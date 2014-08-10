@@ -92,5 +92,16 @@ define('LABEL_A12','Editar Tipo de Panel');
 
 /*----------------------REGISTRAR VENDEDORES----------------------*/
 define('LABEL_RV1','Vendedores');
-
+define('LABEL_RV2','Nuevo Vendedor');
+define('LABEL_RV3','Nombres');
+define('LABEL_RV4','Apellido paterno');
+define('LABEL_RV5','Apellido materno');
+define('LABEL_RV6','Ingrese nombres');
+define('LABEL_RV7','Ingrese apellido paterno');
+define('LABEL_RV8','Ingrese apellido materno');
+define('LABEL_RV9','Dirección');
+define('LABEL_RV10','E-mail');
+define('LABEL_RV11','Ingresar dirección');
+define('LABEL_RV12','ingresar e-mail');
+define('LABEL_RV13','Sexo');
 ?>
