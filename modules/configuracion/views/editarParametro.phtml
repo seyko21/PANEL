@@ -7,6 +7,7 @@
  * Descripcion : 
  */
 $editar = Session::getPermiso('PARMED');
+$alias = Session::getPermiso('PARMVA');
 $parm = parametroController::getParametro();
 ?>
 <form id="<?php echo T100; ?>formParametro" name="<?php echo T100; ?>formParametro" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -43,7 +44,20 @@ $parm = parametroController::getParametro();
                         </div>
                     </div>
                 </section>
-                
+                <?php if($alias['permiso']):?>
+                <section>
+                    <div class="row">
+                        <label class="label col col-2"><?php echo LABEL_AA1; ?></label>
+                        <div class="col col-3">
+                            <label class="input"> 
+                                <i class="icon-append fa fa-keyboard-o"></i>
+                                <input type="text" id="<?php echo T100; ?>txt_alias" name="<?php echo T100; ?>txt_alias" value="<?php echo $parm['alias']; ?>">
+                                <b class="tooltip tooltip-top-right"><i class="fa fa-keyboard-o txt-color-teal"></i> <?php echo LABEL_AA2; ?></b>
+                            </label>
+                        </div>                        
+                    </div>
+                </section>
+                <?php endif; ?>
                 <section>
                     <div class="row">
                         <label class="label col col-2"></label>
@@ -84,7 +98,12 @@ $parm = parametroController::getParametro();
                         required : true,
                         regular: true,
                         minlength: 3
-                }
+                }, <?php echo T100; ?>txt_alias : {                  
+                        regular: true,
+                        minlength: 2,
+                        maxlength: 5
+                }     
+                        
         },
 
         // Do not change code below
