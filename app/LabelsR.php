@@ -74,22 +74,6 @@ define('LABEL_13','Importe');
 define('LABEL_14','Ingrese importe');
 define('LABEL_15','Editar Concepto');
 
-/*----------------------PARAMETROS----------------------*/
-define('LABEL_A1','Parametro');
-define('LABEL_A2','Nuevo Parametro');
-define('LABEL_A3','Nombre');
-define('LABEL_A4','Ingrese un Nombre');
-define('LABEL_A5','Valor');
-define('LABEL_A6','Ingrese un valor');
-define('LABEL_A7','Editar Parametro');
-/*----------------------TIPO Panel----------------------*/
-define('LABEL_A8','Tipo de Panel ');
-define('LABEL_A9','Nuevo Tipo de Panel');
-define('LABEL_A10','Descripción');
-define('LABEL_A11','Ingrese una Descripción');
-define('LABEL_A12','Editar Tipo de Panel');
-//ok
-
 /*----------------------REGISTRAR VENDEDORES----------------------*/
 define('LABEL_RV1','Vendedores');
 define('LABEL_RV2','Nuevo Vendedor');
@@ -104,7 +88,4 @@ define('LABEL_RV10','E-mail');
 define('LABEL_RV11','Ingresar dirección');
 define('LABEL_RV12','ingresar e-mail');
 define('LABEL_RV13','Sexo');
-
-//1dmp
-//daniel mendoza
 ?>
