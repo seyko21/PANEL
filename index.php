@@ -3,8 +3,10 @@ define('DS',DIRECTORY_SEPARATOR);
 define('ROOT',  realpath(dirname(__FILE__)) . DS);
 
 require_once (ROOT . 'app' . DS . 'Config.php');
-require_once (ROOT . 'app' . DS . 'Constantes.php');
-require_once (ROOT . 'app' . DS . 'Labels.php');
+require_once (ROOT . 'app' . DS . 'ConstantesD.php');
+require_once (ROOT . 'app' . DS . 'ConstantesR.php');
+require_once (ROOT . 'app' . DS . 'LabelsD.php');
+require_once (ROOT . 'app' . DS . 'LabelsR.php');
 
 Session::init();
 
