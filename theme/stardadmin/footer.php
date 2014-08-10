@@ -86,8 +86,9 @@ Obj::run()->Autoload->js('modules/', true);
 </script>
 
 </html>
-<?php require_once (ROOT . 'app' . DS . 'ConstantesJsD.php'); ?>
 <?php require_once (ROOT . 'app' . DS . 'ConstantesJsR.php'); ?>
+<?php require_once (ROOT . 'app' . DS . 'ConstantesJsD.php'); ?>
+
 <script>
 //    $.each($('script'),function(){
 //        alert($(this).attr('src'))

@@ -16,7 +16,4 @@ var diccionario = {
         T4: '<?php echo T4; ?>',
         T5: '<?php echo T5; ?>',
         T6: '<?php echo T6; ?>',
-        T7: '<?php echo T7; ?>'
-    }
-};
-</script>
+        T7: '<?php echo T7; ?>',    
