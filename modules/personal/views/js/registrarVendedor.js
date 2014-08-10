@@ -31,7 +31,7 @@ var registrarVendedor_ = function(){
         });
     };
     
-this.publico.getGridVendedor = function (){
+    this.publico.getGridVendedor = function (){
         $('#'+diccionario.tabs.T7+'getGridVendedor').dataTable({
             bProcessing: true,
             bServerSide: true,
@@ -60,6 +60,18 @@ this.publico.getGridVendedor = function (){
             }
         });
         setup_widgets_desktop();
+    };
+    
+    this.publico.getNuevoVendedor = function(btn){
+        simpleAjax.send({
+            element: btn,
+            dataType: 'html',
+            root: _private.config.modulo + 'getNuevoVendedor',
+            fnCallback: function(data){
+                $('#cont-modal').append(data);  /*los formularios con append*/
+                $('#'+diccionario.tabs.T7+'formVendedor').modal('show');
+            }
+        });
     };
     
     return this.publico;

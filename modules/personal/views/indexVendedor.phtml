@@ -4,7 +4,7 @@ $eliminar = Session::getPermiso('REGVEDE');
         
 echo Functions::widgetOpen(array(
         'id'=>T7,
-        'title'=>LABEL_11
+        'title'=>LABEL_RV1
     ));
 ?>
 <div class="widget-body-toolbar"></div>
@@ -12,12 +12,12 @@ echo Functions::widgetOpen(array(
         <div class="dt-top-row">
             <div class="DTTT btn-group">
                 <?php if($grabar['permiso']): ?>
-                <button id="<?php echo T7; ?>btnNew" type="button" onclick="concepto.getNuevoConcepto(this);" class="btn txt-color-white bg-color-blueDark">
+                <button id="<?php echo T7; ?>btnNew" type="button" onclick="registrarVendedor.getNuevoVendedor(this);" class="btn txt-color-white bg-color-blueDark">
                     <i class="fa fa-file-o"></i> <?php echo BTN_NUEVO; ?>
                 </button>
                 <?php endif; ?>
                 <?php if($eliminar['permiso']): ?>
-                <button id="<?php echo T7; ?>btnNew" type="button" onclick="concepto.postDeleteConceptoAll(this);" class="btn txt-color-white bg-color-blueDark">
+                <button id="<?php echo T7; ?>btnNew" type="button" onclick="registrarVendedor.postDeleteVendedorAll(this);" class="btn txt-color-white bg-color-blueDark">
                     <i class="fa fa-ban"></i> <?php echo BTN_DELETE; ?>
                 </button>
                 <?php endif; ?>
@@ -25,7 +25,7 @@ echo Functions::widgetOpen(array(
         </div>
 
     </div>
-    <form id="<?php echo T7; ?>formGridConcepto" name="<?php echo T7; ?>formGridConcepto">
-        <table id="<?php echo T7; ?>gridConceptos" class="table table-striped table-bordered table-hover table-condensed" style="width:100%"></table>
+    <form id="<?php echo T7; ?>formGridVendedor" name="<?php echo T7; ?>formGridVendedor">
+        <table id="<?php echo T7; ?>getGridVendedor" class="table table-striped table-bordered table-hover table-condensed" style="width:100%"></table>
     </form>
 <?php echo Functions::widgetClose(); ?>
