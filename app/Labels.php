@@ -106,4 +106,5 @@ define('LABEL_RV12','ingresar e-mail');
 define('LABEL_RV13','Sexo');
 
 //1dmp
+//daniel mendoza
 ?>
