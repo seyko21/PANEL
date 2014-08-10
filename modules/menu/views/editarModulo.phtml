@@ -1,0 +1,105 @@
+<?php
+
+/*
+ * Documento   : editarModulo
+ * Creado      : 11-jul-2014
+ * Autor       : ..... .....
+ * Descripcion : 
+ */
+$editar = Session::getPermiso('MNUED');
+
+$data = configurarMenuController::getModulo($this->_idModulo);
+
+?>
+<form id="<?php echo T3; ?>formEditarModulo" name="<?php echo T3; ?>formEditarModulo" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close"  aria-hidden="true" onclick="configurarMenu.resetKeyModulo();">
+                    &times;
+                </button>
+                <h4 class="modal-title">Editar Módulo</h4>
+            </div>
+            <div class="modal-body smart-form">
+                <section>
+                    <div class="row">
+                        <label class="label col col-2"><?php echo M_FG_MOD_L_MOD; ?></label>
+                        <div class="col col-10">
+                            <label class="input"> 
+                                <input type="text" id="<?php echo T3; ?>txt_modulo" name="<?php echo T3; ?>txt_modulo" value="<?php echo $data['modulo']; ?>"></input>
+                            </label>
+                        </div>
+                    </div>
+                </section>
+                <section>
+                    <div class="row">
+                        <label class="label col col-2"><?php echo M_FG_MOD_L_ORD; ?></label>
+                        <div class="col col-2">
+                            <label class="input"> 
+                                <input type="text" id="<?php echo T3; ?>txt_orden" name="<?php echo T3; ?>txt_orden" value="<?php echo $data['orden']; ?>"></input>
+                            </label>
+                        </div>
+                        <?php echo Functions::help(M_FG_MOD_H_ORD); ?>
+                    </div>
+                </section>
+                <section>
+                    <div class="row">
+                        <label class="label col col-2"></label>
+                        <div class="col col-3">
+                            <label class="checkbox">
+                                <input type="checkbox" name="<?php echo T3; ?>chk_activo" id="<?php echo T3; ?>chk_activo" value="1" <?php echo ($data['activo'] == 1)?'checked':''; ?>></input>
+                                <i></i>
+                                <?php echo CK_ACTIVO; ?>
+                            </label>
+                        </div>
+                    </div>
+                </section>
+            </div>
+            <div class="modal-footer">
+                <?php if($editar['permiso']):?>
+                <button id="<?php echo T3; ?>btnEditarModulo" type="submit" class="btn txt-color-white bg-color-blueDark">
+                    <i class="fa fa-save"></i> <?php echo $editar['accion']; ?>
+                </button>
+                <?php endif; ?>
+                <button type="button" class="btn btn-default xClose" onclick="configurarMenu.resetKeyModulo();">
+                    <i class="fa fa-ban"></i> <?php echo BTN_CLOSE; ?>
+                </button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+
+<!-- si no riene permiso se anula submit desde cualquier input -->
+<?php if(!$editar['permiso']): ?>
+<script>
+    simpleScript.noSubmit('#<?php echo T3; ?>formEditarModulo');
+</script>
+<?php endif; ?>
+<script>
+    $('.xhelp').tooltip({placement:'right'});
+    $('#<?php echo T3; ?>formEditarModulo').validate({
+        // Rules for form validation
+        rules : {
+                <?php echo T3; ?>txt_modulo : {
+                        required : true,
+                        regular: true,
+                        minlength: 3
+                },
+                <?php echo T3; ?>txt_orden : {
+                        required : true,
+                        regular: true,
+                        number: true,
+                        maxlength: 3
+                }
+        },
+
+        // Do not change code below
+        errorPlacement : function(error, element) {
+                error.insertAfter(element.parent());
+        },
+
+        submitHandler: function(){
+            configurarMenu.postEditarModulo();
+        }   
+    });
+</script>
+</form>

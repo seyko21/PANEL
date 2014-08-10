@@ -1,0 +1,67 @@
+<?php
+/*
+ * Documento   : opciones
+ * Creado      : 12-jul-2014
+ * Autor       : ..... .....
+ * Descripcion : 
+ */
+$eliminar = Session::getPermiso('MNUDE');
+
+$data = configurarMenuController::getOpciones();
+?>
+
+<?php if(sizeof($data)): ?>
+<ol id="ol-opciones" class="lista-redondeada ol">
+    <?php 
+        foreach ($data as $value): 
+            $inactivo = 'text-decoration:line-through;color: red;';
+            if($value['activo'] == '1'){
+                $inactivo = '';
+            }
+    ?>
+        <li id="liMenPri_<?php echo $value['id_opciones']; ?>" data-orden="<?php echo $value['id_opciones']; ?>">
+            <a href="javascript:;" rel="popover-hover" data-placement="top" data-original-title="<?php echo $value['opcion']; ?>" data-content="<div><b>Alias:</b> <?php echo $value['alias']; ?></div><div><b>URL:</b> <?php echo $value['url']; ?></div><div><b>Orden:</b> <?php echo $value['orden']; ?></div>" data-html="true">
+                <span style="<?php echo $inactivo; ?>"><?php echo $value['opcion']; ?></span>
+                <div class="pull-right btn-group" style="margin-top: -4px;">
+                    <button class="btn btn-xs btn-primary" title="Editar" onclick="configurarMenu.getEditarOpcion('<?php echo AesCtr::en($value['id_opciones']); ?>');">
+                        <i class="fa fa-edit fa-lg"></i>
+                    </button>
+                    <?php if ($eliminar['permiso']): ?>
+                        <button class="btn btn-xs btn-danger" title="<?php echo $eliminar['accion']; ?>" onclick="configurarMenu.postDeleteOpcion('<?php echo AesCtr::en($value['id_opciones']); ?>');">
+                            <i class="fa fa-ban fa-lg"></i>
+                        </button>
+                    <?php endif; ?>
+                </div>
+            </a>
+        </li>
+    <?php endforeach; ?>
+</ol>
+<script>
+    // activate popovers with hover states
+    $("[rel=popover-hover]").popover({
+            trigger : "hover"
+    });
+    
+    //    mover listas
+    $("#ol-opciones").sortable({
+        update:function(){
+            var ordenElementos = $(this).sortable("toArray",{attribute: 'data-orden'}).toString(); 
+            configurarMenu.postOrdenar('OPC',ordenElementos);
+            
+            $.each($('#ol-opciones').find('li'),function(index,value){
+                var h = $(this).find('a').attr('data-content','<div><b>Orden:</b> '+(1 + index)+'</div>');
+            });
+        }
+    });
+    
+    /*para quitar evento*/
+    simpleScript.removeAttr.click({
+        container: '#widget_<?php echo T3.'opciones'; ?>',
+        typeElement: 'button'
+    });
+</script>
+<?php else: ?>
+<div  class="no-result-menu">
+    <div class="alert alert-danger">No se encontraron registros</div>
+</div>
+<?php endif; ?>

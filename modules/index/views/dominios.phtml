@@ -1,0 +1,63 @@
+<?php
+/*
+ * Documento   : dominios
+ * Creado      : 06-jun-2014
+ * Autor       : RDCC
+ * Descripcion : 
+ */
+?>
+<!-- SHORTCUT AREA : With large tiles (activated via clicking user name tag)
+Note: These tiles are completely responsive,
+you can add as many as you like
+-->
+<!--LOS DOMINIOS-->
+<div id="shortcut">
+    <ul>
+        <?php    
+        if (Session::get('sys_menu')):
+            $dominioTMP = '';
+            $permisos = array();
+            
+            foreach (Session::get('sys_menu') as $value) :
+                
+                /* acciones de una opcion */
+                $acciones = indexController::getAccionesOpcion($value['id_rolopciones']);
+                $aliasopcion = $value['aliasopcion'];
+
+                /* creando array de permisos */
+                
+                foreach ($acciones as $val) {
+                    $permisos[] = array(
+                        'opcion' => $aliasopcion . $val['aliasaccion'],
+                        'accion' => $val['accion'],
+                        'permiso' => $val['activo']
+                    );
+                }
+                
+                if ($value['dominio'] != $dominioTMP):
+                    ?>
+                    <li>
+                        <a href="javascript:;" class="<?php echo $value['class']; ?>" onclick="index.getModulos('<?php echo $value['id_dominio']; ?>');"> <span class="iconbox"> <i class="<?php echo $value['icon']; ?>"></i> <span><?php echo $value['dominio']; ?></span> </span> </a>
+                    </li>
+                    <?php
+                endif;
+                
+                $dominioTMP = $value['dominio'];
+            endforeach;
+        endif;
+        /* crear sesion de permisos */
+        Session::set('sys_permisos', $permisos);
+        ?>
+    </ul>
+</div>
+<!-- END SHORTCUT AREA -->
+<script>
+    function noneEvt(){
+        /*para hacer evento invisible*/
+        simpleScript.removeAttr.click({
+            container: '#shortcut',
+            typeElement: 'li a'
+        });
+    }
+    setTimeout('noneEvt()',2000);
+</script>

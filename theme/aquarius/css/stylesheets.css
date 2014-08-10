@@ -1,0 +1,65 @@
+@import "icons.css";
+@import "bootstrap.css";
+@import "bootstrap-responsive.css";
+@import "fullcalendar.css";
+@import "ui.css";
+@import "select2.css";
+@import "uniform.default.css";
+@import "validation.css";
+@import "mCustomScrollbar.css";
+@import "cleditor.css";
+@import "fancybox/jquery.fancybox.css";
+@import "../js/plugins/plupload/jquery.plupload.queue/css/jquery.plupload.queue.css";
+@import "elfinder.min.css";
+@import "elfinder.css";
+@import "login.css";
+@import "stylesheet.css";
+
+
+html { height: 100%; }
+body { min-height: 100%; font-family: Arial, Helvetica, sans-serif; font-size: 12px; line-height: 22px; position: relative; background: url("../img/backgrounds/body.jpg") left top repeat;}
+
+
+@media only screen and (max-width: 1350px) {
+    body > .menu{display: block;}
+}
+
+@media only screen and (max-width: 1024px) {
+    body > .menu{display: block;}
+}
+
+@media only screen and (min-width: 481px) and (max-width: 768px) {
+    body > .menu {display: none; position: absolute; left: 50%; margin-top: 0px; margin-left: -110px !important; top: 15px; z-index: 999; height: auto; min-height: auto;}
+    body > .menu .breadLine .arrow {display: block;}
+    body > .content{margin-left: 0px;}
+        .header .header_menu li.list_icon{display: block;}
+}
+
+@media only screen and (min-width: 481px) {
+    
+}
+
+@media only screen and (max-width: 768px) {
+    .wBlock.auto{width: auto; float: left;}
+        .wBlock.auto .dSpace{padding: 3px;}
+    .wBlock .dSpace{width: 100%; padding: 3px 0px;}
+    .wBlock .rSpace{float: left; width: 100%;}
+}
+
+@media only screen and (min-width: 769px) {
+
+}
+
+@media only screen and (min-width: 769px) and (max-width: 980px) {
+    body > .menu {display: none; position: absolute; left: 50%; margin-top: 0px; margin-left: -110px !important; top: 15px;  z-index: 999; height: auto; min-height: auto;}
+    body > .menu .breadLine .arrow {display: block;}
+    body > .content{margin-left: 0px;}
+        .header .header_menu li.list_icon{display: block;}        
+}
+
+@media only screen and (min-width: 320px) and (max-width: 480px) {
+    body > .menu {display: none; position: absolute; left: 50%; margin-top: 0px; margin-left: -110px !important; top: 15px; z-index: 999; height: auto; min-height: auto;}
+    body > .menu .breadLine .arrow {display: block;}
+    body > .content{margin-left: 0px;}
+        .header .header_menu li.list_icon{display: block;}        
+}

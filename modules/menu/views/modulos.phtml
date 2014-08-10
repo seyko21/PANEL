@@ -1,0 +1,108 @@
+<?php
+/*
+ * Documento   : modulos
+ * Creado      : 11-jul-2014
+ * Autor       : ..... .....
+ * Descripcion : 
+ */
+$eliminar = Session::getPermiso('MNUDE');
+
+$data = configurarMenuController::getModulos();
+
+?>
+<?php if(sizeof($data)): ?>
+
+<ol id="ol-modulos" class="lista-redondeada ol">
+    <?php 
+        foreach ($data as $value): 
+            $inactivo = 'text-decoration:line-through;color: red;';
+            if($value['activo'] == '1'){
+                $inactivo = '';
+            }
+    ?>
+        <li id="liMod_<?php echo $value['id_modulo']; ?>" data-orden="<?php echo $value['id_modulo']; ?>" >
+            <a href="javascript:;" rel="popover-hover" data-placement="top" data-original-title="<?php echo $value['modulo']; ?>" data-content="<div><b>Orden:</b> <?php echo $value['orden']; ?></div>" data-html="true">
+                <span style="<?php echo $inactivo; ?>"><?php echo $value['modulo']; ?></span>
+                <div class="pull-right btn-group" style="margin-top: -4px;">
+                    <button class="btn btn-xs btn-primary" title="Ver menú principal" onclick="moverLiModulos('<?php echo AesCtr::en($value['id_modulo']); ?>','<?php echo $value['modulo']; ?>');">
+                        <i class="fa fa-search-plus fa-lg"></i>
+                    </button>
+                    <button class="btn btn-xs btn-primary" title="Editar" onclick="configurarMenu.getEditarModulo('<?php echo AesCtr::en($value['id_modulo']); ?>');">
+                        <i class="fa fa-edit fa-lg"></i>
+                    </button>
+                    <?php if ($eliminar['permiso']): ?>
+                        <button class="btn btn-xs btn-danger" title="<?php echo $eliminar['accion']; ?>" onclick="configurarMenu.postDeleteModulo('<?php echo AesCtr::en($value['id_modulo']); ?>');">
+                            <i class="fa fa-ban fa-lg"></i>
+                        </button>
+                    <?php endif; ?>
+                </div>
+            </a>
+        </li>
+    <?php endforeach; ?>
+</ol>
+<script>
+    // activate popovers with hover states
+    $("[rel=popover-hover]").popover({
+            trigger : "hover"
+    });
+    function moverLiModulos(id,mod){
+        /*reset key menupri, opcion y sus contenedores*/
+        configurarMenu.resetKeyMenuPrincipal();
+        configurarMenu.resetKeyOpcion();
+        configurarMenuScript.resetFromModulo();
+        
+        configurarMenu.getMenuPrincipal(id);
+        
+        $('#name-modulo').hide();
+        $('#clonex div').css({
+            top: 0,
+            left: 0,
+            display: 'none'
+        });
+        
+        var pos = $('#liMod_'+simpleAjax.stringGet(id)).position();
+        $('#clonex').css({
+            left: pos.left + 595,
+            top: pos.top + 85
+        });
+        
+        $('.popover').css('display','none');
+        $('#clonex div').css('display','block');
+        $('#clonex div').html(mod);
+        $('#clonex div').animate({
+            top: 300,
+            left: '-=550'
+            }, 1000, function() {
+                $('#clonex div').fadeOut();
+                $('#name-modulo').html(mod).fadeOut().delay(500).fadeIn();
+        });
+        $('html,body').animate({
+            scrollTop: $('#cont-listaMenuPrincipal').offset().top
+        }, 2000);
+    }
+    
+//    mover listas
+    $("#ol-modulos").sortable({
+        update:function(){
+            var ordenElementos = $(this).sortable("toArray",{attribute: 'data-orden'}).toString(); 
+            configurarMenu.postOrdenar('MOD',ordenElementos);
+            
+            $.each($('#ol-modulos').find('li'),function(index,value){
+                var h = $(this).find('a').attr('data-content','<div><b>Orden:</b> '+(1 + index)+'</div>');
+            });
+        }
+    });
+    
+    /*para quitar evento*/
+    simpleScript.removeAttr.click({
+        container: '#widget_<?php echo T3.'modulos'; ?>',
+        typeElement: 'button'
+    });
+</script>
+
+
+<?php else: ?>
+<div  class="no-result-menu">
+    <div class="alert alert-danger">No se encontraron registros</div>
+</div>
+<?php endif; ?>

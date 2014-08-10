@@ -1,0 +1,98 @@
+<?php
+/*
+ * Documento   : dominios
+ * Creado      : 11-jul-2014
+ * Autor       : ..... .....
+ * Descripcion : 
+ */
+$eliminar = Session::getPermiso('MNUDE');
+
+$dataDom = configurarMenuController::getDominios();
+?>
+<ol id="ol-dominios" class="lista-redondeada ol">
+    <?php 
+        foreach ($dataDom as $value): 
+            $inactivo = 'text-decoration:line-through;color: red;';
+            if($value['activo'] == '1'){
+                $inactivo = '';
+            }
+    ?>
+        <li id="liDom_<?php echo $value['id_dominio']; ?>" data-orden="<?php echo $value['id_dominio']; ?>" data-css="<?php echo $value['icon']; ?>">
+            <a href="javascript:;" rel="popover-hover" data-placement="top" data-original-title="<?php echo $value['dominio']; ?>" data-content="<div><b>icon css:</b> <?php echo $value['icon']; ?></div><div><b>orden:</b> <?php echo $value['orden']; ?></div>" data-html="true">
+                <span style="<?php echo $inactivo; ?>"><?php echo $value['dominio']; ?></span>
+                <div class="pull-right btn-group" style="margin-top: -4px;">
+                    <button class="btn btn-xs btn-primary" title="Ver módulos" onclick="moverLiDominios('<?php echo AesCtr::en($value['id_dominio']); ?>','<?php echo $value['dominio']; ?>');">
+                        <i class="fa fa-search-plus fa-lg"></i>
+                    </button>
+                    <button class="btn btn-xs btn-primary" title="Editar" onclick="configurarMenu.getEditarDominio('<?php echo AesCtr::en($value['id_dominio']); ?>');">
+                        <i class="fa fa-edit fa-lg"></i>
+                    </button>
+                    <?php if ($eliminar['permiso']): ?>
+                        <button class="btn btn-xs btn-danger" title="<?php echo $eliminar['accion']; ?>" onclick="configurarMenu.postDeleteDominio('<?php echo AesCtr::en($value['id_dominio']); ?>');">
+                            <i class="fa fa-ban fa-lg"></i>
+                        </button>
+                    <?php endif; ?>
+                </div>
+            </a>
+        </li>
+    <?php endforeach; ?>
+</ol>
+<script>
+    // activate popovers with hover states
+    $("[rel=popover-hover]").popover({
+            trigger : "hover"
+    });
+    function moverLiDominios(el,dom){
+        /*reset key modulo, menupri, opcion y sus contenedores*/
+        configurarMenu.resetKeyModulo();
+        configurarMenu.resetKeyMenuPrincipal();
+        configurarMenu.resetKeyOpcion();
+        configurarMenuScript.resetFromDominio();
+        
+        configurarMenu.getModulos(el);
+        
+        $('#name-dominio').hide();
+        $('#clonex div').css({
+            top: 0,
+            left: 0,
+            display: 'none'
+        });
+        
+        var pos = $('#liDom_'+simpleAjax.stringGet(el)).position();
+        $('#clonex').css({
+            left: pos.left + 59,
+            top: pos.top + 85
+        });
+        
+        $('.popover').css('display','none');
+        $('#clonex div').css('display','block');
+        $('#clonex div').html(dom);
+        $('#clonex div').animate({
+            left: '+=550'
+            }, 1000, function() {
+                $('#clonex div').fadeOut();
+                $('#name-dominio').html(dom).fadeOut().delay(500).fadeIn();
+        });
+
+    }
+    
+    //    mover listas
+    $("#ol-dominios").sortable({
+        update:function(){
+            var icon = $(this).attr('data-css');
+            var ordenElementos = $(this).sortable("toArray",{attribute: 'data-orden'}).toString(); 
+            configurarMenu.postOrdenar('DOM',ordenElementos);
+            
+            $.each($('#ol-dominios').find('li'),function(index,value){
+                var h = $(this).find('a').attr('data-content','<div><b>icon css:</b> '+icon+'</div><div><b>Orden:</b> '+(1 + index)+'</div>');
+            });
+        }
+    });
+    
+    /*para hacer evento invisible*/
+    simpleScript.removeAttr.click({
+        container: '#widget_<?php echo T3.'dominios'; ?>',
+        typeElement: 'button'
+    });
+
+</script>

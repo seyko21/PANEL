@@ -1,0 +1,76 @@
+<?php
+
+/*
+ * Documento   : nuevaAccion
+ * Creado      : 07-jul-2014
+ * Autor       : ..... .....
+ * Descripcion : 
+ */
+$grabar = Session::getPermiso('ACCGR');
+?>
+<form id="CRDACformNuevaAccion" name="CRDACformNuevaAccion" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close"  aria-hidden="true">
+                    &times;
+                </button>
+                <h4 class="modal-title">Nueva Acción</h4>
+            </div>
+            <div class="modal-body smart-form">
+                <section>
+                    <div class="row">
+                        <label class="label col col-2">Acción</label>
+                        <div class="col col-10">
+                            <label class="input"> 
+                                <input type="text" id="CRDACtxt_accion" name="CRDACtxt_accion"></input>
+                            </label>
+                        </div>
+                    </div>
+                </section>
+                <section>
+                    <div class="row">
+                        <label class="label col col-2">Alias</label>
+                        <div class="col col-2">
+                            <label class="input"> 
+                                <input type="text" id="CRDACtxt_alias" name="CRDACtxt_alias"></input>
+                            </label>
+                        </div>
+                        <?php echo Functions::help('Alias debe ser entre 2 y 5 caracteres'); ?>
+                    </div>
+                </section>
+                <section>
+                    <div class="row">
+                        <label class="label col col-2"></label>
+                        <div class="col col-3">
+                            <label class="checkbox">
+                                <input type="checkbox" checked="checked" name="CRDACchk_activo" id="CRDACchk_activo" value="1"></input>
+                                <i></i>
+                                Activo
+                            </label>
+                        </div>
+                    </div>
+                </section>
+            </div>
+            <div class="modal-footer">
+                <?php if($grabar['permiso']):?>
+                <button id="CRDACbtnGrabaAccion" type="submit" class="btn txt-color-white bg-color-blueDark">
+                    <i class="fa fa-save"></i> <?php echo $grabar['accion']; ?>
+                </button>
+                <?php endif; ?>
+                <button type="button" class="btn btn-default xClose">
+                    <i class="fa fa-ban"></i> Cerrar
+                </button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</form>
+<!-- si no riene permiso se anula submit desde cualquier input -->
+<?php if(!$grabar['permiso']): ?>
+<script>
+    simpleScript.noSubmit('#CRDACformNuevaAccion');
+</script>
+<?php endif; ?>
+<script>
+    $('.xhelp').tooltip({placement:'right'});
+</script>

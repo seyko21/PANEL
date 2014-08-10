@@ -1,0 +1,43 @@
+<?php
+/*
+ * Documento   : lock
+ * Creado      : 17-jul-2014
+ * Autor       : ..... .....
+ * Descripcion : 
+ */
+?>
+<form id="login-form" class="lockscreen animated flipInY" onsubmit="return false;">
+    <div class="logo">
+        <h1 class="semi-bold"><img src="<?php echo $rutaLayout['_img']; ?>logo.png" alt=""/> Simple ERP</h1>
+    </div>
+    <div>
+        <img src="<?php echo $rutaLayout['_img']; ?>avatars/sunny-big.png" alt="" width="120" height="120" />
+        <div>
+            <h1><i class="fa fa-user fa-3x text-muted air air-top-right hidden-mobile"></i><?php echo $this->nameUsuario; ?> <small><i class="fa fa-lock text-muted"></i> &nbsp;Bloqueado</small></h1>
+<!--            <p class="text-muted">
+                el correo
+            </p>-->
+
+            <div class="input-group">
+                <input type="hidden" name="txtUser" id="txtUser" value="<?php echo $this->usuario ?>">
+                <input class="form-control" type="password" placeholder="Contraseña" id="txtClave" name="txtClave">
+                <div class="input-group-btn">
+                    <button id="btnEntrar" class="btn btn-primary" type="submit">
+                        <i class="fa fa-key"></i> Desbloquear
+                    </button>
+                </div>
+            </div>
+            <p class="no-margin margin-top-5">
+                ¿Es otra persona? <a href="index"> Click aquí</a>
+            </p>
+        </div>
+
+    </div>
+    <p class="font-xs margin-top-5">
+        Copyright SmartAdmin 2014-2020.
+
+    </p>
+</form>
+<script>
+    loginScript.validate();
+</script>

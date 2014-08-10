@@ -1,0 +1,63 @@
+#DesktopIcons{
+    position: absolute;
+    bottom: 40px;
+    left: 250px;
+}
+.loadWindow{
+    position:relative;
+    margin:auto;
+    width:95px;
+    background:#BDBDBD;
+    top:-5px;
+    padding:5px;
+    color:#FFF;
+    -moz-border-radius: 0 0 5px 5px;
+    -webkit-border-radius: 0 0 5px 5px;
+    -khtml-border-radius: 0 0 5px 5px;
+    border-radius:0 0 5px 5px;
+}
+.loadWindow span{
+    position: absolute;
+    margin-top: 0px;
+    left: 25px
+}
+.pager_grid{
+    padding-top:5px;
+    padding-right: 5px;
+    padding-left: 5px;
+    border-width: 1px 1px 1px 0px;margin-top:-19px;
+    border-style: solid solid solid none;
+    border-color: rgb(221, 221, 221) rgb(221, 221, 221) rgb(221, 221, 221) -moz-use-text-color;
+    border:1px solid #ccc;
+    border-image: none;
+    border-collapse: separate;
+    border-radius: 4px;
+    position: relative;
+    height: 42px;
+    margin-top: -21px;
+    /*background: linear-gradient(to bottom, rgb(241, 241, 241) 0%, rgb(219, 219, 219) 100%) repeat scroll 0% 0% transparent;*/
+}
+.panel-icon{
+    padding: 5px 10px;
+    max-width: auto;
+}
+.parsley-error-list{
+    position:absolute;
+    z-index:20;
+    top:35px;
+}
+.pull-left{
+    float: left;
+}
+.pull-right{
+    float: right;
+}
+.required, .regexp, .number, .email, .url, .min, .max, .range, .minlength, 
+.maxlength, .rangelength, .mincheck, .maxcheck, .rangecheck, .equalto, .urlstrict,
+.digits, .dateIso, .alphanum, .notnull, .notblank{
+    position: absolute;
+    width: 300px;
+}
+.w90{
+    width: 90%;
+}

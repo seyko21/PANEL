@@ -1,0 +1,136 @@
+<?php
+/*
+ * Documento   : nuevoConcepto
+ * Creado      : 06-ago-2014
+ * Autor       : ..... .....
+ * Descripcion : 
+ */
+$grabar = Session::getPermiso('CONCGR');
+$editar = Session::getPermiso('CONCED');
+$data = conceptoController::getConcepto();
+?>
+<form id="<?php echo T6; ?>formConcepto" name="<?php echo T6; ?>formConcepto" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close"  aria-hidden="true">
+                    &times;
+                </button>
+                <h4 class="modal-title"><?php echo LABEL_15;?></h4>
+            </div>
+            <div class="modal-body smart-form">
+                <section>
+                    <div class="row">
+                        <label class="label col col-3"><?php echo LABEL_6; ?></label>
+                        <div class="col col-8">
+                            <label class="select"> 
+                                <?php
+                                    $datac = conceptoController::getTipoConceptos();
+                                    
+                                    echo Functions::selectHtml(array(
+                                        'data'=>$datac,
+                                        'atributes'=>array(
+                                            'id'=>T6.'lst_tipoconcento',
+                                            'name'=>T6.'lst_tipoconcento'
+                                        ),
+                                        'etiqueta'=>'descripcion',
+                                        'value'=>'id_tipo',
+                                        'defaultEtiqueta'=>$data['id_tipo'],
+                                        'txtSelect'=>true
+                                    ));
+                                ?><i></i>
+                            </label>                            
+                        </div>
+                        <?php if ($grabar['permiso']): ?>
+                        <button id="<?php echo T6; ?>btnNew" type="button" onclick="tipoConcepto.getNuevoTipoConcepto(this,'#<?php echo T6; ?>lst_tipoconcento');" class="btn txt-color-white bg-color-blueDark" title="<?php echo BTN_NUEVO; ?>">
+                                <i class="fa fa-file-o pd8"></i>
+                            </button>
+                        <?php endif; ?>
+                    </div>
+                </section>
+                <section>
+                    <div class="row">
+                        <label class="label col col-3"><?php echo LABEL_8; ?></label>
+                        <div class="col col-8">
+                            <label class="input"> 
+                                <i class="icon-append fa fa-keyboard-o"></i>
+                                <input type="text" id="<?php echo T6; ?>txt_descripcion" name="<?php echo T6; ?>txt_descripcion" value="<?php echo $data['descripcion']; ?>">
+                                <b class="tooltip tooltip-top-right"><i class="fa fa-keyboard-o txt-color-teal"></i> <?php echo LABEL_9; ?></b>
+                            </label>
+                        </div>
+                    </div>
+                </section>
+                <section>
+                    <div class="row">
+                        <label class="label col col-3"><?php echo LABEL_13; ?></label>
+                        <div class="col col-4">
+                            <label class="input"> 
+                                <i class="icon-append fa fa-money"></i>
+                                <input type="text" id="<?php echo T6; ?>txt_importe" name="<?php echo T6; ?>txt_importe" value="<?php echo $data['precio']; ?>">
+                                <b class="tooltip tooltip-top-right"><i class="fa fa-money txt-color-teal"></i> <?php echo LABEL_14; ?></b>
+                            </label>
+                        </div>
+                    </div>
+                </section>
+                <section>
+                    <div class="row">
+                        <label class="label col col-3"></label>
+                        <div class="col col-3">
+                            <label class="checkbox">
+                                <input type="checkbox" checked="checked" name="<?php echo T6; ?>chk_activo" id="<?php echo T6; ?>chk_activo" value="A" <?php echo ($data['estado'] == 'A')?'checked':'' ?>></input>
+                                <i></i>
+                                <?php echo CK_ACTIVO; ?>
+                            </label>
+                        </div>
+                    </div>
+                </section>
+            </div>
+            <div class="modal-footer">
+                <?php if($editar['permiso']):?>
+                <button id="<?php echo T6; ?>btnEconc" type="submit" class="btn txt-color-white bg-color-blueDark">
+                    <i class="fa fa-save"></i> <?php echo $editar['accion']; ?>
+                </button>
+                <?php endif; ?>
+                <button type="button" class="btn btn-default xClose">
+                    <i class="fa fa-ban"></i> <?php echo BTN_CLOSE; ?>
+                </button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+
+<!-- si no riene permiso se anula submit desde cualquier input -->
+<?php if(!$editar['permiso']): ?>
+<script>
+    simpleScript.noSubmit('#<?php echo T6; ?>formConcepto');
+</script>
+<?php endif; ?>
+<script>
+    $('#<?php echo T6; ?>formConcepto').validate({
+        // Rules for form validation
+        rules : {
+                <?php echo T6; ?>lst_tipoconcento : {
+                        required : true
+                },
+                <?php echo T6; ?>txt_descripcion : {
+                        required : true,
+                        regular: true,
+                        minlength: 3
+                },
+                <?php echo T6; ?>txt_importe : {
+                        required : true,
+                        number: true,
+                        maxlength: 10
+                }        
+        },
+
+        // Do not change code below
+        errorPlacement : function(error, element) {
+                error.insertAfter(element.parent());
+        },
+
+        submitHandler: function(){
+            concepto.postEditarConcepto();
+        }   
+    });
+</script>
+</form>

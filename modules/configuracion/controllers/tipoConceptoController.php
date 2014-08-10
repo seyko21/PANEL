@@ -1,0 +1,132 @@
+<?php
+/*
+ * --------------------------------------
+ * creado por:  RDCC
+ * fecha: 03.01.2014
+ * tipoConceptoController.php
+ * --------------------------------------
+ */
+class tipoConceptoController extends Controller{
+    
+    public function __construct() {
+        $this->loadModel('tipoConcepto');
+    }
+
+    public function index(){ 
+        Obj::run()->View->render('index');
+    }
+
+    public function getTipoConceptos(){ 
+        $editar = Session::getPermiso('TICNED');
+        $eliminar = Session::getPermiso('TICNDE');
+        
+        $sEcho          =   $this->post('sEcho');
+        
+        $rResult = Obj::run()->tipoConceptoModel->getTipoConceptos();
+        
+        if(!isset($rResult['error'])){  
+            $iTotal         = isset($rResult[0]['total'])?$rResult[0]['total']:0;
+            
+            $sOutput = '{';
+            $sOutput .= '"sEcho": '.intval($sEcho).', ';
+            $sOutput .= '"iTotalRecords": '.$iTotal.', ';
+            $sOutput .= '"iTotalDisplayRecords": '.$iTotal.', ';
+            $sOutput .= '"aaData": [ ';
+            foreach ( $rResult as $key=>$aRow ){
+                
+                if($aRow['estado'] == 'A'){
+                    $estado = '<span class=\"label label-success\">Activo</span>';
+                }elseif($aRow['estado'] == 'I'){
+                    $estado = '<span class=\"label label-danger\">Inactivo</span>';
+                }
+            
+                /*antes de enviar id se encrypta*/
+                $encryptReg = Aes::en($aRow['id_tipo']);
+                
+                $chk = '<input id=\"c_'.(++$key).'\" type=\"checkbox\" name=\"'.T5.'chk_delete[]\" value=\"'.$encryptReg.'\">';
+//                $chk = str_replace(chr(10), "", $chk);
+//                $chk = str_replace(chr(13), "", $chk);
+                
+                /*datos de manera manual*/
+                $sOutput .= '["'.$chk.'","'.$aRow['descripcion'].'","'.$estado.'", ';
+
+                
+
+                /*
+                 * configurando botones (add/edit/delete etc)
+                 * se verifica si tiene permisos para editar
+                 */
+                $sOutput .= '"<div class=\"btn-group\">';
+                
+                if($editar['permiso'] == 1){
+                    $sOutput .= '<button type=\"button\" class=\"btn btn-primary btn-xs\" title=\"'.$editar['accion'].'\" onclick=\"tipoConcepto.getEditarTipoConcepto(\''.$encryptReg.'\')\">';
+                    $sOutput .= '    <i class=\"fa fa-edit fa-lg\"></i>';
+                    $sOutput .= '</button>';
+                }
+                if($eliminar['permiso'] == 1){
+                    $sOutput .= '<button type=\"button\" class=\"btn btn-danger btn-xs\" title=\"'.$eliminar['accion'].'\" onclick=\"tipoConcepto.postDeleteTipoConcepto(\''.$encryptReg.'\')\">';
+                    $sOutput .= '    <i class=\"fa fa-ban fa-lg\"></i>';
+                    $sOutput .= '</button>';
+                }
+                
+                $sOutput .= ' </div>" ';
+
+                $sOutput = substr_replace( $sOutput, "", -1 );
+                $sOutput .= '],';
+            }
+            $sOutput = substr_replace( $sOutput, "", -1 );
+            $sOutput .= '] }';
+        }else{
+            $sOutput = $rResult['error'];
+        }
+        
+        echo $sOutput;
+    }
+    
+    public function getNuevoTipoConcepto(){ 
+        Obj::run()->View->render('nuevoTipoConcepto');
+    }
+    
+    public function getEditarTipoConcepto(){ 
+        Obj::run()->View->render('editarTipoConcepto');
+    }
+    
+    public static function getTipoConcepto(){ 
+        $data = Obj::run()->tipoConceptoModel->getTipoConcepto();
+        
+        return $data;
+    }
+    
+    public function getAddListTipoConcepto(){ 
+        $data = Obj::run()->tipoConceptoModel->getLastTipoConcepto();
+        
+        echo json_encode($data);
+    }
+    
+    public function postNuevoTipoConcepto(){ 
+        $data = Obj::run()->tipoConceptoModel->mantenimientoTipoConcepto();
+        
+        echo json_encode($data);
+    }
+    
+    public function postEditarTipoConcepto(){ 
+        $data = Obj::run()->tipoConceptoModel->mantenimientoTipoConcepto();
+        
+        echo json_encode($data);
+    }
+    
+    public function postDeleteTipoConcepto(){ 
+        $data = Obj::run()->tipoConceptoModel->mantenimientoTipoConcepto();
+        
+        echo json_encode($data);
+    }
+    
+    public function postDeleteTipoConceptoAll(){ 
+        $data = Obj::run()->tipoConceptoModel->mantenimientoTipoConceptoAll();
+        
+        echo json_encode($data);
+    }
+    
+}
+
+?>
