@@ -13,7 +13,7 @@ class registrarVendedorController extends Controller{
     }
     
     public function index(){ 
-        Obj::run()->View->render('index');
+        Obj::run()->View->render('indexRegistrarVendedor');
     }
     
 }

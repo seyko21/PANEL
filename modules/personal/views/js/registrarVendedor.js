@@ -12,7 +12,7 @@ var registrarVendedor_ = function(){
     
     this.publico.main = function(element){
         simpleScript.addTab({
-            id : diccionario.tabs.[NUMERO_DE_LABEL],
+            id : diccionario.tabs.T7,
             label: $(element).attr('title'),
             fnCallback: function(){
                 registrarVendedor.getCont();
@@ -25,14 +25,14 @@ var registrarVendedor_ = function(){
             dataType: 'html',
             root: _private.config.modulo,
             fnCallback: function(data){
-                $('#'+diccionario.tabs.[NUMERO_DE_LABEL]+'_CONTAINER').html(data);
-                registrarVendedor.[METODO_PARA_GRID]();
+                $('#'+diccionario.tabs.T7+'_CONTAINER').html(data);
+                registrarVendedor.getGridVendedor();
             }
         });
     };
     
-this.publico.[METODO_PARA_GRID] = function (){
-        $('#'+diccionario.tabs.[NUMERO_DE_LABEL]+'grid[NOMBRE_TABLA]').dataTable({
+this.publico.getGridVendedor = function (){
+        $('#'+diccionario.tabs.T7+'getGridVendedor').dataTable({
             bProcessing: true,
             bServerSide: true,
             bDestroy: true,
@@ -41,7 +41,7 @@ this.publico.[METODO_PARA_GRID] = function (){
             bPaginate: true,
             iDisplayLength: 10,            
             aoColumns: [
-                {sTitle: "<input type='checkbox' id='"+diccionario.tabs.[NUMERO_DE_LABEL]+"chk_all' onclick='simpleScript.checkAll(this,\"#"+diccionario.tabs.[NUMERO_DE_LABEL]+"grid[NOMBRE_TABLA]\");'>", sWidth: "1%", sClass: "center", bSortable: false},
+                {sTitle: "<input type='checkbox' id='"+diccionario.tabs.T7+"chk_all' onclick='simpleScript.checkAll(this,\"#"+diccionario.tabs.T7+"getGridVendedor\");'>", sWidth: "1%", sClass: "center", bSortable: false},
                 {sTitle: "Campo 1", sWidth: "55%"},
                 {sTitle: "Campo 2", sWidth: "8%",  sClass: "center", bSortable: false},
                 {sTitle: "Estado", sWidth: "8%",  sClass: "center", bSortable: false},
@@ -49,13 +49,13 @@ this.publico.[METODO_PARA_GRID] = function (){
             ],
             aaSorting: [[1, 'asc']],
             sScrollY: "300px",
-            sAjaxSource: _private.config.modulo+'[ACCION_DE_CONTROLLER_PHP]',
+            sAjaxSource: _private.config.modulo+'getGridVendedor',
             fnDrawCallback: function() {
-                $('#'+diccionario.tabs.[NUMERO_DE_LABEL]+'grid[NOMBRE_TABLA]_filter').find('input').attr('placeholder','Buscar');
+                $('#'+diccionario.tabs.T7+'getGridVendedor_filter').find('input').attr('placeholder','Buscar');
                 /*para hacer evento invisible*/
                 simpleScript.removeAttr.click({
-                    container: '#widget_'+diccionario.tabs.[NUMERO_DE_LABEL], //widget del datagrid
-                    typeElement: 'button, #'+diccionario.tabs.[NUMERO_DE_LABEL]+'chk_all'
+                    container: '#widget_'+diccionario.tabs.T7, //widget del datagrid
+                    typeElement: 'button, #'+diccionario.tabs.T7+'chk_all'
                 });
             }
         });
