@@ -114,7 +114,7 @@ $contenido = 'var '.$opcion.'_ = function(){
         });
     };
     
-this.publico.[METODO_PARA_GRID] = function (){
+    this.publico.[METODO_PARA_GRID] = function (){
         $(\'#\'+diccionario.tabs.[NUMERO_DE_LABEL]+\'grid[NOMBRE_TABLA]\').dataTable({
             bProcessing: true,
             bServerSide: true,
