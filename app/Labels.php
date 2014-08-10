@@ -41,7 +41,7 @@ define('M_LB_MOD','Módulo:');
     /*formulario modulos*/
     define('M_FG_MOD_TITLTE','Nuevo Módulo');
     define('M_FG_MOD_L_MOD','Módulo');
-    define('M_FG_MOD_L_ORD','Orden');
+    define('M_FG_MOD_L_ORD','Orden');ddddd
     define('M_FG_MOD_H_ORD','Posición del menú');
     
 /*CONFIGURAR USUARIOS*/
