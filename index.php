@@ -9,7 +9,7 @@ require_once (ROOT . 'app' . DS . 'Labels.php');
 Session::init();
 
 try{
-    /*registro de clases CCC*/
+    /*registro de clases CCCuuu*/
     Registry::anonimous('Request');
     Registry::anonimous('Database');
     Registry::anonimous('View');    
