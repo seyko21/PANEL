@@ -88,7 +88,7 @@ define('LABEL_A9','Nuevo Tipo de Panel');
 define('LABEL_A10','Descripción');
 define('LABEL_A11','Ingrese una Descripción');
 define('LABEL_A12','Editar Tipo de Panel');
-
+//ok
 
 /*----------------------REGISTRAR VENDEDORES----------------------*/
 define('LABEL_RV1','Vendedores');
