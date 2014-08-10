@@ -91,7 +91,6 @@ define('LABEL_A12','Editar Tipo de Panel');
 
 
 /*----------------------REGISTRAR VENDEDORES----------------------*/
-define('LABEL_RV1','Vendedores');
-
+define('LABEL_RV1','Vendedorescc');
 
 ?>
