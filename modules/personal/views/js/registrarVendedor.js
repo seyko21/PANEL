@@ -74,6 +74,57 @@ var registrarVendedor_ = function(){
         });
     };
     
+    this.publico.getProvincias = function(obj){
+        simpleAjax.send({
+            gifProcess: true,
+            root: _private.config.modulo + 'getProvincias',
+            data: '&_idDepartamento='+obj.idDepartamento,
+            fnCallback: function(data){
+                simpleScript.listBox({
+                    data: data,
+                    optionSelec: true,
+                    content: obj.content,
+                    attr:{
+                        id: obj.idElement,
+                        name: obj.nameElement,
+                        onchange: obj.change
+                    },
+                    dataView:{
+                        etiqueta: 'provincia',
+                        value: 'id_provincia'
+                    }
+                });
+            }
+        });
+    };
+    
+    this.publico.getUbigeo = function(obj){
+        simpleAjax.send({
+            gifProcess: true,
+            root: _private.config.modulo + 'getUbigeo',
+            data: '&_idProvincia='+obj.idProvincia,
+            fnCallback: function(data){
+                simpleScript.listBox({
+                    data: data,
+                    optionSelec: true,
+                    content: obj.content,
+                    attr:{
+                        id: obj.idElement,
+                        name: obj.nameElement
+                    },
+                    dataView:{
+                        etiqueta: 'distrito',
+                        value: 'id_ubigeo'
+                    }
+                });
+            }
+        });
+    };
+
+    this.publico.postNuevoVendedor = function(){
+        alert(4);
+    };
+    
     return this.publico;
     
 };
