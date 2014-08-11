@@ -54,6 +54,19 @@ class registrarVendedorModel extends Model{
         return $data;
     }
 
+    public function mantenimientoregistrarVendedor(){
+        $query = "call sp_rolesAccionesMantenimiento(:flag,:key,:accion,:alias,:activo,:usuario);";
+        $parms = array(
+            ':flag' => $this->_flag,
+            ':key' => $this->_key,
+            ':accion' => $this->_accion,
+            ':alias' => $this->_alias,
+            ':activo' => $this->_activo,
+            ':usuario' => $this->_usuario
+        );
+        $data = $this->queryOne($query,$parms);
+        return $data;
+    }
 
 }
 
