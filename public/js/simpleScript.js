@@ -255,7 +255,7 @@ var simpleScript_ = function(){
             cb += '<option value="'+eval(id)+'" '+sel+'>'+eval(value)+'</option>';
         }
         cb +='</select><i></i>';
-        $('#'+content).html(cb);
+        $(content).html(cb);
         
         if(fnCallback !== ''){
             fnCallback();
