@@ -14,6 +14,7 @@ class parametroModel extends Model{
     private $_nombre;
     private $_valor;
     private $_estado;
+    private $_alias;
     private $_usuario;
     private $_chkdel; 
     
@@ -35,6 +36,7 @@ class parametroModel extends Model{
         $this->_idParametro   = Aes::de($this->post('_idParametro'));    /*se decifra*/
         $this->_nombre  = $this->post(T100.'txt_nombre');
         $this->_valor  = $this->post(T100.'txt_valor');        
+        $this->_alias  = $this->post(T100.'txt_alias'); 
         $this->_estado  = $this->post(T100.'chk_activo');
         
         $this->_usuario = Session::get('sys_idUsuario');
@@ -82,27 +84,29 @@ class parametroModel extends Model{
     }
     
     public function mantenimientoParametro(){
-        $query = "call sp_configParametroMantenimiento(:flag,:key,:nombre,:valor,:estado,:usuario);";
+        $query = "call sp_configParametroMantenimiento(:flag,:key,:nombre,:valor,:alias,:estado,:usuario);";
         $parms = array(
             ':flag' => $this->_flag,
             ':key' => $this->_idParametro,
             ':nombre' => $this->_nombre,
             ':valor' => $this->_valor,
+            ':alias' => $this->_alias,
             ':estado' => ($this->_estado == 'A')?'A':'I',
             ':usuario' => $this->_usuario
         );
-        $data = $this->queryOne($query,$parms);        
+        $data = $this->queryOne($query,$parms);  
         return $data;
     }
     
     public function mantenimientoParametroAll(){        
         foreach ($this->_chkdel as $value) {
-            $query = "call sp_configParametroMantenimiento(:flag,:key,:nombre,:valor,:estado,:usuario);";
+            $query = "call sp_configParametroMantenimiento(:flag,:key,:nombre,:valor,:alias,:estado,:usuario);";
             $parms = array(
                 ':flag' => $this->_flag,
                 ':key' => Aes::de($value),
                 ':nombre' => '',
-                ':valor' => '',                
+                ':valor' => '', 
+                ':alias' => '',
                 ':estado' => '',
                 ':usuario' => $this->_usuario
             );

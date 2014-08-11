@@ -239,7 +239,7 @@ var simpleScript_ = function(){
                 attr += i+'="'+obj.attr[i]+'" ';
             }
         }
-        var cb = '<select '+attr+' type="select" onkeypress="if(gKeyEnter(event)){var ntabindex = parseInt($(this).attr(\'tabindex\')) + 1;$(\'[tabindex=\' + ntabindex + \']\').focus();return false;}">';
+        var cb = '<select '+attr+'>';
         if(optionSelec){
             cb += '<option value="">Seleccionar</option>';
         }
@@ -247,14 +247,14 @@ var simpleScript_ = function(){
         var id = '';
         var value = '';
         for(var i in data){
-            id = 'data[i].'+dataView.id;
+            id = 'data[i].'+dataView.etiqueta;
             value = 'data[i].'+dataView.value;
             if(deffault === eval(id)){
                 sel = ' selected = "selected" ';
             }
             cb += '<option value="'+eval(id)+'" '+sel+'>'+eval(value)+'</option>';
         }
-        cb +='</select>';
+        cb +='</select><i></i>';
         $('#'+content).html(cb);
         
         if(fnCallback !== ''){

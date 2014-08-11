@@ -88,4 +88,12 @@ define('LABEL_RV10','E-mail');
 define('LABEL_RV11','Ingresar dirección');
 define('LABEL_RV12','ingresar e-mail');
 define('LABEL_RV13','Sexo');
+define('LABEL_RV14','Teléfonos');
+define('LABEL_RV15','Ingresar teléfonos');
+define('LABEL_RV16','Nro. de documento');
+define('LABEL_RV17','Ingresar nro. de documento');
+define('LABEL_RV18','Departamento');
+define('LABEL_RV19','Provincia');
+define('LABEL_RV20','Distrito');
+
 ?>

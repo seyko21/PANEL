@@ -43,7 +43,8 @@ var parametro_ = function(){
             aoColumns: [
                 {sTitle: "<input type='checkbox' id='"+diccionario.tabs.T100+"chk_all' onclick='simpleScript.checkAll(this,\"#"+diccionario.tabs.T100+"gridParametro\");'>", sWidth: "1%", sClass: "center", bSortable: false},
                 {sTitle: "Nombre", sWidth: "40%"},
-                {sTitle: "Valor", sWidth: "30%",  sClass: "center", bSortable: false},
+                {sTitle: "Alias", sWidth: "10%",  sClass: "center", bSortable: false},
+                {sTitle: "Valor", sWidth: "20%",  sClass: "center", bSortable: false},
                 {sTitle: "Estado", sWidth: "8%",  sClass: "center", bSortable: false},
                 {sTitle: "Acciones", sWidth: "15%", sClass: "center", bSortable: false}
             ],
@@ -122,7 +123,7 @@ var parametro_ = function(){
             form: '#'+diccionario.tabs.T100+'formParametro',
             data: '&_idParametro='+_private.idParametro,
             clear: true,
-            fnCallback: function(data) {
+            fnCallback: function(data) {                
                 if(!isNaN(data.result) && parseInt(data.result) === 1){
                     simpleScript.notify.ok({
                         content: mensajes.MSG_3,
@@ -149,7 +150,7 @@ var parametro_ = function(){
                     content: mensajes.MSG_7,
                     callbackSI: function(){
                         simpleAjax.send({
-                            flag: 4,
+                            flag: 3,
                             element: btn,
                             form: '#'+diccionario.tabs.T100+'formGridParametro',
                             root: _private.config.modulo + 'postDeleteParametroAll',

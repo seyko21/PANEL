@@ -46,7 +46,7 @@ class parametroController extends Controller{
                 $chk = '<input id=\"c_'.(++$key).'\" type=\"checkbox\" name=\"'.T100.'chk_delete[]\" value=\"'.$encryptReg.'\">';
                 
                 /*datos de manera manual*/
-                $sOutput .= '["'.$chk.'","'.$aRow['nombre'].'","'.$aRow['valor'].'","'.$estado.'", ';
+                $sOutput .= '["'.$chk.'","'.$aRow['nombre'].'","'.$aRow['alias'].'","'.$aRow['valor'].'","'.$estado.'", ';
                 
 
                 /*

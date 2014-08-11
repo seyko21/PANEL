@@ -10,6 +10,7 @@ class registrarVendedorModel extends Model{
 
     private $_flag;
     private $_key;
+    private $_idDepartamento;
     private $_usuario;
     
     /*para el grid*/
@@ -26,6 +27,7 @@ class registrarVendedorModel extends Model{
     private function _set(){
         $this->_flag    = $this->post('_flag');
         $this->_key     = Aes::de($this->post('_key'));    /*se decifra*/
+        $this->_idDepartamento = $this->post('_idDepartamento');
         $this->_usuario = Session::get('sys_idUsuario');
         
         $this->_iDisplayStart  =   $this->post('iDisplayStart'); 
@@ -34,6 +36,25 @@ class registrarVendedorModel extends Model{
         $this->_sSearch        =   $this->post('sSearch');
     }
     
+    public function getDepartamentos(){
+        $query = "SELECT id_departamento,departamento FROM `ub_departamento` ";
+        
+        $parms = array();
+        $data = $this->queryAll($query,$parms);
+        return $data;
+    }
+    
+    public function getProvincias(){
+        $query = "SELECT id_provincia,provincia FROM `ubprovincia` WHERE LEFT(id_provincia,2) = :idDepartamento ";
+        
+        $parms = array(
+            ':idDepartamento'=>$this->_idDepartamento
+        );
+        $data = $this->queryAll($query,$parms);
+        return $data;
+    }
+
+
 }
 
 ?>

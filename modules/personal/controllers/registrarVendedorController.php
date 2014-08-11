@@ -20,6 +20,19 @@ class registrarVendedorController extends Controller{
         Obj::run()->View->render('nuevoVendedor');
     }
     
+    public static function getDepartamentos(){ 
+        $data = Obj::run()->registrarVendedorModel->getDepartamentos();
+        
+        return $data;
+    }
+    
+    public static function getProvincias(){
+        $data = Obj::run()->registrarVendedorModel->getProvincias();
+        
+        return $data;
+    }
+
+
 }
 
 ?>

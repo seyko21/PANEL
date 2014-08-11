@@ -3,7 +3,7 @@
  * Documento   : Model
  * Creado      : 03-ene-2014, 17:05:26
  * Autor       : RDCC
- * Descripcion :  
+ * Descripcion :
  */
 class Model{
     
@@ -35,7 +35,7 @@ class Model{
         try {
             $statement = $this->_db->prepare($query);
             $statement->execute($arrayValues);
-            $result = $statement->fetch(PDO::FETCH_ASSOC);
+            $result = $statement->fetch(PDO::FETCH_ASSOC);            
         } catch (PDOException $e) {
             $er = $e->getTrace();
             $bug = $er[1]['args'][0];

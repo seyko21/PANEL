@@ -52,11 +52,81 @@ $grabar = Session::getPermiso('REGVEGR');
                             </label>
                         </div>
                     </div>
+                </section>   
+                <section>
+                    <div class="row">
+                        <label class="label col col-3"><?php echo LABEL_RV16; ?></label>
+                        <div class="col col-8">
+                            <label class="input"> 
+                                <i class="icon-append fa fa-keyboard-o"></i>
+                                <input type="text" id="<?php echo T7; ?>txt_nrodocumento" name="<?php echo T7; ?>txt_nrodocumento">
+                                <b class="tooltip tooltip-top-right"><i class="fa fa-keyboard-o txt-color-teal"></i> <?php echo LABEL_RV17; ?></b>
+                            </label>
+                        </div>
+                    </div>
                 </section>
-                
-                
-                
-                
+                <section>
+                    <div class="row">
+                        <label class="label col col-3"><?php echo LABEL_RV18; ?></label>
+                        <div class="col col-8">
+                            <label class="select"> 
+                                <?php
+                                    $data = registrarVendedorController::getDepartamentos();
+                                    
+                                    echo Functions::selectHtml(array(
+                                        'data'=>$data,
+                                        'atributes'=>array(
+                                            'id'=>T7.'lst_departamento',
+                                            'name'=>T7.'lst_departamento',
+                                            'onchange'=>'registrarVendedor.getProvincias({
+                                                            idDepartamento: $(\'#'.T7.'lst_departamento\').val(),
+                                                            content: \'#'.T7.'cont-provincias\',
+                                                            idElement: \'#'.T7.'lst_provincia\',
+                                                            nameElement: \'#'.T7.'lst_provincia\',
+                                                            change: \'registrarVendedor.getDistritos({
+                                                                        idProvincia: $(\'#'.T7.'lst_provincia\').val(),
+                                                                        content: \'#'.T7.'cont-ubigeo\',
+                                                                        idElement: \'#'.T7.'lst_ubigeo\',
+                                                                        nameElement: \'#'.T7.'lst_ubigeo\',
+                                                                    });\'
+                                                        });'
+                                        ),
+                                        'etiqueta'=>'departamento',
+                                        'value'=>'id_departamento',
+                                        'defaultEtiqueta'=>'',
+                                        'txtSelect'=>true
+                                    ));
+                                ?><i></i>
+                            </label>
+                        </div>
+                    </div>
+                </section>
+                <section>
+                    <div class="row">
+                        <label class="label col col-3"><?php echo LABEL_RV19; ?></label>
+                        <div class="col col-8">
+                            <label class="select" id="<?php echo T7; ?>cont-provincias"> 
+                                <select id="<?php echo T7; ?>lst_provincia" name="<?php echo T7; ?>lst_provincia">
+                                    <option value="">Seleccionar</option>
+                                </select>
+                                <i></i>
+                            </label>
+                        </div>
+                    </div>
+                </section>
+                <section>
+                    <div class="row">
+                        <label class="label col col-3"><?php echo LABEL_RV20; ?></label>
+                        <div class="col col-8">
+                            <label class="select" id="<?php echo T7; ?>cont-ubigeo"> 
+                                <select id="<?php echo T7; ?>lst_distrito" name="<?php echo T7; ?>lst_distrito">
+                                    <option value="">Seleccionar</option>
+                                </select>
+                                <i></i>
+                            </label>
+                        </div>
+                    </div>
+                </section>
                 <section>
                     <div class="row">
                         <label class="label col col-3"><?php echo LABEL_RV9; ?></label>
@@ -75,7 +145,7 @@ $grabar = Session::getPermiso('REGVEGR');
                         <div class="col col-8">
                             <label class="input"> 
                                 <i class="icon-append fa fa-keyboard-o"></i>
-                                <input type="text" id="<?php echo T7; ?>txt_email" name="<?php echo T7; ?>txt_txt_email">
+                                <input type="text" id="<?php echo T7; ?>txt_email" name="<?php echo T7; ?>txt_email">
                                 <b class="tooltip tooltip-top-right"><i class="fa fa-keyboard-o txt-color-teal"></i> <?php echo LABEL_RV12; ?></b>
                             </label>
                         </div>
@@ -83,60 +153,36 @@ $grabar = Session::getPermiso('REGVEGR');
                 </section>
                 <section>
                     <div class="row">
-                        <label class="label col col-3"><?php echo LABEL_RV13; ?></label>
+                        <label class="label col col-4"><?php echo LABEL_RV13; ?></label>
                         <div class="inline-group">
                             <label class="radio"> 
-                                <input name="checkbox-inline" checked="checked" type="radio">
+                                <input name="<?php echo T7; ?>chk_sexo" id="<?php echo T7; ?>chk_sexoH" checked type="radio" value="H">
                                 <i></i>Hombre
                             </label>
                             <label class="radio"> 
-                                <input name="checkbox-inline" type="radio">
+                                <input name="<?php echo T7; ?>chk_sexo" id="<?php echo T7; ?>chk_sexoM" type="radio" value="M">
                                 <i></i>Mujer
                             </label>
                         </div>
                     </div>
                 </section>
-                
-                
-                
-                
                 <section>
                     <div class="row">
-                        <label class="label col col-3"><?php echo LABEL_6; ?></label>
+                        <label class="label col col-3"><?php echo LABEL_RV14; ?></label>
                         <div class="col col-8">
-                            <label class="select"> 
-                                <?php
-                                    $data = conceptoController::getTipoConceptos();
-                                    
-                                    echo Functions::selectHtml(array(
-                                        'data'=>$data,
-                                        'atributes'=>array(
-                                            'id'=>T7.'lst_tipoconcento',
-                                            'name'=>T7.'lst_tipoconcento'
-                                        ),
-                                        'etiqueta'=>'descripcion',
-                                        'value'=>'id_tipo',
-                                        'defaultEtiqueta'=>'',
-                                        'txtSelect'=>true
-                                    ));
-                                ?><i></i>
+                            <label class="input"> 
+                                <i class="icon-append fa fa-keyboard-o"></i>
+                                <input type="text" id="<?php echo T7; ?>txt_telefonos" name="<?php echo T7; ?>txt_telefonos">
+                                <b class="tooltip tooltip-top-right"><i class="fa fa-keyboard-o txt-color-teal"></i> <?php echo LABEL_RV15; ?></b>
                             </label>
                         </div>
                     </div>
                 </section>
                 
-                <section>
-                    <div class="row">
-                        <label class="label col col-3"><?php echo LABEL_13; ?></label>
-                        <div class="col col-4">
-                            <label class="input"> 
-                                <i class="icon-append fa fa-money"></i>
-                                <input type="text" id="<?php echo T7; ?>txt_importe" name="<?php echo T7; ?>txt_importe">
-                                <b class="tooltip tooltip-top-right"><i class="fa fa-money txt-color-teal"></i> <?php echo LABEL_14; ?></b>
-                            </label>
-                        </div>
-                    </div>
-                </section>
+                
+              
+                
+               
             </div>
             <div class="modal-footer">
                 <?php if($grabar['permiso']):?>
@@ -161,19 +207,44 @@ $grabar = Session::getPermiso('REGVEGR');
     $('#<?php echo T7; ?>formVendedor').validate({
         // Rules for form validation
         rules : {
-                <?php echo T7; ?>lst_tipoconcento : {
-                        required : true
-                },
-                <?php echo T7; ?>txt_descripcion : {
+                <?php echo T7; ?>txt_nombres : {
                         required : true,
                         regular: true,
                         minlength: 3
                 },
-                <?php echo T7; ?>txt_importe : {
+                <?php echo T7; ?>txt_apellidopaterno : {
                         required : true,
+                        regular: true,
+                        minlength: 3
+                },
+                <?php echo T7; ?>txt_apellidomaterno : {
+                        required : true,
+                        regular: true,
+                        minlength: 3
+                },
+                <?php echo T7; ?>txt_nrodocumento:{
+                        required: true,
                         number: true,
-                        maxlength: 10
-                }        
+                        maxlength: 8
+                },
+                <?php echo T7; ?>lst_departamento : {
+                        required : true
+                },
+                <?php echo T7; ?>lst_provincia : {
+                        required : true
+                },
+                <?php echo T7; ?>lst_distrito : {
+                        required : true
+                },
+                <?php echo T7; ?>txt_direccion : {
+                        required : true,
+                        regular: true,
+                        minlength: 3
+                },
+                <?php echo T7; ?>txt_email : {
+                        required : true,
+                        email: true
+                }   
         },
 
         // Do not change code below
@@ -182,7 +253,7 @@ $grabar = Session::getPermiso('REGVEGR');
         },
 
         submitHandler: function(){
-            concepto.postNuevoConcepto();
+            registrarVendedor.postNuevoVendedor();
         }   
     });
 </script>
