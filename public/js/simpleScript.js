@@ -226,7 +226,7 @@ var simpleScript_ = function(){
     };
     
     this.public.listBox = function(obj){
-        var data = obj.data.row,
+        var data = obj.data,
             optionSelec = obj.optionSelec, /*para mostrar texto seleccionar*/
             content = obj.content,
             deffault = (obj.deffault !== undefined)?obj.deffault:'', /*para seleccionar un registro*/
@@ -247,8 +247,8 @@ var simpleScript_ = function(){
         var id = '';
         var value = '';
         for(var i in data){
-            id = 'data[i].'+dataView.etiqueta;
-            value = 'data[i].'+dataView.value;
+            id = 'data[i].'+dataView.value;
+            value = 'data[i].'+dataView.etiqueta;
             if(deffault === eval(id)){
                 sel = ' selected = "selected" ';
             }
