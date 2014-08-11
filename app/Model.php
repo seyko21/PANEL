@@ -3,7 +3,7 @@
  * Documento   : Model
  * Creado      : 03-ene-2014, 17:05:26
  * Autor       : RDCC
- * Descripcion :
+ * Descripcion :  
  */
 class Model{
     
