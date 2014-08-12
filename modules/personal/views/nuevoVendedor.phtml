@@ -16,7 +16,7 @@ $grabar = Session::getPermiso('REGVEGR');
                 </button>
                 <h4 class="modal-title"><?php echo LABEL_RV2;?></h4>
             </div>
-            <div class="modal-body smart-form" style="height: 350px;overflow-y: auto">
+            <div class="modal-body smart-form" style="height: 350px;overflow-y: auto;overflow-x: hidden;">
                 <section>
                     <div class="row">
                         <label class="label col col-3"><?php echo LABEL_RV3; ?></label>
@@ -81,14 +81,10 @@ $grabar = Session::getPermiso('REGVEGR');
                                             'onchange'=>'registrarVendedor.getProvincias({
                                                             idDepartamento: $(\'#'.T7.'lst_departamento\').val(),
                                                             content: \'#'.T7.'cont-provincias\',
-                                                            idElement: \'#'.T7.'lst_provincia\',
-                                                            nameElement: \'#'.T7.'lst_provincia\',
-                                                            change: \'registrarVendedor.getDistritos({
-                                                                        idProvincia: $(\'#'.T7.'lst_provincia\').val(),
-                                                                        content: \'#'.T7.'cont-ubigeo\',
-                                                                        idElement: \'#'.T7.'lst_ubigeo\',
-                                                                        nameElement: \'#'.T7.'lst_ubigeo\',
-                                                                    });\'
+                                                            idElement: \''.T7.'lst_provincia\',
+                                                            nameElement: \''.T7.'lst_provincia\',
+                                                            contentUbigeo: \'#'.T7.'cont-ubigeo\',
+                                                            idUbigeo: \''.T7.'lst_ubigeo\'
                                                         });'
                                         ),
                                         'etiqueta'=>'departamento',
@@ -153,14 +149,14 @@ $grabar = Session::getPermiso('REGVEGR');
                 </section>
                 <section>
                     <div class="row">
-                        <label class="label col col-4"><?php echo LABEL_RV13; ?></label>
-                        <div class="inline-group">
+                        <label class="label col col-3"><?php echo LABEL_RV13; ?></label>
+                        <div class="inline-group col col-8">
                             <label class="radio"> 
-                                <input name="<?php echo T7; ?>chk_sexo" id="<?php echo T7; ?>chk_sexoH" checked type="radio" value="H">
+                                <input name="<?php echo T7; ?>rd_sexo" id="<?php echo T7; ?>rd_sexoH" checked type="radio" value="H">
                                 <i></i>Hombre
                             </label>
                             <label class="radio"> 
-                                <input name="<?php echo T7; ?>chk_sexo" id="<?php echo T7; ?>chk_sexoM" type="radio" value="M">
+                                <input name="<?php echo T7; ?>rd_sexo" id="<?php echo T7; ?>rd_sexoM" type="radio" value="M">
                                 <i></i>Mujer
                             </label>
                         </div>
@@ -244,7 +240,10 @@ $grabar = Session::getPermiso('REGVEGR');
                 <?php echo T7; ?>txt_email : {
                         required : true,
                         email: true
-                }   
+                },
+                <?php echo T7; ?>txt_telefonos : {
+                        regular: true
+                }       
         },
 
         // Do not change code below

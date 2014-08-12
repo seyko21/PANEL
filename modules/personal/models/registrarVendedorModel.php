@@ -9,8 +9,18 @@
 class registrarVendedorModel extends Model{
 
     private $_flag;
-    private $_key;
+    private $_idPersona;
     private $_idDepartamento;
+    private $_idProvincia;
+    private $_apellidoPaterno;
+    private $_apellidoMaterno;
+    private $_nombres;
+    private $_sexo;
+    private $_direccion;
+    private $_email;
+    private $_telefono;
+    private $_numeroDoc;
+    private $_ubigeo;
     private $_usuario;
     
     /*para el grid*/
@@ -26,8 +36,18 @@ class registrarVendedorModel extends Model{
     
     private function _set(){
         $this->_flag    = $this->post('_flag');
-        $this->_key     = Aes::de($this->post('_key'));    /*se decifra*/
+        $this->_idPersona     = Aes::de($this->post('_idPersona'));    /*se decifra*/
         $this->_idDepartamento = $this->post('_idDepartamento');
+        $this->_idProvincia = $this->post('_idProvincia');
+        $this->_apellidoPaterno = $this->post(T7.'txt_apellidopaterno');
+        $this->_apellidoMaterno = $this->post(T7.'txt_apellidomaterno');
+        $this->_nombres = $this->post(T7.'txt_nombres');
+        $this->_sexo = $this->post(T7.'rd_sexo');
+        $this->_direccion = $this->post(T7.'txt_direccion');
+        $this->_email = $this->post(T7.'txt_email');
+        $this->_telefono = $this->post(T7.'txt_telefonos');
+        $this->_numeroDoc = $this->post(T7.'txt_nrodocumento');
+        $this->_ubigeo = $this->post(T7.'lst_ubigeo');
         $this->_usuario = Session::get('sys_idUsuario');
         
         $this->_iDisplayStart  =   $this->post('iDisplayStart'); 
@@ -45,7 +65,7 @@ class registrarVendedorModel extends Model{
     }
     
     public function getProvincias(){
-        $query = "SELECT id_provincia,provincia FROM `ubprovincia` WHERE LEFT(id_provincia,2) = :idDepartamento ";
+        $query = "SELECT id_provincia,provincia FROM `ub_provincia` WHERE LEFT(id_provincia,2) = :idDepartamento ";
         
         $parms = array(
             ':idDepartamento'=>$this->_idDepartamento
@@ -54,7 +74,50 @@ class registrarVendedorModel extends Model{
         return $data;
     }
 
-
+    public function getUbigeo(){
+        $query = "SELECT id_ubigeo,distrito FROM `ub_ubigeo` WHERE LEFT(id_ubigeo,4) = :idProvincia ";
+        
+        $parms = array(
+            ':idProvincia'=>$this->_idProvincia
+        );
+        $data = $this->queryAll($query,$parms);
+        return $data;
+    }
+    
+    public function mantenimientoVendedor(){
+        $query = "call sp_perVendedorMantenimiento(
+                    :flag,
+                    :idPersona,
+                    :apellidoPaterno,
+                    :apellidoMaterno,
+                    :nombres,
+                    :sexo,
+                    :direccion,
+                    :email,
+                    :telefono,
+                    :numeroDoc,
+                    :ubigeo,
+                    :usuario
+                );";
+        $parms = array(
+            ':flag' => $this->_flag,
+            ':idPersona' => $this->_idPersona,
+            ':apellidoPaterno' => $this->_apellidoPaterno,
+            ':apellidoMaterno' => $this->_apellidoMaterno,
+            ':nombres' => $this->_nombres,
+            ':sexo' => $this->_sexo,
+            ':direccion' => $this->_direccion,
+            ':email' => $this->_email,
+            ':telefono' => $this->_telefono,
+            ':numeroDoc' => $this->_numeroDoc,
+            ':ubigeo' => $this->_ubigeo,
+            ':usuario' => $this->_usuario
+        );
+         
+        $data = $this->queryOne($query,$parms);  
+        return $data;
+    }
+    
 }
 
 ?>

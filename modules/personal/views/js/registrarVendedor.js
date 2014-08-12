@@ -86,12 +86,24 @@ var registrarVendedor_ = function(){
                     content: obj.content,
                     attr:{
                         id: obj.idElement,
-                        name: obj.nameElement,
-                        onchange: obj.change
+                        name: obj.nameElement
                     },
                     dataView:{
                         etiqueta: 'provincia',
                         value: 'id_provincia'
+                    },
+                    fnCallback: function(){
+                        simpleScript.setEvent.change({
+                            element: '#'+obj.idElement,
+                            event: function(){
+                                registrarVendedor.getUbigeo({
+                                    idProvincia: $('#'+obj.idElement).val(),
+                                    content: obj.contentUbigeo,
+                                    idElement: obj.idUbigeo,
+                                    nameElement: obj.idUbigeo
+                                });
+                            }
+                        });
                     }
                 });
             }
@@ -122,7 +134,28 @@ var registrarVendedor_ = function(){
     };
 
     this.publico.postNuevoVendedor = function(){
-        alert(4);
+        simpleAjax.send({
+            flag: 1,
+            element: '#'+diccionario.tabs.T7+'btnGvend',
+            root: _private.config.modulo + 'postNuevoVendedor',
+            form: '#'+diccionario.tabs.T7+'formVendedor',
+//            clear: true,
+            fnCallback: function(data) {
+                if(!isNaN(data.result) && parseInt(data.result) === 1){
+                    simpleScript.notify.ok({
+                        content: mensajes.MSG_3,
+                        callback: function(){
+                            registrarVendedor.getGridVendedor();
+                            simpleScript.closeModal('#'+diccionario.tabs.T7+'formVendedor');
+                        }
+                    });
+                }else if(!isNaN(data.result) && parseInt(data.result) === 2){
+                    simpleScript.notify.error({
+                        content: mensajes.MSG_4
+                    });
+                }
+            }
+        });
     };
     
     return this.publico;

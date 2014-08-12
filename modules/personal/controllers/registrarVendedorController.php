@@ -29,9 +29,20 @@ class registrarVendedorController extends Controller{
     public static function getProvincias(){
         $data = Obj::run()->registrarVendedorModel->getProvincias();
         
-        return $data;
+        echo json_encode($data);
     }
-
+    
+    public static function getUbigeo(){
+        $data = Obj::run()->registrarVendedorModel->getUbigeo();
+        
+        echo json_encode($data);
+    }
+    
+    public static function postNuevoVendedor(){
+        $data = Obj::run()->registrarVendedorModel->mantenimientoVendedor();
+        
+        echo json_encode($data);
+    }
 
 }
 

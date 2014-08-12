@@ -60,5 +60,15 @@ class loginModel extends Model{
         return $data;
     }
     
+    public function postLastLogin() {
+        $query = "UPDATE mae_usuario SET ultimo_acceso = :fecha where id_usuario = :usuario;";
+        $parms = array(
+            ':fecha'=> date('Y-m-d H:m:s'),
+            ':usuario' => Session::get('sys_idUsuario')
+        );
+        $data = $this->queryAll($query, $parms);
+        return $data;
+    }
+    
 }
 ?>

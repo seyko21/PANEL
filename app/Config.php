@@ -20,15 +20,15 @@ define('APP_EXPORT_FILES',ROOT . 'public' . DS . 'files' . DS);
 define('DB_ENTORNO','D');  /*D=DESARROLLO, P=PRODUCCION*/
 define('DB_MOTOR','mysql');
 
-define('DB_HOST','beholia.com');
-define('DB_USER','beholiac_prueba');
-define('DB_PASS','Sevend2014');
-define('DB_NAME','beholiac_sevend');
+//define('DB_HOST','beholia.com');
+//define('DB_USER','beholiac_prueba');
+//define('DB_PASS','Sevend2014');
+//define('DB_NAME','beholiac_sevend');
 
-//define('DB_HOST','localhost');
-//define('DB_USER','root');
-//define('DB_PASS','');
-//define('DB_NAME','beholiac_sevendlocal');
+define('DB_HOST','localhost');
+define('DB_USER','root');
+define('DB_PASS','');
+define('DB_NAME','sevend_local');
 
 define('DB_PORT','3306');
 define('DB_CHARSET','utf8');
