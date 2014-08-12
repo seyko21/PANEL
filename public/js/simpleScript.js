@@ -194,8 +194,8 @@ var simpleScript_ = function(){
         change: function(obj){
             $(obj.element).off('change');
             $(obj.element).on({
-                keypress:function(){
-                    eval(obj.event);
+                change:function(){
+                    obj.event();
                 }
             });
         },
