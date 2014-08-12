@@ -32,11 +32,6 @@ class registrarVendedorController extends Controller{
         return $data;
     }
 
-    public function postNuevoVendedor(){
-        $data = Obj::run()->registrarVendedorModel->mantenimientoregistrarVendedorModel();
-
-        echo json_encode($data);
-    }
 
 }
 
