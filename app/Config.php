@@ -28,7 +28,7 @@ define('DB_NAME','beholiac_sevend');
 //define('DB_HOST','localhost');
 //define('DB_USER','root');
 //define('DB_PASS','');
-//define('DB_NAME','beholiac_sevend');
+//define('DB_NAME','beholiac_sevendlocal');
 
 define('DB_PORT','3306');
 define('DB_CHARSET','utf8');
