@@ -2,7 +2,7 @@ var registrarVendedor_ = function(){
     
     var _private = {};
     
-    _private.id = 0;
+    _private.idVendedor = 0;
     
     _private.config = {
         modulo: 'personal/registrarVendedor/'
@@ -42,8 +42,10 @@ var registrarVendedor_ = function(){
             iDisplayLength: 10,            
             aoColumns: [
                 {sTitle: "<input type='checkbox' id='"+diccionario.tabs.T7+"chk_all' onclick='simpleScript.checkAll(this,\"#"+diccionario.tabs.T7+"getGridVendedor\");'>", sWidth: "1%", sClass: "center", bSortable: false},
-                {sTitle: "Campo 1", sWidth: "55%"},
-                {sTitle: "Campo 2", sWidth: "8%",  sClass: "center", bSortable: false},
+                {sTitle: "Nro. Documento", sClass: "center", sWidth: "10%", bSortable: false},
+                {sTitle: "Nombres y Apellidos", sWidth: "35%"},
+                {sTitle: "Email", sWidth: "20%", bSortable: false},
+                {sTitle: "Teléfonos", sWidth: "15%", bSortable: false},
                 {sTitle: "Estado", sWidth: "8%",  sClass: "center", bSortable: false},
                 {sTitle: "Acciones", sWidth: "15%", sClass: "center", bSortable: false}
             ],
@@ -139,7 +141,49 @@ var registrarVendedor_ = function(){
             element: '#'+diccionario.tabs.T7+'btnGvend',
             root: _private.config.modulo + 'postNuevoVendedor',
             form: '#'+diccionario.tabs.T7+'formVendedor',
-//            clear: true,
+            clear: true,
+            fnCallback: function(data) {
+                if(!isNaN(data.result) && parseInt(data.result) === 1){
+                    simpleScript.notify.ok({
+                        content: mensajes.MSG_3,
+                        callback: function(){
+                            registrarVendedor.getGridVendedor();
+                            simpleScript.closeModal('#'+diccionario.tabs.T7+'formVendedor');
+                        }
+                    });
+                }else if(!isNaN(data.result) && parseInt(data.result) === 2){
+                    simpleScript.notify.error({
+                        content: mensajes.MSG_4
+                    });
+                }
+            }
+        });
+    };
+    
+    this.publico.getEditarVendedor = function(btn,id){
+        _private.idVendedor = id;
+       
+        simpleAjax.send({
+            element: btn,
+            dataType: 'html',
+            gifProcess: true,
+            data: '&_idPersona='+_private.idVendedor,
+            root: _private.config.modulo + 'getEditarVendedor',
+            fnCallback: function(data){
+                $('#cont-modal').append(data);
+                $('#'+diccionario.tabs.T7+'formVendedor').modal('show');
+            }
+        });
+    };
+    
+    this.publico.postEditarVendedor = function(){
+        simpleAjax.send({
+            flag: 2,
+            element: '#'+diccionario.tabs.T7+'btnEvend',
+            root: _private.config.modulo + 'postNuevoVendedor',
+            form: '#'+diccionario.tabs.T7+'formVendedor',
+            data: '&_idPersona='+_private.idVendedor,
+            clear: true,
             fnCallback: function(data) {
                 if(!isNaN(data.result) && parseInt(data.result) === 1){
                     simpleScript.notify.ok({

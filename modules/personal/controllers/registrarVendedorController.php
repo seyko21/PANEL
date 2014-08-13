@@ -20,30 +20,110 @@ class registrarVendedorController extends Controller{
         Obj::run()->View->render('nuevoVendedor');
     }
     
+    public function getEditarVendedor(){ 
+        Obj::run()->View->render('editarVendedor');
+    }
+    
     public static function getDepartamentos(){ 
         $data = Obj::run()->registrarVendedorModel->getDepartamentos();
         
         return $data;
     }
     
-    public static function getProvincias(){
+    public function getProvincias(){
         $data = Obj::run()->registrarVendedorModel->getProvincias();
         
         echo json_encode($data);
     }
     
-    public static function getUbigeo(){
+    public static function getProvinciasEst($dep=''){
+        $data = Obj::run()->registrarVendedorModel->getProvincias($dep);
+        
+        return $data;
+    }
+    
+    public function getUbigeo(){
         $data = Obj::run()->registrarVendedorModel->getUbigeo();
         
         echo json_encode($data);
     }
     
-    public static function postNuevoVendedor(){
+    public static function getUbigeoEst($pro=''){
+        $data = Obj::run()->registrarVendedorModel->getUbigeo($pro);
+        
+        return $data;
+    }
+    
+    public function postNuevoVendedor(){
         $data = Obj::run()->registrarVendedorModel->mantenimientoVendedor();
         
         echo json_encode($data);
     }
+    
+    public static function findVendedor(){
+        $data = Obj::run()->registrarVendedorModel->findVendedor();
+        
+        return $data;
+    }
+    public function getGridVendedor() {
+        $editar = Session::getPermiso('REGVEED');
+        
+        $sEcho          =   $this->post('sEcho');
+        
+        $rResult = Obj::run()->registrarVendedorModel->getGridVendedor();
+        
+        if(!isset($rResult['error'])){  
+            $iTotal         = isset($rResult[0]['total'])?$rResult[0]['total']:0;
+            
+            $sOutput = '{';
+            $sOutput .= '"sEcho": '.intval($sEcho).', ';
+            $sOutput .= '"iTotalRecords": '.$iTotal.', ';
+            $sOutput .= '"iTotalDisplayRecords": '.$iTotal.', ';
+            $sOutput .= '"aaData": [ ';
+            foreach ( $rResult as $key=>$aRow ){
+                
+                
+            
+                /*antes de enviar id se encrypta*/
+                $encryptReg = Aes::en($aRow['id_persona']);
+                
+                if($aRow['estado'] == 'A'){
+                    $estado = '<button type=\"button\" class=\"btn btn-success btn-xs\" title=\"Desactivar\" onclick=\"registrarVendedor.postDesactivarVendedor(\''.$encryptReg.'\')\">Activo</button>';
+                }elseif($aRow['estado'] == 'I'){
+                    $estado = '<button type=\"button\" class=\"btn btn-danger btn-xs\" title=\"Activar\" onclick=\"registrarVendedor.postActivarVendedor(\''.$encryptReg.'\')\">Inactivo</button>';
+                }
+                
+                $chk = '<input id=\"c_'.(++$key).'\" type=\"checkbox\" name=\"'.T101.'chk_delete[]\" value=\"'.$encryptReg.'\">';
+                
+                /*datos de manera manual*/
+                $sOutput .= '["'.$chk.'","'.$aRow['numerodocumento'].'","'.$aRow['nombrecompleto'].'","'.$aRow['email'].'","'.$aRow['telefono'].'","'.$estado.'", ';
+                
 
+                /*
+                 * configurando botones (add/edit/delete etc)
+                 * se verifica si tiene permisos para editar
+                 */
+                $sOutput .= '"<div class=\"btn-group\">';
+                
+                if($editar['permiso'] == 1){
+                    $sOutput .= '<button type=\"button\" class=\"btn btn-primary btn-xs\" title=\"'.$editar['accion'].'\" onclick=\"registrarVendedor.getEditarVendedor(this,\''.$encryptReg.'\')\">';
+                    $sOutput .= '    <i class=\"fa fa-edit fa-lg\"></i>';
+                    $sOutput .= '</button>';
+                }
+                
+                $sOutput .= ' </div>" ';
+
+                $sOutput = substr_replace( $sOutput, "", -1 );
+                $sOutput .= '],';
+            }
+            $sOutput = substr_replace( $sOutput, "", -1 );
+            $sOutput .= '] }';
+        }else{
+            $sOutput = $rResult['error'];
+        }
+        
+        echo $sOutput;
+    }
 }
 
 ?>

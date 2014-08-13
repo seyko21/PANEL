@@ -56,6 +56,53 @@ class registrarVendedorModel extends Model{
         $this->_sSearch        =   $this->post('sSearch');
     }
     
+    public function getGridVendedor() {
+        $aColumns       =   array( 'chk','numerodocumento','nombrecompleto' ); //para la ordenacion y pintado en html
+        /*
+	 * Ordenando, se verifica por que columna se ordenara
+	 */
+        $sOrder = "";
+        for ( $i=0 ; $i<intval( $this->_iSortingCols ) ; $i++ ){
+                if ( $this->post( 'bSortable_'.intval($this->post('iSortCol_'.$i)) ) == "true" ){
+                        $sOrder .= " ".$aColumns[ intval( $this->post('iSortCol_'.$i) ) ]." ".
+                                ($this->post('sSortDir_'.$i)==='asc' ? 'asc' : 'desc') ." ";
+                }
+        }
+        
+        $query = "call sp_perVendedorGrid(:iDisplayStart,:iDisplayLength,:sOrder,:sSearch);";
+        
+        $parms = array(
+            ':iDisplayStart' => $this->_iDisplayStart,
+            ':iDisplayLength' => $this->_iDisplayLength,
+            ':sOrder' => $sOrder,
+            ':sSearch' => $this->_sSearch,
+        );
+        $data = $this->queryAll($query,$parms);
+        return $data;
+    }
+    
+    public function findVendedor(){
+        $query = "SELECT 
+                    nombres,
+                    apellidopaterno,
+                    apellidomaterno,
+                    numerodocumento,
+                    id_ubigeo,
+                    direccion,
+                    email,
+                    sexo,
+                    telefono 
+                FROM mae_persona WHERE id_persona = :idPersona;";
+        
+        $parms = array(
+            ':idPersona'=>$this->_idPersona
+        );
+        
+        $data = $this->queryOne($query,$parms);
+        return $data;
+    }
+
+
     public function getDepartamentos(){
         $query = "SELECT id_departamento,departamento FROM `ub_departamento` ";
         
@@ -64,22 +111,23 @@ class registrarVendedorModel extends Model{
         return $data;
     }
     
-    public function getProvincias(){
+    public function getProvincias($dep=''){
         $query = "SELECT id_provincia,provincia FROM `ub_provincia` WHERE LEFT(id_provincia,2) = :idDepartamento ";
         
         $parms = array(
-            ':idDepartamento'=>$this->_idDepartamento
+            ':idDepartamento'=>($dep == '')?$this->_idDepartamento:$dep
         );
         $data = $this->queryAll($query,$parms);
         return $data;
     }
 
-    public function getUbigeo(){
+    public function getUbigeo($pro=''){
         $query = "SELECT id_ubigeo,distrito FROM `ub_ubigeo` WHERE LEFT(id_ubigeo,4) = :idProvincia ";
         
         $parms = array(
-            ':idProvincia'=>$this->_idProvincia
+            ':idProvincia'=>($pro == '')?$this->_idProvincia:$pro
         );
+                
         $data = $this->queryAll($query,$parms);
         return $data;
     }
@@ -113,7 +161,6 @@ class registrarVendedorModel extends Model{
             ':ubigeo' => $this->_ubigeo,
             ':usuario' => $this->_usuario
         );
-         
         $data = $this->queryOne($query,$parms);  
         return $data;
     }

@@ -95,5 +95,6 @@ define('LABEL_RV17','Ingresar nro. de documento');
 define('LABEL_RV18','Departamento');
 define('LABEL_RV19','Provincia');
 define('LABEL_RV20','Distrito');
+define('LABEL_RV21','Editar Vendedor');
 
 ?>

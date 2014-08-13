@@ -1,0 +1,281 @@
+<?php
+$editar = Session::getPermiso('REGVEED');
+
+$data = registrarVendedorController::findVendedor();
+?>
+<form id="<?php echo T7; ?>formVendedor" name="<?php echo T7; ?>formVendedor" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close"  aria-hidden="true">
+                    &times;
+                </button>
+                <h4 class="modal-title"><?php echo LABEL_RV21;?></h4>
+            </div>
+            <div class="modal-body smart-form" style="height: 350px;overflow-y: auto;overflow-x: hidden;">
+                <section>
+                    <div class="row">
+                        <label class="label col col-3"><?php echo LABEL_RV3; ?></label>
+                        <div class="col col-8">
+                            <label class="input"> 
+                                <i class="icon-append fa fa-user"></i>
+                                <input type="text" id="<?php echo T7; ?>txt_nombres" name="<?php echo T7; ?>txt_nombres" value="<?php echo $data['nombres']; ?>">
+                                <b class="tooltip tooltip-top-right"><i class="fa fa-user txt-color-teal"></i> <?php echo LABEL_RV6; ?></b>
+                            </label>
+                        </div>
+                    </div>
+                </section>
+                <section>
+                    <div class="row">
+                        <label class="label col col-3"><?php echo LABEL_RV4; ?></label>
+                        <div class="col col-8">
+                            <label class="input"> 
+                                <i class="icon-append fa fa-user"></i>
+                                <input type="text" id="<?php echo T7; ?>txt_apellidopaterno" name="<?php echo T7; ?>txt_apellidopaterno" value="<?php echo $data['apellidopaterno']; ?>">
+                                <b class="tooltip tooltip-top-right"><i class="fa fa-user txt-color-teal"></i> <?php echo LABEL_RV7; ?></b>
+                            </label>
+                        </div>
+                    </div>
+                </section>
+                <section>
+                    <div class="row">
+                        <label class="label col col-3"><?php echo LABEL_RV5; ?></label>
+                        <div class="col col-8">
+                            <label class="input"> 
+                                <i class="icon-append fa fa-user"></i>
+                                <input type="text" id="<?php echo T7; ?>txt_apellidomaterno" name="<?php echo T7; ?>txt_apellidomaterno" value="<?php echo $data['apellidomaterno']; ?>">
+                                <b class="tooltip tooltip-top-right"><i class="fa fa-user txt-color-teal"></i> <?php echo LABEL_RV8; ?></b>
+                            </label>
+                        </div>
+                    </div>
+                </section>   
+                <section>
+                    <div class="row">
+                        <label class="label col col-3"><?php echo LABEL_RV16; ?></label>
+                        <div class="col col-8">
+                            <label class="input"> 
+                                <i class="icon-append fa fa-keyboard-o"></i>
+                                <input type="text" id="<?php echo T7; ?>txt_nrodocumento" name="<?php echo T7; ?>txt_nrodocumento" value="<?php echo $data['numerodocumento']; ?>">
+                                <b class="tooltip tooltip-top-right"><i class="fa fa-keyboard-o txt-color-teal"></i> <?php echo LABEL_RV17; ?></b>
+                            </label>
+                        </div>
+                    </div>
+                </section>
+                <section>
+                    <div class="row">
+                        <label class="label col col-3"><?php echo LABEL_RV18; ?></label>
+                        <div class="col col-8">
+                            <label class="select"> 
+                                <?php 
+                                    $datax = registrarVendedorController::getDepartamentos();
+                                    
+                                    echo Functions::selectHtml(array(
+                                        'data'=>$datax,
+                                        'atributes'=>array(
+                                            'id'=>T7.'lst_departamento',
+                                            'name'=>T7.'lst_departamento',
+                                            'onchange'=>'registrarVendedor.getProvincias({
+                                                            idDepartamento: $(\'#'.T7.'lst_departamento\').val(),
+                                                            content: \'#'.T7.'cont-provincias\',
+                                                            idElement: \''.T7.'lst_provincia\',
+                                                            nameElement: \''.T7.'lst_provincia\',
+                                                            contentUbigeo: \'#'.T7.'cont-ubigeo\',
+                                                            idUbigeo: \''.T7.'lst_ubigeo\'
+                                                        });'
+                                        ),
+                                        'etiqueta'=>'departamento',
+                                        'value'=>'id_departamento',
+                                        'defaultEtiqueta'=> substr($data['id_ubigeo'], 0,2),
+                                        'txtSelect'=>true
+                                    ));
+                                ?><i></i>
+                            </label>
+                        </div>
+                    </div>
+                </section>
+                <section>
+                    <div class="row">
+                        <label class="label col col-3"><?php echo LABEL_RV19; ?></label>
+                        <div class="col col-8">
+                            <label class="select" id="<?php echo T7; ?>cont-provincias"> 
+                                <?php 
+                                    $datap = registrarVendedorController::getProvinciasEst(substr($data['id_ubigeo'], 0,2));
+                                    
+                                    echo Functions::selectHtml(array(
+                                        'data'=>$datap,
+                                        'atributes'=>array(
+                                            'id'=>T7.'lst_provincia',
+                                            'name'=>T7.'lst_provincia',
+                                            'onchange'=>'registrarVendedor.getUbigeo({                                                                
+                                                            idProvincia: $(\'#'.T7.'lst_provincia\').val(),
+                                                            content: \'#'.T7.'cont-ubigeo\',
+                                                            idElement: \''.T7.'lst_ubigeo\',
+                                                            nameElement: \''.T7.'lst_ubigeo\'
+                                                        });'
+                                        ),
+                                        'etiqueta'=>'provincia',
+                                        'value'=>'id_provincia',
+                                        'defaultEtiqueta'=> substr($data['id_ubigeo'], 0,4),
+                                        'txtSelect'=>true
+                                    ));
+                                ?>
+                                <i></i>
+                            </label>
+                        </div>
+                    </div>
+                </section>
+                <section>
+                    <div class="row">
+                        <label class="label col col-3"><?php echo LABEL_RV20; ?></label>
+                        <div class="col col-8">
+                            <label class="select" id="<?php echo T7; ?>cont-ubigeo"> 
+                                <?php 
+                                    $datau = registrarVendedorController::getUbigeoEst(substr($data['id_ubigeo'], 0,4));
+                                    
+                                    echo Functions::selectHtml(array(
+                                        'data'=>$datau,
+                                        'atributes'=>array(
+                                            'id'=>T7.'lst_distrito',
+                                            'name'=>T7.'lst_distrito'
+                                        ),
+                                        'etiqueta'=>'distrito',
+                                        'value'=>'id_ubigeo',
+                                        'defaultEtiqueta'=> $data['id_ubigeo'],
+                                        'txtSelect'=>true
+                                    ));
+                                ?>
+                                <i></i>
+                            </label>
+                        </div>
+                    </div>
+                </section>
+                <section>
+                    <div class="row">
+                        <label class="label col col-3"><?php echo LABEL_RV9; ?></label>
+                        <div class="col col-8">
+                            <label class="input"> 
+                                <i class="icon-append fa fa-keyboard-o"></i>
+                                <input type="text" id="<?php echo T7; ?>txt_direccion" name="<?php echo T7; ?>txt_direccion" value="<?php echo $data['direccion']; ?>">
+                                <b class="tooltip tooltip-top-right"><i class="fa fa-keyboard-o txt-color-teal"></i> <?php echo LABEL_RV11; ?></b>
+                            </label>
+                        </div>
+                    </div>
+                </section>
+                <section>
+                    <div class="row">
+                        <label class="label col col-3"><?php echo LABEL_RV10; ?></label>
+                        <div class="col col-8">
+                            <label class="input"> 
+                                <i class="icon-append fa fa-keyboard-o"></i>
+                                <input type="text" id="<?php echo T7; ?>txt_email" name="<?php echo T7; ?>txt_email" value="<?php echo $data['email']; ?>">
+                                <b class="tooltip tooltip-top-right"><i class="fa fa-keyboard-o txt-color-teal"></i> <?php echo LABEL_RV12; ?></b>
+                            </label>
+                        </div>
+                    </div>
+                </section>
+                <section>
+                    <div class="row">
+                        <label class="label col col-3"><?php echo LABEL_RV13; ?></label>
+                        <div class="inline-group col col-8">
+                            <label class="radio"> 
+                                <input name="<?php echo T7; ?>rd_sexo" id="<?php echo T7; ?>rd_sexoH" checked type="radio" value="H" <?php echo ($data['sexo'] == 'H')?'checked':''; ?>>
+                                <i></i>Hombre
+                            </label>
+                            <label class="radio"> 
+                                <input name="<?php echo T7; ?>rd_sexo" id="<?php echo T7; ?>rd_sexoM" type="radio" value="M" <?php echo ($data['sexo'] == 'M')?'checked':''; ?>>
+                                <i></i>Mujer
+                            </label>
+                        </div>
+                    </div>
+                </section>
+                <section>
+                    <div class="row">
+                        <label class="label col col-3"><?php echo LABEL_RV14; ?></label>
+                        <div class="col col-8">
+                            <label class="input"> 
+                                <i class="icon-append fa fa-keyboard-o"></i>
+                                <input type="text" id="<?php echo T7; ?>txt_telefonos" name="<?php echo T7; ?>txt_telefonos" value="<?php echo $data['telefono']; ?>">
+                                <b class="tooltip tooltip-top-right"><i class="fa fa-keyboard-o txt-color-teal"></i> <?php echo LABEL_RV15; ?></b>
+                            </label>
+                        </div>
+                    </div>
+                </section>
+                
+            </div>
+            <div class="modal-footer">
+                <?php if($editar['permiso']):?>
+                <button id="<?php echo T7; ?>btnEvend" type="submit" class="btn txt-color-white bg-color-blueDark">
+                    <i class="fa fa-save"></i> <?php echo $editar['accion']; ?>
+                </button>
+                <?php endif; ?>
+                <button type="button" class="btn btn-default xClose">
+                    <i class="fa fa-ban"></i> <?php echo BTN_CLOSE; ?>
+                </button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+
+<!-- si no riene permiso se anula submit desde cualquier input -->
+<?php if(!$editar['permiso']): ?>
+<script>
+    simpleScript.noSubmit('#<?php echo T7; ?>formVendedor');
+</script>
+<?php endif; ?>
+<script>
+    $('#<?php echo T7; ?>formVendedor').validate({
+        // Rules for form validation
+        rules : {
+                <?php echo T7; ?>txt_nombres : {
+                        required : true,
+                        regular: true,
+                        minlength: 3
+                },
+                <?php echo T7; ?>txt_apellidopaterno : {
+                        required : true,
+                        regular: true,
+                        minlength: 3
+                },
+                <?php echo T7; ?>txt_apellidomaterno : {
+                        required : true,
+                        regular: true,
+                        minlength: 3
+                },
+                <?php echo T7; ?>txt_nrodocumento:{
+                        required: true,
+                        number: true,
+                        maxlength: 8
+                },
+                <?php echo T7; ?>lst_departamento : {
+                        required : true
+                },
+                <?php echo T7; ?>lst_provincia : {
+                        required : true
+                },
+                <?php echo T7; ?>lst_distrito : {
+                        required : true
+                },
+                <?php echo T7; ?>txt_direccion : {
+                        required : true,
+                        regular: true,
+                        minlength: 3
+                },
+                <?php echo T7; ?>txt_email : {
+                        required : true,
+                        email: true
+                },
+                <?php echo T7; ?>txt_telefonos : {
+                        regular: true
+                }       
+        },
+
+        // Do not change code below
+        errorPlacement : function(error, element) {
+                error.insertAfter(element.parent());
+        },
+
+        submitHandler: function(){
+            registrarVendedor.postEditarVendedor();
+        }   
+    });
+</script>
+</form>
