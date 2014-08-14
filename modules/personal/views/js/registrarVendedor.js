@@ -202,6 +202,36 @@ var registrarVendedor_ = function(){
         });
     };
     
+    this.publico.postDeleteVendedorAll = function(btn){
+        simpleScript.validaCheckBox({
+            id: '#'+diccionario.tabs.T7+'getGridVendedor',
+            msn: mensajes.MSG_9,
+            fnCallback: function(){
+                simpleScript.notify.confirm({
+                    content: mensajes.MSG_7,
+                    callbackSI: function(){
+                        simpleAjax.send({
+                            flag: 3,
+                            element: btn,
+                            form: '#'+diccionario.tabs.T7+'formGridVendedor',
+                            root: _private.config.modulo + 'postDeleteVendedorAll',
+                            fnCallback: function(data) {
+                                if(!isNaN(data.result) && parseInt(data.result) === 1){
+                                    simpleScript.notify.ok({
+                                        content: mensajes.MSG_8,
+                                        callback: function(){
+                                            registrarVendedor.getGridVendedor();
+                                        }
+                                    });
+                                }
+                            }
+                        });
+                    }
+                });
+            }
+        });
+    };
+    
     return this.publico;
     
 };

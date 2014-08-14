@@ -135,8 +135,8 @@ $data = registrarVendedorController::findVendedor();
                                     echo Functions::selectHtml(array(
                                         'data'=>$datau,
                                         'atributes'=>array(
-                                            'id'=>T7.'lst_distrito',
-                                            'name'=>T7.'lst_distrito'
+                                            'id'=>T7.'lst_ubigeo',
+                                            'name'=>T7.'lst_ubigeo'
                                         ),
                                         'etiqueta'=>'distrito',
                                         'value'=>'id_ubigeo',
@@ -251,7 +251,7 @@ $data = registrarVendedorController::findVendedor();
                 <?php echo T7; ?>lst_provincia : {
                         required : true
                 },
-                <?php echo T7; ?>lst_distrito : {
+                <?php echo T7; ?>lst_ubigeo : {
                         required : true
                 },
                 <?php echo T7; ?>txt_direccion : {

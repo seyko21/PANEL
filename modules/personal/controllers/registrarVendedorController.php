@@ -65,6 +65,13 @@ class registrarVendedorController extends Controller{
         
         return $data;
     }
+    
+    public function postDeleteVendedorAll(){
+        $data = Obj::run()->registrarVendedorModel->mantenimientoVendedorAll();
+        
+        echo json_encode($data);
+    }
+    
     public function getGridVendedor() {
         $editar = Session::getPermiso('REGVEED');
         
@@ -93,7 +100,7 @@ class registrarVendedorController extends Controller{
                     $estado = '<button type=\"button\" class=\"btn btn-danger btn-xs\" title=\"Activar\" onclick=\"registrarVendedor.postActivarVendedor(\''.$encryptReg.'\')\">Inactivo</button>';
                 }
                 
-                $chk = '<input id=\"c_'.(++$key).'\" type=\"checkbox\" name=\"'.T101.'chk_delete[]\" value=\"'.$encryptReg.'\">';
+                $chk = '<input id=\"c_'.(++$key).'\" type=\"checkbox\" name=\"'.T7.'chk_delete[]\" value=\"'.$encryptReg.'\">';
                 
                 /*datos de manera manual*/
                 $sOutput .= '["'.$chk.'","'.$aRow['numerodocumento'].'","'.$aRow['nombrecompleto'].'","'.$aRow['email'].'","'.$aRow['telefono'].'","'.$estado.'", ';

@@ -21,6 +21,7 @@ class registrarVendedorModel extends Model{
     private $_telefono;
     private $_numeroDoc;
     private $_ubigeo;
+    private $_chkdel;
     private $_usuario;
     
     /*para el grid*/
@@ -49,6 +50,7 @@ class registrarVendedorModel extends Model{
         $this->_numeroDoc = $this->post(T7.'txt_nrodocumento');
         $this->_ubigeo = $this->post(T7.'lst_ubigeo');
         $this->_usuario = Session::get('sys_idUsuario');
+        $this->_chkdel  = $this->post(T7.'chk_delete');
         
         $this->_iDisplayStart  =   $this->post('iDisplayStart'); 
         $this->_iDisplayLength =   $this->post('iDisplayLength'); 
@@ -104,7 +106,7 @@ class registrarVendedorModel extends Model{
 
 
     public function getDepartamentos(){
-        $query = "SELECT id_departamento,departamento FROM `ub_departamento` ";
+        $query = "SELECT id_departamento,departamento FROM `ub_departamento` ORDER BY departamento ";
         
         $parms = array();
         $data = $this->queryAll($query,$parms);
@@ -112,7 +114,7 @@ class registrarVendedorModel extends Model{
     }
     
     public function getProvincias($dep=''){
-        $query = "SELECT id_provincia,provincia FROM `ub_provincia` WHERE LEFT(id_provincia,2) = :idDepartamento ";
+        $query = "SELECT id_provincia,provincia FROM `ub_provincia` WHERE LEFT(id_provincia,2) = :idDepartamento ORDER BY provincia";
         
         $parms = array(
             ':idDepartamento'=>($dep == '')?$this->_idDepartamento:$dep
@@ -122,7 +124,7 @@ class registrarVendedorModel extends Model{
     }
 
     public function getUbigeo($pro=''){
-        $query = "SELECT id_ubigeo,distrito FROM `ub_ubigeo` WHERE LEFT(id_ubigeo,4) = :idProvincia ";
+        $query = "SELECT id_ubigeo,distrito FROM `ub_ubigeo` WHERE LEFT(id_ubigeo,4) = :idProvincia ORDER BY distrito;";
         
         $parms = array(
             ':idProvincia'=>($pro == '')?$this->_idProvincia:$pro
@@ -162,6 +164,20 @@ class registrarVendedorModel extends Model{
             ':usuario' => $this->_usuario
         );
         $data = $this->queryOne($query,$parms);  
+        return $data;
+    }
+    
+    public function mantenimientoVendedorAll(){
+        foreach ($this->_chkdel as $value) {
+            $query = "UPDATE `mae_persona` SET
+			`estado` = '0'
+                    WHERE `id_persona` = :idPersona;";
+            $parms = array(
+                ':idPersona' => Aes::de($value)
+            );
+            $this->execute($query,$parms);
+        }
+        $data = array('result'=>1);
         return $data;
     }
     
