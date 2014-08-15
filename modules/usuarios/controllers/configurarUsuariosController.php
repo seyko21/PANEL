@@ -97,6 +97,7 @@ class configurarUsuariosController extends Controller{
     }
     
     public function getEmpleados(){ 
+        $tab = $this->post('_tab');
         $sEcho          =   $this->post('sEcho');
         
         $rResult = Obj::run()->configurarUsuariosModel->getEmpleados();
@@ -111,9 +112,10 @@ class configurarUsuariosController extends Controller{
             $sOutput .= '"aaData": [ ';
             foreach ( $rResult as $key=>$aRow ){
                 /*antes de enviar id se encrypta*/
-                $encryptReg = Aes::en($aRow['persona']);
+                $encryptReg  = Aes::en($aRow['persona']);
+                $encryptReg2 = Aes::en($aRow['id_persona']);
                 
-                $nom = '<a href=\"javascript:;\" onclick=\"configurarUsuariosScript.setEmpleado({'.T4.'txt_empleado:\''.$encryptReg.'\', '.T4.'txt_empleadodesc:\''.$aRow['nombrecompleto'].'\', '.T4.'txt_email:\''.$aRow['email'].'\'});\" >'.$aRow['nombrecompleto'].'</a>';
+                $nom = '<a href=\"javascript:;\" onclick=\"configurarUsuariosScript.setEmpleado({'.$tab.'txt_empleado:\''.$encryptReg.'\','.$tab.'txt_idpersona:\''.$encryptReg2.'\', '.$tab.'txt_empleadodesc:\''.$aRow['nombrecompleto'].'\', '.$tab.'txt_email:\''.$aRow['email'].'\'});\" >'.$aRow['nombrecompleto'].'</a>';
                 
                 /*datos de manera manual*/
                 $sOutput .= '["'.(++$key).'","'.$nom.'" ';

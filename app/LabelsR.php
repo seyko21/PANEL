@@ -13,6 +13,7 @@ define('CK_ACTIVO','Activo');
 define('BTN_NUEVO','Nuevo');
 define('BTN_DELETE','Eliminar');
 define('BTN_CLOSE','Cerrar');
+define('BTN_ADD','Agregar');
 
 /*FORMULARIO LOGIN*/
 define('L_TITLE','Ingresar');
@@ -59,7 +60,7 @@ define('M_TITLTE_USU','Usuarios');
     
     /*formulario buscar empleado*/
     define('LABEL_1','Buscar Empleado');
-    define('LABEL_2','Empleado');
+    define('LABEL_2','Nombres');
 /*----------------------TIPO DE CONCEPTOS----------------------*/
 define('LABEL_6','Tipo de Concepto');
 define('LABEL_7','Nuevo Tipo de Concepto');
@@ -97,4 +98,13 @@ define('LABEL_RV19','Provincia');
 define('LABEL_RV20','Distrito');
 define('LABEL_RV21','Editar Vendedor');
 
+/*----------------------    GENERAR COTIZACION----------------------*/
+define('LABEL_GNC1','Cotizaciones');
+define('LABEL_GNC2','Generar Cotización');
+define('LABEL_GNC3','Cliente');
+define('LABEL_GNC4','Meses de contrato');
+define('LABEL_GNC5','Días de oferta');
+define('LABEL_GNC6','IGV');
+define('LABEL_GNC7','Producto');
+define('LABEL_GNC8','Buscar Producto');
 ?>

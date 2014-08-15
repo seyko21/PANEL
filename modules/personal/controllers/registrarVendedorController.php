@@ -24,6 +24,10 @@ class registrarVendedorController extends Controller{
         Obj::run()->View->render('editarVendedor');
     }
     
+    public function getFormBuscarMisProductos(){ 
+        Obj::run()->View->render('formBuscarMisProductos');
+    }
+    
     public static function getDepartamentos(){ 
         $data = Obj::run()->registrarVendedorModel->getDepartamentos();
         

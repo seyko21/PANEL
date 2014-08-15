@@ -2,6 +2,8 @@ var configurarUsuarios_ = function(){
     
     var _private = {};
     
+    _private.tab = 0;
+    
     _private.config = {
         modulo: 'usuarios/configurarUsuarios/'
     };
@@ -77,7 +79,8 @@ var configurarUsuarios_ = function(){
         return _private.config.modulo + 'getEmpleados/';
     };
     
-    this.public.getFormEmpleado = function(btn){
+    this.public.getFormEmpleado = function(btn,tab){
+        _private.tab = tab;
         simpleAjax.send({
             element: btn,
             dataType: 'html',
@@ -106,6 +109,7 @@ var configurarUsuarios_ = function(){
             sAjaxSource: _private.config.modulo+'getEmpleados',
             fnServerParams: function(aoData) {
                 aoData.push({"name": diccionario.tabs.T4+"_term", "value": $('#'+diccionario.tabs.T4+'txt_search').val()});
+                aoData.push({"name": "_tab", "value": _private.tab});
             },
             fnDrawCallback: function() {
                 $('#'+diccionario.tabs.T4+'gridEmpleadosFound_filter').remove();

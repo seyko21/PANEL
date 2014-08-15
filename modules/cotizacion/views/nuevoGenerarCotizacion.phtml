@@ -1,0 +1,118 @@
+<?php
+$grabar = Session::getPermiso('GNCOTGR');
+?>
+<form id="<?php echo T8; ?>formGenerarCotizacion" name="<?php echo T8; ?>formGenerarCotizacion" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog" style="width: 70%;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close"  aria-hidden="true">
+                    &times;
+                </button>
+                <h4 class="modal-title"><?php echo LABEL_GNC2; ?></h4>
+            </div>
+            <div class="modal-body form-horizontal">
+                <div class="form-group">
+                    <label class="control-label col-md-2" for="prepend"><?php echo LABEL_GNC3; ?></label>
+                    <div class="col-md-10">
+                        <div class="input-group input-group-sm">
+                            <input type="hidden" id="<?php echo T8; ?>txt_idpersona" name="<?php echo T8; ?>txt_idpersona">
+                            <input class="form-control" type="text" id="<?php echo T8; ?>txt_empleadodesc" name="<?php echo T8; ?>txt_empleadodesc">
+                            <span class="input-group-btn">
+                                <button class="btn btn-default" type="button" onclick="configurarUsuarios.getFormEmpleado(this, '<?php echo T8; ?>');"><i class="fa fa-search"></i> Buscar</button>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-md-2" for="prepend"><?php echo LABEL_GNC4; ?></label>
+                    <div class="col-md-2">
+                        <div class="input">
+                            <input class="form-control" type="text" id="<?php echo T8; ?>txt_meses" name="<?php echo T8; ?>txt_meses">
+                        </div>
+                    </div>
+                    <label class="control-label col-md-2" for="prepend"><?php echo LABEL_GNC5; ?></label>
+                    <div class="col-md-2">
+                        <div class="input">
+                            <input class="form-control" type="text" id="<?php echo T8; ?>txt_oferta" name="<?php echo T8; ?>txt_oferta">
+                        </div>
+                    </div>
+                    <div class="col-md-2 smart-form hide">
+                        <div class="select">
+                            <select id="<?php echo T8; ?>lst_igv" name="<?php echo T8; ?>lst_igv">
+                                <option value="S" selected="selected">IGV Si</option>
+                                <option value="N">IGV No</option>
+                            </select><i></I>
+                        </div>
+                    </div>
+                </div>
+                <button id="<?php echo T8; ?>btnGadd" type="button" class="btn txt-color-white bg-color-blueDark" onclick="registrarVendedor.getFormBuscarMisProductos(this,'<?php echo T8; ?>');">
+                    <i class="fa fa-plus-circle"></i> <?php echo BTN_ADD; ?>
+                </button>
+                <p>
+                <div class="si-access" style="min-height: 200px; max-height: auto;">
+                    <table id="<?php echo T8; ?>gridProductos" class="table table-bordered table-striped table-condensed table-hover smart-form has-tickbox">
+                        <thead>
+                            <th style="width:59%">Producto</th>
+                            <th style="width:10%">Precio</th>
+                            <th style="width:10%">Producción</th>
+                            <th style="width:10%">Cantidad</th>
+                            <th style="width:10%">Total</th>
+                            <th style="width:1%">...</th>
+                        </thead>
+                        <tbody>
+                            
+                        </tbody>
+                    </table>
+                </div>
+                </p>
+            </div>
+            <div class="modal-footer">
+                <?php if ($grabar['permiso']): ?>
+                    <button id="<?php echo T8; ?>btnGcoti" type="submit" class="btn txt-color-white bg-color-blueDark">
+                        <i class="fa fa-save"></i> <?php echo $grabar['accion']; ?>
+                    </button>
+                <?php endif; ?>
+                <button type="button" class="btn btn-default xClose">
+                    <i class="fa fa-ban"></i> <?php echo BTN_CLOSE; ?>
+                </button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+
+    <!-- si no riene permiso se anula submit desde cualquier input -->
+    <?php if (!$grabar['permiso']): ?>
+        <script>
+            simpleScript.noSubmit('#<?php echo T8; ?>formGenerarCotizacion');
+        </script>
+    <?php endif; ?>
+    <script>
+        $('.xhelp').tooltip({placement: 'right'});
+        $('#<?php echo T8; ?>formGenerarCotizacion').validate({
+            // Rules for form validation
+            rules: {
+<?php echo T8; ?>txt_dominio: {
+                    required: true,
+                    regular: true,
+                    minlength: 5
+                },
+<?php echo T8; ?>txt_icono: {
+                    required: true,
+                    regular: true,
+                    minlength: 5
+                },
+<?php echo T8; ?>txt_orden: {
+                    required: true,
+                    number: true,
+                    maxlength: 2
+                }
+            },
+            // Do not change code below
+            errorPlacement: function(error, element) {
+                error.insertAfter(element.parent());
+            },
+            submitHandler: function() {
+                //configurarMenu.postDominio();
+            }
+        });
+    </script>
+</form>

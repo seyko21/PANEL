@@ -9,8 +9,8 @@ define("T1","TAB_CRDCR");       /*tab modulo CONFIGURACION DE ROLES*/
 define("T2","TAB_CRDAC");       /*tab modulo CONFIGURAR ACCIONES*/
 define("T3","TAB_CMDMCMN");     /*tab modulo CONFIGURAR MENU*/
 define("T4","TAB_CUDUSU");     /*tab modulo CONFIGURAR USUARIOS*/
-define("T5","TAB_TIPCON");     /*tab modulo TIPO DE CONCEPTOS*/
+define("T5","XTIPCON");     /*tab modulo TIPO DE CONCEPTOS*/
 define("T6","TAB_CONC");        /*tab modulo CONCEPTOS*/
 define("T7","TAB_REGVE");        /*tab modulo REGISTRAR VENDEDOR*/
-
+define("T8","TAB_GNCOT");        /*tab modulo GENERAR COTIZACION*/
 ?>

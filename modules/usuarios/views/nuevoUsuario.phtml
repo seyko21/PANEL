@@ -45,7 +45,7 @@ $buscar = Session::getPermiso('CUSBS');
                                     </label>
                                 </div>
                                 <?php if ($buscar['permiso']): ?>
-                                    <button id="<?php echo T4; ?>btnBuscar" type="button" class="btn txt-color-white bg-color-blueDark" onclick="configurarUsuarios.getFormEmpleado(this);">
+                                    <button id="<?php echo T4; ?>btnBuscar" type="button" class="btn txt-color-white bg-color-blueDark" onclick="configurarUsuarios.getFormEmpleado(this,'<?php echo T4; ?>');">
                                         <i class="fa fa-search" style="padding: 8px"></i>
                                     </button>
                                 <?php 

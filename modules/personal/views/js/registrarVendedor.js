@@ -4,6 +4,8 @@ var registrarVendedor_ = function(){
     
     _private.idVendedor = 0;
     
+    _private.tab = 0;
+    
     _private.config = {
         modulo: 'personal/registrarVendedor/'
     };
@@ -135,29 +137,21 @@ var registrarVendedor_ = function(){
         });
     };
 
-    this.publico.postNuevoVendedor = function(){
+    this.publico.getFormBuscarMisProductos = function(btn,tab){
+        _private.tab = tab;
         simpleAjax.send({
-            flag: 1,
-            element: '#'+diccionario.tabs.T7+'btnGvend',
-            root: _private.config.modulo + 'postNuevoVendedor',
-            form: '#'+diccionario.tabs.T7+'formVendedor',
-            clear: true,
-            fnCallback: function(data) {
-                if(!isNaN(data.result) && parseInt(data.result) === 1){
-                    simpleScript.notify.ok({
-                        content: mensajes.MSG_3,
-                        callback: function(){
-                            registrarVendedor.getGridVendedor();
-                            simpleScript.closeModal('#'+diccionario.tabs.T7+'formVendedor');
-                        }
-                    });
-                }else if(!isNaN(data.result) && parseInt(data.result) === 2){
-                    simpleScript.notify.error({
-                        content: mensajes.MSG_4
-                    });
-                }
+            element: btn,
+            dataType: 'html',
+            root: _private.config.modulo + 'getFormBuscarMisProductos',
+            fnCallback: function(data){
+                $('#cont-modal').append(data);  /*los formularios con append*/
+                $('#'+diccionario.tabs.T7+'formBuscarProducto').modal('show');
             }
         });
+    };
+    
+    this.publico.getMisProductos = function(){
+        alert(8)
     };
     
     this.publico.getEditarVendedor = function(btn,id){
@@ -232,6 +226,31 @@ var registrarVendedor_ = function(){
         });
     };
     
+    this.publico.postNuevoVendedor = function(){
+        simpleAjax.send({
+            flag: 1,
+            element: '#'+diccionario.tabs.T7+'btnGvend',
+            root: _private.config.modulo + 'postNuevoVendedor',
+            form: '#'+diccionario.tabs.T7+'formVendedor',
+            clear: true,
+            fnCallback: function(data) {
+                if(!isNaN(data.result) && parseInt(data.result) === 1){
+                    simpleScript.notify.ok({
+                        content: mensajes.MSG_3,
+                        callback: function(){
+                            registrarVendedor.getGridVendedor();
+                            simpleScript.closeModal('#'+diccionario.tabs.T7+'formVendedor');
+                        }
+                    });
+                }else if(!isNaN(data.result) && parseInt(data.result) === 2){
+                    simpleScript.notify.error({
+                        content: mensajes.MSG_4
+                    });
+                }
+            }
+        });
+    };
+        
     return this.publico;
     
 };

@@ -79,10 +79,10 @@ class configurarUsuariosModel extends Model{
     }
     
     public function getEmpleados(){
-        $query = " SELECT persona,nombrecompleto,email FROM `mae_persona` WHERE nombrecompleto LIKE CONCAT('%',:nombre,'%') AND estado = :estado ";
+        $query = " SELECT persona,id_persona,nombrecompleto,email FROM `mae_persona` WHERE nombrecompleto LIKE CONCAT('%',:nombre,'%') AND estado = :estado ";
         $parms = array(
             ':nombre'=> $this->_xsearch,
-            ':estado' => '1',
+            ':estado' => 'A',
         );
         $data = $this->queryAll($query,$parms);
         return $data;
