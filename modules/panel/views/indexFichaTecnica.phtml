@@ -1,0 +1,52 @@
+<?php 
+$grabar = Session::getPermiso('FITECGR');
+$eliminar = Session::getPermiso('FITECDE');
+        
+echo Functions::widgetOpen(array(
+        'id'=>T102,
+        'title'=>LABEL_A20        
+    )); 
+?>
+
+    <div class="widget-body-toolbar"></div>
+    <div class="dataTables_wrapper form-inline" role="grid">
+        <div class="dt-top-row">
+            <div class="DTTT btn-group">
+                <?php if($grabar['permiso']): ?>
+                <button id="<?php echo T102; ?>btnNew" type="button" onclick="fichaTecnica.getNuevoFichaTecnica(this);" class="btn txt-color-white bg-color-blueDark">
+                    <i class="fa fa-file-o"></i> <?php echo BTN_NUEVO; ?>
+                </button>
+                <?php endif; ?>
+                <?php if($eliminar['permiso']): ?>
+                <button id="<?php echo T102; ?>btnNew" type="button" onclick="fichaTecnica.postDeleteFichaTecnicaAll(this);" class="btn txt-color-white bg-color-blueDark">
+                    <i class="fa fa-ban"></i> <?php echo BTN_DELETE; ?>
+                </button>
+                <?php endif; ?>
+            </div>
+        </div>
+
+    </div>
+    <form id="<?php echo T102; ?>fromGridFichaTecnica" name="<?php echo T102; ?>fromGridFichaTecnica">
+        <table id="<?php echo T102; ?>gridFichaTecnica" class="table table-striped table-bordered table-hover table-condensed" style="width:100%"></table>
+    </form>           
+<?php echo Functions::widgetClose(); ?>   
+
+<?php 
+    $obj = array(
+        'id'=>T102.'caratula',
+        'title'=>LABEL_A23,
+        'height'=>'200px',
+        'actions'=>array(
+            array(
+                'id'=>T102.'btnNew',
+                'label'=>BTN_AAGREGAR,
+                'click'=>'fichaTecnica.getNuevoCaratula()'
+            )
+        )
+    );
+    echo Functions::widgetOpen($obj); 
+
+?>
+<!-- CARATULAS -->   
+<div id="cont-listaCaratulas">
+</div>
