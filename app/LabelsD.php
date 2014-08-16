@@ -41,5 +41,8 @@ define('LABEL_A29','Alto (m)');
 define('LABEL_A29M','Escriba el alto en Metros');
 define('LABEL_A30','Observación');
 define('LABEL_A30M','En caso exista una Observación, escribirla.');
-
+define('LABEL_A31','Buscar Dirección');
+define('LABEL_A31M','Escriba una dirección para buscar en el mapa');
+define('LABEL_A32','Latitud');
+define('LABEL_A33','Longitud');
 ?>

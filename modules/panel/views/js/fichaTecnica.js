@@ -1,3 +1,4 @@
+
 var fichaTecnica_ = function(){
     
     var _private = {};
@@ -140,17 +141,18 @@ var fichaTecnica_ = function(){
             }
         });
     };
-    
-    this.publico.getNuevoFichaTecnica = function(btn){
+          
+    this.publico.getNuevoFichaTecnica = function(btn){        
         simpleAjax.send({
             element: btn,
             dataType: 'html',
             root: _private.config.modulo + 'getNuevoFichaTecnica',
             fnCallback: function(data){
                 $('#cont-modal').append(data);  /*los formularios con append*/
-                $('#'+diccionario.tabs.T102+'formFichaTecnica').modal('show');
+                $('#'+diccionario.tabs.T102+'formFichaTecnica').modal('show');                       
             }
-        });
+        });        
+        
     };
     this.publico.getEditarFichaTecnica = function(id){
         _private.idProducto = id;

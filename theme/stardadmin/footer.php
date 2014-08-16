@@ -4,7 +4,7 @@
 
 <script src="<?php echo $rutaLayout['_js']; ?>plugin/pace/pace.min.js"></script>
 
-<script src="<?php echo $rutaLayout['_js']; ?>libs/jquery-2.0.2.min.js"></script>
+<script src="<?php echo $rutaLayout['_js']; ?>libs/jquery-2.0.2.min.js"></script> 
 <script src="<?php echo $rutaLayout['_js']; ?>libs/jquery-ui-1.10.3.min.js"></script>
 
 <!-- JS TOUCH : include this plugin for mobile drag / drop touch events
@@ -71,6 +71,8 @@
 <script src="<?php echo BASE_URL ?>libs/Aes/js/aesctr.js"></script>
 <script src="<?php echo BASE_URL ?>libs/Aes/js/base64.js"></script>
 <script src="<?php echo BASE_URL ?>libs/Aes/js/utf8.js"></script>
+
+<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=true"></script>
 
 </body>  
 

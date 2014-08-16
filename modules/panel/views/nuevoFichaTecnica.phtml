@@ -16,20 +16,16 @@ $grabar = Session::getPermiso('FITECGR');
                 </button>
                 <h4 class="modal-title"><?php  echo LABEL_A21; ?></h4>
             </div>
-            <div class="modal-body smart-form">
-
-
+            <!-- style="height: 380px;overflow-y: auto;overflow-x: hidden;" -->
+            <div class="modal-body smart-form"  >
                 <ul class="nav nav-tabs bordered">
-
-
                     <li class="active">
                         <a href="#s1" data-toggle="tab"><?php echo LABEL_A24; ?></a>
                     </li>
-                    <li>
+                    <li >
                         <a href="#s2" data-toggle="tab"><?php echo LABEL_A25; ?></a>
                     </li>
                 </ul>
-
                 <div class="tab-content padding-10">
                     <div class="tab-pane fade in active" id="s1">
                          <section>
@@ -132,7 +128,7 @@ $grabar = Session::getPermiso('FITECGR');
                                     <div class="col col-3">
                                         <label class="input"> 
                                             <i class="icon-append fa fa-thumb-tack "></i>
-                                            <input type="text" id="<?php echo T102; ?>txt_clave" name="<?php echo T102; ?>txt_ancho"></input>
+                                            <input type="text" id="<?php echo T102; ?>txt_ancho" name="<?php echo T102; ?>txt_ancho"></input>
                                             <b class="tooltip tooltip-top-right"><i class="fa fa-thumb-tack  txt-color-teal"></i> <?php echo LABEL_A28M; ?></b>
                                         </label>
                                     </div>
@@ -140,7 +136,7 @@ $grabar = Session::getPermiso('FITECGR');
                                     <div class="col col-3">
                                         <label class="input"> 
                                             <i class="icon-append fa fa-thumb-tack "></i>
-                                            <input type="text" id="<?php echo T102; ?>txt_clave" name="<?php echo T102; ?>txt_alto"></input>
+                                            <input type="text" id="<?php echo T102; ?>txt_alto" name="<?php echo T102; ?>txt_alto"></input>
                                             <b class="tooltip tooltip-top-right"><i class="fa fa-thumb-tack  txt-color-teal"></i> <?php echo LABEL_A29M; ?></b>
                                         </label>
                                 </div>
@@ -161,18 +157,44 @@ $grabar = Session::getPermiso('FITECGR');
                         </section>                        
                    
                     </div>
+                    <!-- Segundo Tab-->
                     <div class="tab-pane fade" id="s2">
-                     <!--   <?php //$roles = configurarFichaTecnicasController::getRoles(); ?>
-                        <ul style="list-style: none">
-                            <?php foreach ($roles as $r): ?>
-                                <li class="move-cursor">
-                                    <label class="checkbox">
-                                        <input type="checkbox" value="<?php echo $r['id_rol']; ?>" name="<?php echo T102; ?>chk_roles[]"><i></i>
-                                        <?php echo $r['rol']; ?>
-                                    </label>
-                                </li> 
-                            <?php endforeach; ?>
-                        </ul>-->
+                    <section>
+                        <div class="row">
+                            <label class="label col col-3"><?php echo LABEL_A31; ?></label>
+                            <div class="col col-8">
+                                <label class="input"> 
+                                    <i class="icon-append fa fa-map-marker"></i>
+                                    <input type="text" id="<?php echo T102; ?>txt_direccion" name="<?php echo T102; ?>txt_direccion" value="Chimbote, Perú"  onKeyPress="return fichaTecnicaScript.enter(event)" >
+                                    <b class="tooltip tooltip-top-right"><i class="fa fa-map-marker  txt-color-teal"></i> <?php echo LABEL_A31M; ?></b>
+                                </label>                               
+                            </div>
+                            <button id="<?php echo T102; ?>btnBuscar" type="button" class="btn txt-color-white bg-color-blueDark" onclick="fichaTecnicaScript.codeAddress();">
+                                    <i class="fa fa-search" style="padding: 8px"></i>
+                            </button>
+                        </div>
+                    </section>   
+                    <section>                        
+                            <div id="<?php echo T102; ?>map_canvas" style="width:530px;height:300px;"></div>                                                                             
+                    </section>    
+                     <section>
+                            <div class="row">
+                                <label class="label col col-2"><?php echo LABEL_A32; ?></label>
+                                    <div class="col col-4">
+                                        <label class="input">                                             
+                                            <input type="text" id="<?php echo T102; ?>txt_latitud" name="<?php echo T102; ?>txt_latitud" readonly="readonly"></input>                                            
+                                        </label>
+                                    </div>
+                                <label class="label col col-2"><?php echo LABEL_A33; ?></label>
+                                    <div class="col col-4">
+                                        <label class="input">                                             
+                                             <input type="text" id="<?php echo T102; ?>txt_longitud" name="<?php echo T102; ?>txt_longitud" readonly="readonly"></input>                                              
+                                        </label>
+                                </div>
+                            </div>
+                        </section>    
+                        
+                        
                     </div>
                 </div>
             </div>
@@ -196,6 +218,7 @@ $grabar = Session::getPermiso('FITECGR');
     </script>
 <?php endif; ?>
 <script>
+           
     $('.xhelp').tooltip({placement: 'right'});
     $('#<?php echo T102; ?>formFichaTecnica').validate({
         // Rules for form validation
@@ -226,18 +249,22 @@ $grabar = Session::getPermiso('FITECGR');
             error.insertAfter(element.parent());
         },
         submitHandler: function() {
-            simpleScript.validaCheckBox({
-                id: '#s2',
-                msn: 'Seleccione al menos un rol.',
-                fnCallback: function(){
-                    configurarFichaTecnicas.postNuevoFichaTecnica();
-                }
-            });
+           fichaTecnica.postNuevofichaTecnica();
         }
-    });
+    });  
     /*para hacer evento invisible*/
-simpleScript.removeAttr.click({
-    container: '#<?php echo T102; ?>formFichaTecnica',
-    typeElement: 'button'
-});
+    simpleScript.removeAttr.click({
+        container: '#<?php echo T102; ?>formFichaTecnica',
+        typeElement: 'button'
+    });
+        
+    $('.nav-tabs a').click(function(){
+        setTimeout(function() {
+            //Inicializamos la función de google maps una vez el DOM este cargado	
+            fichaTecnicaScript.googleMap(14,1);
+            fichaTecnicaScript.codeAddress();                     
+        }, 1000);                                
+    });  
+    
+    
 </script>
