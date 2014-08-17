@@ -3,7 +3,7 @@ var configurarUsuariosScript_ = function(){
    
    this.public = {};
    
-   this.public.setEmpleado = function (obj){
+   this.public.setEmpleado = function (obj,form){
        for(var i in obj){
            $('#'+i).val(obj[i]);
        }

@@ -1,0 +1,43 @@
+.sBase {
+	OVERFLOW: hidden; WIDTH: 100%; POSITION: relative; HEIGHT: 100%
+}
+.sHeader {
+	Z-INDEX: 3; POSITION: absolute; BACKGROUND-COLOR: #ffffff
+}
+.sHeaderInner {
+	POSITION: relative
+}
+.sHeaderInner TABLE {
+	TABLE-LAYOUT: fixed! important; WIDTH: 1px! important; BORDER-COLLAPSE: collapse! important;border-spacing: 0px 0px
+}
+.sFHeader {
+	Z-INDEX: 4; OVERFLOW: hidden; POSITION: absolute
+}
+.sFHeader TABLE {
+	TABLE-LAYOUT: fixed! important; WIDTH: 1px! important; BORDER-COLLAPSE: collapse! important; BACKGROUND-COLOR: #ffffff; border-spacing: 0px 0px
+}
+.sData {
+	Z-INDEX: 2; OVERFLOW: auto; POSITION: absolute; BACKGROUND-COLOR: #ffffff
+}
+.sData TABLE {
+	TABLE-LAYOUT: fixed! important; WIDTH: 1px! important; BORDER-COLLAPSE: collapse! important; border-spacing: 0px 0px
+}
+.sFData {
+	Z-INDEX: 1; POSITION: absolute; 
+}
+.sFDataInner {
+	POSITION: relative;
+}
+.sFData TABLE {
+	TABLE-LAYOUT: fixed! important; WIDTH: 1px! important; BORDER-COLLAPSE: collapse! important; border-spacing: 0px 0px;
+}
+.sDefault {
+	PADDING-RIGHT: 0px; PADDING-LEFT: 0px; PADDING-BOTTOM: 0px; MARGIN: 0px; BORDER-TOP-STYLE: none; PADDING-TOP: 0px;  BORDER-RIGHT-STYLE: none; BORDER-LEFT-STYLE: none; BORDER-BOTTOM-STYLE: none
+}
+.sDefault TH {
+	PADDING-RIGHT: 6px; PADDING-LEFT: 4px; PADDING-BOTTOM: 3px; PADDING-TOP: 3px;  WHITE-SPACE: nowrap
+}
+.sDefault TD {
+ PADDING-RIGHT: 6px;  PADDING-LEFT: 4px; PADDING-BOTTOM: 3px; PADDING-TOP: 3px;  /*WHITE-SPACE: nowrap*/
+}
+.sScrollLCont{-moz-border-radius: 4px;-webkit-border-radius: 4px;border-radius: 4px;border:1px solid #ccc;background:#fff}

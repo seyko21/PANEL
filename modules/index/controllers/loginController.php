@@ -16,6 +16,7 @@ class loginController extends Controller{
   
         if(isset($data['id_usuario'])){
             Session::set('sys_idUsuario', $data['id_usuario']);
+            Session::set('sys_idPersona', $data['id_persona']);
             Session::set('sys_usuario', $data['usuario']);
             Session::set('sys_nombreUsuario', $data['nombrecompleto']);
             Obj::run()->loginModel->postLastLogin();

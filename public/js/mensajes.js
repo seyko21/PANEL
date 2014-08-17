@@ -7,5 +7,6 @@ var mensajes = {
     MSG_6: 'Registro se elimino correctamente.',
     MSG_7: '¿Está seguro de eliminar registros seleccionados?',
     MSG_8: 'Registros se eliminaron correctamente.',
-    MSG_9: 'Seleccione al menos un registro.'
+    MSG_9: 'Seleccione al menos un registro.',
+    MSG_10: 'No se han agregado registros.'
 };

@@ -75,9 +75,9 @@ var configurarUsuarios_ = function(){
         });
     };
     
-    this.public.getEmpleados = function(){
-        return _private.config.modulo + 'getEmpleados/';
-    };
+//    this.public.getEmpleados = function(){
+//        return _private.config.modulo + 'getEmpleados/';
+//    };
     
     this.public.getFormEmpleado = function(btn,tab){
         _private.tab = tab;

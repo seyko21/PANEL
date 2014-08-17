@@ -32,7 +32,19 @@ var simpleScript_ = function(){
                     });
                 $(this).attr('onclick',null);
             });
-        }
+        },
+        keypress: function(obj){
+            var collection = $(obj.container).find(obj.typeElement);
+            $.each(collection,function(){
+                /*obtener evento*/
+                var onclick = $(this).attr('onkeypress');
+                    /*asignar evento*/
+                    $(this).keypress(function(){
+                        eval(onclick);
+                    });
+                $(this).attr('onkeypress',null);
+            });
+        },
     };
     
     this.public.notify = {
@@ -55,8 +67,7 @@ var simpleScript_ = function(){
 //                    content : (obj.content !== undefined)?obj.content : "No content",
 //                    color : (obj.color !== undefined)?obj.color : "#739E73",
 //                    timeout: (obj.timeout !== undefined)?obj.timeout : 6000,
-//                    icon : (obj.icon !== undefined)?obj.icon : "fa fa-check",
-//                    number : (obj.number !== undefined)?obj.number : "2"
+//                    icon : (obj.icon !== undefined)?obj.icon : "fa fa-check"
 //            });
 //            if(obj.callback !== undefined){
 //                obj.callback();
@@ -79,8 +90,7 @@ var simpleScript_ = function(){
 //                    content : (obj.content !== undefined)?obj.content : "No content",
 //                    color : (obj.color !== undefined)?obj.color : "#C46A69",
 //                    icon : (obj.icon !== undefined)?obj.icon : "fa fa-warning shake animated",
-//                    timeout : (obj.timeout !== undefined)?obj.timeout : 6000,
-//                    number : (obj.number !== undefined)?obj.number : "1"
+//                    timeout : (obj.timeout !== undefined)?obj.timeout : 6000
 //            });
 //            if(obj.callback !== undefined){
 //                obj.callback();
@@ -93,8 +103,7 @@ var simpleScript_ = function(){
                     content : (obj.content !== undefined)?obj.content : "No content",
                     color : (obj.color !== undefined)?obj.color : "#3276B1",
                     timeout : (obj.timeout !== undefined)?obj.timeout : 6000,
-                    icon : (obj.icon !== undefined)?obj.icon : "fa fa-bell swing animated",
-                    number : (obj.number !== undefined)?obj.number : "1"
+                    icon : (obj.icon !== undefined)?obj.icon : "fa fa-bell swing animated"
             });
             if(obj.callback !== undefined){
                 obj.callback();
@@ -102,17 +111,27 @@ var simpleScript_ = function(){
         },
                 
         warning: function(obj){
-            $.bigBox({
+            $.smallBox({
                     title : (obj.title !== undefined)?obj.title : "Aviso del Sistema:",
                     content : (obj.content !== undefined)?obj.content : "No content",
                     color : (obj.color !== undefined)?obj.color : "#C79121",
-                    timeout : (obj.timeout !== undefined)?obj.timeout : 6000,
-                    icon : (obj.icon !== undefined)?obj.icon : "fa fa-shield fadeInLeft animated",
-                    number : (obj.number !== undefined)?obj.number : "1"
+                    iconSmall : (obj.icon !== undefined)?obj.icon : "fa fa-shield shake animated",
+                    timeout : (obj.timeout !== undefined)?obj.timeout : 6000
             });
             if(obj.callback !== undefined){
                 obj.callback();
             }
+            
+//            $.bigBox({
+//                    title : (obj.title !== undefined)?obj.title : "Aviso del Sistema:",
+//                    content : (obj.content !== undefined)?obj.content : "No content",
+//                    color : (obj.color !== undefined)?obj.color : "#C79121",
+//                    timeout : (obj.timeout !== undefined)?obj.timeout : 6000,
+//                    icon : (obj.icon !== undefined)?obj.icon : "fa fa-shield fadeInLeft animated"
+//            });
+//            if(obj.callback !== undefined){
+//                obj.callback();
+//            }
         },
                 
         msn: function(obj){
@@ -143,7 +162,7 @@ var simpleScript_ = function(){
         
         confirm: function(obj){
             $.SmartMessageBox({
-                title : "ERP - Confirmar:",
+                title : "SEVEND - Confirmar:",
                 content : (obj.content !== undefined)?obj.content : "No content",
                 buttons : '[No][Si]'
             }, function(ButtonPressed) {
@@ -353,7 +372,28 @@ var simpleScript_ = function(){
             }
         });
         if(marca === 0){
-            simpleScript.notify.error({
+            simpleScript.notify.warning({
+                content: obj.msn
+            });
+            return false;
+        }
+        if(obj.fnCallback !== undefined){
+            obj.fnCallback();
+        }
+    };
+    
+    this.public.validaTable = function(obj){
+        var sitr = 0;
+        var collection = $(obj.id).find('tbody tr');
+        $.each(collection,function(){
+            var hhdd = $(this).find('td:eq(0)').find('input:hidden');
+            /*solo ingresa una sola vez*/
+            if(hhdd.length > 0){
+                sitr = 1;
+            }
+        });
+        if(sitr === 0){
+            simpleScript.notify.warning({
                 content: obj.msn
             });
             return false;
@@ -374,6 +414,25 @@ var simpleScript_ = function(){
                 $(this).find(':checkbox').prop('checked','');     
             });
         }
+    };
+    
+    this.public.setInput = function (obj,form){
+       for(var i in obj){
+           $('#'+i).val(obj[i]);
+       }
+       simpleScript.closeModal(form);
+    };
+    
+    this.public.createCell = function(obj){
+        var t = '';
+        for(var i=0;i<obj.rows;i++){
+           t+= '<tr>'; 
+           for(var j=0;j<obj.cols;j++){
+               t+='<td>&nbsp;</td>';
+           }
+           t+= '</tr>';
+        }
+        return t;
     };
     
     return this.public;

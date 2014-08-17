@@ -181,6 +181,16 @@ class Functions{
         return $html;
     }
 
-    
+    public static function createCell($obj){
+        $t = '';
+        for($i=0;$i<$obj['row'];$i++){
+           $t.= '<tr>'; 
+           for($j=0;$j<$obj['cols'];$j++){
+               $t.='<td>&nbsp;</td>';
+           }
+           $t.= '</tr>';
+        }
+        return $t;
+    }
 }
 ?>

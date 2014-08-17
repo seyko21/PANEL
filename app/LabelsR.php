@@ -14,6 +14,7 @@ define('BTN_NUEVO','Nuevo');
 define('BTN_DELETE','Eliminar');
 define('BTN_CLOSE','Cerrar');
 define('BTN_ADD','Agregar');
+define('LABEL_T','Total');
 
 /*FORMULARIO LOGIN*/
 define('L_TITLE','Ingresar');
@@ -107,4 +108,7 @@ define('LABEL_GNC5','Días de oferta');
 define('LABEL_GNC6','IGV');
 define('LABEL_GNC7','Producto');
 define('LABEL_GNC8','Buscar Producto');
+define('LABEL_GNC9','Escriba ubicación y presione enter para buscar');
+define('LABEL_GNC10','Agregar Producto');
+define('LABEL_GNC11','Abre ventana para buscar y agregar productos');
 ?>

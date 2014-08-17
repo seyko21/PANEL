@@ -28,7 +28,7 @@ abstract class Controller{
     }
     
     protected function getLibrary($libreria){
-        $rutaLibreria = ROOT . 'libs' . DS . $libreria . '.php';
+        $rutaLibreria = ROOT . 'libs' . DS . $libreria . DS . $libreria.'.php';
         
         if(is_readable($rutaLibreria)){
             require_once ($rutaLibreria);

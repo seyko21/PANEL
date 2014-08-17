@@ -137,23 +137,6 @@ var registrarVendedor_ = function(){
         });
     };
 
-    this.publico.getFormBuscarMisProductos = function(btn,tab){
-        _private.tab = tab;
-        simpleAjax.send({
-            element: btn,
-            dataType: 'html',
-            root: _private.config.modulo + 'getFormBuscarMisProductos',
-            fnCallback: function(data){
-                $('#cont-modal').append(data);  /*los formularios con append*/
-                $('#'+diccionario.tabs.T7+'formBuscarProducto').modal('show');
-            }
-        });
-    };
-    
-    this.publico.getMisProductos = function(){
-        alert(8)
-    };
-    
     this.publico.getEditarVendedor = function(btn,id){
         _private.idVendedor = id;
        

@@ -4,6 +4,9 @@
 .center{
     text-align: center;
 }
+.right{
+    text-align: right;
+}
 .contMenus{
     height:192px;
     overflow:auto; 

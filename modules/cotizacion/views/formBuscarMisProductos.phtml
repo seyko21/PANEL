@@ -1,0 +1,101 @@
+<?php
+/*
+ * Documento   : buscarEmpleado
+ * Creado      : 03-ago-2014
+ * Autor       : ..... .....
+ * Descripcion : 
+ */
+
+$buscar = Session::getPermiso('REGVEBS');
+?>
+<form id="<?php echo T8; ?>formBuscarProducto" name="<?php echo T8; ?>formBuscarProducto" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog" style="width: 70%">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close"  aria-hidden="true">
+                    &times;
+                </button>
+                <h4 class="modal-title"><?php echo LABEL_GNC8; ?></h4>
+            </div>
+            <div class="modal-body smart-form">
+                <section>
+                    <div class="row">
+                        <label class="label col col-2"><?php echo LABEL_GNC7; ?></label>
+                        <div class="col col-8">
+                            <label class="input"> 
+                                <input type="text" id="<?php echo T8; ?>txt_search" name="<?php echo T8; ?>txt_search" placeholder="<?php echo LABEL_GNC9; ?>" onkeypress="simpleScript.triggerPress('<?php echo T8; ?>btnSubSearchPro',event);"></input>
+                            </label>
+                        </div>
+                    </div>
+                </section>
+                <div class="well">
+                    <table id="<?php echo T8; ?>gridProductosFound" class="table table-bordered table-striped table-condensed smart-form table-hover has-tickbox" style="width:100%">
+                        <thead>
+                            <th>Nro</th>
+                            <th style="width: 3%">
+                                <label class="checkbox">
+                                    <input type="checkbox" id="<?php echo T8; ?>chk_all" name="<?php echo T8; ?>chk_all" onclick="simpleScript.checkAll(this,'#<?php echo T8; ?>gridProductosFound');"><i></i>
+                                </label>
+                            </th>
+                            <th class="center">Cod.</th>
+                            <th class="center">Descripción</th>
+                            <th class="center">Ubicación</th>
+                            <th class="center">Iluminado</th>
+                            <th class="center">Alto</th>
+                            <th class="center">Ancho</th>
+                            <th class="center">Area</th>
+                            <th class="center">Precio</th>
+                        </thead>
+                        <tbody>
+                            <?php echo Functions::createCell(array('row'=>7,'cols'=>10)); ?>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button id="<?php echo T8; ?>btnSubSearchPro" type="submit" class="hide">
+                    <i class="fa fa-ban"></i> <?php echo BTN_CLOSE; ?>
+                </button>
+                
+                <button id="<?php echo T8; ?>btnAddProd" type="button" class="btn txt-color-white bg-color-blueDark" onclick="generarCotizacionScript.addProducto();">
+                    <i class="fa fa-plus-circle"></i> <?php echo BTN_ADD; ?>
+                </button>
+                <button type="button" class="btn btn-default xClose">
+                    <i class="fa fa-ban"></i> <?php echo BTN_CLOSE; ?>
+                </button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</form>
+<!-- si no riene permiso se anula submit desde cualquier input -->
+<?php if (!$buscar['permiso']): ?>
+    <script>
+        simpleScript.noSubmit('#<?php echo T8; ?>formBuscarProducto');
+    </script>
+<?php endif; ?>
+<script>
+    $('#<?php echo T8; ?>formBuscarProducto').validate({
+            // Rules for form validation
+            rules : {
+                    <?php echo T8; ?>txt_search : {
+                            required : true,
+                            regular2: true,
+                            minlength: 3
+                    }
+            },
+
+            // Do not change code below
+            errorPlacement : function(error, element) {
+                    error.insertAfter(element.parent());
+            },
+                    
+            submitHandler: function(){
+                generarCotizacion.getTableMisProductos();
+            }   
+        });
+         
+simpleScript.removeAttr.click({
+    container: '#<?php echo T8; ?>formBuscarProducto',
+    typeElement: 'button'
+});
+</script>

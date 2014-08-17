@@ -1,5 +1,8 @@
 <?php
 $grabar = Session::getPermiso('GNCOTGR');
+$agregar = Session::getPermiso('GNCOTAG');
+$buscar = Session::getPermiso('GNCOTBS');
+
 ?>
 <form id="<?php echo T8; ?>formGenerarCotizacion" name="<?php echo T8; ?>formGenerarCotizacion" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog" style="width: 70%;">
@@ -16,9 +19,11 @@ $grabar = Session::getPermiso('GNCOTGR');
                     <div class="col-md-10">
                         <div class="input-group input-group-sm">
                             <input type="hidden" id="<?php echo T8; ?>txt_idpersona" name="<?php echo T8; ?>txt_idpersona">
-                            <input class="form-control" type="text" id="<?php echo T8; ?>txt_empleadodesc" name="<?php echo T8; ?>txt_empleadodesc">
+                            <input class="form-control" type="text" id="<?php echo T8; ?>txt_empleadodesc" name="<?php echo T8; ?>txt_empleadodesc" readonly>
                             <span class="input-group-btn">
+                                <?php if($buscar['permiso']):?>
                                 <button class="btn btn-default" type="button" onclick="configurarUsuarios.getFormEmpleado(this, '<?php echo T8; ?>');"><i class="fa fa-search"></i> Buscar</button>
+                                <?php endif; ?>
                             </span>
                         </div>
                     </div>
@@ -45,9 +50,12 @@ $grabar = Session::getPermiso('GNCOTGR');
                         </div>
                     </div>
                 </div>
-                <button id="<?php echo T8; ?>btnGadd" type="button" class="btn txt-color-white bg-color-blueDark" onclick="registrarVendedor.getFormBuscarMisProductos(this,'<?php echo T8; ?>');">
+                <?php if($agregar['permiso']):?>
+                <button id="<?php echo T8; ?>btnGadd" type="button" class="btn txt-color-white bg-color-blueDark" onclick="generarCotizacion.getFormBuscarMisProductos(this,'<?php echo T8; ?>');"
+                        rel="popover-hover" data-placement="top" data-original-title="<?php echo LABEL_GNC10; ?>" data-content="<?php echo LABEL_GNC11; ?>">
                     <i class="fa fa-plus-circle"></i> <?php echo BTN_ADD; ?>
                 </button>
+                <?php endif; ?>
                 <p>
                 <div class="si-access" style="min-height: 200px; max-height: auto;">
                     <table id="<?php echo T8; ?>gridProductos" class="table table-bordered table-striped table-condensed table-hover smart-form has-tickbox">
@@ -60,9 +68,17 @@ $grabar = Session::getPermiso('GNCOTGR');
                             <th style="width:1%">...</th>
                         </thead>
                         <tbody>
-                            
+                            <?php echo Functions::createCell(array('row'=>5,'cols'=>6)); ?>
                         </tbody>
                     </table>
+                </div>
+                <div class="form-group" style="margin-top:5px">
+                    <div class="col-md-2 pull-right">
+                        <div class="input">
+                            <input class="form-control right" type="text" id="<?php echo T8; ?>txt_total" name="<?php echo T8; ?>txt_total" readonly>
+                        </div>
+                    </div>
+                    <label class="control-label col-md-2 pull-right" for="prepend"><?php echo LABEL_T; ?></label>
                 </div>
                 </p>
             </div>
@@ -79,40 +95,48 @@ $grabar = Session::getPermiso('GNCOTGR');
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 
-    <!-- si no riene permiso se anula submit desde cualquier input -->
-    <?php if (!$grabar['permiso']): ?>
-        <script>
-            simpleScript.noSubmit('#<?php echo T8; ?>formGenerarCotizacion');
-        </script>
-    <?php endif; ?>
+<!-- si no riene permiso se anula submit desde cualquier input -->
+<?php if (!$grabar['permiso']): ?>
     <script>
-        $('.xhelp').tooltip({placement: 'right'});
-        $('#<?php echo T8; ?>formGenerarCotizacion').validate({
-            // Rules for form validation
-            rules: {
-<?php echo T8; ?>txt_dominio: {
-                    required: true,
-                    regular: true,
-                    minlength: 5
-                },
-<?php echo T8; ?>txt_icono: {
-                    required: true,
-                    regular: true,
-                    minlength: 5
-                },
-<?php echo T8; ?>txt_orden: {
-                    required: true,
-                    number: true,
-                    maxlength: 2
-                }
+        simpleScript.noSubmit('#<?php echo T8; ?>formGenerarCotizacion');
+    </script>
+<?php endif; ?>
+<script>
+//        $("[rel=popover-hover]").popover({
+//            trigger : "hover"
+//        });
+    $('#<?php echo T8; ?>formGenerarCotizacion').validate({
+        // Rules for form validation
+        rules: {
+            <?php echo T8; ?>txt_idpersona: {
+                required: true
             },
-            // Do not change code below
-            errorPlacement: function(error, element) {
-                error.insertAfter(element.parent());
-            },
-            submitHandler: function() {
-                //configurarMenu.postDominio();
+            <?php echo T8; ?>txt_empleadodesc: {
+                required: true
+            },        
+            <?php echo T8; ?>txt_meses: {
+                required: true,
+                decimal: true,
+                maxlength: 4
+            },   
+            <?php echo T8; ?>txt_oferta: {
+                required: true,
+                number: true,
+                maxlength: 3
             }
-        });
+        },
+        // Do not change code below
+        errorPlacement: function(error, element) {
+            error.insertAfter(element.parent());
+        },
+        submitHandler: function() {
+            generarCotizacion.postGenerarCotizacion();
+        }
+    });
+    
+simpleScript.removeAttr.click({
+    container: '#<?php echo T8; ?>formGenerarCotizacion',
+    typeElement: 'button'
+});
     </script>
 </form>
