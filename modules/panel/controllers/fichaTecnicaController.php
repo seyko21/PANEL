@@ -87,7 +87,7 @@ class fichaTecnicaController extends Controller{
         $rResult = Obj::run()->fichaTecnicaModel->getCaratulas();
         return $rResult;
     } 
-       public static function getDepartamentos(){ 
+    public static function getDepartamentos(){ 
         $data = Obj::run()->fichaTecnicaModel->getDepartamentos();        
         return $data;
     }
@@ -127,6 +127,11 @@ class fichaTecnicaController extends Controller{
     public function getEditarFichaTecnica(){ 
         Obj::run()->View->render('editarFichaTecnica');
     }
+    public static function getFichaTecnica(){ 
+        $data = Obj::run()->fichaTecnicaModel->getFichaTecnica();        
+        return $data;
+    }
+    
     public function postNuevoFichaTecnica(){ 
         $data = Obj::run()->fichaTecnicaModel->mantenimientoFichaTecnica();
         

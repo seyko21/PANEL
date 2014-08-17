@@ -81,7 +81,9 @@ var fichaTecnicaScript_ = function(){
     //funcion que simplemente actualiza los campos del formulario
     this.publico.updatePosition = function (latLng){	       
         $("#"+diccionario.tabs.T102+"txt_latitud").val(latLng.lat());
-        $("#"+diccionario.tabs.T102+"txt_longitud").val(latLng.lng());	   
+        $("#"+diccionario.tabs.T102+"txt_longitud").val(latLng.lng());	
+        lat = latLng.lat();
+        lng = latLng.lng();
      };
           
     //Resetear Mapa

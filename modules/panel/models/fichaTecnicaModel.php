@@ -120,6 +120,14 @@ class fichaTecnicaModel extends Model{
         $data = $this->queryAll($query,$parms);
         return $data;
     }
+    public function getFichaTecnica(){
+        $query = " SELECT * FROM lgk_catalogo WHERE id_producto = :id ";
+        $parms = array(
+            ':id' => $this->_idProducto,
+        );
+        $data = $this->queryOne($query,$parms);            
+        return $data;
+    }
     
     public function getCaratulas(){
         $query = "call sp_catalogoCaratulasConsultas(:idProducto);";

@@ -35,7 +35,7 @@ echo Functions::widgetOpen(array(
     $obj = array(
         'id'=>T102.'caratula',
         'title'=>LABEL_A23,
-        'height'=>'200px',
+        'height'=>'100px',
         'actions'=>array(
             array(
                 'id'=>T102.'btnNew',
@@ -50,3 +50,16 @@ echo Functions::widgetOpen(array(
 <!-- CARATULAS -->   
 <div id="cont-listaCaratulas">
 </div>
+
+<script>
+     // activate popovers with hover states
+    $("[rel=popover-hover]").popover({
+            trigger : "hover"
+    });  
+    /*para hacer evento invisible*/
+    simpleScript.removeAttr.click({
+        container: '#widget_<?php echo T102.'caratulas'; ?>',
+        typeElement: 'button'
+    });
+
+</script>

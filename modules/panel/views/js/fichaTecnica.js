@@ -163,7 +163,7 @@ var fichaTecnica_ = function(){
             gifProcess: true,
             dataType: 'html',
             root: _private.config.modulo + 'getEditarFichaTecnica',
-            data: '&_idFichaTecnica='+_private.idProducto,
+            data: '&_idProducto='+_private.idProducto,
             fnCallback: function(data){
                 $('#cont-modal').append(data);  /*los formularios con append*/
                 $('#'+diccionario.tabs.T102+'formFichaTecnica').modal('show');
@@ -200,7 +200,7 @@ var fichaTecnica_ = function(){
                         content: mensajes.MSG_3,
                         callback: function(){
                             fichaTecnica.getGridFichaTecnica();     
-                            //simpleScript.closeModal('#'+diccionario.tabs.T102+'formFichaTecnica');
+                            simpleScript.closeModal('#'+diccionario.tabs.T102+'formFichaTecnica');
                         }
                     });
                 }else if(!isNaN(data.result) && parseInt(data.result) === 2){

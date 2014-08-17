@@ -12,15 +12,15 @@ $data = fichaTecnicaController::getCaratulas();
 ?>
 
 <?php if(sizeof($data)): ?>
-<ol id="ol-caratula" class="lista-redondeada ol">
+<ol id="ol-caratulas" class="lista-redondeada ol">
     <?php 
         foreach ($data as $value): 
-            $inactivo = 'text-decoration:line-through;color: red;';
+            $inactivo = 'text-decoration:line-through;color: red;float:left; margin-top:-20px;';
             if($value['estado'] == 'D'){
                 $inactivo = '';
             }
     ?>
-        <li id="liMenPri_<?php echo $value['id_caratula']; ?>" data-orden="<?php echo $value['id_menuprincipal']; ?>" 
+        <li id="liCaratula_<?php echo $value['id_caratula']; ?>" data-orden="<?php echo $value['id_menuprincipal']; ?>" 
                 data-url="<?php echo $value['url']; ?>" data-alias="<?php echo $value['alias']; ?>">
             <a href="javascript:;" rel="popover-hover" data-placement="top" 
                data-original-title="<?php echo $value['codigo']; ?>" 
@@ -28,16 +28,15 @@ $data = fichaTecnicaController::getCaratulas();
                <div><b>URL:</b> <?php echo $value['url']; ?></div>
                <div><b>Orden:</b> <?php echo $value['orden']; ?></div>"
                data-html="true">
-               
                <span style="<?php echo $inactivo; ?>">
                    <?php echo $value['codigo']; ?>
                </span>
                <div class="pull-right btn-group" style="margin-top: -4px;">                    
-                    <button class="btn btn-xs btn-primary" title="Editar" onclick="fichaTecnica.getEditarMenuPrincipal('<?php echo AesCtr::en($value['id_menuprincipal']); ?>');">
+                    <button class="btn btn-xs btn-primary" title="Editar" onclick="fichaTecnica.getEditarMenuPrincipal('<?php echo AesCtr::en($value['id_caratula']); ?>');">
                         <i class="fa fa-edit fa-lg"></i>
                     </button>
                     <?php if ($eliminar['permiso']): ?>
-                        <button class="btn btn-xs btn-danger" title="<?php echo $eliminar['accion']; ?>" onclick="fichaTecnica.postDeleteMenuPrincipal('<?php echo AesCtr::en($value['id_menuprincipal']); ?>');">
+                        <button class="btn btn-xs btn-danger" title="<?php echo $eliminar['accion']; ?>" onclick="fichaTecnica.postDeleteMenuPrincipal('<?php echo AesCtr::en($value['id_caratula']); ?>');">
                             <i class="fa fa-ban fa-lg"></i>
                         </button>
                     <?php endif; ?>
@@ -46,57 +45,7 @@ $data = fichaTecnicaController::getCaratulas();
         </li>
     <?php endforeach; ?>
 </ol>
-<script>
-    // activate popovers with hover states
-    $("[rel=popover-hover]").popover({
-            trigger : "hover"
-    });
-    function moverLiCaratula(el,dom){
-        /*reset key opcion y sus contenedores*/
-        FichaTecnica.resetKeyProducto();
-        FichaTecnicaScript.resetFromCaratula();
-        
-        FichaTecnica.getOpciones(el);
-        
-        $('#name-menuprincipal').hide();
-        $('#clonex div').css({
-            top: 0,
-            left: 0,
-            display: 'none'
-        });
-        
-        var pos = $('#liMenPri_'+simpleAjax.stringGet(el)).position();
-        $('#clonex').css({
-            left: pos.left + 59,
-            top: pos.top + 380
-        });
-        
-        $('.popover').css('display','none');
-        $('#clonex div').css('display','block');
-        $('#clonex div').html(dom);
-        $('#clonex div').animate({
-            left: '+=550'
-            }, 1000, function() {
-                $('#clonex div').fadeOut();
-                $('#name-menuprincipal').html(dom).fadeOut().delay(500).fadeIn();
-        });
-
-    }
-    
-    //    mover listas
-    $("#ol-caratulas").sortable({
-        update:function(){
-            var url = $(this).attr('data-url');
-            var alias = $(this).attr('data-alias');
-            var ordenElementos = $(this).sortable("toArray",{attribute: 'data-orden'}).toString(); 
-            FichaTecnica.postOrdenar('MEP',ordenElementos);
-            
-            $.each($('#ol-menuprincipal').find('li'),function(index,value){
-                var h = $(this).find('a').attr('data-content','<div><b>Alias:</b> '+alias+'</div><div><b>URL:</b> '+url+'</div><div><b>Orden:</b> '+(1 + index)+'</div>');
-            });
-        }
-    });
-    
+<script>      
     /*para quitar evento*/
     simpleScript.removeAttr.click({
         container: '#widget_<?php echo T102.'caratulas'; ?>',
