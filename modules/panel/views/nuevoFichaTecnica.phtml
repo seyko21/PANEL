@@ -92,7 +92,7 @@ $grabar = Session::getPermiso('FITECGR');
                                         <label class="input"> 
                                             <i class="icon-append fa fa-map-marker"></i>
                                             <input type="text" id="<?php echo T102; ?>txt_ubicacion" name="<?php echo T102; ?>txt_ubicacion" >
-                                            <b class="tooltip tooltip-top-right"><i class="fa fa-map-marker  txt-color-teal"></i> <?php echo LABEL_A26M; ?></b>
+                                            <b class="tooltip tooltip-top-right"><i class="fa fa-question-circle  txt-color-teal"></i> <?php echo LABEL_A26M; ?></b>
                                         </label>
                                     </div>
                                 </div>
@@ -104,8 +104,7 @@ $grabar = Session::getPermiso('FITECGR');
                                 <div class="col col-8">
                                     <label class="select"> 
                                         <?php
-                                            $data = fichaTecnicaController::getTipoPanel();
-
+                                            $data = fichaTecnicaController::getTPanelFichaTecnica();
                                             echo Functions::selectHtml(array(
                                                 'data'=>$data,
                                                 'atributes'=>array(
@@ -129,7 +128,7 @@ $grabar = Session::getPermiso('FITECGR');
                                         <label class="input"> 
                                             <i class="icon-append fa fa-thumb-tack "></i>
                                             <input type="text" id="<?php echo T102; ?>txt_ancho" name="<?php echo T102; ?>txt_ancho"></input>
-                                            <b class="tooltip tooltip-top-right"><i class="fa fa-thumb-tack  txt-color-teal"></i> <?php echo LABEL_A28M; ?></b>
+                                            <b class="tooltip tooltip-top-right"><i class="fa fa-question-circle  txt-color-teal"></i> <?php echo LABEL_A28M; ?></b>
                                         </label>
                                     </div>
                                 <label class="label col col-2"><?php echo LABEL_A29; ?></label>
@@ -137,7 +136,7 @@ $grabar = Session::getPermiso('FITECGR');
                                         <label class="input"> 
                                             <i class="icon-append fa fa-thumb-tack "></i>
                                             <input type="text" id="<?php echo T102; ?>txt_alto" name="<?php echo T102; ?>txt_alto"></input>
-                                            <b class="tooltip tooltip-top-right"><i class="fa fa-thumb-tack  txt-color-teal"></i> <?php echo LABEL_A29M; ?></b>
+                                            <b class="tooltip tooltip-top-right"><i class="fa fa-question-circle  txt-color-teal"></i> <?php echo LABEL_A29M; ?></b>
                                         </label>
                                 </div>
                             </div>
@@ -147,9 +146,9 @@ $grabar = Session::getPermiso('FITECGR');
                                     <label class="label col col-3"><?php echo LABEL_A30; ?></label>
                                     <div class="col col-8">
                                         <label class="textarea textarea-resizable"> 
-                                             <i class="icon-append fa fa-map-marker"></i>
+                                             <i class="icon-append fa fa-align-justify"></i>
                                             <textarea id="<?php echo T102; ?>txt_observacion" name="<?php echo T102; ?>txt_observacion" class="custom-scroll" rows="3"></textarea> 
-                                             <b class="tooltip tooltip-top-right"><i class="fa fa-map-marker  txt-color-teal"></i> <?php echo LABEL_A30M; ?></b>
+                                             <b class="tooltip tooltip-top-right"><i class="fa fa-question-circle txt-color-teal"></i> <?php echo LABEL_A30M; ?></b>
 					</label>
                                         
                                     </div>
@@ -165,8 +164,8 @@ $grabar = Session::getPermiso('FITECGR');
                             <div class="col col-8">
                                 <label class="input"> 
                                     <i class="icon-append fa fa-map-marker"></i>
-                                    <input type="text" id="<?php echo T102; ?>txt_direccion" name="<?php echo T102; ?>txt_direccion" value="Chimbote, Perú"  onKeyPress="return fichaTecnicaScript.enter(event)" >
-                                    <b class="tooltip tooltip-top-right"><i class="fa fa-map-marker  txt-color-teal"></i> <?php echo LABEL_A31M; ?></b>
+                                    <input type="text" id="<?php echo T102; ?>txt_direccion" name="<?php echo T102; ?>txt_direccion" onKeyPress="return fichaTecnicaScript.enter(event)" >
+                                    <b class="tooltip tooltip-top-right"><i class="fa fa-question-circle  txt-color-teal"></i> <?php echo LABEL_A31M; ?></b>
                                 </label>                               
                             </div>
                             <button id="<?php echo T102; ?>btnBuscar" type="button" class="btn txt-color-white bg-color-blueDark" onclick="fichaTecnicaScript.codeAddress();">
@@ -200,7 +199,7 @@ $grabar = Session::getPermiso('FITECGR');
             </div>
             <div class="modal-footer">
                 <?php if ($grabar['permiso']): ?>
-                    <button id="<?php echo T102; ?>btnGrabaAccion" type="submit" class="btn txt-color-white bg-color-blueDark">
+                    <button id="<?php echo T102; ?>btnGfitec" type="submit" class="btn txt-color-white bg-color-blueDark">
                         <i class="fa fa-save"></i> <?php echo $grabar['accion']; ?>
                     </button>
                 <?php endif; ?>
@@ -223,33 +222,48 @@ $grabar = Session::getPermiso('FITECGR');
     $('#<?php echo T102; ?>formFichaTecnica').validate({
         // Rules for form validation
         rules: {
-            <?php echo T102; ?>txt_empleado: {
-                required: true
-            },
-            <?php echo T102; ?>txt_email: {
+            <?php echo T102; ?>txt_ubicacion : {
                 required: true,
-                email: true
+                minlength: 5
+            },
+            <?php echo T102; ?>txt_ancho : {
+                required: true                
             },        
-            <?php echo T102; ?>txt_clave: {
-                required: true,
-                regular: true,
-                minlength: 2
+            <?php echo T102; ?>txt_alto : {
+                required: true                
+            },        
+            <?php echo T102; ?>lst_departamento : {
+                required : true
             },
-            <?php echo T102; ?>txt_empleadodesc: {
-                required: true,
-                regular: true,
-                minlength: 2
+            <?php echo T102; ?>lst_provincia : {
+                required : true
             },
-            <?php echo T102; ?>chk_roles: {
+            <?php echo T102; ?>lst_ubigeo : {
+               required : true
+            },
+            <?php echo T102; ?>lst_tipopanel : {
                 required: true
-            }        
+            },
+            <?php echo T102; ?>txt_latitud : {
+                required: true
+            },
+            <?php echo T102; ?>txt_longitud : {
+                required: true
+            } 
         },
         // Do not change code below
         errorPlacement: function(error, element) {
             error.insertAfter(element.parent());
         },
         submitHandler: function() {
-           fichaTecnica.postNuevofichaTecnica();
+            
+           fichaTecnica.postNuevoFichaTecnica();
+           //valores por defecto:
+              setTimeout(function() {
+                $("#<?php echo T102; ?>txt_direccion").val('Chimbote, Perú');
+                $("#<?php echo T102; ?>txt_ancho").val('10');
+                $("#<?php echo T102; ?>txt_alto").val('5');                    
+              }, 1000);                
         }
     });  
     /*para hacer evento invisible*/
@@ -265,6 +279,9 @@ $grabar = Session::getPermiso('FITECGR');
             fichaTecnicaScript.codeAddress();                     
         }, 1000);                                
     });  
-    
+    //Por Defecto:
+    $("#<?php echo T102; ?>txt_direccion").val('Chimbote, Perú');
+    $("#<?php echo T102; ?>txt_ancho").val('10');
+    $("#<?php echo T102; ?>txt_alto").val('5');
     
 </script>

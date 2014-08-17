@@ -69,8 +69,10 @@ var fichaTecnicaScript_ = function(){
                  fichaTecnicaScript.updatePosition(marker.getPosition());
              });
           } else {
-             //si no es OK devuelvo error
-             alert("No podemos encontrar la direccion en el Mapa.");
+             //si no es OK devuelvo error             
+             simpleScript.notify.warning({
+                content: mensajes.MSG_11                        
+             });             
           }                    
         });
       };   

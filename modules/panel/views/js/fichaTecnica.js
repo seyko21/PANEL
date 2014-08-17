@@ -49,8 +49,10 @@ var fichaTecnica_ = function(){
             iDisplayLength: 10,            
             aoColumns: [
                 {sTitle: "<input type='checkbox' id='"+diccionario.tabs.T102+"chk_all' onclick='simpleScript.checkAll(this,\"#"+diccionario.tabs.T102+"gridFichaTecnica\");'>", sWidth: "1%", sClass: "center", bSortable: false},
-                {sTitle: "Ubicación", sWidth: "55%"},
+                {sTitle: "ID", sWidth: "8%"},
+                {sTitle: "Ubicación", sWidth: "40%"},
                 {sTitle: "Area m2", sWidth: "8%",  sClass: "center", bSortable: false},
+                {sTitle: "Nro Caratulas", sWidth: "8%",  sClass: "center", bSortable: false},
                 {sTitle: "Estado", sWidth: "8%",  sClass: "center", bSortable: false},
                 {sTitle: "Acciones", sWidth: "15%", sClass: "center", bSortable: false}
             ],
@@ -60,10 +62,10 @@ var fichaTecnica_ = function(){
             fnDrawCallback: function() {
                 $('#'+diccionario.tabs.T102+'gridFichaTecnica_filter').find('input').attr('placeholder','Buscar');
                 /*para hacer evento invisible*/
-               /* simpleScript.removeAttr.click({
+                simpleScript.removeAttr.click({
                     container: '#widget_'+diccionario.tabs.T102, //widget del datagrid
                     typeElement: 'button, #'+diccionario.tabs.T102+'chk_all'
-                });*/
+                });
             }
         });
         setup_widgets_desktop();
@@ -105,7 +107,7 @@ var fichaTecnica_ = function(){
                         simpleScript.setEvent.change({
                             element: '#'+obj.idElement,
                             event: function(){
-                                registrarVendedor.getUbigeo({
+                                fichaTecnica.getUbigeo({
                                     idProvincia: $('#'+obj.idElement).val(),
                                     content: obj.contentUbigeo,
                                     idElement: obj.idUbigeo,
@@ -169,7 +171,103 @@ var fichaTecnica_ = function(){
         });
     };
        
+    this.publico.postNuevoFichaTecnica = function(){        
+        //Validar Manualmente:
+        if( $('#'+diccionario.tabs.T102+'txt_ubicacion').val() == '' ||
+            $('#'+diccionario.tabs.T102+'txt_ancho').val() == '' ||
+            $('#'+diccionario.tabs.T102+'txt_alto').val() == '' ||
+            $('#'+diccionario.tabs.T102+'lst_departamento').val() == '' ||
+            $('#'+diccionario.tabs.T102+'lst_provincia').val() == '' ||
+            $('#'+diccionario.tabs.T102+'lst_ubigeo').val() == '' ||
+            $('#'+diccionario.tabs.T102+'lst_tipopanel').val() == '' ||
+            $('#'+diccionario.tabs.T102+'txt_latitud').val() == '' ||
+            $('#'+diccionario.tabs.T102+'txt_longitud').val() == ''){
+                simpleScript.notify.error({
+                    content: mensajes.MSG_12        
+                 });
+                return;
+        }
+        
+        simpleAjax.send({
+            flag: 1,
+            element: '#'+diccionario.tabs.T102+'btnGfitec',
+            root: _private.config.modulo + 'postNuevoFichaTecnica',
+            form: '#'+diccionario.tabs.T102+'formFichaTecnica',
+            clear: true,
+            fnCallback: function(data) {            
+               if(!isNaN(data.result) && parseInt(data.result) === 1){
+                    simpleScript.notify.ok({
+                        content: mensajes.MSG_3,
+                        callback: function(){
+                            fichaTecnica.getGridFichaTecnica();     
+                            //simpleScript.closeModal('#'+diccionario.tabs.T102+'formFichaTecnica');
+                        }
+                    });
+                }else if(!isNaN(data.result) && parseInt(data.result) === 2){
+                    simpleScript.notify.error({
+                        content: mensajes.MSG_4
+                    });
+                }
+            }
+        });
+    };
     
+    this.publico.postEditarFichaTecnica = function(){
+        
+        simpleAjax.send({
+            flag: 2,
+            element: '#'+diccionario.tabs.T102+'btnGfitec',
+            root: _private.config.modulo + 'postEditarFichaTecnica',
+            form: '#'+diccionario.tabs.T102+'formFichaTecnica',
+            data: '&_idProducto='+_private.idProducto,
+            clear: true,
+            fnCallback: function(data) {
+                if(!isNaN(data.result) && parseInt(data.result) === 1){
+                    simpleScript.notify.ok({
+                        content: mensajes.MSG_3,
+                        callback: function(){
+                            _private.idProducto = 0;
+                            fichaTecnica.getGridFichaTecnica();
+                            simpleScript.closeModal('#'+diccionario.tabs.T102+'formFichaTecnica');
+                        }
+                    });
+                }else if(!isNaN(data.result) && parseInt(data.result) === 2){
+                    simpleScript.notify.error({
+                        content: mensajes.MSG_4
+                    });
+                }
+            }
+        });
+    };    
+    this.publico.postDeleteFichaTecnicaAll = function(btn){
+        simpleScript.validaCheckBox({
+            id: '#'+diccionario.tabs.T102+'gridFichaTecnica',
+            msn: mensajes.MSG_9,
+            fnCallback: function(){
+                simpleScript.notify.confirm({
+                    content: mensajes.MSG_7,
+                    callbackSI: function(){
+                        simpleAjax.send({
+                            flag: 4,
+                            element: btn,
+                            form: '#'+diccionario.tabs.T102+'formGridFichaTecnica',
+                            root: _private.config.modulo + 'postDeleteFichaTecnicaAll',
+                            fnCallback: function(data) {
+                                if(!isNaN(data.result) && parseInt(data.result) === 1){
+                                    simpleScript.notify.ok({
+                                        content: mensajes.MSG_8,
+                                        callback: function(){
+                                            fichaTecnica.getGridFichaTecnica();
+                                        }
+                                    });
+                                }
+                            }
+                        });
+                    }
+                });
+            }
+        });
+    };
     
     return this.publico;
     
