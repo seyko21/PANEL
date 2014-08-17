@@ -8,5 +8,7 @@ var mensajes = {
     MSG_7: '¿Está seguro de eliminar registros seleccionados?',
     MSG_8: 'Registros se eliminaron correctamente.',
     MSG_9: 'Seleccione al menos un registro.',
-    MSG_10: 'No se han agregado registros.'
+    MSG_10: 'No se han agregado registros.',
+    MSG_11: 'No podemos encontrar la direccion en el Mapa.',
+    MSG_12: 'Falta ingresar datos.'
 };

@@ -36,8 +36,8 @@ class fichaTecnicaController extends Controller{
                 
                 if($aRow['estado'] == 'A'){
                     $estado = '<span class=\"label label-success\">Activo</span>';
-                }elseif($aRow['estado'] == 'I'){
-                    $estado = '<span class=\"label label-danger\">Inactivo</span>';
+                }elseif($aRow['estado'] == 'B'){
+                    $estado = '<span class=\"label label-danger\">Baja</span>';
                 }
             
                 /*antes de enviar id se encrypta*/
@@ -46,7 +46,7 @@ class fichaTecnicaController extends Controller{
                 $chk = '<input id=\"c_'.(++$key).'\" type=\"checkbox\" name=\"'.T101.'chk_delete[]\" value=\"'.$encryptReg.'\">';
                 
                 /*datos de manera manual*/
-                $sOutput .= '["'.$chk.'","'.$aRow['ubicacion'].'","'.$aRow['dimesion_area'].'","'.$estado.'", ';
+                $sOutput .= '["'.$chk.'","'.$aRow['id_producto'].'","'.$aRow['ubicacion'].'","'.$aRow['dimesion_area'].'","'.$aRow['NroCaratulas'].'","'.$estado.'", ';
                 
 
                 /*
@@ -112,8 +112,8 @@ class fichaTecnicaController extends Controller{
         return $data;
     }
     
-    public static function getTipoPanel(){ 
-        $data = Obj::run()->fichaTecnicaModel->getTipoPanel();        
+    public static function getTPanelFichaTecnica(){ 
+        $data = Obj::run()->fichaTecnicaModel->getTPanelFichaTecnica();        
         return $data;
     }    
        
@@ -127,6 +127,29 @@ class fichaTecnicaController extends Controller{
     public function getEditarFichaTecnica(){ 
         Obj::run()->View->render('editarFichaTecnica');
     }
+    public function postNuevoFichaTecnica(){ 
+        $data = Obj::run()->fichaTecnicaModel->mantenimientoFichaTecnica();
+        
+        echo json_encode($data);
+    }
+    
+    public function postEditarFichaTecnica(){ 
+        $data = Obj::run()->fichaTecnicaModel->mantenimientoFichaTecnica();
+        
+        echo json_encode($data);
+    }
+    
+    public function postDeleteFichaTecnica(){ 
+        $data = Obj::run()->fichaTecnicaModel->mantenimientoFichaTecnica();
+        
+        echo json_encode($data);
+    }
+    
+    public function postDeleteFichaTecnicaAll(){ 
+        $data = Obj::run()->fichaTecnicaModel->mantenimientoFichaTecnicaAll();
+        
+        echo json_encode($data);
+    }        
     
 }
 

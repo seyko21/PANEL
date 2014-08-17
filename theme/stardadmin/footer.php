@@ -76,7 +76,7 @@
 <script src="<?php echo BASE_URL ?>libs/Aes/js/base64.js"></script>
 <script src="<?php echo BASE_URL ?>libs/Aes/js/utf8.js"></script>
 <script src="<?php echo BASE_URL ?>public/js/scrollTable.js"></script>
-
+<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=true"></script>
 </body>  
 
 <?php

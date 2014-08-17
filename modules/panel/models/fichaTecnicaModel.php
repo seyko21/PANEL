@@ -14,6 +14,14 @@ class fichaTecnicaModel extends Model{
     private $_idProducto;
     private $_idDepartamento;
     private $_idProvincia;
+    private $_idtipopanel;
+    private $_idubigeo;
+    private $_ubicacion;
+    private $_alto;
+    private $_ancho;
+    private $_googlelatitud;
+    private $_googlelongitud;
+    private $_observacion;
     
     /*para el grid*/
     private $_iDisplayStart;
@@ -32,7 +40,17 @@ class fichaTecnicaModel extends Model{
         $this->_usuario = Session::get('sys_idUsuario');
         $this->_idProducto = Aes::de($this->post('_idProducto'));   
         $this->_idDepartamento = $this->post('_idDepartamento');
-        $this->_idProvincia = $this->post('_idProvincia');        
+        $this->_idProvincia = $this->post('_idProvincia'); 
+        
+        $this->_idtipopanel  = $this->post(T102.'lst_tipopanel');  
+        $this->_idubigeo  = $this->post(T102.'lst_ubigeo');  
+        $this->_ubicacion  = $this->post(T102.'txt_ubicacion');  
+        $this->_ancho  = $this->post(T102.'txt_ancho');  
+        $this->_alto  = $this->post(T102.'txt_alto');  
+        $this->_googlelatitud  = $this->post(T102.'txt_latitud');  
+        $this->_googlelongitud  = $this->post(T102.'txt_longitud');  
+        $this->_observacion  = $this->post(T102.'txt_observacion');                          
+        
         $this->_iDisplayStart  =   $this->post('iDisplayStart'); 
         $this->_iDisplayLength =   $this->post('iDisplayLength'); 
         $this->_iSortingCols   =   $this->post('iSortingCols');
@@ -40,7 +58,7 @@ class fichaTecnicaModel extends Model{
     }
     
     public function getGridFichaTecnica(){
-        $aColumns       =   array( 'chk','ubicacion' ); //para la ordenacion y pintado en html
+        $aColumns       =   array( 'chk','id_producto','ubicacion' ); //para la ordenacion y pintado en html
         /*
 	 * Ordenando, se verifica por que columna se ordenara
 	 */
@@ -93,7 +111,7 @@ class fichaTecnicaModel extends Model{
         $data = $this->queryAll($query,$parms);
         return $data;
     }
-    public function getTipoPanel(){
+    public function getTPanelFichaTecnica(){
         $query = "SELECT id_tipopanel, descripcion FROM lgk_tipopanel WHERE estado = :estado; ";
         
         $parms = array(
@@ -118,6 +136,52 @@ class fichaTecnicaModel extends Model{
         
         return $xdata;
     }    
+    public function mantenimientoFichaTecnica(){
+        $query = "call sp_catalogoFichaTecnicaMantenimiento(:flag,:key,:id_tipopanel,				
+				:id_ubigeo,:ubicacion,:dimension_alto,:dimension_ancho,				
+				:google_latitud,:google_longitud,
+				:observacion,:usuario);";
+        $parms = array(
+            ':flag' => $this->_flag,
+            ':key' => $this->_idProducto,
+            ':id_tipopanel' => $this->_idtipopanel,     
+            ':id_ubigeo' => $this->_idubigeo,   
+            ':ubicacion' => $this->_ubicacion,   
+            ':dimension_alto' => $this->_alto,   
+            ':dimension_ancho' => $this->_ancho,   
+            ':google_latitud' => $this->_googlelatitud,   
+            ':google_longitud' => $this->_googlelongitud,   
+            ':observacion' =>($this->_observacion == '')?'Ninguno':$this->_observacion,                           
+            ':usuario' => $this->_usuario
+        );
+        $data = $this->queryOne($query,$parms);        
+        return $data;
+    }
+    
+    public function mantenimientoFichaTecnicaAll(){        
+        foreach ($this->_chkdel as $value) {
+            $query = "call sp_catalogoFichaTecnicaMantenimiento(:flag,:key,:id_tipopanel,				
+				:id_ubigeo,:ubicacion,:dimension_alto,:dimension_ancho,				
+				:google_latitud,:google_longitud,
+				:observacion,:usuario);";
+            $parms = array(
+                  ':flag' => $this->_flag,
+                  ':key' => Aes::de($value),
+                  ':id_tipopanel' => '',     
+                  ':id_ubigeo' => '',   
+                  ':ubicacion' => '',   
+                  ':dimension_alto' => '',   
+                  ':dimension_ancho' => '',   
+                  ':google_latitud' => '',   
+                  ':google_longitud' => '',   
+                  ':observacion' => '',                                 
+                  ':usuario' => $this->_usuario
+            );
+            $this->execute($query,$parms);
+        }
+        $data = array('result'=>1);
+        return $data;
+    }   
     
 }
 
