@@ -19,6 +19,7 @@ class generarCotizacionModel extends Model{
     private $_meses;
     private $_oferta;
     private $_total;
+    private $_igv;
     private $_usuario;
     
     /*para el grid*/
@@ -43,6 +44,7 @@ class generarCotizacionModel extends Model{
         $this->_precio      = $this->post(T8.'hhddPrecio');
         $this->_produccion  = $this->post(T8.'hhddProduccion');
         $this->_total       = $this->post(T8.'txt_total');
+        $this->_igv         = $this->post(T8.'lst_igv');
         $this->_idPersona   = Session::get('sys_idPersona');
         $this->_usuario     = Session::get('sys_idUsuario');
         
@@ -91,7 +93,7 @@ class generarCotizacionModel extends Model{
     }
     
     public function generarCotizacion(){
-        $query = "CALL sp_cotiGenerarCotizacion(:flag,:idCotizacion,:idRepresentante,:mesesContrato,:diasOferta,:total,:idCaratula,:precio,:produccion,:usuario);";
+        $query = "CALL sp_cotiGenerarCotizacion(:flag,:idCotizacion,:idRepresentante,:mesesContrato,:diasOferta,:total,:idCaratula,:precio,:produccion,:usuario,:igv);";
         
         $parms = array(
             ':flag' => $this->_flag,
@@ -103,7 +105,8 @@ class generarCotizacionModel extends Model{
             ':idCaratula' => '',
             ':precio' => '',
             ':produccion' => '',
-            ':usuario' => $this->_usuario
+            ':usuario' => $this->_usuario,
+            ':igv' => $this->_igv
         );
         $data = $this->queryOne($query,$parms);  
         
