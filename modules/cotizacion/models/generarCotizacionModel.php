@@ -122,7 +122,8 @@ class generarCotizacionModel extends Model{
                     ':idCaratula' => AesCtr::de($prod),
                     ':precio' => $this->_precio[$key],
                     ':produccion' => $this->_produccion[$key],
-                    ':usuario' => ''
+                    ':usuario' => '',
+                    ':igv' => ''
                 );
                 $this->execute($query,$parms);  
             }
