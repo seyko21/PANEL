@@ -105,6 +105,7 @@ var generarCotizacionScript_ = function(){
     
     this.publico.resetArrayProducto = function(){
         _private.prodAdd = [];
+        _private.total = 0;
     };
     
     return this.publico;
