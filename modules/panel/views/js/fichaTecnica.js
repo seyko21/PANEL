@@ -200,7 +200,7 @@ var fichaTecnica_ = function(){
                         content: mensajes.MSG_3,
                         callback: function(){
                             fichaTecnica.getGridFichaTecnica();     
-                            simpleScript.closeModal('#'+diccionario.tabs.T102+'formFichaTecnica');
+                            //simpleScript.closeModal('#'+diccionario.tabs.T102+'formFichaTecnica');
                         }
                     });
                 }else if(!isNaN(data.result) && parseInt(data.result) === 2){
