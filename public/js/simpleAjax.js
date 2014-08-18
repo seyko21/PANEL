@@ -8,7 +8,7 @@ var simpleAjax_ = function(){
         $(form+" :hidden").val('');
         $(form+" :password").val('');
         $(form+" textarea").val('');
-        $(form+" select").val('');
+        $(form+" select").val(''); // 
         $(form+" :checked").attr("checked",false);
         $(form+" :radio").attr("checked",false);
     };

@@ -25,8 +25,8 @@ var generarCotizacionScript_ = function(){
                         idProducto = cad[0];
                         descripcion = cad[1];
                         precio = parseFloat(cad[2]).toFixed(2);
-                        produccion = 0;
-                        total = parseFloat(precio + produccion).toFixed(2);
+                        produccion = parseFloat(cad[3]).toFixed(2);
+                        total = parseFloat(precio) * parseFloat($('#'+diccionario.tabs.T8+'txt_meses').val()) + parseFloat(produccion);
                         duplicado = 0;
                         
                         /*validanco duplicidad*/
@@ -55,13 +55,13 @@ var generarCotizacionScript_ = function(){
                                 <td class="right">'+precio+'</td>\n\
                                 <td class="right">'+produccion+'</td>\n\
                                 <td class="right">1</td>\n\
-                                <td class="right">'+total+'</td>\n\
+                                <td class="right">'+total.toFixed(2)+'</td>\n\
                                 <td>\n\
                                     <button type="button" class="btn btn-danger btn-xs" onclick="generarCotizacionScript.removeProducto(\''+idProducto+'\',\''+precio+'\');"><i class="fa-trash-o"></i></a>\n\
                                 </td>\n\
                             </tr>';
                             
-                            _private.total += (precio + produccion);
+                            _private.total += total;
                         }
                     }
                 });

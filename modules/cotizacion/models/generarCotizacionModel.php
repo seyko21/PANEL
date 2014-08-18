@@ -79,24 +79,10 @@ class generarCotizacionModel extends Model{
     }
     
     public function getMisProductos(){
-        $query = "
-        SELECT
-                a.`id_caratula`,
-                c.`codigo`,
-                c.`descripcion`,
-                c.`precio`,
-                c.`iluminado`,
-                k.`ubicacion`,
-                k.`dimension_alto` AS alto,
-                k.`dimension_ancho` AS ancho,
-                k.`dimesion_area` AS aarea
-        FROM `lgk_asignacioncuenta` a 
-        INNER JOIN `lgk_caratula` c ON c.`id_caratula`=a.`id_caratula`
-        INNER JOIN `lgk_catalogo` k ON k.`id_producto`=c.`id_producto`
-        WHERE a.`id_persona`=:idPersona AND c.`estado`='D' AND k.`estado`='A'
-        AND k.`ubicacion` LIKE CONCAT('%',REPLACE(:ubicacion,' ','%'),'%');";
+        $query = "CALL sp_cotiGenerarCotizacionMisProductos(:flag,:idPersona,:ubicacion);";
         
         $parms = array(
+            ':flag' => 1,
             ':idPersona' => $this->_idPersona,
             ':ubicacion' => $this->_ubicacion
         );

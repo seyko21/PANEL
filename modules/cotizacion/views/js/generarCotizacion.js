@@ -76,16 +76,24 @@ var generarCotizacion_ = function(){
     };
     
     this.publico.getFormBuscarMisProductos = function(btn,tab){
-        _private.tab = tab;
-        simpleAjax.send({
-            element: btn,
-            dataType: 'html',
-            root: _private.config.modulo + 'getFormBuscarMisProductos',
-            fnCallback: function(data){
-                $('#cont-modal').append(data);  /*los formularios con append*/
-                $('#'+diccionario.tabs.T8+'formBuscarProducto').modal('show');
-            }
-        });
+        var cant = parseFloat($('#'+diccionario.tabs.T8+'txt_meses').val());
+      
+        if(isNaN(cant)){
+            simpleScript.notify.warning({
+                content: 'Ingrese cantidad de meses.'
+            });
+        }else{
+            _private.tab = tab;
+            simpleAjax.send({
+                element: btn,
+                dataType: 'html',
+                root: _private.config.modulo + 'getFormBuscarMisProductos',
+                fnCallback: function(data){
+                    $('#cont-modal').append(data);  /*los formularios con append*/
+                    $('#'+diccionario.tabs.T8+'formBuscarProducto').modal('show');
+                }
+            });
+        }
     };
     
     this.publico.getTableMisProductos = function(){
