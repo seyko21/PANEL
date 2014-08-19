@@ -1,0 +1,172 @@
+<?php /*
+* ---------------------------------------
+* --------- CREATED BY CREATOR ----------
+* fecha: 19-08-2014 06:08:51 
+* Descripcion : formNewAsignarCuenta.phtml
+* ---------------------------------------
+*/
+
+/*prefijo: ASCU debe ser alias en tabla men_menuprincipal*/
+$grabar = Session::getPermiso("ASCUGR");
+$buscar = Session::getPermiso("ASCUBS");
+?>
+<form id="<?php echo ASCU; ?>formNewAsignarCuenta" name="<?php echo ASCU; ?>formNewAsignarCuenta" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog" style="width: 60%">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close"  aria-hidden="true">
+                    &times;
+                </button>
+                <h4 class="modal-title"><?php echo LABEL_ASC2; ?></h4>
+            </div>
+            <div class="modal-body form-horizontal"> 
+                <div class="form-group">
+                    <label class="control-label col-md-2" for="prepend"><?php echo LABEL_ASC4; ?></label>
+                    <div class="col-md-10">
+                        <div class="input-group input-group-sm">
+                            <input type="hidden" id="<?php echo ASCU; ?>txt_idpersona" name="<?php echo ASCU; ?>txt_idpersona">
+                            <input class="form-control" type="text" id="<?php echo ASCU; ?>txt_empleadodesc" name="<?php echo ASCU; ?>txt_empleadodesc" readonly>
+                            <span class="input-group-btn">
+                                <?php if($buscar['permiso']):?>
+                                <button class="btn btn-default" type="button" onclick="configurarUsuarios.getFormEmpleado(this, '<?php echo ASCU; ?>');"><i class="fa fa-search"></i> Buscar</button>
+                                <?php endif; ?>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-md-2" for="prepend"><?php echo LABEL_ASC3; ?></label>
+                    <div class="col-md-10">
+                        <div class="input-group input-group-sm">
+                            <input class="form-control" type="text" id="<?php echo ASCU; ?>txt_comision" name="<?php echo ASCU; ?>txt_comision">
+                        </div>
+                    </div>
+                </div>
+                <p>
+                    <div class="si-access" style="min-height: 200px; max-height: auto;">
+                        <table id="<?php echo ASCU; ?>gridProductos" class="table table-bordered table-striped table-condensed table-hover smart-form has-tickbox">
+                            <thead>
+                                <tr>
+                                    <th style="width:3%">
+                                        <label class="checkbox">
+                                            <input type="checkbox" id="<?php echo ASCU; ?>chk_all" name="<?php echo ASCU; ?>chk_all" onclick="simpleScript.checkAll(this,'#<?php echo ASCU; ?>gridProductos');"><i></i>
+                                        </label>
+                                    </th>
+                                    <th style="width:10%">Código</th>
+                                    <th style="width:69%" id="<?php echo ASCU; ?>pro">Producto</th>
+                                    <th style="width:13%">Precio</th>
+                                    <th style="width:10%">Areaxx</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                <?php 
+                                    /*productos sin asignar*/
+                                    $dataprod = asignarCuentaController::getProductos();
+                                    //echo Functions::createCell(array('row'=>5,'cols'=>4)); 
+                                    $f = 0;
+
+                                    foreach ($dataprod as $value):
+                                    
+                                ?>
+                                    
+                                    <td>
+                                        <label class="checkbox">
+                                            <input type="checkbox" id="<?php echo $f.ASCU; ?>chk_prod" name="<?php echo ASCU; ?>chk_prod[]" value="<?php echo AesCtr::en($value['id_caratula']).'-'.$value['codigo']; ?>"><i></i>
+                                        </label>
+                                    </td>
+                                    <td><?php echo $value['codigo']; ?></td>
+                                    <td><?php echo $value['descripcion'].' - '.$value['ubicacion']; ?></td>
+                                    <td class="right"><?php echo number_format($value['precio'],2); ?></td>
+                                    <td><?php echo $value['aarea']; ?></td>
+                                </tr>
+                                <?php endforeach; ?>
+                                
+                                
+                            </tbody>
+                        </table>
+                    </div>
+                </p>
+            </div>
+            <div class="modal-footer">
+                <?php if($grabar["permiso"]):?>
+                <button id="<?php echo ASCU; ?>btnGrAsignarCuenta" type="submit" class="btn txt-color-white bg-color-blueDark">
+                    <i class="fa fa-save"></i> <?php echo $grabar["accion"]; ?>
+                </button>
+                <?php endif; ?>
+                <button type="button" class="btn btn-default xClose">
+                    <i class="fa fa-ban"></i> Cerrar
+                </button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</form>
+<!-- si no tiene permiso se anula submit desde cualquier input -->
+<?php if(!$grabar["permiso"]): ?>
+<script>
+    simpleScript.noSubmit("#<?php echo ASCU; ?>formNewAsignarCuenta");
+</script>
+<?php endif; ?>
+<script>
+    (function() {
+        var mySt = new scrollTable('<?php echo ASCU; ?>gridProductos');
+    })();
+//    var oTable = $('#<?php echo ASCU; ?>gridProductos').dataTable({
+//            bProcessing: true,
+//            bDestroy: true,
+//            bPaginate: false,
+//            aoColumns: [
+//                {sClass: "center",sWidth: "3%", bSortable: false},
+//                {sWidth: "10%",sClass: "center", bSortable: false},
+//                {sWidth: "69%"},
+//                {sWidth: "13%",sClass: "right", bSortable: false},
+//                {sWidth: "10%", sClass: "center", bSortable: false}
+//            ],
+//            aaSorting: [[2, 'desc']],
+//            sScrollY: "150px",
+//            fnDrawCallback: function() {
+//                $('#<?php echo ASCU; ?>gridProductos_filter').hide();
+               //var d = setTimeout("$('#<?php echo ASCU; ?>pro').click()",2000);
+//                
+////                /*para hacer evento invisible*/
+////                simpleScript.removeAttr.click({
+////                    container: '#widget_'+diccionario.tabs.T8,
+////                    typeElement: 'button'
+////                });
+//            }
+//        });
+//    $(window).resize(function(){
+//        oTable.fnAdjustColumnSizing();
+//    });
+/*configurar validacion de formulario -- este codigo es de ejemplo*/
+$("#<?php echo ASCU; ?>formNewAsignarCuenta").validate({
+    // Rules for form validation
+    rules : {
+        <?php echo ASCU; ?>txt_idpersona : {
+            required : true
+        },
+        <?php echo ASCU; ?>txt_empleadodesc : {
+            required : true
+        },
+        <?php echo ASCU; ?>txt_comision : {
+            required : true,
+            decimal: true,
+            maxlength: 4
+        }
+    },
+
+    // No cambie el código de abajo
+    errorPlacement : function(error, element) {
+        error.insertAfter(element.parent());
+    },
+
+    submitHandler: function(){
+        asignarCuenta.postNewAsignarCuenta();
+    }   
+});
+
+simpleScript.removeAttr.click({
+    container: '#<?php echo ASCU; ?>formNewAsignarCuenta',
+    typeElement: 'button'
+});
+</script>

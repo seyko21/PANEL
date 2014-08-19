@@ -13,4 +13,5 @@ define("T5","XTIPCON");     /*tab modulo TIPO DE CONCEPTOS*/
 define("T6","TAB_CONC");        /*tab modulo CONCEPTOS*/
 define("T7","TAB_REGVE");        /*tab modulo REGISTRAR VENDEDOR*/
 define("T8","TAB_GNCOT");        /*tab modulo GENERAR COTIZACION*/
+define("ASCU","ASCU_TAB");        /*tab modulo ASIGNAR CUENTA*/
 ?>

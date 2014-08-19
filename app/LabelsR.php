@@ -111,4 +111,10 @@ define('LABEL_GNC8','Buscar Producto');
 define('LABEL_GNC9','Escriba ubicación y presione enter para buscar');
 define('LABEL_GNC10','Agregar Producto');
 define('LABEL_GNC11','Abre ventana para buscar y agregar productos');
+
+/*----------------------    ASIGNAR CUENTAS----------------------*/
+define('LABEL_ASC1','Cuentas');
+define('LABEL_ASC2','Nueva Asignación');
+define('LABEL_ASC3','Comisión');
+define('LABEL_ASC4','Empleado');
 ?>

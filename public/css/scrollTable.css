@@ -2,7 +2,7 @@
 	OVERFLOW: hidden; WIDTH: 100%; POSITION: relative; HEIGHT: 100%
 }
 .sHeader {
-	Z-INDEX: 3; POSITION: absolute; BACKGROUND-COLOR: #ffffff
+	Z-INDEX: 1000004; POSITION: absolute; BACKGROUND-COLOR: #ffffff
 }
 .sHeaderInner {
 	POSITION: relative
