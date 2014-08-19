@@ -2,7 +2,7 @@
 	OVERFLOW: hidden; WIDTH: 100%; POSITION: relative; HEIGHT: 100%
 }
 .sHeader {
-	Z-INDEX: 3; POSITION: absolute; BACKGROUND-COLOR: #ffffff
+	Z-INDEX: 3; POSITION: absolute; BACKGROUND-COLOR: transparent
 }
 .sHeaderInner {
 	POSITION: relative
@@ -14,10 +14,10 @@
 	Z-INDEX: 4; OVERFLOW: hidden; POSITION: absolute
 }
 .sFHeader TABLE {
-	TABLE-LAYOUT: fixed! important; WIDTH: 1px! important; BORDER-COLLAPSE: collapse! important; BACKGROUND-COLOR: #ffffff; border-spacing: 0px 0px
+	TABLE-LAYOUT: fixed! important; WIDTH: 1px! important; BORDER-COLLAPSE: collapse! important; BACKGROUND-COLOR: transparent; border-spacing: 0px 0px
 }
 .sData {
-	Z-INDEX: 2; OVERFLOW: auto; POSITION: absolute; BACKGROUND-COLOR: #ffffff
+	Z-INDEX: 2; OVERFLOW: auto; POSITION: absolute; BACKGROUND-COLOR: transparent
 }
 .sData TABLE {
 	TABLE-LAYOUT: fixed! important; WIDTH: 1px! important; BORDER-COLLAPSE: collapse! important; border-spacing: 0px 0px
