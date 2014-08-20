@@ -45,4 +45,13 @@ define('LABEL_A31','Buscar Dirección');
 define('LABEL_A31M','Escriba una dirección para buscar en el mapa');
 define('LABEL_A32','Latitud');
 define('LABEL_A33','Longitud');
+define('LABEL_A35','Agregar Caratula');
+define('LABEL_A36','Editar Caratula');
+define('LABEL_A37','Código');
+define('LABEL_A37M','Ingrese Código Unico de la caratula');
+define('LABEL_A38','Descripción');
+define('LABEL_A38M','Ingrese Descripción ejm: Lado A, Lado B');
+define('LABEL_A39','Precio');
+define('LABEL_A40','Iluminado');
+define('LABEL_A41','Subir Imagen');
 ?>
