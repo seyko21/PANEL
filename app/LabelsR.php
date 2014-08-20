@@ -58,6 +58,7 @@ define('M_TITLTE_USU','Usuarios');
     define('LABEL_3','E-mail');
     define('LABEL_4','Ingrese clave.');
     define('LABEL_5','Ingrese empleado.');
+    define('LABEL_USU1','Editar Usuario');
     
     /*formulario buscar empleado*/
     define('LABEL_1','Buscar Empleado');
