@@ -136,7 +136,10 @@ class fichaTecnicaController extends Controller{
     }
     public static function getUbicacion(){ 
         $data = Obj::run()->fichaTecnicaModel->getUbicacion();   
-        $retorno = LABEL_A23 . ' : '. $data['ubicacion'] . ' - '.$data['dimension_alto'].' x '.$data['dimension_ancho'].' m' ;
+        $retorno = LABEL_A23;
+        if(strlen($data['ubicacion']) > 0 or strlen($data['dimension_alto']) > 0 or strlen($data['dimension_ancho']) > 0 ){
+            $retorno .= ' : '. $data['ubicacion'] . ' - '.$data['dimension_alto'].' x '.$data['dimension_ancho'].' m' ;
+        }        
         echo $retorno;        
     }
     
