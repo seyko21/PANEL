@@ -49,7 +49,7 @@ var fichaTecnica_ = function(){
             iDisplayLength: 10,            
             aoColumns: [
                 {sTitle: "<input type='checkbox' id='"+diccionario.tabs.T102+"chk_all' onclick='simpleScript.checkAll(this,\"#"+diccionario.tabs.T102+"gridFichaTecnica\");'>", sWidth: "1%", sClass: "center", bSortable: false},
-                {sTitle: "ID", sWidth: "8%"},
+                {sTitle: "ID", sWidth: "5%"},
                 {sTitle: "Ubicación", sWidth: "40%"},
                 {sTitle: "Area m2", sWidth: "8%",  sClass: "center", bSortable: false},
                 {sTitle: "Nro Caratulas", sWidth: "8%",  sClass: "center", bSortable: false},
@@ -68,20 +68,34 @@ var fichaTecnica_ = function(){
                 });
             }
         });
-        setup_widgets_desktop();
+        setup_widgets_desktop();               
+        setTimeout(function(){            
+           fichaTecnica.getListaCaratulas($('#'+diccionario.tabs.T102+'gridFichaTecnica #c_1').val());                   
+        }, 1000);              
+        
     };
     
     this.publico.getListaCaratulas = function(){
-         _private.idCaratula = simpleScript.getParam(arguments[0]);
-        
+        _private.idCaratula = simpleScript.getParam(arguments[0]);         
+                
         simpleAjax.send({
             dataType: 'html',
             root: _private.config.modulo + 'getListaCaratulas',
             data: '&_idProducto='+_private.idCaratula,
             fnCallback: function(data){
-                $('#cont-listaCaratulas').html(data);
+                $('#cont-listaCaratulas').html(data);                        
             }
-        });
+        });        
+        //Ubicacion:
+        simpleAjax.send({
+            dataType: 'html',
+            root: _private.config.modulo + 'getUbicacion',
+            data: '&_idProducto='+_private.idCaratula,
+            typeData: 'html',
+            fnCallback: function(data){                           
+                $('#widget_'+diccionario.tabs.T102+'caratula h2').html(data);
+            }
+        });        
         
     }
    
@@ -170,6 +184,18 @@ var fichaTecnica_ = function(){
             }
         });
     };
+    this.publico.getNuevoCaratula = function(btn){        
+        simpleAjax.send({
+            element: btn,
+            dataType: 'html',
+            root: _private.config.modulo + 'getNuevoCaratula',
+            fnCallback: function(data){
+                $('#cont-modal').append(data);  /*los formularios con append*/
+                $('#'+diccionario.tabs.T102+'formCaratula').modal('show');                       
+            }
+        });        
+        
+    };    
        
     this.publico.postNuevoFichaTecnica = function(){        
         //Validar Manualmente:
@@ -200,7 +226,7 @@ var fichaTecnica_ = function(){
                         content: mensajes.MSG_3,
                         callback: function(){
                             fichaTecnica.getGridFichaTecnica();     
-                            //simpleScript.closeModal('#'+diccionario.tabs.T102+'formFichaTecnica');
+                            simpleScript.closeModal('#'+diccionario.tabs.T102+'formFichaTecnica');
                         }
                     });
                 }else if(!isNaN(data.result) && parseInt(data.result) === 2){
@@ -213,7 +239,21 @@ var fichaTecnica_ = function(){
     };
     
     this.publico.postEditarFichaTecnica = function(){
-        
+          //Validar Manualmente:
+        if( $('#'+diccionario.tabs.T102+'txt_ubicacion').val() == '' ||
+            $('#'+diccionario.tabs.T102+'txt_ancho').val() == '' ||
+            $('#'+diccionario.tabs.T102+'txt_alto').val() == '' ||
+            $('#'+diccionario.tabs.T102+'lst_departamento').val() == '' ||
+            $('#'+diccionario.tabs.T102+'lst_provincia').val() == '' ||
+            $('#'+diccionario.tabs.T102+'lst_ubigeo').val() == '' ||
+            $('#'+diccionario.tabs.T102+'lst_tipopanel').val() == '' ||
+            $('#'+diccionario.tabs.T102+'txt_latitud').val() == '' ||
+            $('#'+diccionario.tabs.T102+'txt_longitud').val() == ''){
+                simpleScript.notify.error({
+                    content: mensajes.MSG_12        
+                 });
+                return;
+        }
         simpleAjax.send({
             flag: 2,
             element: '#'+diccionario.tabs.T102+'btnGfitec',

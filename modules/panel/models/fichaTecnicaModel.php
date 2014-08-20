@@ -128,6 +128,15 @@ class fichaTecnicaModel extends Model{
         $data = $this->queryOne($query,$parms);            
         return $data;
     }
+    public function getUbicacion(){
+        $query = " SELECT ubicacion,  FORMAT(dimension_alto,0) as dimension_alto ,  FORMAT(dimension_ancho,0) as dimension_ancho"
+                . "  FROM lgk_catalogo WHERE id_producto = :id ";
+        $parms = array(
+            ':id' => $this->_idProducto,
+        );
+        $data = $this->queryOne($query,$parms);           
+        return $data;
+    }    
     
     public function getCaratulas(){
         $query = "call sp_catalogoCaratulasConsultas(:idProducto);";

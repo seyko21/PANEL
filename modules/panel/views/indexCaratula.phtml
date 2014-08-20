@@ -20,18 +20,25 @@ $data = fichaTecnicaController::getCaratulas();
                 $inactivo = '';
             }
     ?>
-        <li id="liCaratula_<?php echo $value['id_caratula']; ?>" data-orden="<?php echo $value['id_menuprincipal']; ?>" 
-                data-url="<?php echo $value['url']; ?>" data-alias="<?php echo $value['alias']; ?>">
+        <li id="liCaratula_<?php echo $value['id_caratula']; ?>" >
             <a href="javascript:;" rel="popover-hover" data-placement="top" 
                data-original-title="<?php echo $value['codigo']; ?>" 
-               data-content="<div><b>Alias:</b> <?php echo $value['descripcion']; ?></div>
-               <div><b>URL:</b> <?php echo $value['url']; ?></div>
-               <div><b>Orden:</b> <?php echo $value['orden']; ?></div>"
+               data-content="<div><b>Descripción:</b> <?php echo $value['descripcion']; ?></div>
+               <div><b>Precio:</b> <?php echo number_format($value['precio'],2); ?></div>
+               <div><b>Iluminado:</b> <?php echo ($value['iluminado']==1)?'SI':'NO'; ?></div>               
+               <div><img src='http://localhost/panel/public/img/public/paneles.png' style='width:100%;'></div>"
                data-html="true">
+                
                <span style="<?php echo $inactivo; ?>">
-                   <?php echo $value['codigo']; ?>
+                   <?php echo $value['codigo'].' - '.$value['descripcion'] ?>
                </span>
+                                                                     
                <div class="pull-right btn-group" style="margin-top: -4px;">                    
+                   <?php if($value['iluminado'] == '1'): ?>
+                    <button class=" btn  btn-xs btn-warning" title="Iluminado">
+                        <i class="fa fa-sun-o fa-lg"></i>                                              
+                    </button>
+                   <?php endif; ?>
                     <button class="btn btn-xs btn-primary" title="Editar" onclick="fichaTecnica.getEditarMenuPrincipal('<?php echo AesCtr::en($value['id_caratula']); ?>');">
                         <i class="fa fa-edit fa-lg"></i>
                     </button>
@@ -46,6 +53,10 @@ $data = fichaTecnicaController::getCaratulas();
     <?php endforeach; ?>
 </ol>
 <script>      
+    // activate popovers with hover states
+    $("[rel=popover-hover]").popover({
+            trigger : "hover"
+    });  
     /*para quitar evento*/
     simpleScript.removeAttr.click({
         container: '#widget_<?php echo T102.'caratulas'; ?>',
@@ -53,7 +64,7 @@ $data = fichaTecnicaController::getCaratulas();
     });
 </script>
 <?php else: ?>
-<div  class="no-result-menu">
+<div  class="no-result-menu" style="float:left;margin-top:20px;">
     <div class="alert alert-danger">No se encontraron registros</div>
 </div>
 <?php endif; ?>

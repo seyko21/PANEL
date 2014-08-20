@@ -113,7 +113,7 @@ class fichaTecnicaController extends Controller{
     }
     
     public static function getTPanelFichaTecnica(){ 
-        $data = Obj::run()->fichaTecnicaModel->getTPanelFichaTecnica();        
+        $data = Obj::run()->fichaTecnicaModel->getTPanelFichaTecnica();            
         return $data;
     }    
        
@@ -122,14 +122,22 @@ class fichaTecnicaController extends Controller{
     }
     public function getNuevoFichaTecnica(){ 
         Obj::run()->View->render('nuevoFichaTecnica');
-    }
-    
+    }    
     public function getEditarFichaTecnica(){ 
         Obj::run()->View->render('editarFichaTecnica');
     }
+    public function getNuevoCaratula(){ 
+        Obj::run()->View->render('nuevoCaratula');
+    }    
+    
     public static function getFichaTecnica(){ 
         $data = Obj::run()->fichaTecnicaModel->getFichaTecnica();        
         return $data;
+    }
+    public static function getUbicacion(){ 
+        $data = Obj::run()->fichaTecnicaModel->getUbicacion();   
+        $retorno = LABEL_A23 . ' : '. $data['ubicacion'] . ' - '.$data['dimension_alto'].' x '.$data['dimension_ancho'].' m' ;
+        echo $retorno;        
     }
     
     public function postNuevoFichaTecnica(){ 
