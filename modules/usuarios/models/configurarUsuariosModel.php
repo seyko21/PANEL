@@ -9,7 +9,8 @@ class configurarUsuariosModel extends Model{
     private $_flag;
     private $_key;
     private $_empleado;
-    private $_clave;
+    private $_idUsuario;
+    private $_clave = '1234567';
     private $_mail;
     private $_activo;
     private $_roles;
@@ -31,7 +32,7 @@ class configurarUsuariosModel extends Model{
         $this->_flag    = $this->post('_flag');
         $this->_key     = Aes::de($this->post('_key'));    /*se decifra*/
         $this->_empleado= Aes::de($this->post(T4.'txt_empleado'));    /*se decifra*/
-        $this->_clave  = $this->post(T4.'txt_clave');
+        $this->_idUsuario= Aes::de($this->post('_idUsuario'));    /*se decifra*/
         $this->_activo  = $this->post(T4.'chk_activo');
         $this->_roles  = $this->post(T4.'chk_roles');
         $this->_mail  = $this->post(T4.'txt_email');
@@ -78,6 +79,20 @@ class configurarUsuariosModel extends Model{
         return $data;
     }
     
+    public function getRolesUser(){
+        $query = " SELECT 
+                r.id_rol,
+                r.rol,
+                (SELECT COUNT(*) FROM `men_usuariorol` xx WHERE xx.`id_rol`=r.id_rol AND xx.`id_usuario`=:idUsuario) AS chk
+        FROM men_rol r WHERE activo = :activo ";
+        $parms = array(
+            ':idUsuario'=> $this->_idUsuario,
+            ':activo' => '1',
+        );
+        $data = $this->queryAll($query,$parms);
+        return $data;
+    }
+    
     public function getEmpleados(){
         $query = " SELECT persona,id_persona,nombrecompleto,email FROM `mae_persona` WHERE nombrecompleto LIKE CONCAT('%',:nombre,'%') AND estado = :estado ";
         $parms = array(
@@ -85,6 +100,23 @@ class configurarUsuariosModel extends Model{
             ':estado' => 'A',
         );
         $data = $this->queryAll($query,$parms);
+        return $data;
+    }
+    
+    public function getUsuario(){
+        $query = "SELECT 
+                u.`persona`,
+                p.`nombrecompleto`,
+                u.`usuario`,
+                u.estado
+        FROM `mae_usuario` u 
+        INNER JOIN mae_persona p ON p.`persona`=u.`persona`
+        WHERE u.`id_usuario` = :idUsuario";
+        
+        $parms = array(
+            ':idUsuario'=> $this->_idUsuario
+        );
+        $data = $this->queryOne($query,$parms);
         return $data;
     }
     
@@ -106,7 +138,7 @@ class configurarUsuariosModel extends Model{
                 $query = "call sp_usuariosConfigurarUsuariosMantenimiento(:flag,:key,:empleado,:usuario,:clave,:activo,:user);";
                 $parms = array(
                     ':flag' => 2,
-                    ':key' => $rol,
+                    ':key' => AesCtr::de($rol),
                     ':empleado' => $data['lastIdUser'],
                     ':usuario' => '',
                     ':clave' => '',
@@ -117,6 +149,41 @@ class configurarUsuariosModel extends Model{
             }
         }
         $res = array('result'=>$data['result'],'duplicado'=>$data['duplicado']);
+        return $res;
+    }
+    
+    public function editarUsuario(){
+        $query = "UPDATE mae_usuario SET usuario = :usuario, activo=:activo WHERE id_usuario=:idUsuario";
+        $parms = array(
+            ':usuario' => $this->_mail,
+            ':activo' => $this->_activo,
+            ':idUsuario' => $this->_idUsuario
+        );
+        $this->execute($query,$parms);
+        
+        /*se borra roles*/
+        $query = "DELETE FROM men_usuariorol WHERE id_usuario = :idUsuario";
+        $parms = array(
+            ':idUsuario' => $this->_idUsuario
+        );
+        $this->execute($query,$parms);
+       
+        /*se graba nuevos roles*/
+        foreach ($this->_roles as $rol) {
+            $query = "call sp_usuariosConfigurarUsuariosMantenimiento(:flag,:key,:empleado,:usuario,:clave,:activo,:user);";
+            $parms = array(
+                ':flag' => 2,
+                ':key' => AesCtr::de($rol),
+                ':empleado' => $this->_idUsuario,
+                ':usuario' => '',
+                ':clave' => '',
+                ':activo' => '',
+                ':user' => $this->_usuario
+            );
+            $this->execute($query,$parms);
+        }
+        
+        $res = array('result'=>1,'duplicado'=>0);
         return $res;
     }
     

@@ -19,7 +19,6 @@ class configurarUsuariosController extends Controller{
     public function getUsuarios(){ 
         $editar = Session::getPermiso('CUSED');
         $eliminar = Session::getPermiso('CUSDE');
-        $roles = Session::getPermiso('CUSRO');
         
         $sEcho          =   $this->post('sEcho');
         
@@ -35,9 +34,9 @@ class configurarUsuariosController extends Controller{
             $sOutput .= '"aaData": [ ';
             foreach ( $rResult as $aRow ){
                 
-                if($aRow['activo'] == 1){
+                if($aRow['estado'] == 'A'){
                     $estado = '<span class=\"label label-success\">Activo</span>';
-                }else{
+                }elseif($aRow['estado'] == 'I'){
                     $estado = '<span class=\"label label-danger\">Inactivo</span>';
                 }
                 
@@ -54,18 +53,13 @@ class configurarUsuariosController extends Controller{
                 $sOutput .= '"<div class=\"btn-group\">';
                 
                 if($editar['permiso'] == 1){
-                    $sOutput .= '<button type=\"button\" class=\"btn btn-primary btn-xs\" title=\"'.$editar['accion'].'\" onclick=\"configurarUsuarios.getUsuario(\''.$encryptReg.'\')\">';
+                    $sOutput .= '<button type=\"button\" class=\"btn btn-primary btn-xs\" title=\"'.$editar['accion'].'\" onclick=\"configurarUsuarios.getEditUsuario(this,\''.$encryptReg.'\')\">';
                     $sOutput .= '    <i class=\"fa fa-edit fa-lg\"></i>';
                     $sOutput .= '</button>';
                 }
                 if($eliminar['permiso'] == 1){
                     $sOutput .= '<button type=\"button\" class=\"btn btn-danger btn-xs\" title=\"'.$eliminar['accion'].'\" onclick=\"configurarUsuarios.postDeleteUsuario(\''.$encryptReg.'\')\">';
                     $sOutput .= '    <i class=\"fa fa-ban fa-lg\"></i>';
-                    $sOutput .= '</button>';
-                }
-                if($roles['permiso'] == 1){
-                    $sOutput .= '<button type=\"button\" class=\"btn btn-primary btn-xs\" title=\"'.$roles['accion'].'\" onclick=\"configurarUsuarios.getRolesUsuarios(\''.$encryptReg.'\',\''.$aRow['nombrecompleto'].'\')\">';
-                    $sOutput .= '    <i class=\"fa fa-group fa-lg\"></i>';
                     $sOutput .= '</button>';
                 }
                 
@@ -85,6 +79,20 @@ class configurarUsuariosController extends Controller{
     
     public function getNuevoUsuario(){ 
         Obj::run()->View->render('nuevoUsuario');
+    }
+    
+    public function getEditUsuario(){ 
+        Obj::run()->View->render('editarUsuario');
+    }
+    
+    public static function getUsuario(){ 
+        $rResult = Obj::run()->configurarUsuariosModel->getUsuario();
+        return $rResult;
+    }
+    
+    public static function getRolesUser(){ 
+        $rResult = Obj::run()->configurarUsuariosModel->getRolesUser();
+        return $rResult;
     }
     
     public function getFormEmpleado(){ 
@@ -136,6 +144,13 @@ class configurarUsuariosController extends Controller{
         
         echo json_encode($data);
     }
+    
+    public function postEditarUsuario(){
+        $data = Obj::run()->configurarUsuariosModel->editarUsuario();
+        
+        echo json_encode($data);
+    }
+    
 }
 
 ?>

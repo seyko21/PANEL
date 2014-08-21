@@ -5,8 +5,10 @@
  * Autor       : ..... .....
  * Descripcion : 
  */
-$grabar = Session::getPermiso('CUSGR');
+$editar = Session::getPermiso('CUSED');
 $buscar = Session::getPermiso('CUSBS');
+
+$data = configurarUsuariosController::getUsuario();
 ?>
 <form id="<?php echo T4; ?>formUsuario" name="<?php echo T4; ?>formUsuario" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">
@@ -15,7 +17,7 @@ $buscar = Session::getPermiso('CUSBS');
                 <button type="button" class="close"  aria-hidden="true">
                     &times;
                 </button>
-                <h4 class="modal-title"><?php  echo M_FG_USU_TITLTE; ?></h4>
+                <h4 class="modal-title"><?php  echo LABEL_USU1; ?></h4>
             </div>
             <div class="modal-body smart-form">
 
@@ -39,19 +41,11 @@ $buscar = Session::getPermiso('CUSBS');
                                 <div class="col col-8">
                                     <label class="input"> 
                                         <i class="icon-append fa fa-user"></i>
-                                        <input type="text" id="<?php echo T4; ?>txt_empleadodesc" name="<?php echo T4; ?>txt_empleadodesc" readonly></input>
+                                        <input type="text" id="<?php echo T4; ?>txt_empleadodesc" name="<?php echo T4; ?>txt_empleadodesc" readonly value="<?php echo $data['nombrecompleto']; ?>"></input>
                                         <b class="tooltip tooltip-top-right"><i class="fa fa-user txt-color-teal"></i> <?php echo LABEL_5; ?></b>
-                                        <input type="hidden" id="<?php echo T4; ?>txt_empleado" name="<?php echo T4; ?>txt_empleado"></input>
+                                        <input type="hidden" id="<?php echo T4; ?>txt_empleado" name="<?php echo T4; ?>txt_empleado" value="7777777"></input>
                                     </label>
                                 </div>
-                                <?php if ($buscar['permiso']): ?>
-                                    <button id="<?php echo T4; ?>btnBuscar" type="button" class="btn txt-color-white bg-color-blueDark" onclick="configurarUsuarios.getFormEmpleado(this,'<?php echo T4; ?>');">
-                                        <i class="fa fa-search" style="padding: 8px"></i>
-                                    </button>
-                                <?php 
-                                        echo Functions::help(M_FG_USU_H_EMP); 
-                                    endif;
-                                ?>
                             </div>
                         </section>
                         <section>
@@ -60,7 +54,7 @@ $buscar = Session::getPermiso('CUSBS');
                                 <div class="col col-8">
                                     <label class="input"> 
                                         <i class="icon-append fa fa-envelope-o"></i>
-                                        <input type="text" id="<?php echo T4; ?>txt_email" name="<?php echo T4; ?>txt_email" >
+                                        <input type="text" id="<?php echo T4; ?>txt_email" name="<?php echo T4; ?>txt_email" value="<?php echo $data['usuario']; ?>">
                                         <b class="tooltip tooltip-top-right"><i class="fa fa-envelope-o txt-color-teal"></i> <?php echo L_L_EMAIL; ?></b>
                                     </label>
                                 </div>
@@ -71,7 +65,7 @@ $buscar = Session::getPermiso('CUSBS');
                                 <label class="label col col-2"></label>
                                 <div class="col col-3">
                                     <label class="checkbox">
-                                        <input type="checkbox" checked="checked" name="<?php echo T4; ?>chk_activo" id="<?php echo T4; ?>chk_activo" value="1"></input>
+                                        <input type="checkbox" name="<?php echo T4; ?>chk_activo" id="<?php echo T4; ?>chk_activo" value="1" <?php echo ($data['estado'] == 'A')?'checked':'';?> ></input>
                                         <i></i>
                                         <?php echo CK_ACTIVO; ?>
                                     </label>
@@ -80,12 +74,12 @@ $buscar = Session::getPermiso('CUSBS');
                         </section>
                     </div>
                     <div class="tab-pane fade" id="s2">
-                        <?php $roles = configurarUsuariosController::getRoles(); ?>
+                        <?php $roles = configurarUsuariosController::getRolesUser(); ?>
                         <ul style="list-style: none">
                             <?php foreach ($roles as $r): ?>
                                 <li class="move-cursor">
                                     <label class="checkbox">
-                                        <input type="checkbox" value="<?php echo AesCtr::en($r['id_rol']); ?>" name="<?php echo T4; ?>chk_roles[]"><i></i>
+                                        <input type="checkbox" value="<?php echo AesCtr::en($r['id_rol']); ?>" name="<?php echo T4; ?>chk_roles[]" <?php echo ($r['chk'] == 1)?'checked':'';?>><i></i>
                                         <?php echo $r['rol']; ?>
                                     </label>
                                 </li> 
@@ -95,9 +89,9 @@ $buscar = Session::getPermiso('CUSBS');
                 </div>
             </div>
             <div class="modal-footer">
-                <?php if ($grabar['permiso']): ?>
+                <?php if ($editar['permiso']): ?>
                 <button id="<?php echo T4; ?>btnGrabaAccion" type="submit" class="btn txt-color-white bg-color-blueDark">
-                        <i class="fa fa-save"></i> <?php echo $grabar['accion']; ?>
+                        <i class="fa fa-save"></i> <?php echo $editar['accion']; ?>
                     </button>
                 <?php endif; ?>
                 <button type="button" class="btn btn-default xClose">
@@ -108,7 +102,7 @@ $buscar = Session::getPermiso('CUSBS');
     </div><!-- /.modal-dialog -->
 </form>
 <!-- si no riene permiso se anula submit desde cualquier input -->
-<?php if (!$grabar['permiso']): ?>
+<?php if (!$editar['permiso']): ?>
     <script>
         simpleScript.noSubmit('#<?php echo T4; ?>formUsuario');
     </script>
@@ -136,7 +130,7 @@ $buscar = Session::getPermiso('CUSBS');
             error.insertAfter(element.parent());
         },
         submitHandler: function() {
-            configurarUsuariosScript.validaFormUser(1);
+            configurarUsuariosScript.validaFormUser(2);
         }
     });
     /*para hacer evento invisible*/
