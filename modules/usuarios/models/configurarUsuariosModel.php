@@ -153,7 +153,7 @@ class configurarUsuariosModel extends Model{
     }
     
     public function editarUsuario(){
-        $query = "UPDATE mae_usuario SET usuario = :usuario, activo=:activo WHERE id_usuario=:idUsuario";
+        $query = "UPDATE mae_usuario SET usuario = :usuario, estado=:activo WHERE id_usuario=:idUsuario";
         $parms = array(
             ':usuario' => $this->_mail,
             ':activo' => $this->_activo,
@@ -184,6 +184,19 @@ class configurarUsuariosModel extends Model{
         }
         
         $res = array('result'=>1,'duplicado'=>0);
+        return $res;
+    }
+    
+    public function deleteUsuario(){
+        
+        $query = "UPDATE mae_usuario SET estado=:estado WHERE id_usuario=:idUsuario";
+        $parms = array(
+            ':idUsuario' => $this->_key,
+            ':estado' => '0'
+        );
+        $this->execute($query,$parms);
+        
+        $res = array('result'=>1);
         return $res;
     }
     

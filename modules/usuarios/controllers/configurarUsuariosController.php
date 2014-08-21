@@ -151,6 +151,12 @@ class configurarUsuariosController extends Controller{
         echo json_encode($data);
     }
     
+    public function postDeleteUsuario(){
+        $data = Obj::run()->configurarUsuariosModel->deleteUsuario();
+        
+        echo json_encode($data);
+    }
+    
 }
 
 ?>

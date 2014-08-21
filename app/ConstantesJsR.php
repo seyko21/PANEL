@@ -19,3 +19,4 @@ var diccionario = {
         T7: '<?php echo T7; ?>',  
         T8: '<?php echo T8; ?>',
         ASCU: '<?php echo ASCU; ?>',
+        CLIT: '<?php echo CLIT; ?>',

@@ -189,6 +189,32 @@ var configurarUsuarios_ = function(){
         });
     };
     
+    this.public.postDeleteUsuario = function(){
+        var id = simpleScript.getParam(arguments[0]);
+        
+        simpleScript.notify.confirm({
+            content: mensajes.MSG_5,
+            callbackSI: function(){
+                simpleAjax.send({
+                    flag: 3,
+                    gifProcess: true,
+                    data: '&_key='+id,
+                    root: _private.config.modulo + 'postDeleteUsuario',
+                    fnCallback: function(data) {
+                        if(!isNaN(data.result) && parseInt(data.result) === 1){
+                            simpleScript.notify.ok({
+                                content: mensajes.MSG_6,
+                                callback: function(){
+                                    configurarUsuarios.getGridUsuarios();
+                                }
+                            });
+                        }
+                    }
+                });
+            }
+        });
+    };
+    
     return this.public;
     
 };
