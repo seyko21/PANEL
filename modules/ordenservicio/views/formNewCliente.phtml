@@ -1,20 +1,22 @@
-<?php
-/*
- * Documento   : nuevoConcepto
- * Creado      : 06-ago-2014
- * Autor       : ..... .....
- * Descripcion : 
- */
-$grabar = Session::getPermiso('REGVEGR');
+<?php /*
+* ---------------------------------------
+* --------- CREATED BY CREATOR ----------
+* fecha: 21-08-2014 07:08:16 
+* Descripcion : formNewCliente.phtml
+* ---------------------------------------
+*/
+
+/*prefijo: REGCL debe ser alias en tabla men_menuprincipal*/
+$grabar = Session::getPermiso("REGCLGR");
 ?>
-<form id="<?php echo T7; ?>formVendedor" name="<?php echo T7; ?>formVendedor" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<form id="<?php echo REGCL; ?>formNewCliente" name="<?php echo REGCL; ?>formNewCliente" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close"  aria-hidden="true">
                     &times;
                 </button>
-                <h4 class="modal-title"><?php echo LABEL_RV2;?></h4>
+                <h4 class="modal-title"><?php echo LABEL_RC1;?></h4>
             </div>
             <div class="modal-body smart-form" style="height: 350px;overflow-y: auto;overflow-x: hidden;">
                 <section>
@@ -23,7 +25,7 @@ $grabar = Session::getPermiso('REGVEGR');
                         <div class="col col-8">
                             <label class="input"> 
                                 <i class="icon-append fa fa-user"></i>
-                                <input type="text" id="<?php echo T7; ?>txt_nombres" name="<?php echo T7; ?>txt_nombres">
+                                <input type="text" id="<?php echo REGCL; ?>txt_nombres" name="<?php echo REGCL; ?>txt_nombres">
                                 <b class="tooltip tooltip-top-right"><i class="fa fa-user txt-color-teal"></i> <?php echo LABEL_RV6; ?></b>
                             </label>
                         </div>
@@ -35,7 +37,7 @@ $grabar = Session::getPermiso('REGVEGR');
                         <div class="col col-8">
                             <label class="input"> 
                                 <i class="icon-append fa fa-user"></i>
-                                <input type="text" id="<?php echo T7; ?>txt_apellidopaterno" name="<?php echo T7; ?>txt_apellidopaterno">
+                                <input type="text" id="<?php echo REGCL; ?>txt_apellidopaterno" name="<?php echo REGCL; ?>txt_apellidopaterno">
                                 <b class="tooltip tooltip-top-right"><i class="fa fa-user txt-color-teal"></i> <?php echo LABEL_RV7; ?></b>
                             </label>
                         </div>
@@ -47,7 +49,7 @@ $grabar = Session::getPermiso('REGVEGR');
                         <div class="col col-8">
                             <label class="input"> 
                                 <i class="icon-append fa fa-user"></i>
-                                <input type="text" id="<?php echo T7; ?>txt_apellidomaterno" name="<?php echo T7; ?>txt_apellidomaterno">
+                                <input type="text" id="<?php echo REGCL; ?>txt_apellidomaterno" name="<?php echo REGCL; ?>txt_apellidomaterno">
                                 <b class="tooltip tooltip-top-right"><i class="fa fa-user txt-color-teal"></i> <?php echo LABEL_RV8; ?></b>
                             </label>
                         </div>
@@ -55,11 +57,26 @@ $grabar = Session::getPermiso('REGVEGR');
                 </section>   
                 <section>
                     <div class="row">
+                        <label class="label col col-3"><?php echo LABEL_RC2; ?></label>
+                        <div class="col col-8">
+                            <label class="select"> 
+                                <select id="<?php echo REGCL; ?>lst_tipodoc" name="<?php echo REGCL; ?>lst_tipodoc">
+                                    <option value="">Seleccionar</option>
+                                    <option value="RU">RUC</option>
+                                    <option value="DN">DNI</option>
+                                </select>
+                                <i></i>
+                            </label>
+                        </div>
+                    </div>
+                </section>
+                <section>
+                    <div class="row">
                         <label class="label col col-3"><?php echo LABEL_RV16; ?></label>
                         <div class="col col-8">
                             <label class="input"> 
                                 <i class="icon-append fa fa-keyboard-o"></i>
-                                <input type="text" id="<?php echo T7; ?>txt_nrodocumento" name="<?php echo T7; ?>txt_nrodocumento">
+                                <input type="text" id="<?php echo REGCL; ?>txt_nrodocumento" name="<?php echo REGCL; ?>txt_nrodocumento">
                                 <b class="tooltip tooltip-top-right"><i class="fa fa-keyboard-o txt-color-teal"></i> <?php echo LABEL_RV17; ?></b>
                             </label>
                         </div>
@@ -71,20 +88,20 @@ $grabar = Session::getPermiso('REGVEGR');
                         <div class="col col-8">
                             <label class="select"> 
                                 <?php
-                                    $data = registrarVendedorController::getDepartamentos();
+                                    $data = clienteController::getDepartamentos();
                                     
                                     echo Functions::selectHtml(array(
                                         'data'=>$data,
                                         'atributes'=>array(
-                                            'id'=>T7.'lst_departamento',
-                                            'name'=>T7.'lst_departamento',
+                                            'id'=>REGCL.'lst_departamento',
+                                            'name'=>REGCL.'lst_departamento',
                                             'onchange'=>'registrarVendedor.getProvincias({
-                                                            idDepartamento: $(\'#'.T7.'lst_departamento\').val(),
-                                                            content: \'#'.T7.'cont-provincias\',
-                                                            idElement: \''.T7.'lst_provincia\',
-                                                            nameElement: \''.T7.'lst_provincia\',
-                                                            contentUbigeo: \'#'.T7.'cont-ubigeo\',
-                                                            idUbigeo: \''.T7.'lst_ubigeo\'
+                                                            idDepartamento: $(\'#'.REGCL.'lst_departamento\').val(),
+                                                            content: \'#'.REGCL.'cont-provincias\',
+                                                            idElement: \''.REGCL.'lst_provincia\',
+                                                            nameElement: \''.REGCL.'lst_provincia\',
+                                                            contentUbigeo: \'#'.REGCL.'cont-ubigeo\',
+                                                            idUbigeo: \''.REGCL.'lst_ubigeo\'
                                                         });'
                                         ),
                                         'etiqueta'=>'departamento',
@@ -101,8 +118,8 @@ $grabar = Session::getPermiso('REGVEGR');
                     <div class="row">
                         <label class="label col col-3"><?php echo LABEL_RV19; ?></label>
                         <div class="col col-8">
-                            <label class="select" id="<?php echo T7; ?>cont-provincias"> 
-                                <select id="<?php echo T7; ?>lst_provincia" name="<?php echo T7; ?>lst_provincia">
+                            <label class="select" id="<?php echo REGCL; ?>cont-provincias"> 
+                                <select id="<?php echo REGCL; ?>lst_provincia" name="<?php echo REGCL; ?>lst_provincia">
                                     <option value="">Seleccionar</option>
                                 </select>
                                 <i></i>
@@ -114,8 +131,8 @@ $grabar = Session::getPermiso('REGVEGR');
                     <div class="row">
                         <label class="label col col-3"><?php echo LABEL_RV20; ?></label>
                         <div class="col col-8">
-                            <label class="select" id="<?php echo T7; ?>cont-ubigeo"> 
-                                <select id="<?php echo T7; ?>lst_ubigeo" name="<?php echo T7; ?>lst_ubigeo">
+                            <label class="select" id="<?php echo REGCL; ?>cont-ubigeo"> 
+                                <select id="<?php echo REGCL; ?>lst_ubigeo" name="<?php echo REGCL; ?>lst_ubigeo">
                                     <option value="">Seleccionar</option>
                                 </select>
                                 <i></i>
@@ -129,7 +146,7 @@ $grabar = Session::getPermiso('REGVEGR');
                         <div class="col col-8">
                             <label class="input"> 
                                 <i class="icon-append fa fa-keyboard-o"></i>
-                                <input type="text" id="<?php echo T7; ?>txt_direccion" name="<?php echo T7; ?>txt_direccion">
+                                <input type="text" id="<?php echo REGCL; ?>txt_direccion" name="<?php echo REGCL; ?>txt_direccion">
                                 <b class="tooltip tooltip-top-right"><i class="fa fa-keyboard-o txt-color-teal"></i> <?php echo LABEL_RV11; ?></b>
                             </label>
                         </div>
@@ -141,7 +158,7 @@ $grabar = Session::getPermiso('REGVEGR');
                         <div class="col col-8">
                             <label class="input"> 
                                 <i class="icon-append fa fa-keyboard-o"></i>
-                                <input type="text" id="<?php echo T7; ?>txt_email" name="<?php echo T7; ?>txt_email">
+                                <input type="text" id="<?php echo REGCL; ?>txt_email" name="<?php echo REGCL; ?>txt_email">
                                 <b class="tooltip tooltip-top-right"><i class="fa fa-keyboard-o txt-color-teal"></i> <?php echo LABEL_RV12; ?></b>
                             </label>
                         </div>
@@ -152,11 +169,11 @@ $grabar = Session::getPermiso('REGVEGR');
                         <label class="label col col-3"><?php echo LABEL_RV13; ?></label>
                         <div class="inline-group col col-8">
                             <label class="radio"> 
-                                <input name="<?php echo T7; ?>rd_sexo" id="<?php echo T7; ?>rd_sexoH" checked type="radio" value="H">
+                                <input name="<?php echo REGCL; ?>rd_sexo" id="<?php echo REGCL; ?>rd_sexoH" checked type="radio" value="H">
                                 <i></i>Hombre
                             </label>
                             <label class="radio"> 
-                                <input name="<?php echo T7; ?>rd_sexo" id="<?php echo T7; ?>rd_sexoM" type="radio" value="M">
+                                <input name="<?php echo REGCL; ?>rd_sexo" id="<?php echo REGCL; ?>rd_sexoM" type="radio" value="M">
                                 <i></i>Mujer
                             </label>
                         </div>
@@ -168,7 +185,7 @@ $grabar = Session::getPermiso('REGVEGR');
                         <div class="col col-8">
                             <label class="input"> 
                                 <i class="icon-append fa fa-keyboard-o"></i>
-                                <input type="text" id="<?php echo T7; ?>txt_telefonos" name="<?php echo T7; ?>txt_telefonos">
+                                <input type="text" id="<?php echo REGCL; ?>txt_telefonos" name="<?php echo REGCL; ?>txt_telefonos">
                                 <b class="tooltip tooltip-top-right"><i class="fa fa-keyboard-o txt-color-teal"></i> <?php echo LABEL_RV15; ?></b>
                             </label>
                         </div>
@@ -182,7 +199,7 @@ $grabar = Session::getPermiso('REGVEGR');
             </div>
             <div class="modal-footer">
                 <?php if($grabar['permiso']):?>
-                <button id="<?php echo T7; ?>btnGvend" type="submit" class="btn txt-color-white bg-color-blueDark">
+                <button id="<?php echo REGCL; ?>btnGrCliente" type="submit" class="btn txt-color-white bg-color-blueDark">
                     <i class="fa fa-save"></i> <?php echo $grabar['accion']; ?>
                 </button>
                 <?php endif; ?>
@@ -196,52 +213,55 @@ $grabar = Session::getPermiso('REGVEGR');
 <!-- si no riene permiso se anula submit desde cualquier input -->
 <?php if(!$grabar['permiso']): ?>
 <script>
-    simpleScript.noSubmit('#<?php echo T7; ?>formVendedor');
+    simpleScript.noSubmit('#<?php echo REGCL; ?>formNewCliente');
 </script>
 <?php endif; ?>
 <script>
-    $('#<?php echo T7; ?>formVendedor').validate({
+    $('#<?php echo REGCL; ?>formNewCliente').validate({
         // Rules for form validation
         rules : {
-                <?php echo T7; ?>txt_nombres : {
+                <?php echo REGCL; ?>txt_nombres : {
                         required : true,
                         regular: true,
                         minlength: 3
                 },
-                <?php echo T7; ?>txt_apellidopaterno : {
+                <?php echo REGCL; ?>txt_apellidopaterno : {
                         required : true,
                         regular: true,
                         minlength: 3
                 },
-                <?php echo T7; ?>txt_apellidomaterno : {
+                <?php echo REGCL; ?>txt_apellidomaterno : {
                         required : true,
                         regular: true,
                         minlength: 3
                 },
-                <?php echo T7; ?>txt_nrodocumento:{
+                <?php echo REGCL; ?>lst_tipodoc:{
+                        required: true
+                },        
+                <?php echo REGCL; ?>txt_nrodocumento:{
                         required: true,
                         number: true,
-                        maxlength: 8
+                        maxlength: 14
                 },
-                <?php echo T7; ?>lst_departamento : {
+                <?php echo REGCL; ?>lst_departamento : {
                         required : true
                 },
-                <?php echo T7; ?>lst_provincia : {
+                <?php echo REGCL; ?>lst_provincia : {
                         required : true
                 },
-                <?php echo T7; ?>lst_ubigeo : {
+                <?php echo REGCL; ?>lst_ubigeo : {
                         required : true
                 },
-                <?php echo T7; ?>txt_direccion : {
+                <?php echo REGCL; ?>txt_direccion : {
                         required : true,
                         regular2: true,
                         minlength: 3
                 },
-                <?php echo T7; ?>txt_email : {
+                <?php echo REGCL; ?>txt_email : {
                         required : true,
                         email: true
                 },
-                <?php echo T7; ?>txt_telefonos : {
+                <?php echo REGCL; ?>txt_telefonos : {
                         regular2: true
                 }       
         },
@@ -252,8 +272,17 @@ $grabar = Session::getPermiso('REGVEGR');
         },
 
         submitHandler: function(){
-            registrarVendedor.postNuevoVendedor();
+            cliente.postNewCliente();
         }   
     });
 </script>
 </form>
+
+
+
+
+
+
+
+
+

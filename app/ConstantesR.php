@@ -15,4 +15,5 @@ define("T7","TAB_REGVE");        /*tab modulo REGISTRAR VENDEDOR*/
 define("T8","TAB_GNCOT");        /*tab modulo GENERAR COTIZACION*/
 define("ASCU","ASCU_TAB");        /*tab modulo ASIGNAR CUENTA*/
 define("CLIT","CLIT");             /*tab modulo CLIENTE*/
+define("REGCL","REGCL");             /*tab modulo CLIENTE*/
 ?>

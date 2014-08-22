@@ -72,6 +72,18 @@ class registrarVendedorController extends Controller{
         echo json_encode($data);
     }
     
+    public function postDesactivarVendedor(){
+        $data = Obj::run()->registrarVendedorModel->postDesactivarVendedor();
+        
+        echo json_encode($data);
+    }
+    
+    public function postActivarVendedor(){
+        $data = Obj::run()->registrarVendedorModel->postActivarVendedor();
+        
+        echo json_encode($data);
+    }
+    
     public function getGridVendedor() {
         $editar = Session::getPermiso('REGVEED');
         
@@ -95,9 +107,9 @@ class registrarVendedorController extends Controller{
                 $encryptReg = Aes::en($aRow['id_persona']);
                 
                 if($aRow['estado'] == 'A'){
-                    $estado = '<button type=\"button\" class=\"btn btn-success btn-xs\" title=\"Desactivar\" onclick=\"registrarVendedor.postDesactivarVendedor(\''.$encryptReg.'\')\">Activo</button>';
+                    $estado = '<button type=\"button\" class=\"btn btn-success btn-xs\" title=\"Desactivar\" onclick=\"registrarVendedor.postDesactivarVendedor(this,\''.$encryptReg.'\')\">Activo</button>';
                 }elseif($aRow['estado'] == 'I'){
-                    $estado = '<button type=\"button\" class=\"btn btn-danger btn-xs\" title=\"Activar\" onclick=\"registrarVendedor.postActivarVendedor(\''.$encryptReg.'\')\">Inactivo</button>';
+                    $estado = '<button type=\"button\" class=\"btn btn-danger btn-xs\" title=\"Activar\" onclick=\"registrarVendedor.postActivarVendedor(this,\''.$encryptReg.'\')\">Inactivo</button>';
                 }
                 
                 $chk = '<input id=\"c_'.(++$key).'\" type=\"checkbox\" name=\"'.T7.'chk_delete[]\" value=\"'.$encryptReg.'\">';
@@ -131,6 +143,7 @@ class registrarVendedorController extends Controller{
         
         echo $sOutput;
     }
+    
 }
 
 ?>

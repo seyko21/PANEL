@@ -20,3 +20,4 @@ var diccionario = {
         T8: '<?php echo T8; ?>',
         ASCU: '<?php echo ASCU; ?>',
         CLIT: '<?php echo CLIT; ?>',
+        REGCL: '<?php echo REGCL; ?>',

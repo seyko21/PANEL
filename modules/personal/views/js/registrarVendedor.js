@@ -166,6 +166,7 @@ var registrarVendedor_ = function(){
                     simpleScript.notify.ok({
                         content: mensajes.MSG_3,
                         callback: function(){
+                            _private.idVendedor = 0;
                             registrarVendedor.getGridVendedor();
                             simpleScript.closeModal('#'+diccionario.tabs.T7+'formVendedor');
                         }
@@ -205,6 +206,44 @@ var registrarVendedor_ = function(){
                         });
                     }
                 });
+            }
+        });
+    };
+    
+    this.publico.postDesactivarVendedor = function(btn,id){
+        simpleAjax.send({
+            element: btn,
+            root: _private.config.modulo + 'postDesactivarVendedor',
+            data: '&_idPersona='+id,
+            clear: true,
+            fnCallback: function(data) {
+                if(!isNaN(data.result) && parseInt(data.result) === 1){
+                    simpleScript.notify.ok({
+                        content: 'Vendedor se desactivo correctamente',
+                        callback: function(){
+                            registrarVendedor.getGridVendedor();
+                        }
+                    });
+                }
+            }
+        });
+    };
+    
+    this.publico.postActivarVendedor = function(btn,id){
+        simpleAjax.send({
+            element: btn,
+            root: _private.config.modulo + 'postActivarVendedor',
+            data: '&_idPersona='+id,
+            clear: true,
+            fnCallback: function(data) {
+                if(!isNaN(data.result) && parseInt(data.result) === 1){
+                    simpleScript.notify.ok({
+                        content: 'Vendedor se activo correctamente',
+                        callback: function(){
+                            registrarVendedor.getGridVendedor();
+                        }
+                    });
+                }
             }
         });
     };

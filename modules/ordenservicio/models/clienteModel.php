@@ -1,12 +1,13 @@
 <?php
 /*
-* --------------------------------------
-* fecha: 10-08-2014 06:08:26 
-* Descripcion : registrarVendedorModel.php
-* --------------------------------------
+* ---------------------------------------
+* --------- CREATED BY CREATOR ----------
+* fecha: 21-08-2014 07:08:16 
+* Descripcion : clienteModel.php
+* ---------------------------------------
 */ 
 
-class registrarVendedorModel extends Model{
+class clienteModel extends Model{
 
     private $_flag;
     private $_idPersona;
@@ -17,6 +18,7 @@ class registrarVendedorModel extends Model{
     private $_nombres;
     private $_sexo;
     private $_direccion;
+    private $_tipoDoc;
     private $_email;
     private $_telefono;
     private $_numeroDoc;
@@ -40,25 +42,26 @@ class registrarVendedorModel extends Model{
         $this->_idPersona     = Aes::de($this->post('_idPersona'));    /*se decifra*/
         $this->_idDepartamento = $this->post('_idDepartamento');
         $this->_idProvincia = $this->post('_idProvincia');
-        $this->_apellidoPaterno = $this->post(T7.'txt_apellidopaterno');
-        $this->_apellidoMaterno = $this->post(T7.'txt_apellidomaterno');
-        $this->_nombres = $this->post(T7.'txt_nombres');
-        $this->_sexo = $this->post(T7.'rd_sexo');
-        $this->_direccion = $this->post(T7.'txt_direccion');
-        $this->_email = $this->post(T7.'txt_email');
-        $this->_telefono = $this->post(T7.'txt_telefonos');
-        $this->_numeroDoc = $this->post(T7.'txt_nrodocumento');
-        $this->_ubigeo = $this->post(T7.'lst_ubigeo');
-        $this->_usuario = Session::get('sys_idUsuario');
-        $this->_chkdel  = $this->post(T7.'chk_delete');
+        $this->_apellidoPaterno = $this->post(REGCL.'txt_apellidopaterno');
+        $this->_apellidoMaterno = $this->post(REGCL.'txt_apellidomaterno');
+        $this->_nombres = $this->post(REGCL.'txt_nombres');
+        $this->_sexo = $this->post(REGCL.'rd_sexo');
+        $this->_direccion = $this->post(REGCL.'txt_direccion');
+        $this->_email = $this->post(REGCL.'txt_email');
+        $this->_telefono = $this->post(REGCL.'txt_telefonos');
+        $this->_numeroDoc = $this->post(REGCL.'txt_nrodocumento');
+        $this->_ubigeo = $this->post(REGCL.'lst_ubigeo');
+        $this->_tipoDoc = $this->post(REGCL.'lst_tipodoc');
+        $this->_chkdel  = $this->post(REGCL.'chk_delete');
+        $this->_usuario = Session::get("sys_idUsuario");
         
-        $this->_iDisplayStart  =   $this->post('iDisplayStart'); 
-        $this->_iDisplayLength =   $this->post('iDisplayLength'); 
-        $this->_iSortingCols   =   $this->post('iSortingCols');
-        $this->_sSearch        =   $this->post('sSearch');
+        $this->_iDisplayStart  =   Formulario::getParam("iDisplayStart"); 
+        $this->_iDisplayLength =   Formulario::getParam("iDisplayLength"); 
+        $this->_iSortingCols   =   Formulario::getParam("iSortingCols");
+        $this->_sSearch        =   Formulario::getParam("sSearch");
     }
     
-    public function getGridVendedor() {
+    public function getClientes() {
         $aColumns       =   array( 'chk','numerodocumento','nombrecompleto' ); //para la ordenacion y pintado en html
         /*
 	 * Ordenando, se verifica por que columna se ordenara
@@ -71,7 +74,7 @@ class registrarVendedorModel extends Model{
                 }
         }
         
-        $query = "call sp_perVendedorGrid(:iDisplayStart,:iDisplayLength,:sOrder,:sSearch);";
+        $query = "call sp_ordseClienteGrid(:iDisplayStart,:iDisplayLength,:sOrder,:sSearch);";
         
         $parms = array(
             ':iDisplayStart' => $this->_iDisplayStart,
@@ -83,28 +86,6 @@ class registrarVendedorModel extends Model{
         return $data;
     }
     
-    public function findVendedor(){
-        $query = "SELECT 
-                    nombres,
-                    apellidopaterno,
-                    apellidomaterno,
-                    numerodocumento,
-                    id_ubigeo,
-                    direccion,
-                    email,
-                    sexo,
-                    telefono 
-                FROM mae_persona WHERE id_persona = :idPersona;";
-        
-        $parms = array(
-            ':idPersona'=>$this->_idPersona
-        );
-        
-        $data = $this->queryOne($query,$parms);
-        return $data;
-    }
-
-
     public function getDepartamentos(){
         $query = "SELECT id_departamento,departamento FROM `ub_departamento` ORDER BY departamento ";
         
@@ -113,29 +94,9 @@ class registrarVendedorModel extends Model{
         return $data;
     }
     
-    public function getProvincias($dep=''){
-        $query = "SELECT id_provincia,provincia FROM `ub_provincia` WHERE LEFT(id_provincia,2) = :idDepartamento ORDER BY provincia";
-        
-        $parms = array(
-            ':idDepartamento'=>($dep == '')?$this->_idDepartamento:$dep
-        );
-        $data = $this->queryAll($query,$parms);
-        return $data;
-    }
-
-    public function getUbigeo($pro=''){
-        $query = "SELECT id_ubigeo,distrito FROM `ub_ubigeo` WHERE LEFT(id_ubigeo,4) = :idProvincia ORDER BY distrito;";
-        
-        $parms = array(
-            ':idProvincia'=>($pro == '')?$this->_idProvincia:$pro
-        );
-                
-        $data = $this->queryAll($query,$parms);
-        return $data;
-    }
-    
-    public function mantenimientoVendedor(){
-        $query = "call sp_perVendedorMantenimiento(
+    /*grabar nuevo registro: Cliente*/
+    public function newCliente(){
+        $query = "call sp_ordseClienteMantenimiento(
                     :flag,
                     :idPersona,
                     :apellidoPaterno,
@@ -147,6 +108,7 @@ class registrarVendedorModel extends Model{
                     :telefono,
                     :numeroDoc,
                     :ubigeo,
+                    :tipoDoc,
                     :usuario
                 );";
         $parms = array(
@@ -161,13 +123,59 @@ class registrarVendedorModel extends Model{
             ':telefono' => $this->_telefono,
             ':numeroDoc' => $this->_numeroDoc,
             ':ubigeo' => $this->_ubigeo,
+            ':tipoDoc' => $this->_tipoDoc,
             ':usuario' => $this->_usuario
         );
         $data = $this->queryOne($query,$parms);  
         return $data;
     }
     
-    public function mantenimientoVendedorAll(){
+    /*seleccionar registro a editar: Cliente*/
+    public function findCliente(){
+        $query = "SELECT 
+                    nombres,
+                    apellidopaterno,
+                    apellidomaterno,
+                    numerodocumento,
+                    id_ubigeo,
+                    direccion,
+                    tipodocumento,
+                    email,
+                    sexo,
+                    telefono 
+                FROM mae_persona WHERE id_persona = :idPersona;";
+        
+        $parms = array(
+            ':idPersona'=>$this->_idPersona
+        );
+        
+        $data = $this->queryOne($query,$parms);
+        return $data;
+    }
+    
+    public function getProvincias($dep=''){
+        $query = "SELECT id_provincia,provincia FROM `ub_provincia` WHERE LEFT(id_provincia,2) = :idDepartamento ORDER BY provincia";
+        
+        $parms = array(
+            ':idDepartamento'=>($dep == '')?$this->_idDepartamento:$dep
+        );
+        $data = $this->queryAll($query,$parms);
+        return $data;
+    }
+    
+    public function getUbigeo($pro=''){
+        $query = "SELECT id_ubigeo,distrito FROM `ub_ubigeo` WHERE LEFT(id_ubigeo,4) = :idProvincia ORDER BY distrito;";
+        
+        $parms = array(
+            ':idProvincia'=>($pro == '')?$this->_idProvincia:$pro
+        );
+                
+        $data = $this->queryAll($query,$parms);
+        return $data;
+    }
+    
+    /*eliminar varios registros: Cliente*/
+    public function deleteClienteAll(){
         foreach ($this->_chkdel as $value) {
             $query = "UPDATE `mae_persona` SET
 			`estado` = '0'
@@ -181,7 +189,7 @@ class registrarVendedorModel extends Model{
         return $data;
     }
     
-    public function postDesactivarVendedor(){
+    public function postDesactivarCliente(){
         $query = "UPDATE `mae_persona` SET
                     `estado` = 'I'
                 WHERE `id_persona` = :idPersona;";
@@ -193,7 +201,7 @@ class registrarVendedorModel extends Model{
         return $data;
     }
     
-    public function postActivarVendedor(){
+    public function postActivarCliente(){
         $query = "UPDATE `mae_persona` SET
                     `estado` = 'A'
                 WHERE `id_persona` = :idPersona;";

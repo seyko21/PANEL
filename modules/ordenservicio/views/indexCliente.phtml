@@ -2,14 +2,14 @@
 /*
 * ---------------------------------------
 * --------- CREATED BY CREATOR ----------
-* fecha: 20-08-2014 08:08:50 
+* fecha: 21-08-2014 07:08:16 
 * Descripcion : indexCliente.phtml
 * ---------------------------------------
 */
-$grabar   = Session::getPermiso("CLITGR");
-$eliminar = Session::getPermiso("CLITDE");
+$grabar   = Session::getPermiso("REGCLGR");
+$eliminar = Session::getPermiso("REGCLDE");
 echo Functions::widgetOpen(array(
-        "id"=>CLIT,
+        "id"=>REGCL,
         "title"=>"Cliente"
     )); 
 ?>
@@ -20,13 +20,13 @@ echo Functions::widgetOpen(array(
             <div class="DTTT btn-group">
                 <!-- verificar permisos -->
                 <?php if($grabar["permiso"]): ?>
-                <button id="<?php echo CLIT; ?>btnNewCliente" type="button" onclick="cliente.getFormNewCliente(this);" class="btn txt-color-white bg-color-blueDark">
+                <button id="<?php echo REGCL; ?>btnNewCliente" type="button" onclick="cliente.getFormNewCliente(this);" class="btn txt-color-white bg-color-blueDark">
                     <i class="fa fa-file-o"></i> <?php echo BTN_NUEVO; ?>
                 </button>
                 <?php endif; ?>
                 <!-- verificar permisos -->
                 <?php if($eliminar["permiso"]): ?>
-                <button id="<?php echo CLIT; ?>btnDeleteCliente" type="button" onclick="cliente.postDeleteClienteAll(this);" class="btn txt-color-white bg-color-blueDark">
+                <button id="<?php echo REGCL; ?>btnDeleteCliente" type="button" onclick="cliente.postDeleteClienteAll(this);" class="btn txt-color-white bg-color-blueDark">
                     <i class="fa fa-trash-o"></i> <?php echo BTN_DELETE; ?>
                 </button>
                 <?php endif; ?>
@@ -34,7 +34,7 @@ echo Functions::widgetOpen(array(
         </div>
 
     </div>
-    <form id="<?php echo CLIT; ?>formGridCliente" name="<?php echo T5; ?>formGridCliente">
-        <table id="<?php echo CLIT; ?>gridCliente" class="table table-striped table-bordered table-hover table-condensed" style="width:100%"></table>
+    <form id="<?php echo REGCL; ?>formGridCliente" name="<?php echo T5; ?>formGridCliente">
+        <table id="<?php echo REGCL; ?>gridCliente" class="table table-striped table-bordered table-hover table-condensed" style="width:100%"></table>
     </form>
 <?php echo Functions::widgetClose(); ?>

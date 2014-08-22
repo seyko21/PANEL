@@ -118,4 +118,9 @@ define('LABEL_ASC1','Cuentas');
 define('LABEL_ASC2','Nueva Asignación');
 define('LABEL_ASC3','Comisión');
 define('LABEL_ASC4','Empleado');
+
+/*----------------------    CLIENTE  ----------------------*/
+define('LABEL_RC1','Nuevo Cliente');
+define('LABEL_RC2','Tipo de documento');
+define('LABEL_RC3','Editar Cliente');
 ?>
