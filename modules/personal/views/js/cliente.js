@@ -62,7 +62,7 @@ var cliente_ = function(){
             sScrollY: "300px",
             sAjaxSource: _private.config.modulo+'getGridCliente',
             fnDrawCallback: function() {
-                $('#'+diccionario.tabs.REGCL+'gridCliente_filter').find('input').attr('placeholder','Buscar por Razón Social o número de documento').css('width','350px');
+                $('#'+diccionario.tabs.REGCL+'gridCliente_filter').find('input').attr('placeholder','Buscar por Razón Social');
                 /*para hacer evento invisible*/
                 simpleScript.removeAttr.click({
                     container: '#widget_'+diccionario.tabs.REGCL, //widget del datagrid
