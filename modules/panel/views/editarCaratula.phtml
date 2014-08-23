@@ -1,11 +1,12 @@
 <?php
 /*
  * Documento   : nuevaCaratula
- * Creado      : 18-ago-2014
+ * Creado      : 21-ago-2014
  * Autor       : ..... .....
  * Descripcion : 
  */
-$grabar = Session::getPermiso('FITECGR');
+$editar = Session::getPermiso('FITECED');
+$data = fichaTecnicaController::getCaratula();
 ?>
 <form id="<?php echo T102; ?>formCaratula" name="<?php echo T102; ?>formCaratula" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">
@@ -14,7 +15,7 @@ $grabar = Session::getPermiso('FITECGR');
                 <button type="button" class="close"  aria-hidden="true">
                     &times;
                 </button>
-                <h4 class="modal-title"><?php echo LABEL_A35;?></h4>
+                <h4 class="modal-title"><?php echo LABEL_A36;?></h4>
             </div>
             <div class="modal-body smart-form">
                 <section>
@@ -23,7 +24,7 @@ $grabar = Session::getPermiso('FITECGR');
                         <div class="col col-5">
                             <label class="input"> 
                                 <i class="icon-append fa fa-code"></i>
-                                <input type="text" id="<?php echo T102; ?>txt_codigo" name="<?php echo T102; ?>txt_codigo" maxlength="7">
+                                <input type="text" id="<?php echo T102; ?>txt_codigo" name="<?php echo T102; ?>txt_codigo" maxlength="7" value="<?php echo $data['codigo']; ?>">
                                 <b class="tooltip tooltip-top-right"><i class="fa fa-question-circle txt-color-teal"></i> <?php echo LABEL_A37M; ?></b>
                             </label>
                         </div>
@@ -35,7 +36,7 @@ $grabar = Session::getPermiso('FITECGR');
                         <div class="col col-10">
                             <label class="input"> 
                                 <i class="icon-append fa fa-keyboard-o"></i>
-                                <input type="text" id="<?php echo T102; ?>txt_descripcion" name="<?php echo T102; ?>txt_descripcion">
+                                <input type="text" id="<?php echo T102; ?>txt_descripcion" name="<?php echo T102; ?>txt_descripcion" value="<?php echo $data['descripcion']; ?>">
                                 <b class="tooltip tooltip-top-right"><i class="fa fa-question-circle txt-color-teal"></i> <?php echo LABEL_A38M; ?></b>
                             </label>
                         </div>
@@ -47,13 +48,13 @@ $grabar = Session::getPermiso('FITECGR');
                             <div class="col col-3">
                                 <label class="input"> 
                                     <i class="icon-append fa  fa-money"></i>
-                                    <input type="text" id="<?php echo T102; ?>txt_precio" name="<?php echo T102; ?>txt_precio"></input>
+                                    <input type="text" id="<?php echo T102; ?>txt_precio" name="<?php echo T102; ?>txt_precio" value="<?php echo $data['precio']; ?>"></input>
                                     <b class="tooltip tooltip-top-right"><i class="fa fa-question-circle  txt-color-teal"></i> <?php echo LABEL_A39M; ?></b>
                                 </label>
                             </div>                        
                             <div class="col col-3">
                                 <label class="checkbox">
-                                    <input type="checkbox" name="<?php echo T102; ?>chk_iluminado" id="<?php echo T102; ?>chk_iluminado" value="1"></input>
+                                    <input type="checkbox" name="<?php echo T102; ?>chk_iluminado" id="<?php echo T102; ?>chk_iluminado" value="1" <?php echo ($data['iluminado'] == '1')?'checked':'' ?>></input>
                                     <i></i>
                                     <?php echo LABEL_A40; ?>
                                 </label>
@@ -64,9 +65,9 @@ $grabar = Session::getPermiso('FITECGR');
                 
             </div>
             <div class="modal-footer">
-                <?php if($grabar['permiso']):?>
+                <?php if($editar['permiso']):?>
                 <button id="<?php echo T102; ?>btnGcara" type="submit" class="btn txt-color-white bg-color-blueDark">
-                    <i class="fa fa-save"></i> <?php echo $grabar['accion']; ?> 
+                    <i class="fa fa-save"></i> <?php echo $editar['accion']; ?>
                 </button>
                 <?php endif; ?>
                 <button type="button" class="btn btn-default xClose">
@@ -107,7 +108,7 @@ $grabar = Session::getPermiso('FITECGR');
         },
 
         submitHandler: function(){
-            fichaTecnica.postNuevoCaratula();
+            fichaTecnica.postEditarCaratula();
         }   
     });
 </script>

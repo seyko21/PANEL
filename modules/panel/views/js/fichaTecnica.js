@@ -1,11 +1,9 @@
-
 var fichaTecnica_ = function(){
     
     var _private = {};
     
-    _private.idProducto = 0;
-    
-    _private.idCaratula = 0;
+    _private.idProducto = 0;    
+    _private.idCaratula = 0;    
     
     _private.config = {
         modulo: 'panel/fichaTecnica/'
@@ -68,32 +66,51 @@ var fichaTecnica_ = function(){
                 });
             }
         });
-        setup_widgets_desktop();               
-        setTimeout(function(){            
-           fichaTecnica.getListaCaratulas($('#'+diccionario.tabs.T102+'gridFichaTecnica #c_1').val());                   
-        }, 1000);              
+        setup_widgets_desktop();                
         
     };
     
-    this.publico.getListaCaratulas = function(){
-        _private.idCaratula = simpleScript.getParam(arguments[0]);         
-                
-        simpleAjax.send({
-            dataType: 'html',
-            root: _private.config.modulo + 'getListaCaratulas',
-            data: '&_idProducto='+_private.idCaratula,
-            fnCallback: function(data){
-                $('#cont-listaCaratulas').html(data);                        
+    this.publico.getGridCaratula = function(){        
+        _private.idProducto = simpleScript.getParam(arguments[0]);                        
+        $('#'+diccionario.tabs.T102+'gridCaratula').dataTable({
+            bFilter: false, 
+            bProcessing: true,
+            bServerSide: true,
+            bDestroy: true,
+            sPaginationType: "full_numbers", //two_button
+            sServerMethod: "POST",
+            bPaginate: false,
+            iDisplayLength: 10, 
+            sSearch: false,
+            aoColumns: [                
+                {sTitle: "Código", sWidth: "10%",bSortable: false},
+                {sTitle: "Descripción", sWidth: "30%",bSortable: false},
+                {sTitle: "Precio", sWidth: "8%",  sClass: "right", bSortable: false},
+                {sTitle: "Iluminado", sWidth: "8%",  sClass: "center", bSortable: false},
+                {sTitle: "Estado", sWidth: "8%",  sClass: "center", bSortable: false},
+                {sTitle: "Acciones", sWidth: "15%", sClass: "center", bSortable: false}
+            ],                     
+            sAjaxSource: _private.config.modulo+'getGridCaratula',
+            fnServerParams: function(aoData) {
+                aoData.push({"name": "_idProducto", "value": _private.idProducto});                
+            },
+            fnDrawCallback: function() {                
+                /*para hacer evento invisible*/
+//                simpleScript.removeAttr.click({
+//                    container: '#widget_'+diccionario.tabs.T102+'Caratula', //widget del datagrid
+//                    typeElement: 'button, #'+diccionario.tabs.T102+'chk_all'
+//                });
             }
-        });        
+        });
+        setup_widgets_desktop();                
         //Ubicacion:
         simpleAjax.send({
             dataType: 'html',
             root: _private.config.modulo + 'getUbicacion',
-            data: '&_idProducto='+_private.idCaratula,
+            data: '&_idProducto='+_private.idProducto,
             typeData: 'html',
-            fnCallback: function(data){                           
-                $('#widget_'+diccionario.tabs.T102+'caratula h2').html(data);
+            fnCallback: function(data){                                 
+                   $('#widget_'+diccionario.tabs.T102+'Caratula header h2').html(data);                                  
             }
         });        
         
@@ -184,18 +201,34 @@ var fichaTecnica_ = function(){
             }
         });
     };
-    this.publico.getNuevoCaratula = function(btn){        
+    this.publico.getNuevoCaratula = function(btn, id){
+        _private.idProducto  = id;         
         simpleAjax.send({
             element: btn,
             dataType: 'html',
             root: _private.config.modulo + 'getNuevoCaratula',
             fnCallback: function(data){
                 $('#cont-modal').append(data);  /*los formularios con append*/
-                $('#'+diccionario.tabs.T102+'formCaratula').modal('show');                       
+                $('#'+diccionario.tabs.T102+'formCaratula').modal('show');
+                
             }
         });        
         
     };    
+     this.publico.getEditarCaratula = function(id, idd){
+        _private.idCaratula = id;
+        _private.idProducto  = idd;         
+        simpleAjax.send({
+            gifProcess: true,
+            dataType: 'html',
+            root: _private.config.modulo + 'getEditarCaratula',
+            data: '&_idCaratula='+_private.idCaratula,
+            fnCallback: function(data){
+                $('#cont-modal').append(data);  /*los formularios con append*/
+                $('#'+diccionario.tabs.T102+'formCaratula').modal('show');
+            }
+        });
+    };   
        
     this.publico.postNuevoFichaTecnica = function(){        
         //Validar Manualmente:
@@ -290,7 +323,7 @@ var fichaTecnica_ = function(){
                         simpleAjax.send({
                             flag: 4,
                             element: btn,
-                            form: '#'+diccionario.tabs.T102+'formGridFichaTecnica',
+                            form: '#'+diccionario.tabs.T102+'fromGridFichaTecnica',
                             root: _private.config.modulo + 'postDeleteFichaTecnicaAll',
                             fnCallback: function(data) {
                                 if(!isNaN(data.result) && parseInt(data.result) === 1){
@@ -308,6 +341,95 @@ var fichaTecnica_ = function(){
             }
         });
     };
+         
+     this.publico.postNuevoCaratula = function(){                    
+        simpleAjax.send({
+            flag: 1,
+            element: '#'+diccionario.tabs.T102+'btnGcara',
+            root: _private.config.modulo + 'postNuevoCaratula',
+            form: '#'+diccionario.tabs.T102+'formCaratula',
+            data: '&_idProducto='+_private.idProducto ,
+            clear: true,
+            fnCallback: function(data) {            
+               if(!isNaN(data.result) && parseInt(data.result) === 1){
+                    simpleScript.notify.ok({
+                        content: mensajes.MSG_3,
+                        callback: function(){
+                            fichaTecnica.getGridFichaTecnica();                                                           
+                             setTimeout(function(){            
+                                   fichaTecnica.getGridCaratula(_private.idProducto);                                   
+                             }, 1000);                                                                                      
+                        }
+                    });
+                }else if(!isNaN(data.result) && parseInt(data.result) === 2){
+                    simpleScript.notify.error({
+                        content: mensajes.MSG_4
+                    });
+                }
+            }
+        });
+    };
+    
+    this.publico.postEditarCaratula = function(){       
+        simpleAjax.send({
+            flag: 2,
+            element: '#'+diccionario.tabs.T102+'btnGcara',
+            root: _private.config.modulo + 'postEditarCaratula',
+            form: '#'+diccionario.tabs.T102+'formCaratula',
+            data: '&_idCaratula='+_private.idCaratula,
+            clear: true,
+            fnCallback: function(data) {
+                if(!isNaN(data.result) && parseInt(data.result) === 1){
+                    simpleScript.notify.ok({
+                        content: mensajes.MSG_3,
+                        callback: function(){                            
+                             fichaTecnica.getGridCaratula(_private.idProducto);     
+                             _private.idProducto = 0;
+                             _private.idCaratula = 0;                                                                      
+                            simpleScript.closeModal('#'+diccionario.tabs.T102+'formCaratula');
+                        }
+                    });
+                }else if(!isNaN(data.result) && parseInt(data.result) === 2){
+                    simpleScript.notify.error({
+                        content: mensajes.MSG_4
+                    });
+                }
+            }
+        });
+    };     
+    
+   this.publico.postDeleteCaratula = function(btn,idCaratula ){        
+        simpleScript.notify.confirm({
+            content: mensajes.MSG_5,
+            callbackSI: function(){                        
+               simpleAjax.send({
+                    flag: 3,
+                    element: btn,                    
+                    root: _private.config.modulo + 'postDeleteCaratula',                    
+                    data: '&_idCaratula='+idCaratula,                    
+                    fnCallback: function(data) {
+                         if(!isNaN(data.result) && parseInt(data.result) === 1){
+                            simpleScript.notify.ok({
+                                content: mensajes.MSG_6,
+                                callback: function(){                                        
+                                     fichaTecnica.getGridFichaTecnica();                                                           
+                                    setTimeout(function(){            
+                                          fichaTecnica.getGridCaratula(_private.idProducto);                                   
+                                    }, 1000);                                         
+                                }
+                            });
+                        } else if(!isNaN(data.result) && parseInt(data.result) === 3){
+                            simpleScript.notify.error({
+                                content: 'La caratula esta siendo usada en el sistema, no se puede eliminar.'
+                            });
+                        }
+                    }
+                });
+                                
+            }
+        });
+    };       
+    
     
     return this.publico;
     

@@ -22,12 +22,20 @@ class fichaTecnicaModel extends Model{
     private $_googlelatitud;
     private $_googlelongitud;
     private $_observacion;
-    
+    private $_idCaratula; 
+    private $_codigo;				
+    private $_descripcion; 
+    private $_precio;
+    private $_iluminado;
+    private $_imagen;
+        
     /*para el grid*/
     private $_iDisplayStart;
     private $_iDisplayLength;
     private $_iSortingCols;
     private $_sSearch;
+    
+    private $_chkdel; 
     
     public function __construct() {
         parent::__construct();
@@ -41,7 +49,7 @@ class fichaTecnicaModel extends Model{
         $this->_idProducto = Aes::de($this->post('_idProducto'));   
         $this->_idDepartamento = $this->post('_idDepartamento');
         $this->_idProvincia = $this->post('_idProvincia'); 
-        
+                        
         $this->_idtipopanel  = $this->post(T102.'lst_tipopanel');  
         $this->_idubigeo  = $this->post(T102.'lst_ubigeo');  
         $this->_ubicacion  = $this->post(T102.'txt_ubicacion');  
@@ -49,13 +57,23 @@ class fichaTecnicaModel extends Model{
         $this->_alto  = $this->post(T102.'txt_alto');  
         $this->_googlelatitud  = $this->post(T102.'txt_latitud');  
         $this->_googlelongitud  = $this->post(T102.'txt_longitud');  
-        $this->_observacion  = $this->post(T102.'txt_observacion');                          
+        $this->_observacion  = $this->post(T102.'txt_observacion');    
         
+        $this->_idCaratula = Aes::de($this->post('_idCaratula'));  /*se decifra*/       
+        $this->_codigo = $this->post(T102.'txt_codigo'); 			
+        $this->_descripcion = $this->post(T102.'txt_descripcion'); 
+        $this->_precio =  str_replace(',','',$this->post(T102.'txt_precio'));  /*quitamos la coma para guardar decimal*/
+        $this->_iluminado = $this->post(T102.'chk_iluminado');
+        $this->_imagen = $this->post(T102.'txt_imagen');  
+        
+        $this->_chkdel  = $this->post(T102.'chk_delete'); 
+         
         $this->_iDisplayStart  =   $this->post('iDisplayStart'); 
         $this->_iDisplayLength =   $this->post('iDisplayLength'); 
         $this->_iSortingCols   =   $this->post('iSortingCols');
         $this->_sSearch        =   $this->post('sSearch');
-    }
+        
+       }
     
     public function getGridFichaTecnica(){
         $aColumns       =   array( 'chk','id_producto','ubicacion' ); //para la ordenacion y pintado en html
@@ -128,8 +146,26 @@ class fichaTecnicaModel extends Model{
         $data = $this->queryOne($query,$parms);            
         return $data;
     }
+    public function getCaratula(){
+        $query = " SELECT
+                `id_caratula`,
+                `id_producto`,
+                `codigo`,
+                `descripcion`,
+                FORMAT(`precio`,2) AS precio,
+                `iluminado`,
+                `estado`,  
+                `imagen`
+              FROM `lgk_caratula` 
+              WHERE id_caratula = :id ";
+        $parms = array(
+            ':id' => $this->_idCaratula,
+        );
+        $data = $this->queryOne($query,$parms);            
+        return $data;
+    }    
     public function getUbicacion(){
-        $query = " SELECT ubicacion,  FORMAT(dimension_alto,0) as dimension_alto ,  FORMAT(dimension_ancho,0) as dimension_ancho"
+        $query = " SELECT ubicacion,  FORMAT(dimension_alto,0) as dimension_alto, FORMAT(dimension_ancho,0) as dimension_ancho"
                 . "  FROM lgk_catalogo WHERE id_producto = :id ";
         $parms = array(
             ':id' => $this->_idProducto,
@@ -138,21 +174,30 @@ class fichaTecnicaModel extends Model{
         return $data;
     }    
     
-    public function getCaratulas(){
+    public function getGridCaratula(){
+        $aColumns       =   array( 'chk' ); //para la ordenacion y pintado en html
+        /*
+	 * Ordenando, se verifica por que columna se ordenara
+	 */
+        $sOrder = "";
+        for ( $i=0 ; $i<intval( $this->_iSortingCols ) ; $i++ ){
+                if ( $this->post( "bSortable_".intval($this->post("iSortCol_".$i)) ) == "true" ){
+                        $sOrder .= " ".$aColumns[ intval( $this->post("iSortCol_".$i) ) ]." ".
+                                ($this->post("sSortDir_".$i)==="asc" ? "asc" : 'desc') ." ";
+                }
+        }
+        
         $query = "call sp_catalogoCaratulasConsultas(:idProducto);";
         
-        $parms = array(            
+        $parms = array(
             ':idProducto' => $this->_idProducto
         );
-        $data = $this->queryAll($query,$parms);
-        if(!isset($data['error'])){  
-            $xdata = $data;
-        }else{
-            $xdata = $data['error'];
-        }       
-        
-        return $xdata;
-    }    
+        $data = $this->queryAll($query,$parms);        
+        return $data; 
+       
+    }
+            
+  
     public function mantenimientoFichaTecnica(){
         $query = "call sp_catalogoFichaTecnicaMantenimiento(:flag,:key,:id_tipopanel,				
 				:id_ubigeo,:ubicacion,:dimension_alto,:dimension_ancho,				
@@ -194,11 +239,32 @@ class fichaTecnicaModel extends Model{
                   ':observacion' => '',                                 
                   ':usuario' => $this->_usuario
             );
-            $this->execute($query,$parms);
-        }
+            $this->execute($query,$parms);            
+        }        
         $data = array('result'=>1);
         return $data;
     }   
+    
+    
+    public function mantenimientoCaratula(){
+        $query = "call sp_catalogoCaratulaMantenimiento(:flag,:key,:idproducto,				
+				:codigo, :descripcion, :precio, :iluminado, :imagen, :usuario);";
+        $parms = array(
+            ':flag' => $this->_flag,
+            ':key' => $this->_idCaratula,
+            ':idproducto' => $this->_idProducto,     
+            ':codigo' => $this->_codigo,   
+            ':descripcion' => $this->_descripcion,   
+            ':precio' => $this->_precio,   
+            ':iluminado' => $this->_iluminado,   
+            ':imagen' => $this->_imagen,               
+            ':usuario' => $this->_usuario
+        );
+        $data = $this->queryOne($query,$parms);            
+        return $data;
+    }    
+    
+    
     
 }
 

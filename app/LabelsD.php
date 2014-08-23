@@ -52,6 +52,7 @@ define('LABEL_A37M','Ingrese Código Unico de la caratula');
 define('LABEL_A38','Descripción');
 define('LABEL_A38M','Ingrese Descripción ejm: Lado A, Lado B');
 define('LABEL_A39','Precio');
+define('LABEL_A39M','Ingrese el precio Unitario.');
 define('LABEL_A40','Iluminado');
 define('LABEL_A41','Subir Imagen');
 ?>
