@@ -15,17 +15,17 @@ $data = clienteController::findCliente();
             <div class="modal-body smart-form" style="height: 350px;overflow-y: auto;overflow-x: hidden;">
                 <section>
                     <div class="row">
-                        <label class="label col col-3"><?php echo LABEL_RV3; ?></label>
+                        <label class="label col col-3"><?php echo LABEL_RC4; ?></label>
                         <div class="col col-8">
                             <label class="input"> 
                                 <i class="icon-append fa fa-user"></i>
-                                <input type="text" id="<?php echo REGCL; ?>txt_nombres" name="<?php echo REGCL; ?>txt_nombres" value="<?php echo $data['nombres']; ?>">
+                                <input type="text" id="<?php echo REGCL; ?>txt_nombres" name="<?php echo REGCL; ?>txt_nombres" value="<?php echo $data['nombrecompleto']; ?>">
                                 <b class="tooltip tooltip-top-right"><i class="fa fa-user txt-color-teal"></i> <?php echo LABEL_RV6; ?></b>
                             </label>
                         </div>
                     </div>
                 </section>
-                <section>
+<!--                <section>
                     <div class="row">
                         <label class="label col col-3"><?php echo LABEL_RV4; ?></label>
                         <div class="col col-8">
@@ -48,8 +48,8 @@ $data = clienteController::findCliente();
                             </label>
                         </div>
                     </div>
-                </section>   
-                <section>
+                </section>   -->
+                <section class="hide">
                     <div class="row">
                         <label class="label col col-3"><?php echo LABEL_RC2; ?></label>
                         <div class="col col-8">
@@ -176,7 +176,7 @@ $data = clienteController::findCliente();
                         </div>
                     </div>
                 </section>
-                <section>
+<!--                <section>
                     <div class="row">
                         <label class="label col col-3"><?php echo LABEL_RV10; ?></label>
                         <div class="col col-8">
@@ -202,8 +202,8 @@ $data = clienteController::findCliente();
                             </label>
                         </div>
                     </div>
-                </section>
-                <section>
+                </section>-->
+<!--                <section>
                     <div class="row">
                         <label class="label col col-3"><?php echo LABEL_RV14; ?></label>
                         <div class="col col-8">
@@ -214,7 +214,7 @@ $data = clienteController::findCliente();
                             </label>
                         </div>
                     </div>
-                </section>
+                </section>-->
                 
             </div>
             <div class="modal-footer">
@@ -273,9 +273,7 @@ $data = clienteController::findCliente();
                         required : true
                 },
                 <?php echo REGCL; ?>txt_direccion : {
-                        required : true,
-                        regular2: true,
-                        minlength: 3
+                        regular2: true
                 },
                 <?php echo REGCL; ?>txt_email : {
                         required : true,

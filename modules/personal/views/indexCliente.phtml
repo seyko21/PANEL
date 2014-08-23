@@ -35,6 +35,11 @@ echo Functions::widgetOpen(array(
 
     </div>
     <form id="<?php echo REGCL; ?>formGridCliente" name="<?php echo T5; ?>formGridCliente">
-        <table id="<?php echo REGCL; ?>gridCliente" class="table table-striped table-bordered table-hover table-condensed" style="width:100%"></table>
+        <div class="pull-left" style="width: 49%;border-right: 1px solid #ccc">
+            <table id="<?php echo REGCL; ?>gridCliente" class="table table-striped table-bordered table-hover table-condensed" style="width:100%"></table>
+        </div>
+        <div class="pull-right" style="width: 49%">
+            <table id="<?php echo REGCL; ?>gridRepresentanteCliente" class="table table-striped table-bordered table-hover table-condensed" style="width:100%"></table>
+        </div>
     </form>
 <?php echo Functions::widgetClose(); ?>

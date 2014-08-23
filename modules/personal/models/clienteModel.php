@@ -133,6 +133,7 @@ class clienteModel extends Model{
     /*seleccionar registro a editar: Cliente*/
     public function findCliente(){
         $query = "SELECT 
+                    nombrecompleto,
                     nombres,
                     apellidopaterno,
                     apellidomaterno,

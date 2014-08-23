@@ -48,7 +48,7 @@ class clienteController extends Controller{
                 $chk = '<input id=\"c_'.(++$key).'\" type=\"checkbox\" name=\"'.REGCL.'chk_delete[]\" value=\"'.$encryptReg.'\">';
                 
                 /*datos de manera manual*/
-                $sOutput .= '["'.$chk.'","'.$aRow['numerodocumento'].'","'.$aRow['nombrecompleto'].'","'.$aRow['email'].'","'.$aRow['telefono'].'","'.$estado.'", ';
+                $sOutput .= '["'.$chk.'","'.$aRow['numerodocumento'].'","'.$aRow['nombrecompleto'].'","'.$estado.'", ';
                 
 
                 /*

@@ -93,7 +93,7 @@ define('LABEL_RV12','ingresar e-mail');
 define('LABEL_RV13','Sexo');
 define('LABEL_RV14','Teléfonos');
 define('LABEL_RV15','Ingresar teléfonos');
-define('LABEL_RV16','Nro. de documento');
+define('LABEL_RV16','Nro. de RUC');
 define('LABEL_RV17','Ingresar nro. de documento');
 define('LABEL_RV18','Departamento');
 define('LABEL_RV19','Provincia');
@@ -123,4 +123,5 @@ define('LABEL_ASC4','Empleado');
 define('LABEL_RC1','Nuevo Cliente');
 define('LABEL_RC2','Tipo de documento');
 define('LABEL_RC3','Editar Cliente');
+define('LABEL_RC4','Razón Social');
 ?>

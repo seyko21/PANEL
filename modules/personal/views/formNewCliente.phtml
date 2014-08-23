@@ -22,7 +22,7 @@ $grabar = Session::getPermiso("REGCLGR");
             <div class="modal-body smart-form" style="height: 350px;overflow-y: auto;overflow-x: hidden;">
                 <section>
                     <div class="row">
-                        <label class="label col col-3"><?php echo LABEL_RV3; ?></label>
+                        <label class="label col col-3"><?php echo LABEL_RC4; ?></label>
                         <div class="col col-8">
                             <label class="input"> 
                                 <i class="icon-append fa fa-user"></i>
@@ -32,7 +32,7 @@ $grabar = Session::getPermiso("REGCLGR");
                         </div>
                     </div>
                 </section>
-                <section>
+<!--                <section>
                     <div class="row">
                         <label class="label col col-3"><?php echo LABEL_RV4; ?></label>
                         <div class="col col-8">
@@ -55,15 +55,15 @@ $grabar = Session::getPermiso("REGCLGR");
                             </label>
                         </div>
                     </div>
-                </section>   
-                <section>
+                </section>   -->
+                <section class="hide">
                     <div class="row">
                         <label class="label col col-3"><?php echo LABEL_RC2; ?></label>
                         <div class="col col-8">
                             <label class="select"> 
                                 <select id="<?php echo REGCL; ?>lst_tipodoc" name="<?php echo REGCL; ?>lst_tipodoc">
                                     <option value="">Seleccionar</option>
-                                    <option value="RU">RUC</option>
+                                    <option value="RU" selected="selected">RUC</option>
                                     <option value="DN">DNI</option>
                                 </select>
                                 <i></i>
@@ -153,7 +153,7 @@ $grabar = Session::getPermiso("REGCLGR");
                         </div>
                     </div>
                 </section>
-                <section>
+<!--                <section>
                     <div class="row">
                         <label class="label col col-3"><?php echo LABEL_RV10; ?></label>
                         <div class="col col-8">
@@ -179,8 +179,8 @@ $grabar = Session::getPermiso("REGCLGR");
                             </label>
                         </div>
                     </div>
-                </section>
-                <section>
+                </section>-->
+<!--                <section>
                     <div class="row">
                         <label class="label col col-3"><?php echo LABEL_RV14; ?></label>
                         <div class="col col-8">
@@ -191,7 +191,7 @@ $grabar = Session::getPermiso("REGCLGR");
                             </label>
                         </div>
                     </div>
-                </section>
+                </section>-->
                 
                 
               
@@ -254,9 +254,7 @@ $grabar = Session::getPermiso("REGCLGR");
                         required : true
                 },
                 <?php echo REGCL; ?>txt_direccion : {
-                        required : true,
-                        regular2: true,
-                        minlength: 3
+                        regular2: true
                 },
                 <?php echo REGCL; ?>txt_email : {
                         required : true,

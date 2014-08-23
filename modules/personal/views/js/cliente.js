@@ -13,7 +13,7 @@ var cliente_ = function(){
     _private.idCliente = 0;
     
     _private.config = {
-        modulo: "ordenservicio/cliente/"
+        modulo: "personal/cliente/"
     };
 
     /*metodos publicos*/
@@ -53,10 +53,8 @@ var cliente_ = function(){
             iDisplayLength: 10,            
             aoColumns: [
                 {sTitle: "<input type='checkbox' id='"+diccionario.tabs.REGCL+"chk_all' onclick='simpleScript.checkAll(this,\"#"+diccionario.tabs.REGCL+"gridCliente\");'>", sWidth: "1%", sClass: "center", bSortable: false},
-                {sTitle: "Nro. Documento", sClass: "center", sWidth: "10%", bSortable: false},
-                {sTitle: "Nombres y Apellidos", sWidth: "35%"},
-                {sTitle: "Email", sWidth: "20%", bSortable: false},
-                {sTitle: "Teléfonos", sWidth: "15%", bSortable: false},
+                {sTitle: "Nro. RUC", sClass: "center", sWidth: "10%", bSortable: false},
+                {sTitle: "Razón Social", sWidth: "35%"},
                 {sTitle: "Estado", sWidth: "8%",  sClass: "center", bSortable: false},
                 {sTitle: "Acciones", sWidth: "15%", sClass: "center", bSortable: false}
             ],
@@ -64,7 +62,7 @@ var cliente_ = function(){
             sScrollY: "300px",
             sAjaxSource: _private.config.modulo+'getGridCliente',
             fnDrawCallback: function() {
-                $('#'+diccionario.tabs.REGCL+'gridCliente_filter').find('input').attr('placeholder','Buscar por Nombres o número de documento').css('width','350px');
+                $('#'+diccionario.tabs.REGCL+'gridCliente_filter').find('input').attr('placeholder','Buscar por Razón Social o número de documento').css('width','350px');
                 /*para hacer evento invisible*/
                 simpleScript.removeAttr.click({
                     container: '#widget_'+diccionario.tabs.REGCL, //widget del datagrid
