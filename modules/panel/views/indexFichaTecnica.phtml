@@ -7,7 +7,8 @@ echo Functions::widgetOpen(array(
         'title'=>LABEL_A20        
     )); 
 ?>
-
+<button id="<?php echo T102; ?>btnDowPDF" type="button" class="hide" onclick="window.open('<?php echo 'public/files/fichatecnica.pdf'?>','_blank');">Descargar</button>
+<button id="<?php echo T102; ?>btnDowExcel" type="button" class="hide" onclick="window.open('<?php echo 'public/files/fichatecnica.xls'?>','_self');">Descargar</button>
     <div class="widget-body-toolbar"></div>
     <div class="dataTables_wrapper form-inline" role="grid">
         <div class="dt-top-row">
@@ -53,13 +54,6 @@ echo Functions::widgetOpen(array(
         container: '#widget_<?php echo T102; ?>',
         typeElement: 'button'
     });
-    simpleScript.removeAttr.click({
-        container: '#widget_<?php echo T103; ?>',
-        typeElement: 'button'
-    });
-    
-    setTimeout(function(){            
-       fichaTecnica.getGridCaratula($('#'+diccionario.tabs.T102+'gridFichaTecnica #c_1').val());                   
-    }, 1000);            
+       
 
 </script>

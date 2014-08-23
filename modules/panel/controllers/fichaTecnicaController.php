@@ -34,7 +34,8 @@ class fichaTecnicaController extends Controller{
        $editar = Session::getPermiso('FITECED');
        $eliminar = Session::getPermiso('FITECDE');
        $agregar = Session::getPermiso('FITECAG'); 
-       
+       $exportarpdf   = Session::getPermiso('FITECEP');
+       $exportarexcel = Session::getPermiso('FITECEX');
        $sEcho          =   $this->post('sEcho');
         
         $rResult = Obj::run()->fichaTecnicaModel->getGridFichaTecnica();
@@ -61,7 +62,7 @@ class fichaTecnicaController extends Controller{
                 $chk = '<input id=\"c_'.(++$key).'\" type=\"checkbox\" name=\"'.T102.'chk_delete[]\" value=\"'.$encryptReg.'\">';
                 
                 /*datos de manera manual*/
-                $sOutput .= '["'.$chk.'","'.$aRow['id_producto'].'","'.$aRow['ubicacion'].'","'.$aRow['dimesion_area'].'","'.$aRow['NroCaratulas'].'","'.$estado.'", ';
+                $sOutput .= '["'.$chk.'","'.$aRow['ubicacion'].'","'.$aRow['dimesion_area'].'","'.number_format($aRow['precio'],2).'","'.$aRow['nroCaratulas'].'","'.$estado.'", ';
                 
 
                 /*
@@ -71,19 +72,29 @@ class fichaTecnicaController extends Controller{
                 $sOutput .= '"<div class=\"btn-group\">';
                 
                 //Visualizar Detalle
-                $sOutput .= '<button type=\"button\" class=\"btn bg-color-blueDark txt-color-white btn-xs\" title=\"Listar Caratula\" onclick=\"fichaTecnica.getGridCaratula(\''.$encryptReg.'\')\">';
+                $sOutput .= '<button type=\"button\" class=\"btn bg-color-blue txt-color-white btn-xs\" title=\"Listar Caratula\" onclick=\"fichaTecnica.getGridCaratula(\''.$encryptReg.'\')\">';
                 $sOutput .= '    <i class=\"fa fa-search-plus fa-lg\"></i>';
                 $sOutput .= '</button>';          
                 if($agregar['permiso'] == 1){
-                    $sOutput .= '<button type=\"button\" class=\"btn btn-success btn-xs\" title=\"'.$agregar['accion'].' Caratula\" onclick=\"fichaTecnica.getNuevoCaratula(this, \''.$encryptReg.'\')\">';
+                    $sOutput .= '<button type=\"button\" class=\"btn bg-color-pink txt-color-white btn-xs\" title=\"'.$agregar['accion'].' Caratula\" onclick=\"fichaTecnica.getNuevoCaratula(this, \''.$encryptReg.'\')\">';
                     $sOutput .= '    <i class=\"fa fa-plus-circle fa-lg\"></i>';
                     $sOutput .= '</button>';
                 }                        
                 if($editar['permiso'] == 1){
-                    $sOutput .= '<button type=\"button\" class=\"btn btn-primary btn-xs\" title=\"'.$editar['accion'].'\" onclick=\"fichaTecnica.getEditarFichaTecnica(\''.$encryptReg.'\')\">';
+                    $sOutput .= '<button type=\"button\" class=\"btn btn-primary btn-xs\" title=\"'.$editar['accion'].' Ficha Técnica\" onclick=\"fichaTecnica.getEditarFichaTecnica(\''.$encryptReg.'\')\">';
                     $sOutput .= '    <i class=\"fa fa-edit fa-lg\"></i>';
                     $sOutput .= '</button>';
-                }                                                
+                }   
+                if($exportarpdf['permiso'] == 1){
+                    $sOutput .= '<button type=\"button\" class=\"btn txt-color-white bg-color-blueDark btn-xs\" title=\"'.$exportarpdf['accion'].'\" onclick=\"fichaTecnica.postPDF(this,\''.$encryptReg.'\')\">';
+                    $sOutput .= '    <i class=\"fa fa-file-pdf-o fa-lg\"></i>';
+                    $sOutput .= '</button>';
+                }
+                if($exportarexcel['permiso'] == 1){
+                    $sOutput .= '<button type=\"button\" class=\"btn btn-success btn-xs\" title=\"'.$exportarexcel['accion'].'\" onclick=\"fichaTecnica.postExcel(this,\''.$encryptReg.'\')\">';
+                    $sOutput .= '    <i class=\"fa fa-file-excel-o fa-lg\"></i>';
+                    $sOutput .= '</button>';
+                }
                 
                 $sOutput .= ' </div>" ';
 
@@ -254,6 +265,84 @@ class fichaTecnicaController extends Controller{
         
         echo json_encode($data);
     }    
+    public function postPDF(){ 
+        $data = Obj::run()->fichaTecnicaModel->getRptFichaTecnica();
+        
+        $mpdf = new mPDF('c');
+
+        $mpdf->mirrorMargins = 1;
+        $mpdf->defaultheaderfontsize = 9; /* in pts */
+        $mpdf->defaultheaderfontstyle = B; /* blank, B, I, or BI */
+        $mpdf->defaultheaderline = 1; /* 1 to include line below header/above footer */
+        $mpdf->defaultfooterfontsize = 10; /* in pts */
+        $mpdf->defaultfooterfontstyle = B; /* blank, B, I, or BI */
+        $mpdf->defaultfooterline = 1; /* 1 to include line below header/above footer */
+        
+        $html ='
+        <h3>Ubicación: '.$data[0]['ubicacion'].'</h3>        
+        <table border="1" style="border-collapse:collapse">        
+            <tr>
+                <th style="width:20%">Código</th>
+                <th style="width:40%">Descripción</th>
+                <th style="width:10%">Precio</th>
+                <th style="width:10%">Iluminado</th>           
+                <th style="width:10%">Estado</th> 
+            </tr>';
+        foreach ($data as $value) {
+            $html .= '<tr>
+                <td style="text-align:center">'.$value['codigo'].'</td>
+                <td>'.$value['descripcion'].'</td>
+                <td style="text-align:right">'.number_format($value['precio'],2).'</td>               
+                <td style="text-align:center">'.$value['iluminado'].'</td>                
+                <td style="text-align:center">'.$value['estado'].'</td>                                    
+            </tr>';
+        }    
+        $html .='</table>';
+        
+        $mpdf->WriteHTML($html);
+        $mpdf->Output(ROOT.'public'.DS.'files'.DS.'fichatecnica.pdf','F');
+        
+        $data = array('result'=>1);
+        echo json_encode($data);
+    }
+    
+    public function postExcel(){
+        $data = Obj::run()->generarCotizacionModel->getCotizacion();
+        
+        $html ='
+        <h3>Cotización N° '.$data[0]['cotizacion_numero'].'</h3>
+        <h4>Cliente: '.$data[0]['nombrecompleto'].'</h4>
+        <table border="1" style="border-collapse:collapse">
+            <tr>
+                <th style="width:10%">Código</th>
+                <th style="width:40%">Producto</th>
+                <th style="width:10%">Precio</th>
+                <th style="width:10%">Meses</th>
+                <th style="width:10%">Producción</th>
+                <th style="width:10%">Importe</th>
+            </tr>';
+        foreach ($data as $value) {
+            $html .= '<tr>
+                <td style="text-align:center">'.$value['codigo'].'</td>
+                <td>'.$value['producto'].'</td>
+                <td style="text-align:right">'.number_format($value['precio'],2).'</td>
+                <td style="text-align:center">'.$value['cantidad_mes'].'</td>
+                <td style="text-align:right">'.number_format($value['costo_produccion'],2).'</td>
+                <td style="text-align:right">'.number_format($value['importe'],2).'</td>
+            </tr>';
+        }    
+        $html .='</table>';
+        
+        
+        $f=fopen(ROOT.'public'.DS.'files'.DS.'cotizacion.xls','wb');
+        if(!$f){$data = array('result'=>2);}
+        fwrite($f,  utf8_decode($html));
+        fclose($f);
+                        
+        $data = array('result'=>1);
+        echo json_encode($data);
+    }
+        
     
 }
 

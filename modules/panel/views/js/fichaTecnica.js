@@ -32,6 +32,9 @@ var fichaTecnica_ = function(){
             fnCallback: function(data){
                 $('#'+diccionario.tabs.T102+'_CONTAINER').html(data);                
                 fichaTecnica.getGridFichaTecnica();
+                setTimeout(function(){            
+                    fichaTecnica.getGridCaratula($('#'+diccionario.tabs.T102+'gridFichaTecnica #c_1').val());                   
+                }, 1000);     
             }
         });
     };
@@ -46,10 +49,10 @@ var fichaTecnica_ = function(){
             bPaginate: true,
             iDisplayLength: 10,            
             aoColumns: [
-                {sTitle: "<input type='checkbox' id='"+diccionario.tabs.T102+"chk_all' onclick='simpleScript.checkAll(this,\"#"+diccionario.tabs.T102+"gridFichaTecnica\");'>", sWidth: "1%", sClass: "center", bSortable: false},
-                {sTitle: "ID", sWidth: "5%"},
-                {sTitle: "Ubicación", sWidth: "40%"},
+                {sTitle: "<input type='checkbox' id='"+diccionario.tabs.T102+"chk_all' onclick='simpleScript.checkAll(this,\"#"+diccionario.tabs.T102+"gridFichaTecnica\");'>", sWidth: "1%", sClass: "center", bSortable: false},                
+                {sTitle: "Ubicación", sWidth: "30%"},
                 {sTitle: "Area m2", sWidth: "8%",  sClass: "center", bSortable: false},
+                {sTitle: "Precio", sWidth: "8%",  sClass: "center", bSortable: false},
                 {sTitle: "Nro Caratulas", sWidth: "8%",  sClass: "center", bSortable: false},
                 {sTitle: "Estado", sWidth: "8%",  sClass: "center", bSortable: false},
                 {sTitle: "Acciones", sWidth: "15%", sClass: "center", bSortable: false}
@@ -96,10 +99,10 @@ var fichaTecnica_ = function(){
             },
             fnDrawCallback: function() {                
                 /*para hacer evento invisible*/
-//                simpleScript.removeAttr.click({
-//                    container: '#widget_'+diccionario.tabs.T102+'Caratula', //widget del datagrid
-//                    typeElement: 'button, #'+diccionario.tabs.T102+'chk_all'
-//                });
+                simpleScript.removeAttr.click({
+                    container: '#widget_'+diccionario.tabs.T102+'Caratula', //widget del datagrid
+                    typeElement: 'button, #'+diccionario.tabs.T102+'chk_all'
+                });
             }
         });
         setup_widgets_desktop();                
@@ -342,7 +345,7 @@ var fichaTecnica_ = function(){
         });
     };
          
-     this.publico.postNuevoCaratula = function(){                    
+     this.publico.postNuevoCaratula = function(){            
         simpleAjax.send({
             flag: 1,
             element: '#'+diccionario.tabs.T102+'btnGcara',
@@ -355,7 +358,7 @@ var fichaTecnica_ = function(){
                     simpleScript.notify.ok({
                         content: mensajes.MSG_3,
                         callback: function(){
-                            fichaTecnica.getGridFichaTecnica();                                                           
+                            fichaTecnica.getGridFichaTecnica();                                                                                       
                              setTimeout(function(){            
                                    fichaTecnica.getGridCaratula(_private.idProducto);                                   
                              }, 1000);                                                                                      
@@ -383,9 +386,10 @@ var fichaTecnica_ = function(){
                     simpleScript.notify.ok({
                         content: mensajes.MSG_3,
                         callback: function(){                            
-                             fichaTecnica.getGridCaratula(_private.idProducto);     
-                             _private.idProducto = 0;
-                             _private.idCaratula = 0;                                                                      
+                            fichaTecnica.getGridFichaTecnica();                                                                                       
+                             setTimeout(function(){            
+                                   fichaTecnica.getGridCaratula(_private.idProducto);                                   
+                             }, 1000);                                                                  
                             simpleScript.closeModal('#'+diccionario.tabs.T102+'formCaratula');
                         }
                     });
@@ -429,6 +433,37 @@ var fichaTecnica_ = function(){
             }
         });
     };       
+    
+    this.publico.postPDF = function(btn,id){
+        simpleAjax.send({
+            element: btn,
+            root: _private.config.modulo + 'postPDF',
+            data: '&_idProducto='+id,
+            fnCallback: function(data) {
+                if(parseInt(data.result) === 1){
+                    $('#'+diccionario.tabs.T102+'btnDowPDF').click();
+                }                
+            }
+        });
+    };
+    
+    this.publico.postExcel = function(btn,id){
+        simpleAjax.send({
+            element: btn,
+            root: _private.config.modulo + 'postExcel',
+            data: '&_idProducto='+id,
+            fnCallback: function(data) {
+                if(parseInt(data.result) === 1){
+                   $('#'+diccionario.tabs.T102+'btnDowExcel').click();
+                }
+                if(!isNaN(data.result) && parseInt(data.result) === 2){
+                    simpleScript.notify.error({
+                        content: 'Ocurrió un error al exportar Ficha Tecnica.'
+                    });
+                }
+            }
+        });
+    };
     
     
     return this.publico;

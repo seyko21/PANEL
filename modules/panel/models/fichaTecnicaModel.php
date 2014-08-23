@@ -76,7 +76,7 @@ class fichaTecnicaModel extends Model{
        }
     
     public function getGridFichaTecnica(){
-        $aColumns       =   array( 'chk','id_producto','ubicacion' ); //para la ordenacion y pintado en html
+        $aColumns       =   array( 'chk','ubicacion' ); //para la ordenacion y pintado en html
         /*
 	 * Ordenando, se verifica por que columna se ordenara
 	 */
@@ -162,6 +162,36 @@ class fichaTecnicaModel extends Model{
             ':id' => $this->_idCaratula,
         );
         $data = $this->queryOne($query,$parms);            
+        return $data;
+    }    
+    public function getRptFichaTecnica(){
+        $query = " SELECT a.id_producto, 
+                          a.`id_caratula`,
+                          a.`codigo` , 
+                          a.`descripcion`,
+                          a.`precio`,
+                          a.`iluminado`,
+                          a.`estado`,
+                          c.`ubicacion`, 
+                          c.`dimension_alto`, 
+                          c.`dimension_ancho`, 
+                          c.`dimesion_area`, 
+                          c.`observacion`,
+                          c.`estado` as estadoProducto,
+                          t.`descripcion` AS tipoPanel, 
+                          u.`distrito`, 
+                          (SELECT d.`departamento` FROM `ub_departamento` d WHERE d.`id_departamento` = LEFT(c.`id_ubigeo`,2)) AS departamento,
+                          (SELECT p.`provincia` FROM `ub_provincia` p WHERE p.`id_provincia` = LEFT(c.`id_ubigeo`,4)) AS provincia		
+	FROM `lgk_caratula` a
+		INNER JOIN `lgk_catalogo` c ON c.`id_producto` = a.`id_producto`
+		INNER JOIN `lgk_tipopanel` t ON t.`id_tipopanel` = c.`id_tipopanel`
+		INNER JOIN `ub_ubigeo` u ON u.`id_ubigeo` = c.`id_ubigeo`
+	WHERE c.`id_producto` = :idProducto ; ";
+        $parms = array(
+            ':idProducto' => $this->_idProducto,
+        );
+        $data = $this->queryAll($query,$parms);    
+        //print_r($data);
         return $data;
     }    
     public function getUbicacion(){

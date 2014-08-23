@@ -77,11 +77,9 @@ $grabar = Session::getPermiso('FITECGR');
     </div><!-- /.modal-dialog -->
 
 <!-- si no riene permiso se anula submit desde cualquier input -->
-<?php if(!$grabar['permiso']): ?>
 <script>
     simpleScript.noSubmit('#<?php echo T102; ?>formCaratula');
 </script>
-<?php endif; ?>
 <script>
     $('#<?php echo T102; ?>formCaratula').validate({
         // Rules for form validation
@@ -105,8 +103,7 @@ $grabar = Session::getPermiso('FITECGR');
         errorPlacement : function(error, element) {
                 error.insertAfter(element.parent());
         },
-
-        submitHandler: function(){
+        submitHandler: function(){          
             fichaTecnica.postNuevoCaratula();
         }   
     });
