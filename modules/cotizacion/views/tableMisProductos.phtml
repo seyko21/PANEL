@@ -6,7 +6,7 @@ $rows = sizeof($datap);
 
 foreach ($datap as $value):
     $f++;
-    $iluminado = '<span class="label label-danger center" style="color:#fff"><b>No</b></span>';
+    $iluminado = '<span class="label label-danger center" style="color:#fff;text-align:center"><b>No</b></span>';
     if($value['iluminado'] == 1){
         $iluminado = '<span class="label label-success" style="color:#fff;text-align:center"><b>Si</b></span>';
     }
@@ -20,10 +20,9 @@ foreach ($datap as $value):
         </label>
     </td>
     <td><?php echo $value['codigo']; ?></td>
-    <td><?php echo $value['descripcion']; ?></td>
-    <td><?php echo $value['ubicacion']; ?></td>
+    <td><?php echo $value['ubicacion'].' - '.$value['descripcion'].' ('.$value['ancho'].' x '.$value['alto'].' mt)'; ?></td>
+    <td><?php echo $value['distrito']; ?></td>
     <td><?php echo $iluminado; ?></td>
-    <td><?php echo $value['aarea']; ?></td>
     <td style="text-align: right"><?php echo number_format($value['precio'],2); ?></td>
     <td style="text-align: right"><?php echo number_format($value['costo_produccion'],2); ?></td>
 </tr>
@@ -33,6 +32,6 @@ foreach ($datap as $value):
 $diff = 0;
 if($rows < 7){
     $diff = 7 - $rows;
-    echo Functions::createCell(array('row'=>($diff),'cols'=>9)); 
+    echo Functions::createCell(array('row'=>($diff),'cols'=>8)); 
 }
 ?>

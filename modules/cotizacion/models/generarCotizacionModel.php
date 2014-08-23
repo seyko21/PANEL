@@ -135,7 +135,7 @@ class generarCotizacionModel extends Model{
         $query = "
         SELECT 
                 c.`codigo`,
-                CONCAT(c.`descripcion`,' - ',ct.`ubicacion`)AS producto,
+                CONCAT(ct.`ubicacion`,' - ',c.`descripcion`)AS producto,
                 cd.`precio`,
                 p.`nombrecompleto`,
                 p.`email`,
@@ -145,12 +145,14 @@ class generarCotizacionModel extends Model{
                 cd.`importe`,
                 ct.`dimension_alto`,
                 ct.`dimension_ancho`,
-                ct.`dimesion_area`
+                ct.`dimesion_area`,
+                tp.descripcion AS elemento
         FROM `lgk_cotizaciond` cd
         INNER JOIN `lgk_caratula` c ON c.`id_caratula`=cd.`id_caratula`
         INNER JOIN `lgk_cotizacion` co ON co.`id_cotizacion`=cd.`id_cotizacion`
         INNER JOIN `lgk_catalogo` ct ON ct.`id_producto`=c.`id_producto`
         INNER JOIN mae_persona p ON p.`id_persona`=co.`id_representante`
+        INNER JOIN lgk_tipopanel tp ON tp.id_tipopanel = ct.id_tipopanel
         WHERE cd.`id_cotizacion`=:idCotizacion;";
         
         $parms = array(

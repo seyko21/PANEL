@@ -182,22 +182,31 @@ class generarCotizacionController extends Controller{
         $mpdf->defaultfooterline = 1; /* 1 to include line below header/above footer */
         
         $html ='
+        <style>
+            table tr td, table tr th{
+                font-size: 11px;
+            }
+        </style>
         <h3>Cotización N° '.$data[0]['cotizacion_numero'].'</h3>
         <h4>Cliente: '.$data[0]['nombrecompleto'].'</h4>
         <table border="1" style="border-collapse:collapse">
             <tr>
                 <th style="width:10%">Código</th>
-                <th style="width:40%">Producto</th>
-                <th style="width:10%">Precio</th>
+                <th style="width:20%">Tipo</th>
+                <th style="width:30%">Ubicación</th>
+                <th style="width:30%">Medidas</th>
                 <th style="width:10%">Meses</th>
-                <th style="width:10%">Producción</th>
                 <th style="width:10%">Importe</th>
+                <th style="width:10%">Producción</th>
+                <th style="width:10%">Total</th>
             </tr>';
         foreach ($data as $value) {
             $html .= '<tr>
                 <td style="text-align:center">'.$value['codigo'].'</td>
+                <td>'.$value['elemento'].'</td>
                 <td>'.$value['producto'].'</td>
-                <td style="text-align:right">'.number_format($value['precio'],2).'</td>
+                <td>'.$value['dimension_ancho'].' x '.$value['dimension_alto'].' mts</td>
+                <td style="text-align:right">'.number_format(($value['precio'] * $value['cantidad_mes']),2).'</td>
                 <td style="text-align:center">'.$value['cantidad_mes'].'</td>
                 <td style="text-align:right">'.number_format($value['costo_produccion'],2).'</td>
                 <td style="text-align:right">'.number_format($value['importe'],2).'</td>

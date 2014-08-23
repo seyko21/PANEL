@@ -38,15 +38,47 @@ $buscar = Session::getPermiso('REGVEBS');
                                 </label>
                             </th>
                             <th class="center">Cod.</th>
-                            <th class="center">Descripción</th>
                             <th class="center">Ubicación</th>
+                            <th class="center">Ciudad</th>
                             <th class="center">Iluminado</th>
-                            <th class="center">Area</th>
                             <th class="center">Precio</th>
                             <th class="center">Producción</th>
                         </thead>
                         <tbody>
-                            <?php echo Functions::createCell(array('row'=>7,'cols'=>9)); ?>
+                            <?php 
+                                $f = 0;
+                                $datap = generarCotizacionController::getMisProductos(); 
+                                $rows = sizeof($datap);
+                                foreach ($datap as $value):
+                                    $f++;
+                                    $iluminado = '<span class="label label-danger center" style="color:#fff;text-align:center"><b>No</b></span>';
+                                    if($value['iluminado'] == 1){
+                                        $iluminado = '<span class="label label-success" style="color:#fff;text-align:center"><b>Si</b></span>';
+                                    }
+                                    $prod = AesCtr::en($value['id_caratula']).'~'.$value['descripcion'].' '.$value['ubicacion'].'~'.$value['precio'].'~'.$value['costo_produccion'].'~'.$value['id_ubigeo'];
+                            ?>
+                            <tr>
+                                <td><?php echo $f; ?></td>
+                                <td>
+                                    <label class="checkbox">
+                                        <input type="checkbox" id="<?php echo $f.$tab; ?>chk_prod" name="<?php echo $tab; ?>chk_prod[]" value="<?php echo $prod; ?>"><i></i>
+                                    </label>
+                                </td>
+                                <td><?php echo $value['codigo']; ?></td>
+                                <td><?php echo $value['ubicacion'].' - '.$value['descripcion'].' ('.$value['ancho'].' x '.$value['alto'].' mt)'; ?></td>
+                                <td><?php echo $value['distrito']; ?></td>
+                                <td><?php echo $iluminado; ?></td>
+                                <td style="text-align: right"><?php echo number_format($value['precio'],2); ?></td>
+                                <td style="text-align: right"><?php echo number_format($value['costo_produccion'],2); ?></td>
+                            </tr>
+                            <?php endforeach; ?> 
+                            <?php 
+                            $diff = 0;
+                            if($rows < 7){
+                                $diff = 7 - $rows;
+                                echo Functions::createCell(array('row'=>($diff),'cols'=>8)); 
+                            }
+                            ?>
                         </tbody>
                     </table>
                 </div>

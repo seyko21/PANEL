@@ -152,7 +152,8 @@ class asignarCuentaModel extends Model{
                 k.`dimesion_area` AS aarea
         FROM `lgk_caratula` c 
         INNER JOIN `lgk_catalogo` k ON k.`id_producto`=c.`id_producto`
-        WHERE c.`estado`='D' AND k.`estado`=:estado;";
+        WHERE c.`estado`='D' AND k.`estado`=:estado
+        and not exists (select * from lgk_asignacioncuenta ac where ac.id_caratula = c.id_caratula );";
         
         $parms = array(
             ':estado'=>'A'
