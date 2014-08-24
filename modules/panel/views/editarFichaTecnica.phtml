@@ -242,12 +242,9 @@ $data = fichaTecnicaController::getFichaTecnica();
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </form>
-<!-- si no riene permiso se anula submit desde cualquier input -->
-<?php if (!$grabar['permiso']): ?>
-    <script>
-        simpleScript.noSubmit('#<?php echo T102; ?>formFichaTecnica');
-    </script>
-<?php endif; ?>
+<script>
+    simpleScript.noSubmit('#<?php echo T102; ?>formFichaTecnica');
+</script>
 <script>
     lat = <?php echo $data['google_latitud'] ?>;
     lng = <?php echo $data['google_longitud'] ?>;     

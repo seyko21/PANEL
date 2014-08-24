@@ -210,12 +210,9 @@ $grabar = Session::getPermiso('FITECGR');
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </form>
-<!-- si no riene permiso se anula submit desde cualquier input -->
-<?php if (!$grabar['permiso']): ?>
-    <script>
-        simpleScript.noSubmit('#<?php echo T102; ?>formFichaTecnica');
-    </script>
-<?php endif; ?>
+<script>
+    simpleScript.noSubmit('#<?php echo T102; ?>formFichaTecnica');
+</script>
 <script>
            
     $('.xhelp').tooltip({placement: 'right'});

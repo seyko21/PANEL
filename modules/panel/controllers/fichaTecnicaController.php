@@ -38,7 +38,7 @@ class fichaTecnicaController extends Controller{
        $exportarexcel = Session::getPermiso('FITECEX');
        $sEcho          =   $this->post('sEcho');
         
-        $rResult = Obj::run()->fichaTecnicaModel->getGridFichaTecnica();
+       $rResult = Obj::run()->fichaTecnicaModel->getGridFichaTecnica();
         
         if(!isset($rResult['error'])){  
             $iTotal         = isset($rResult[0]['total'])?$rResult[0]['total']:0;
@@ -62,9 +62,8 @@ class fichaTecnicaController extends Controller{
                 $chk = '<input id=\"c_'.(++$key).'\" type=\"checkbox\" name=\"'.T102.'chk_delete[]\" value=\"'.$encryptReg.'\">';
                 
                 /*datos de manera manual*/
-                $sOutput .= '["'.$chk.'","'.$aRow['ubicacion'].'","'.$aRow['dimesion_area'].'","'.number_format($aRow['precio'],2).'","'.$aRow['nroCaratulas'].'","'.$estado.'", ';
+                $sOutput .= '["'.$chk.'","'.$aRow['distrito'].'","'.$aRow['ubicacion'].'","'.$aRow['dimesion_area'].'","'.number_format($aRow['precio'],2).'","'.$aRow['nroCaratulas'].'","'.$estado.'", ';
                 
-
                 /*
                  * configurando botones (add/edit/delete etc)
                  * se verifica si tiene permisos para editar

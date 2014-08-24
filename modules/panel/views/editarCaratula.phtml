@@ -78,11 +78,9 @@ $data = fichaTecnicaController::getCaratula();
     </div><!-- /.modal-dialog -->
 
 <!-- si no riene permiso se anula submit desde cualquier input -->
-<?php if(!$grabar['permiso']): ?>
 <script>
     simpleScript.noSubmit('#<?php echo T102; ?>formCaratula');
 </script>
-<?php endif; ?>
 <script>
     $('#<?php echo T102; ?>formCaratula').validate({
         // Rules for form validation

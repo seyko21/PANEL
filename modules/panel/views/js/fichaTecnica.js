@@ -50,18 +50,19 @@ var fichaTecnica_ = function(){
             iDisplayLength: 10,            
             aoColumns: [
                 {sTitle: "<input type='checkbox' id='"+diccionario.tabs.T102+"chk_all' onclick='simpleScript.checkAll(this,\"#"+diccionario.tabs.T102+"gridFichaTecnica\");'>", sWidth: "1%", sClass: "center", bSortable: false},                
-                {sTitle: "Ubicación", sWidth: "30%"},
+                {sTitle: "Ciudad", sWidth: "18%"},
+                {sTitle: "Ubicación", sWidth: "35%"},
                 {sTitle: "Area m2", sWidth: "8%",  sClass: "center", bSortable: false},
                 {sTitle: "Precio", sWidth: "8%",  sClass: "center", bSortable: false},
-                {sTitle: "Nro Caratulas", sWidth: "8%",  sClass: "center", bSortable: false},
+                {sTitle: "Nro Caratulas", sWidth: "5%",  sClass: "center", bSortable: false},
                 {sTitle: "Estado", sWidth: "8%",  sClass: "center", bSortable: false},
                 {sTitle: "Acciones", sWidth: "15%", sClass: "center", bSortable: false}
             ],
-            aaSorting: [[1, 'asc']],
+            aaSorting: [[2, 'asc']],
             sScrollY: "200px",
             sAjaxSource: _private.config.modulo+'getGridFichaTecnica',
             fnDrawCallback: function() {
-                $('#'+diccionario.tabs.T102+'gridFichaTecnica_filter').find('input').attr('placeholder','Buscar');
+                $('#'+diccionario.tabs.T102+'gridFichaTecnica_filter').find('input').attr('placeholder','Buscar por Ciudad o Ubicación').css('width','350px');;                
                 /*para hacer evento invisible*/
                 simpleScript.removeAttr.click({
                     container: '#widget_'+diccionario.tabs.T102, //widget del datagrid

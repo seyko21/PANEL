@@ -11,8 +11,8 @@ echo Functions::widgetOpen(array(
 <button id="<?php echo T102; ?>btnDowExcel" type="button" class="hide" onclick="window.open('<?php echo 'public/files/fichatecnica.xls'?>','_self');">Descargar</button>
     <div class="widget-body-toolbar"></div>
     <div class="dataTables_wrapper form-inline" role="grid">
-        <div class="dt-top-row">
-            <div class="DTTT btn-group">
+        <div class="dt-top-row">                        
+            <div class="DTTT btn-group">                
                 <?php if($grabar['permiso']): ?>
                 <button id="<?php echo T102; ?>btnNew" type="button" onclick="fichaTecnica.getNuevoFichaTecnica(this);" class="btn txt-color-white bg-color-blueDark">
                     <i class="fa fa-file-o"></i> <?php echo BTN_NUEVO; ?>
@@ -51,7 +51,7 @@ echo Functions::widgetOpen(array(
             
     /*para hacer evento invisible*/
     simpleScript.removeAttr.click({
-        container: '#widget_<?php echo T102; ?>',
+        container: '#widget_<?php echo T102; ?>, #widget_<?php echo T102; ?>Caratula',
         typeElement: 'button'
     });
        

@@ -76,7 +76,7 @@ class fichaTecnicaModel extends Model{
        }
     
     public function getGridFichaTecnica(){
-        $aColumns       =   array( 'chk','ubicacion' ); //para la ordenacion y pintado en html
+        $aColumns       =   array( 'chk','u.distrito','ubicacion' ); //para la ordenacion y pintado en html
         /*
 	 * Ordenando, se verifica por que columna se ordenara
 	 */
@@ -97,6 +97,7 @@ class fichaTecnicaModel extends Model{
             ':sSearch' => $this->_sSearch,
         );
         $data = $this->queryAll($query,$parms);
+       // print_r($parms);
         return $data; 
        
     }

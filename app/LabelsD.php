@@ -55,4 +55,19 @@ define('LABEL_A39','Precio');
 define('LABEL_A39M','Ingrese el precio Unitario.');
 define('LABEL_A40','Iluminado');
 define('LABEL_A41','Subir Imagen');
+/*----------------------Permiso Municipal----------------------*/
+define('LABEL_A50','Permiso Municipal de Panel');
+define('LABEL_A51','Registro de Permiso Municipal');
+define('LABEL_A52','Registrar Permiso Municipal');
+define('LABEL_A53','Editar Permiso Municipal');
+
+define('LABEL_A54','Fecha Inicio');
+define('LABEL_A54M','Ingrese una Fecha de inicio valida');
+define('LABEL_A55','Fecha Final');
+define('LABEL_A55M','Ingrese una Fecha de final valida');
+define('LABEL_A56','Monto pagado');
+define('LABEL_A56M','Ingrese el monto pagado por el permiso');
+define('LABEL_A57','Observacion');
+define('LABEL_A57M','Puede especificar algun codigo de documento, carta, etc.');
+
 ?>
