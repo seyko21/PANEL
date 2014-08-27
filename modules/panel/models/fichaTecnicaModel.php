@@ -43,35 +43,35 @@ class fichaTecnicaModel extends Model{
     }
     
     private function _set(){
-        $this->_flag    = $this->post('_flag');
-        $this->_key     = Aes::de($this->post('_key'));    /*se decifra*/
+        $this->_flag    = Formulario::getParam('_flag');
+        $this->_key     = Aes::de(Formulario::getParam('_key'));    /*se decifra*/
         $this->_usuario = Session::get('sys_idUsuario');
-        $this->_idProducto = Aes::de($this->post('_idProducto'));   
-        $this->_idDepartamento = $this->post('_idDepartamento');
-        $this->_idProvincia = $this->post('_idProvincia'); 
+        $this->_idProducto = Aes::de(Formulario::getParam('_idProducto'));   
+        $this->_idDepartamento = Formulario::getParam('_idDepartamento');
+        $this->_idProvincia = Formulario::getParam('_idProvincia'); 
                         
-        $this->_idtipopanel  = $this->post(T102.'lst_tipopanel');  
-        $this->_idubigeo  = $this->post(T102.'lst_ubigeo');  
-        $this->_ubicacion  = $this->post(T102.'txt_ubicacion');  
-        $this->_ancho  = $this->post(T102.'txt_ancho');  
-        $this->_alto  = $this->post(T102.'txt_alto');  
-        $this->_googlelatitud  = $this->post(T102.'txt_latitud');  
-        $this->_googlelongitud  = $this->post(T102.'txt_longitud');  
-        $this->_observacion  = $this->post(T102.'txt_observacion');    
+        $this->_idtipopanel  = Formulario::getParam(T102.'lst_tipopanel');  
+        $this->_idubigeo  = Formulario::getParam(T102.'lst_ubigeo');  
+        $this->_ubicacion  = Formulario::getParam(T102.'txt_ubicacion');  
+        $this->_ancho  = Formulario::getParam(T102.'txt_ancho');  
+        $this->_alto  = Formulario::getParam(T102.'txt_alto');  
+        $this->_googlelatitud  = Formulario::getParam(T102.'txt_latitud');  
+        $this->_googlelongitud  = Formulario::getParam(T102.'txt_longitud');  
+        $this->_observacion  = Formulario::getParam(T102.'txt_observacion');    
         
-        $this->_idCaratula = Aes::de($this->post('_idCaratula'));  /*se decifra*/       
-        $this->_codigo = $this->post(T102.'txt_codigo'); 			
-        $this->_descripcion = $this->post(T102.'txt_descripcion'); 
-        $this->_precio =  str_replace(',','',$this->post(T102.'txt_precio'));  /*quitamos la coma para guardar decimal*/
-        $this->_iluminado = $this->post(T102.'chk_iluminado');
-        $this->_imagen = $this->post(T102.'txt_imagen');  
+        $this->_idCaratula = Aes::de(Formulario::getParam('_idCaratula'));  /*se decifra*/       
+        $this->_codigo = Formulario::getParam(T102.'txt_codigo'); 			
+        $this->_descripcion = Formulario::getParam(T102.'txt_descripcion'); 
+        $this->_precio =  str_replace(',','',Formulario::getParam(T102.'txt_precio'));  /*quitamos la coma para guardar decimal*/
+        $this->_iluminado = Formulario::getParam(T102.'chk_iluminado');
+        $this->_imagen = Formulario::getParam(T102.'txt_imagen');  
         
-        $this->_chkdel  = $this->post(T102.'chk_delete'); 
+        $this->_chkdel  = Formulario::getParam(T102.'chk_delete'); 
          
-        $this->_iDisplayStart  =   $this->post('iDisplayStart'); 
-        $this->_iDisplayLength =   $this->post('iDisplayLength'); 
-        $this->_iSortingCols   =   $this->post('iSortingCols');
-        $this->_sSearch        =   $this->post('sSearch');
+        $this->_iDisplayStart  =   Formulario::getParam('iDisplayStart'); 
+        $this->_iDisplayLength =   Formulario::getParam('iDisplayLength'); 
+        $this->_iSortingCols   =   Formulario::getParam('iSortingCols');
+        $this->_sSearch        =   Formulario::getParam('sSearch');
         
        }
     
@@ -82,9 +82,9 @@ class fichaTecnicaModel extends Model{
 	 */
         $sOrder = "";
         for ( $i=0 ; $i<intval( $this->_iSortingCols ) ; $i++ ){
-                if ( $this->post( "bSortable_".intval($this->post("iSortCol_".$i)) ) == "true" ){
-                        $sOrder .= " ".$aColumns[ intval( $this->post("iSortCol_".$i) ) ]." ".
-                                ($this->post("sSortDir_".$i)==="asc" ? "asc" : 'desc') ." ";
+                if ( Formulario::getParam( "bSortable_".intval(Formulario::getParam("iSortCol_".$i)) ) == "true" ){
+                        $sOrder .= " ".$aColumns[ intval( Formulario::getParam("iSortCol_".$i) ) ]." ".
+                                (Formulario::getParam("sSortDir_".$i)==="asc" ? "asc" : 'desc') ." ";
                 }
         }
         
@@ -142,7 +142,7 @@ class fichaTecnicaModel extends Model{
     public function getFichaTecnica(){
         $query = " SELECT * FROM lgk_catalogo WHERE id_producto = :id ";
         $parms = array(
-            ':id' => $this->_idProducto,
+            ':id' => $this->_idProducto
         );
         $data = $this->queryOne($query,$parms);            
         return $data;
@@ -160,7 +160,7 @@ class fichaTecnicaModel extends Model{
               FROM `lgk_caratula` 
               WHERE id_caratula = :id ";
         $parms = array(
-            ':id' => $this->_idCaratula,
+            ':id' => $this->_idCaratula
         );
         $data = $this->queryOne($query,$parms);            
         return $data;
@@ -189,7 +189,7 @@ class fichaTecnicaModel extends Model{
 		INNER JOIN `ub_ubigeo` u ON u.`id_ubigeo` = c.`id_ubigeo`
 	WHERE c.`id_producto` = :idProducto ; ";
         $parms = array(
-            ':idProducto' => $this->_idProducto,
+            ':idProducto' => $this->_idProducto
         );
         $data = $this->queryAll($query,$parms);    
         //print_r($data);
@@ -199,7 +199,7 @@ class fichaTecnicaModel extends Model{
         $query = " SELECT ubicacion,  FORMAT(dimension_alto,0) as dimension_alto, FORMAT(dimension_ancho,0) as dimension_ancho"
                 . "  FROM lgk_catalogo WHERE id_producto = :id ";
         $parms = array(
-            ':id' => $this->_idProducto,
+            ':id' => $this->_idProducto
         );
         $data = $this->queryOne($query,$parms);           
         return $data;
@@ -212,9 +212,9 @@ class fichaTecnicaModel extends Model{
 	 */
         $sOrder = "";
         for ( $i=0 ; $i<intval( $this->_iSortingCols ) ; $i++ ){
-                if ( $this->post( "bSortable_".intval($this->post("iSortCol_".$i)) ) == "true" ){
-                        $sOrder .= " ".$aColumns[ intval( $this->post("iSortCol_".$i) ) ]." ".
-                                ($this->post("sSortDir_".$i)==="asc" ? "asc" : 'desc') ." ";
+                if ( Formulario::getParam( "bSortable_".intval(Formulario::getParam("iSortCol_".$i)) ) == "true" ){
+                        $sOrder .= " ".$aColumns[ intval( Formulario::getParam("iSortCol_".$i) ) ]." ".
+                                (Formulario::getParam("sSortDir_".$i)==="asc" ? "asc" : 'desc') ." ";
                 }
         }
         

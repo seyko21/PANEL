@@ -42,7 +42,7 @@ class fichaTecnicaController extends Controller{
         
         if(!isset($rResult['error'])){  
             $iTotal         = isset($rResult[0]['total'])?$rResult[0]['total']:0;
-            
+            $idx =1;
             $sOutput = '{';
             $sOutput .= '"sEcho": '.intval($sEcho).', ';
             $sOutput .= '"iTotalRecords": '.$iTotal.', ';
@@ -71,7 +71,7 @@ class fichaTecnicaController extends Controller{
                 $sOutput .= '"<div class=\"btn-group\">';
                 
                 //Visualizar Detalle
-                $sOutput .= '<button type=\"button\" class=\"btn bg-color-blue txt-color-white btn-xs\" title=\"Listar Caratula\" onclick=\"fichaTecnica.getGridCaratula(\''.$encryptReg.'\')\">';
+                $sOutput .= '<button id=\"'.T102.'btnProducto'.$idx.'\" type=\"button\" class=\"btn bg-color-blue txt-color-white btn-xs\" title=\"Listar Caratula\" onclick=\"fichaTecnica.getGridCaratula(\''.$encryptReg.'\')\">';
                 $sOutput .= '    <i class=\"fa fa-search-plus fa-lg\"></i>';
                 $sOutput .= '</button>';          
                 if($agregar['permiso'] == 1){
@@ -99,6 +99,7 @@ class fichaTecnicaController extends Controller{
 
                 $sOutput = substr_replace( $sOutput, "", -1 );
                 $sOutput .= '],';
+                $idx++;
             }
             $sOutput = substr_replace( $sOutput, "", -1 );
             $sOutput .= '] }';
@@ -278,6 +279,10 @@ class fichaTecnicaController extends Controller{
         $mpdf->defaultfooterline = 1; /* 1 to include line below header/above footer */
         
         $html ='
+        <style>
+            h3, table, table td, table th{ font-size:11px;}
+            table{width:100%;}
+        </style>
         <h3>Ubicación: '.$data[0]['ubicacion'].'</h3>        
         <table border="1" style="border-collapse:collapse">        
             <tr>
@@ -306,34 +311,31 @@ class fichaTecnicaController extends Controller{
     }
     
     public function postExcel(){
-        $data = Obj::run()->generarCotizacionModel->getCotizacion();
+        $data = Obj::run()->fichaTecnicaModel->getRptFichaTecnica();
         
         $html ='
-        <h3>Cotización N° '.$data[0]['cotizacion_numero'].'</h3>
-        <h4>Cliente: '.$data[0]['nombrecompleto'].'</h4>
-        <table border="1" style="border-collapse:collapse">
+        <h3>Ubicación: '.$data[0]['ubicacion'].'</h3>        
+        <table border="1" style="border-collapse:collapse">        
             <tr>
-                <th style="width:10%">Código</th>
-                <th style="width:40%">Producto</th>
+                <th style="width:20%">Código</th>
+                <th style="width:40%">Descripción</th>
                 <th style="width:10%">Precio</th>
-                <th style="width:10%">Meses</th>
-                <th style="width:10%">Producción</th>
-                <th style="width:10%">Importe</th>
+                <th style="width:10%">Iluminado</th>           
+                <th style="width:10%">Estado</th> 
             </tr>';
         foreach ($data as $value) {
             $html .= '<tr>
                 <td style="text-align:center">'.$value['codigo'].'</td>
-                <td>'.$value['producto'].'</td>
-                <td style="text-align:right">'.number_format($value['precio'],2).'</td>
-                <td style="text-align:center">'.$value['cantidad_mes'].'</td>
-                <td style="text-align:right">'.number_format($value['costo_produccion'],2).'</td>
-                <td style="text-align:right">'.number_format($value['importe'],2).'</td>
+                <td>'.$value['descripcion'].'</td>
+                <td style="text-align:right">'.number_format($value['precio'],2).'</td>               
+                <td style="text-align:center">'.$value['iluminado'].'</td>                
+                <td style="text-align:center">'.$value['estado'].'</td>                                    
             </tr>';
         }    
         $html .='</table>';
         
         
-        $f=fopen(ROOT.'public'.DS.'files'.DS.'cotizacion.xls','wb');
+        $f=fopen(ROOT.'public'.DS.'files'.DS.'fichatecnica.xls','wb');
         if(!$f){$data = array('result'=>2);}
         fwrite($f,  utf8_decode($html));
         fclose($f);

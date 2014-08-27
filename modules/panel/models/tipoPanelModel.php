@@ -71,9 +71,9 @@ class tipoPanelModel extends Model{
     }
     
      public function getTipoPanel(){
-        $query = " SELECT * FROM lgk_tipopanel WHERE id_tipopanel = :id ";
+        $query = " SELECT * FROM lgk_tipopanel WHERE id_tipopanel = :id ;";
         $parms = array(
-            ':id' => $this->_idTipoPanel,
+            ':id' => $this->_idTipoPanel
         );
         $data = $this->queryOne($query,$parms);            
         return $data;

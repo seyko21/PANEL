@@ -32,8 +32,8 @@ var fichaTecnica_ = function(){
             fnCallback: function(data){
                 $('#'+diccionario.tabs.T102+'_CONTAINER').html(data);                
                 fichaTecnica.getGridFichaTecnica();
-                setTimeout(function(){            
-                    fichaTecnica.getGridCaratula($('#'+diccionario.tabs.T102+'gridFichaTecnica #c_1').val());                   
+                setTimeout(function(){         
+                    $("#"+diccionario.tabs.T102+"btnProducto1").click();                                    
                 }, 1000);     
             }
         });

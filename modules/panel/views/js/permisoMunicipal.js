@@ -39,6 +39,10 @@ var permisoMunicipal_ = function(){
             fnCallback: function(data){
                 $("#"+diccionario.tabs.PERMU+"_CONTAINER").html(data);
                 permisoMunicipal.getGridFichaTecnica();
+                setTimeout(function(){            
+                    $("#"+diccionario.tabs.PERMU+"btnProducto1").click();
+                }, 1000);     
+                
             }
         });
     };
@@ -54,10 +58,10 @@ var permisoMunicipal_ = function(){
             iDisplayLength: 10,            
             aoColumns: [     
                 {sTitle: "Ciudad", sWidth: "20%"},
-                {sTitle: "Ubicación", sWidth: "30%"},
-                {sTitle: "Area m2", sWidth: "8%",  sClass: "center", bSortable: false},
-                {sTitle: "Fecha Inicio", sWidth: "8%",  sClass: "center", bSortable: false},
-                {sTitle: "Fecha Final", sWidth: "8%",  sClass: "center", bSortable: false},
+                {sTitle: "Ubicación", sWidth: "30%"},                
+                {sTitle: "Fecha Inicio", sWidth: "8%",  sClass: "center"},
+                {sTitle: "Fecha Final", sWidth: "8%",  sClass: "center"},
+                {sTitle: "Area m2", sWidth: "8%",  sClass: "center", bSortable: false},                
                 {sTitle: "Estado", sWidth: "8%",  sClass: "center", bSortable: false},
                 {sTitle: "Acciones", sWidth: "15%", sClass: "center", bSortable: false}
             ],
@@ -88,10 +92,10 @@ var permisoMunicipal_ = function(){
             bPaginate: true,
             iDisplayLength: 10,            
             aoColumns: [     
-                {sTitle: "Fecha Inicio", sWidth: "20%", bSortable: false},
-                {sTitle: "Fecha Final", sWidth: "20%", bSortable: false},
-                {sTitle: "Monto Pagado", sWidth: "8%",  sClass: "center", bSortable: false},
-                {sTitle: "Observación", sWidth: "20%",  sClass: "center", bSortable: false},                
+                {sTitle: "Fecha Inicio", sWidth: "10%", sClass: "center", bSortable: false},
+                {sTitle: "Fecha Final", sWidth: "10%", sClass: "center", bSortable: false},
+                {sTitle: "Monto Pagado", sWidth: "15%",  sClass: "center", bSortable: false},
+                {sTitle: "Observación", sWidth: "40%",  sClass: "center", bSortable: false},                
                 {sTitle: "Estado", sWidth: "8%",  sClass: "center", bSortable: false},
                 {sTitle: "Acciones", sWidth: "15%", sClass: "center", bSortable: false}
             ],           
@@ -109,7 +113,16 @@ var permisoMunicipal_ = function(){
             }
         });        
         setup_widgets_desktop();     
-        
+        //Ubicacion:
+        simpleAjax.send({
+            dataType: 'html',
+            root: _private.config.modulo + 'getUbicacion',
+            data: '&_idProducto='+_private.idProducto,
+            typeData: 'html',
+            fnCallback: function(data){                                 
+                   $('#widget_'+diccionario.tabs.PERMU+'pm header h2').html(data);                                  
+            }
+        });   
     };
         
     
@@ -126,7 +139,33 @@ var permisoMunicipal_ = function(){
         });
     };
     
+     this.publico.getEditarPermisoMunicipal= function(id, idd){
+        _private.idPermisoMunicipal = id;
+        _private.idProducto  = idd;         
+        simpleAjax.send({
+            gifProcess: true,
+            dataType: 'html',
+            root: _private.config.modulo + 'getFormEditPermisoMunicipal',
+            data: '&_idPermisoMuni='+ _private.idPermisoMunicipal,
+            fnCallback: function(data){
+                $('#cont-modal').append(data);  /*los formularios con append*/
+                $('#'+diccionario.tabs.PERMU+'formPermisoMunicipal').modal('show');           
+            }
+        });
+    };       
+    
     this.publico.postNewPermisoMunicipal = function(){
+       var fi;
+       var ff; 
+       fi = $('#'+diccionario.tabs.PERMU+'txt_fi').val();
+       ff = $('#'+diccionario.tabs.PERMU+'txt_ff').val();       
+       if( fi >= ff ){
+           simpleScript.notify.warning({
+                  content: 'La fecha Inicio no puede ser mayor que la fecha final.'      
+            });
+           return;
+       }
+       
       simpleAjax.send({
             flag: 1,
             element: '#'+diccionario.tabs.PERMU+'btnGrPermisoMunicipal',
@@ -139,10 +178,11 @@ var permisoMunicipal_ = function(){
                     simpleScript.notify.ok({
                         content: mensajes.MSG_3,
                         callback: function(){
-                            fichaTecnica.getGridFichaTecnica();                                                                                       
+                            permisoMunicipal.getGridFichaTecnica();                            
                              setTimeout(function(){            
-                                   fichaTecnica.getGridCaratula(_private.idProducto);                                   
-                             }, 1000);                                                                                      
+                                   permisoMunicipal.getGridPermisoMunicipal(_private.idProducto);                                   
+                             }, 1000);    
+                             simpleScript.closeModal('#'+diccionario.tabs.PERMU+'formNewPermisoMunicipal');
                         }
                     });
                 }else if(!isNaN(data.result) && parseInt(data.result) === 2){
@@ -153,6 +193,73 @@ var permisoMunicipal_ = function(){
             }
         });
     };
+    
+    this.publico.postEditarPermisoMunicipal = function(){    
+       var fi;
+       var ff; 
+       fi = $('#'+diccionario.tabs.PERMU+'txt_fi').val();
+       ff = $('#'+diccionario.tabs.PERMU+'txt_ff').val();       
+       if( fi >= ff ){
+           simpleScript.notify.warning({
+                  content: 'La fecha Inicio no puede ser mayor que la fecha final.'      
+            });
+           return;
+       }
+        simpleAjax.send({
+            flag: 2,
+            element: '#'+diccionario.tabs.PERMU+'btnGrPermisoMunicipal',
+            root: _private.config.modulo + 'postEditarCaratula',
+            form: '#'+diccionario.tabs.PERMU+'formPermisoMunicipal',
+            data: '&_idPermisoMuni='+_private.idPermisoMunicipal,
+            clear: true,
+            fnCallback: function(data) {
+                if(!isNaN(data.result) && parseInt(data.result) === 1){
+                    simpleScript.notify.ok({
+                        content: mensajes.MSG_3,
+                        callback: function(){                            
+                            permisoMunicipal.getGridFichaTecnica();                            
+                             setTimeout(function(){            
+                                   permisoMunicipal.getGridPermisoMunicipal(_private.idProducto);                                   
+                             }, 1000);                                                                  
+                            simpleScript.closeModal('#'+diccionario.tabs.PERMU+'formPermisoMunicipal');
+                        }
+                    });
+                }else if(!isNaN(data.result) && parseInt(data.result) === 2){
+                    simpleScript.notify.error({
+                        content: mensajes.MSG_4
+                    });
+                }
+            }
+        });
+    };     
+    
+   this.publico.postDeletePermisoMunicipal  = function(btn,id ){        
+        simpleScript.notify.confirm({
+            content: mensajes.MSG_5,
+            callbackSI: function(){                        
+               simpleAjax.send({
+                    flag: 3,
+                    element: btn,                    
+                    root: _private.config.modulo + 'postDeletePermisoMunicipal',                    
+                    data: '&_idPermisoMuni='+id,                    
+                    fnCallback: function(data) {
+                         if(!isNaN(data.result) && parseInt(data.result) === 1){
+                            simpleScript.notify.ok({
+                                content: mensajes.MSG_6,
+                                callback: function(){                                        
+                                     permisoMunicipal.getGridFichaTecnica();                                                           
+                                    setTimeout(function(){            
+                                          permisoMunicipal.getGridPermisoMunicipal(_private.idProducto);                                   
+                                    }, 1000);                                         
+                                }
+                            });
+                        } 
+                    }
+                });
+                                
+            }
+        });
+    };       
     
     
     return this.publico;

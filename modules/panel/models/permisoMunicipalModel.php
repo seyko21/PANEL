@@ -10,7 +10,7 @@
 class permisoMunicipalModel extends Model{
 
     private $_flag;
-    private $_idPermisoMunicipal;
+    private $_idPermisomuni;
     private $_usuario;
     private $_fi, $_ff, $_monto, $_obs;
     
@@ -28,9 +28,9 @@ class permisoMunicipalModel extends Model{
     }
     
     private function _set(){
-        $this->_flag                    = Formulario::getParam("_flag");
-        $this->_idPermisoMunicipal   = Aes::de(Formulario::getParam("_idPermisomuni"));    /*se decifra*/
-        $this->_usuario                 = Session::get("sys_idUsuario");
+        $this->_flag            = Formulario::getParam("_flag");
+        $this->_idPermisomuni   = Aes::de(Formulario::getParam("_idPermisoMuni"));    /*se decifra*/
+        $this->_usuario         = Session::get("sys_idUsuario");
         
         $this->_idProducto = Aes::de($this->post('_idProducto')); 
         
@@ -43,10 +43,11 @@ class permisoMunicipalModel extends Model{
         $this->_iDisplayLength =   Formulario::getParam("iDisplayLength"); 
         $this->_iSortingCols   =   Formulario::getParam("iSortingCols");
         $this->_sSearch        =   Formulario::getParam("sSearch");
+        
     }
     
     public function getGridFichaTecnica(){
-        $aColumns       =   array( 'chk','u.distrito','ubicacion' ); //para la ordenacion y pintado en html
+        $aColumns       =   array('distrito','ubicacion','fechaInicio','fechaFin' ); //para la ordenacion y pintado en html
         /*
 	 * Ordenando, se verifica por que columna se ordenara
 	 */
@@ -66,7 +67,7 @@ class permisoMunicipalModel extends Model{
             ':sOrder' => $sOrder,
             ':sSearch' => $this->_sSearch,
         );
-        $data = $this->queryAll($query,$parms);
+        $data = $this->queryAll($query,$parms);      
         return $data; 
        
     }
@@ -83,18 +84,38 @@ class permisoMunicipalModel extends Model{
         $data = $this->queryAll($query,$parms);
         return $data; 
        
-    }    
+    } 
     
+    public function getUbicacion(){
+        $query = " SELECT ubicacion,  FORMAT(dimension_alto,0) as dimension_alto, FORMAT(dimension_ancho,0) as dimension_ancho"
+                . "  FROM lgk_catalogo WHERE id_producto = :id ";
+        $parms = array(
+            ':id' => $this->_idProducto,
+        );
+        $data = $this->queryOne($query,$parms);           
+        return $data;
+    }       
+    
+    public function getPermisoMunicipal(){
+        $query = "SELECT * FROM lgk_permisomuni WHERE id_permisomuni = :id; ";
+                
+        $parms = array(
+            ':id' => $this->_idPermisomuni
+        );
+        $data = $this->queryOne($query,$parms);   
+//        print_r($parms);
+        return $data;
+    }
     public function mantenimientoPermisoMunicipal(){
         $query = "call sp_catalogoPermisoMunicipalMantenimiento(:flag,:key,:idproducto,				
 				:fi, :ff, :monto, :obs, :usuario);";
                 
         $parms = array(
             ':flag' => $this->_flag,
-            ':key' => $this->_idPermisoMunicipal,
+            ':key' => $this->_idPermisomuni,
             ':idproducto' => $this->_idProducto,     
-            ':fi' => $this->_fi,   
-            ':ff' => $this->_ff,   
+            ':fi' => Functions::cambiaf_a_mysql($this->_fi),   
+            ':ff' => Functions::cambiaf_a_mysql($this->_ff),   
             ':monto' => $this->_monto,   
             ':obs' => $this->_obs,               
             ':usuario' => $this->_usuario
