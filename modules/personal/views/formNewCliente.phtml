@@ -19,7 +19,7 @@ $grabar = Session::getPermiso("REGCLGR");
                 </button>
                 <h4 class="modal-title"><?php echo LABEL_RC1;?></h4>
             </div>
-            <div class="modal-body smart-form" style="height: 350px;overflow-y: auto;overflow-x: hidden;">
+            <div class="modal-body smart-form">
                 <section>
                     <div class="row">
                         <label class="label col col-3"><?php echo LABEL_RC4; ?></label>
@@ -80,6 +80,9 @@ $grabar = Session::getPermiso("REGCLGR");
                                 <input type="text" id="<?php echo REGCL; ?>txt_nrodocumento" name="<?php echo REGCL; ?>txt_nrodocumento">
                                 <b class="tooltip tooltip-top-right"><i class="fa fa-keyboard-o txt-color-teal"></i> <?php echo LABEL_RV17; ?></b>
                             </label>
+                            <div class="note">
+                                <strong>Note:</strong> <a href="http://www.sunat.gob.pe/cl-ti-itmrconsruc/jcrS00Alias" target="_blank">Validar RUC en SUNAT</a>
+                            </div>
                         </div>
                     </div>
                 </section>

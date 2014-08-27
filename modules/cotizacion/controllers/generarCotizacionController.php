@@ -53,12 +53,12 @@ class generarCotizacionController extends Controller{
                     $sOutput .= '</button>';
                 }
                 if($exportarpdf['permiso']){
-                    $sOutput .= '<button type=\"button\" class=\"btn txt-color-white bg-color-blueDark\" title=\"'.$exportarpdf['accion'].'\" onclick=\"generarCotizacion.postPDF(this,\''.$encryptReg.'\')\">';
+                    $sOutput .= '<button type=\"button\" class=\"btn txt-color-white bg-color-blueDark btn-xs\" title=\"'.$exportarpdf['accion'].'\" onclick=\"generarCotizacion.postPDF(this,\''.$encryptReg.'\')\">';
                     $sOutput .= '    <i class=\"fa fa-file-pdf-o fa-lg\"></i>';
                     $sOutput .= '</button>';
                 }
                 if($exportarexcel['permiso']){
-                    $sOutput .= '<button type=\"button\" class=\"btn btn-success\" title=\"'.$exportarexcel['accion'].'\" onclick=\"generarCotizacion.postExcel(this,\''.$encryptReg.'\')\">';
+                    $sOutput .= '<button type=\"button\" class=\"btn btn-success btn-xs\" title=\"'.$exportarexcel['accion'].'\" onclick=\"generarCotizacion.postExcel(this,\''.$encryptReg.'\')\">';
                     $sOutput .= '    <i class=\"fa fa-file-excel-o fa-lg\"></i>';
                     $sOutput .= '</button>';
                 }

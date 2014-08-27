@@ -1,31 +1,39 @@
-<?php
+<?php /*
+* ---------------------------------------
+* --------- CREATED BY CREATOR ----------
+* fecha: 21-08-2014 07:08:16 
+* Descripcion : formEditarRepresentante.phtml
+* ---------------------------------------
+*/
+
+/*prefijo: REGCL debe ser alias en tabla men_menuprincipal*/
 $editar = Session::getPermiso('REGCLED');
 
 $data = clienteController::findCliente();
 ?>
-<form id="<?php echo REGCL; ?>formEditCliente" name="<?php echo REGCL; ?>formEditCliente" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<form id="<?php echo REGCL; ?>formEditarRepresentante" name="<?php echo REGCL; ?>formEditarRepresentante" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close"  aria-hidden="true">
                     &times;
                 </button>
-                <h4 class="modal-title"><?php echo LABEL_RC3;?></h4>
+                <h4 class="modal-title"><?php echo LABEL_RC8;?></h4>
             </div>
             <div class="modal-body smart-form">
                 <section>
                     <div class="row">
-                        <label class="label col col-3"><?php echo LABEL_RC4; ?></label>
+                        <label class="label col col-3"><?php echo LABEL_RV3; ?></label>
                         <div class="col col-8">
                             <label class="input"> 
                                 <i class="icon-append fa fa-user"></i>
-                                <input type="text" id="<?php echo REGCL; ?>txt_nombres" name="<?php echo REGCL; ?>txt_nombres" value="<?php echo $data['nombrecompleto']; ?>">
+                                <input type="text" id="<?php echo REGCL; ?>txt_nombres" name="<?php echo REGCL; ?>txt_nombres" value="<?php echo $data['nombres']; ?>">
                                 <b class="tooltip tooltip-top-right"><i class="fa fa-user txt-color-teal"></i> <?php echo LABEL_RV6; ?></b>
                             </label>
                         </div>
                     </div>
                 </section>
-<!--                <section>
+                <section>
                     <div class="row">
                         <label class="label col col-3"><?php echo LABEL_RV4; ?></label>
                         <div class="col col-8">
@@ -48,7 +56,7 @@ $data = clienteController::findCliente();
                             </label>
                         </div>
                     </div>
-                </section>   -->
+                </section>
                 <section class="hide">
                     <div class="row">
                         <label class="label col col-3"><?php echo LABEL_RC2; ?></label>
@@ -56,8 +64,8 @@ $data = clienteController::findCliente();
                             <label class="select"> 
                                 <select id="<?php echo REGCL; ?>lst_tipodoc" name="<?php echo REGCL; ?>lst_tipodoc">
                                     <option value="">Seleccionar</option>
-                                    <option value="RU" <?php echo ($data['tipodocumento'] == 'RU')?'selected="selected"':'';?> >RUC</option>
-                                    <option value="DN" <?php echo ($data['tipodocumento'] == 'DN')?'selected="selected"':'';?> >DNI</option>
+                                    <option value="RU">RUC</option>
+                                    <option value="DN" selected="selected">DNI</option>
                                 </select>
                                 <i></i>
                             </label>
@@ -66,16 +74,13 @@ $data = clienteController::findCliente();
                 </section>
                 <section>
                     <div class="row">
-                        <label class="label col col-3"><?php echo LABEL_RV16; ?></label>
+                        <label class="label col col-3"><?php echo LABEL_RV22; ?></label>
                         <div class="col col-8">
                             <label class="input"> 
                                 <i class="icon-append fa fa-keyboard-o"></i>
                                 <input type="text" id="<?php echo REGCL; ?>txt_nrodocumento" name="<?php echo REGCL; ?>txt_nrodocumento" value="<?php echo $data['numerodocumento']; ?>">
                                 <b class="tooltip tooltip-top-right"><i class="fa fa-keyboard-o txt-color-teal"></i> <?php echo LABEL_RV17; ?></b>
                             </label>
-                            <div class="note">
-                                <strong>Note:</strong> <a href="http://www.sunat.gob.pe/cl-ti-itmrconsruc/jcrS00Alias" target="_blank">Validar RUC en SUNAT</a>
-                            </div>
                         </div>
                     </div>
                 </section>
@@ -84,7 +89,7 @@ $data = clienteController::findCliente();
                         <label class="label col col-3"><?php echo LABEL_RV18; ?></label>
                         <div class="col col-8">
                             <label class="select"> 
-                                <?php 
+                                <?php
                                     $datax = clienteController::getDepartamentos();
                                     
                                     echo Functions::selectHtml(array(
@@ -103,7 +108,7 @@ $data = clienteController::findCliente();
                                         ),
                                         'etiqueta'=>'departamento',
                                         'value'=>'id_departamento',
-                                        'defaultEtiqueta'=> substr($data['id_ubigeo'], 0,2),
+                                        'defaultEtiqueta'=>substr($data['id_ubigeo'], 0,2),
                                         'txtSelect'=>true
                                     ));
                                 ?><i></i>
@@ -179,7 +184,7 @@ $data = clienteController::findCliente();
                         </div>
                     </div>
                 </section>
-<!--                <section>
+                <section>
                     <div class="row">
                         <label class="label col col-3"><?php echo LABEL_RV10; ?></label>
                         <div class="col col-8">
@@ -205,8 +210,8 @@ $data = clienteController::findCliente();
                             </label>
                         </div>
                     </div>
-                </section>-->
-<!--                <section>
+                </section>
+                <section>
                     <div class="row">
                         <label class="label col col-3"><?php echo LABEL_RV14; ?></label>
                         <div class="col col-8">
@@ -217,12 +222,11 @@ $data = clienteController::findCliente();
                             </label>
                         </div>
                     </div>
-                </section>-->
-                
+                </section>
             </div>
             <div class="modal-footer">
                 <?php if($editar['permiso']):?>
-                <button id="<?php echo REGCL; ?>btnEcli" type="submit" class="btn txt-color-white bg-color-blueDark">
+                <button id="<?php echo REGCL; ?>btnERep" type="submit" class="btn txt-color-white bg-color-blueDark">
                     <i class="fa fa-save"></i> <?php echo $editar['accion']; ?>
                 </button>
                 <?php endif; ?>
@@ -233,14 +237,14 @@ $data = clienteController::findCliente();
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 
-<!-- si no riene permiso se anula submit desde cualquier input -->
+<!-- si no riene permiso se anula submit desde cualquier input, para evitar el submit -->
 <?php if(!$editar['permiso']): ?>
 <script>
-    simpleScript.noSubmit('#<?php echo REGCL; ?>formEditCliente');
+    simpleScript.noSubmit('#<?php echo REGCL; ?>formEditarRepresentante');
 </script>
 <?php endif; ?>
 <script>
-    $('#<?php echo REGCL; ?>formEditCliente').validate({
+    $('#<?php echo REGCL; ?>formEditarRepresentante').validate({
         // Rules for form validation
         rules : {
                 <?php echo REGCL; ?>txt_nombres : {
@@ -260,7 +264,7 @@ $data = clienteController::findCliente();
                 },
                 <?php echo REGCL; ?>lst_tipodoc:{
                         required: true
-                },
+                },        
                 <?php echo REGCL; ?>txt_nrodocumento:{
                         required: true,
                         number: true,
@@ -293,8 +297,17 @@ $data = clienteController::findCliente();
         },
 
         submitHandler: function(){
-            cliente.postEditarCliente();
+            cliente.postEditRepresentante();
         }   
     });
 </script>
 </form>
+
+
+
+
+
+
+
+
+

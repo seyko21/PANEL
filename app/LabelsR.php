@@ -15,6 +15,10 @@ define('BTN_DELETE','Eliminar');
 define('BTN_CLOSE','Cerrar');
 define('BTN_ADD','Agregar');
 define('LABEL_T','Total');
+define('LABEL_ACT','Activo');
+define('LABEL_DESACT','Inactivo');
+define('BTN_ACT','Activar');
+define('BTN_DESACT','Desactivar');
 
 /*FORMULARIO LOGIN*/
 define('L_TITLE','Ingresar');
@@ -99,6 +103,7 @@ define('LABEL_RV18','Departamento');
 define('LABEL_RV19','Provincia');
 define('LABEL_RV20','Distrito');
 define('LABEL_RV21','Editar Vendedor');
+define('LABEL_RV22','Nro. de Documento');
 
 /*----------------------    GENERAR COTIZACION----------------------*/
 define('LABEL_GNC1','Cotizaciones');
@@ -124,4 +129,8 @@ define('LABEL_RC1','Nuevo Cliente');
 define('LABEL_RC2','Tipo de documento');
 define('LABEL_RC3','Editar Cliente');
 define('LABEL_RC4','Razón Social');
+define('LABEL_RC5','Representantes');
+define('LABEL_RC6','Cliente:');
+define('LABEL_RC7','Nuevo Representante');
+define('LABEL_RC8','Editar Representante');
 ?>
