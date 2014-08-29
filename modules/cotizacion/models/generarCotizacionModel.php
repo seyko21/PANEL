@@ -21,6 +21,7 @@ class generarCotizacionModel extends Model{
     private $_total;
     private $_igv;
     private $_usuario;
+    private $_xSearch;
     
     /*para el grid*/
     private $_iDisplayStart;
@@ -47,6 +48,7 @@ class generarCotizacionModel extends Model{
         $this->_igv         = $this->post(T8.'lst_igv');
         $this->_idPersona   = Session::get('sys_idPersona');
         $this->_usuario     = Session::get('sys_idUsuario');
+        $this->_xSearch     = $this->post(T8.'_term');
         
         $this->_iDisplayStart  =   $this->post('iDisplayStart'); 
         $this->_iDisplayLength =   $this->post('iDisplayLength'); 
@@ -111,13 +113,15 @@ class generarCotizacionModel extends Model{
         $data = $this->queryOne($query,$parms);  
         
         if($data['result'] == 1){
+            $item = 0;
             foreach ($this->_idProducto as $key => $prod) {
+                $item++;
                 $parms = array(
                     ':flag' => 2,
                     ':idCotizacion' => $data['idCotizacion'],
                     ':idRepresentante' => '',
                     ':mesesContrato' => $this->_meses,
-                    ':diasOferta' => '',
+                    ':diasOferta' => $item,
                     ':total' => '',
                     ':idCaratula' => AesCtr::de($prod),
                     ':precio' => $this->_precio[$key],
@@ -125,7 +129,7 @@ class generarCotizacionModel extends Model{
                     ':usuario' => '',
                     ':igv' => ''
                 );
-                $this->execute($query,$parms);  
+                $this->execute($query,$parms);             
             }
         }
         return $data;
@@ -151,7 +155,7 @@ class generarCotizacionModel extends Model{
         INNER JOIN `lgk_caratula` c ON c.`id_caratula`=cd.`id_caratula`
         INNER JOIN `lgk_cotizacion` co ON co.`id_cotizacion`=cd.`id_cotizacion`
         INNER JOIN `lgk_catalogo` ct ON ct.`id_producto`=c.`id_producto`
-        INNER JOIN mae_persona p ON p.`id_persona`=co.`id_representante`
+        INNER JOIN mae_persona p ON p.`id_persona`=co.`id_persona`
         INNER JOIN lgk_tipopanel tp ON tp.id_tipopanel = ct.id_tipopanel
         WHERE cd.`id_cotizacion`=:idCotizacion;";
         
@@ -159,6 +163,23 @@ class generarCotizacionModel extends Model{
             ':idCotizacion' => $this->_idCotizacion
         );
         $data = $this->queryAll($query,$parms);            
+        return $data;
+    }
+    
+    public function getClientes(){
+        $query = "
+         SELECT 
+                id_persona,
+                nombrecompleto
+         FROM mae_persona
+         WHERE usuarioregistro = :usuario AND id_personapadre <> ''
+         AND nombrecompleto LIKE CONCAT('%',:cliente,'%'); ";
+        
+        $parms = array(
+            ':usuario'=> $this->_usuario,
+            ':cliente' => $this->_xSearch,
+        );
+        $data = $this->queryAll($query,$parms);
         return $data;
     }
     

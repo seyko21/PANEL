@@ -20,6 +20,7 @@ class registrarVendedorModel extends Model{
     private $_email;
     private $_telefono;
     private $_numeroDoc;
+    private $_dni;
     private $_ubigeo;
     private $_chkdel;
     private $_usuario;
@@ -48,6 +49,7 @@ class registrarVendedorModel extends Model{
         $this->_email = $this->post(T7.'txt_email');
         $this->_telefono = $this->post(T7.'txt_telefonos');
         $this->_numeroDoc = $this->post(T7.'txt_nrodocumento');
+        $this->_dni = $this->post(T7.'txt_dni');
         $this->_ubigeo = $this->post(T7.'lst_ubigeo');
         $this->_usuario = Session::get('sys_idUsuario');
         $this->_chkdel  = $this->post(T7.'chk_delete');
@@ -59,7 +61,7 @@ class registrarVendedorModel extends Model{
     }
     
     public function getGridVendedor() {
-        $aColumns       =   array( 'chk','numerodocumento','nombrecompleto' ); //para la ordenacion y pintado en html
+        $aColumns       =   array( 'chk','numerodocumento','dni','nombrecompleto' ); //para la ordenacion y pintado en html
         /*
 	 * Ordenando, se verifica por que columna se ordenara
 	 */
@@ -91,6 +93,7 @@ class registrarVendedorModel extends Model{
                     numerodocumento,
                     id_ubigeo,
                     direccion,
+                    dni,
                     email,
                     sexo,
                     telefono 
@@ -146,6 +149,7 @@ class registrarVendedorModel extends Model{
                     :email,
                     :telefono,
                     :numeroDoc,
+                    :dni,
                     :ubigeo,
                     :usuario
                 );";
@@ -160,6 +164,7 @@ class registrarVendedorModel extends Model{
             ':email' => $this->_email,
             ':telefono' => $this->_telefono,
             ':numeroDoc' => $this->_numeroDoc,
+            ':dni' => $this->_dni,
             ':ubigeo' => $this->_ubigeo,
             ':usuario' => $this->_usuario
         );

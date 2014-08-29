@@ -7,7 +7,7 @@
 * ---------------------------------------
 */
 $grabar   = Session::getPermiso("ASCUGR");
-$eliminar = Session::getPermiso("ASCUDE");
+$anular = Session::getPermiso("ASCUAN");
 echo Functions::widgetOpen(array(
         "id"=>ASCU,
         "title"=>LABEL_ASC1
@@ -25,9 +25,9 @@ echo Functions::widgetOpen(array(
                 </button>
                 <?php endif; ?>
                 <!-- verificar permisos -->
-                <?php if($eliminar["permiso"]): ?>
-                <button id="<?php echo ASCU; ?>btnDeleteAsignarCuenta" type="button" onclick="asignarCuenta.postDeleteAsignarCuentaAll(this);" class="btn txt-color-white bg-color-blueDark">
-                    <i class="fa fa-trash-o"></i> <?php echo BTN_DELETE; ?>
+                <?php if($anular["permiso"]): ?>
+                <button id="<?php echo ASCU; ?>btnDeleteAsignarCuenta" type="button" onclick="asignarCuenta.postAnularAsignarCuentaAll(this);" class="btn txt-color-white bg-color-blueDark">
+                    <i class="fa fa-ban"></i> <?php echo $anular["accion"]; ?>
                 </button>
                 <?php endif; ?>
             </div>

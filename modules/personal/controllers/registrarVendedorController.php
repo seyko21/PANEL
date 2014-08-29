@@ -86,6 +86,7 @@ class registrarVendedorController extends Controller{
     
     public function getGridVendedor() {
         $editar = Session::getPermiso('REGVEED');
+        $adjuntar = Session::getPermiso('REGVEADA');
         
         $sEcho          =   $this->post('sEcho');
         
@@ -115,7 +116,7 @@ class registrarVendedorController extends Controller{
                 $chk = '<input id=\"c_'.(++$key).'\" type=\"checkbox\" name=\"'.T7.'chk_delete[]\" value=\"'.$encryptReg.'\">';
                 
                 /*datos de manera manual*/
-                $sOutput .= '["'.$chk.'","'.$aRow['numerodocumento'].'","'.$aRow['nombrecompleto'].'","'.$aRow['email'].'","'.$aRow['telefono'].'","'.$estado.'", ';
+                $sOutput .= '["'.$chk.'","'.$aRow['numerodocumento'].'","'.$aRow['dni'].'","'.$aRow['nombrecompleto'].'","'.$aRow['email'].'","'.$aRow['telefono'].'","'.$estado.'", ';
                 
 
                 /*
@@ -124,12 +125,16 @@ class registrarVendedorController extends Controller{
                  */
                 $sOutput .= '"<div class=\"btn-group\">';
                 
-                if($editar['permiso'] == 1){
+                if($editar['permiso']){
                     $sOutput .= '<button type=\"button\" class=\"btn btn-primary btn-xs\" title=\"'.$editar['accion'].'\" onclick=\"registrarVendedor.getEditarVendedor(this,\''.$encryptReg.'\')\">';
                     $sOutput .= '    <i class=\"fa fa-edit fa-lg\"></i>';
                     $sOutput .= '</button>';
                 }
-                
+                if($adjuntar['permiso']){
+                    $sOutput .= '<button type=\"button\" class=\"btn bg-color-orange txt-color-white btn-xs\" title=\"'.$adjuntar['accion'].'\" onclick=\"registrarVendedor.getFormAntecedentes(this,\''.$encryptReg.'\')\">';
+                    $sOutput .= '    <i class=\"fa fa-external-link fa-lg\"></i>';
+                    $sOutput .= '</button>';
+                }
                 $sOutput .= ' </div>" ';
 
                 $sOutput = substr_replace( $sOutput, "", -1 );

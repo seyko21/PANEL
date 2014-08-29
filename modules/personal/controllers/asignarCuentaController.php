@@ -32,11 +32,17 @@ class asignarCuentaController extends Controller{
             $sOutput .= '"aaData": [ ';
             foreach ( $rResult as $key=>$aRow ){
                 
+                if($aRow['estado'] == 'R'){
+                    $estado = '<span class=\"label label-success\">'.LABEL_ACT.'</span>';
+                }elseif($aRow['estado'] == 'A'){
+                    $estado = '<span class=\"label label-danger\">'.LABEL_AN.'</span>';
+                }
+                
                 /*antes de enviar id se encrypta*/
                 $encryptReg = Aes::en($aRow['id_asignacion']);
                 $chk = '<input id=\"c_'.(++$key).'\" type=\"checkbox\" name=\"'.ASCU.'chk_delete[]\" value=\"'.$encryptReg.'\">';
                 /*datos de manera manual*/
-                $sOutput .= '["'.$chk.'","'.$aRow['codigo'].'","'.$aRow['lado'].' - '.$aRow['ubicacion'].'","'.$aRow['nombrecompleto'].'","'.$aRow['porcentaje_comision'].'" ';
+                $sOutput .= '["'.$chk.'","'.$aRow['codigo'].'","'.$aRow['lado'].' - '.$aRow['ubicacion'].'","'.$aRow['nombrecompleto'].'","'.$aRow['porcentaje_comision'].'","'.$estado.'" ';
 
                 /*
                  * configurando botones (add/edit/delete etc)
@@ -96,8 +102,8 @@ class asignarCuentaController extends Controller{
     }
     
     /*envia datos para eliminar registro: AsignarCuenta*/
-    public function postDeleteAsignarCuentaAll(){
-        $data = Obj::run()->asignarCuentaModel->deleteAsignarCuentaAll();
+    public function postAnularAsignarCuentaAll(){
+        $data = Obj::run()->asignarCuentaModel->anularAsignarCuentaAll();
         
         echo json_encode($data);
     }

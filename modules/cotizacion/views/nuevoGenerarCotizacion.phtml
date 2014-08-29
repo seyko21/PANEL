@@ -2,7 +2,7 @@
 $grabar = Session::getPermiso('GNCOTGR');
 $agregar = Session::getPermiso('GNCOTAG');
 $buscar = Session::getPermiso('GNCOTBS');
-
+print_r($buscar);
 ?>
 <form id="<?php echo T8; ?>formGenerarCotizacion" name="<?php echo T8; ?>formGenerarCotizacion" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog" style="width: 70%;">
@@ -19,10 +19,10 @@ $buscar = Session::getPermiso('GNCOTBS');
                     <div class="col-md-10">
                         <div class="input-group input-group-sm">
                             <input type="hidden" id="<?php echo T8; ?>txt_idpersona" name="<?php echo T8; ?>txt_idpersona">
-                            <input class="form-control" type="text" id="<?php echo T8; ?>txt_empleadodesc" name="<?php echo T8; ?>txt_empleadodesc" readonly>
+                            <input class="form-control" type="text" id="<?php echo T8; ?>txt_cliente" name="<?php echo T8; ?>txt_cliente" readonly>
                             <span class="input-group-btn">
                                 <?php if($buscar['permiso']):?>
-                                <button class="btn btn-default" type="button" onclick="configurarUsuarios.getFormEmpleado(this, '<?php echo T8; ?>');"><i class="fa fa-search"></i> Buscar</button>
+                                <button class="btn btn-default" type="button" onclick="generarCotizacion.getFormBuscarCliente(this, '<?php echo T8; ?>');"><i class="fa fa-search"></i> Buscar</button>
                                 <?php endif; ?>
                             </span>
                         </div>

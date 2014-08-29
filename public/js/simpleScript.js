@@ -416,11 +416,15 @@ var simpleScript_ = function(){
         }
     };
     
+    this.public.closeTab = function(tab){
+        $('#li-'+tab).find('span.delete-tab').click();
+    };
+    
     this.public.setInput = function (obj,form){
        for(var i in obj){
            $('#'+i).val(obj[i]);
        }
-       simpleScript.closeModal(form);
+       this.closeModal(form);
     };
     
     this.public.createCell = function(obj){
@@ -433,6 +437,21 @@ var simpleScript_ = function(){
            t+= '</tr>';
         }
         return t;
+    };
+    
+    /*recarga grid despues de una accion*/
+    this.public.reloadGrid = function(g){
+        $(g+'_wrapper').find('.dataTables_paginate').find('ul').find('.active').click();
+    };
+    
+    /*cambia la busqueda sencible por el enter*/
+    this.public.enterSearch = function(g,oTable){
+        $(g+'_filter').find('input').unbind();
+        $(g+'_filter').find('input').bind('keyup', function(e) {
+            if(e.keyCode === 13) {
+                oTable.fnFilter(this.value);   
+            }
+        });  
     };
     
     return this.public;

@@ -44,8 +44,9 @@ var registrarVendedor_ = function(){
             iDisplayLength: 10,            
             aoColumns: [
                 {sTitle: "<input type='checkbox' id='"+diccionario.tabs.T7+"chk_all' onclick='simpleScript.checkAll(this,\"#"+diccionario.tabs.T7+"getGridVendedor\");'>", sWidth: "1%", sClass: "center", bSortable: false},
-                {sTitle: "Nro. Documento", sClass: "center", sWidth: "10%", bSortable: false},
-                {sTitle: "Nombres y Apellidos", sWidth: "35%"},
+                {sTitle: "RUC", sClass: "center", sWidth: "10%", bSortable: false},
+                {sTitle: "DNI", sClass: "center", sWidth: "10%", bSortable: false},
+                {sTitle: "Nombres y Apellidos", sWidth: "25%"},
                 {sTitle: "Email", sWidth: "20%", bSortable: false},
                 {sTitle: "Teléfonos", sWidth: "15%", bSortable: false},
                 {sTitle: "Estado", sWidth: "8%",  sClass: "center", bSortable: false},

@@ -63,6 +63,18 @@ $data = registrarVendedorController::findVendedor();
                 </section>
                 <section>
                     <div class="row">
+                        <label class="label col col-3"><?php echo LABEL_RV23; ?></label>
+                        <div class="col col-8">
+                            <label class="input"> 
+                                <i class="icon-append fa fa-keyboard-o"></i>
+                                <input type="text" id="<?php echo T7; ?>txt_dni" name="<?php echo T7; ?>txt_dni" value="<?php echo $data['dni']; ?>">
+                                <b class="tooltip tooltip-top-right"><i class="fa fa-keyboard-o txt-color-teal"></i> <?php echo LABEL_RV24; ?></b>
+                            </label>
+                        </div>
+                    </div>
+                </section>
+                <section>
+                    <div class="row">
                         <label class="label col col-3"><?php echo LABEL_RV18; ?></label>
                         <div class="col col-8">
                             <label class="select"> 
@@ -241,6 +253,11 @@ $data = registrarVendedorController::findVendedor();
                         minlength: 3
                 },
                 <?php echo T7; ?>txt_nrodocumento:{
+                        required: true,
+                        number: true,
+                        maxlength: 12
+                },
+                <?php echo T7; ?>txt_dni:{
                         required: true,
                         number: true,
                         maxlength: 8

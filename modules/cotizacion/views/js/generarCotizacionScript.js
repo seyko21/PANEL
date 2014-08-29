@@ -6,10 +6,6 @@ var generarCotizacionScript_ = function(){
     
     _private.total = 0;
     
-    _private.dciudad = 0;
-    
-    _private.ubigeo = [];
-    
     this.publico = {};
     
     this.publico.addProducto = function(){
@@ -49,7 +45,6 @@ var generarCotizacionScript_ = function(){
                         if(duplicado === 0){//no duplicado, agregar
                             /*guardo idProducto decifrado en temporal para validar ducplicidad*/
                             _private.prodAdd.push(simpleAjax.stringGet(idProducto));
-                            _private.ubigeo.push(ubigeo);
 
                             tr += '<tr id="'+diccionario.tabs.T8+'tr_'+idProducto+'">\n\
                                 <td>\n\
@@ -74,39 +69,6 @@ var generarCotizacionScript_ = function(){
                 });
                 
                 if(tr !== ''){
-                    /*verificar q sean de la misma ciudad*/
-                   
-                        
-                    $.each(collection,function(index,value){
-                        chk = $(this).find('td:eq(1)').find('input:checkbox');
-                        if(chk.is(':checked')){
-                            cad = chk.val().split('~');
-                            var xubigeo = cad[4];
-
-                            for(var i in _private.ubigeo){
-                                if(xubigeo !== _private.ubigeo[i] && _private.ubigeo[i] !== undefined){
-                                    _private.dciudad = 1;
-                                }
-                            }
-
-
-                        }
-                    });
-                        
-                    if(_private.dciudad === 1){
-                        simpleScript.notify.warning({
-                            content: 'Registros deben ser de la misma ciudad'
-                        });
-                        _private.ubigeo = [];
-                        _private.prodAdd = [];
-                        _private.dciudad = 0;
-                        return false;
-                    }
-                        
-                        
-                        
-                        
-                        
                     /*agrego los registros*/
                     $('#'+diccionario.tabs.T8+'gridProductos').find('tbody').html(tr);
                     /*total de registros*/

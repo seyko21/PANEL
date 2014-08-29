@@ -57,6 +57,7 @@ var asignarCuenta_ = function(){
                 {sTitle: "Producto", sWidth: "30%"},
                 {sTitle: "Vendedor", sWidth: "30%"},
                 {sTitle: "Comisión", sWidth: "10%", sClass: "center", bSortable: false},
+                {sTitle: "Estado", sWidth: "10%", sClass: "center", bSortable: false}
             ],
             aaSorting: [[0, 'desc']],
             sScrollY: "300px",
@@ -116,7 +117,7 @@ var asignarCuenta_ = function(){
         });
     };
     
-    this.publico.postDeleteAsignarCuentaAll = function(btn){
+    this.publico.postAnularAsignarCuentaAll = function(btn){
         simpleScript.validaCheckBox({
             id: "#"+diccionario.tabs.ASCU+"gridAsignarCuenta",
             msn: mensajes.MSG_9,
@@ -128,7 +129,7 @@ var asignarCuenta_ = function(){
                             flag: 3, //si se usa SP usar flag, sino se puede eliminar esta linea
                             element: btn,
                             form: "#"+diccionario.tabs.ASCU+"formGridAsignarCuenta",
-                            root: _private.config.modulo + "postDeleteAsignarCuentaAll",
+                            root: _private.config.modulo + "postAnularAsignarCuentaAll",
                             fnCallback: function(data) {
                                 if(!isNaN(data.result) && parseInt(data.result) === 1){
                                     simpleScript.notify.ok({

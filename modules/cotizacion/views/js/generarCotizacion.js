@@ -110,6 +110,51 @@ var generarCotizacion_ = function(){
         });
     };
     
+    this.publico.getFormBuscarCliente = function(btn,tab){
+        _private.tab = tab;
+        simpleAjax.send({
+            element: btn,
+            dataType: 'html',
+            root: _private.config.modulo + 'getFormBuscarCliente',
+            fnCallback: function(data){
+                $('#cont-modal').append(data);  /*los formularios con append*/
+                $('#'+diccionario.tabs.T8+'formBuscarCliente').modal('show');
+            }
+        });
+    };
+    
+    this.publico.getClientes = function(){
+        $('#'+diccionario.tabs.T8+'gridClientesFound').dataTable({
+            bProcessing: true,
+            bServerSide: true,
+            bDestroy: true,
+            bFilter: false, 
+            sServerMethod: "POST",
+            bPaginate: false,
+            aoColumns: [
+                {sTitle: "Nro.", sClass: "center",sWidth: "2%",  bSortable: false},
+                {sTitle: "Cliente", sWidth: "88%"}
+            ],
+            aaSorting: [[1, 'asc']],
+            sScrollY: "250px",
+            sAjaxSource: _private.config.modulo+'getClientes',
+            fnServerParams: function(aoData) {
+                aoData.push({"name": diccionario.tabs.T8+"_term", "value": $('#'+diccionario.tabs.T8+'txt_search').val()});
+                aoData.push({"name": "_tab", "value": _private.tab});
+            },
+            fnDrawCallback: function() {
+//                $('#'+diccionario.tabs.T8+'gridEmpleadosFound_wrapper').find('.dt-bottom-row').remove();
+                $('#'+diccionario.tabs.T8+'gridClientesFound_wrapper').find('.dataTables_scrollBody').css('overflow-x','hidden');
+                /*para hacer evento invisible*/
+                simpleScript.removeAttr.click({
+                    container: '#'+diccionario.tabs.T8+'gridClientesFound',
+                    typeElement: 'a'
+                });
+            }
+        });
+        $('#'+diccionario.tabs.T8+'gridEmpleadosFound_filter').remove();
+    };
+    
     this.publico.postGenerarCotizacion = function(){
         simpleScript.validaTable({
             id: '#'+diccionario.tabs.T8+'gridProductos',

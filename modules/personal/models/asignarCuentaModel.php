@@ -124,10 +124,10 @@ class asignarCuentaModel extends Model{
     }
     
     /*eliminar varios registros: AsignarCuenta*/
-    public function deleteAsignarCuentaAll(){
+    public function anularAsignarCuentaAll(){
         foreach ($this->_chkdel as $value) {
             $query = "
-            UPDATE lgk_asignacioncuenta SET estado = '0' WHERE id_asignacion = :idAsignarCuenta";
+            UPDATE lgk_asignacioncuenta SET estado = 'A' WHERE id_asignacion = :idAsignarCuenta";
             $parms = array(
                 ':idAsignarCuenta' => Aes::de($value)
             );
@@ -153,7 +153,7 @@ class asignarCuentaModel extends Model{
         FROM `lgk_caratula` c 
         INNER JOIN `lgk_catalogo` k ON k.`id_producto`=c.`id_producto`
         WHERE c.`estado`='D' AND k.`estado`=:estado
-        and not exists (select * from lgk_asignacioncuenta ac where ac.id_caratula = c.id_caratula );";
+        and not exists (select * from lgk_asignacioncuenta ac where ac.id_caratula = c.id_caratula and ac.estado='R');";
         
         $parms = array(
             ':estado'=>'A'

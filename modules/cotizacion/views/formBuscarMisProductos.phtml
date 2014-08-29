@@ -21,14 +21,14 @@ $buscar = Session::getPermiso('REGVEBS');
                 <section>
                     <div class="row">
                         <label class="label col col-2"><?php echo LABEL_GNC7; ?></label>
-                        <div class="col col-8">
+                        <div class="col col-8 hide">
                             <label class="input"> 
                                 <input type="text" id="<?php echo T8; ?>txt_search" name="<?php echo T8; ?>txt_search" placeholder="<?php echo LABEL_GNC9; ?>" onkeypress="simpleScript.triggerPress('<?php echo T8; ?>btnSubSearchPro',event);"></input>
                             </label>
                         </div>
                     </div>
                 </section>
-                <div class="well">
+                <div class="well" style="overflow: auto;height: 300px;overflow-x: hidden">
                     <table id="<?php echo T8; ?>gridProductosFound" class="table table-bordered table-striped table-condensed smart-form table-hover has-tickbox" style="width:100%">
                         <thead>
                             <th>Nro</th>

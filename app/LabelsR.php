@@ -16,6 +16,7 @@ define('BTN_CLOSE','Cerrar');
 define('BTN_ADD','Agregar');
 define('LABEL_T','Total');
 define('LABEL_ACT','Activo');
+define('LABEL_AN','Anulado');
 define('LABEL_DESACT','Inactivo');
 define('BTN_ACT','Activar');
 define('BTN_DESACT','Desactivar');
@@ -98,12 +99,14 @@ define('LABEL_RV13','Sexo');
 define('LABEL_RV14','Teléfonos');
 define('LABEL_RV15','Ingresar teléfonos');
 define('LABEL_RV16','Nro. de RUC');
-define('LABEL_RV17','Ingresar nro. de documento');
+define('LABEL_RV17','Ingresar nro. de RUC');
 define('LABEL_RV18','Departamento');
 define('LABEL_RV19','Provincia');
 define('LABEL_RV20','Distrito');
 define('LABEL_RV21','Editar Vendedor');
 define('LABEL_RV22','Nro. de Documento');
+define('LABEL_RV23','DNI');
+define('LABEL_RV24','Ingresar nro. de DNI');
 
 /*----------------------    GENERAR COTIZACION----------------------*/
 define('LABEL_GNC1','Cotizaciones');
@@ -117,6 +120,7 @@ define('LABEL_GNC8','Buscar Producto');
 define('LABEL_GNC9','Escriba ubicación y presione enter para buscar');
 define('LABEL_GNC10','Agregar Producto');
 define('LABEL_GNC11','Abre ventana para buscar y agregar productos');
+define('LABEL_GNC12','Buscar Cliente');
 
 /*----------------------    ASIGNAR CUENTAS----------------------*/
 define('LABEL_ASC1','Cuentas');

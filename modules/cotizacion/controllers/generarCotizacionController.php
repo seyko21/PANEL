@@ -96,6 +96,44 @@ class generarCotizacionController extends Controller{
         return $data;
     }
     
+    public function getFormBuscarCliente(){ 
+        Obj::run()->View->render('formBuscarCliente');
+    }
+    
+    public function getClientes(){ 
+        $tab = $this->post('_tab');
+        $sEcho          =   $this->post('sEcho');
+        
+        $rResult = Obj::run()->generarCotizacionModel->getClientes();
+        
+        if(!isset($rResult['error'])){  
+            $iTotal         = isset($rResult[0]['total'])?$rResult[0]['total']:0;
+            
+            $sOutput = '{';
+            $sOutput .= '"sEcho": '.intval($sEcho).', ';
+            $sOutput .= '"iTotalRecords": '.$iTotal.', ';
+            $sOutput .= '"iTotalDisplayRecords": '.$iTotal.', ';
+            $sOutput .= '"aaData": [ ';
+            foreach ( $rResult as $key=>$aRow ){
+                /*antes de enviar id se encrypta*/
+                $encryptReg = Aes::en($aRow['id_persona']);
+                
+                $nom = '<a href=\"javascript:;\" onclick=\"simpleScript.setInput({'.$tab.'txt_idpersona:\''.$encryptReg.'\', '.$tab.'txt_cliente:\''.$aRow['nombrecompleto'].'\'},\'#'.T8.'formBuscarCliente\');\" >'.$aRow['nombrecompleto'].'</a>';
+                
+                /*datos de manera manual*/
+                $sOutput .= '["'.(++$key).'","'.$nom.'" ';
+
+                $sOutput .= '],';
+            }
+            $sOutput = substr_replace( $sOutput, "", -1 );
+            $sOutput .= '] }';
+        }else{
+            $sOutput = $rResult['error'];
+        }
+        
+        echo $sOutput;
+    }
+    
     public function postGenerarCotizacion(){ 
         $data = Obj::run()->generarCotizacionModel->generarCotizacion();
         
@@ -168,7 +206,11 @@ class generarCotizacionController extends Controller{
         echo json_encode($data);
     }
     
-    public function postPDF(){ 
+    public function postPDF(){  
+        $ar = ROOT.'public'.DS.'files'.DS.'cotizacion.pdf';
+        /*se elimina el archivo*/
+        unlink($ar);
+        
         $data = Obj::run()->generarCotizacionModel->getCotizacion();
         
         $mpdf = new mPDF('c');
@@ -215,13 +257,17 @@ class generarCotizacionController extends Controller{
         $html .='</table>';
         
         $mpdf->WriteHTML($html);
-        $mpdf->Output(ROOT.'public'.DS.'files'.DS.'cotizacion.pdf','F');
+        $mpdf->Output($ar,'F');
         
         $data = array('result'=>1);
         echo json_encode($data);
     }
     
     public function postExcel(){
+        $ar = ROOT.'public'.DS.'files'.DS.'cotizacion.xls';
+        /*se elimina el archivo*/
+        unlink($ar);
+        
         $data = Obj::run()->generarCotizacionModel->getCotizacion();
         
         $html ='
@@ -249,7 +295,7 @@ class generarCotizacionController extends Controller{
         $html .='</table>';
         
         
-        $f=fopen(ROOT.'public'.DS.'files'.DS.'cotizacion.xls','wb');
+        $f=fopen($ar,'wb');
         if(!$f){$data = array('result'=>2);}
         fwrite($f,  utf8_decode($html));
         fclose($f);
