@@ -208,9 +208,9 @@ var permisoMunicipal_ = function(){
         simpleAjax.send({
             flag: 2,
             element: '#'+diccionario.tabs.PERMU+'btnGrPermisoMunicipal',
-            root: _private.config.modulo + 'postEditarCaratula',
+            root: _private.config.modulo + 'postEditarPermisoMunicipal',
             form: '#'+diccionario.tabs.PERMU+'formPermisoMunicipal',
-            data: '&_idPermisoMuni='+_private.idPermisoMunicipal,
+            data: '&_idPermisoMuni='+_private.idPermisoMunicipal+'&_idProducto='+_private.idProducto,
             clear: true,
             fnCallback: function(data) {
                 if(!isNaN(data.result) && parseInt(data.result) === 1){

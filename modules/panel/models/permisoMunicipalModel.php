@@ -120,7 +120,8 @@ class permisoMunicipalModel extends Model{
             ':obs' => $this->_obs,               
             ':usuario' => $this->_usuario
         );
-        $data = $this->queryOne($query,$parms);            
+        $data = $this->queryOne($query,$parms); 
+//        print_r($parms);
         return $data;
     }    
     

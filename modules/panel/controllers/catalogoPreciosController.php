@@ -8,9 +8,10 @@
 */    
 
 class catalogoPreciosController extends Controller{
-
+           
     public function __construct() {
         $this->loadModel("catalogoPrecios");
+        $this->loadController(array('modulo'=>'panel','controller'=>'fichaTecnica'));        
     }    
     public function index(){ 
         Obj::run()->View->render("indexCatalogoPrecios");
@@ -87,10 +88,11 @@ class catalogoPreciosController extends Controller{
         echo $sOutput;
     }          
     
-    public function postEditarCaratula(){ 
+    public function postEditarCaratula(){         
         $data = Obj::run()->catalogoPreciosModel->mantenimientoCaratula();
-        
-        echo json_encode($data);
+        echo json_encode($data);                        
+//        $data = Obj::run()->fichaTecnicaController->postEditarFichaTecnica();        
+//        echo $data;        
     }   
     
   

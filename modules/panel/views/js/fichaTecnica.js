@@ -62,7 +62,7 @@ var fichaTecnica_ = function(){
             sScrollY: "200px",
             sAjaxSource: _private.config.modulo+'getGridFichaTecnica',
             fnDrawCallback: function() {
-                $('#'+diccionario.tabs.T102+'gridFichaTecnica_filter').find('input').attr('placeholder','Buscar por Ciudad o Ubicación').css('width','350px');;                
+                $('#'+diccionario.tabs.T102+'gridFichaTecnica_filter').find('input').attr('placeholder','Buscar por Ciudad o Ubicación').css('width','350px');               
                 /*para hacer evento invisible*/
                 simpleScript.removeAttr.click({
                     container: '#widget_'+diccionario.tabs.T102, //widget del datagrid

@@ -1,0 +1,29 @@
+<?php 
+/*
+* ---------------------------------------
+* --------- CREATED BY CREATOR ----------
+* fecha: 29-08-2014 02:08:11 
+* Descripcion : indexConsultaPermisos.phtml
+* ---------------------------------------
+*/
+$grabar   = Session::getPermiso("TAB_CONPERGR");
+$eliminar = Session::getPermiso("TAB_CONPERDE");
+echo Functions::widgetOpen(array(
+        "id"=>TAB_CONPER,
+        "title"=>LABEL_A60
+    )); 
+?>
+<button id="<?php echo TAB_CONPER; ?>btnDowPDF" type="button" class="hide" onclick="window.open('<?php echo 'public/files/fichatecnica.pdf'?>','_blank');">Descargar</button>
+<button id="<?php echo TAB_CONPER; ?>btnDowExcel" type="button" class="hide" onclick="window.open('<?php echo 'public/files/fichatecnica.xls'?>','_self');">Descargar</button>
+    <div class="widget-body-toolbar"></div>
+    <div class="dataTables_wrapper form-inline" role="grid">
+        <div class="dt-top-row">
+            <div class="DTTT btn-group">              
+            </div>
+        </div>
+
+    </div>
+    <form id="<?php echo TAB_CONPER; ?>formGridConsultaPermisos" name="<?php echo TAB_CONPER; ?>formGridConsultaPermisos">
+        <table id="<?php echo TAB_CONPER; ?>gridConsultaPermisos" class="table table-striped table-bordered table-hover table-condensed" style="width:100%"></table>
+    </form>
+<?php echo Functions::widgetClose(); ?>

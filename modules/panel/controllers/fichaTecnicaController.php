@@ -305,7 +305,7 @@ class fichaTecnicaController extends Controller{
         
         $mpdf->WriteHTML($html);
         $mpdf->Output(ROOT.'public'.DS.'files'.DS.'fichatecnica.pdf','F');
-        
+                
         $data = array('result'=>1);
         echo json_encode($data);
     }

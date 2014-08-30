@@ -60,7 +60,6 @@ define('LABEL_A50','Permiso Municipal de Panel');
 define('LABEL_A51','Registro de Permiso Municipal');
 define('LABEL_A52','Registrar Permiso Municipal');
 define('LABEL_A53','Editar Permiso Municipal');
-
 define('LABEL_A54','Fecha Inicio');
 define('LABEL_A54M','Ingrese una Fecha de inicio valida');
 define('LABEL_A55','Fecha Final');
@@ -69,5 +68,7 @@ define('LABEL_A56','Monto pagado');
 define('LABEL_A56M','Ingrese el monto pagado por el permiso');
 define('LABEL_A57','Observacion');
 define('LABEL_A57M','Puede especificar algun codigo de documento, carta, etc.');
-
+define('LABEL_A58','Listado de Catálogo');
+/*----------------------Consulta de Permisos por vencer----------------------*/
+define('LABEL_A60','Consulta de Permisos por vencer en 5 meses');
 ?>
