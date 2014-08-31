@@ -21,6 +21,7 @@ class generarCotizacionModel extends Model{
     private $_total;
     private $_igv;
     private $_usuario;
+    private $_chkdel;
     private $_xSearch;
     
     /*para el grid*/
@@ -49,6 +50,7 @@ class generarCotizacionModel extends Model{
         $this->_idPersona   = Session::get('sys_idPersona');
         $this->_usuario     = Session::get('sys_idUsuario');
         $this->_xSearch     = $this->post(T8.'_term');
+        $this->_chkdel  = $this->post(T8.'chk_delete');
         
         $this->_iDisplayStart  =   $this->post('iDisplayStart'); 
         $this->_iDisplayLength =   $this->post('iDisplayLength'); 
@@ -57,7 +59,7 @@ class generarCotizacionModel extends Model{
     }
     
     public function getGridCotizacion() {
-        $aColumns       =   array( 'cotizacion_numero','nombrecompleto' ); //para la ordenacion y pintado en html
+        $aColumns       =   array( '','cotizacion_numero','nombrecompleto' ); //para la ordenacion y pintado en html
         /*
 	 * Ordenando, se verifica por que columna se ordenara
 	 */
@@ -180,6 +182,20 @@ class generarCotizacionModel extends Model{
             ':cliente' => $this->_xSearch,
         );
         $data = $this->queryAll($query,$parms);
+        return $data;
+    }
+    
+    public function anularCotizacion(){
+        foreach ($this->_chkdel as $value) {
+            $query = "UPDATE `lgk_cotizacion` SET
+			`estado` = 'A'
+                    WHERE `id_cotizacion` = :idCotizacion;";
+            $parms = array(
+                ':idCotizacion' => Aes::de($value)
+            );
+            $this->execute($query,$parms);
+        }
+        $data = array('result'=>1);
         return $data;
     }
     

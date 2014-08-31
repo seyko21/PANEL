@@ -111,9 +111,6 @@ var generarCotizacionScript_ = function(){
     this.publico.resetArrayProducto = function(){
         _private.prodAdd = [];
         _private.total = 0;
-        _private.ubigeo = [];
-        _private.prodAdd = [];
-        _private.dciudad = 0;
     };
     
     return this.publico;

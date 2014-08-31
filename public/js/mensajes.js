@@ -10,5 +10,7 @@ var mensajes = {
     MSG_9: 'Seleccione al menos un registro.',
     MSG_10: 'No se han agregado registros.',
     MSG_11: 'No podemos encontrar la direccion en el Mapa.',
-    MSG_12: 'Falta ingresar datos.'
+    MSG_12: 'Falta ingresar datos.',
+    MSG_13: '¿Está seguro de anular registros seleccionados?',
+    MSG_14: 'Registros se anularon correctamente.'
 };

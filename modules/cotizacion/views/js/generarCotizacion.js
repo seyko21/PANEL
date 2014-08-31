@@ -41,13 +41,14 @@ var generarCotizacion_ = function(){
             bPaginate: true,
             iDisplayLength: 10,            
             aoColumns: [
+                {sTitle: "<input type='checkbox' id='"+diccionario.tabs.T8+"chk_all' onclick='simpleScript.checkAll(this,\"#"+diccionario.tabs.T8+"gridGenerarCotizacion\");'>", sWidth: "1%", sClass: "center", bSortable: false},
                 {sTitle: "Código", sClass: "center",sWidth: "15%"},
                 {sTitle: "Apellidos y Nombres", sWidth: "40%"},
                 {sTitle: "Meses", sWidth: "10%",sClass: "center", bSortable: false},
                 {sTitle: "Oferta", sWidth: "10%", sClass: "center", bSortable: false},
                 {sTitle: "Acciones", sWidth: "15%", sClass: "center", bSortable: false}
             ],
-            aaSorting: [[0, 'desc']],
+            aaSorting: [[1, 'desc']],
             sScrollY: "300px",
             sAjaxSource: _private.config.modulo+'getGridCotizacion',
             fnDrawCallback: function() {
@@ -71,6 +72,27 @@ var generarCotizacion_ = function(){
             fnCallback: function(data){
                 $('#cont-modal').append(data);  /*los formularios con append*/
                 $('#'+diccionario.tabs.T8+'formGenerarCotizacion').modal('show');
+            }
+        });
+    };
+        
+    this.publico.getNuevoGenerarCotizacion2 = function(element){
+        generarCotizacionScript.resetArrayProducto();
+        simpleScript.addTab({
+            id : diccionario.tabs.T8+'new',
+            label: 'Nueva Cotización',
+            fnCallback: function(){
+                generarCotizacion.getContNew();
+            }
+        });
+    };
+    
+    this.publico.getContNew = function(){
+        simpleAjax.send({
+            dataType: 'html',
+            root: _private.config.modulo+'getFormNewCotizacion',
+            fnCallback: function(data){
+                $('#'+diccionario.tabs.T8+'new_CONTAINER').html(data);
             }
         });
     };
@@ -173,8 +195,9 @@ var generarCotizacion_ = function(){
                                     simpleScript.notify.ok({
                                         content: mensajes.MSG_3,
                                         callback: function(){
-                                            generarCotizacion.getGridCotizacion();
-                                            simpleScript.closeModal('#'+diccionario.tabs.T8+'formGenerarCotizacion');
+                                            simpleScript.closeTab(diccionario.tabs.T8+'new');
+                                            simpleScript.reloadGrid('#'+diccionario.tabs.T8+'gridGenerarCotizacion');
+                                            //simpleScript.closeModal('#'+diccionario.tabs.T8+'formGenerarCotizacion');
                                         }
                                     });
                                 }
@@ -233,6 +256,35 @@ var generarCotizacion_ = function(){
                         content: 'Ocurrió un error al exportar cotización.'
                     });
                 }
+            }
+        });
+    };
+    
+    this.publico.postAnularCotizacionAll = function(btn){
+        simpleScript.validaCheckBox({
+            id: '#'+diccionario.tabs.T8+'gridGenerarCotizacion',
+            msn: mensajes.MSG_9,
+            fnCallback: function(){
+                simpleScript.notify.confirm({
+                    content: mensajes.MSG_13,
+                    callbackSI: function(){
+                        simpleAjax.send({
+                            element: btn,
+                            form: '#'+diccionario.tabs.T8+'formGridGenerarCotizacion',
+                            root: _private.config.modulo + 'postAnularCotizacionAll',
+                            fnCallback: function(data) {
+                                if(!isNaN(data.result) && parseInt(data.result) === 1){
+                                    simpleScript.notify.ok({
+                                        content: mensajes.MSG_14,
+                                        callback: function(){
+                                            simpleScript.reloadGrid('#'+diccionario.tabs.T8+'gridGenerarCotizacion');
+                                        }
+                                    });
+                                }
+                            }
+                        });
+                    }
+                });
             }
         });
     };

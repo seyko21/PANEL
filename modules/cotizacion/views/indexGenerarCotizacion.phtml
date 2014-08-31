@@ -19,8 +19,13 @@ echo Functions::widgetOpen(array(
                     <i class="fa fa-file-o"></i> <?php echo BTN_NUEVO; ?>
                 </button>
                 <?php endif; ?>
+                <?php if($grabar['permiso']): ?>
+                <button id="<?php echo T8; ?>btnNew" type="button" onclick="generarCotizacion.getNuevoGenerarCotizacion2(this);" class="btn txt-color-white bg-color-blueDark">
+                    <i class="fa fa-file-o"></i> <?php echo BTN_NUEVO; ?>xx
+                </button>
+                <?php endif; ?>
                 <?php if($anular['permiso']): ?>
-                <button id="<?php echo T8; ?>btnNew" type="button" onclick="generarCotizacion.postDeleteGenerarCotizacionAll(this);" class="btn txt-color-white bg-color-blueDark">
+                <button id="<?php echo T8; ?>btnNew" type="button" onclick="generarCotizacion.postAnularCotizacionAll(this);" class="btn txt-color-white bg-color-blueDark">
                     <i class="fa fa-ban"></i> <?php echo $anular['accion']; ?>
                 </button>
                 <?php endif; ?>

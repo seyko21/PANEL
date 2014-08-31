@@ -1,0 +1,264 @@
+<?php
+echo Functions::widgetOpen(array(
+    'id' => T8,
+    'title' => LABEL_GNC2,
+    'padding' => true,
+    'wizard' => true
+));
+$grabar = Session::getPermiso('GNCOTGR');
+$agregar = Session::getPermiso('GNCOTAG');
+$buscar = Session::getPermiso('GNCOTBS');
+?>
+<div class="row">
+    <form id="<?php echo T8; ?>formGenerarCotizacion" novalidate="novalidate">
+        <div id="bootstrap-wizard-1" class="col-sm-12">
+            <div class="form-bootstrapWizard">
+                <ul class="bootstrapWizard form-wizard">
+                    <li class="active" data-target="#step1">
+                        <a href="#tab1" data-toggle="tab"> <span class="step">1</span> <span class="title">Información general</span> </a>
+                    </li>
+                    <li data-target="#step2">
+                        <a href="#tab2" data-toggle="tab"> <span class="step">2</span> <span class="title">Productos</span> </a>
+                    </li>
+                    <li data-target="#step3">
+                        <a href="#tab3" data-toggle="tab"> <span class="step">3</span> <span class="title">Finalizar</span> </a>
+                    </li>
+                </ul>
+                <div class="clearfix"></div>
+            </div>
+            <div class="tab-content">
+                <div class="tab-pane active form-horizontal" id="tab1">
+                    <br><br>
+                    <h3><strong>Paso 1</strong> - Información general</h3>
+
+                    <div class="form-group">
+                        <label class="control-label col-md-2" for="prepend"><?php echo LABEL_GNC3; ?></label>
+                        <div class="col-md-9">
+                            <div class="input-group input-group-sm">
+                                <input type="hidden" id="<?php echo T8; ?>txt_idpersona" name="<?php echo T8; ?>txt_idpersona">
+                                <input class="form-control" type="text" id="<?php echo T8; ?>txt_cliente" name="<?php echo T8; ?>txt_cliente" readonly>
+                                <span class="input-group-btn">
+                                    <?php if ($buscar['permiso']): ?>
+                                        <button class="btn btn-default" type="button" onclick="generarCotizacion.getFormBuscarCliente(this, '<?php echo T8; ?>');"><i class="fa fa-search"></i> Buscar</button>
+                                    <?php endif; ?>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label col-md-2" for="prepend"><?php echo LABEL_GNC4; ?></label>
+                        <div class="col-md-2">
+                            <div class="input">
+                                <input class="form-control" type="text" id="<?php echo T8; ?>txt_meses" name="<?php echo T8; ?>txt_meses">
+                            </div>
+                        </div>
+                        <label class="control-label col-md-2" for="prepend"><?php echo LABEL_GNC5; ?></label>
+                        <div class="col-md-2">
+                            <div class="input">
+                                <input class="form-control" type="text" id="<?php echo T8; ?>txt_oferta" name="<?php echo T8; ?>txt_oferta">
+                            </div>
+                        </div>
+                        <div class="col-md-2 smart-form hide">
+                            <div class="select">
+                                <select id="<?php echo T8; ?>lst_igv" name="<?php echo T8; ?>lst_igv">
+                                    <option value="1" >IGV Si</option>
+                                    <option value="0" selected="selected">IGV No</option>
+                                </select><i></I>
+                            </div>
+                        </div>
+                    </div>
+                    
+                </div>
+
+
+
+
+
+
+
+                <div class="tab-pane" id="tab2">
+                    <br>
+                    <h3><strong>Paso 2</strong> - Productos</h3>
+
+                    <div class="form-group">
+                        <label class="control-label col-md-2" for="prepend">
+                            <?php if($agregar['permiso']):?>
+                            <button id="<?php echo T8; ?>btnGadd" type="button" class="btn txt-color-white bg-color-blueDark" onclick="generarCotizacion.getFormBuscarMisProductos(this,'<?php echo T8; ?>');"
+                                    rel="popover-hover" data-placement="top" data-original-title="<?php echo LABEL_GNC10; ?>" data-content="<?php echo LABEL_GNC11; ?>">
+                                <i class="fa fa-plus-circle"></i> <?php echo BTN_ADD; ?>
+                            </button>
+                            <?php endif; ?>
+                        </label>
+                    </div>
+                    <br><br>
+                    <div style="padding: 10px">
+                        <div class="si-access" style="min-height: 200px; max-height: auto;">
+                            <table id="<?php echo T8; ?>gridProductos" class="table table-bordered table-striped table-condensed table-hover smart-form has-tickbox">
+                                <thead>
+                                    <th style="width:59%">Producto</th>
+                                    <th style="width:10%">Precio</th>
+                                    <th style="width:10%">Producción</th>
+                                    <th style="width:10%">Cantidad</th>
+                                    <th style="width:10%">Total</th>
+                                    <th style="width:1%">...</th>
+                                </thead>
+                                <tbody>
+                                    <?php echo Functions::createCell(array('row'=>5,'cols'=>6)); ?>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="form-group" style="margin-top:5px">
+                            <div class="col-md-2 pull-right">
+                                <div class="input">
+                                    <input class="form-control right" type="text" id="<?php echo T8; ?>txt_total" name="<?php echo T8; ?>txt_total" readonly>
+                                </div>
+                            </div>
+                            <label class="control-label col-md-2 pull-right" for="prepend"><?php echo LABEL_T; ?></label>
+                        </div>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+
+
+
+               
+                <div class="tab-pane" id="tab3">
+                    <br>
+                    <h3><strong>Step 3</strong> - Finalizar</h3>
+                    <br>
+                    <h1 class="text-center text-success"><strong><i class="fa fa-check fa-lg"></i> Completo</strong></h1>
+                    <h4 class="text-center">
+                        <button id="<?php echo T8; ?>btnGcoti" type="button" class="btn btn-success btn-large" title="Crear Opción" onclick="generarCotizacion.postGenerarCotizacion();">    
+                            <i class="fa fa-plus-circle fa-lg"></i>
+                            Click aquí para generar cotización
+                        </button>
+                    </h4>
+                    <br>
+                    <br>
+                </div>
+
+                <div class="form-actions">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <ul class="pager wizard no-margin no-border">
+                                <!--<li class="previous first disabled">
+                                <a href="javascript:void(0);" class="btn btn-lg btn-default"> First </a>
+                                </li>-->
+                                <li class="previous disabled">
+                                    <a href="javascript:void(0);" class="btn btn-lg btn-default"> Anterior </a>
+                                </li>
+                                <!--<li class="next last">
+                                <a href="javascript:void(0);" class="btn btn-lg btn-primary"> Last </a>
+                                </li>-->
+                                <li class="next">
+                                    <a href="javascript:void(0);" class="btn btn-lg txt-color-darken"> Siguiente </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <?php echo Functions::widgetClose(); ?>
+        <script>
+            var $validator = $("#<?php echo T8; ?>formGenerarCotizacion").validate({
+                rules: {
+                    <?php echo T8; ?>txt_idpersona: {
+                        required: true
+                    },
+                    <?php echo T8; ?>txt_cliente: {
+                        required: true
+                    },        
+                    <?php echo T8; ?>txt_meses: {
+                        required: true,
+                        decimal: true,
+                        maxlength: 4
+                    },   
+                    <?php echo T8; ?>txt_oferta: {
+                        number: true,
+                        maxlength: 3
+                    }
+                },
+                highlight: function(element) {
+                    $(element).closest('.form-group').removeClass('has-success').addClass('has-error');
+                },
+                unhighlight: function(element) {
+                    $(element).closest('.form-group').removeClass('has-error').addClass('has-success');
+                },
+                errorElement: 'span',
+                errorClass: 'help-block',
+                errorPlacement: function(error, element) {
+                    if (element.parent('.input-group').length) {
+                        error.insertAfter(element.parent());
+                    } else {
+                        error.insertAfter(element);
+                    }
+                }
+            });
+
+            var baseItemSelector = 'li:has([data-toggle="tab"])';
+            $('#bootstrap-wizard-1').bootstrapWizard({
+                tabClass: 'form-wizard',
+                onTabClick: function(tab, navigation, index) {
+                    //desactivar tabs
+                    return false;
+                },
+                onTabChange: function(tab, navigation, index) {
+                    
+                },
+                onNext: function(tab, navigation, index) {
+                    var $valid = $("#<?php echo T8; ?>formGenerarCotizacion").valid();
+                    if(index === 1){
+                        if (!$valid) {
+                            $validator.focusInvalid();
+                            return false;
+                        }
+                        /*marca el paso como completado*/
+                        $('#bootstrap-wizard-1').find('.form-wizard').children('li').eq(index - 1).addClass(
+                                'complete');
+                        $('#bootstrap-wizard-1').find('.form-wizard').children('li').eq(index - 1).find('.step')
+                                .html('<i class="fa fa-check"></i>');
+                    }
+                    if(index === 2){
+                        var r = simpleScript.validaTable({
+                            id: '#'+diccionario.tabs.T8+'gridProductos',
+                            msn: mensajes.MSG_10
+                        });
+                        if(r === false){
+                            return false;
+                        }else{
+                            /*marca el paso como completado*/
+                            $('#bootstrap-wizard-1').find('.form-wizard').children('li').eq(index - 1).addClass(
+                                    'complete');
+                            $('#bootstrap-wizard-1').find('.form-wizard').children('li').eq(index - 1).find('.step')
+                                    .html('<i class="fa fa-check"></i>');
+                        }
+                    }
+                    
+                }
+            });
+
+            var wizard = $('.wizard').wizard();
+
+            wizard.on('finished', function(e, data) {
+                //$("#fuelux-wizard").submit();
+                //console.log("submitted!");
+                $.smallBox({
+                    title: "Congratulations! Your form was submitted",
+                    content: "<i class='fa fa-clock-o'></i> <i>1 seconds ago...</i>",
+                    color: "#5F895F",
+                    iconSmall: "fa fa-check bounce animated",
+                    timeout: 4000
+                });
+            });
+            /*para hacer evento invisible*/
+            simpleScript.removeAttr.click({
+                container: '#<?php echo T8; ?>formGenerarCotizacion',
+                typeElement: 'button'
+            });
+        </script>
+    </form>
+</div>

@@ -33,13 +33,14 @@ class generarCotizacionController extends Controller{
             $sOutput .= '"iTotalRecords": '.$iTotal.', ';
             $sOutput .= '"iTotalDisplayRecords": '.$iTotal.', ';
             $sOutput .= '"aaData": [ ';
-            foreach ( $rResult as $aRow ){
+            foreach ( $rResult as $key=>$aRow ){
                 
                 /*antes de enviar id se encrypta*/
                 $encryptReg = Aes::en($aRow['id_cotizacion']);
                 
+                $chk = '<input id=\"c_'.(++$key).'\" type=\"checkbox\" name=\"'.T8.'chk_delete[]\" value=\"'.$encryptReg.'\">';
                 /*datos de manera manual*/
-                $sOutput .= '["'.$aRow['cotizacion_numero'].'","'.$aRow['nombrecompleto'].'","'.$aRow['meses_contrato'].'","'.$aRow['dias_oferta'].'", ';
+                $sOutput .= '["'.$chk.'","'.$aRow['cotizacion_numero'].'","'.$aRow['nombrecompleto'].'","'.$aRow['meses_contrato'].'","'.$aRow['dias_oferta'].'", ';
 
                 /*
                  * configurando botones (add/edit/delete etc)
@@ -79,6 +80,10 @@ class generarCotizacionController extends Controller{
 
     public function getNuevoGenerarCotizacion(){
         Obj::run()->View->render('nuevoGenerarCotizacion'); 
+    }
+    
+    public function getFormNewCotizacion(){
+        Obj::run()->View->render('formNewCotizacion'); 
     }
     
     public function getFormBuscarMisProductos(){ 
@@ -304,6 +309,11 @@ class generarCotizacionController extends Controller{
         echo json_encode($data);
     }
     
+    public function postAnularCotizacionAll(){
+        $data = Obj::run()->generarCotizacionModel->anularCotizacion();
+        
+        echo json_encode($data);
+    }
 }
 
 ?>
