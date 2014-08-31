@@ -39,7 +39,13 @@ $grabar = Session::getPermiso('CONCGR');
                                 ?><i></i>
                             </label>
                         </div>
+                        <?php if ($grabar['permiso']): ?>
+                        <button id="<?php echo T6; ?>btnNew" type="button" onclick="tipoConcepto.getNuevoTipoConcepto(this,'#<?php echo T6; ?>lst_tipoconcento');" class="btn txt-color-white bg-color-blueDark" title="<?php echo BTN_NUEVO; ?>">
+                                <i class="fa fa-file-o pd8"></i>
+                            </button>
+                        <?php endif; ?>
                     </div>
+               
                 </section>
                 <section>
                     <div class="row">

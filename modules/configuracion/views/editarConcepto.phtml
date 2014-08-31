@@ -66,7 +66,7 @@ $data = conceptoController::getConcepto();
                         <div class="col col-4">
                             <label class="input"> 
                                 <i class="icon-append fa fa-money"></i>
-                                <input type="text" id="<?php echo T6; ?>txt_importe" name="<?php echo T6; ?>txt_importe" value="<?php echo $data['precio']; ?>">
+                                <input type="text" id="<?php echo T6; ?>txt_importe" name="<?php echo T6; ?>txt_importe" value="<?php echo number_format($data['precio'],2); ?>">
                                 <b class="tooltip tooltip-top-right"><i class="fa fa-money txt-color-teal"></i> <?php echo LABEL_14; ?></b>
                             </label>
                         </div>
@@ -112,8 +112,7 @@ $data = conceptoController::getConcepto();
                         required : true
                 },
                 <?php echo T6; ?>txt_descripcion : {
-                        required : true,
-                        regular: true,
+                        required : true,                        
                         minlength: 3
                 },
                 <?php echo T6; ?>txt_importe : {

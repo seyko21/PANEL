@@ -13,7 +13,7 @@ class tipoConceptoController extends Controller{
     }
 
     public function index(){ 
-        Obj::run()->View->render('index');
+        Obj::run()->View->render('indexTipoConcepto');
     }
 
     public function getTipoConceptos(){ 

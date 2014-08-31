@@ -43,7 +43,8 @@ var concepto_ = function(){
             aoColumns: [
                 {sTitle: "<input type='checkbox' id='"+diccionario.tabs.T6+"chk_all' onclick='simpleScript.checkAll(this,\"#"+diccionario.tabs.T6+"gridConceptos\");'>", sWidth: "1%", sClass: "center", bSortable: false},
                 {sTitle: "Descripción", sWidth: "35%"},
-                {sTitle: "Tipo de Concepto", sWidth: "35%", bSortable: false},
+                {sTitle: "Tipo de Concepto", sWidth: "35%" },
+                {sTitle: "Precio", sWidth: "13%",sClass: "right"},
                 {sTitle: "Estado", sWidth: "8%",  sClass: "center", bSortable: false},
                 {sTitle: "Acciones", sWidth: "15%", sClass: "center", bSortable: false}
             ],
@@ -101,7 +102,7 @@ var concepto_ = function(){
                     simpleScript.notify.ok({
                         content: mensajes.MSG_3,
                         callback: function(){
-                            concepto.getGridConceptos();
+                            simpleScript.reloadGrid('#'+diccionario.tabs.T6+'gridConceptos');                            
                         }
                     });
                 }else if(!isNaN(data.result) && parseInt(data.result) === 2){
@@ -127,8 +128,8 @@ var concepto_ = function(){
                         content: mensajes.MSG_3,
                         callback: function(){
                             _private.idConcepto = 0;
-                            concepto.getGridConceptos();
-                            simpleScript.closeModal('#'+diccionario.tabs.T6+'formConcepto');
+                           simpleScript.reloadGrid('#'+diccionario.tabs.T6+'gridConceptos');
+                           simpleScript.closeModal('#'+diccionario.tabs.T6+'formConcepto');
                         }
                     });
                 }else if(!isNaN(data.result) && parseInt(data.result) === 2){

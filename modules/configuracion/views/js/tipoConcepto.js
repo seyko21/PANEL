@@ -34,7 +34,7 @@ var tipoConcepto_ = function(){
     };
     
     this.publico.getTipoConceptos = function (){
-        var oTable = $('#'+diccionario.tabs.T5+'gridTipoConceptos').dataTable({
+        var oTable = $('#'+diccionario.tabs.T5+'gridTipoConceptos').dataTable({             
             bProcessing: true,
             bServerSide: true,
             bDestroy: true,
@@ -66,8 +66,7 @@ var tipoConcepto_ = function(){
     
     this.publico.getNuevoTipoConcepto = function(btn,callbackData){
         /*para cuando se llama formulario desde otro modulo*/
-        _private.callbackData = callbackData;
-        
+        _private.callbackData = callbackData;        
         simpleAjax.send({
             element: btn,
             dataType: 'html',
@@ -118,13 +117,13 @@ var tipoConcepto_ = function(){
                     simpleScript.notify.ok({
                         content: mensajes.MSG_3,
                         callback: function(){
-                            /*si se graba desde otro modulo*/
+                            /*si se graba desde otro modulo*/                            
                             if(_private.callbackData.length > 0){                                
-                                tipoConcepto.getAddListTipoConcepto();                                
+                               tipoConcepto.getAddListTipoConcepto();                                
                             }
                             /*se verifica si existe tabb para recargar grid*/
                             if($('#'+diccionario.tabs.T5+'_CONTAINER').length > 0){
-                                tipoConcepto.getTipoConceptos();
+                               simpleScript.reloadGrid('#'+diccionario.tabs.T5+'gridTipoConceptos');
                             }
                         }
                     });
@@ -151,7 +150,7 @@ var tipoConcepto_ = function(){
                         content: mensajes.MSG_3,
                         callback: function(){
                             _private.idTipoConcepto = 0;
-                            tipoConcepto.getTipoConceptos();
+                            simpleScript.reloadGrid('#'+diccionario.tabs.T5+'gridTipoConceptos');
                             simpleScript.closeModal('#'+diccionario.tabs.T5+'formTipoConcepto');
                         }
                     });

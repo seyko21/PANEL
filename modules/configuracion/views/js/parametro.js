@@ -32,7 +32,7 @@ var parametro_ = function(){
     };
     
     this.publico.getGridParametro = function (){
-        $('#'+diccionario.tabs.T100+'gridParametro').dataTable({
+        $('#'+diccionario.tabs.T100+'gridParametro').dataTable({           
             bProcessing: true,
             bServerSide: true,
             bDestroy: true,
@@ -102,7 +102,7 @@ var parametro_ = function(){
                     simpleScript.notify.ok({
                         content: mensajes.MSG_3,
                         callback: function(){
-                            parametro.getGridParametro();
+                            simpleScript.reloadGrid('#'+diccionario.tabs.T100+'gridParametro');
                         }
                     });
                 }else if(!isNaN(data.result) && parseInt(data.result) === 2){
@@ -129,7 +129,7 @@ var parametro_ = function(){
                         content: mensajes.MSG_3,
                         callback: function(){
                             _private.idParametro = 0;
-                            parametro.getGridParametro();
+                            simpleScript.reloadGrid('#'+diccionario.tabs.T100+'gridParametro');
                             simpleScript.closeModal('#'+diccionario.tabs.T100+'formParametro');
                         }
                     });

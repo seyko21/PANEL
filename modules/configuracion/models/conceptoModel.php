@@ -29,31 +29,31 @@ class conceptoModel extends Model{
     }
     
     private function _set(){
-        $this->_flag    = $this->post('_flag');
-        $this->_idConcepto     = Aes::de($this->post('_idConcepto'));    /*se decifra*/
-        $this->_idTipoConcepto     = $this->post(T6.'lst_tipoconcento');
-        $this->_descripcion     = $this->post(T6.'txt_descripcion');
-        $this->_importe     = $this->post(T6.'txt_importe');
-        $this->_estado     = $this->post(T6.'chk_activo');
-        $this->_chkdel  = $this->post(T6.'chk_delete');
+        $this->_flag    = Formulario::getParam('_flag');
+        $this->_idConcepto     = Aes::de(Formulario::getParam('_idConcepto'));    /*se decifra*/
+        $this->_idTipoConcepto     = Formulario::getParam(T6.'lst_tipoconcento');
+        $this->_descripcion     = Formulario::getParam(T6.'txt_descripcion');
+        $this->_importe  =  str_replace(',','',Formulario::getParam(T6.'txt_importe')); //Quitar coma del importe
+        $this->_estado     = Formulario::getParam(T6.'chk_activo');
+        $this->_chkdel  = Formulario::getParam(T6.'chk_delete');
         $this->_usuario = Session::get('sys_idUsuario');
         
-        $this->_iDisplayStart  =   $this->post('iDisplayStart'); 
-        $this->_iDisplayLength =   $this->post('iDisplayLength'); 
-        $this->_iSortingCols   =   $this->post('iSortingCols');
-        $this->_sSearch        =   $this->post('sSearch');
+        $this->_iDisplayStart  =   Formulario::getParam('iDisplayStart'); 
+        $this->_iDisplayLength =   Formulario::getParam('iDisplayLength'); 
+        $this->_iSortingCols   =   Formulario::getParam('iSortingCols');
+        $this->_sSearch        =   Formulario::getParam('sSearch');
     }
     
     public function getGridConceptos(){
-        $aColumns       =   array( 'chk','descripcion' ); //para la ordenacion y pintado en html
+        $aColumns       =   array( 'chk','c.descripcion','t.descripcion','c.precio' ); //para la ordenacion y pintado en html
         /*
 	 * Ordenando, se verifica por que columna se ordenara
 	 */
         $sOrder = "";
         for ( $i=0 ; $i<intval( $this->_iSortingCols ) ; $i++ ){
-                if ( $this->post( "bSortable_".intval($this->post("iSortCol_".$i)) ) == "true" ){
-                        $sOrder .= " ".$aColumns[ intval( $this->post("iSortCol_".$i) ) ]." ".
-                                ($this->post("sSortDir_".$i)==="asc" ? "asc" : 'desc') ." ";
+                if ( Formulario::getParam( "bSortable_".intval(Formulario::getParam("iSortCol_".$i)) ) == "true" ){
+                        $sOrder .= " ".$aColumns[ intval( Formulario::getParam("iSortCol_".$i) ) ]." ".
+                                (Formulario::getParam("sSortDir_".$i)==="asc" ? "asc" : 'desc') ." ";
                 }
         }
         
