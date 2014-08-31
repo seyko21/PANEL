@@ -71,4 +71,6 @@ define('LABEL_A57M','Puede especificar algun codigo de documento, carta, etc.');
 define('LABEL_A58','Listado de Catálogo');
 /*----------------------Consulta de Permisos por vencer----------------------*/
 define('LABEL_A60','Consulta de Permisos por vencer en 5 meses');
+/*----------------------Catalogo de Precios----------------------*/
+define('LABEL_A70','Listado de Catalogo');
 ?>
