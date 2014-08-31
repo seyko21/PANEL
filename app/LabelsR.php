@@ -121,6 +121,7 @@ define('LABEL_GNC9','Escriba ubicación y presione enter para buscar');
 define('LABEL_GNC10','Agregar Producto');
 define('LABEL_GNC11','Abre ventana para buscar y agregar productos');
 define('LABEL_GNC12','Buscar Cliente');
+define('LABEL_GNC13','Validez de oferta');
 
 /*----------------------    ASIGNAR CUENTAS----------------------*/
 define('LABEL_ASC1','Cuentas');

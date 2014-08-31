@@ -41,6 +41,12 @@ $buscar = Session::getPermiso('GNCOTBS');
                             <input class="form-control" type="text" id="<?php echo T8; ?>txt_oferta" name="<?php echo T8; ?>txt_oferta">
                         </div>
                     </div>
+                    <label class="control-label col-md-2" for="prepend"><?php echo LABEL_GNC13; ?></label>
+                    <div class="col-md-2">
+                        <div class="input">
+                            <input class="form-control" type="text" id="<?php echo T8; ?>txt_diasvalidez" name="<?php echo T8; ?>txt_diasvalidez">
+                        </div>
+                    </div>
                     <div class="col-md-2 smart-form hide">
                         <div class="select">
                             <select id="<?php echo T8; ?>lst_igv" name="<?php echo T8; ?>lst_igv">
@@ -122,7 +128,11 @@ $buscar = Session::getPermiso('GNCOTBS');
             <?php echo T8; ?>txt_oferta: {
                 number: true,
                 maxlength: 3
-            }
+            },
+            <?php echo T8; ?>txt_diasvalidez: {
+                number: true,
+                maxlength: 3
+            }        
         },
         // Do not change code below
         errorPlacement: function(error, element) {

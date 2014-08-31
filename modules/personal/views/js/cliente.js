@@ -100,7 +100,7 @@ var cliente_ = function(){
             iDisplayLength: 10,            
             aoColumns: [
                 {sTitle: "<input type='checkbox' id='"+diccionario.tabs.REGCL+"chk_allr' onclick='simpleScript.checkAll(this,\"#"+diccionario.tabs.REGCL+"gridRepresentantes\");'>", sWidth: "1%", sClass: "center", bSortable: false},
-                {sTitle: "Nro. RUC", sClass: "center", sWidth: "10%", bSortable: false},
+                {sTitle: "DNI", sClass: "center", sWidth: "10%", bSortable: false},
                 {sTitle: "Representante", sWidth: "35%"},
                 {sTitle: "Estado", sWidth: "8%",  sClass: "center", bSortable: false},
                 {sTitle: "Acciones", sWidth: "15%", sClass: "center", bSortable: false}

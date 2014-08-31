@@ -69,6 +69,15 @@ $buscar = Session::getPermiso('GNCOTBS');
                         </div>
                     </div>
                     
+                    <div class="form-group">
+                        <label class="control-label col-md-2" for="prepend"><?php echo LABEL_GNC13; ?></label>
+                        <div class="col-md-2">
+                            <div class="input">
+                                <input class="form-control" type="text" id="<?php echo T8; ?>txt_diasvalidez" name="<?php echo T8; ?>txt_diasvalidez">
+                            </div>
+                        </div>
+                    </div>
+                    
                 </div>
 
 
@@ -180,7 +189,12 @@ $buscar = Session::getPermiso('GNCOTBS');
                     <?php echo T8; ?>txt_oferta: {
                         number: true,
                         maxlength: 3
-                    }
+                    },
+                    <?php echo T8; ?>txt_diasvalidez: {
+                        required: true,
+                        number: true,
+                        maxlength: 3
+                    }        
                 },
                 highlight: function(element) {
                     $(element).closest('.form-group').removeClass('has-success').addClass('has-error');

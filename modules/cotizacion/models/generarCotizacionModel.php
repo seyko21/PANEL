@@ -20,6 +20,7 @@ class generarCotizacionModel extends Model{
     private $_oferta;
     private $_total;
     private $_igv;
+    private $_validez;
     private $_usuario;
     private $_chkdel;
     private $_xSearch;
@@ -48,6 +49,7 @@ class generarCotizacionModel extends Model{
         $this->_total       = $this->post(T8.'txt_total');
         $this->_igv         = $this->post(T8.'lst_igv');
         $this->_idPersona   = Session::get('sys_idPersona');
+        $this->_validez     = $this->post(T8.'txt_diasvalidez');
         $this->_usuario     = Session::get('sys_idUsuario');
         $this->_xSearch     = $this->post(T8.'_term');
         $this->_chkdel  = $this->post(T8.'chk_delete');
@@ -97,7 +99,7 @@ class generarCotizacionModel extends Model{
     }
     
     public function generarCotizacion(){
-        $query = "CALL sp_cotiGenerarCotizacion(:flag,:idCotizacion,:idRepresentante,:mesesContrato,:diasOferta,:total,:idCaratula,:precio,:produccion,:usuario,:igv);";
+        $query = "CALL sp_cotiGenerarCotizacion(:flag,:idCotizacion,:idRepresentante,:mesesContrato,:diasOferta,:total,:idCaratula,:precio,:produccion,:usuario,:igv,:validez);";
         
         $parms = array(
             ':flag' => $this->_flag,
@@ -110,7 +112,8 @@ class generarCotizacionModel extends Model{
             ':precio' => '',
             ':produccion' => '',
             ':usuario' => $this->_usuario,
-            ':igv' => $this->_igv
+            ':igv' => $this->_igv,
+            ':validez' => $this->_validez
         );
         $data = $this->queryOne($query,$parms);  
         
