@@ -26,18 +26,18 @@ class tipoConceptoModel extends Model{
     }
     
     private function _set(){
-        $this->_flag    = $this->post('_flag');
-        $this->_key     = Aes::de($this->post('_key'));    /*se decifra*/
-        $this->_idTipoConcepto     = Aes::de($this->post('_idTipoConcepto'));    /*se decifra*/
-        $this->_descripcion  = $this->post(T5.'txt_descripcion');
-        $this->_estado  = $this->post(T5.'chk_activo');
-        $this->_chkdel  = $this->post(T5.'chk_delete');
+        $this->_flag    = Formulario::getParam('_flag');
+        $this->_key     = Aes::de(Formulario::getParam('_key'));    /*se decifra*/
+        $this->_idTipoConcepto     = Aes::de(Formulario::getParam('_idTipoConcepto'));    /*se decifra*/
+        $this->_descripcion  = Formulario::getParam(T5.'txt_descripcion');
+        $this->_estado  = Formulario::getParam(T5.'chk_activo');
+        $this->_chkdel  = Formulario::getParam(T5.'chk_delete');
         $this->_usuario = Session::get('sys_idUsuario');
         
-        $this->_iDisplayStart  =   $this->post('iDisplayStart'); 
-        $this->_iDisplayLength =   $this->post('iDisplayLength'); 
-        $this->_iSortingCols   =   $this->post('iSortingCols');
-        $this->_sSearch        =   $this->post('sSearch');
+        $this->_iDisplayStart  =   Formulario::getParam('iDisplayStart'); 
+        $this->_iDisplayLength =   Formulario::getParam('iDisplayLength'); 
+        $this->_iSortingCols   =   Formulario::getParam('iSortingCols');
+        $this->_sSearch        =   Formulario::getParam('sSearch');
     }
     
     public function getTipoConceptos(){
@@ -47,9 +47,9 @@ class tipoConceptoModel extends Model{
 	 */
         $sOrder = "";
         for ( $i=0 ; $i<intval( $this->_iSortingCols ) ; $i++ ){
-                if ( $this->post( "bSortable_".intval($this->post("iSortCol_".$i)) ) == "true" ){
-                        $sOrder .= " ".$aColumns[ intval( $this->post("iSortCol_".$i) ) ]." ".
-                                ($this->post("sSortDir_".$i)==="asc" ? "asc" : 'desc') ." ";
+                if ( Formulario::getParam( "bSortable_".intval(Formulario::getParam("iSortCol_".$i)) ) == "true" ){
+                        $sOrder .= " ".$aColumns[ intval( Formulario::getParam("iSortCol_".$i) ) ]." ".
+                                (Formulario::getParam("sSortDir_".$i)==="asc" ? "asc" : 'desc') ." ";
                 }
         }
         

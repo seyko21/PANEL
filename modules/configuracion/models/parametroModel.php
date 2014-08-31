@@ -31,21 +31,21 @@ class parametroModel extends Model{
     }
     
     private function _set(){
-        $this->_flag    = $this->post('_flag');
-        $this->_key     = Aes::de($this->post('_key'));    /*se decifra*/
-        $this->_idParametro   = Aes::de($this->post('_idParametro'));    /*se decifra*/
-        $this->_nombre  = $this->post(T100.'txt_nombre');
-        $this->_valor  = $this->post(T100.'txt_valor');        
-        $this->_alias  = $this->post(T100.'txt_alias'); 
-        $this->_estado  = $this->post(T100.'chk_activo');
+        $this->_flag    = Formulario::getParam('_flag');
+        $this->_key     = Aes::de(Formulario::getParam('_key'));    /*se decifra*/
+        $this->_idParametro   = Aes::de(Formulario::getParam('_idParametro'));    /*se decifra*/
+        $this->_nombre  = Formulario::getParam(T100.'txt_nombre');
+        $this->_valor  = Formulario::getParam(T100.'txt_valor');        
+        $this->_alias  = Formulario::getParam(T100.'txt_alias'); 
+        $this->_estado  = Formulario::getParam(T100.'chk_activo');
         
         $this->_usuario = Session::get('sys_idUsuario');
-        $this->_chkdel  = $this->post(T100.'chk_delete');
+        $this->_chkdel  = Formulario::getParam(T100.'chk_delete');
         
-        $this->_iDisplayStart  =   $this->post('iDisplayStart'); 
-        $this->_iDisplayLength =   $this->post('iDisplayLength'); 
-        $this->_iSortingCols   =   $this->post('iSortingCols');
-        $this->_sSearch        =   $this->post('sSearch');
+        $this->_iDisplayStart  =   Formulario::getParam('iDisplayStart'); 
+        $this->_iDisplayLength =   Formulario::getParam('iDisplayLength'); 
+        $this->_iSortingCols   =   Formulario::getParam('iSortingCols');
+        $this->_sSearch        =   Formulario::getParam('sSearch');
     }
     
     public function getGridParametro(){
@@ -55,9 +55,9 @@ class parametroModel extends Model{
 	 */
         $sOrder = "";
         for ( $i=0 ; $i<intval( $this->_iSortingCols ) ; $i++ ){
-                if ( $this->post( "bSortable_".intval($this->post("iSortCol_".$i)) ) == "true" ){
-                        $sOrder .= " ".$aColumns[ intval( $this->post("iSortCol_".$i) ) ]." ".
-                                ($this->post("sSortDir_".$i)==="asc" ? "asc" : 'desc') ." ";
+                if ( Formulario::getParam( "bSortable_".intval(Formulario::getParam("iSortCol_".$i)) ) == "true" ){
+                        $sOrder .= " ".$aColumns[ intval( Formulario::getParam("iSortCol_".$i) ) ]." ".
+                                (Formulario::getParam("sSortDir_".$i)==="asc" ? "asc" : 'desc') ." ";
                 }
         }
         
