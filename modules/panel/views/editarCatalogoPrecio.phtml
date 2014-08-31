@@ -6,7 +6,7 @@
  * Descripcion : 
  */
 $editar = Session::getPermiso('CATPRED');
-$data = catalogoPreciosController::getCaratula();
+$data = fichaTecnicaController::getCaratula();
 ?>
 <form id="<?php echo TAB_CATPRE; ?>formCaratula" name="<?php echo TAB_CATPRE; ?>formCaratula" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">
@@ -24,7 +24,7 @@ $data = catalogoPreciosController::getCaratula();
                         <div class="col col-5">
                             <label class="input"> 
                                 <i class="icon-append fa fa-code"></i>
-                                <input type="text" id="<?php echo TAB_CATPRE; ?>txt_codigo" name="<?php echo TAB_CATPRE; ?>txt_codigo" maxlength="7" value="<?php echo $data['codigo']; ?>">
+                                <input type="text" id="<?php echo T102; ?>txt_codigo" name="<?php echo T102; ?>txt_codigo" maxlength="7" value="<?php echo $data['codigo']; ?>">
                                 <b class="tooltip tooltip-top-right"><i class="fa fa-question-circle txt-color-teal"></i> <?php echo LABEL_A37M; ?></b>
                             </label>
                         </div>
@@ -36,7 +36,7 @@ $data = catalogoPreciosController::getCaratula();
                         <div class="col col-10">
                             <label class="input"> 
                                 <i class="icon-append fa fa-keyboard-o"></i>
-                                <input type="text" id="<?php echo TAB_CATPRE; ?>txt_descripcion" name="<?php echo TAB_CATPRE; ?>txt_descripcion" value="<?php echo $data['descripcion']; ?>">
+                                <input type="text" id="<?php echo T102; ?>txt_descripcion" name="<?php echo T102; ?>txt_descripcion" value="<?php echo $data['descripcion']; ?>">
                                 <b class="tooltip tooltip-top-right"><i class="fa fa-question-circle txt-color-teal"></i> <?php echo LABEL_A38M; ?></b>
                             </label>
                         </div>
@@ -48,25 +48,25 @@ $data = catalogoPreciosController::getCaratula();
                             <div class="col col-3">
                                 <label class="input"> 
                                     <i class="icon-append fa  fa-money"></i>
-                                    <input type="text" id="<?php echo TAB_CATPRE; ?>txt_precio" name="<?php echo TAB_CATPRE; ?>txt_precio" value="<?php echo $data['precio']; ?>"></input>
+                                    <input type="text" id="<?php echo T102; ?>txt_precio" name="<?php echo T102; ?>txt_precio" value="<?php echo $data['precio']; ?>"></input>
                                     <b class="tooltip tooltip-top-right"><i class="fa fa-question-circle  txt-color-teal"></i> <?php echo LABEL_A39M; ?></b>
                                 </label>
                             </div>                        
                             <div class="col col-3">
                                 <label class="checkbox">
-                                    <input type="checkbox" name="<?php echo TAB_CATPRE; ?>chk_iluminado" id="<?php echo TAB_CATPRE; ?>chk_iluminado" value="1" <?php echo ($data['iluminado'] == '1')?'checked':'' ?>></input>
+                                    <input type="checkbox" name="<?php echo T102; ?>chk_iluminado" id="<?php echo T102; ?>chk_iluminado" value="1" <?php echo ($data['iluminado'] == '1')?'checked':'' ?>></input>
                                     <i></i>
                                     <?php echo LABEL_A40; ?>
                                 </label>
                         </div>
                     </div>
                 </section>
-                <input type="hidden" id="<?php echo TAB_CATPRE; ?>txt_imagen" name="<?php echo TAB_CATPRE; ?>txt_imagen" value="">                
+                <input type="hidden" id="<?php echo T102; ?>txt_imagen" name="<?php echo T102; ?>txt_imagen" value="">                
                 
             </div>
             <div class="modal-footer">
                 <?php if($editar['permiso']):?>
-                <button id="<?php echo TAB_CATPRE; ?>btnGcara" type="submit" class="btn txt-color-white bg-color-blueDark">
+                <button id="<?php echo T102; ?>btnGcara" type="submit" class="btn txt-color-white bg-color-blueDark">
                     <i class="fa fa-save"></i> <?php echo $editar['accion']; ?>
                 </button>
                 <?php endif; ?>
@@ -85,16 +85,16 @@ $data = catalogoPreciosController::getCaratula();
     $('#<?php echo TAB_CATPRE; ?>formCaratula').validate({
         // Rules for form validation
         rules : {
-                <?php echo TAB_CATPRE; ?>txt_codigo : {
+                <?php echo T102; ?>txt_codigo : {
                         required : true,
                         regular: true,
                         minlength: 3
                 },
-                <?php echo TAB_CATPRE; ?>txt_descripcion : {
+                <?php echo T102; ?>txt_descripcion : {
                         required : true,                        
                         minlength: 3
                 },
-                <?php echo TAB_CATPRE; ?>txt_precio : {
+                <?php echo T102; ?>txt_precio : {
                         required : true,
                         decimal: true                        
                 }

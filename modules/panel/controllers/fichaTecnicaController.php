@@ -266,78 +266,25 @@ class fichaTecnicaController extends Controller{
         echo json_encode($data);
     }    
     public function postPDF(){ 
-        $data = Obj::run()->fichaTecnicaModel->getRptFichaTecnica();
         
         $mpdf = new mPDF('c');
 
         $mpdf->mirrorMargins = 1;
-        $mpdf->defaultheaderfontsize = 9; /* in pts */
+        $mpdf->defaultheaderfontsize = 11; /* in pts */
         $mpdf->defaultheaderfontstyle = B; /* blank, B, I, or BI */
         $mpdf->defaultheaderline = 1; /* 1 to include line below header/above footer */
-        $mpdf->defaultfooterfontsize = 10; /* in pts */
+        $mpdf->defaultfooterfontsize = 11; /* in pts */
         $mpdf->defaultfooterfontstyle = B; /* blank, B, I, or BI */
         $mpdf->defaultfooterline = 1; /* 1 to include line below header/above footer */
+                        
+        $mpdf->SetHTMLHeader('<img src="'.ROOT.'public'.DS.'img'.DS.'logotipo.png" width="137" height="68" />','',TRUE);
+        $mpdf->SetHTMLFooter('<table width="100%" style="vertical-align: bottom; font-family: serif; font-size: 8pt; color: #000000; font-weight: bold;"><tr>
+                                <td width="33%"><span style="font-weight: bold;">{DATE j-m-Y}</span></td>
+                                <td width="33%" align="center" style="font-weight: bold;">{PAGENO}/{nbpg}</td>
+                                <td width="33%" style="text-align: right; ">SEVEND.pe</td>
+                             </tr></table>');
         
-        $html ='
-        <style>
-            table, table td, table th{ font-size:11px;}
-            table{width:100%;}
-        </style>
-        <h2>FICHA TECNICA </h2>  
-        <table width="100%" border="0">
-            <tr>
-              <td width="16%"><b>DEPARTAMENTO:</b></td>
-              <td width="27%">'.$data[0]['departamento'].'</td>
-              <td width="10%"><b>PROVINCIA:</b></td>
-              <td width="21%">'.$data[0]['provincia'].'</td>
-              <td width="8%"><b>DISTRITO:</b></td>
-              <td width="18%">'.$data[0]['distrito'].'</td>
-            </tr>
-            <tr>
-              <td><b>UBICACION:</b></td>
-              <td colspan="5">'.$data[0]['ubicacion'].'</td>
-            </tr>
-            <tr>
-              <td><b>TIPO PANEL:</b></td>
-              <td>'.$data[0]['tipoPanel'].'</td>
-              <td colspan="4"><table width="100%" border="0">
-                <tr>
-                  <td width="13%"><b>ANCHO:</b></td>
-                  <td width="16%">'.$data[0]['dimension_ancho'].'</td>
-                  <td width="16%"><b>ALTO:</b></td>
-                  <td width="21%">'.$data[0]['dimension_alto'].'</td>
-                  <td width="14%"><b>AREA:</b></td>
-                  <td width="20%">'.$data[0]['dimesion_area'].'</td>
-                </tr>
-              </table></td>
-            </tr>
-            <tr>
-              <td><b>OBSERVACION:</b></td>
-              <td colspan="5">'.$data[0]['observacion'].'</td>
-            </tr>
-          </table>              
-          <h3>LISTADO DE CARATULAS</h3>
-        <table border="1" style="border-collapse:collapse">        
-            <tr>
-                <th style="width:20%">Código</th>
-                <th style="width:40%">Descripción</th>
-                <th style="width:10%">Precio</th>
-                <th style="width:10%">Iluminado</th>           
-                <th style="width:10%">Estado</th> 
-            </tr>';
-        foreach ($data as $value) {
-            $iluminado = ($value['iluminado']=='1')?'SI':'NO';
-            $estado = ($value['estado']=='D')?'DISPONIBLE':'ALQUILADO';
-            $html .= '<tr>
-                <td style="text-align:center">'.$value['codigo'].'</td>
-                <td>'.$value['descripcion'].'</td>
-                <td style="text-align:right">'.number_format($value['precio'],2).'</td>               
-                <td style="text-align:center">'.$iluminado.'</td>                
-                <td style="text-align:center">'.$estado.'</td>                                    
-            </tr>';
-        }    
-        $html .='</table>';
-        
+        $html = $this->getHtmlReporte();        
         $mpdf->WriteHTML($html);
         $mpdf->Output(ROOT.'public'.DS.'files'.DS.'fichatecnica.pdf','F');
                 
@@ -346,30 +293,9 @@ class fichaTecnicaController extends Controller{
     }
     
     public function postExcel(){
-        $data = Obj::run()->fichaTecnicaModel->getRptFichaTecnica();
-        
-        $html ='
-        <h3>Ubicación: '.$data[0]['ubicacion'].'</h3>        
-        <table border="1" style="border-collapse:collapse">        
-            <tr>
-                <th style="width:20%">Código</th>
-                <th style="width:40%">Descripción</th>
-                <th style="width:10%">Precio</th>
-                <th style="width:10%">Iluminado</th>           
-                <th style="width:10%">Estado</th> 
-            </tr>';
-        foreach ($data as $value) {
-            $html .= '<tr>
-                <td style="text-align:center">'.$value['codigo'].'</td>
-                <td>'.$value['descripcion'].'</td>
-                <td style="text-align:right">'.number_format($value['precio'],2).'</td>               
-                <td style="text-align:center">'.$value['iluminado'].'</td>                
-                <td style="text-align:center">'.$value['estado'].'</td>                                    
-            </tr>';
-        }    
-        $html .='</table>';
-        
-        
+       
+        $html = $this->getHtmlReporte();
+                
         $f=fopen(ROOT.'public'.DS.'files'.DS.'fichatecnica.xls','wb');
         if(!$f){$data = array('result'=>2);}
         fwrite($f,  utf8_decode($html));
@@ -378,6 +304,108 @@ class fichaTecnicaController extends Controller{
         $data = array('result'=>1);
         echo json_encode($data);
     }
+    
+    
+    public function getHtmlReporte(){
+        $data = Obj::run()->fichaTecnicaModel->getRptFichaTecnica();
+                
+        $html ='
+            <style>
+            table, table td, table th{ font-size:11px;}
+            table{width:100%;}
+        </style>
+        <h2>FICHA TECNICA </h2>  
+        <table width="100%" border="0">
+            <tr>
+              <td width="16%"><b>DEPARTAMENTO:</b></td><td width="21%">'.$data[0]['departamento'].'</td>
+              <td width="10%"><b>PROVINCIA:</b></td><td width="20%">'.$data[0]['provincia'].'</td>
+              <td width="8%"><b>DISTRITO:</b></td><td width="26%">'.$data[0]['distrito'].'</td>
+            </tr>
+            <tr>
+              <td><b>UBICACION:</b></td><td colspan="5">'.strtoupper($data[0]['ubicacion']).'</td>
+            </tr>
+            <tr>
+              <td><b>TIPO PANEL:</b></td><td>'.$data[0]['tipoPanel'].'</td>
+              <td colspan="4"><table width="100%" border="0">
+                <tr>
+                  <td width="20%"><b>ANCHO:</b></td><td width="21%" >'.$data[0]['dimension_ancho'].'</td>
+                  <td width="20%"><b>ALTO:</b></td><td width="21%" >'.$data[0]['dimension_alto'].'</td>
+                  <td width="20%"><b>AREA:</b></td><td width="21%" >'.$data[0]['dimesion_area'].' m <sup>2</sup></td>
+                </tr>
+              </table></td>
+            </tr>           
+            <tr>
+                <td colspan="6"><table width="100%" border="0">
+                  <tr>
+                    <td width="11%"><b>LATITUD:</b></td><td width="41%">'.$data[0]['google_latitud'].'</td>
+                    <td width="7%"><b>LONGITUD:</b></td><td width="41%">'.$data[0]['google_longitud'].'</td>
+                  </tr>
+                </table></td>
+              </tr>
+              <tr>
+              <td><b>OBSERVACION:</b></td><td colspan="5">'.$data[0]['observacion'].'</td>
+            </tr>
+          </table>              
+          <h4>LISTADO DE CARATULAS</h4>
+        <table style="border-collapse:collapse;" border="1">        
+            <tr>
+                <th style="width:20%">CODIGO</th>
+                <th style="width:40%">DESCRIPCION</th>
+                <th style="width:10%">PRECIO</th>
+                <th style="width:10%">ILUMINADO</th>           
+                <th style="width:10%">ESTADO</th> 
+            </tr>';
+        foreach ($data as $value) {
+            $iluminado = ($value['iluminado']=='1')?'SI':'NO';
+            $estado = ($value['estado']=='D')?'DISPONIBLE':'ALQUILADO';
+            $comision = 100*$value['comision_vendedor'];
+            $vendedor = ($value['vendedor'] == ''?'No se asigno vendedor':$value['vendedor']);
+            $html .= '            
+            <tr>
+                <td style="text-align:center"><h3>'.$value['codigo'].'</h3></td>
+                <td>'.$value['descripcion'].'</td>
+                <td style="text-align:right">'.number_format($value['precio'],2).'</td>               
+                <td style="text-align:center">'.$iluminado.'</td>                
+                <td style="text-align:center">'.$estado.'</td>                                    
+            </tr>
+            <tr>
+                <td style="text-align:right"><b>Vendedor:</b></td>
+                <td>'.$vendedor.'</td>
+                <td style="text-align:right"><b>Comisión:</b></td>               
+                <td style="text-align:center">'.number_format($comision,2).'% </td>                
+                <td style="text-align:center">&nbsp;</td>                                    
+            </tr>';
+        }
+              
+        $html .='</table>';                        
+        $html .='<h4>PERMISO MUNICIPAL</h4>';
+        
+        if($data[0]['fecha_inicio'] == ''){
+           $html .='<h4><i>No tiene registrado Permiso Municipal.</i></h4>'; 
+        }else{        
+            $html .= '
+                <table width="100%" border="0">
+                    <tr>
+                      <td width="18%"><strong>FECHA INICIO:</strong></td>
+                      <td width="22%">'.functions::cambiaf_a_normal($data[0]['fecha_inicio']).'</td>
+                      <td width="18%"><strong>FECHA FINAL:</strong></td>
+                      <td width="49%">'.functions::cambiaf_a_normal($data[0]['fecha_final']).'</td>
+                    </tr>
+                    <tr>
+                      <td><strong>MONTO PAGADO:</strong></td>
+                      <td colspan="2">'.number_format($data[0]['pm_precio']).'</td>
+                    </tr>
+                    <tr>
+                      <td><strong>OBSERVACIONES:</strong></td>
+                      <td colspan="3">'.$data[0]['pm_obs'].'</td>
+                    </tr>
+                  </table>';
+        }
+       
+        return $html;
+        
+    }
+    
         
     
 }

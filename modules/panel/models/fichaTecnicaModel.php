@@ -178,11 +178,19 @@ class fichaTecnicaModel extends Model{
                           c.`dimension_ancho`, 
                           c.`dimesion_area`, 
                           c.`observacion`,
-                          c.`estado` as estadoProducto,
+                          c.`estado` AS estadoProducto,
                           t.`descripcion` AS tipoPanel, 
                           u.`distrito`, 
                           (SELECT d.`departamento` FROM `ub_departamento` d WHERE d.`id_departamento` = LEFT(c.`id_ubigeo`,2)) AS departamento,
-                          (SELECT p.`provincia` FROM `ub_provincia` p WHERE p.`id_provincia` = LEFT(c.`id_ubigeo`,4)) AS provincia		
+                          (SELECT p.`provincia` FROM `ub_provincia` p WHERE p.`id_provincia` = LEFT(c.`id_ubigeo`,4)) AS provincia,
+                          c.google_latitud,
+                          c.google_longitud,
+                          ( SELECT pm.fecha_inicio FROM lgk_permisomuni pm WHERE pm.id_producto = c.id_producto AND pm.estado = 'A' ORDER BY pm.id_permisomuni DESC LIMIT 1 ) AS fecha_inicio,
+                          ( SELECT pm.fecha_final FROM lgk_permisomuni pm WHERE pm.id_producto = c.id_producto AND pm.estado = 'A' ORDER BY pm.id_permisomuni DESC LIMIT 1 ) AS fecha_final,
+                          ( SELECT pm.observacion FROM lgk_permisomuni pm WHERE pm.id_producto = c.id_producto AND pm.estado = 'A' ORDER BY pm.id_permisomuni DESC LIMIT 1 ) AS pm_obs,
+                          ( SELECT pm.monto_pago FROM lgk_permisomuni pm WHERE pm.id_producto = c.id_producto AND pm.estado = 'A' ORDER BY pm.id_permisomuni DESC LIMIT 1 ) AS pm_precio,
+                          ( SELECT `porcentaje_comision` FROM `lgk_asignacioncuenta` ac WHERE ac.`id_caratula` = a.`id_caratula` AND ac.`estado` = 'A' LIMIT 1 ) AS comision_vendedor,
+                          ( SELECT (SELECT p.`nombrecompleto` FROM `mae_persona` p WHERE p.`id_persona` = ac.`id_persona` ) FROM `lgk_asignacioncuenta` ac WHERE ac.`id_caratula` = a.`id_caratula` AND ac.`estado` = 'A' LIMIT 1 ) AS vendedor                          
 	FROM `lgk_caratula` a
 		INNER JOIN `lgk_catalogo` c ON c.`id_producto` = a.`id_producto`
 		INNER JOIN `lgk_tipopanel` t ON t.`id_tipopanel` = c.`id_tipopanel`

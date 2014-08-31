@@ -19,12 +19,7 @@ class catalogoPreciosController extends Controller{
     public function getEditarCaratula(){ 
         Obj::run()->View->render('editarCatalogoPrecio');
     } 
-    
-    public function getCaratula(){                 
-        $data = Obj::run()->catalogoPreciosModel->getCaratula();        
-        return $data;            
-    }
-    
+        
     public function getGridProducto(){
        $editar = Session::getPermiso('CATPRED');       
         
@@ -88,11 +83,9 @@ class catalogoPreciosController extends Controller{
         echo $sOutput;
     }          
     
-    public function postEditarCaratula(){         
-        $data = Obj::run()->catalogoPreciosModel->mantenimientoCaratula();
-        echo json_encode($data);                        
-//        $data = Obj::run()->fichaTecnicaController->postEditarFichaTecnica();        
-//        echo $data;        
+    public function postEditarCaratula(){                                 
+        $data = Obj::run()->fichaTecnicaController->postEditarCaratula();        
+        echo $data;        
     }   
     
   

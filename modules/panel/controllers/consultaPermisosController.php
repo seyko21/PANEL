@@ -11,6 +11,7 @@ class consultaPermisosController extends Controller{
 
     public function __construct() {
         $this->loadModel("consultaPermisos");
+        $this->loadController(array('modulo'=>'panel','controller'=>'fichaTecnica')); 
     }
     
     public function index(){ 
@@ -87,11 +88,13 @@ class consultaPermisosController extends Controller{
     }
     
    public function postPDF(){ 
-       
+      $data = Obj::run()->fichaTecnicaController->postPDF();        
+      echo $data;
    }
     
    public function postExcel(){
-      
+      $data = Obj::run()->fichaTecnicaController->postExcel();        
+      echo $data;
    }    
     
     
