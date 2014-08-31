@@ -104,8 +104,8 @@ var catalogoPrecios_ = function(){
                 if(!isNaN(data.result) && parseInt(data.result) === 1){
                     simpleScript.notify.ok({
                         content: mensajes.MSG_3,
-                        callback: function(){                            
-                            catalogoPrecios.getGridCatalogoPrecios();        
+                        callback: function(){                                                              
+                            simpleScript.reloadGrid('#'+diccionario.tabs.TAB_CATPRE+'gridCatalogoPrecio');
                             simpleScript.closeModal('#'+diccionario.tabs.TAB_CATPRE+'formCaratula');
                         }
                     });

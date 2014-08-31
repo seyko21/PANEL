@@ -100,7 +100,7 @@ var tipoPanel_ = function(){
                     simpleScript.notify.ok({
                         content: mensajes.MSG_3,
                         callback: function(){
-                            tipoPanel.getGridTipoPanel();
+                            simpleScript.reloadGrid('#'+diccionario.tabs.T101+'gridTipoPanel');                             
                         }
                     });
                 }else if(!isNaN(data.result) && parseInt(data.result) === 2){
@@ -127,7 +127,7 @@ var tipoPanel_ = function(){
                         content: mensajes.MSG_3,
                         callback: function(){
                             _private.idTipoPanel = 0;
-                            tipoPanel.getGridTipoPanel();
+                            simpleScript.reloadGrid('#'+diccionario.tabs.T101+'gridTipoPanel'); 
                             simpleScript.closeModal('#'+diccionario.tabs.T101+'formTipoPanel');
                         }
                     });

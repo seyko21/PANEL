@@ -48,7 +48,7 @@ var permisoMunicipal_ = function(){
     };
     
     this.publico.getGridFichaTecnica = function (){
-        $('#'+diccionario.tabs.PERMU+'gridFichaTecnica').dataTable({
+        $('#'+diccionario.tabs.PERMU+'gridFichaTecnica').dataTable({                         
             bProcessing: true,
             bServerSide: true,
             bDestroy: true,
@@ -178,7 +178,7 @@ var permisoMunicipal_ = function(){
                     simpleScript.notify.ok({
                         content: mensajes.MSG_3,
                         callback: function(){
-                            permisoMunicipal.getGridFichaTecnica();                            
+                            simpleScript.reloadGrid('#'+diccionario.tabs.PERMU+'gridFichaTecnica');                          
                              setTimeout(function(){            
                                    permisoMunicipal.getGridPermisoMunicipal(_private.idProducto);                                   
                              }, 1000);    
@@ -217,7 +217,7 @@ var permisoMunicipal_ = function(){
                     simpleScript.notify.ok({
                         content: mensajes.MSG_3,
                         callback: function(){                            
-                            permisoMunicipal.getGridFichaTecnica();                            
+                            simpleScript.reloadGrid('#'+diccionario.tabs.PERMU+'gridFichaTecnica');                               
                              setTimeout(function(){            
                                    permisoMunicipal.getGridPermisoMunicipal(_private.idProducto);                                   
                              }, 1000);                                                                  
@@ -247,7 +247,7 @@ var permisoMunicipal_ = function(){
                             simpleScript.notify.ok({
                                 content: mensajes.MSG_6,
                                 callback: function(){                                        
-                                     permisoMunicipal.getGridFichaTecnica();                                                           
+                                    simpleScript.reloadGrid('#'+diccionario.tabs.PERMU+'gridFichaTecnica');                                                              
                                     setTimeout(function(){            
                                           permisoMunicipal.getGridPermisoMunicipal(_private.idProducto);                                   
                                     }, 1000);                                         

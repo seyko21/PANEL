@@ -280,10 +280,43 @@ class fichaTecnicaController extends Controller{
         
         $html ='
         <style>
-            h3, table, table td, table th{ font-size:11px;}
+            table, table td, table th{ font-size:11px;}
             table{width:100%;}
         </style>
-        <h3>Ubicación: '.$data[0]['ubicacion'].'</h3>        
+        <h2>FICHA TECNICA </h2>  
+        <table width="100%" border="0">
+            <tr>
+              <td width="16%"><b>DEPARTAMENTO:</b></td>
+              <td width="27%">'.$data[0]['departamento'].'</td>
+              <td width="10%"><b>PROVINCIA:</b></td>
+              <td width="21%">'.$data[0]['provincia'].'</td>
+              <td width="8%"><b>DISTRITO:</b></td>
+              <td width="18%">'.$data[0]['distrito'].'</td>
+            </tr>
+            <tr>
+              <td><b>UBICACION:</b></td>
+              <td colspan="5">'.$data[0]['ubicacion'].'</td>
+            </tr>
+            <tr>
+              <td><b>TIPO PANEL:</b></td>
+              <td>'.$data[0]['tipoPanel'].'</td>
+              <td colspan="4"><table width="100%" border="0">
+                <tr>
+                  <td width="13%"><b>ANCHO:</b></td>
+                  <td width="16%">'.$data[0]['dimension_ancho'].'</td>
+                  <td width="16%"><b>ALTO:</b></td>
+                  <td width="21%">'.$data[0]['dimension_alto'].'</td>
+                  <td width="14%"><b>AREA:</b></td>
+                  <td width="20%">'.$data[0]['dimesion_area'].'</td>
+                </tr>
+              </table></td>
+            </tr>
+            <tr>
+              <td><b>OBSERVACION:</b></td>
+              <td colspan="5">'.$data[0]['observacion'].'</td>
+            </tr>
+          </table>              
+          <h3>LISTADO DE CARATULAS</h3>
         <table border="1" style="border-collapse:collapse">        
             <tr>
                 <th style="width:20%">Código</th>
@@ -293,12 +326,14 @@ class fichaTecnicaController extends Controller{
                 <th style="width:10%">Estado</th> 
             </tr>';
         foreach ($data as $value) {
+            $iluminado = ($value['iluminado']=='1')?'SI':'NO';
+            $estado = ($value['estado']=='D')?'DISPONIBLE':'ALQUILADO';
             $html .= '<tr>
                 <td style="text-align:center">'.$value['codigo'].'</td>
                 <td>'.$value['descripcion'].'</td>
                 <td style="text-align:right">'.number_format($value['precio'],2).'</td>               
-                <td style="text-align:center">'.$value['iluminado'].'</td>                
-                <td style="text-align:center">'.$value['estado'].'</td>                                    
+                <td style="text-align:center">'.$iluminado.'</td>                
+                <td style="text-align:center">'.$estado.'</td>                                    
             </tr>';
         }    
         $html .='</table>';

@@ -261,8 +261,8 @@ var fichaTecnica_ = function(){
                if(!isNaN(data.result) && parseInt(data.result) === 1){
                     simpleScript.notify.ok({
                         content: mensajes.MSG_3,
-                        callback: function(){
-                            fichaTecnica.getGridFichaTecnica();     
+                        callback: function(){                            
+                            simpleScript.reloadGrid('#'+diccionario.tabs.T102+'gridFichaTecnica');
                             simpleScript.closeModal('#'+diccionario.tabs.T102+'formFichaTecnica');
                         }
                     });
@@ -303,8 +303,8 @@ var fichaTecnica_ = function(){
                     simpleScript.notify.ok({
                         content: mensajes.MSG_3,
                         callback: function(){
-                            _private.idProducto = 0;
-                            fichaTecnica.getGridFichaTecnica();
+                            _private.idProducto = 0;                            
+                            simpleScript.reloadGrid('#'+diccionario.tabs.T102+'gridFichaTecnica');
                             simpleScript.closeModal('#'+diccionario.tabs.T102+'formFichaTecnica');
                         }
                     });
@@ -359,10 +359,10 @@ var fichaTecnica_ = function(){
                     simpleScript.notify.ok({
                         content: mensajes.MSG_3,
                         callback: function(){
-                            fichaTecnica.getGridFichaTecnica();                                                                                       
-                             setTimeout(function(){            
-                                   fichaTecnica.getGridCaratula(_private.idProducto);                                   
-                             }, 1000);                                                                                      
+                            simpleScript.reloadGrid('#'+diccionario.tabs.T102+'gridFichaTecnica');                                                                                       
+                            setTimeout(function(){            
+                                  fichaTecnica.getGridCaratula(_private.idProducto);                                   
+                            }, 1000);                                                                                      
                         }
                     });
                 }else if(!isNaN(data.result) && parseInt(data.result) === 2){
@@ -387,7 +387,7 @@ var fichaTecnica_ = function(){
                     simpleScript.notify.ok({
                         content: mensajes.MSG_3,
                         callback: function(){                            
-                            fichaTecnica.getGridFichaTecnica();                                                                                       
+                            simpleScript.reloadGrid('#'+diccionario.tabs.T102+'gridFichaTecnica');                                                                                     
                              setTimeout(function(){            
                                    fichaTecnica.getGridCaratula(_private.idProducto);                                   
                              }, 1000);                                                                  
@@ -417,7 +417,7 @@ var fichaTecnica_ = function(){
                             simpleScript.notify.ok({
                                 content: mensajes.MSG_6,
                                 callback: function(){                                        
-                                     fichaTecnica.getGridFichaTecnica();                                                           
+                                    simpleScript.reloadGrid('#'+diccionario.tabs.T102+'gridFichaTecnica');                                                           
                                     setTimeout(function(){            
                                           fichaTecnica.getGridCaratula(_private.idProducto);                                   
                                     }, 1000);                                         
