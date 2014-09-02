@@ -311,7 +311,7 @@ class fichaTecnicaController extends Controller{
                 
         $html ='
             <style>
-            table, table td, table th{ font-size:11px;}
+            table, table td, table th{ font-size:12px;}
             table{width:100%;}
         </style>
         <h2>FICHA TECNICA </h2>  
@@ -325,7 +325,7 @@ class fichaTecnicaController extends Controller{
               <td><b>UBICACION:</b></td><td colspan="5">'.strtoupper($data[0]['ubicacion']).'</td>
             </tr>
             <tr>
-              <td><b>TIPO PANEL:</b></td><td>'.$data[0]['tipoPanel'].'</td>
+              <td><b>TIPO PANEL:</b></td><td>'.strtoupper($data[0]['tipoPanel']).'</td>
               <td colspan="4"><table width="100%" border="0">
                 <tr>
                   <td width="20%"><b>ANCHO:</b></td><td width="21%" >'.$data[0]['dimension_ancho'].'</td>
@@ -343,7 +343,7 @@ class fichaTecnicaController extends Controller{
                 </table></td>
               </tr>
               <tr>
-              <td><b>OBSERVACION:</b></td><td colspan="5">'.$data[0]['observacion'].'</td>
+              <td><b>OBSERVACION:</b></td><td colspan="5">'.strtoupper($data[0]['observacion']).'</td>
             </tr>
           </table>              
           <h4>LISTADO DE CARATULAS</h4>
@@ -370,7 +370,7 @@ class fichaTecnicaController extends Controller{
             </tr>
             <tr>
                 <td style="text-align:right"><b>Vendedor:</b></td>
-                <td>'.$vendedor.'</td>
+                <td>'.strtoupper($vendedor).'</td>
                 <td style="text-align:right"><b>Comisión:</b></td>               
                 <td style="text-align:center">'.number_format($comision,2).'% </td>                
                 <td style="text-align:center">&nbsp;</td>                                    
@@ -397,7 +397,7 @@ class fichaTecnicaController extends Controller{
                     </tr>
                     <tr>
                       <td><strong>OBSERVACIONES:</strong></td>
-                      <td colspan="3">'.$data[0]['pm_obs'].'</td>
+                      <td colspan="3">'.strtoupper($data[0]['pm_obs']).'</td>
                     </tr>
                   </table>';
         }

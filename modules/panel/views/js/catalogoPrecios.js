@@ -117,7 +117,36 @@ var catalogoPrecios_ = function(){
             }
         });
     };     
-    
+    this.publico.postPDF = function(btn,id){
+          simpleAjax.send({
+              element: btn,
+              root: _private.config.modulo + 'postPDF',
+              data: '&_idCaratula='+id,
+              fnCallback: function(data) {
+                  if(parseInt(data.result) === 1){
+                      $('#'+diccionario.tabs.TAB_CATPRE+'btnDowPDF').click();
+                  }                
+              }
+          });
+      };
+
+      this.publico.postExcel = function(btn,id){
+          simpleAjax.send({
+              element: btn,
+              root: _private.config.modulo + 'postExcel',
+              data: '&_idCaratula='+id,
+              fnCallback: function(data) {
+                  if(parseInt(data.result) === 1){
+                     $('#'+diccionario.tabs.TAB_CATPRE+'btnDowExcel').click();
+                  }
+                  if(!isNaN(data.result) && parseInt(data.result) === 2){
+                      simpleScript.notify.error({
+                          content: 'Ocurrió un error al exportar Ficha Tecnica.'
+                      });
+                  }
+              }
+          });
+      };    
     
     return this.publico;
     
