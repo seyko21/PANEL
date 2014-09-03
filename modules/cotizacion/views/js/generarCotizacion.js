@@ -2,7 +2,9 @@ var generarCotizacion_ = function(){
     
     var _private = {};
     
-    _private.id = 0;
+    _private.idCotizacion = 0;
+    
+    _private.numeroCotizacion = 0;
     
     _private.config = {
         modulo: 'cotizacion/generarCotizacion/'
@@ -93,6 +95,31 @@ var generarCotizacion_ = function(){
             root: _private.config.modulo+'getFormNewCotizacion',
             fnCallback: function(data){
                 $('#'+diccionario.tabs.T8+'new_CONTAINER').html(data);
+            }
+        });
+    };
+    
+    this.publico.getClonar = function(numCoti,idCot){
+        _private.idCotizacion = idCot;
+        _private.numeroCotizacion = numCoti;
+        
+        simpleScript.addTab({
+            id : diccionario.tabs.T8+'clon',
+            label: 'Clonar Cotización',
+            fnCallback: function(){
+                generarCotizacion.getContClonar();
+                generarCotizacionScript.resetArrayProducto();
+            }
+        });
+    };
+    
+    this.publico.getContClonar = function(){
+        simpleAjax.send({
+            dataType: 'html',
+            root: _private.config.modulo+'getFormClonarCotizacion',
+            data: '&_idCotizacion='+_private.idCotizacion,
+            fnCallback: function(data){
+                $('#'+diccionario.tabs.T8+'clon_CONTAINER').html(data);
             }
         });
     };
@@ -195,8 +222,43 @@ var generarCotizacion_ = function(){
                                     simpleScript.notify.ok({
                                         content: mensajes.MSG_3,
                                         callback: function(){
-                                            simpleScript.closeTab(diccionario.tabs.T8+'new');
                                             simpleScript.reloadGrid('#'+diccionario.tabs.T8+'gridGenerarCotizacion');
+                                            simpleScript.closeTab(diccionario.tabs.T8+'new');
+                                            //simpleScript.closeModal('#'+diccionario.tabs.T8+'formGenerarCotizacion');
+                                        }
+                                    });
+                                }
+                            }
+                        });
+                    }
+                });
+            }
+        });
+    };
+    
+    this.publico.postClonarCotizacion = function(){
+        simpleScript.validaTable({
+            id: '#'+diccionario.tabs.T8+'gridProductos',
+            msn: mensajes.MSG_10,
+            fnCallback: function(){
+                simpleScript.notify.confirm({
+                    content: 'Se anulará la cotización N° '+_private.numeroCotizacion+' ¿Está seguro de generar cotización?',
+                    callbackSI: function(){
+                        simpleAjax.send({
+                            flag: 11,
+                            element: '#'+diccionario.tabs.T8+'btnGcoti',
+                            form: '#'+diccionario.tabs.T8+'formGenerarCotizacion',
+                            root: _private.config.modulo + 'postGenerarCotizacion',
+                            data: '&_idCotizacion='+_private.idCotizacion,
+                            fnCallback: function(data) {
+                                if(!isNaN(data.result) && parseInt(data.result) === 1){
+                                    simpleScript.notify.ok({
+                                        content: mensajes.MSG_3,
+                                        callback: function(){
+                                            _private.idCotizacion = 0;
+                                            _private.numeroCotizacion = 0;
+                                            simpleScript.reloadGrid('#'+diccionario.tabs.T8+'gridGenerarCotizacion');
+                                            simpleScript.closeTab(diccionario.tabs.T8+'clon');
                                             //simpleScript.closeModal('#'+diccionario.tabs.T8+'formGenerarCotizacion');
                                         }
                                     });

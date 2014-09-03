@@ -33,6 +33,18 @@ var simpleScript_ = function(){
                 $(this).attr('onclick',null);
             });
         },
+        keyup: function(obj){
+            var collection = $(obj.container).find(obj.typeElement);
+            $.each(collection,function(){
+                /*obtener evento*/
+                var keyup = $(this).attr('onkeyup');
+                    /*asignar evento*/
+                    $(this).keyup(function(){
+                        eval(keyup);
+                    });
+                $(this).attr('onkeyup',null);
+            });
+        },
         keypress: function(obj){
             var collection = $(obj.container).find(obj.typeElement);
             $.each(collection,function(){
@@ -227,7 +239,7 @@ var simpleScript_ = function(){
                 changeMonth: true,
                 changeYear: true
             });
-            $(obj.element).mask('99/99/9999');
+            $(obj.element).mask('99-99-9999');
         },
                 
         dateRange: function(obj){
@@ -240,7 +252,7 @@ var simpleScript_ = function(){
                     $(obj.fin).datepicker( "option", obj.opt, selectedDate );
                 }
             });
-            $(obj.ini).mask('99/99/9999');
+            $(obj.ini).mask('99-99-9999');
         }
     };
     
@@ -439,6 +451,10 @@ var simpleScript_ = function(){
         return t;
     };
     
+    /*
+     * USO
+     * simpleScript.reloadGrid('#'+diccionario.tabs.T8+'gridGenerarCotizacion');
+     */
     /*recarga grid despues de una accion*/
     this.public.reloadGrid = function(g){
         $(g+'_wrapper').find('.dataTables_paginate').find('ul').find('.active').click();
@@ -452,6 +468,18 @@ var simpleScript_ = function(){
                 oTable.fnFilter(this.value);   
             }
         });  
+    };
+    
+    /*busqueda sencible en una tabla*/
+    this.public.triggerSearch = function(el,oTable,index){
+        $(oTable).find('tbody').find('tr').each(function(){
+            var cadena = $(this).find('td:eq('+index+')').html();
+            
+            $(this).hide();
+            if(cadena.toLowerCase().indexOf(el.value) > 0 || el.value === ''){
+                $(this).show();
+            }
+        });
     };
     
     return this.public;

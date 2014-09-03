@@ -117,11 +117,12 @@ define('LABEL_GNC5','Días de oferta');
 define('LABEL_GNC6','IGV');
 define('LABEL_GNC7','Producto');
 define('LABEL_GNC8','Buscar Producto');
-define('LABEL_GNC9','Escriba ubicación y presione enter para buscar');
+define('LABEL_GNC9','Escriba ubicación para buscar');
 define('LABEL_GNC10','Agregar Producto');
 define('LABEL_GNC11','Abre ventana para buscar y agregar productos');
 define('LABEL_GNC12','Buscar Cliente');
-define('LABEL_GNC13','Validez de oferta');
+define('LABEL_GNC13','Validez de oferta (días)');
+define('LABEL_GNC14','Costo de producción');
 
 /*----------------------    ASIGNAR CUENTAS----------------------*/
 define('LABEL_ASC1','Cuentas');

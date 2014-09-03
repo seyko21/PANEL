@@ -21,11 +21,16 @@ $buscar = Session::getPermiso('REGVEBS');
                 <section>
                     <div class="row">
                         <label class="label col col-2"><?php echo LABEL_GNC7; ?></label>
-                        <div class="col col-8 hide">
+                        <div class="col col-8">
+                            <label class="input"> 
+                                <input type="text" id="<?php echo T8; ?>txt_search" name="<?php echo T8; ?>txt_search" placeholder="<?php echo LABEL_GNC9; ?>" onkeypress="simpleScript.triggerSearch(this,'#<?php echo T8; ?>gridProductosFound',3);"></input>
+                            </label>
+                        </div>
+<!--                        <div class="col col-8 hide">
                             <label class="input"> 
                                 <input type="text" id="<?php echo T8; ?>txt_search" name="<?php echo T8; ?>txt_search" placeholder="<?php echo LABEL_GNC9; ?>" onkeypress="simpleScript.triggerPress('<?php echo T8; ?>btnSubSearchPro',event);"></input>
                             </label>
-                        </div>
+                        </div>-->
                     </div>
                 </section>
                 <div class="well" style="overflow: auto;height: 300px;overflow-x: hidden">
@@ -42,7 +47,6 @@ $buscar = Session::getPermiso('REGVEBS');
                             <th class="center">Ciudad</th>
                             <th class="center">Iluminado</th>
                             <th class="center">Precio</th>
-                            <th class="center">Producción</th>
                         </thead>
                         <tbody>
                             <?php 
@@ -55,7 +59,7 @@ $buscar = Session::getPermiso('REGVEBS');
                                     if($value['iluminado'] == 1){
                                         $iluminado = '<span class="label label-success" style="color:#fff;text-align:center"><b>Si</b></span>';
                                     }
-                                    $prod = AesCtr::en($value['id_caratula']).'~'.$value['descripcion'].' '.$value['ubicacion'].'~'.$value['precio'].'~'.$value['costo_produccion'].'~'.$value['id_ubigeo'];
+                                    $prod = AesCtr::en($value['id_caratula']).'~'.$value['descripcion'].' '.$value['ubicacion'].'~'.$value['precio'].'~'.$value['dimesion_area'].'~'.$value['id_ubigeo'];
                             ?>
                             <tr>
                                 <td><?php echo $f; ?></td>
@@ -69,14 +73,13 @@ $buscar = Session::getPermiso('REGVEBS');
                                 <td><?php echo $value['distrito']; ?></td>
                                 <td><?php echo $iluminado; ?></td>
                                 <td style="text-align: right"><?php echo number_format($value['precio'],2); ?></td>
-                                <td style="text-align: right"><?php echo number_format($value['costo_produccion'],2); ?></td>
                             </tr>
                             <?php endforeach; ?> 
                             <?php 
                             $diff = 0;
                             if($rows < 7){
                                 $diff = 7 - $rows;
-                                echo Functions::createCell(array('row'=>($diff),'cols'=>8)); 
+                                echo Functions::createCell(array('row'=>($diff),'cols'=>7)); 
                             }
                             ?>
                         </tbody>
@@ -99,31 +102,31 @@ $buscar = Session::getPermiso('REGVEBS');
     </div><!-- /.modal-dialog -->
 </form>
 <!-- si no riene permiso se anula submit desde cualquier input -->
-<?php if (!$buscar['permiso']): ?>
+<?php // if (!$buscar['permiso']): ?>
     <script>
         simpleScript.noSubmit('#<?php echo T8; ?>formBuscarProducto');
     </script>
-<?php endif; ?>
+<?php // endif; ?>
 <script>
-    $('#<?php echo T8; ?>formBuscarProducto').validate({
-            // Rules for form validation
-            rules : {
-                    <?php echo T8; ?>txt_search : {
-                            required : true,
-                            regular2: true,
-                            minlength: 3
-                    }
-            },
-
-            // Do not change code below
-            errorPlacement : function(error, element) {
-                    error.insertAfter(element.parent());
-            },
-                    
-            submitHandler: function(){
-                generarCotizacion.getTableMisProductos();
-            }   
-        });
+//    $('#<?php echo T8; ?>formBuscarProducto').validate({
+//            // Rules for form validation
+//            rules : {
+//                    <?php echo T8; ?>txt_search : {
+//                            required : true,
+//                            regular2: true,
+//                            minlength: 3
+//                    }
+//            },
+//
+//            // Do not change code below
+//            errorPlacement : function(error, element) {
+//                    error.insertAfter(element.parent());
+//            },
+//                    
+//            submitHandler: function(){
+//                generarCotizacion.getTableMisProductos();
+//            }   
+//        });
          
 simpleScript.removeAttr.click({
     container: '#<?php echo T8; ?>formBuscarProducto',

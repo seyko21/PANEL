@@ -16,6 +16,7 @@ class generarCotizacionModel extends Model{
     private $_ubicacion;
     private $_precio;
     private $_produccion;
+    private $_costoProduccion;
     private $_meses;
     private $_oferta;
     private $_total;
@@ -46,6 +47,7 @@ class generarCotizacionModel extends Model{
         $this->_idProducto  = $this->post(T8.'hhddIdProducto');
         $this->_precio      = $this->post(T8.'hhddPrecio');
         $this->_produccion  = $this->post(T8.'hhddProduccion');
+        $this->_costoProduccion  = $this->post(T8.'txt_produccion');
         $this->_total       = $this->post(T8.'txt_total');
         $this->_igv         = $this->post(T8.'lst_igv');
         $this->_idPersona   = Session::get('sys_idPersona');
@@ -98,8 +100,23 @@ class generarCotizacionModel extends Model{
         return $data;
     }
     
+    private function anularUnaCotizacion(){
+        $query = "UPDATE `lgk_cotizacion` SET
+                    `estado` = 'A'
+                WHERE `id_cotizacion` = :idCotizacion;";
+        $parms = array(
+            ':idCotizacion' => $this->_idCotizacion
+        );
+        $this->execute($query,$parms);
+    }
+
     public function generarCotizacion(){
         $query = "CALL sp_cotiGenerarCotizacion(:flag,:idCotizacion,:idRepresentante,:mesesContrato,:diasOferta,:total,:idCaratula,:precio,:produccion,:usuario,:igv,:validez);";
+        
+        if($this->_flag == 11){//cuando se clona una cotizacion, hay q anularla
+            $this->anularUnaCotizacion();
+            $this->_flag = 1; //retrorna a 1 para ael SP
+        }
         
         $parms = array(
             ':flag' => $this->_flag,
@@ -110,7 +127,7 @@ class generarCotizacionModel extends Model{
             ':total' => $this->_total,
             ':idCaratula' => '',
             ':precio' => '',
-            ':produccion' => '',
+            ':produccion' => $this->_costoProduccion,
             ':usuario' => $this->_usuario,
             ':igv' => $this->_igv,
             ':validez' => $this->_validez
@@ -129,10 +146,11 @@ class generarCotizacionModel extends Model{
                     ':diasOferta' => $item,
                     ':total' => '',
                     ':idCaratula' => AesCtr::de($prod),
-                    ':precio' => $this->_precio[$key],
+                    ':precio' => str_replace(",","",$this->_precio[$key]),
                     ':produccion' => $this->_produccion[$key],
                     ':usuario' => '',
-                    ':igv' => ''
+                    ':igv' => '',
+                    ':validez' => ''
                 );
                 $this->execute($query,$parms);             
             }
@@ -155,7 +173,8 @@ class generarCotizacionModel extends Model{
                 ct.`dimension_alto`,
                 ct.`dimension_ancho`,
                 ct.`dimesion_area`,
-                tp.descripcion AS elemento
+                tp.descripcion AS elemento,
+                (SELECT usuario FROM mae_usuario WHERE id_usuario=co.`usuario_creacion`)AS mail_user
         FROM `lgk_cotizaciond` cd
         INNER JOIN `lgk_caratula` c ON c.`id_caratula`=cd.`id_caratula`
         INNER JOIN `lgk_cotizacion` co ON co.`id_cotizacion`=cd.`id_cotizacion`
@@ -199,6 +218,45 @@ class generarCotizacionModel extends Model{
             $this->execute($query,$parms);
         }
         $data = array('result'=>1);
+        return $data;
+    }
+    
+    public function getProduccion(){
+        $query = "SELECT valor FROM `pub_parametro` WHERE alias = :alias;";
+        $parms = array(
+            ':alias' => 'COPM2'
+        );
+        $data = $this->queryOne($query,$parms);
+        return $data;
+    }
+    
+    public function getProductosCotizados(){
+        $query = "CALL sp_cotiGenerarCotizacionMisProductos(:flag,:idCotizacion,:ubicacion);";
+        
+        $parms = array(
+            ':flag' => 2,
+            ':idCotizacion' => $this->_idCotizacion,
+            ':ubicacion' => ''
+        );
+        $data = $this->queryAll($query,$parms);            
+        return $data;
+    }
+    
+    public function findCotizacion(){
+        $query = "SELECT 
+                c.`id_persona`,
+                p.`nombrecompleto`,
+                c.`meses_contrato`,
+                c.`dias_oferta`,
+                c.`validez`,
+                c.`valor_produccion`
+        FROM `lgk_cotizacion` c
+        INNER JOIN mae_persona p ON p.`id_persona`=c.`id_persona`
+        WHERE c.`id_cotizacion`=:idCotizacion";
+        $parms = array(
+            ':idCotizacion' => $this->_idCotizacion
+        );
+        $data = $this->queryOne($query,$parms);
         return $data;
     }
     

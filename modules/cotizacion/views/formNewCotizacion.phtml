@@ -50,7 +50,7 @@ $buscar = Session::getPermiso('GNCOTBS');
                         <label class="control-label col-md-2" for="prepend"><?php echo LABEL_GNC4; ?></label>
                         <div class="col-md-2">
                             <div class="input">
-                                <input class="form-control" type="text" id="<?php echo T8; ?>txt_meses" name="<?php echo T8; ?>txt_meses">
+                                <input class="form-control" type="text" id="<?php echo T8; ?>txt_meses" name="<?php echo T8; ?>txt_meses" onkeyup="generarCotizacionScript.reCalcular(1);">
                             </div>
                         </div>
                         <label class="control-label col-md-2" for="prepend"><?php echo LABEL_GNC5; ?></label>
@@ -74,6 +74,13 @@ $buscar = Session::getPermiso('GNCOTBS');
                         <div class="col-md-2">
                             <div class="input">
                                 <input class="form-control" type="text" id="<?php echo T8; ?>txt_diasvalidez" name="<?php echo T8; ?>txt_diasvalidez">
+                            </div>
+                        </div>
+                        <?php $data = generarCotizacionController::getProduccion(); ?>
+                        <label class="control-label col-md-2" for="prepend"><?php echo LABEL_GNC14; ?></label>
+                        <div class="col-md-2">
+                            <div class="input">
+                                <input class="form-control" type="text" id="<?php echo T8; ?>txt_produccion" name="<?php echo T8; ?>txt_produccion" value="<?php echo $data['valor']; ?>" onkeyup="generarCotizacionScript.changeProduccion(this);">
                             </div>
                         </div>
                     </div>
@@ -106,14 +113,15 @@ $buscar = Session::getPermiso('GNCOTBS');
                             <table id="<?php echo T8; ?>gridProductos" class="table table-bordered table-striped table-condensed table-hover smart-form has-tickbox">
                                 <thead>
                                     <th style="width:59%">Producto</th>
+                                    <th style="width:8%">Area</th>
                                     <th style="width:10%">Precio</th>
+                                    <th style="width:10%">Meses</th>
                                     <th style="width:10%">Producción</th>
-                                    <th style="width:10%">Cantidad</th>
                                     <th style="width:10%">Total</th>
                                     <th style="width:1%">...</th>
                                 </thead>
                                 <tbody>
-                                    <?php echo Functions::createCell(array('row'=>5,'cols'=>6)); ?>
+                                    <?php echo Functions::createCell(array('row'=>5,'cols'=>7)); ?>
                                 </tbody>
                             </table>
                         </div>
@@ -194,7 +202,11 @@ $buscar = Session::getPermiso('GNCOTBS');
                         required: true,
                         number: true,
                         maxlength: 3
-                    }        
+                    },
+                    <?php echo T8; ?>txt_produccion: {
+                        required: true,
+                        number: true
+                    }      
                 },
                 highlight: function(element) {
                     $(element).closest('.form-group').removeClass('has-success').addClass('has-error');
@@ -272,6 +284,10 @@ $buscar = Session::getPermiso('GNCOTBS');
             simpleScript.removeAttr.click({
                 container: '#<?php echo T8; ?>formGenerarCotizacion',
                 typeElement: 'button'
+            });
+            simpleScript.removeAttr.keyup({
+                container: '#<?php echo T8; ?>formGenerarCotizacion',
+                typeElement: 'input'
             });
         </script>
     </form>

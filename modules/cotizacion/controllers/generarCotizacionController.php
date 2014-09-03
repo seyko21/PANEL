@@ -20,6 +20,7 @@ class generarCotizacionController extends Controller{
         $enviaremail   = Session::getPermiso('GNCOTEE');
         $exportarpdf   = Session::getPermiso('GNCOTEP');
         $exportarexcel = Session::getPermiso('GNCOTEX');
+        $clonar         = Session::getPermiso('GNCOTCL');
         
         $sEcho          =   $this->post('sEcho');
         
@@ -44,15 +45,10 @@ class generarCotizacionController extends Controller{
 
                 /*
                  * configurando botones (add/edit/delete etc)
-                 * se verifica si tiene permisos para editar
+                 * se verifica si tiene permisos para editar fa-mail-forward
                  */
                 $sOutput .= '"<div class=\"btn-group\">';
                 
-                if($enviaremail['permiso']){
-                    $sOutput .= '<button type=\"button\" class=\"btn btn-primary\" title=\"'.$enviaremail['accion'].'\" onclick=\"generarCotizacion.postEmail(this,\''.$encryptReg.'\')\">';
-                    $sOutput .= '    <i class=\"fa fa-envelope-o fa-lg\"></i>';
-                    $sOutput .= '</button>';
-                }
                 if($exportarpdf['permiso']){
                     $sOutput .= '<button type=\"button\" class=\"btn txt-color-white bg-color-blueDark btn-xs\" title=\"'.$exportarpdf['accion'].'\" onclick=\"generarCotizacion.postPDF(this,\''.$encryptReg.'\')\">';
                     $sOutput .= '    <i class=\"fa fa-file-pdf-o fa-lg\"></i>';
@@ -61,6 +57,16 @@ class generarCotizacionController extends Controller{
                 if($exportarexcel['permiso']){
                     $sOutput .= '<button type=\"button\" class=\"btn btn-success btn-xs\" title=\"'.$exportarexcel['accion'].'\" onclick=\"generarCotizacion.postExcel(this,\''.$encryptReg.'\')\">';
                     $sOutput .= '    <i class=\"fa fa-file-excel-o fa-lg\"></i>';
+                    $sOutput .= '</button>';
+                }
+                if($clonar['permiso']){
+                    $sOutput .= '<button type=\"button\" class=\"btn bg-color-purple txt-color-white btn-xs\" title=\"'.$clonar['accion'].'\" onclick=\"generarCotizacion.getClonar(\''.$aRow['cotizacion_numero'].'\',\''.$encryptReg.'\')\">';
+                    $sOutput .= '    <i class=\"fa fa-copy fa-lg\"></i>';
+                    $sOutput .= '</button>';
+                }
+                if($enviaremail['permiso']){
+                    $sOutput .= '<button type=\"button\" class=\"btn btn-primary btn-xs\" title=\"'.$enviaremail['accion'].'\" onclick=\"generarCotizacion.postEmail(this,\''.$encryptReg.'\')\">';
+                    $sOutput .= '    <i class=\"fa fa-envelope-o fa-lg\"></i>';
                     $sOutput .= '</button>';
                 }
                 
@@ -84,6 +90,10 @@ class generarCotizacionController extends Controller{
     
     public function getFormNewCotizacion(){
         Obj::run()->View->render('formNewCotizacion'); 
+    }
+    
+    public function getFormClonarCotizacion(){
+        Obj::run()->View->render('formClonarCotizacion'); 
     }
     
     public function getFormBuscarMisProductos(){ 
@@ -139,6 +149,18 @@ class generarCotizacionController extends Controller{
         echo $sOutput;
     }
     
+    public static function getProduccion(){
+        $data = Obj::run()->generarCotizacionModel->getProduccion();
+        
+        return $data;
+    }
+    
+    public static function getProductosCotizados(){
+        $data = Obj::run()->generarCotizacionModel->getProductosCotizados();
+        
+        return $data;
+    }
+    
     public function postGenerarCotizacion(){ 
         $data = Obj::run()->generarCotizacionModel->generarCotizacion();
         
@@ -147,7 +169,11 @@ class generarCotizacionController extends Controller{
     
     public function postEmail(){ 
         $data = Obj::run()->generarCotizacionModel->getCotizacion();
-        $email = $data[0]['email'];
+        $emailCliente = $data[0]['email'];
+        $cliente = $data[0]['nombrecompleto'];
+        $emailUser = $data[0]['mail_user'];
+        
+        
         $cad = explode('@',$email);
                
         $body ='
@@ -186,8 +212,8 @@ class generarCotizacionController extends Controller{
 
         $mail->AddReplyTo("name@gmail.com","First Last");
 
-        $address = "whoto@gmail.com";
-        $mail->AddAddress($address, "John Doe");
+        $mail->AddAddress($emailCliente, $cliente);
+        $mail->AddAddress($emailUser, $emailUser);
 
         $mail->Subject    = "PHPMailer Test Subject via mail(), basic";
 
@@ -243,7 +269,7 @@ class generarCotizacionController extends Controller{
                 <th style="width:30%">Ubicación</th>
                 <th style="width:30%">Medidas</th>
                 <th style="width:10%">Meses</th>
-                <th style="width:10%">Importe</th>
+                <th style="width:10%">Precio</th>
                 <th style="width:10%">Producción</th>
                 <th style="width:10%">Total</th>
             </tr>';
@@ -253,8 +279,8 @@ class generarCotizacionController extends Controller{
                 <td>'.$value['elemento'].'</td>
                 <td>'.$value['producto'].'</td>
                 <td>'.$value['dimension_ancho'].' x '.$value['dimension_alto'].' mts</td>
-                <td style="text-align:right">'.number_format(($value['precio'] * $value['cantidad_mes']),2).'</td>
-                <td style="text-align:center">'.$value['cantidad_mes'].'</td>
+                <td style="text-align:right">'.$value['cantidad_mes'].'</td>
+                <td style="text-align:center">'.number_format($value['precio'],2).'</td>
                 <td style="text-align:right">'.number_format($value['costo_produccion'],2).'</td>
                 <td style="text-align:right">'.number_format($value['importe'],2).'</td>
             </tr>';
@@ -313,7 +339,14 @@ class generarCotizacionController extends Controller{
         $data = Obj::run()->generarCotizacionModel->anularCotizacion();
         
         echo json_encode($data);
+    }  
+    
+    public static function findCotizacion(){
+        $data = Obj::run()->generarCotizacionModel->findCotizacion();
+        
+        return $data;
     }
+    
 }
 
 ?>
