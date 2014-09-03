@@ -4,7 +4,8 @@
         PERMU: '<?php echo PERMU; ?>',
         TAB_CATPRE: '<?php echo TAB_CATPRE; ?>',
         TAB_CONPER: '<?php echo TAB_CONPER; ?>',
-        TAB_SOCIO: '<?php echo tab_socio; ?>'
+        TAB_SOCIO: '<?php echo TAB_SOCIO; ?>',
+        REINV: '<?php echo REINV; ?>'
     }
 };
 </script>
