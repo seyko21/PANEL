@@ -34,15 +34,10 @@ class tipoConceptoController extends Controller{
             $sOutput .= '"aaData": [ ';
             foreach ( $rResult as $key=>$aRow ){
                 
-//                if($aRow['estado'] == 'A'){
-//                    $estado = '<span class=\"label label-success\">Activo</span>';
-//                }elseif($aRow['estado'] == 'I'){
-//                    $estado = '<span class=\"label label-danger\">Inactivo</span>';
-//                }
-            /*antes de enviar id se encrypta*/
-            $encryptReg = Aes::en($aRow['id_tipo']);              
+               /*antes de enviar id se encrypta*/
+                $encryptReg = Aes::en($aRow['id_tipo']);              
             
-            if($aRow['estado'] == 'A'){
+              if($aRow['estado'] == 'A'){
                     if($editar['permiso']){
                         $estado = '<button type=\"button\" class=\"btn btn-success btn-xs\" title=\"'.BTN_DESACT.'\" onclick=\"tipoConcepto.postDesactivar(this,\''.$encryptReg.'\')\"><i class=\"fa fa-check\"></i> '.LABEL_ACT.'</button>';
                     }else{

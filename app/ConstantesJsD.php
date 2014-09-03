@@ -3,7 +3,8 @@
         T102: '<?php echo T102; ?>',        
         PERMU: '<?php echo PERMU; ?>',
         TAB_CATPRE: '<?php echo TAB_CATPRE; ?>',
-        TAB_CONPER: '<?php echo TAB_CONPER; ?>'
+        TAB_CONPER: '<?php echo TAB_CONPER; ?>',
+        TAB_SOCIO: '<?php echo tab_socio; ?>'
     }
 };
 </script>

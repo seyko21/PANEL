@@ -12,4 +12,5 @@ define("T102","VFITEC");     /*tab modulo Ficha Tecnica*/
 define("PERMU","VPERMU");             /*tab modulo PERMISOMUNICIPAL*/
 define("TAB_CATPRE","TAB_CATPRE");             /*tab modulo CATALOGOPRECIO*/
 define("TAB_CONPER","TAB_CONPER");             /*tab modulo CONSULTAPERMISOS*/
+define("TAB_SOCIO","tab_socio");             /*tab modulo SOCIO*/
 ?>

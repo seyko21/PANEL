@@ -168,7 +168,43 @@ var tipoPanel_ = function(){
             }
         });
     };
-        
+    this.publico.postDesactivar = function(btn,id){
+           simpleAjax.send({
+               element: btn,
+               root: _private.config.modulo + 'postDesactivar',
+               data: '&_idTipoPanel='+id,
+               clear: true,
+               fnCallback: function(data) {
+                   if(!isNaN(data.result) && parseInt(data.result) === 1){
+                       simpleScript.notify.ok({
+                           content: 'Tipo Panel se desactivo correctamente',
+                           callback: function(){
+                               simpleScript.reloadGrid('#'+diccionario.tabs.T101+'gridTipoPanel');
+                           }
+                       });
+                   }
+               }
+           });
+       };
+    
+    this.publico.postActivar = function(btn,id){
+        simpleAjax.send({
+            element: btn,
+            root: _private.config.modulo + 'postActivar',
+            data: '&_idTipoPanel='+id,
+            clear: true,
+            fnCallback: function(data) {
+                if(!isNaN(data.result) && parseInt(data.result) === 1){
+                    simpleScript.notify.ok({
+                        content: 'Tipo Panel se activo correctamente',
+                        callback: function(){
+                            simpleScript.reloadGrid('#'+diccionario.tabs.T101+'gridTipoPanel');
+                        }
+                    });
+                }
+            }
+        });
+    };            
     
     
     return this.publico;

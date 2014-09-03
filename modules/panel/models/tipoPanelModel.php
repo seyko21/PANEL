@@ -107,6 +107,31 @@ class tipoPanelModel extends Model{
         $data = array('result'=>1);
         return $data;
     }    
+    public function postDesactivar(){
+        $query = "UPDATE `lgk_tipopanel` SET
+                    `estado` = 'I'
+                WHERE `id_tipopanel` = :id;";
+        $parms = array(
+            ':id' => $this->_idTipoPanel
+        );
+        $this->execute($query,$parms);
+        $data = array('result'=>1);    
+        
+        return $data;
+    }
+    
+    public function postActivar(){
+        $query = "UPDATE `lgk_tipopanel` SET
+                    `estado` = 'A'
+                WHERE `id_tipopanel` = :id;";
+        $parms = array(
+            ':id' => $this->_idTipoPanel
+        );
+        $this->execute($query,$parms);
+        $data = array('result'=>1);
+        return $data;
+    }        
+        
     
 }
 

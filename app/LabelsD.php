@@ -73,4 +73,29 @@ define('LABEL_A58','Listado de Catálogo');
 define('LABEL_A60','Consulta de Permisos por vencer en 5 meses');
 /*----------------------Catalogo de Precios----------------------*/
 define('LABEL_A70','Listado de Catalogo');
+/*----------------------REGISTRAR Socio----------------------*/
+define('LABEL_A80','Socio');
+define('LABEL_A81','Nuevo Socio');
+define('LABEL_A82','Editar Socio');
+define('LABEL_A83','Nombres');
+define('LABEL_A83M','Ingrese nombres');
+define('LABEL_A84','Apellido paterno');
+define('LABEL_A84M','Ingrese apellido paterno');
+define('LABEL_A85','Apellido materno');
+define('LABEL_A85M','Ingrese apellido materno');
+define('LABEL_A86','Dirección');
+define('LABEL_A86M','Ingresar dirección');
+define('LABEL_A87','E-mail');
+define('LABEL_A87M','ingresar e-mail');
+define('LABEL_A88','Sexo');
+define('LABEL_A89','Teléfonos');
+define('LABEL_A89M','Ingresar teléfonos');
+define('LABEL_A90','Nro. de RUC');
+define('LABEL_A90M','Ingresar nro. de RUC');
+define('LABEL_A91','Departamento');
+define('LABEL_A92','Provincia');
+define('LABEL_A93','Distrito');
+define('LABEL_A94','Nro. de Documento');
+define('LABEL_A95','DNI');
+define('LABEL_A95M','Ingresar nro. de DNI');
 ?>

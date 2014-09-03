@@ -71,7 +71,7 @@ class configurarUsuariosModel extends Model{
     }
     
     public function getRoles(){
-        $query = " SELECT id_rol,rol FROM men_rol WHERE activo = :activo ";
+        $query = " SELECT id_rol,rol FROM men_rol WHERE activo = :activo and NOT `id_rol` IN ('0001') ";
         $parms = array(
             ':activo' => '1',
         );
@@ -84,7 +84,7 @@ class configurarUsuariosModel extends Model{
                 r.id_rol,
                 r.rol,
                 (SELECT COUNT(*) FROM `men_usuariorol` xx WHERE xx.`id_rol`=r.id_rol AND xx.`id_usuario`=:idUsuario) AS chk
-        FROM men_rol r WHERE activo = :activo ";
+        FROM men_rol r WHERE activo = :activo and NOT r.`id_rol` IN ('0001')  ";
         $parms = array(
             ':idUsuario'=> $this->_idUsuario,
             ':activo' => '1',
