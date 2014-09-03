@@ -84,10 +84,10 @@ class fichaTecnicaModel extends Model{
         for ( $i=0 ; $i<intval( $this->_iSortingCols ) ; $i++ ){
                 if ( Formulario::getParam( "bSortable_".intval(Formulario::getParam("iSortCol_".$i)) ) == "true" ){
                         $sOrder .= " ".$aColumns[ intval( Formulario::getParam("iSortCol_".$i) ) ]." ".
-                                (Formulario::getParam("sSortDir_".$i)==="asc" ? "asc" : 'desc') ." ";
+                                (Formulario::getParam("sSortDir_".$i)==="asc" ? "asc" : 'desc') .",";
                 }
         }
-        
+        $sOrder = substr_replace( $sOrder, "", -1 );
         $query = "call sp_catalogoFichaTecnicaGrid(:iDisplayStart,:iDisplayLength,:sOrder,:sSearch);";
         
         $parms = array(

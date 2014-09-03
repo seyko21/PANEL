@@ -36,7 +36,7 @@ class catalogoPreciosModel extends Model{
     }
     
     public function getGridProducto(){
-        $aColumns       =   array( 'codigo','distrito','ubicacion' ); //para la ordenacion y pintado en html
+        $aColumns       =   array( 'codigo','distrito','ubicacion','dimesion_area','precio','iluminado','estado' ); //para la ordenacion y pintado en html
         /*
 	 * Ordenando, se verifica por que columna se ordenara
 	 */
@@ -44,9 +44,10 @@ class catalogoPreciosModel extends Model{
         for ( $i=0 ; $i<intval( $this->_iSortingCols ) ; $i++ ){
                 if ( Formulario::getParam( "bSortable_".intval(Formulario::getParam("iSortCol_".$i)) ) == "true" ){
                         $sOrder .= " ".$aColumns[ intval( Formulario::getParam("iSortCol_".$i) ) ]." ".
-                                (Formulario::getParam("sSortDir_".$i)==="asc" ? "asc" : 'desc') ." ";
+                                (Formulario::getParam("sSortDir_".$i)==="asc" ? "asc" : 'desc') .",";
                 }
-        }
+        }        
+        $sOrder = substr_replace( $sOrder, "", -1 );
         
         $query = "call sp_catalogoPreciosGrid(:iDisplayStart,:iDisplayLength,:sOrder,:sSearch);";
         
@@ -57,7 +58,7 @@ class catalogoPreciosModel extends Model{
             ':sSearch' => $this->_sSearch,
         );
         $data = $this->queryAll($query,$parms);
-              
+     
         return $data; 
        
     }

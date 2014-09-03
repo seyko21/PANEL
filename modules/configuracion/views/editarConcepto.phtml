@@ -77,7 +77,7 @@ $data = conceptoController::getConcepto();
                         <label class="label col col-3"></label>
                         <div class="col col-3">
                             <label class="checkbox">
-                                <input type="checkbox" checked="checked" name="<?php echo T6; ?>chk_activo" id="<?php echo T6; ?>chk_activo" value="A" <?php echo ($data['estado'] == 'A')?'checked':'' ?>></input>
+                                <input type="checkbox" <?php echo ($data['estado'] == 'A')?'checked':'' ?> name="<?php echo T6; ?>chk_activo" id="<?php echo T6; ?>chk_activo" value="A" ></input>
                                 <i></i>
                                 <?php echo CK_ACTIVO; ?>
                             </label>
