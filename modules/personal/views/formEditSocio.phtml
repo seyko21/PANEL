@@ -237,7 +237,7 @@ $data = socioController::findSocio();
     </div><!-- /.modal-dialog -->
 
 <!-- si no riene permiso se anula submit desde cualquier input -->
-<?php if(!$grabar['permiso']): ?>
+<?php if(!$editar['permiso']): ?>
 <script>
     simpleScript.noSubmit('#<?php echo TAB_SOCIO; ?>formEditSocio');
 </script>
