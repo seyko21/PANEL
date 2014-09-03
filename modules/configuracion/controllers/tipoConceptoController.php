@@ -34,14 +34,27 @@ class tipoConceptoController extends Controller{
             $sOutput .= '"aaData": [ ';
             foreach ( $rResult as $key=>$aRow ){
                 
-                if($aRow['estado'] == 'A'){
-                    $estado = '<span class=\"label label-success\">Activo</span>';
-                }elseif($aRow['estado'] == 'I'){
-                    $estado = '<span class=\"label label-danger\">Inactivo</span>';
-                }
+//                if($aRow['estado'] == 'A'){
+//                    $estado = '<span class=\"label label-success\">Activo</span>';
+//                }elseif($aRow['estado'] == 'I'){
+//                    $estado = '<span class=\"label label-danger\">Inactivo</span>';
+//                }
+            /*antes de enviar id se encrypta*/
+            $encryptReg = Aes::en($aRow['id_tipo']);              
             
-                /*antes de enviar id se encrypta*/
-                $encryptReg = Aes::en($aRow['id_tipo']);
+            if($aRow['estado'] == 'A'){
+                    if($editar['permiso']){
+                        $estado = '<button type=\"button\" class=\"btn btn-success btn-xs\" title=\"'.BTN_DESACT.'\" onclick=\"tipoConcepto.postDesactivar(this,\''.$encryptReg.'\')\"><i class=\"fa fa-check\"></i> '.LABEL_ACT.'</button>';
+                    }else{
+                        $estado = '<span class=\"label label-success\">'.LABEL_ACT.'</span>';
+                    }
+                }elseif($aRow['estado'] == 'I'){
+                    if($editar['permiso']){
+                        $estado = '<button type=\"button\" class=\"btn btn-danger btn-xs\" title=\"'.BTN_ACT.'\" onclick=\"tipoConcepto.postActivar(this,\''.$encryptReg.'\')\"><i class=\"fa fa-ban\"></i> '.LABEL_DESACT.'</button>';
+                    }else{
+                        $estado = '<span class=\"label label-danger\">'.LABEL_DESACT.'</span>';
+                    }
+                }                                
                 
                 $chk = '<input id=\"c_'.(++$key).'\" type=\"checkbox\" name=\"'.T5.'chk_delete[]\" value=\"'.$encryptReg.'\">';
 //                $chk = str_replace(chr(10), "", $chk);
@@ -49,9 +62,7 @@ class tipoConceptoController extends Controller{
                 
                 /*datos de manera manual*/
                 $sOutput .= '["'.$chk.'","'.$aRow['descripcion'].'","'.$estado.'", ';
-
-                
-
+               
                 /*
                  * configurando botones (add/edit/delete etc)
                  * se verifica si tiene permisos para editar
@@ -126,6 +137,18 @@ class tipoConceptoController extends Controller{
         
         echo json_encode($data);
     }
+    
+    public function postDesactivar(){
+        $data = Obj::run()->tipoConceptoModel->postDesactivar();
+        
+        echo json_encode($data);
+    }
+    
+    public function postActivar(){
+        $data = Obj::run()->tipoConceptoModel->postActivar();
+        
+        echo json_encode($data);
+    }    
     
 }
 

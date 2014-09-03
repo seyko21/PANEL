@@ -170,7 +170,43 @@ var parametro_ = function(){
             }
         });
     };
+    this.publico.postDesactivar = function(btn,id){
+           simpleAjax.send({
+               element: btn,
+               root: _private.config.modulo + 'postDesactivar',
+               data: '&_idParametro='+id,
+               clear: true,
+               fnCallback: function(data) {
+                   if(!isNaN(data.result) && parseInt(data.result) === 1){
+                       simpleScript.notify.ok({
+                           content: 'Parametro se desactivo correctamente',
+                           callback: function(){
+                               simpleScript.reloadGrid('#'+diccionario.tabs.T100+'gridParametro');
+                           }
+                       });
+                   }
+               }
+           });
+       };
     
+    this.publico.postActivar = function(btn,id){
+        simpleAjax.send({
+            element: btn,
+            root: _private.config.modulo + 'postActivar',
+            data: '&_idParametro='+id,
+            clear: true,
+            fnCallback: function(data) {
+                if(!isNaN(data.result) && parseInt(data.result) === 1){
+                    simpleScript.notify.ok({
+                        content: 'Parametro se activo correctamente',
+                        callback: function(){
+                            simpleScript.reloadGrid('#'+diccionario.tabs.T100+'gridParametro');
+                        }
+                    });
+                }
+            }
+        });
+    };      
     
     return this.publico;
     

@@ -33,15 +33,24 @@ class conceptoController extends Controller{
             $sOutput .= '"iTotalDisplayRecords": '.$iTotal.', ';
             $sOutput .= '"aaData": [ ';
             foreach ( $rResult as $key=>$aRow ){
-                
-                if($aRow['estado'] == 'A'){
-                    $estado = '<span class=\"label label-success\">Activo</span>';
-                }elseif($aRow['estado'] == 'I'){
-                    $estado = '<span class=\"label label-danger\">Inactivo</span>';
-                }
-            
                 /*antes de enviar id se encrypta*/
                 $encryptReg = Aes::en($aRow['id_concepto']);
+                
+                if($aRow['estado'] == 'A'){
+                    if($editar['permiso']){
+                        $estado = '<button type=\"button\" class=\"btn btn-success btn-xs\" title=\"'.BTN_DESACT.'\" onclick=\"concepto.postDesactivar(this,\''.$encryptReg.'\')\"><i class=\"fa fa-check\"></i> '.LABEL_ACT.'</button>';
+                    }else{
+                        $estado = '<span class=\"label label-success\">'.LABEL_ACT.'</span>';
+                    }
+                }elseif($aRow['estado'] == 'I'){
+                    if($editar['permiso']){
+                        $estado = '<button type=\"button\" class=\"btn btn-danger btn-xs\" title=\"'.BTN_ACT.'\" onclick=\"concepto.postActivar(this,\''.$encryptReg.'\')\"><i class=\"fa fa-ban\"></i> '.LABEL_DESACT.'</button>';
+                    }else{
+                        $estado = '<span class=\"label label-danger\">'.LABEL_DESACT.'</span>';
+                    }
+                }                                
+                                
+                
                 
                 $chk = '<input id=\"c_'.(++$key).'\" type=\"checkbox\" name=\"'.T6.'chk_delete[]\" value=\"'.$encryptReg.'\">';
                 
@@ -116,6 +125,17 @@ class conceptoController extends Controller{
         
         echo json_encode($data);
     }
+    public function postDesactivar(){
+        $data = Obj::run()->conceptoModel->postDesactivar();
+        
+        echo json_encode($data);
+    }
+    
+    public function postActivar(){
+        $data = Obj::run()->conceptoModel->postActivar();
+        
+        echo json_encode($data);
+    }      
     
 }
 

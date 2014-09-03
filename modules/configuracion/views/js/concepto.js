@@ -170,6 +170,43 @@ var concepto_ = function(){
             }
         });
     };
+    this.publico.postDesactivar = function(btn,id){
+           simpleAjax.send({
+               element: btn,
+               root: _private.config.modulo + 'postDesactivar',
+               data: '&_idConcepto='+id,
+               clear: true,
+               fnCallback: function(data) {
+                   if(!isNaN(data.result) && parseInt(data.result) === 1){
+                       simpleScript.notify.ok({
+                           content: 'Concepto se desactivo correctamente',
+                           callback: function(){
+                               simpleScript.reloadGrid('#'+diccionario.tabs.T6+'gridConceptos');
+                           }
+                       });
+                   }
+               }
+           });
+       };
+    
+    this.publico.postActivar = function(btn,id){
+        simpleAjax.send({
+            element: btn,
+            root: _private.config.modulo + 'postActivar',
+            data: '&_idConcepto='+id,
+            clear: true,
+            fnCallback: function(data) {
+                if(!isNaN(data.result) && parseInt(data.result) === 1){
+                    simpleScript.notify.ok({
+                        content: 'Concepto se activo correctamente',
+                        callback: function(){
+                            simpleScript.reloadGrid('#'+diccionario.tabs.T6+'gridConceptos');
+                        }
+                    });
+                }
+            }
+        });
+    };     
     
     return this.publico;
     

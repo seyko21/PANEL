@@ -122,6 +122,30 @@ class conceptoModel extends Model{
         $data = array('result'=>1);
         return $data;
     }
+    public function postDesactivar(){
+        $query = "UPDATE `pub_concepto` SET
+                    `estado` = 'I'
+                WHERE `id_concepto` = :id;";
+        $parms = array(
+            ':id' => $this->_idConcepto
+        );
+        $this->execute($query,$parms);
+        $data = array('result'=>1);    
+        
+        return $data;
+    }
+    
+    public function postActivar(){
+        $query = "UPDATE `pub_concepto` SET
+                    `estado` = 'A'
+                WHERE `id_concepto` = :id;";
+        $parms = array(
+            ':id' => $this->_idConcepto
+        );
+        $this->execute($query,$parms);
+        $data = array('result'=>1);
+        return $data;
+    }            
     
 }
 

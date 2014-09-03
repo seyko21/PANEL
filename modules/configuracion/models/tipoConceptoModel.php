@@ -38,6 +38,7 @@ class tipoConceptoModel extends Model{
         $this->_iDisplayLength =   Formulario::getParam('iDisplayLength'); 
         $this->_iSortingCols   =   Formulario::getParam('iSortingCols');
         $this->_sSearch        =   Formulario::getParam('sSearch');
+                
     }
     
     public function getTipoConceptos(){
@@ -111,6 +112,31 @@ class tipoConceptoModel extends Model{
         $data = array('result'=>1);
         return $data;
     }
+    
+    public function postDesactivar(){
+        $query = "UPDATE `pub_tipoconcepto` SET
+                    `estado` = 'I'
+                WHERE `id_tipo` = :idTConcepto;";
+        $parms = array(
+            ':idTConcepto' => $this->_idTipoConcepto
+        );
+        $this->execute($query,$parms);
+        $data = array('result'=>1);    
+        
+        return $data;
+    }
+    
+    public function postActivar(){
+        $query = "UPDATE `pub_tipoconcepto` SET
+                    `estado` = 'A'
+                WHERE `id_tipo` = :idTConcepto;";
+        $parms = array(
+            ':idTConcepto' => $this->_idTipoConcepto
+        );
+        $this->execute($query,$parms);
+        $data = array('result'=>1);
+        return $data;
+    }        
     
 }
 ?>

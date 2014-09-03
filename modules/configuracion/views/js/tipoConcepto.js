@@ -55,10 +55,10 @@ var tipoConcepto_ = function(){
             fnDrawCallback: function() {
                 $('#'+diccionario.tabs.T5+'gridTipoConceptos_filter').find('input').attr('placeholder','Buscar');
                 /*para hacer evento invisible*/
-                simpleScript.removeAttr.click({
-                    container: '#widget_'+diccionario.tabs.T5+'tipoconceptos',
-                    typeElement: 'button, #'+diccionario.tabs.T5+'chk_all'
-                });
+//                simpleScript.removeAttr.click({
+//                    container: '#widget_'+diccionario.tabs.T5+'tipoconceptos',
+//                    typeElement: 'button, #'+diccionario.tabs.T5+'chk_all'
+//                });
             }
         });
         setup_widgets_desktop();
@@ -218,6 +218,44 @@ var tipoConcepto_ = function(){
             }
         });
     };
+    
+    this.publico.postDesactivar = function(btn,id){
+           simpleAjax.send({
+               element: btn,
+               root: _private.config.modulo + 'postDesactivar',
+               data: '&_idTipoConcepto='+id,
+               clear: true,
+               fnCallback: function(data) {
+                   if(!isNaN(data.result) && parseInt(data.result) === 1){
+                       simpleScript.notify.ok({
+                           content: 'Tipo Concepto se desactivo correctamente',
+                           callback: function(){
+                               simpleScript.reloadGrid('#'+diccionario.tabs.T5+'gridTipoConceptos');
+                           }
+                       });
+                   }
+               }
+           });
+       };
+    
+    this.publico.postActivar = function(btn,id){
+        simpleAjax.send({
+            element: btn,
+            root: _private.config.modulo + 'postActivar',
+            data: '&_idTipoConcepto='+id,
+            clear: true,
+            fnCallback: function(data) {
+                if(!isNaN(data.result) && parseInt(data.result) === 1){
+                    simpleScript.notify.ok({
+                        content: 'Tipo Concepto se activo correctamente',
+                        callback: function(){
+                            simpleScript.reloadGrid('#'+diccionario.tabs.T5+'gridTipoConceptos');
+                        }
+                    });
+                }
+            }
+        });
+    };    
     
     return this.publico;
     

@@ -116,6 +116,31 @@ class parametroModel extends Model{
         return $data;
     }    
     
+    public function postDesactivar(){
+        $query = "UPDATE `pub_parametro` SET
+                    `estado` = 'I'
+                WHERE `id_parametro` = :id;";
+        $parms = array(
+            ':id' => $this->_idParametro
+        );
+        $this->execute($query,$parms);
+        $data = array('result'=>1);    
+        
+        return $data;
+    }
+    
+    public function postActivar(){
+        $query = "UPDATE `pub_parametro` SET
+                    `estado` = 'A'
+                WHERE `id_parametro` = :id;";
+        $parms = array(
+            ':id' => $this->_idParametro
+        );
+        $this->execute($query,$parms);
+        $data = array('result'=>1);
+        return $data;
+    }      
+    
 }
 
 ?>
