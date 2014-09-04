@@ -59,12 +59,12 @@ class generarCotizacionController extends Controller{
                     $sOutput .= '    <i class=\"fa fa-file-excel-o fa-lg\"></i>';
                     $sOutput .= '</button>';
                 }
-                if($clonar['permiso']){
+                if($clonar['permiso'] && $aRow['estado'] == 'E'){
                     $sOutput .= '<button type=\"button\" class=\"btn bg-color-purple txt-color-white btn-xs\" title=\"'.$clonar['accion'].'\" onclick=\"generarCotizacion.getClonar(\''.$aRow['cotizacion_numero'].'\',\''.$encryptReg.'\')\">';
                     $sOutput .= '    <i class=\"fa fa-copy fa-lg\"></i>';
                     $sOutput .= '</button>';
                 }
-                if($enviaremail['permiso']){
+                if($enviaremail['permiso'] && $aRow['estado'] == 'E'){
                     $sOutput .= '<button type=\"button\" class=\"btn btn-primary btn-xs\" title=\"'.$enviaremail['accion'].'\" onclick=\"generarCotizacion.postEmail(this,\''.$encryptReg.'\')\">';
                     $sOutput .= '    <i class=\"fa fa-envelope-o fa-lg\"></i>';
                     $sOutput .= '</button>';
