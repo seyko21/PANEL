@@ -27,7 +27,7 @@ class generarCotizacionController extends Controller{
         $rResult = Obj::run()->generarCotizacionModel->getGridCotizacion();
         
         if(!isset($rResult['error'])){  
-            $iTotal         = isset($rResult[0]['total'])?$rResult[0]['total']:0;
+            $iTotal         = isset($rResult[0]['totalg'])?$rResult[0]['totalg']:0;
             
             $sOutput = '{';
             $sOutput .= '"sEcho": '.intval($sEcho).', ';
