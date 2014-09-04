@@ -24,7 +24,7 @@ class regInversionController extends Controller{
         
         $sEcho          =   $this->post('sEcho');
         
-        $rResult = Obj::run()->socioModel->getGridSocio();
+        $rResult = Obj::run()->regInversionModel->getGridSocio();
         
         if(!isset($rResult['error'])){  
             $iTotal         = isset($rResult[0]['total'])?$rResult[0]['total']:0;
@@ -52,9 +52,12 @@ class regInversionController extends Controller{
                         $estado = '<span class=\"label label-danger\">'.LABEL_DESACT.'</span>';
                     }
                 }        
-                
-                $chk = '<input id=\"c_'.(++$key).'\" type=\"checkbox\" name=\"'.TAB_SOCIO.'chk_delete[]\" value=\"'.$encryptReg.'\">';
-                
+                                
+                 if ($aRow['monto_invertido'] == 0)
+                    $chk = '<input id=\"c_'.(++$key).'\" type=\"checkbox\" name=\"'.TAB_SOCIO.'chk_delete[]\" value=\"'.$encryptReg.'\">';
+                else {
+                    $chk = '';
+                }
                 /*datos de manera manual*/
                 $sOutput .= '["'.$chk.'","'.$aRow['numerodocumento'].'","'.$aRow['nombrecompleto'].'","'.number_format($aRow['monto_invertido'],2).'","'.$estado.'", ';
                 
@@ -110,26 +113,16 @@ class regInversionController extends Controller{
                 
             
                 /*antes de enviar id se encrypta*/
-                $encryptReg = Aes::en($aRow['id_persona']);
+                $encryptReg = Aes::en($aRow['id_inversion']);
                 
-                if($aRow['estado'] == 'A'){
-                    if($editar['permiso']){
-                        $estado = '<button type=\"button\" class=\"btn btn-success btn-xs\" title=\"'.BTN_DESACT.'\" onclick=\"cliente.postDesactivarInv(this,\''.$encryptReg.'\')\"><i class=\"fa fa-check\"></i> '.LABEL_ACT.'</button>';
-                    }else{
-                        $estado = '<span class=\"label label-success\">'.LABEL_ACT.'</span>';
-                    }
-                }elseif($aRow['estado'] == 'I'){
-                    if($editar['permiso']){
-                        $estado = '<button type=\"button\" class=\"btn btn-danger btn-xs\" title=\"'.BTN_ACT.'\" onclick=\"cliente.postActivarInv(this,\''.$encryptReg.'\')\"><i class=\"fa fa-ban\"></i> '.LABEL_DESACT.'</button>';
-                    }else{
-                        $estado = '<span class=\"label label-danger\">'.LABEL_DESACT.'</span>';
-                    }
-                }
-                                
-                $chk = '<input id=\"c_'.(++$key).'\" type=\"checkbox\" name=\"'.REGCL.'chk_deleterp[]\" value=\"'.$encryptReg.'\">';
+                  if ($aRow['monto_asignado'] == 0)
+                    $chk = '<input id=\"c_'.(++$key).'\" type=\"checkbox\" name=\"'.REINV.'chk_chkdelinv[]\" value=\"'.$encryptReg.'\">';
+                else {
+                    $chk = '';
+                }                                
                 
                 /*datos de manera manual*/
-                $sOutput .= '["'.$chk.'","'.functions::cambiaf_a_normal($aRow['fecha_inversion']).'","'.  number_format($aRow['monto_invertido'],2).'","'.$estado.'", ';
+                $sOutput .= '["'.$chk.'","'.functions::cambiaf_a_normal($aRow['fecha_inversion']).'","'.number_format($aRow['monto_invertido'],2).'","'.number_format($aRow['monto_asignado'],2).'","'.number_format($aRow['monto_saldo'],2).'",';
                 
                 /*
                  * configurando botones (add/edit/delete etc)
@@ -169,8 +162,14 @@ class regInversionController extends Controller{
         Obj::run()->View->render("formNewRegInversion");
     }           
     /*carga formulario (editRegInversion.phtml) para editar registro: RegInversion*/
-    public function getFormEditRegInversion(){
-        Obj::run()->View->render("formEditRegInversion");
+    public function getFormEditInversion(){
+        Obj::run()->View->render("formEditInversion");
+    }
+    
+    public static function findInversion(){
+        $data = Obj::run()->regInversionModel->findInversion();
+        
+        return $data;
     }
     
      public static function getDepartamentos(){ 
@@ -210,6 +209,11 @@ class regInversionController extends Controller{
         echo $data;
     }
     
+     /*envia datos para eliminar registro: Socio*/
+    public function postDeleteSocioAll(){
+        $data = Obj::run()->socioController->postDeleteSocioAll();        
+        echo $data;
+    }   
         
     /*envia datos para grabar registro: RegInversion*/
     public function postNewInversion(){
@@ -219,17 +223,26 @@ class regInversionController extends Controller{
     }    
     /*envia datos para editar registro: RegInversion*/
     public function postEditInversion(){
-        $data = Obj::run()->regInversionModel->editRegInversion();
+        $data = Obj::run()->regInversionModel->mantenimientoInversion();
         
         echo json_encode($data);
     }
     
     /*envia datos para eliminar registro: RegInversion*/
     public function postDeleteInversionAll(){
-        $data = Obj::run()->regInversionModel->deleteRegInversionAll();
+        $data = Obj::run()->regInversionModel->deleteInversionAll();
         
         echo json_encode($data);
     }
+    public function postDesactivarSocio(){
+        $data = Obj::run()->socioController->postDesactivarSocio();        
+        echo $data;
+    }    
+    public function postActivarSocio(){
+        $data = Obj::run()->socioController->postActivarSocio();        
+        echo $data;
+    }    
+      
     
 }
 

@@ -65,7 +65,8 @@ class socioModel extends Model{
     }
     
     public function getGridSocio() {
-        $aColumns       =   array( 'chk','numerodocumento','nombrecompleto','email','telefono','monto_invertido' ); //para la ordenacion y pintado en html
+        $aColumns = array( 'chk','numerodocumento','nombrecompleto','email','telefono','monto_invertido','monto_asignado','monto_saldo' ); //para la ordenacion y pintado en html
+
         /*
 	 * Ordenando, se verifica por que columna se ordenara
 	 */
@@ -86,6 +87,7 @@ class socioModel extends Model{
             ':sSearch' => $this->_sSearch,
         );
         $data = $this->queryAll($query,$parms);
+      
         return $data;
     }    
     
@@ -152,8 +154,8 @@ class socioModel extends Model{
     
       
     /*eliminar varios registros: Socio*/
-   public function mantenimientoFichaTecnicaAll(){        
-           foreach ($this->_chkdel as $value) {
+   public function deleteSocioAll(){        
+        foreach ($this->_chkdel as $value) {
             $query = "UPDATE `mae_persona` SET
 			`estado` = '0'
                     WHERE `id_persona` = :idPersona;";
@@ -165,7 +167,30 @@ class socioModel extends Model{
         $data = array('result'=>1);
         return $data;
     }   
+   
+    public function postDesactivarSocio(){
+        $query = "UPDATE `mae_persona` SET
+                    `estado` = 'I'
+                WHERE `id_persona` = :idPersona;";
+        $parms = array(
+            ':idPersona' => $this->_idPersona
+        );
+        $this->execute($query,$parms);
+        $data = array('result'=>1);
+        return $data;
+    }
     
+    public function postActivarSocio(){
+        $query = "UPDATE `mae_persona` SET
+                    `estado` = 'A'
+                WHERE `id_persona` = :idPersona;";
+        $parms = array(
+            ':idPersona' => $this->_idPersona
+        );
+        $this->execute($query,$parms);
+        $data = array('result'=>1);
+        return $data;
+    }   
 }
 
 ?>

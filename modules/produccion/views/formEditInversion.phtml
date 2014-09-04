@@ -1,0 +1,93 @@
+<?php /*
+* ---------------------------------------
+* --------- CREATED BY CREATOR ----------
+* fecha: 04-09-2014 14:09:13 
+* Descripcion : formEditInversion.phtml
+* ---------------------------------------
+*/
+
+/*prefijo: REINV debe ser alias en tabla men_menuprincipal*/
+$editar = Session::getPermiso('REINVED');
+$data = regInversionController::findInversion();
+
+?>
+<form id="<?php echo REINV; ?>formEditInversion" name="<?php echo REINV; ?>formEditInversion" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close"  aria-hidden="true">
+                    &times;
+                </button>
+                <h4 class="modal-title"><?php echo LABEL_A103;?></h4>
+            </div>
+            <div class="modal-body smart-form"> 
+                 <section>
+                    <div class="row">
+                        <label class="label col col-2"><?php echo LABEL_A104; ?></label>                        
+                        <div class="col col-3">
+                            <label class="input"> 
+                                <i class="icon-append fa fa-calendar-o "></i>
+                                <input type="text" id="<?php echo REINV; ?>txt_fecha" name="<?php echo REINV; ?>txt_fecha" value="<?php echo Functions::cambiaf_a_normal($data['fecha_inversion']); ?>">
+                                <b class="tooltip tooltip-top-right"><i class="fa fa-question-circle txt-color-teal"></i> <?php echo LABEL_A104M; ?></b>
+                            </label>
+                        </div>
+                        <label class="label col col-2"><?php echo LABEL_A105; ?></label>
+                            <div class="col col-4">
+                                <label class="input"> 
+                                    <i class="icon-append fa  fa-money"></i>
+                                    <input type="text" id="<?php echo REINV; ?>txt_monto" name="<?php echo REINV; ?>txt_monto" value="<?php echo number_format($data['monto_invertido'],2); ?>"></input>
+                                    <b class="tooltip tooltip-top-right"><i class="fa fa-question-circle  txt-color-teal"></i> <?php echo LABEL_A105M; ?></b>
+                                </label>
+                            </div>            
+                    </div>
+                </section>
+                
+            </div>
+            <div class="modal-footer">
+                <?php if($editar["permiso"]):?>
+                <button id="<?php echo REINV; ?>btnGrRegInversion" type="submit" class="btn txt-color-white bg-color-blueDark">
+                    <i class="fa fa-save"></i> <?php echo $editar["accion"]; ?>
+                </button>
+                <?php endif; ?>
+                <button type="button" class="btn btn-default xClose">
+                    <i class="fa fa-ban"></i> Cerrar
+                </button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</form>
+<!-- si no tiene permiso se anula submit desde cualquier input -->
+<?php if(!$editar["permiso"]): ?>
+<script>
+    simpleScript.noSubmit("#<?php echo REINV; ?>formEditInversion");
+</script>
+<?php endif; ?>
+<script>
+
+simpleScript.setEvent.date({
+      element: '#<?php echo REINV; ?>txt_fecha'
+    });
+    
+/*configurar validacion de formulario -- este codigo es de ejemplo*/
+$("#<?php echo REINV; ?>formEditInversion").validate({
+    // Rules for form validation
+    rules : {
+        <?php echo REINV; ?>txt_monto : {
+            required : true,
+            decimal: true     
+        },
+        <?php echo REINV; ?>txt_fecha : {
+            required : true,
+            date: true     
+        }
+    },
+    // No cambie el código de abajo
+    errorPlacement : function(error, element) {
+        error.insertAfter(element.parent());
+    },
+
+    submitHandler: function(){
+        regInversion.postEditarInversion();
+    }   
+});
+</script>

@@ -90,10 +90,11 @@ var regInversion_ = function(){
             bFilter:false, 
             iDisplayLength: 10,            
             aoColumns: [
-                {sTitle: "<input type='checkbox' id='"+diccionario.tabs.REINV+"chk_allr' onclick='simpleScript.checkAll(this,\"#"+diccionario.tabs.REGCL+"gridInversion\");'>", sWidth: "1%", sClass: "center", bSortable: false},                
-                {sTitle: "Fecha", sWidth: "20%"},
-                {sTitle: "Monto Invertido", sClass: "right", sWidth: "35%"},
-                {sTitle: "Estado", sWidth: "8%",  sClass: "center", bSortable: false},
+                {sTitle: "<input type='checkbox' id='"+diccionario.tabs.REINV+"chk_allr' onclick='simpleScript.checkAll(this,\"#"+diccionario.tabs.REINV+"gridInversion\");'>", sWidth: "1%", sClass: "center", bSortable: false},                
+                {sTitle: "Fecha", sClass: "center", sWidth: "10%"},
+                {sTitle: "Invertido", sClass: "right", sWidth: "20%"},   
+                {sTitle: "Asignado", sClass: "right", sWidth: "20%"},
+                {sTitle: "Saldo", sClass: "right", sWidth: "20%"},
                 {sTitle: "Acciones", sWidth: "15%", sClass: "center", bSortable: false}
             ],
             fnServerParams: function(aoData) {
@@ -162,7 +163,7 @@ var regInversion_ = function(){
             element: btn,
             dataType: 'html',
             gifProcess: true,
-            data: '&_idPersona='+_private.idInversion,
+            data: '&_idInversion='+_private.idInversion,
             root: _private.config.modulo + 'getFormEditInversion',
             fnCallback: function(data){
                 $('#cont-modal').append(data);
@@ -285,7 +286,36 @@ var regInversion_ = function(){
         });
     };     
     
-    
+    this.publico.postDeleteSocioAll = function(btn){
+        simpleScript.validaCheckBox({
+            id: "#"+diccionario.tabs.REINV+"gridSocio",
+            msn: mensajes.MSG_9,
+            fnCallback: function(){
+                simpleScript.notify.confirm({
+                    content: mensajes.MSG_7,
+                    callbackSI: function(){
+                        $("#"+diccionario.tabs.REINV+"tollInversion").hide();
+                        $("#"+diccionario.tabs.REINV+"cont-gridInversion").html('<table id="'+diccionario.tabs.REINV+'gridInversion" class="table table-striped table-bordered table-hover table-condensed" style="width:100%"></table>');                      
+                        simpleAjax.send({
+                            element: btn,
+                            form: "#"+diccionario.tabs.REINV+"formGridSocio",
+                            root: _private.config.modulo + "postDeleteSocioAll",
+                            fnCallback: function(data) {
+                                if(!isNaN(data.result) && parseInt(data.result) === 1){
+                                    simpleScript.notify.ok({
+                                        content: mensajes.MSG_8,
+                                        callback: function(){
+                                            regInversion.getGridSocio();
+                                        }
+                                    });
+                                }
+                            }
+                        });
+                    }
+                });
+            }
+        });
+    };   
     
     this.publico.postNewRegInversion = function(){
        simpleAjax.send({
@@ -300,8 +330,11 @@ var regInversion_ = function(){
                     simpleScript.notify.ok({
                         content: mensajes.MSG_3,
                         callback: function(){
-                           var _socio = $('#'+diccionario.tabs.REINV+'regInversion-cont').html();
-                           regInversion.getGridInversion(_private.idSocio,_socio);
+                           simpleScript.reloadGrid('#'+diccionario.tabs.REINV+'gridSocio');
+                           setTimeout(function(){            
+                                var _socio = $('#'+diccionario.tabs.REINV+'regInversion-cont').html();
+                                regInversion.getGridInversion(_private.idSocio,_socio);                                      
+                           }, 1000);                                                            
                            simpleScript.closeModal('#'+diccionario.tabs.REINV+'formNewRegInversion');
                         }
                     });
@@ -314,25 +347,64 @@ var regInversion_ = function(){
         });
     };
     
-    this.publico.postDeleteRegInversionAll = function(btn){
+      this.publico.postEditarInversion = function(){
+        simpleAjax.send({
+            flag: 2,
+            element: '#'+diccionario.tabs.REINV+'btnGrRegInversion',
+            root: _private.config.modulo + 'postEditInversion',
+            form: '#'+diccionario.tabs.REINV+'formEditInversion',
+            data: '&_idInversion='+_private.idInversion+'&_idPersona='+_private.idSocio,
+            clear: true,
+            fnCallback: function(data) {
+                if(!isNaN(data.result) && parseInt(data.result) === 1){
+                    simpleScript.notify.ok({
+                        content: mensajes.MSG_3,
+                        callback: function(){
+                            _private.idInversion = 0;
+                           simpleScript.reloadGrid('#'+diccionario.tabs.REINV+'gridSocio');   
+                           setTimeout(function(){            
+                                simpleScript.reloadGrid('#'+diccionario.tabs.REINV+'gridInversion');                               
+                           }, 1000);                            
+                           simpleScript.closeModal('#'+diccionario.tabs.REINV+'formEditInversion');
+                        }
+                    });
+                }else if(!isNaN(data.result) && parseInt(data.result) === 2){
+                    simpleScript.notify.error({
+                        content: mensajes.MSG_4
+                    });
+                }else if(!isNaN(data.result) && parseInt(data.result) === 3){
+                    simpleScript.notify.error({
+                        content: mensajes.MSG_15
+                    });
+                    simpleScript.closeModal('#'+diccionario.tabs.REINV+'formEditInversion');
+                }
+            }
+        });
+    };     
+    
+    
+    this.publico.postDeleteInversionAll = function(btn){
         simpleScript.validaCheckBox({
-            id: "#"+diccionario.tabs.REINV+"gridRegInversion",
+            id: "#"+diccionario.tabs.REINV+"gridInversion",
             msn: mensajes.MSG_9,
             fnCallback: function(){
                 simpleScript.notify.confirm({
                     content: mensajes.MSG_7,
-                    callbackSI: function(){
+                    callbackSI: function(){                        
                         simpleAjax.send({
-                            flag: 3, //si se usa SP usar flag, sino se puede eliminar esta linea
                             element: btn,
-                            form: "#"+diccionario.tabs.REINV+"formGridRegInversion",
-                            root: _private.config.modulo + "postDeleteRegInversionAll",
+                            form: "#"+diccionario.tabs.REINV+"formGridSocio",
+                            root: _private.config.modulo + "postDeleteInversionAll",
                             fnCallback: function(data) {
                                 if(!isNaN(data.result) && parseInt(data.result) === 1){
                                     simpleScript.notify.ok({
                                         content: mensajes.MSG_8,
                                         callback: function(){
-                                            regInversion.getGridInversion();
+                                            simpleScript.reloadGrid('#'+diccionario.tabs.REINV+'gridSocio');
+                                            setTimeout(function(){            
+                                                 var _socio = $('#'+diccionario.tabs.REINV+'regInversion-cont').html();
+                                                 regInversion.getGridInversion(_private.idSocio,_socio);                                      
+                                            }, 1000);         
                                         }
                                     });
                                 }
@@ -343,6 +415,44 @@ var regInversion_ = function(){
             }
         });
     };
+    
+    this.publico.postDesactivarSocio = function(btn,id){
+        simpleAjax.send({
+            element: btn,
+            root: _private.config.modulo + 'postDesactivarSocio',
+            data: '&_idPersona='+id,
+            clear: true,
+            fnCallback: function(data) {
+                if(!isNaN(data.result) && parseInt(data.result) === 1){
+                    simpleScript.notify.ok({
+                        content: 'Socio se desactivo correctamente',
+                        callback: function(){
+                           simpleScript.reloadGrid('#'+diccionario.tabs.REINV+'gridSocio'); 
+                        }
+                    });
+                }
+            }
+        });
+    };
+    
+    this.publico.postActivarSocio = function(btn,id){
+        simpleAjax.send({
+            element: btn,
+            root: _private.config.modulo + 'postActivarSocio',
+            data: '&_idPersona='+id,
+            clear: true,
+            fnCallback: function(data) {
+                if(!isNaN(data.result) && parseInt(data.result) === 1){
+                    simpleScript.notify.ok({
+                        content: 'Socio se activo correctamente',
+                        callback: function(){
+                            simpleScript.reloadGrid('#'+diccionario.tabs.REINV+'gridSocio'); 
+                        }
+                    });
+                }
+            }
+        });
+    };    
     
     return this.publico;
     

@@ -53,11 +53,13 @@ var socio_ = function(){
             iDisplayLength: 10,            
             aoColumns: [
                 {sTitle: "<input type='checkbox' id='"+diccionario.tabs.TAB_SOCIO+"chk_all' onclick='simpleScript.checkAll(this,\"#"+diccionario.tabs.TAB_SOCIO+"gridSocio\");'>", sWidth: "1%", sClass: "center", bSortable: false},
-                {sTitle: "RUC", sClass: "center", sWidth: "15%"},               
-                {sTitle: "Nombres y Apellidos", sWidth: "25%"},
+                {sTitle: "RUC", sClass: "center", sWidth: "10%"},               
+                {sTitle: "Nombres y Apellidos", sWidth: "20%"},
                 {sTitle: "Email", sWidth: "20%"},
-                {sTitle: "Teléfonos", sWidth: "15%"},
-                {sTitle: "Invertido", sWidth: "15%",  sClass: "right"},
+                {sTitle: "Teléfonos", sWidth: "5%"},
+                {sTitle: "Invertido", sWidth: "10%",  sClass: "right"},
+                {sTitle: "Asignado", sWidth: "10%",  sClass: "right"},
+                {sTitle: "Saldo", sWidth: "10%",  sClass: "right"},
                 {sTitle: "Estado", sWidth: "8%",  sClass: "center", bSortable: false},                
                 {sTitle: "Acciones", sWidth: "15%", sClass: "center", bSortable: false}
             ],
@@ -225,7 +227,6 @@ var socio_ = function(){
                     content: mensajes.MSG_7,
                     callbackSI: function(){
                         simpleAjax.send({
-                            flag: 3, //si se usa SP usar flag, sino se puede eliminar esta linea
                             element: btn,
                             form: "#"+diccionario.tabs.TAB_SOCIO+"formGridSocio",
                             root: _private.config.modulo + "postDeleteSocioAll",
@@ -242,6 +243,44 @@ var socio_ = function(){
                         });
                     }
                 });
+            }
+        });
+    };
+    
+    this.publico.postDesactivarSocio = function(btn,id){
+        simpleAjax.send({
+            element: btn,
+            root: _private.config.modulo + 'postDesactivarSocio',
+            data: '&_idPersona='+id,
+            clear: true,
+            fnCallback: function(data) {
+                if(!isNaN(data.result) && parseInt(data.result) === 1){
+                    simpleScript.notify.ok({
+                        content: 'Socio se desactivo correctamente',
+                        callback: function(){
+                           simpleScript.reloadGrid('#'+diccionario.tabs.TAB_SOCIO+'gridSocio'); 
+                        }
+                    });
+                }
+            }
+        });
+    };
+    
+    this.publico.postActivarSocio = function(btn,id){
+        simpleAjax.send({
+            element: btn,
+            root: _private.config.modulo + 'postActivarSocio',
+            data: '&_idPersona='+id,
+            clear: true,
+            fnCallback: function(data) {
+                if(!isNaN(data.result) && parseInt(data.result) === 1){
+                    simpleScript.notify.ok({
+                        content: 'Socio se activo correctamente',
+                        callback: function(){
+                            simpleScript.reloadGrid('#'+diccionario.tabs.TAB_SOCIO+'gridSocio'); 
+                        }
+                    });
+                }
             }
         });
     };

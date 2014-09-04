@@ -39,15 +39,18 @@ class socioController extends Controller{
                 $encryptReg = Aes::en($aRow['id_persona']);
                 
                 if($aRow['estado'] == 'A'){
-                    $estado = '<button type=\"button\" class=\"btn btn-success btn-xs\" title=\"Desactivar\" onclick=\"socio.postDesactivar(this,\''.$encryptReg.'\')\">Activo</button>';
+                    $estado = '<button type=\"button\" class=\"btn btn-success btn-xs\" title=\"Desactivar\" onclick=\"socio.postDesactivarSocio(this,\''.$encryptReg.'\')\">Activo</button>';
                 }elseif($aRow['estado'] == 'I'){
-                    $estado = '<button type=\"button\" class=\"btn btn-danger btn-xs\" title=\"Activar\" onclick=\"socio.postActivar(this,\''.$encryptReg.'\')\">Inactivo</button>';
+                    $estado = '<button type=\"button\" class=\"btn btn-danger btn-xs\" title=\"Activar\" onclick=\"socio.postActivarSocio(this,\''.$encryptReg.'\')\">Inactivo</button>';
+                }
+                if ($aRow['monto_invertido'] == 0)
+                    $chk = '<input id=\"c_'.(++$key).'\" type=\"checkbox\" name=\"'.TAB_SOCIO.'chk_delete[]\" value=\"'.$encryptReg.'\">';
+                else {
+                    $chk = '';
                 }
                 
-                $chk = '<input id=\"c_'.(++$key).'\" type=\"checkbox\" name=\"'.TAB_SOCIO.'chk_delete[]\" value=\"'.$encryptReg.'\">';
-                
                 /*datos de manera manual*/
-                $sOutput .= '["'.$chk.'","'.$aRow['numerodocumento'].'","'.$aRow['nombrecompleto'].'","'.$aRow['email'].'","'.$aRow['telefono'].'","'.number_format($aRow['monto_invertido'],2).'","'.$estado.'", ';
+                $sOutput .= '["'.$chk.'","'.$aRow['numerodocumento'].'","'.$aRow['nombrecompleto'].'","'.$aRow['email'].'","'.$aRow['telefono'].'","'.number_format($aRow['monto_invertido'],2).'","'.number_format($aRow['monto_asignado'],2).'","'.number_format($aRow['monto_saldo'],2).'","'.$estado.'", ';
                 
 
                 /*
@@ -134,7 +137,17 @@ class socioController extends Controller{
         $data = Obj::run()->registrarVendedorModel->getUbigeo($pro);        
         return $data;
     }    
+    public function postDesactivarSocio(){
+        $data = Obj::run()->socioModel->postDesactivarSocio();
+        
+        echo json_encode($data);
+    }
     
+    public function postActivarSocio(){
+        $data = Obj::run()->socioModel->postActivarSocio();
+        
+        echo json_encode($data);
+    }    
   
     
 }

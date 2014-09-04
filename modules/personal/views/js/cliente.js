@@ -296,7 +296,7 @@ var cliente_ = function(){
                     simpleScript.notify.ok({
                         content: 'Cliente se desactivo correctamente',
                         callback: function(){
-                            cliente.getGridCliente();
+                            simpleScript.reloadGrid('#'+diccionario.tabs.REGCL+'gridCliente'); 
                         }
                     });
                 }
@@ -315,7 +315,7 @@ var cliente_ = function(){
                     simpleScript.notify.ok({
                         content: 'Cliente se activo correctamente',
                         callback: function(){
-                            cliente.getGridCliente();
+                            simpleScript.reloadGrid('#'+diccionario.tabs.REGCL+'gridCliente'); 
                         }
                     });
                 }
