@@ -125,6 +125,7 @@ define('LABEL_GNC11','Abre ventana para buscar y agregar productos');
 define('LABEL_GNC12','Buscar Cliente');
 define('LABEL_GNC13','Validez de oferta (días)');
 define('LABEL_GNC14','Costo de producción');
+define('LABEL_GNC15','Generar cotización');
 
 /*----------------------    ASIGNAR CUENTAS----------------------*/
 define('LABEL_ASC1','Cuentas');
