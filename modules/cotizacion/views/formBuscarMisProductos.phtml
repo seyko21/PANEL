@@ -77,9 +77,20 @@ $buscar = Session::getPermiso('REGVEBS');
                             <?php endforeach; ?> 
                             <?php 
                             $diff = 0;
-                            if($rows < 7){
+                            if($rows < 7 && $rows > 0){
                                 $diff = 7 - $rows;
                                 echo Functions::createCell(array('row'=>($diff),'cols'=>7)); 
+                            }else{
+                            ?>  
+                            <tr>
+                                <td>
+                                    <div class="alert alert-block alert-warning">
+                                        <h4 class="alert-heading"><?php echo LABEL_ADV?></h4>
+                                        <?php echo LABEL_ADVMSN?>
+                                    </div>
+                                </td>
+                            </tr>
+                            <?php
                             }
                             ?>
                         </tbody>

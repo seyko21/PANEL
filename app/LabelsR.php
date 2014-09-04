@@ -20,6 +20,8 @@ define('LABEL_AN','Anulado');
 define('LABEL_DESACT','Inactivo');
 define('BTN_ACT','Activar');
 define('BTN_DESACT','Desactivar');
+define('LABEL_ADV','Advertencia');
+define('LABEL_ADVMSN','Todas las caratulas han sido cotizadas.');
 
 /*FORMULARIO LOGIN*/
 define('L_TITLE','Ingresar');
