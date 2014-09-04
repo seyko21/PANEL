@@ -142,8 +142,8 @@ $data = generarCotizacionController::findCotizacion();
                                                 <label class="input"><input id="<?php echo T8; ?>hhddPrecio" name="<?php echo T8; ?>hhddPrecio[]" value="<?php echo number_format($value['precio'],2); ?>" data-value="<?php echo $value['precio']; ?>" style="text-align:right" type="text"></label>
                                             </td>
                                             <td class="right"><?php echo $value['cantidad_mes']; ?></td>
-                                            <td class="right"><?php echo $value['costo_produccion']; ?></td>
-                                            <td class="right"><?php echo $value['importe']; ?></td>
+                                            <td class="right"><?php echo number_format($value['costo_produccion'],2); ?></td>
+                                            <td class="right"><?php echo number_format($value['importe'],2); ?></td>
                                             <td>
                                                 <button type="button" class="btn btn-danger btn-xs" onclick="generarCotizacionScript.removeProducto('<?php echo $idProducto; ?>', '<?php echo $value['precio']; ?>');"><i class="fa fa-trash-o"></i>
                                                 </button>
@@ -163,7 +163,7 @@ $data = generarCotizacionController::findCotizacion();
                         <div class="form-group" style="margin-top:5px">
                             <div class="col-md-2 pull-right">
                                 <div class="input">
-                                    <input class="form-control right" type="text" id="<?php echo T8; ?>txt_total" name="<?php echo T8; ?>txt_total" readonly>
+                                    <input class="form-control right" type="text" id="<?php echo T8; ?>txt_total" name="<?php echo T8; ?>txt_total" readonly="" value="<?php echo number_format($datac[0]['total'], 2); ?>">
                                 </div>
                             </div>
                             <label class="control-label col-md-2 pull-right" for="prepend"><?php echo LABEL_T; ?></label>
