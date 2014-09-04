@@ -23,6 +23,7 @@ class socioModel extends Model{
     private $_numeroDoc;
     private $_dni;
     private $_ubigeo;
+    private $_tiposocio;
     private $_chkdel;
     private $_usuario;
     
@@ -52,6 +53,8 @@ class socioModel extends Model{
         $this->_numeroDoc = $this->post(TAB_SOCIO.'txt_nrodocumento');
         $this->_dni = $this->post(TAB_SOCIO.'txt_dni');
         $this->_ubigeo = $this->post(TAB_SOCIO.'lst_ubigeo');
+        $this->_tiposocio = $this->post(TAB_SOCIO.'lst_tiposocio');
+                
         $this->_usuario = Session::get('sys_idUsuario');
         $this->_chkdel  = $this->post(TAB_SOCIO.'chk_delete');
         
@@ -100,6 +103,7 @@ class socioModel extends Model{
                     :numeroDoc,
                     :dni,
                     :ubigeo,
+                    :tiposocio,
                     :usuario
                 );";
         $parms = array(
@@ -115,6 +119,7 @@ class socioModel extends Model{
             ':numeroDoc' => $this->_numeroDoc,
             ':dni' => $this->_dni,
             ':ubigeo' => $this->_ubigeo,
+            ':tiposocio' => $this->_tiposocio,
             ':usuario' => $this->_usuario
         );
         $data = $this->queryOne($query,$parms);     
@@ -133,7 +138,8 @@ class socioModel extends Model{
                         dni,
                         email,
                         sexo,
-                        telefono 
+                        telefono,
+                        tipo_socio
                     FROM mae_persona WHERE id_persona = :idPersona;";
 
             $parms = array(

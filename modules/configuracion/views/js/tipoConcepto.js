@@ -123,7 +123,7 @@ var tipoConcepto_ = function(){
                             }
                             /*se verifica si existe tabb para recargar grid*/
                             if($('#'+diccionario.tabs.T5+'_CONTAINER').length > 0){
-                               simpleScript.reloadGrid('#'+diccionario.tabs.T5+'gridTipoConceptos');
+                               tipoConcepto.getTipoConceptos();
                             }
                         }
                     });
@@ -261,3 +261,5 @@ var tipoConcepto_ = function(){
     
 };
  var tipoConcepto = new tipoConcepto_();
+ 
+ 

@@ -102,7 +102,7 @@ var parametro_ = function(){
                     simpleScript.notify.ok({
                         content: mensajes.MSG_3,
                         callback: function(){
-                            simpleScript.reloadGrid('#'+diccionario.tabs.T100+'gridParametro');
+                            parametro.getGridParametro();
                         }
                     });
                 }else if(!isNaN(data.result) && parseInt(data.result) === 2){

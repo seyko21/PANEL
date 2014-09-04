@@ -262,7 +262,7 @@ var fichaTecnica_ = function(){
                     simpleScript.notify.ok({
                         content: mensajes.MSG_3,
                         callback: function(){                            
-                            simpleScript.reloadGrid('#'+diccionario.tabs.T102+'gridFichaTecnica');
+                            fichaTecnica.getGridCaratula();
                             simpleScript.closeModal('#'+diccionario.tabs.T102+'formFichaTecnica');
                         }
                     });
@@ -359,7 +359,7 @@ var fichaTecnica_ = function(){
                     simpleScript.notify.ok({
                         content: mensajes.MSG_3,
                         callback: function(){
-                            simpleScript.reloadGrid('#'+diccionario.tabs.T102+'gridFichaTecnica');                                                                                       
+                            simpleScript.reloadGrid('#'+diccionario.tabs.T102+'gridFichaTecnica');                                                                                 
                             setTimeout(function(){            
                                   fichaTecnica.getGridCaratula(_private.idProducto);                                   
                             }, 1000);                                                                                      
@@ -471,3 +471,4 @@ var fichaTecnica_ = function(){
     
 };
 var fichaTecnica = new fichaTecnica_();
+

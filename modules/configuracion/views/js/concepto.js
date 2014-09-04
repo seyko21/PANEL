@@ -102,7 +102,7 @@ var concepto_ = function(){
                     simpleScript.notify.ok({
                         content: mensajes.MSG_3,
                         callback: function(){
-                            simpleScript.reloadGrid('#'+diccionario.tabs.T6+'gridConceptos');                            
+                            concepto.getGridConceptos();                            
                         }
                     });
                 }else if(!isNaN(data.result) && parseInt(data.result) === 2){

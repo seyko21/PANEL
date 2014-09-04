@@ -98,6 +98,8 @@ define('LABEL_A93','Distrito');
 define('LABEL_A94','Nro. de Documento');
 define('LABEL_A95','DNI');
 define('LABEL_A95M','Ingresar nro. de DNI');
+define('LABEL_A96','Tipo de Socio');
+
 /*----------------------REGISTRAR Inversion----------------------*/
 define('LABEL_A100','Inversión del Socio');
 define('LABEL_A101','Socio: ');

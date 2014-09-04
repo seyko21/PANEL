@@ -219,7 +219,32 @@ $data = socioController::findSocio();
                         </div>
                     </div>
                 </section>
-                                              
+                 <section>
+                    <div class="row">
+                        <label class="label col col-3"><?php echo LABEL_A96; ?></label>
+                        <div class="col col-8">
+                            <label class="select"> 
+                                <?php
+                                    $tiposoc = Array (
+                                            Array ( 'id' => 'P', 'descripcion' => 'PRINCIPAL' ),
+                                            Array ( 'id' => 'A', 'descripcion' => 'ASOCIADO' )
+                                    );                                   
+                                    echo Functions::selectHtml(array(
+                                        'data'=>$tiposoc,
+                                        'atributes'=>array(
+                                            'id'=>TAB_SOCIO.'lst_tiposocio',
+                                            'name'=>TAB_SOCIO.'lst_tiposocio'
+                                        ),
+                                        'etiqueta'=>'descripcion',
+                                        'value'=>'id',
+                                        'defaultEtiqueta'=>$data['tipo_socio'],
+                                        'txtSelect'=>true
+                                    ));
+                                ?><i></i>
+                            </label>
+                        </div>
+                    </div>
+                </section>                                
                 
                
             </div>

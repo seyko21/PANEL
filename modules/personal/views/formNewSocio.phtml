@@ -85,8 +85,7 @@ $grabar = Session::getPermiso("REGSOGR");
                         <div class="col col-8">
                             <label class="select"> 
                                 <?php
-                                    $data = socioController::getDepartamentos();
-                                    
+                                    $data = socioController::getDepartamentos();                                    
                                     echo Functions::selectHtml(array(
                                         'data'=>$data,
                                         'atributes'=>array(
@@ -188,7 +187,32 @@ $grabar = Session::getPermiso("REGSOGR");
                         </div>
                     </div>
                 </section>
-                                              
+               <section>
+                    <div class="row">
+                        <label class="label col col-3"><?php echo LABEL_A96; ?></label>
+                        <div class="col col-8">
+                            <label class="select"> 
+                                <?php
+                                    $tiposoc = Array (
+                                            Array ( 'id' => 'P', 'descripcion' => 'PRINCIPAL' ),
+                                            Array ( 'id' => 'A', 'descripcion' => 'ASOCIADO' )
+                                    );                                   
+                                    echo Functions::selectHtml(array(
+                                        'data'=>$tiposoc,
+                                        'atributes'=>array(
+                                            'id'=>TAB_SOCIO.'lst_tiposocio',
+                                            'name'=>TAB_SOCIO.'lst_tiposocio'
+                                        ),
+                                        'etiqueta'=>'descripcion',
+                                        'value'=>'id',
+                                        'defaultEtiqueta'=>'',
+                                        'txtSelect'=>true
+                                    ));
+                                ?><i></i>
+                            </label>
+                        </div>
+                    </div>
+                </section>                               
                 
                
             </div>
