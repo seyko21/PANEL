@@ -233,7 +233,7 @@ var simpleScript_ = function(){
         
         date: function(obj){
             $(obj.element).datepicker({
-                dateFormat: 'dd-mm-yy',
+                dateFormat: 'dd/mm/yy',
                 prevText: '<i class="fa fa-chevron-left"></i>',
                 nextText: '<i class="fa fa-chevron-right"></i>',
                 changeMonth: true,
@@ -244,7 +244,7 @@ var simpleScript_ = function(){
                 
         dateRange: function(obj){
             $(obj.ini).datepicker({
-                dateFormat: 'dd-mm-yy',
+                dateFormat: 'dd/mm/yy',
                 prevText: '<i class="fa fa-chevron-left"></i>',
                 nextText: '<i class="fa fa-chevron-right"></i>',
                 numberOfMonths: 1,
