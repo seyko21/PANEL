@@ -233,32 +233,33 @@ var simpleScript_ = function(){
         
         date: function(obj){
             $(obj.element).datepicker({
-                showOn: "button",
-                buttonImage: "img/date.png",
-                buttonImageOnly: true,
+                dateFormat: 'dd-mm-yy',
+                prevText: '<i class="fa fa-chevron-left"></i>',
+                nextText: '<i class="fa fa-chevron-right"></i>',
                 changeMonth: true,
                 changeYear: true
             });
-            $(obj.element).mask('99/99/9999');
+            $(obj.element).mask('99-99-9999');
         },
                 
         dateRange: function(obj){
             $(obj.ini).datepicker({
-                showOn: "button",
-                buttonImageOnly: true,
-                buttonImage: "img/date.png",
+                dateFormat: 'dd-mm-yy',
+                prevText: '<i class="fa fa-chevron-left"></i>',
+                nextText: '<i class="fa fa-chevron-right"></i>',
                 numberOfMonths: 1,
                 onClose: function( selectedDate ) {
                     $(obj.fin).datepicker( "option", obj.opt, selectedDate );
                 }
             });
-            $(obj.ini).mask('99/99/9999');
+            $(obj.ini).mask('99-99-9999');
         }
     };
     
     this.public.listBox = function(obj){
         var data = obj.data,
             optionSelec = obj.optionSelec, /*para mostrar texto seleccionar*/
+            optionAll = obj.optionAll, /*para mostrar texto todos*/
             content = obj.content,
             deffault = (obj.deffault !== undefined)?obj.deffault:'', /*para seleccionar un registro*/
             fnCallback = (obj.fnCallback !== undefined)?obj.fnCallback:'',
@@ -273,6 +274,9 @@ var simpleScript_ = function(){
         var cb = '<select '+attr+'>';
         if(optionSelec){
             cb += '<option value="">Seleccionar</option>';
+        }
+        if(optionAll){
+            cb += '<option value="A">Todos</option>';
         }
         var sel = '';
         var id = '';
