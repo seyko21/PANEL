@@ -15,6 +15,7 @@ class configurarUsuariosModel extends Model{
     private $_activo;
     private $_roles;
     private $_usuario;
+    private $_rol;
     
     /*para el grid*/
     private $_iDisplayStart;
@@ -38,7 +39,7 @@ class configurarUsuariosModel extends Model{
         $this->_mail  = $this->post(T4.'txt_email');
         $this->_xsearch  = $this->post(T4.'_term');
         $this->_usuario = Session::get('sys_idUsuario');
-        
+        $this->_rol   = $this->post('_rol');
         $this->_iDisplayStart  =   $this->post('iDisplayStart'); 
         $this->_iDisplayLength =   $this->post('iDisplayLength'); 
         $this->_iSortingCols   =   $this->post('iSortingCols');
@@ -94,8 +95,11 @@ class configurarUsuariosModel extends Model{
     }
     
     public function getEmpleados(){
-        $query = " SELECT persona,id_persona,nombrecompleto,email FROM `mae_persona` WHERE nombrecompleto LIKE CONCAT('%',:nombre,'%') AND estado = :estado ";
+        
+        $query = 'call sp_perBuscarPersona(:flag, :nombre, :estado);';
+        
         $parms = array(
+            ':flag' => $this->_rol,
             ':nombre'=> $this->_xsearch,
             ':estado' => 'A',
         );

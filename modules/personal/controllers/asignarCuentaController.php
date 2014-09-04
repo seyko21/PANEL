@@ -18,8 +18,11 @@ class asignarCuentaController extends Controller{
     }
     
     public function getGridAsignarCuenta(){
-        $sEcho          =   $this->post('sEcho');
         
+        $editar = Session::getPermiso('ASCUED');
+        
+        $sEcho          =   $this->post('sEcho');
+                
         $rResult = Obj::run()->asignarCuentaModel->gridAsignarCuenta();
         
         if(!isset($rResult['error'])){  
@@ -40,23 +43,22 @@ class asignarCuentaController extends Controller{
                 
                 /*antes de enviar id se encrypta*/
                 $encryptReg = Aes::en($aRow['id_asignacion']);
+                
                 $chk = '<input id=\"c_'.(++$key).'\" type=\"checkbox\" name=\"'.ASCU.'chk_delete[]\" value=\"'.$encryptReg.'\">';
                 /*datos de manera manual*/
-                $sOutput .= '["'.$chk.'","'.$aRow['codigo'].'","'.$aRow['lado'].' - '.$aRow['ubicacion'].'","'.$aRow['nombrecompleto'].'","'.$aRow['porcentaje_comision'].'","'.$estado.'" ';
+                $sOutput .= '["'.$chk.'","'.$aRow['codigo'].'","'.Functions::cambiaf_a_normal($aRow['fecha_creacion']).'","'.$aRow['ubicacion'].' - '.$aRow['lado'].'","'.$aRow['nombrecompleto'].'","'.$aRow['porcentaje_comision'].'","'.$estado.'" , ';
 
                 /*
                  * configurando botones (add/edit/delete etc)
                  * se verifica si tiene permisos para editar
                  */
-//                $sOutput .= '"<div class=\"btn-group\">';
-//                
-//                if($eliminar['permiso']){
-//                    $sOutput .= '<button type=\"button\" class=\"btn btn-danger\" title=\"'.$eliminar['accion'].'\" onclick=\"generarCotizacion.postEmail(this,\''.$encryptReg.'\')\">';
-//                    $sOutput .= '    <i class=\"fa fa-envelope-o fa-lg\"></i>';
-//                    $sOutput .= '</button>';
-//                }
-//                
-//                $sOutput .= ' </div>" ';
+                $sOutput .= '"<div class=\"btn-group\">';
+                if($editar['permiso'] == 1){
+                    $sOutput .= '<button type=\"button\" class=\"btn btn-primary btn-xs\" title=\"'.$editar['accion'].'\" onclick=\"asignarCuenta.getEditarCuenta(this,\''.$encryptReg.'\')\">';
+                    $sOutput .= '    <i class=\"fa fa-edit fa-lg\"></i>';
+                    $sOutput .= '</button>';
+                }
+                $sOutput .= ' </div>" ';
 
                 $sOutput = substr_replace( $sOutput, "", -1 );
                 $sOutput .= '],';

@@ -5,7 +5,7 @@ var configurarUsuarios_ = function(){
     _private.idUsuario = 0;
     
     _private.tab = 0;
-    
+    _private.rol = '';
     _private.config = {
         modulo: 'usuarios/configurarUsuarios/'
     };
@@ -92,15 +92,17 @@ var configurarUsuarios_ = function(){
         });
     };
     
-    this.public.getFormEmpleado = function(btn,tab){
+    this.public.getFormEmpleado = function(btn,tab,rol,label){
         _private.tab = tab;
+        _private.rol = rol;
         simpleAjax.send({
             element: btn,
             dataType: 'html',
-            root: _private.config.modulo + 'getFormEmpleado',
+            root: _private.config.modulo + 'getFormEmpleado',            
             fnCallback: function(data){
-                $('#cont-modal').append(data);  /*los formularios con append*/
+                $('#cont-modal').append(data);  /*los formularios con append*/                
                 $('#'+diccionario.tabs.T4+'formBuscarEmpleado').modal('show');
+                $('#'+diccionario.tabs.T4+'formBuscarEmpleado h4.modal-title').html(label);
             }
         });
     };
@@ -123,6 +125,7 @@ var configurarUsuarios_ = function(){
             fnServerParams: function(aoData) {
                 aoData.push({"name": diccionario.tabs.T4+"_term", "value": $('#'+diccionario.tabs.T4+'txt_search').val()});
                 aoData.push({"name": "_tab", "value": _private.tab});
+                aoData.push({"name": "_rol", "value": _private.rol});
             },
             fnDrawCallback: function() {
                 $('#'+diccionario.tabs.T4+'gridEmpleadosFound_filter').remove();

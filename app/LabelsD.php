@@ -8,7 +8,9 @@
 
 define('BTN_AAGREGAR','Agregar');
 define('BTN_AANULAR','Anular');
-
+define('LABEL_AC100','Todas las caratulas han sido asignadas.');
+define('LABEL_BSVEN','Buscar vendedor');
+define('LABEL_BSPER','Buscar Persona');
 /*----------------------PARAMETROS----------------------*/
 define('LABEL_A1','Parámetro');
 define('LABEL_A2','Nuevo Parámetro');

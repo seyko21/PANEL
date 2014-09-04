@@ -29,7 +29,7 @@ $buscar = Session::getPermiso("ASCUBS");
                             <input class="form-control" type="text" id="<?php echo ASCU; ?>txt_empleadodesc" name="<?php echo ASCU; ?>txt_empleadodesc" readonly>
                             <span class="input-group-btn">
                                 <?php if ($buscar['permiso']): ?>
-                                    <button class="btn btn-default" type="button" onclick="configurarUsuarios.getFormEmpleado(this, '<?php echo ASCU; ?>');"><i class="fa fa-search"></i> Buscar</button>
+                                    <button class="btn btn-default" type="button" onclick="configurarUsuarios.getFormEmpleado(this, '<?php echo ASCU; ?>','2','<?php echo LABEL_BSVEN; ?>');"><i class="fa fa-search"></i> Buscar</button>
 <?php endif; ?>
                             </span>
                         </div>
@@ -65,10 +65,10 @@ $buscar = Session::getPermiso("ASCUBS");
                                 /* productos sin asignar */
                                 $dataprod = asignarCuentaController::getProductos();
                                 //echo Functions::createCell(array('row'=>5,'cols'=>4)); 
-                                $f = 0;
-
+                                $f = 0;                               
                                 foreach ($dataprod as $value):
-                                    ?>
+                                  $f++
+                              ?>
                                     <tr>
                                         <td>
                                             <label class="checkbox">
@@ -80,7 +80,21 @@ $buscar = Session::getPermiso("ASCUBS");
                                         <td class="right"><?php echo number_format($value['precio'], 2); ?></td>
                                         <td><?php echo $value['aarea']; ?></td>
                                     </tr>
-                            <?php endforeach; ?>
+                            <?php endforeach; 
+                                
+                            if ($f == 0){
+                            ?>  
+                            <tr>
+                                <td colspan="8">
+                                    <div class="alert alert-block alert-warning">
+                                        <h4 class="alert-heading"><?php echo LABEL_ADV?></h4>
+                                        <?php echo LABEL_AC100?>
+                                    </div>
+                                </td>
+                            </tr>
+                            <?php
+                            }
+                            ?>        
 
                         </tbody>
                     </table>
