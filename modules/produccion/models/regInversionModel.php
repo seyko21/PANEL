@@ -68,14 +68,13 @@ class regInversionModel extends Model{
     }    
     
      public function mantenimientoInversion(){
-        $query = "call sp_prodInversionMantenimiento(:flag,:key,:idpersona,:fecha, :monto,:estado,:usuario);";
+        $query = "call sp_prodInversionMantenimiento(:flag,:key,:idpersona,:fecha, :monto,:usuario);";
         $parms = array(
             ':flag' => $this->_flag,
             ':key' => $this->_idInversion,
             ':idpersona' => $this->_idPersona,            
             ':fecha' => Functions::cambiaf_a_mysql($this->_fecha),            
-            ':monto' => $this->_monto,            
-            ':estado' => ($this->_estado == 'A')?'A':'I',
+            ':monto' => $this->_monto,                        
             ':usuario' => $this->_usuario
         );
         $data = $this->queryOne($query,$parms);    

@@ -245,7 +245,7 @@ var regInversion_ = function(){
                     simpleScript.notify.ok({
                         content: mensajes.MSG_3,
                         callback: function(){
-                           simpleScript.reloadGrid('#'+diccionario.tabs.REINV+'gridSocio');
+                           regInversion.getGridSocio();
                            simpleScript.closeModal('#'+diccionario.tabs.REINV+'formNewSocio');
                         }
                     });
@@ -300,8 +300,9 @@ var regInversion_ = function(){
                     simpleScript.notify.ok({
                         content: mensajes.MSG_3,
                         callback: function(){
-                          // simpleScript.reloadGrid('#'+diccionario.tabs.REINV+'gridInversion');
-                          // simpleScript.closeModal('#'+diccionario.tabs.REINV+'formNewRegInversion');
+                           var _socio = $('#'+diccionario.tabs.REINV+'regInversion-cont').html();
+                           regInversion.getGridInversion(_private.idSocio,_socio);
+                           simpleScript.closeModal('#'+diccionario.tabs.REINV+'formNewRegInversion');
                         }
                     });
                 }else if(!isNaN(data.result) && parseInt(data.result) === 2){
@@ -331,7 +332,7 @@ var regInversion_ = function(){
                                     simpleScript.notify.ok({
                                         content: mensajes.MSG_8,
                                         callback: function(){
-                                            regInversion.getGridRegInversion();
+                                            regInversion.getGridInversion();
                                         }
                                     });
                                 }

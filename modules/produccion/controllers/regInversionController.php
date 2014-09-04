@@ -210,27 +210,22 @@ class regInversionController extends Controller{
         echo $data;
     }
     
-    
-    
+        
     /*envia datos para grabar registro: RegInversion*/
-    public function postNewRegInversion(){
+    public function postNewInversion(){
         $data = Obj::run()->regInversionModel->mantenimientoInversion();
         
         echo json_encode($data);
-    }
-    
-    
-    
-    
+    }    
     /*envia datos para editar registro: RegInversion*/
-    public function postEditRegInversion(){
+    public function postEditInversion(){
         $data = Obj::run()->regInversionModel->editRegInversion();
         
         echo json_encode($data);
     }
     
     /*envia datos para eliminar registro: RegInversion*/
-    public function postDeleteRegInversionAll(){
+    public function postDeleteInversionAll(){
         $data = Obj::run()->regInversionModel->deleteRegInversionAll();
         
         echo json_encode($data);
