@@ -10,8 +10,8 @@
 class socioController extends Controller{
 
     public function __construct() {
-        $this->loadModel("socio");
-         $this->loadController(array('modulo'=>'personal','controller'=>'registrarVendedor')); 
+        $this->loadModel(array('modulo'=>'personal','modelo'=>'socio'));
+        $this->loadController(array('modulo'=>'personal','controller'=>'registrarVendedor')); 
     }
     
     public function index(){ 
@@ -74,6 +74,7 @@ class socioController extends Controller{
         
         echo $sOutput;
     }
+   
     
     /*carga formulario (newSocio.phtml) para nuevo registro: Socio*/
     public function getFormNewSocio(){

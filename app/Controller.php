@@ -23,10 +23,10 @@ abstract class Controller extends Obj{
         $controller = $control['controller'] . 'Controller';
         $rutaControlador = ROOT . 'modules' . DS . $modulo. DS . 'controllers' . DS . $controller . '.php';
         
-        if (is_readable($rutaControlador)) {
+        if (is_readable($rutaControlador)) {            
             require_once ($rutaControlador);
             Registry::anonimous($controller); /*registro el controlador por unica vez*/
-        } else {
+        } else {            
             echo 'Error de Controlador: <b>'.$rutaControlador.'</b> no encontrado.';
         }
     }

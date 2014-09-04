@@ -98,4 +98,15 @@ define('LABEL_A93','Distrito');
 define('LABEL_A94','Nro. de Documento');
 define('LABEL_A95','DNI');
 define('LABEL_A95M','Ingresar nro. de DNI');
+/*----------------------REGISTRAR Inversion----------------------*/
+define('LABEL_A100','Inversión del Socio');
+define('LABEL_A101','Socio: ');
+define('LABEL_A102','Registrar Inversión');
+define('LABEL_A103','Editar Inversión');
+define('LABEL_A104','Fecha Inversión ');
+define('LABEL_A104M','Debe de ingresar fecha en el formato: dd/mm/aaaa ');
+define('LABEL_A105','Monto a Invertir ');
+define('LABEL_A105M','Debe de ingresar el monto de inversión');
+
+
 ?>

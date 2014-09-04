@@ -10,23 +10,43 @@ $grabar   = Session::getPermiso("REINVGR");
 $eliminar = Session::getPermiso("REINVDE");
 echo Functions::widgetOpen(array(
         "id"=>REINV,
-        "title"=>"RegInversion"
+        "title"=>LABEL_A100
     )); 
 ?>
 
-    <div class="widget-body-toolbar"></div>
+  <div class="widget-body-toolbar"></div>
     <div class="dataTables_wrapper form-inline" role="grid">
-        <div class="dt-top-row">
+        <div class="dt-top-row pull-left" style="width: 49%">
             <div class="DTTT btn-group">
                 <!-- verificar permisos -->
                 <?php if($grabar["permiso"]): ?>
-                <button id="<?php echo REINV; ?>btnNewRegInversion" type="button" onclick="regInversion.getFormNewRegInversion(this);" class="btn txt-color-white bg-color-blueDark">
+                <button id="<?php echo REINV; ?>btnNewSocio" type="button" onclick="regInversion.getFormNewSocio(this);" class="btn txt-color-white bg-color-blueDark">
                     <i class="fa fa-file-o"></i> <?php echo BTN_NUEVO; ?>
                 </button>
                 <?php endif; ?>
                 <!-- verificar permisos -->
                 <?php if($eliminar["permiso"]): ?>
-                <button id="<?php echo REINV; ?>btnDeleteRegInversion" type="button" onclick="regInversion.postDeleteRegInversionAll(this);" class="btn txt-color-white bg-color-blueDark">
+                <button id="<?php echo REINV; ?>btnDeleteSocio" type="button" onclick="regInversion.postDeleteSocioAll(this);" class="btn txt-color-white bg-color-blueDark">
+                    <i class="fa fa-trash-o"></i> <?php echo BTN_DELETE; ?>
+                </button>
+                <?php endif; ?>
+            </div>
+        </div>
+        <div id="<?php echo REINV; ?>tollInversion" class="dt-top-row pull-right" style="width: 49%;display: none">
+            <button type="button" class="btn btn-warning" style="position:absolute;margin-top:-38px">
+                <?php echo LABEL_A101; ?> 
+                <span id="<?php echo REINV; ?>regInversion-cont"></span>
+            </button>
+            <div class="DTTT btn-group">
+                <!-- verificar permisos -->
+                <?php if($grabar["permiso"]): ?>
+                <button id="<?php echo REINV; ?>btnNewInv" type="button" onclick="regInversion.getFormNewRegInversion(this);" class="btn txt-color-white bg-color-blueDark">
+                    <i class="fa fa-file-o"></i> <?php echo BTN_NUEVO; ?>
+                </button>
+                <?php endif; ?>
+                <!-- verificar permisos -->
+                <?php if($eliminar["permiso"]): ?>
+                <button id="<?php echo REINV; ?>btnDeleteInv" type="button" onclick="regInversion.postDeleteInversionAll(this);" class="btn txt-color-white bg-color-blueDark">
                     <i class="fa fa-trash-o"></i> <?php echo BTN_DELETE; ?>
                 </button>
                 <?php endif; ?>
@@ -34,7 +54,12 @@ echo Functions::widgetOpen(array(
         </div>
 
     </div>
-    <form id="<?php echo REINV; ?>formGridRegInversion" name="<?php echo T5; ?>formGridRegInversion">
-        <table id="<?php echo REINV; ?>gridRegInversion" class="table table-striped table-bordered table-hover table-condensed" style="width:100%"></table>
+    <form id="<?php echo REINV; ?>formGridSocio" name="<?php echo REINV; ?>formGridSocio">
+        <div class="pull-left" style="width: 49%;border-right: 1px solid #ccc">
+            <table id="<?php echo REINV; ?>gridSocio" class="table table-striped table-bordered table-hover table-condensed" style="width:100%"></table>
+        </div>
+        <div id="<?php echo REINV; ?>cont-gridInversion" class="pull-right" style="width: 49%;border-left: 1px solid #ccc">
+            <table id="<?php echo REINV; ?>gridInversion" class="table table-striped table-bordered table-hover table-condensed" style="width:100%"></table>
+        </div>
     </form>
 <?php echo Functions::widgetClose(); ?>

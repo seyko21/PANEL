@@ -117,7 +117,7 @@ class socioModel extends Model{
             ':ubigeo' => $this->_ubigeo,
             ':usuario' => $this->_usuario
         );
-        $data = $this->queryOne($query,$parms);        
+        $data = $this->queryOne($query,$parms);     
         return $data;
     }
     

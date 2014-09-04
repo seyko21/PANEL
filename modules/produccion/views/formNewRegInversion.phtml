@@ -16,10 +16,30 @@ $grabar = Session::getPermiso("REINVGR");
                 <button type="button" class="close"  aria-hidden="true">
                     &times;
                 </button>
-                <h4 class="modal-title">TITULO DE FORMULARIO</h4>
+                <h4 class="modal-title"><?php echo LABEL_A102;?></h4>
             </div>
             <div class="modal-body smart-form"> 
-                CONTENIDO DEL FORM (utilizar constantes en Labels.php)
+                 <section>
+                    <div class="row">
+                        <label class="label col col-2"><?php echo LABEL_A104; ?></label>                        
+                        <div class="col col-3">
+                            <label class="input"> 
+                                <i class="icon-append fa fa-calendar-o "></i>
+                                <input type="text" id="<?php echo REINV; ?>txt_fecha" name="<?php echo REINV; ?>txt_fecha" >
+                                <b class="tooltip tooltip-top-right"><i class="fa fa-question-circle txt-color-teal"></i> <?php echo LABEL_A104M; ?></b>
+                            </label>
+                        </div>
+                        <label class="label col col-2"><?php echo LABEL_A105; ?></label>
+                            <div class="col col-4">
+                                <label class="input"> 
+                                    <i class="icon-append fa  fa-money"></i>
+                                    <input type="text" id="<?php echo REINV; ?>txt_monto" name="<?php echo REINV; ?>txt_monto"></input>
+                                    <b class="tooltip tooltip-top-right"><i class="fa fa-question-circle  txt-color-teal"></i> <?php echo LABEL_A105M; ?></b>
+                                </label>
+                            </div>            
+                    </div>
+                </section>
+                
             </div>
             <div class="modal-footer">
                 <?php if($grabar["permiso"]):?>
@@ -41,25 +61,24 @@ $grabar = Session::getPermiso("REINVGR");
 </script>
 <?php endif; ?>
 <script>
+
+simpleScript.setEvent.date({
+      element: '#<?php echo REINV; ?>txt_fecha'
+    });
+    
 /*configurar validacion de formulario -- este codigo es de ejemplo*/
 $("#<?php echo REINV; ?>formNewRegInversion").validate({
     // Rules for form validation
     rules : {
-        <?php echo REINV; ?>txt_campo : {
+        <?php echo REINV; ?>txt_monto : {
             required : true,
-            regular: true,
-            minlength: 3
+            decimal: true     
+        },
+        <?php echo REINV; ?>txt_fecha : {
+            required : true,
+            date: true     
         }
     },
-
-    // Msn para validacion -- es opcional -- se puede eliminar, validate tiene los msn configurados por defecto
-    messages : {
-        <?php echo REINV; ?>txt_campo : {
-            required : "Campo requerido",
-            regular: "No se permite caracteres inválidos"
-        }
-    },
-
     // No cambie el código de abajo
     errorPlacement : function(error, element) {
         error.insertAfter(element.parent());

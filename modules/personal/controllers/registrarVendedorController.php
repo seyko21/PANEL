@@ -9,7 +9,8 @@
 class registrarVendedorController extends Controller{
 
     public function __construct() {
-        $this->loadModel('registrarVendedor');
+        $this->loadModel(array('modulo'=>'personal','modelo'=>'registrarVendedor'));
+        //$this->loadModel('registrarVendedor');
     }
     
     public function index(){ 

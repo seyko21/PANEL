@@ -239,7 +239,7 @@ var simpleScript_ = function(){
                 changeMonth: true,
                 changeYear: true
             });
-            $(obj.element).mask('99-99-9999');
+            $(obj.element).mask('99/99/9999');
         },
                 
         dateRange: function(obj){
@@ -252,7 +252,7 @@ var simpleScript_ = function(){
                     $(obj.fin).datepicker( "option", obj.opt, selectedDate );
                 }
             });
-            $(obj.ini).mask('99-99-9999');
+            $(obj.ini).mask('99/99/9999');
         }
     };
     

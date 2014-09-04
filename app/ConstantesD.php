@@ -6,12 +6,12 @@
  * Descripcion : 
  */
 
-define("T100","TAB_PARAM");     /*tab modulo Parametros*/
-define("T101","TAB_TIPA");     /*tab modulo Tipo de Panel*/
+define("T100","VPARAM");     /*tab modulo Parametros*/
+define("T101","VTIPA");     /*tab modulo Tipo de Panel*/
 define("T102","VFITEC");     /*tab modulo Ficha Tecnica*/
 define("PERMU","VPERMU");             /*tab modulo PERMISOMUNICIPAL*/
-define("TAB_CATPRE","TAB_CATPRE");             /*tab modulo CATALOGOPRECIO*/
-define("TAB_CONPER","TAB_CONPER");             /*tab modulo CONSULTAPERMISOS*/
-define("TAB_SOCIO","TAB_SOCIO");             /*tab modulo SOCIO*/
-define("REINV","REINV");             /*tab modulo REGINVERSION*/
+define("TAB_CATPRE","VCATPRE");             /*tab modulo CATALOGOPRECIO*/
+define("TAB_CONPER","VCONPER");             /*tab modulo CONSULTAPERMISOS*/
+define("TAB_SOCIO","VSOCIO");             /*tab modulo SOCIO*/
+define("REINV","VREINV");             /*tab modulo REGINVERSION*/
 ?>

@@ -36,7 +36,7 @@ class permisoMunicipalModel extends Model{
         
         $this->_fi = $this->post(PERMU.'txt_fi'); 
         $this->_ff = $this->post(PERMU.'txt_ff'); 
-        $this->_monto = $this->post(PERMU.'txt_monto'); 
+        $this->_monto = str_replace(',','',Formulario::getParam(PERMU.'txt_monto'));
         $this->_obs = $this->post(PERMU.'txt_observacion'); 
         
         $this->_iDisplayStart  =   Formulario::getParam("iDisplayStart"); 
