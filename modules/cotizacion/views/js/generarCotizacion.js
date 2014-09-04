@@ -45,7 +45,7 @@ var generarCotizacion_ = function(){
             aoColumns: [
                 {sTitle: "<input type='checkbox' id='"+diccionario.tabs.T8+"chk_all' onclick='simpleScript.checkAll(this,\"#"+diccionario.tabs.T8+"gridGenerarCotizacion\");'>", sWidth: "1%", sClass: "center", bSortable: false},
                 {sTitle: "Código", sClass: "center",sWidth: "15%"},
-                {sTitle: "Prospecto", sWidth: "40%"},
+                {sTitle: "Prospecto", sWidth: "25%"},
                 {sTitle: "Fecha", sWidth: "10%",sClass: "center"},
                 {sTitle: "Meses", sWidth: "10%",sClass: "center"},
                 {sTitle: "Validez", sWidth: "10%", sClass: "center"},
