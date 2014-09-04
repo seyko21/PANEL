@@ -48,7 +48,7 @@ var generarCotizacion_ = function(){
                 {sTitle: "Prospecto", sWidth: "25%"},
                 {sTitle: "Fecha", sWidth: "10%",sClass: "center"},
                 {sTitle: "Meses", sWidth: "10%",sClass: "center"},
-                {sTitle: "Validez", sWidth: "10%", sClass: "center"},
+                {sTitle: "Fec. Venc.", sWidth: "10%", sClass: "center"},
                 {sTitle: "Total", sWidth: "10%", sClass: "right"},
                 {sTitle: "Acciones", sWidth: "15%", sClass: "center", bSortable: false}
             ],
