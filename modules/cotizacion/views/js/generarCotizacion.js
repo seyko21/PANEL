@@ -45,16 +45,17 @@ var generarCotizacion_ = function(){
             aoColumns: [
                 {sTitle: "<input type='checkbox' id='"+diccionario.tabs.T8+"chk_all' onclick='simpleScript.checkAll(this,\"#"+diccionario.tabs.T8+"gridGenerarCotizacion\");'>", sWidth: "1%", sClass: "center", bSortable: false},
                 {sTitle: "Código", sClass: "center",sWidth: "15%"},
-                {sTitle: "Apellidos y Nombres", sWidth: "40%"},
-                {sTitle: "Meses", sWidth: "10%",sClass: "center", bSortable: false},
-                {sTitle: "Oferta", sWidth: "10%", sClass: "center", bSortable: false},
+                {sTitle: "Prospecto", sWidth: "40%"},
+                {sTitle: "Fecha", sWidth: "10%"},
+                {sTitle: "Meses", sWidth: "10%",sClass: "center"},
+                {sTitle: "Validez", sWidth: "10%", sClass: "center"},
                 {sTitle: "Acciones", sWidth: "15%", sClass: "center", bSortable: false}
             ],
             aaSorting: [[1, 'desc']],
             sScrollY: "300px",
             sAjaxSource: _private.config.modulo+'getGridCotizacion',
             fnDrawCallback: function() {
-                $('#'+diccionario.tabs.T8+'gridGenerarCotizacion_filter').find('input').attr('placeholder','Buscar por código o appellidos y nombres').css('width','280px');
+                $('#'+diccionario.tabs.T8+'gridGenerarCotizacion_filter').find('input').attr('placeholder','Buscar por código o prospecto').css('width','280px');
                 /*para hacer evento invisible*/
                 simpleScript.removeAttr.click({
                     container: '#widget_'+diccionario.tabs.T8,
