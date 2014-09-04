@@ -223,7 +223,7 @@ var generarCotizacion_ = function(){
                                     simpleScript.notify.ok({
                                         content: mensajes.MSG_3,
                                         callback: function(){
-                                            simpleScript.reloadGrid('#'+diccionario.tabs.T8+'gridGenerarCotizacion');
+                                            generarCotizacion.getGridCotizacion();
                                             simpleScript.closeTab(diccionario.tabs.T8+'new');
                                             //simpleScript.closeModal('#'+diccionario.tabs.T8+'formGenerarCotizacion');
                                         }
