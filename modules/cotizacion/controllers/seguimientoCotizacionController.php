@@ -34,7 +34,7 @@ class seguimientoCotizacionController extends Controller{
         
         if(!isset($rResult['error'])){  
             $iTotal         = isset($rResult[0]['total'])?$rResult[0]['total']:0;
-            
+
             $sOutput = '{';
             $sOutput .= '"sEcho": '.intval($sEcho).', ';
             $sOutput .= '"iTotalRecords": '.$iTotal.', ';
@@ -77,10 +77,10 @@ class seguimientoCotizacionController extends Controller{
                 $sOutput .= '"<div class=\"smart-form\">';
                 $sOutput .= '<label class=\"select\">';
                 $sOutput .= '<select id=\"'.SEGCO.$p.'lst_estado\" onchange=\"seguimientoCotizacion.getFormObservacion(\''.$encryptReg.'\',this.value,\''.$aRow['estado'].'\',\''.SEGCO.$p.'lst_estado\');\">';
-                $sOutput .= '<option value=\"E\" '.$selE.'>Emitido</option>';
-                $sOutput .= '<option value=\"P\" '.$selP.'>Procesado</option>';
-                $sOutput .= '<option value=\"O\" '.$selO.'>Orden de servicio</option>';
-                $sOutput .= '<option value=\"R\" '.$selR.'>Rechazado</option>';
+                $sOutput .= '<option value=\"E\" '.$selE.'>'.SEGCO_5.'</option>';
+                $sOutput .= '<option value=\"P\" '.$selP.'>'.SEGCO_6.'</option>';
+                $sOutput .= '<option value=\"O\" '.$selO.'>'.SEGCO_7.'</option>';
+                $sOutput .= '<option value=\"R\" '.$selR.'>'.SEGCO_8.'</option>';
                 $sOutput .= '</select><i></i>';
                 $sOutput .= '</label>';
                 $sOutput .= ' </div>" ';
