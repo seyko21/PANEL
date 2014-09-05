@@ -1,0 +1,87 @@
+<?php
+
+/*
+ * Documento   : editarTipoConcepto
+ * Creado      : 05-ago-2014
+ * Autor       : ..... .....
+ * Descripcion : 
+ */
+$editar = Session::getPermiso('ASCUED');
+$data = asignarCuentaController::findAsignarCuenta();
+?>
+<form id="<?php echo ASCU; ?>formEditAsignarCuenta" name="<?php echo ASCU; ?>formEditAsignarCuenta" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close"  aria-hidden="true">
+                    &times;
+                </button>
+                <h4 class="modal-title"><?php echo LABEL_A110;?></h4>
+            </div>
+            <div class="modal-body smart-form">
+                <section>
+                    <div class="modal-body form-horizontal"> 
+                        <div class="form-group">
+                            <label class="control-label col-md-2" for="prepend"><?php echo LABEL_A112; ?></label>
+                            <div class="col-md-10">
+                                <div class="input-group input-group-sm">                                    
+                                    <input class="form-control" type="text" id="<?php echo ASCU; ?>txt_vendedor" name="<?php echo ASCU; ?>txt_vendedor" value="<?php echo $data['nombrecompleto']; ?>" readonly>                                         
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>   
+                           
+                <section>
+                    <div class="row">
+                        <label class="label col col-2"><?php echo LABEL_A111; ?></label>
+                        <div class="col col-10">
+                            <label class="input"> 
+                                <i class="icon-append fa fa-keyboard-o"></i>
+                                <input type="text" id="<?php echo ASCU; ?>txt_comision" name="<?php echo ASCU; ?>txt_comision" value="<?php echo $data['porcentaje_comision']; ?>">
+                                <b class="tooltip tooltip-top-right"><i class="fa fa-keyboard-o txt-color-teal"></i> <?php echo LABEL_A111M; ?></b>
+                            </label>
+                        </div>
+                    </div>
+                </section>               
+            </div>
+            <div class="modal-footer">
+                <?php if($editar['permiso']):?>
+                <button id="<?php echo ASCU; ?>btnGtac" type="submit" class="btn txt-color-white bg-color-blueDark">
+                    <i class="fa fa-save"></i> <?php echo $editar['accion']; ?>
+                </button>
+                <?php endif; ?>
+                <button type="button" class="btn btn-default xClose">
+                    <i class="fa fa-ban"></i> <?php echo BTN_CLOSE; ?>
+                </button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+
+<!-- si no riene permiso se anula submit desde cualquier input -->
+<?php if(!$editar['permiso']): ?>
+<script>
+    simpleScript.noSubmit('#<?php echo ASCU; ?>formEditAsignarCuenta');
+</script>
+<?php endif; ?>
+<script>
+    $('#<?php echo ASCU; ?>formEditAsignarCuenta').validate({
+        // Rules for form validation
+        rules : {
+                <?php echo ASCU; ?>txt_comision : {
+                        required : true,                        
+                        decimal: true
+                }
+        },
+
+        // Do not change code below
+        errorPlacement : function(error, element) {
+                error.insertAfter(element.parent());
+        },
+
+        submitHandler: function(){
+            asignarCuenta.postEditarAsignarCuenta();
+        }   
+    });
+</script>
+</form>

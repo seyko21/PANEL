@@ -44,6 +44,9 @@ $buscar = Session::getPermiso("ASCUBS");
                     </div>
                 </div>
                 <p>
+                    
+                    
+                    
                 <div class="si-access" style="height: 250px;">
                     <table id="<?php echo ASCU; ?>gridProductos" class="table table-bordered table-striped table-condensed table-hover smart-form has-tickbox">
                         <thead>
@@ -64,7 +67,7 @@ $buscar = Session::getPermiso("ASCUBS");
                             <?php
                                 /* productos sin asignar */
                                 $dataprod = asignarCuentaController::getProductos();
-                                //echo Functions::createCell(array('row'=>5,'cols'=>4)); 
+                                
                                 $f = 0;                               
                                 foreach ($dataprod as $value):
                                   $f++
@@ -76,7 +79,7 @@ $buscar = Session::getPermiso("ASCUBS");
                                             </label>
                                         </td>
                                         <td><?php echo $value['codigo']; ?></td>
-                                        <td><?php echo $value['descripcion'] . ' - ' . $value['ubicacion']; ?></td>
+                                        <td><?php echo  $value['ubicacion']. ' - ' . $value['descripcion']; ?></td>
                                         <td class="right"><?php echo number_format($value['precio'], 2); ?></td>
                                         <td><?php echo $value['aarea']; ?></td>
                                     </tr>
@@ -92,7 +95,7 @@ $buscar = Session::getPermiso("ASCUBS");
                                     </div>
                                 </td>
                             </tr>
-                            <?php
+                            <?php                                
                             }
                             ?>        
 
@@ -125,8 +128,8 @@ $buscar = Session::getPermiso("ASCUBS");
 
         (function() {
             var mySt = new scrollTable('<?php echo ASCU; ?>gridProductos',{
-//            fixedCols : 1,
-            colWidths : [30, 100, 425, 100, 80]
+            //fixedCols : 1,
+            colWidths : [30, 100, 450, 100, 90]
         });
         })();
         $('.sHeaderInner').find('table').removeAttr('id');

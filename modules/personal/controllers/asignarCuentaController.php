@@ -79,7 +79,7 @@ class asignarCuentaController extends Controller{
     
     /*carga formulario (editAsignarCuenta.phtml) para editar registro: AsignarCuenta*/
     public function getFormEditAsignarCuenta(){
-        Obj::run()->View->render("formEditAsignarCuenta");
+        Obj::run()->View->render("editarAsignarCuenta");
     }
     
     /*productos sin asignar*/
@@ -108,6 +108,12 @@ class asignarCuentaController extends Controller{
         $data = Obj::run()->asignarCuentaModel->anularAsignarCuentaAll();
         
         echo json_encode($data);
+    }
+    
+    public static function findAsignarCuenta(){
+         $data = Obj::run()->asignarCuentaModel->findAsignarCuenta();
+        
+        return $data;
     }
     
 }

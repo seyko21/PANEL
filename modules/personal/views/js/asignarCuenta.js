@@ -87,6 +87,21 @@ var asignarCuenta_ = function(){
             }
         });
     };
+    this.publico.getEditarCuenta = function(btn,id){
+        _private.idAsignarCuenta = id;
+       
+        simpleAjax.send({
+            element: btn,
+            dataType: 'html',
+            gifProcess: true,
+            data: '&_idAsignarCuenta='+_private.idAsignarCuenta,
+            root: _private.config.modulo + 'getFormEditAsignarCuenta',
+            fnCallback: function(data){
+                $('#cont-modal').append(data);
+                $('#'+diccionario.tabs.ASCU+'formEditAsignarCuenta').modal('show');
+            }
+        });
+    };
     
     this.publico.postNewAsignarCuenta = function(){
         simpleScript.validaCheckBox({

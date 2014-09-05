@@ -112,5 +112,11 @@ define('LABEL_A104M','Debe de ingresar fecha en el formato: dd/mm/aaaa ');
 define('LABEL_A105','Monto a Invertir ');
 define('LABEL_A105M','Debe de ingresar el monto de inversión');
 
+/*----------------------Editar Asignar Cuenta - Comision----------------------*/
+define('LABEL_A110','Editar Comisión');
+define('LABEL_A111','Comisión');
+define('LABEL_A111M','Debe de especificar la Comisión de ganancia del vendedor.');
+define('LABEL_A112','Vendedor');
+define('LABEL_A113','Panel');
 
 ?>

@@ -115,7 +115,21 @@ class asignarCuentaModel extends Model{
     
     /*seleccionar registro a editar: AsignarCuenta*/
     public function findAsignarCuenta(){
-        /*-----------------LOGICA PARA SELECT REGISTRO A EDITAR-----------------*/
+        $query = "SELECT ac.`id_asignacion`, ac.`porcentaje_comision`, ac.`id_caratula`, ac.`id_persona`,
+                p.`nombrecompleto`, CONCAT(a.`ubicacion`,' - ',c.`descripcion`,' - ',a.`dimesion_area`,' m2') AS catalogo			
+               FROM `lgk_asignacioncuenta` ac
+               INNER JOIN `mae_persona` p ON p.`id_persona` = ac.`id_persona`
+               INNER JOIN `lgk_caratula` c ON c.`id_caratula` = ac.`id_caratula` 
+               INNER JOIN `lgk_catalogo` a ON a.`id_producto` = c.`id_producto`
+               WHERE `id_asignacion` = :id;";
+        
+        $parms = array(
+            ':id'=>$this->_idAsignarCuenta
+        );
+        
+        $data = $this->queryOne($query,$parms);
+        return $data;
+    
     }
     
     /*editar registro: AsignarCuenta*/
@@ -153,7 +167,8 @@ class asignarCuentaModel extends Model{
         FROM `lgk_caratula` c 
         INNER JOIN `lgk_catalogo` k ON k.`id_producto`=c.`id_producto`
         WHERE c.`estado`='D' AND k.`estado`=:estado
-        and not exists (select * from lgk_asignacioncuenta ac where ac.id_caratula = c.id_caratula and ac.estado='R');";
+        and not exists (select * from lgk_asignacioncuenta ac where ac.id_caratula = c.id_caratula and ac.estado='R')
+        order by 2 asc ;";
         
         $parms = array(
             ':estado'=>'A'
