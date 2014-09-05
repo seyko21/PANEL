@@ -142,4 +142,16 @@ define('LABEL_RC5','Representantes');
 define('LABEL_RC6','Cliente:');
 define('LABEL_RC7','Nuevo Representante');
 define('LABEL_RC8','Editar Representante');
+
+/*----------------------    SEGUIMIENTO DE COTIZACION  ----------------------*/
+define('SEGCO_1','Seguimiento de Cotización');
+define('SEGCO_2','Observación');
+define('SEGCO_3','Ingrese una observación para el cambio de estado');
+define('SEGCO_4','Todos');
+define('SEGCO_5','Emitido');
+define('SEGCO_6','Procesado');
+define('SEGCO_7','Orden de servicio');
+define('SEGCO_8','Rechazado');
+define('SEGCO_9','Estado');
+
 ?>

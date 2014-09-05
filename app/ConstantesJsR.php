@@ -21,3 +21,4 @@ var diccionario = {
         ASCU: '<?php echo ASCU; ?>',
         CLIT: '<?php echo CLIT; ?>',
         REGCL: '<?php echo REGCL; ?>',
+        SEGCO: '<?php echo SEGCO; ?>',

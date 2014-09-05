@@ -57,6 +57,18 @@ var simpleScript_ = function(){
                 $(this).attr('onkeypress',null);
             });
         },
+        change: function(obj){
+            var collection = $(obj.container).find(obj.typeElement);
+            $.each(collection,function(){
+                /*obtener evento*/
+                var change = $(this).attr('onchange');
+                    /*asignar evento*/
+                    $(this).change(function(){
+                        eval(change);
+                    });
+                $(this).attr('onchange',null);
+            });
+        }
     };
     
     this.public.notify = {
