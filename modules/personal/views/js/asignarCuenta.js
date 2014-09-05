@@ -134,6 +134,33 @@ var asignarCuenta_ = function(){
         });
     };
     
+    this.publico.postEditAsignarCuenta = function(){
+        simpleAjax.send({
+            flag: 2,
+            element: '#'+diccionario.tabs.ASCU+'btnGtac',
+            root: _private.config.modulo + 'postEditAsignarCuenta',
+            form: '#'+diccionario.tabs.ASCU+'formEditAsignarCuenta',
+            data: '&_idAsignarCuenta='+_private.idAsignarCuenta,
+            clear: true,
+            fnCallback: function(data) {
+                if(!isNaN(data.result) && parseInt(data.result) === 1){
+                    simpleScript.notify.ok({
+                        content: mensajes.MSG_3,
+                        callback: function(){
+                            _private.idAsignarCuenta = 0;
+                            simpleScript.reloadGrid('#'+diccionario.tabs.ASCU+'gridAsignarCuenta'); 
+                            simpleScript.closeModal('#'+diccionario.tabs.ASCU+'formEditAsignarCuenta');
+                        }
+                    });
+                }else if(!isNaN(data.result) && parseInt(data.result) === 2){
+                    simpleScript.notify.error({
+                        content: mensajes.MSG_4
+                    });
+                }
+            }
+        });
+    };    
+    
     this.publico.postAnularAsignarCuentaAll = function(btn){
         simpleScript.validaCheckBox({
             id: "#"+diccionario.tabs.ASCU+"gridAsignarCuenta",

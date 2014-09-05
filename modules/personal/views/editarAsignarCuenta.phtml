@@ -10,7 +10,7 @@ $editar = Session::getPermiso('ASCUED');
 $data = asignarCuentaController::findAsignarCuenta();
 ?>
 <form id="<?php echo ASCU; ?>formEditAsignarCuenta" name="<?php echo ASCU; ?>formEditAsignarCuenta" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
+    <div class="modal-dialog" >
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close"  aria-hidden="true">
@@ -18,32 +18,39 @@ $data = asignarCuentaController::findAsignarCuenta();
                 </button>
                 <h4 class="modal-title"><?php echo LABEL_A110;?></h4>
             </div>
-            <div class="modal-body smart-form">
-                <section>
-                    <div class="modal-body form-horizontal"> 
-                        <div class="form-group">
-                            <label class="control-label col-md-2" for="prepend"><?php echo LABEL_A112; ?></label>
-                            <div class="col-md-10">
-                                <div class="input-group input-group-sm">                                    
-                                    <input class="form-control" type="text" id="<?php echo ASCU; ?>txt_vendedor" name="<?php echo ASCU; ?>txt_vendedor" value="<?php echo $data['nombrecompleto']; ?>" readonly>                                         
-                                </div>
-                            </div>
+             <div class="modal-body form-horizontal"> 
+                <div class="form-group">
+                    <label class="control-label col-md-2" for="prepend"><?php echo LABEL_A112; ?></label>
+                    <div class="col-md-10">
+                        <div class="input-group-sm">            
+                            <input class="form-control" type="text" id="<?php echo ASCU; ?>txt_empleadodesc" name="<?php echo ASCU; ?>txt_empleadodesc" value="<?php echo $data['nombrecompleto']; ?>" disabled="disabled" >                                  
                         </div>
                     </div>
-                </section>   
-                           
-                <section>
-                    <div class="row">
-                        <label class="label col col-2"><?php echo LABEL_A111; ?></label>
-                        <div class="col col-10">
-                            <label class="input"> 
-                                <i class="icon-append fa fa-keyboard-o"></i>
-                                <input type="text" id="<?php echo ASCU; ?>txt_comision" name="<?php echo ASCU; ?>txt_comision" value="<?php echo $data['porcentaje_comision']; ?>">
-                                <b class="tooltip tooltip-top-right"><i class="fa fa-keyboard-o txt-color-teal"></i> <?php echo LABEL_A111M; ?></b>
-                            </label>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-md-2" for="prepend"><?php echo LABEL_A114; ?></label>
+                    <div class="col-md-10">
+                        <div class="input-group input-group-sm">            
+                            <input class="form-control" type="text" id="<?php echo ASCU; ?>txt_codigo" name="<?php echo ASCU; ?>txt_codigo" value="<?php echo $data['codigo']; ?>" disabled="disabled" >                                  
                         </div>
                     </div>
-                </section>               
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-md-2" for="prepend"><?php echo LABEL_A113; ?></label>
+                    <div class="col-md-10">
+                        <div class="input-group-sm">            
+                            <input class="form-control" type="text" id="<?php echo ASCU; ?>txt_panel" name="<?php echo ASCU; ?>txt_panel" value="<?php echo $data['catalogo']; ?>" disabled="disabled" >                                  
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-md-2" for="prepend"><?php echo LABEL_A111; ?></label>
+                    <div class="col-md-10">
+                        <div class="input-group input-group-sm">
+                            <input class="form-control" type="text" id="<?php echo ASCU; ?>txt_comision" name="<?php echo ASCU; ?>txt_comision" value="<?php echo $data['porcentaje_comision']; ?>">
+                        </div>
+                    </div>
+                </div>             
             </div>
             <div class="modal-footer">
                 <?php if($editar['permiso']):?>
@@ -80,7 +87,7 @@ $data = asignarCuentaController::findAsignarCuenta();
         },
 
         submitHandler: function(){
-            asignarCuenta.postEditarAsignarCuenta();
+            asignarCuenta.postEditAsignarCuenta();
         }   
     });
 </script>

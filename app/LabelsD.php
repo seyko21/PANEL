@@ -118,5 +118,6 @@ define('LABEL_A111','Comisión');
 define('LABEL_A111M','Debe de especificar la Comisión de ganancia del vendedor.');
 define('LABEL_A112','Vendedor');
 define('LABEL_A113','Panel');
+define('LABEL_A114','Código');
 
 ?>

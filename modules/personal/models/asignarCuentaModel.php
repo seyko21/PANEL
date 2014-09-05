@@ -13,10 +13,9 @@ class asignarCuentaModel extends Model{
     private $_idAsignarCuenta;
     private $_idPersona;
     private $_productos;
-    private $_comision;
     private $_usuario;
     private $_chkdel;
-    
+    private $_comision;
     /*para el grid*/
     private $_iDisplayStart;
     private $_iDisplayLength;
@@ -116,7 +115,8 @@ class asignarCuentaModel extends Model{
     /*seleccionar registro a editar: AsignarCuenta*/
     public function findAsignarCuenta(){
         $query = "SELECT ac.`id_asignacion`, ac.`porcentaje_comision`, ac.`id_caratula`, ac.`id_persona`,
-                p.`nombrecompleto`, CONCAT(a.`ubicacion`,' - ',c.`descripcion`,' - ',a.`dimesion_area`,' m2') AS catalogo			
+                p.`nombrecompleto`, CONCAT(a.`ubicacion`,' - ',c.`descripcion`,' - ',a.`dimesion_area`,' m2') AS catalogo,
+                c.codigo
                FROM `lgk_asignacioncuenta` ac
                INNER JOIN `mae_persona` p ON p.`id_persona` = ac.`id_persona`
                INNER JOIN `lgk_caratula` c ON c.`id_caratula` = ac.`id_caratula` 
@@ -134,7 +134,16 @@ class asignarCuentaModel extends Model{
     
     /*editar registro: AsignarCuenta*/
     public function editAsignarCuenta(){
-        /*-------------------------LOGICA PARA EL UPDATE------------------------*/
+        $query = "UPDATE `lgk_asignacioncuenta` SET
+                    `porcentaje_comision`= :comision
+                WHERE `id_asignacion` = :id;";
+        $parms = array(
+            ':comision' => $this->_comision,
+            ':id' => $this->_idAsignarCuenta
+        );
+        $this->execute($query,$parms);
+        $data = array('result'=>1);
+        return $data;
     }
     
     /*eliminar varios registros: AsignarCuenta*/
@@ -177,7 +186,7 @@ class asignarCuentaModel extends Model{
         $data = $this->queryAll($query,$parms);
         return $data;
     }
-    
+   
     
 }
 
