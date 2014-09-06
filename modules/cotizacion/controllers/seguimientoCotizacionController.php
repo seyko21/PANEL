@@ -60,31 +60,39 @@ class seguimientoCotizacionController extends Controller{
                 $selP = '';
                 $selO = '';
                 $selR = '';
+                $estado = '';
                 switch($aRow['estado']) {
                     case "E":
                         $selE = 'selected=\"selected\"';
+                        $estado = SEGCO_5;
                         break;
                     case "P":
                         $selP = 'selected=\"selected\"';
+                        $estado = SEGCO_6;
                         break;
                     case "O":
                         $selO = 'selected=\"selected\"';
+                        $estado = SEGCO_7;
                         break;
                     case "R":
                         $selR = 'selected=\"selected\"';
+                        $estado = SEGCO_8;
                         break;
                 }
-                $sOutput .= '"<div class=\"smart-form\">';
-                $sOutput .= '<label class=\"select\">';
-                $sOutput .= '<select id=\"'.SEGCO.$p.'lst_estado\" onchange=\"seguimientoCotizacion.getFormObservacion(\''.$encryptReg.'\',this.value,\''.$aRow['estado'].'\',\''.SEGCO.$p.'lst_estado\');\">';
-                $sOutput .= '<option value=\"E\" '.$selE.'>'.SEGCO_5.'</option>';
-                $sOutput .= '<option value=\"P\" '.$selP.'>'.SEGCO_6.'</option>';
-                $sOutput .= '<option value=\"O\" '.$selO.'>'.SEGCO_7.'</option>';
-                $sOutput .= '<option value=\"R\" '.$selR.'>'.SEGCO_8.'</option>';
-                $sOutput .= '</select><i></i>';
-                $sOutput .= '</label>';
-                $sOutput .= ' </div>" ';
-                
+                if($aRow['estado'] == 'E'){
+                    $sOutput .= '"<div class=\"smart-form\">';
+                    $sOutput .= '<label class=\"select\">';
+                    $sOutput .= '<select id=\"'.SEGCO.$p.'lst_estado\" onchange=\"seguimientoCotizacion.getFormObservacion(\''.$encryptReg.'\',this.value,\''.$aRow['estado'].'\',\''.SEGCO.$p.'lst_estado\');\">';
+                    $sOutput .= '<option value=\"E\" '.$selE.'>'.SEGCO_5.'</option>';
+                    $sOutput .= '<option value=\"P\" '.$selP.'>'.SEGCO_6.'</option>';
+    //                $sOutput .= '<option value=\"O\" '.$selO.'>'.SEGCO_7.'</option>';
+    //                $sOutput .= '<option value=\"R\" '.$selR.'>'.SEGCO_8.'</option>';
+                    $sOutput .= '</select><i></i>';
+                    $sOutput .= '</label>';
+                    $sOutput .= ' </div>" ';
+                }else{
+                    $sOutput .= '"<div class=\"label label-success\">'.$estado.'</div>" ';
+                }
                 $sOutput = substr_replace( $sOutput, "", -1 );
                 $sOutput .= '],';
 
