@@ -24,7 +24,7 @@ $buscar = Session::getPermiso('CUSBS');
                         <label class="label col col-2"><?php echo LABEL_2; ?></label>
                         <div class="col col-8">
                             <label class="input"> 
-                                <input type="text" id="<?php echo T4; ?>txt_search" name="<?php echo T4; ?>txt_search" placeholder="Escriba y presione enter para buscar" onkeypress="simpleScript.triggerPress('<?php echo T4; ?>btnSubSearchEm',event);"></input>
+                                <input type="text" id="<?php echo T4; ?>txt_search" name="<?php echo T4; ?>txt_search" placeholder="Escriba y presione enter para buscar" onkeypress="simpleScript.triggerPress('#<?php echo T4; ?>btnSubSearchEm',event);"></input>
                             </label>
                         </div>
                     </div>
