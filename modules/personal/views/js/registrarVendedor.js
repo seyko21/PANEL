@@ -249,6 +249,22 @@ var registrarVendedor_ = function(){
         });
     };
     
+    this.publico.postAccesoVendedor = function(btn,id,vend,mail){
+        simpleAjax.send({
+            element: btn,
+            root: _private.config.modulo + 'postAccesoVendedor',
+            data: '&_vendedor='+vend+'&_idVendedor='+id+'&_mail='+mail,
+            clear: true,
+            fnCallback: function(data) {
+                if(!isNaN(data.result) && parseInt(data.result) === 1){
+                    simpleScript.notify.ok({
+                        content: 'Acceso se envió correctamente'
+                    });
+                }
+            }
+        });
+    };
+    
     this.publico.postNuevoVendedor = function(){
         simpleAjax.send({
             flag: 1,
@@ -273,7 +289,25 @@ var registrarVendedor_ = function(){
             }
         });
     };
-        
+    
+    this.publico.postPassVendedor = function(){
+        simpleAjax.send({
+            flag: 1,
+            element: '#'+diccionario.tabs.T7+'btnGvend',
+            root: _private.config.modulo + 'postPassVendedor',
+            form: '#'+diccionario.tabs.T7+'formVendedor',
+            data: '&_idVendedor='+$('#txtUser').val()+'&_pass='+simpleAjax.stringPost(('#txtNewClave').val()),
+            clear: true,
+            fnCallback: function(data) {
+                if(!isNaN(data.result) && parseInt(data.result) === 1){
+                    simpleScript.notify.ok({
+                        content: mensajes.MSG_3
+                    });
+                }
+            }
+        });
+    };
+    
     return this.publico;
     
 };

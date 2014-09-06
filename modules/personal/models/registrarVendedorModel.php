@@ -14,6 +14,7 @@ class registrarVendedorModel extends Model{
     private $_idProvincia;
     private $_apellidoPaterno;
     private $_apellidoMaterno;
+    private $_idVendedor;
     private $_nombres;
     private $_sexo;
     private $_direccion;
@@ -21,6 +22,7 @@ class registrarVendedorModel extends Model{
     private $_telefono;
     private $_numeroDoc;
     private $_dni;
+    private $_pass;
     private $_ubigeo;
     private $_chkdel;
     private $_usuario;
@@ -39,6 +41,9 @@ class registrarVendedorModel extends Model{
     private function _set(){
         $this->_flag    = $this->post('_flag');
         $this->_idPersona     = Aes::de($this->post('_idPersona'));    /*se decifra*/
+        $this->_idVendedor     = Aes::de($this->post('_idVendedor'));    /*se decifra*/
+        $this->_pass     = Aes::de($this->post('_pass'));    /*se decifra*/
+        
         $this->_idDepartamento = $this->post('_idDepartamento');
         $this->_idProvincia = $this->post('_idProvincia');
         $this->_apellidoPaterno = $this->post(T7.'txt_apellidopaterno');
@@ -199,6 +204,18 @@ class registrarVendedorModel extends Model{
     }
     
     public function postActivarVendedor(){
+        $query = "UPDATE `mae_persona` SET
+                    `estado` = 'A'
+                WHERE `id_persona` = :idPersona;";
+        $parms = array(
+            ':idPersona' => $this->_idPersona
+        );
+        $this->execute($query,$parms);
+        $data = array('result'=>1);
+        return $data;
+    }
+    
+    public function postPassVendedor(){
         $query = "UPDATE `mae_persona` SET
                     `estado` = 'A'
                 WHERE `id_persona` = :idPersona;";

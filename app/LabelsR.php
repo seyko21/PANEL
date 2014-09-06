@@ -22,6 +22,7 @@ define('BTN_ACT','Activar');
 define('BTN_DESACT','Desactivar');
 define('LABEL_ADV','Advertencia');
 define('LABEL_ADVMSN','Todas las caratulas han sido cotizadas.');
+define('COPY','Copyright SmartAdmin 2014-2020.');
 
 /*FORMULARIO LOGIN*/
 define('L_TITLE','Ingresar');

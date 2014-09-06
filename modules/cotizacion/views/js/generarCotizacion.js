@@ -102,6 +102,9 @@ var generarCotizacion_ = function(){
     };
     
     this.publico.getClonar = function(numCoti,idCot){
+        //cerrartab nuevo
+        simpleScript.closeTab(diccionario.tabs.T8+'new');
+        
         _private.idCotizacion = idCot;
         _private.numeroCotizacion = numCoti;
         

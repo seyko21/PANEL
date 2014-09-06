@@ -43,7 +43,7 @@ class asignarCuentaModel extends Model{
     }
     
     public function gridAsignarCuenta(){
-        $aColumns       =   array( 'chk','codigo','fecha_creacion','ubicacion','nombrecompleto','porcentaje_comision','estado' ); //para la ordenacion y pintado en html
+        $aColumns       =   array( 'chk','codigo','ubicacion','nombrecompleto','porcentaje_comision','estado' ); //para la ordenacion y pintado en html
         /*
 	 * Ordenando, se verifica por que columna se ordenara
 	 */

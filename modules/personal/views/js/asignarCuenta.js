@@ -54,11 +54,10 @@ var asignarCuenta_ = function(){
             aoColumns: [
                 {sTitle: "<input type='checkbox' id='"+diccionario.tabs.ASCU+"chk_all' onclick='simpleScript.checkAll(this,\"#"+diccionario.tabs.ASCU+"gridAsignarCuenta\");'>", sWidth: "1%", sClass: "center", bSortable: false},
                 {sTitle: "Código", sClass: "center",sWidth: "8%"},
-                {sTitle: "Fecha", sWidth: "8%", sClass: "center"},
                 {sTitle: "Producto", sWidth: "30%"},
                 {sTitle: "Vendedor", sWidth: "20%"},
                 {sTitle: "Comisión", sWidth: "10%", sClass: "center"},
-                {sTitle: "Estado", sWidth: "8%", sClass: "center", bSortable: false},
+                {sTitle: "Estado", sWidth: "8%", sClass: "center"},
                 {sTitle: "Acciones", sWidth: "5%", sClass: "center", bSortable: false}
             ],
             aaSorting: [[1, 'desc']],
