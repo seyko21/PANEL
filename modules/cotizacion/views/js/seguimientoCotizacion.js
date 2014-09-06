@@ -90,9 +90,9 @@ var seguimientoCotizacion_ = function(){
                 });
             }
         });
-        $(window).resize(function(){
-            oTable.fnAdjustColumnSizing();
-        });
+//        $(window).resize(function(){
+//            oTable.fnAdjustColumnSizing();
+//        });
         setup_widgets_desktop();
     };
     

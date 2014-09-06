@@ -32,30 +32,6 @@ $grabar = Session::getPermiso("REGCLGR");
                         </div>
                     </div>
                 </section>
-<!--                <section>
-                    <div class="row">
-                        <label class="label col col-3"><?php echo LABEL_RV4; ?></label>
-                        <div class="col col-8">
-                            <label class="input"> 
-                                <i class="icon-append fa fa-user"></i>
-                                <input type="text" id="<?php echo REGCL; ?>txt_apellidopaterno" name="<?php echo REGCL; ?>txt_apellidopaterno">
-                                <b class="tooltip tooltip-top-right"><i class="fa fa-user txt-color-teal"></i> <?php echo LABEL_RV7; ?></b>
-                            </label>
-                        </div>
-                    </div>
-                </section>
-                <section>
-                    <div class="row">
-                        <label class="label col col-3"><?php echo LABEL_RV5; ?></label>
-                        <div class="col col-8">
-                            <label class="input"> 
-                                <i class="icon-append fa fa-user"></i>
-                                <input type="text" id="<?php echo REGCL; ?>txt_apellidomaterno" name="<?php echo REGCL; ?>txt_apellidomaterno">
-                                <b class="tooltip tooltip-top-right"><i class="fa fa-user txt-color-teal"></i> <?php echo LABEL_RV8; ?></b>
-                            </label>
-                        </div>
-                    </div>
-                </section>   -->
                 <section class="hide">
                     <div class="row">
                         <label class="label col col-3"><?php echo LABEL_RC2; ?></label>
@@ -156,50 +132,6 @@ $grabar = Session::getPermiso("REGCLGR");
                         </div>
                     </div>
                 </section>
-<!--                <section>
-                    <div class="row">
-                        <label class="label col col-3"><?php echo LABEL_RV10; ?></label>
-                        <div class="col col-8">
-                            <label class="input"> 
-                                <i class="icon-append fa fa-keyboard-o"></i>
-                                <input type="text" id="<?php echo REGCL; ?>txt_email" name="<?php echo REGCL; ?>txt_email">
-                                <b class="tooltip tooltip-top-right"><i class="fa fa-keyboard-o txt-color-teal"></i> <?php echo LABEL_RV12; ?></b>
-                            </label>
-                        </div>
-                    </div>
-                </section>
-                <section>
-                    <div class="row">
-                        <label class="label col col-3"><?php echo LABEL_RV13; ?></label>
-                        <div class="inline-group col col-8">
-                            <label class="radio"> 
-                                <input name="<?php echo REGCL; ?>rd_sexo" id="<?php echo REGCL; ?>rd_sexoH" checked type="radio" value="H">
-                                <i></i>Hombre
-                            </label>
-                            <label class="radio"> 
-                                <input name="<?php echo REGCL; ?>rd_sexo" id="<?php echo REGCL; ?>rd_sexoM" type="radio" value="M">
-                                <i></i>Mujer
-                            </label>
-                        </div>
-                    </div>
-                </section>-->
-<!--                <section>
-                    <div class="row">
-                        <label class="label col col-3"><?php echo LABEL_RV14; ?></label>
-                        <div class="col col-8">
-                            <label class="input"> 
-                                <i class="icon-append fa fa-keyboard-o"></i>
-                                <input type="text" id="<?php echo REGCL; ?>txt_telefonos" name="<?php echo REGCL; ?>txt_telefonos">
-                                <b class="tooltip tooltip-top-right"><i class="fa fa-keyboard-o txt-color-teal"></i> <?php echo LABEL_RV15; ?></b>
-                            </label>
-                        </div>
-                    </div>
-                </section>-->
-                
-                
-              
-                
-               
             </div>
             <div class="modal-footer">
                 <?php if($grabar['permiso']):?>
@@ -214,7 +146,7 @@ $grabar = Session::getPermiso("REGCLGR");
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 
-<!-- si no riene permiso se anula submit desde cualquier input -->
+<!-- si no tiene permiso se anula submit desde cualquier input -->
 <?php if(!$grabar['permiso']): ?>
 <script>
     simpleScript.noSubmit('#<?php echo REGCL; ?>formNewCliente');
@@ -229,19 +161,6 @@ $grabar = Session::getPermiso("REGCLGR");
                         regular: true,
                         minlength: 3
                 },
-                <?php echo REGCL; ?>txt_apellidopaterno : {
-                        required : true,
-                        regular: true,
-                        minlength: 3
-                },
-                <?php echo REGCL; ?>txt_apellidomaterno : {
-                        required : true,
-                        regular: true,
-                        minlength: 3
-                },
-                <?php echo REGCL; ?>lst_tipodoc:{
-                        required: true
-                },        
                 <?php echo REGCL; ?>txt_nrodocumento:{
                         required: true,
                         number: true,
@@ -258,14 +177,7 @@ $grabar = Session::getPermiso("REGCLGR");
                 },
                 <?php echo REGCL; ?>txt_direccion : {
                         regular2: true
-                },
-                <?php echo REGCL; ?>txt_email : {
-                        required : true,
-                        email: true
-                },
-                <?php echo REGCL; ?>txt_telefonos : {
-                        regular2: true
-                }       
+                }
         },
 
         // Do not change code below

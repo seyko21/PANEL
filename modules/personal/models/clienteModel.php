@@ -78,9 +78,11 @@ class clienteModel extends Model{
                 }
         }
         
-        $query = "call sp_ordseClienteGrid(:iDisplayStart,:iDisplayLength,:sOrder,:sSearch);";
+        $query = "call sp_ordseClienteGrid(:acceso,:usuario,:iDisplayStart,:iDisplayLength,:sOrder,:sSearch);";
         
         $parms = array(
+            ':acceso' => Session::get('sys_all'),
+            ':usuario' => $this->_usuario,
             ':iDisplayStart' => $this->_iDisplayStart,
             ':iDisplayLength' => $this->_iDisplayLength,
             ':sOrder' => $sOrder,

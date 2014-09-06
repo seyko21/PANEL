@@ -110,6 +110,7 @@ define('LABEL_RV21','Editar Vendedor');
 define('LABEL_RV22','Nro. de Documento');
 define('LABEL_RV23','DNI');
 define('LABEL_RV24','Ingresar nro. de DNI');
+define('LABEL_RV25','Adjuntar Documento');
 
 /*----------------------    GENERAR COTIZACION----------------------*/
 define('LABEL_GNC1','Cotizaciones');

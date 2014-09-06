@@ -248,19 +248,6 @@ $data = clienteController::findCliente();
                         regular: true,
                         minlength: 3
                 },
-                <?php echo REGCL; ?>txt_apellidopaterno : {
-                        required : true,
-                        regular: true,
-                        minlength: 3
-                },
-                <?php echo REGCL; ?>txt_apellidomaterno : {
-                        required : true,
-                        regular: true,
-                        minlength: 3
-                },
-                <?php echo REGCL; ?>lst_tipodoc:{
-                        required: true
-                },
                 <?php echo REGCL; ?>txt_nrodocumento:{
                         required: true,
                         number: true,
@@ -277,14 +264,7 @@ $data = clienteController::findCliente();
                 },
                 <?php echo REGCL; ?>txt_direccion : {
                         regular2: true
-                },
-                <?php echo REGCL; ?>txt_email : {
-                        required : true,
-                        email: true
-                },
-                <?php echo REGCL; ?>txt_telefonos : {
-                        regular2: true
-                }       
+                }
         },
 
         // Do not change code below

@@ -66,7 +66,7 @@ class registrarVendedorModel extends Model{
     }
     
     public function getGridVendedor() {
-        $aColumns       =   array( 'chk','numerodocumento','dni','nombrecompleto' ); //para la ordenacion y pintado en html
+        $aColumns       =   array( 'chk','numerodocumento','dni','numerodocumento','dni','nombrecompleto','email','telefono' ); //para la ordenacion y pintado en html
         /*
 	 * Ordenando, se verifica por que columna se ordenara
 	 */
@@ -216,11 +216,12 @@ class registrarVendedorModel extends Model{
     }
     
     public function postPassVendedor(){
-        $query = "UPDATE `mae_persona` SET
-                    `estado` = 'A'
-                WHERE `id_persona` = :idPersona;";
+        $query = "UPDATE `mae_usuario` SET
+                    `clave` = :clave
+                WHERE `id_usuario` = :idPersona;";
         $parms = array(
-            ':idPersona' => $this->_idPersona
+            ':idPersona' => $this->_idPersona,
+            ':clave' => md5($this->_pass.APP_PASS_KEY)
         );
         $this->execute($query,$parms);
         $data = array('result'=>1);

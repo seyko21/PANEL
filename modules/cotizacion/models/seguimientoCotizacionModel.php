@@ -55,9 +55,10 @@ class seguimientoCotizacionModel extends Model{
                 }
         }
         
-        $query = "call sp_cotiSeguimientoGrid(:estado,:usuario,:iDisplayStart,:iDisplayLength,:sOrder,:sSearch);";
+        $query = "call sp_cotiSeguimientoGrid(:acceso,:estado,:usuario,:iDisplayStart,:iDisplayLength,:sOrder,:sSearch);";
         
         $parms = array(
+            ":acceso" => Session::get('sys_all'),
             ":estado" => $this->_estadocb,
             ":usuario" => $this->_usuario,
             ":iDisplayStart" => $this->_iDisplayStart,

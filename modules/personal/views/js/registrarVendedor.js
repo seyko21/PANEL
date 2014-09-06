@@ -44,13 +44,13 @@ var registrarVendedor_ = function(){
             iDisplayLength: 10,            
             aoColumns: [
                 {sTitle: "<input type='checkbox' id='"+diccionario.tabs.T7+"chk_all' onclick='simpleScript.checkAll(this,\"#"+diccionario.tabs.T7+"getGridVendedor\");'>", sWidth: "1%", sClass: "center", bSortable: false},
-                {sTitle: "RUC", sClass: "center", sWidth: "10%", bSortable: false},
-                {sTitle: "DNI", sClass: "center", sWidth: "10%", bSortable: false},
+                {sTitle: "RUC", sClass: "center", sWidth: "10%"},
+                {sTitle: "DNI", sClass: "center", sWidth: "10%"},
                 {sTitle: "Nombres y Apellidos", sWidth: "25%"},
-                {sTitle: "Email", sWidth: "20%", bSortable: false},
-                {sTitle: "Teléfonos", sWidth: "15%", bSortable: false},
+                {sTitle: "Email", sWidth: "20%"},
+                {sTitle: "Teléfonos", sWidth: "15%"},
                 {sTitle: "Estado", sWidth: "8%",  sClass: "center", bSortable: false},
-                {sTitle: "Acciones", sWidth: "15%", sClass: "center", bSortable: false}
+                {sTitle: "Acciones", sWidth: "10%", sClass: "center", bSortable: false}
             ],
             aaSorting: [[1, 'asc']],
             sScrollY: "300px",
@@ -150,6 +150,22 @@ var registrarVendedor_ = function(){
             fnCallback: function(data){
                 $('#cont-modal').append(data);
                 $('#'+diccionario.tabs.T7+'formVendedor').modal('show');
+            }
+        });
+    };
+    
+    this.publico.getFormAdjuntar = function(btn,id){
+        _private.idVendedor = id;
+       
+        simpleAjax.send({
+            element: btn,
+            dataType: 'html',
+            gifProcess: true,
+            data: '&_idPersona='+_private.idVendedor,
+            root: _private.config.modulo + 'getFormAdjuntar',
+            fnCallback: function(data){
+                $('#cont-modal').append(data);
+                $('#'+diccionario.tabs.T7+'formAdjuntar').modal('show');
             }
         });
     };
@@ -291,18 +307,20 @@ var registrarVendedor_ = function(){
     };
     
     this.publico.postPassVendedor = function(){
+        window.history.pushState('data', "Titulo", "../../../../");
         simpleAjax.send({
             flag: 1,
-            element: '#'+diccionario.tabs.T7+'btnGvend',
+            element: '#btnEntrar',
             root: _private.config.modulo + 'postPassVendedor',
-            form: '#'+diccionario.tabs.T7+'formVendedor',
-            data: '&_idVendedor='+$('#txtUser').val()+'&_pass='+simpleAjax.stringPost(('#txtNewClave').val()),
+            form: '#formVendedor',
+            data: '&_idPersona='+$('#txtUser').val()+'&_pass='+simpleAjax.stringPost($('#txtNewClave').val()),
             clear: true,
             fnCallback: function(data) {
                 if(!isNaN(data.result) && parseInt(data.result) === 1){
                     simpleScript.notify.ok({
                         content: mensajes.MSG_3
                     });
+                    simpleScript.redirect('index');
                 }
             }
         });

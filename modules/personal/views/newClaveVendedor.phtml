@@ -24,7 +24,7 @@ $n = AesCtr::de($this->nombres);
                 <input type="hidden" name="txtUser" id="txtUser" value="<?php echo $v ?>">
                 <input class="form-control" type="password" placeholder="Contraseña" id="txtNewClave" name="txtNewClave">
                 <div class="input-group-btn">
-                    <button id="btnEntrar" class="btn btn-primary" type="submit">
+                    <button id="btnEntrar" class="btn btn-primary" type="button" onclick="registrarVendedorScript.validaChangePass();">
                         <i class="fa fa-save"></i> Guardar
                     </button>
                 </div>

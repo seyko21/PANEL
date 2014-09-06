@@ -8,7 +8,7 @@
 class loginController extends Controller{
     
     public function __construct() {
-        $this->loadModel('login');
+        $this->loadModel(array('modulo'=>'index','modelo'=>'login'));
     }
 
     public function index() {
@@ -22,11 +22,24 @@ class loginController extends Controller{
             Obj::run()->loginModel->postLastLogin();
             /*los roles*/
             Session::set('sys_roles', Obj::run()->loginModel->getRoles());
-            /*asignando rol por defecto*/
+            
             $rol = Session::get('sys_roles');
-            Session::set('sys_defaultRol',$rol[0]['id_rol']);            
+            /*asignando rol por defecto*/
+            Session::set('sys_defaultRol',$rol[0]['id_rol']);
+            
+            /*
+             * verifico si es SUPER ADMINISTRADOR (001) o ADMINISTRADOR (002)
+             * esto servira para los reportes, si es super o adm tendra acceso a toda la informacion
+             */
+            foreach ($rol as $r) {
+                if($r['id_rol'] == APP_COD_SADM || $r['id_rol'] == APP_COD_ADM){
+                    Session::set('sys_all','S');
+                    break;
+                }else{
+                    Session::set('sys_all','N');
+                }
+            }
         }
-        
         echo json_encode($data);
     }
     

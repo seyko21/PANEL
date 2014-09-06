@@ -10,7 +10,7 @@ class registrarVendedorController extends Controller{
 
     public function __construct() {
         $this->loadModel(array('modulo'=>'personal','modelo'=>'registrarVendedor'));
-        //$this->loadModel('registrarVendedor');
+        $this->loadController(array('modulo'=>'index','controller'=>'login'));
     }
     
     public function index(){ 
@@ -19,7 +19,7 @@ class registrarVendedorController extends Controller{
     
     public function getGridVendedor() {
         $editar = Session::getPermiso('REGVEED');
-        $adjuntar = Session::getPermiso('REGVEADA');
+        $adjuntar = Session::getPermiso('REGVEAJ');
         $mail = Session::getPermiso('REGVEEE');
         
         $sEcho          =   $this->post('sEcho');
@@ -66,7 +66,7 @@ class registrarVendedorController extends Controller{
                     $sOutput .= '</button>';
                 }
                 if($adjuntar['permiso']){
-                    $sOutput .= '<button type=\"button\" class=\"btn bg-color-orange txt-color-white btn-xs\" title=\"'.$adjuntar['accion'].'\" onclick=\"registrarVendedor.getFormAntecedentes(this,\''.$encryptReg.'\')\">';
+                    $sOutput .= '<button type=\"button\" class=\"btn bg-color-orange txt-color-white btn-xs\" title=\"'.$adjuntar['accion'].' documento\" onclick=\"registrarVendedor.getFormAdjuntar(this,\''.$encryptReg.'\')\">';
                     $sOutput .= '    <i class=\"fa fa-external-link fa-lg\"></i>';
                     $sOutput .= '</button>';
                 }
@@ -95,6 +95,10 @@ class registrarVendedorController extends Controller{
     
     public function getEditarVendedor(){ 
         Obj::run()->View->render('editarVendedor');
+    }
+    
+    public function getFormAdjuntar(){ 
+        Obj::run()->View->render('formAdjuntar');
     }
     
     public static function getDepartamentos(){ 
@@ -173,8 +177,7 @@ class registrarVendedorController extends Controller{
     }
 
     public function postPassVendedor(){
-        $data = Obj::run()->registrarVendedorModel->postPassVendedor();
-        
+        $data = Obj::run()->registrarVendedorModel->postPassVendedor();        
         echo json_encode($data);
     }
 

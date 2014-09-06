@@ -34,7 +34,7 @@ var generarCotizacion_ = function(){
     };
     
     this.publico.getGridCotizacion = function(){
-        var oTable = $('#'+diccionario.tabs.T8+'gridGenerarCotizacion').dataTable({
+        var oTable = $('#'+diccionario.tabs.T8+'xgridGenerarCotizacion').dataTable({
             bProcessing: true,
             bServerSide: true,
             bDestroy: true,
@@ -43,7 +43,7 @@ var generarCotizacion_ = function(){
             bPaginate: true,
             iDisplayLength: 10,            
             aoColumns: [
-                {sTitle: "<input type='checkbox' id='"+diccionario.tabs.T8+"chk_all' onclick='simpleScript.checkAll(this,\"#"+diccionario.tabs.T8+"gridGenerarCotizacion\");'>", sWidth: "1%", sClass: "center", bSortable: false},
+                {sTitle: "<input type='checkbox' id='"+diccionario.tabs.T8+"chk_all' onclick='simpleScript.checkAll(this,\"#"+diccionario.tabs.T8+"xgridGenerarCotizacion\");'>", sWidth: "1%", sClass: "center", bSortable: false},
                 {sTitle: "Código", sClass: "center",sWidth: "15%"},
                 {sTitle: "Prospecto", sWidth: "25%"},
                 {sTitle: "Fecha", sWidth: "10%",sClass: "center"},
@@ -56,7 +56,7 @@ var generarCotizacion_ = function(){
             sScrollY: "300px",
             sAjaxSource: _private.config.modulo+'getGridCotizacion',
             fnDrawCallback: function() {
-                $('#'+diccionario.tabs.T8+'gridGenerarCotizacion_filter').find('input').attr('placeholder','Buscar por código o prospecto').css('width','280px');
+                $('#'+diccionario.tabs.T8+'xgridGenerarCotizacion_filter').find('input').attr('placeholder','Buscar por código o prospecto').css('width','280px');
                 /*para hacer evento invisible*/
                 simpleScript.removeAttr.click({
                     container: '#widget_'+diccionario.tabs.T8,
@@ -227,8 +227,8 @@ var generarCotizacion_ = function(){
                                     simpleScript.notify.ok({
                                         content: mensajes.MSG_3,
                                         callback: function(){
-                                            generarCotizacion.getGridCotizacion();
                                             simpleScript.closeTab(diccionario.tabs.T8+'new');
+                                            generarCotizacion.getGridCotizacion();
                                             //simpleScript.closeModal('#'+diccionario.tabs.T8+'formGenerarCotizacion');
                                         }
                                     });
@@ -260,10 +260,10 @@ var generarCotizacion_ = function(){
                                     simpleScript.notify.ok({
                                         content: mensajes.MSG_3,
                                         callback: function(){
+                                            simpleScript.closeTab(diccionario.tabs.T8+'clon');
                                             _private.idCotizacion = 0;
                                             _private.numeroCotizacion = 0;
-                                            simpleScript.reloadGrid('#'+diccionario.tabs.T8+'gridGenerarCotizacion');
-                                            simpleScript.closeTab(diccionario.tabs.T8+'clon');
+                                            simpleScript.reloadGrid('#'+diccionario.tabs.T8+'xgridGenerarCotizacion');
                                             //simpleScript.closeModal('#'+diccionario.tabs.T8+'formGenerarCotizacion');
                                         }
                                     });
@@ -329,7 +329,7 @@ var generarCotizacion_ = function(){
     
     this.publico.postAnularCotizacionAll = function(btn){
         simpleScript.validaCheckBox({
-            id: '#'+diccionario.tabs.T8+'gridGenerarCotizacion',
+            id: '#'+diccionario.tabs.T8+'xgridGenerarCotizacion',
             msn: mensajes.MSG_9,
             fnCallback: function(){
                 simpleScript.notify.confirm({
@@ -344,7 +344,7 @@ var generarCotizacion_ = function(){
                                     simpleScript.notify.ok({
                                         content: mensajes.MSG_14,
                                         callback: function(){
-                                            simpleScript.reloadGrid('#'+diccionario.tabs.T8+'gridGenerarCotizacion');
+                                            simpleScript.reloadGrid('#'+diccionario.tabs.T8+'xgridGenerarCotizacion');
                                         }
                                     });
                                 }

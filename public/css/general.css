@@ -69,6 +69,11 @@
     border: 1px #00a300 solid;    
     background: #D8F6CE;
 }
+.scroll-form{
+    height: 350px;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
 em.invalid{
    color: red;
 /*     border-radius: 4px;

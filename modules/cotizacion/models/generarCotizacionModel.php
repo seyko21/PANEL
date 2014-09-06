@@ -75,9 +75,10 @@ class generarCotizacionModel extends Model{
                 }
         }
         
-        $query = "call sp_cotiGenerarCotizacionGrid(:usuario,:iDisplayStart,:iDisplayLength,:sOrder,:sSearch);";
+        $query = "call sp_cotiGenerarCotizacionGrid(:acceso,:usuario,:iDisplayStart,:iDisplayLength,:sOrder,:sSearch);";
         
         $parms = array(
+            ':acceso' => Session::get('sys_all'),
             ':usuario' => $this->_usuario,
             ':iDisplayStart' => $this->_iDisplayStart,
             ':iDisplayLength' => $this->_iDisplayLength,
@@ -190,6 +191,7 @@ class generarCotizacionModel extends Model{
         return $data;
     }
     
+    /*selecciona todos los clientes de un vendedor*/
     public function getClientes(){
         $query = "
          SELECT 
