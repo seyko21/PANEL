@@ -53,7 +53,7 @@ class asignarCuentaController extends Controller{
                  * se verifica si tiene permisos para editar
                  */
                 $sOutput .= '"<div class=\"btn-group\">';
-                if($editar['permiso'] == 1){
+                if($editar['permiso'] == 1 and $aRow['estado'] == 'R'){
                     $sOutput .= '<button type=\"button\" class=\"btn btn-primary btn-xs\" title=\"'.$editar['accion'].'\" onclick=\"asignarCuenta.getEditarCuenta(this,\''.$encryptReg.'\')\">';
                     $sOutput .= '    <i class=\"fa fa-edit fa-lg\"></i>';
                     $sOutput .= '</button>';
