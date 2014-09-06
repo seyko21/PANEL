@@ -14,4 +14,5 @@ define("TAB_CATPRE","VCATPRE");             /*tab modulo CATALOGOPRECIO*/
 define("TAB_CONPER","VCONPER");             /*tab modulo CONSULTAPERMISOS*/
 define("TAB_SOCIO","VSOCIO");             /*tab modulo SOCIO*/
 define("REINV","VREINV");             /*tab modulo REGINVERSION*/
+define("REPRO","REPRO");             /*tab modulo REGPRODUCCION*/
 ?>
