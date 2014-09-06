@@ -46,14 +46,14 @@ class asignarCuentaController extends Controller{
                 
                 $chk = '<input id=\"c_'.(++$key).'\" type=\"checkbox\" name=\"'.ASCU.'chk_delete[]\" value=\"'.$encryptReg.'\">';
                 /*datos de manera manual*/
-                $sOutput .= '["'.$chk.'","'.$aRow['codigo'].'","'.$aRow['ubicacion'].' - '.$aRow['lado'].'","'.$aRow['nombrecompleto'].'","'.$aRow['porcentaje_comision'].'","'.$estado.'" , ';
+                $sOutput .= '["'.$chk.'","'.$aRow['codigo'].'","'.Functions::cambiaf_a_normal($aRow['fecha_creacion']).'","'.$aRow['ubicacion'].' - '.$aRow['lado'].'","'.$aRow['nombrecompleto'].'","'.$aRow['porcentaje_comision'].'","'.$estado.'" , ';
 
                 /*
                  * configurando botones (add/edit/delete etc)
                  * se verifica si tiene permisos para editar
                  */
                 $sOutput .= '"<div class=\"btn-group\">';
-                if($editar['permiso'] == 1){
+                if($editar['permiso'] == 1 and $aRow['estado'] == 'R'){
                     $sOutput .= '<button type=\"button\" class=\"btn btn-primary btn-xs\" title=\"'.$editar['accion'].'\" onclick=\"asignarCuenta.getEditarCuenta(this,\''.$encryptReg.'\')\">';
                     $sOutput .= '    <i class=\"fa fa-edit fa-lg\"></i>';
                     $sOutput .= '</button>';

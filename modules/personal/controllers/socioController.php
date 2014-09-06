@@ -43,7 +43,7 @@ class socioController extends Controller{
                 }elseif($aRow['estado'] == 'I'){
                     $estado = '<button type=\"button\" class=\"btn btn-danger btn-xs\" title=\"Activar\" onclick=\"socio.postActivarSocio(this,\''.$encryptReg.'\')\">Inactivo</button>';
                 }
-                if ($aRow['monto_asignado'] == 0)
+                if ($aRow['monto_invertido'] == 0)
                     $chk = '<input id=\"c_'.(++$key).'\" type=\"checkbox\" name=\"'.TAB_SOCIO.'chk_delete[]\" value=\"'.$encryptReg.'\">';
                 else {
                     $chk = '';

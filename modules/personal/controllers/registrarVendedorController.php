@@ -17,6 +17,7 @@ class registrarVendedorController extends Controller{
         Obj::run()->View->render('indexVendedor');
     }
     
+
     public function getGridVendedor() {
         $editar = Session::getPermiso('REGVEED');
         $adjuntar = Session::getPermiso('REGVEAJ');
@@ -161,80 +162,11 @@ class registrarVendedorController extends Controller{
         echo json_encode($data);
     }
     
-    /*llama html para actualizar clave de vendedor*/
-    public function confirm($id,$nom){
-        Obj::run()->View->vendedor = $id;
-        Obj::run()->View->nombres = $nom;
-        
-        $v = AesCtr::de($id);
-        
-        if(is_numeric($v)){
-            Obj::run()->View->render('newClaveVendedor',false);
-        }else{
-            $this->redirect('index');
-        }
-        
-    }
-
     public function postPassVendedor(){
         $data = Obj::run()->registrarVendedorModel->postPassVendedor();        
         echo json_encode($data);
     }
-
-    public function postAccesoVendedor(){
-        $idVendedor     = Formulario::getParam('_idVendedor');
-        $nomVendedor    = Formulario::getParam('_vendedor');
-        $email          = Formulario::getParam('_mail');
         
-        
-        $cad = explode('@',$email);
-               
-       echo $body ='
-            <h3>ACCESOS</h3>
-            <h3>Estimado: '.$nomVendedor.'</h3>
-        <table border="1" style="border-collapse:collapse">
-           <tr>
-                <td style="text-align:center">
-                    <p>Usted a sido agregado como usuario a SEVEND.</p>
-                    <p><a href="'.BASE_URL.'personal/registrarVendedor/confirm/'.$idVendedor.'/'.AesCtr::en($nomVendedor).'">Pulse aquí</a> para ingresar al sistema.</p>
-                </td>
-           </tr>
-        </table>';
-        
-        
-        $mail             = new PHPMailer(); // defaults to using php "mail()"
- 
-//        $body             = file_get_contents('contents.html');
-//        $body             = eregi_replace("[\]",'',$html);
-
-        $mail->AddReplyTo("name@gmail.com","First Last");
-
-        $mail->SetFrom('name@gmail.com', 'First Last');
-
-        $mail->AddReplyTo("name@gmail.com","First Last");
-
-        $mail->AddAddress($email, 'admin@adm.com');
-
-        $mail->Subject    = "Accesos a SEVEND";
-
-        $mail->MsgHTML($body);
-
-//        $mail->AddAttachment("public/img/phpmailer.gif");      // attachment
-//        $mail->AddAttachment("public/img/phpmailer_mini.gif"); // attachment
-        
-        $data = array('result'=>2);
-        /*validar si dominio de correo existe*/
-        if(checkdnsrr($cad[1])){
-            if($mail->Send()) {
-                $data = array('result'=>1);
-            } else {
-                $data = array('result'=>2);
-            }
-        }
-        
-        echo json_encode($data);
-    }
-    
 }
 
 ?>
