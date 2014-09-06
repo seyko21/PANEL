@@ -87,7 +87,7 @@ class registrarVendedorController extends Controller{
     
     public function getGridVendedor() {
         $editar = Session::getPermiso('REGVEED');
-        $adjuntar = Session::getPermiso('REGVEADA');
+        $adjuntar = Session::getPermiso('REGVEDA');
         
         $sEcho          =   $this->post('sEcho');
         
