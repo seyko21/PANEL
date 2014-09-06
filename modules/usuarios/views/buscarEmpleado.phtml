@@ -45,11 +45,11 @@ $buscar = Session::getPermiso('CUSBS');
     </div><!-- /.modal-dialog -->
 </form>
 <!-- si no riene permiso se anula submit desde cualquier input -->
-<?php if (!$buscar['permiso']): ?>
+<?php //if (!$buscar['permiso']): ?>
     <script>
         simpleScript.noSubmit('#<?php echo T4; ?>formBuscarEmpleado');
     </script>
-<?php endif; ?>
+<?php //endif; ?>
 <script>
     $('#<?php echo T4; ?>formBuscarEmpleado').validate({
             // Rules for form validation

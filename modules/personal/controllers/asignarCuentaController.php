@@ -46,7 +46,7 @@ class asignarCuentaController extends Controller{
                 
                 $chk = '<input id=\"c_'.(++$key).'\" type=\"checkbox\" name=\"'.ASCU.'chk_delete[]\" value=\"'.$encryptReg.'\">';
                 /*datos de manera manual*/
-                $sOutput .= '["'.$chk.'","'.$aRow['codigo'].'","'.$aRow['ubicacion'].' - '.$aRow['lado'].'","'.$aRow['nombrecompleto'].'","'.$aRow['porcentaje_comision'].'","'.$estado.'" , ';
+                $sOutput .= '["'.$chk.'","'.$aRow['codigo'].'","'.Functions::cambiaf_a_normal($aRow['fecha_creacion']).'","'.$aRow['ubicacion'].' - '.$aRow['lado'].'","'.$aRow['nombrecompleto'].'","'.$aRow['porcentaje_comision'].'","'.$estado.'" , ';
 
                 /*
                  * configurando botones (add/edit/delete etc)
