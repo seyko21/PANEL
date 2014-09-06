@@ -16,6 +16,8 @@ define('APP_COMPANY','www.sevend.pe');
 define('APP_KEY','adABKCDLZEFXGHIJ');
 define('APP_PASS_KEY','99}dF7EZbnbXOkojf&dzvxd5q#guPbPK1spU75Jm|N79Ii7PK');
 define('APP_EXPORT_FILES',ROOT . 'public' . DS . 'files' . DS);
+define('APP_COD_SADM','001');
+define('APP_COD_ADM','002');
 
 define('DB_ENTORNO','D');  /*D=DESARROLLO, P=PRODUCCION*/
 define('DB_MOTOR','mysql');
@@ -23,7 +25,7 @@ define('DB_MOTOR','mysql');
 define('DB_HOST','localhost');
 define('DB_USER','root');
 define('DB_PASS','');
-define('DB_NAME','sevend_local');
+define('DB_NAME','beholiac_sevendlocal');
 
 define('DB_PORT','3306');
 define('DB_CHARSET','utf8');
