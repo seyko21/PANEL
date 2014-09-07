@@ -44,14 +44,14 @@ var generarCotizacion_ = function(){
             iDisplayLength: 10,            
             aoColumns: [
                 {sTitle: "<input type='checkbox' id='"+diccionario.tabs.T8+"chk_all' onclick='simpleScript.checkAll(this,\"#"+diccionario.tabs.T8+"xgridGenerarCotizacion\");'>", sWidth: "1%", sClass: "center", bSortable: false},
-                {sTitle: "Código", sClass: "center",sWidth: "12%"},
-                {sTitle: "Prospecto", sWidth: "20%"},
+                {sTitle: "Código", sClass: "center",sWidth: "11%"},
+                {sTitle: "Prospecto", sWidth: "23%"},
                 {sTitle: "Fecha", sWidth: "10%",sClass: "center"},
                 {sTitle: "Meses", sWidth: "10%",sClass: "center"},
                 {sTitle: "Fec. Venc.", sWidth: "10%", sClass: "center"},
                 {sTitle: "Total", sWidth: "10%", sClass: "right"},
                 {sTitle: "Estado", sWidth: "10%", sClass: "center"},
-                {sTitle: "Acciones", sWidth: "15%", sClass: "center", bSortable: false}
+                {sTitle: "Acciones", sWidth: "11%", sClass: "center", bSortable: false}
             ],
             aaSorting: [[1, 'desc']],
             sScrollY: "300px",
