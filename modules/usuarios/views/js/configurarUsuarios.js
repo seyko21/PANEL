@@ -187,6 +187,10 @@ var configurarUsuarios_ = function(){
                     simpleScript.notify.error({
                         content: 'Empleado ya tiene usuario.'
                     });
+                }else if(!isNaN(data.result) && parseInt(data.result) === 3){
+                    simpleScript.notify.error({
+                        content: 'Correo ya existe.'
+                    });
                 }
             }
         });

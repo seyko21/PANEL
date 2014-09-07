@@ -157,37 +157,60 @@ class configurarUsuariosModel extends Model{
     }
     
     public function editarUsuario(){
-        $query = "UPDATE mae_usuario SET usuario = :usuario, estado=:activo WHERE id_usuario=:idUsuario";
-        $parms = array(
-            ':usuario' => $this->_mail,
-            ':activo' => $this->_activo,
-            ':idUsuario' => $this->_idUsuario
-        );
-        $this->execute($query,$parms);
+//        $query = "UPDATE mae_usuario SET usuario = :usuario, estado=:activo WHERE id_usuario=:idUsuario";
+//        $parms = array(
+//            ':usuario' => $this->_mail,
+//            ':activo' => $this->_activo,
+//            ':idUsuario' => $this->_idUsuario
+//        );
+//        $this->execute($query,$parms);
         
-        /*se borra roles*/
-        $query = "DELETE FROM men_usuariorol WHERE id_usuario = :idUsuario";
+        
+        
+        
+        
+        
+        
+        
+        $query = "call sp_usuariosConfigurarUsuariosMantenimiento(:flag,:key,:empleado,:usuario,:clave,:activo,:user);";
         $parms = array(
-            ':idUsuario' => $this->_idUsuario
+            ':flag' => 3,
+            ':key' => $this->_idUsuario,
+            ':empleado' => '',
+            ':usuario' => $this->_mail,
+            ':clave' => '',
+            ':activo' => $this->_activo,
+            ':user' => $this->_usuario
         );
-        $this->execute($query,$parms);
-       
-        /*se graba nuevos roles*/
-        foreach ($this->_roles as $rol) {
-            $query = "call sp_usuariosConfigurarUsuariosMantenimiento(:flag,:key,:empleado,:usuario,:clave,:activo,:user);";
+        $data = $this->queryOne($query,$parms);
+        
+        $res = array('result'=>$data['result'],'duplicado'=>$data['duplicado']);
+        
+        if($data['result'] != 3){
+            /*se borra roles*/
+            $query = "DELETE FROM men_usuariorol WHERE id_usuario = :idUsuario";
             $parms = array(
-                ':flag' => 2,
-                ':key' => AesCtr::de($rol),
-                ':empleado' => $this->_idUsuario,
-                ':usuario' => '',
-                ':clave' => '',
-                ':activo' => '',
-                ':user' => $this->_usuario
+                ':idUsuario' => $this->_idUsuario
             );
             $this->execute($query,$parms);
+
+            /*se graba nuevos roles*/
+            foreach ($this->_roles as $rol) {
+                $query = "call sp_usuariosConfigurarUsuariosMantenimiento(:flag,:key,:empleado,:usuario,:clave,:activo,:user);";
+                $parms = array(
+                    ':flag' => 2,
+                    ':key' => AesCtr::de($rol),
+                    ':empleado' => $this->_idUsuario,
+                    ':usuario' => '',
+                    ':clave' => '',
+                    ':activo' => '',
+                    ':user' => $this->_usuario
+                );
+                $this->execute($query,$parms);
+            }
+
+            $res = array('result'=>1,'duplicado'=>0);
         }
-        
-        $res = array('result'=>1,'duplicado'=>0);
         return $res;
     }
     
