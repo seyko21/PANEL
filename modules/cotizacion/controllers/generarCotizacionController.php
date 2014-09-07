@@ -39,9 +39,17 @@ class generarCotizacionController extends Controller{
                 /*antes de enviar id se encrypta*/
                 $encryptReg = Aes::en($aRow['id_cotizacion']);
                 
-                $chk = '<input id=\"c_'.(++$key).'\" type=\"checkbox\" name=\"'.T8.'chk_delete[]\" value=\"'.$encryptReg.'\">';
+                
+                if($aRow['estado'] == 'E'){
+                    $estado = '<span class=\"label label-success\">'.SEGCO_5.'</span>';                    
+                    $chk = '<input id=\"c_'.(++$key).'\" type=\"checkbox\" name=\"'.T8.'chk_delete[]\" value=\"'.$encryptReg.'\"  >'; 
+                }elseif($aRow['estado'] == 'A'){                   
+                    $estado = '<span class=\"label label-danger\">'.LABEL_AN.'</span>';
+                    $chk = '<input id=\"c_'.(++$key).'\" type=\"checkbox\" name=\"'.T8.'chk_delete[]\" disabled  >';
+                }     
+                                                
                 /*datos de manera manual*/
-                $sOutput .= '["'.$chk.'","'.$aRow['cotizacion_numero'].'","'.$aRow['nombrecompleto'].'","'.$aRow['fechacoti'].'","'.$aRow['meses_contrato'].'","'.Functions::cambiaf_a_normal($aRow['vencimiento']).'","'.  number_format($aRow['total'],2).'", ';
+                $sOutput .= '["'.$chk.'","'.$aRow['cotizacion_numero'].'","'.$aRow['nombrecompleto'].'","'.$aRow['fechacoti'].'","'.$aRow['meses_contrato'].'","'.Functions::cambiaf_a_normal($aRow['vencimiento']).'","'.  number_format($aRow['total'],2).'","'.$estado.'", ';
 
                 /*
                  * configurando botones (add/edit/delete etc)
@@ -64,7 +72,7 @@ class generarCotizacionController extends Controller{
                     $sOutput .= '    <i class=\"fa fa-copy fa-lg\"></i>';
                     $sOutput .= '</button>';
                 }
-                if($enviaremail['permiso'] && $aRow['estado'] == 'E'){
+                if($enviaremail['permiso'] ){
                     $sOutput .= '<button type=\"button\" class=\"btn btn-primary btn-xs\" title=\"'.$enviaremail['accion'].'\" onclick=\"generarCotizacion.postEmail(this,\''.$encryptReg.'\')\">';
                     $sOutput .= '    <i class=\"fa fa-envelope-o fa-lg\"></i>';
                     $sOutput .= '</button>';
@@ -236,7 +244,7 @@ class generarCotizacionController extends Controller{
         echo json_encode($data);
     }
     
-    public function postPDF($n){
+    public function postPDF($n=''){
         $ar = ROOT.'public'.DS.'files'.DS.'cotizacion.pdf';
         /*se elimina el archivo*/
         unlink($ar);
