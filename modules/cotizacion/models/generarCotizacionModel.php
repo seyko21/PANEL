@@ -166,6 +166,7 @@ class generarCotizacionModel extends Model{
                 CONCAT(ct.`ubicacion`,' - ',c.`descripcion`)AS producto,
                 cd.`precio`,
                 p.`nombrecompleto`,
+                p.numerodocumento,
                 p.`email`,
                 cd.`cantidad_mes`,
                 cd.`costo_produccion`,
@@ -175,7 +176,16 @@ class generarCotizacionModel extends Model{
                 ct.`dimension_ancho`,
                 ct.`dimesion_area`,
                 tp.descripcion AS elemento,
-                (SELECT usuario FROM mae_usuario WHERE id_usuario=co.`usuario_creacion`)AS mail_user
+                (SELECT usuario FROM mae_usuario WHERE id_usuario=co.`usuario_creacion`)AS mail_user,
+                co.nombre_campania,
+                (select pp.nombrecompleto from `mae_persona` pp where pp.id_persona = p.`id_personapadre` ) as razonsocial,
+                (select pp.numerodocumento from `mae_persona` pp where pp.id_persona = p.`id_personapadre` ) as ruccliente,
+                co.`observaciones`,
+                co.`incluyeigv`,
+                co.fecha_cotizacion,
+                co.`subtotal`,
+                co.`impuesto`,
+                co.`total`
         FROM `lgk_cotizaciond` cd
         INNER JOIN `lgk_caratula` c ON c.`id_caratula`=cd.`id_caratula`
         INNER JOIN `lgk_cotizacion` co ON co.`id_cotizacion`=cd.`id_cotizacion`
