@@ -159,7 +159,7 @@ var generarCotizacionScript_ = function(){
         $.each(collection,function(){
             var tthis = $(this);
             var produccion = $(this).find('td:eq(0)').find('#'+diccionario.tabs.T8+'hhddProduccion').val();
-            if(produccion > 0){
+            if(produccion >= 0){
                 var meses = $('#'+diccionario.tabs.T8+'txt_meses').val();
                 var precio = $(this).find('td:eq(2)').find('input:text').val();
                 precio = precio.replace(",","");
