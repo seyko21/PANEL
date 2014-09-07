@@ -50,7 +50,7 @@ var generarCotizacion_ = function(){
                 {sTitle: "Meses", sWidth: "10%",sClass: "center"},
                 {sTitle: "Fec. Venc.", sWidth: "10%", sClass: "center"},
                 {sTitle: "Total", sWidth: "10%", sClass: "right"},
-                {sTitle: "Estado", sWidth: "10%", sClass: "Center"},
+                {sTitle: "Estado", sWidth: "10%", sClass: "center"},
                 {sTitle: "Acciones", sWidth: "15%", sClass: "center", bSortable: false}
             ],
             aaSorting: [[1, 'desc']],
