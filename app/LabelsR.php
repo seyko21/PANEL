@@ -126,8 +126,11 @@ define('LABEL_GNC10','Agregar Producto');
 define('LABEL_GNC11','Abre ventana para buscar y agregar productos');
 define('LABEL_GNC12','Buscar Cliente');
 define('LABEL_GNC13','Validez de oferta (días)');
-define('LABEL_GNC14','Costo de producción');
+define('LABEL_GNC14','Costo de producción de banner');
 define('LABEL_GNC15','Generar cotización');
+define('LABEL_GNC16','Incluye IGV');
+define('LABEL_GNC17','Si');
+define('LABEL_GNC18','No');
 
 /*----------------------    ASIGNAR CUENTAS----------------------*/
 define('LABEL_ASC1','Cuentas');

@@ -45,6 +45,9 @@ $buscar = Session::getPermiso('GNCOTBS');
                             </div>
                         </div>
                     </div>
+                    
+                    
+                    
 
                     <div class="form-group">
                         <label class="control-label col-md-2" for="prepend"><?php echo LABEL_GNC4; ?></label>
@@ -53,20 +56,12 @@ $buscar = Session::getPermiso('GNCOTBS');
                                 <input class="form-control" type="text" id="<?php echo T8; ?>txt_meses" name="<?php echo T8; ?>txt_meses" onkeyup="generarCotizacionScript.reCalcular(1);">
                             </div>
                         </div>
-                        <label class="control-label col-md-2" for="prepend"><?php echo LABEL_GNC5; ?></label>
+                        <label class="control-label col-md-3" for="prepend"><?php echo LABEL_GNC5; ?></label>
                         <div class="col-md-2">
                             <div class="input">
                                 <input class="form-control" type="text" id="<?php echo T8; ?>txt_oferta" name="<?php echo T8; ?>txt_oferta">
                             </div>
-                        </div>
-                        <div class="col-md-2 smart-form hide">
-                            <div class="select">
-                                <select id="<?php echo T8; ?>lst_igv" name="<?php echo T8; ?>lst_igv">
-                                    <option value="1" >IGV Si</option>
-                                    <option value="0" selected="selected">IGV No</option>
-                                </select><i></I>
-                            </div>
-                        </div>
+                        </div>                        
                     </div>
                     
                     <div class="form-group">
@@ -77,10 +72,22 @@ $buscar = Session::getPermiso('GNCOTBS');
                             </div>
                         </div>
                         <?php $data = generarCotizacionController::getProduccion(); ?>
-                        <label class="control-label col-md-2" for="prepend"><?php echo LABEL_GNC14; ?></label>
+                        <label class="control-label col-md-3" for="prepend"><?php echo LABEL_GNC14; ?></label>
                         <div class="col-md-2">
                             <div class="input">
                                 <input class="form-control" type="text" id="<?php echo T8; ?>txt_produccion" name="<?php echo T8; ?>txt_produccion" value="<?php echo $data['valor']; ?>" onkeyup="generarCotizacionScript.changeProduccion(this);">
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="control-label col-md-2" for="prepend"><?php echo LABEL_GNC16; ?></label>
+                        <div class="col-md-2">
+                            <div class="select">
+                                <select id="<?php echo T8; ?>lst_igv" name="<?php echo T8; ?>lst_igv" class="form-control">
+                                    <option value="1"><?php echo LABEL_GNC17; ?></option>
+                                    <option value="0"><?php echo LABEL_GNC18; ?></option>
+                                </select><i></i>
                             </div>
                         </div>
                     </div>

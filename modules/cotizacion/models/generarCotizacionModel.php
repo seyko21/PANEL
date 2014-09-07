@@ -251,7 +251,8 @@ class generarCotizacionModel extends Model{
                 c.`meses_contrato`,
                 c.`dias_oferta`,
                 c.`validez`,
-                c.`valor_produccion`
+                c.`valor_produccion`,
+                c.incluyeigv as igv 
         FROM `lgk_cotizacion` c
         INNER JOIN mae_persona p ON p.`id_persona`=c.`id_persona`
         WHERE c.`id_cotizacion`=:idCotizacion";

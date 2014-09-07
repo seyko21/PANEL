@@ -86,7 +86,7 @@ class seguimientoCotizacionController extends Controller{
                     $sOutput .= '<option value=\"E\" '.$selE.'>'.SEGCO_5.'</option>';
                     $sOutput .= '<option value=\"P\" '.$selP.'>'.SEGCO_6.'</option>';
     //                $sOutput .= '<option value=\"O\" '.$selO.'>'.SEGCO_7.'</option>';
-    //                $sOutput .= '<option value=\"R\" '.$selR.'>'.SEGCO_8.'</option>';
+                    $sOutput .= '<option value=\"R\" '.$selR.'>'.SEGCO_8.'</option>';
                     $sOutput .= '</select><i></i>';
                     $sOutput .= '</label>';
                     $sOutput .= ' </div>" ';

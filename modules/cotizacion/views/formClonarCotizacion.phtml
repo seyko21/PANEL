@@ -55,18 +55,10 @@ $data = generarCotizacionController::findCotizacion();
                                 <input class="form-control" type="text" id="<?php echo T8; ?>txt_meses" name="<?php echo T8; ?>txt_meses" onkeyup="generarCotizacionScript.reCalcular(1);" value="<?php echo $data['meses_contrato']; ?>">
                             </div>
                         </div>
-                        <label class="control-label col-md-2" for="prepend"><?php echo LABEL_GNC5; ?></label>
+                        <label class="control-label col-md-3" for="prepend"><?php echo LABEL_GNC5; ?></label>
                         <div class="col-md-2">
                             <div class="input">
                                 <input class="form-control" type="text" id="<?php echo T8; ?>txt_oferta" name="<?php echo T8; ?>txt_oferta" value="<?php echo $data['dias_oferta']; ?>">
-                            </div>
-                        </div>
-                        <div class="col-md-2 smart-form hide">
-                            <div class="select">
-                                <select id="<?php echo T8; ?>lst_igv" name="<?php echo T8; ?>lst_igv">
-                                    <option value="1" >IGV Si</option>
-                                    <option value="0" selected="selected">IGV No</option>
-                                </select><i></I>
                             </div>
                         </div>
                     </div>
@@ -78,7 +70,7 @@ $data = generarCotizacionController::findCotizacion();
                                 <input class="form-control" type="text" id="<?php echo T8; ?>txt_diasvalidez" name="<?php echo T8; ?>txt_diasvalidez" value="<?php echo $data['validez']; ?>">
                             </div>
                         </div>
-                        <label class="control-label col-md-2" for="prepend"><?php echo LABEL_GNC14; ?></label>
+                        <label class="control-label col-md-3" for="prepend"><?php echo LABEL_GNC14; ?></label>
                         <div class="col-md-2">
                             <div class="input">
                                 <input class="form-control" type="text" id="<?php echo T8; ?>txt_produccion" name="<?php echo T8; ?>txt_produccion" value="<?php echo number_format($data['valor_produccion'], 2); ?>" onkeyup="generarCotizacionScript.changeProduccion(this);">
@@ -86,6 +78,17 @@ $data = generarCotizacionController::findCotizacion();
                         </div>
                     </div>
 
+                    <div class="form-group">
+                        <label class="control-label col-md-2" for="prepend"><?php echo LABEL_GNC16; ?></label>
+                        <div class="col-md-2">
+                            <div class="select">
+                                <select id="<?php echo T8; ?>lst_igv" name="<?php echo T8; ?>lst_igv" class="form-control">
+                                    <option value="1" <?php echo ($data['igv'] == '1')?'selected="selected"':''; ?> ><?php echo LABEL_GNC17; ?></option>
+                                    <option value="0" <?php echo ($data['igv'] == '0')?'selected="selected"':''; ?> ><?php echo LABEL_GNC18; ?></option>
+                                </select><i></i>
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
 
