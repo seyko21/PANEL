@@ -228,12 +228,13 @@ class registrarVendedorController extends Controller{
         
         $v = AesCtr::de($id);
         
-        if(is_numeric($v)){
-            Obj::run()->View->render('newClaveVendedor',false);
-        }else{
-            $this->redirect('index');
-        }
+        Obj::run()->View->render('newClaveVendedor',false);
+       
         
+    }
+    
+    public function adjuntarDocumento(){
+        print_r($_POST);
     }
         
 }
