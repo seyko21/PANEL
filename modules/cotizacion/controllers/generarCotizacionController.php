@@ -282,30 +282,38 @@ class generarCotizacionController extends Controller{
            table,h3,h4{font-family:Arial;} 
            table, table td, table th{font-size:12px;}
            table{width:100%;}
-           #td2 th{background:#901D78; color:#FFF; height:25px;}
+           #td2 th, .totales{background:#901D78; color:#FFF; height:25px;}
            #td2 td{font-size:11px;height:25px;}
-        </style>            
-        <table width="100%" border="0" cellpadding="5" cellspacing="3">
+           #anulado{            
+            font-size:30px; font-family:verdana; color:#F00;  }
+        </style>';
+        
+        if($data[0]['estado'] == 'A'){
+            $html .='<span id="anulado">A N U L A D O</span>';
+        }        
+        $html .='<table width="100%" border="0" cellpadding="5" cellspacing="3">
           <tr bgcolor="#901D78">
-            <th colspan="4"><div align="center"><h2 style="color:#FFF;">PRESUPUESTO DE PANELES</h2></div></th>
+            <th colspan="6"><div align="center"><h2 style="color:#FFF;">PRESUPUESTO DE PANELES</h2></div></th>
           </tr>
           <tr>
             <td width="13%"><strong>N° Cotización:</strong></td>
-            <td width="56%"><h3>'.$data[0]['cotizacion_numero'].'</h3></td>
-            <td width="8%"><strong>Fecha:</strong></td>
-            <td width="23%">'.Functions::cambiaf_a_normal($data[0]['fecha_cotizacion']).'</td>
+            <td width="26%"><h3>'.$data[0]['cotizacion_numero'].'</h3></td>
+            <td width="15%"><strong>Fecha:</strong></td>
+            <td width="15%">'.Functions::cambiaf_a_normal($data[0]['fecha_cotizacion']).'</td>
+            <td width="20%"><strong>Fecha Vencimiento:</strong></td>
+            <td width="15%">'.Functions::cambiaf_a_normal($data[0]['vencimiento']).'</td>
           </tr>
           <tr>
             <td><strong>Cliente:</strong></td>
-            <td colspan="3">'.($data[0]['ruccliente']==''?'':$data[0]['ruccliente'].' - ').$data[0]['razonsocial'].'</td>
+            <td colspan="5">'.($data[0]['ruccliente']==''?'':$data[0]['ruccliente'].' - ').$data[0]['razonsocial'].'</td>
           </tr>
           <tr>
             <td><strong>Representante:</strong></td>
-            <td colspan="3">'.($data[0]['numerodocumento']==''?'':$data[0]['numerodocumento'].' - ').$data[0]['nombrecompleto'].'</td>
+            <td colspan="5">'.($data[0]['numerodocumento']==''?'':$data[0]['numerodocumento'].' - ').$data[0]['nombrecompleto'].'</td>
           </tr>
           <tr>
             <td><strong>Campaña:</strong></td>
-            <td colspan="3">'.$data[0]['nombre_campania'].'</td>          
+            <td colspan="5">'.$data[0]['nombre_campania'].'</td>          
           </tr>
         </table> 
         <br />
@@ -314,8 +322,8 @@ class generarCotizacionController extends Controller{
                 <th style="width:9%" >Código</th>
                 <th style="width:10%">Elemento</th>
                 <th style="width:40%">Ubicación</th>
-                <th style="width:5%">Medidas</th>
-                <th style="width:8%">Meses</th>
+                <th style="width:8%">Area</th>
+                <th style="width:7%">Meses</th>
                 <th style="width:12%">Alquiler</th>
                 <th style="width:12%">Producción</th>
                 <th style="width:12%">Total</th>
@@ -324,8 +332,8 @@ class generarCotizacionController extends Controller{
             $html .= '<tr>
                 <td style="text-align:center">'.$value['codigo'].'</td>
                 <td>'.$value['elemento'].'</td>
-                <td>'.$value['producto'].'</td>
-                <td>'.number_format($value['dimension_ancho']).' x '.number_format($value['dimension_alto']).' mts</td>
+                <td>'.$value['producto'].' - '.number_format($value['dimension_ancho'],1).' x '.number_format($value['dimension_alto'],1).' mts'.'</td>
+                <td style="text-align:center">'.number_format($value['dimesion_area'],2).' m<sup>2</sup></td>
                 <td style="text-align:center">'.number_format($value['cantidad_mes']).'</td>
                 <td style="text-align:right">S/.'.number_format($value['precio'],2).'</td>
                 <td style="text-align:right">S/.'.number_format($value['costo_produccion'],2).'</td>
@@ -333,10 +341,20 @@ class generarCotizacionController extends Controller{
             </tr>';
         }    
         $html .= '<tr><td colspan="6"></td><td>Importe:</td><td style="text-align:right">S/.'.number_format($data[0]['subtotal'],2).'</td></tr>';
-        $html .= '<tr><td colspan="6"></td><td>Impuesto:</td><td style="text-align:right">S/.'.number_format($data[0]['impuesto'],2).'</td></tr>';
-        $html .= '<tr><td colspan="6"></td><td>Total:</td><td style="text-align:right">S/.'.number_format($data[0]['total'],2).'</td></tr>';
+        $html .= '<tr><td colspan="6"></td><td>IGV '.(number_format($data[0]['pigv']*100)).'%:</td><td style="text-align:right">S/.'.number_format($data[0]['impuesto'],2).'</td></tr>';
+        $html .= '<tr><td colspan="7"></td><td class="totales" style="text-align:right; font-weight:bold;">S/.'.number_format($data[0]['total'],2).'</td></tr>';
         
         $html .='</table>';
+        
+        if($data[0]['incluyeigv'] == '1'){
+            $icl = 'Si';
+        }else{
+            $icl = 'No';
+        }        
+        $html .= '<h3 style="color:#F00">* Las Tarifas Son Netas y '.$icl.' Incluyen IGV.</h3>';
+        $html .= '<h4 style="color:#000">Comentarios:</h4>';
+        $html .= '<p>'.$data[0]['observaciones'].'</p>';
+        
         return $html;
     }
     
