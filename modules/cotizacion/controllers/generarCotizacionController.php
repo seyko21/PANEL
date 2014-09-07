@@ -168,14 +168,15 @@ class generarCotizacionController extends Controller{
     }
     
     public function postEmail(){ 
+        $this->postPDF('N');
+        Obj::run()->generarCotizacionModel->postTiempoCotizacion();
+        
         $data = Obj::run()->generarCotizacionModel->getCotizacion();
+        
         $emailCliente = $data[0]['email'];
         $cliente = $data[0]['nombrecompleto'];
         $emailUser = $data[0]['mail_user'];
         
-        
-        $cad = explode('@',$email);
-               
         $body ='
             <h3>Cotización N° '.$data[0]['cotizacion_numero'].'</h3>
             <h3>Cliente: '.$data[0]['nombrecompleto'].'</h3>
@@ -221,23 +222,21 @@ class generarCotizacionController extends Controller{
 
         $mail->MsgHTML($body);
 
-//        $mail->AddAttachment("public/img/phpmailer.gif");      // attachment
+        $mail->AddAttachment('public/files/cotizacion.pdf');      // attachment
 //        $mail->AddAttachment("public/img/phpmailer_mini.gif"); // attachment
         
         $data = array('result'=>2);
         /*validar si dominio de correo existe*/
-        if(checkdnsrr($cad[1])){
-            if($mail->Send()) {
-                $data = array('result'=>1);
-            } else {
-                $data = array('result'=>2);
-            }
+        if($mail->Send()) {
+            $data = array('result'=>1);
+        } else {
+            $data = array('result'=>2);
         }
         
         echo json_encode($data);
     }
     
-    public function postPDF(){  
+    public function postPDF($n){
         $ar = ROOT.'public'.DS.'files'.DS.'cotizacion.pdf';
         /*se elimina el archivo*/
         unlink($ar);
@@ -290,8 +289,10 @@ class generarCotizacionController extends Controller{
         $mpdf->WriteHTML($html);
         $mpdf->Output($ar,'F');
         
-        $data = array('result'=>1);
-        echo json_encode($data);
+        if($n != 'N'){
+            $data = array('result'=>1);
+            echo json_encode($data);
+        }
     }
     
     public function postExcel(){

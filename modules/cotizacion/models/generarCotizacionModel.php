@@ -116,7 +116,7 @@ class generarCotizacionModel extends Model{
         
         if($this->_flag == 11){//cuando se clona una cotizacion, hay q anularla
             $this->anularUnaCotizacion();
-            $this->_flag = 1; //retrorna a 1 para ael SP
+            $this->_flag = 1; //retorna a 1 para ael SP
         }
         
         $parms = array(
@@ -261,6 +261,30 @@ class generarCotizacionModel extends Model{
         );
         $data = $this->queryOne($query,$parms);
         return $data;
+    }
+    
+    public function postTiempoCotizacion(){
+        $query = "
+        INSERT INTO `lgk_tiempocotizacion`(
+               `estado`,
+               `usuario_creacion`,
+               `id_cotizacion`,
+               `observacion`
+        )
+        VALUES (
+                :estado,
+                :usuario,
+                :idCotizacion,
+                :observacion
+        );";
+
+        $parms = array(
+            ':estado' => 'S',
+            ':usuario'=>  $this->_usuario,
+            ':idCotizacion'=>  $this->_idCotizacion,
+            ':observacion'=>'Cotización enviada al cliente'
+        );
+        $data = $this->execute($query,$parms);            
     }
     
 }
