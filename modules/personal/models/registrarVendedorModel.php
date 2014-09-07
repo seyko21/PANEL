@@ -9,7 +9,7 @@
 class registrarVendedorModel extends Model{
 
     private $_flag;
-    private $_idPersona;
+    public  $_idPersona;
     private $_idDepartamento;
     private $_idProvincia;
     private $_apellidoPaterno;
@@ -111,7 +111,6 @@ class registrarVendedorModel extends Model{
         $data = $this->queryOne($query,$parms);
         return $data;
     }
-
 
     public function getDepartamentos(){
         $query = "SELECT id_departamento,departamento FROM `ub_departamento` ORDER BY departamento ";
@@ -224,6 +223,47 @@ class registrarVendedorModel extends Model{
             ':clave' => md5($this->_pass.APP_PASS_KEY)
         );
         $this->execute($query,$parms);
+        $data = array('result'=>1);
+        return $data;
+    }
+    
+    public function adjuntarDocumento($doc){
+        $query = "UPDATE `mae_persona` SET
+                    `antecedentes` = :doc
+                WHERE `id_persona` = :idPersona;";
+        $parms = array(
+            ':idPersona' => $this->_idPersona,
+            ':doc' => $doc
+        );
+        $this->execute($query,$parms);
+        $data = array('result'=>1);
+        return $data;
+    }
+    
+    public function getAdjuntado(){
+        $query = "SELECT 
+                    antecedentes
+                FROM mae_persona WHERE id_persona = :idPersona;";
+        
+        $parms = array(
+            ':idPersona'=>$this->_idPersona
+        );
+        
+        $data = $this->queryOne($query,$parms);
+        return $data;
+    }
+    
+    public function deleteAdjuntar(){
+        $query = "UPDATE  mae_persona SET
+                    antecedentes = ''
+                WHERE id_persona = :idPersona;";
+        
+        $parms = array(
+            ':idPersona'=>$this->_idPersona
+        );
+        
+        $this->execute($query,$parms);
+        
         $data = array('result'=>1);
         return $data;
     }

@@ -155,13 +155,11 @@ var registrarVendedor_ = function(){
     };
     
     this.publico.getFormAdjuntar = function(btn,id){
-        _private.idVendedor = id;
-       
         simpleAjax.send({
             element: btn,
             dataType: 'html',
             gifProcess: true,
-            data: '&_idPersona='+_private.idVendedor,
+            data: '&_idPersona='+id,
             root: _private.config.modulo + 'getFormAdjuntar',
             fnCallback: function(data){
                 $('#cont-modal').append(data);
@@ -322,6 +320,31 @@ var registrarVendedor_ = function(){
                     });
                     simpleScript.redirect('index');
                 }
+            }
+        });
+    };
+    
+    this.publico.deleteAdjuntar = function(btn,id,doc){
+        simpleScript.notify.confirm({
+            content: mensajes.MSG_7,
+            callbackSI: function(){
+                simpleAjax.send({
+                    element: btn,
+                    root: _private.config.modulo + 'deleteAdjuntar',
+                    data: '&_idPersona='+id+'&_doc='+doc,
+                    fnCallback: function(data) {
+                        if(!isNaN(data.result) && parseInt(data.result) === 1){
+                            simpleScript.notify.ok({
+                                content: mensajes.MSG_8,
+                                callback: function(){
+                                    $('#'+diccionario.tabs.T7+'dow').attr('onclick','');
+                                    $('#'+diccionario.tabs.T7+'dow').html(''); 
+                                    $('#'+diccionario.tabs.T7+'btndow').css('display','none');
+                                }
+                            });
+                        }
+                    }
+                });
             }
         });
     };

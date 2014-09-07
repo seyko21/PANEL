@@ -1,12 +1,5 @@
 <?php
-/*
- * Documento   : nuevoTipoConcepto
- * Creado      : 05-ago-2014
- * Autor       : ..... .....
- * Descripcion : 
- */
-$grabar = Session::getPermiso('REGVEGR');
-
+$doc = $data = Obj::run()->registrarVendedorModel->getAdjuntado();
 ?>
 <div id="<?php echo T7; ?>formAdjuntar" name="<?php echo T7; ?>formAdjuntar" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">
@@ -15,17 +8,21 @@ $grabar = Session::getPermiso('REGVEGR');
                 <button type="button" class="close"  aria-hidden="true">
                     &times;
                 </button>
-                <h4 class="modal-title"><?php echo LABEL_RV25;?></h4>
+                <h4 class="modal-title"><?php echo LABEL_RV25; ?></h4>
             </div>
             <div class="modal-body smart-form">
-                <form action="<?php echo BASE_URL; ?>personal/registrarVendedor/adjuntarDocumento" class="dropzone" id="mydropzone"></form>
+                <form class="dropzone" id="mydropzone">
+                    <input type="hidden" id="_idPersona" name="_idPersona" value="<?php echo $this->idVendedor; ?>">
+                </form>
+                <?php if(sizeof($doc) && isset($doc['antecedentes'])):?>
+                <a id="<?php echo T7; ?>dow" href="javascript:;" onclick="window.open('<?php echo 'public/files/docs/'.$doc['antecedentes']; ?>','_blank');"><?php echo $doc['antecedentes'];?></a>
+                <button id="<?php echo T7; ?>btndow" type="button" class="btn btn-danger" style="padding: 5px" onclick="registrarVendedor.deleteAdjuntar(this,'<?php echo $this->idVendedor; ?>','<?php echo 'public/files/docs/'.$doc['antecedentes']; ?>');"><i class="fa fa-trash-o"></i> Eliminar</button>
+                <?php else: ?>
+                <a id="<?php echo T7; ?>dow" href="javascript:;"></a>
+                <button id="<?php echo T7; ?>btndow" type="button" class="btn btn-danger" style="padding: 5px;display: none"><i class="fa fa-trash-o"></i> Eliminar</button>
+                <?php endif; ?>
             </div>
             <div class="modal-footer">
-                <?php if($grabar['permiso']):?>
-                <button id="<?php echo T7; ?>btnGtconc" type="submit" class="btn txt-color-white bg-color-blueDark">
-                    <i class="fa fa-save"></i> <?php echo $grabar['accion']; ?>
-                </button>
-                <?php endif; ?>
                 <button type="button" class="btn btn-default xClose">
                     <i class="fa fa-ban"></i> <?php echo BTN_CLOSE; ?>
                 </button>
@@ -33,20 +30,28 @@ $grabar = Session::getPermiso('REGVEGR');
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 
-<!-- si no riene permiso se anula submit desde cualquier input -->
-<?php if(!$grabar['permiso']): ?>
-<script>
-    simpleScript.noSubmit('#<?php echo T7; ?>formAdjuntar');
-</script>
-<?php endif; ?>
-<script>
-    Dropzone.autoDiscover = false;
-    $("#mydropzone").dropzone({
-            //url: "/file/post",
-            addRemoveLinks : true,
-            maxFilesize: 1,
+    <!-- si no riene permiso se anula submit desde cualquier input -->
+    <?php if (!$grabar['permiso']): ?>
+        <script>
+            simpleScript.noSubmit('#<?php echo T7; ?>formAdjuntar');
+        </script>
+    <?php endif; ?>
+    <script>
+        Dropzone.autoDiscover = false;
+        $("#mydropzone").dropzone({
+            acceptedFiles: ".pdf",
+            url: '<?php echo BASE_URL; ?>personal/registrarVendedor/adjuntarDocumento',
+            maxFiles: 1, // Number of files at a time
+            maxFilesize: 10, //in MB
+            addRemoveLinks: true,
             dictResponseError: 'Error uploading file!',
-            dictDefaultMessage: 'Arrastre aquí una imagen'
-    });
-</script>
+            dictDefaultMessage: 'Arrastre aquí una imagen',
+            complete: function(data){
+                $('#<?php echo T7; ?>dow').attr('onclick',"window.open('public/files/docs/<?php echo Aes::de($this->idVendedor); ?>_"+data.name+"','_blank');");
+                $('#<?php echo T7; ?>dow').html('<?php echo Aes::de($this->idVendedor); ?>'+data.name); 
+                $('#<?php echo T7; ?>btndow').attr('onclick',"registrarVendedor.deleteAdjuntar(this,'<?php echo $this->idVendedor; ?>','public/files/docs/<?php echo Aes::de($this->idVendedor); ?>_"+data.name+"');");
+                $('#<?php echo T7; ?>btndow').css('display','block');
+            }
+        });
+    </script>
 </div>
