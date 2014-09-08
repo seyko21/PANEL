@@ -188,7 +188,8 @@ var generarCotizacion_ = function(){
             bPaginate: false,
             aoColumns: [
                 {sTitle: "Nro.", sClass: "center",sWidth: "2%",  bSortable: false},
-                {sTitle: "Cliente", sWidth: "88%"}
+                {sTitle: "Cliente", sWidth: "40%"},
+                {sTitle: "Razón Social", sWidth: "40%"}
             ],
             aaSorting: [[1, 'asc']],
             sScrollY: "250px",

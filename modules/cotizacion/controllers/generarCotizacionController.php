@@ -144,7 +144,7 @@ class generarCotizacionController extends Controller{
                 $nom = '<a href=\"javascript:;\" onclick=\"simpleScript.setInput({'.$tab.'txt_idpersona:\''.$encryptReg.'\', '.$tab.'txt_cliente:\''.$aRow['nombrecompleto'].'\'},\'#'.T8.'formBuscarCliente\');\" >'.$aRow['nombrecompleto'].'</a>';
                 
                 /*datos de manera manual*/
-                $sOutput .= '["'.(++$key).'","'.$nom.'" ';
+                $sOutput .= '["'.(++$key).'","'.$nom.'", "'.$aRow['razon_social'].'" ';
 
                 $sOutput .= '],';
             }

@@ -80,7 +80,7 @@ $buscar = Session::getPermiso('REGVEBS');
                             if($rows < 7 && $rows > 0){
                                 $diff = 7 - $rows;
                                 echo Functions::createCell(array('row'=>($diff),'cols'=>7)); 
-                            }else{
+                            }elseif($rows == 0){
                             ?>  
                             <tr>
                                 <td colspan="7">

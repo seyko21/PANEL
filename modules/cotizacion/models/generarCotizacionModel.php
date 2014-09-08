@@ -95,12 +95,13 @@ class generarCotizacionModel extends Model{
     }
     
     public function getMisProductos(){
-        $query = "CALL sp_cotiGenerarCotizacionMisProductos(:flag,:idPersona,:ubicacion);";
+        $query = "CALL sp_cotiGenerarCotizacionMisProductos(:flag,:idPersona,:ubicacion,:acceso);";
         
         $parms = array(
             ':flag' => 1,
             ':idPersona' => $this->_idPersona,
-            ':ubicacion' => $this->_ubicacion
+            ':ubicacion' => $this->_ubicacion,
+            ':acceso' => Session::get('sys_all')
         );
         $data = $this->queryAll($query,$parms);            
         return $data;
@@ -215,16 +216,21 @@ class generarCotizacionModel extends Model{
     
     /*selecciona todos los clientes de un vendedor*/
     public function getClientes(){
+        $all = '';
+        /*si no es SADM o ADM solo se mostrara los clientes del usuario*/
+        if(Session::get('sys_all') == 'N'){
+            $all = "p.usuarioregistro = '".$this->_usuario."'  AND";
+        }
         $query = "
          SELECT 
-                id_persona,
-                nombrecompleto
-         FROM mae_persona
-         WHERE usuarioregistro = :usuario AND id_personapadre <> ''
-         AND nombrecompleto LIKE CONCAT('%',:cliente,'%'); ";
+                p.id_persona,
+                p.nombrecompleto,
+                (SELECT pp.nombrecompleto FROM mae_persona pp WHERE pp.id_persona=p.id_personapadre) AS razon_social
+         FROM mae_persona p
+         WHERE  ".$all." p.id_personapadre <> ''
+         AND p.nombrecompleto LIKE CONCAT('%',:cliente,'%'); ";
         
         $parms = array(
-            ':usuario'=> $this->_usuario,
             ':cliente' => $this->_xSearch,
         );
         $data = $this->queryAll($query,$parms);
@@ -255,12 +261,13 @@ class generarCotizacionModel extends Model{
     }
     
     public function getProductosCotizados(){
-        $query = "CALL sp_cotiGenerarCotizacionMisProductos(:flag,:idCotizacion,:ubicacion);";
+        $query = "CALL sp_cotiGenerarCotizacionMisProductos(:flag,:idCotizacion,:ubicacion,:acceso);";
         
         $parms = array(
             ':flag' => 2,
             ':idCotizacion' => $this->_idCotizacion,
-            ':ubicacion' => ''
+            ':ubicacion' => '',
+            ':acceso' => ''
         );
         $data = $this->queryAll($query,$parms);            
         return $data;

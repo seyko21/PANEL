@@ -488,13 +488,18 @@ var simpleScript_ = function(){
     
     /*busqueda sencible en una tabla*/
     this.public.triggerSearch = function(el,oTable,index){
-        $(oTable).find('tbody').find('tr').each(function(){
-            var cadena = $(this).find('td:eq('+index+')').html();
-            
-            $(this).hide();
-            if(cadena.toLowerCase().indexOf(el.value) > 0 || el.value === ''){
-                $(this).show();
-            }
+        if($(el).val() === ''){
+            $(oTable).find('tbody').find('tr').show();
+            return false;
+        }
+        $.expr[':'].icontains = function(obj, index, meta, stack){
+        return (obj.textContent || obj.innerText || $(obj).text() || '').toLowerCase().indexOf(meta[3].toLowerCase()) >= 0;
+        };
+        
+        $(el).keyup(function(){
+            var buscar = $(this).val();
+            $(oTable).find('tbody').find('tr').hide();
+            $(oTable).find('tbody').find("tr:icontains('" + buscar + "')").show();
         });
     };
     
