@@ -279,7 +279,7 @@ class generarCotizacionController extends Controller{
         $html ='
         <style>           
            table,h3,h4{font-family:Arial;} 
-           table, table td, table th{font-size:12px;}
+           table, table td, table th, p {font-size:12px;}
            table{width:100%;}
            #td2 th, .totales{background:#901D78; color:#FFF; height:25px;}
            #td2 td{font-size:11px;height:25px;}
@@ -352,8 +352,12 @@ class generarCotizacionController extends Controller{
         }        
         $html .= '<h3 style="color:#F00">* Las Tarifas Son Netas y '.$icl.' Incluyen IGV.</h3>';
         $html .= '<h4 style="color:#000">Comentarios:</h4>';
-        $html .= '<p>'.$data[0]['observaciones'].'</p>';
-        
+        if ($data[0]['valor_produccion'] > 0 ):
+            $html .= '<p>- El costo del M<sup>2</sup> de producción es de S/. '.number_format($data[0]['valor_produccion'],2).'</p>';
+        endif;        
+        if ($data[0]['observaciones']!= '' ):
+            $html .= '<p>- '.$data[0]['observaciones'].'</p>';
+        endif;        
         return $html;
     }
     

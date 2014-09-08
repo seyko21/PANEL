@@ -196,7 +196,8 @@ class generarCotizacionModel extends Model{
                 co.`total`,
                 (SELECT CAST(valor AS DECIMAL(10,5)) FROM `pub_parametro` WHERE alias = 'IGV') as pigv,
                 DATE_ADD(co.`fecha_cotizacion`, INTERVAL co.`validez` DAY)as vencimiento,
-                co.estado
+                co.estado,
+                co.valor_produccion
         FROM `lgk_cotizaciond` cd
         INNER JOIN `lgk_caratula` c ON c.`id_caratula`=cd.`id_caratula`
         INNER JOIN `lgk_cotizacion` co ON co.`id_cotizacion`=cd.`id_cotizacion`
