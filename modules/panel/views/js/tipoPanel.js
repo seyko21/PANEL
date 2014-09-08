@@ -3,6 +3,7 @@ var tipoPanel_ = function(){
     var _private = {};
     
     _private.idTipoPanel = 0;
+    _private.callbackData = null;
     
     _private.config = {
         modulo: 'panel/tipoPanel/'
@@ -61,7 +62,9 @@ var tipoPanel_ = function(){
         setup_widgets_desktop();
     };
     
-   this.publico.getNuevoTipoPanel = function(btn){
+   this.publico.getNuevoTipoPanel = function(btn, callbackData){
+       /*para cuando se llama formulario desde otro modulo*/
+        _private.callbackData = callbackData;  
         simpleAjax.send({
             element: btn,
             dataType: 'html',
@@ -88,6 +91,18 @@ var tipoPanel_ = function(){
         });
     };
     
+    this.publico.getAddListTipoPanel = function(){
+        simpleAjax.send({
+            root: _private.config.modulo + 'getAddListTipoPanel',
+            fnCallback: function(data){
+                simpleScript.closeModal('#'+diccionario.tabs.T101+'formTipoPanel');
+                $(_private.callbackData).append('<option value="'+data.id_tipo+'">'+data.descripcion+'</option>');
+                _private.callbackData = null;
+            }
+        });
+        
+    };
+    
     this.publico.postNuevoTipoPanel = function(){
         simpleAjax.send({
             flag: 1,
@@ -100,7 +115,16 @@ var tipoPanel_ = function(){
                     simpleScript.notify.ok({
                         content: mensajes.MSG_3,
                         callback: function(){
-                            simpleScript.reloadGrid('#'+diccionario.tabs.T101+'gridTipoPanel');                             
+                            
+                             /*si se graba desde otro modulo*/                            
+                            if(_private.callbackData.length > 0){                                
+                               tipoPanel.getAddListTipoPanel();                                
+                            }
+                            /*se verifica si existe tabb para recargar grid*/
+                            if($('#'+diccionario.tabs.T101+'_CONTAINER').length > 0){
+                               tipoPanel.getGridTipoPanel();
+                            }
+                                                        
                         }
                     });
                 }else if(!isNaN(data.result) && parseInt(data.result) === 2){

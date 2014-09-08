@@ -119,6 +119,11 @@ $grabar = Session::getPermiso('FITECGR');
                                         ?><i></i>
                                     </label>
                                 </div>
+                                <?php if ($grabar['permiso']): ?>
+                                <button id="<?php echo T102; ?>btnNew" type="button" onclick="tipoPanel.getNuevoTipoPanel(this,'#<?php echo T102; ?>lst_tipopanel');" class="btn txt-color-white bg-color-blueDark" title="<?php echo BTN_NUEVO; ?>">
+                                        <i class="fa fa-file-o pd8"></i>
+                                    </button>
+                                <?php endif; ?>
                             </div>
                         </section>                        
                         <section>

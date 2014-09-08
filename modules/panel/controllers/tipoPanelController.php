@@ -95,6 +95,13 @@ class tipoPanelController extends Controller{
         Obj::run()->View->render('editarTipoPanel');
     }
     
+       
+    public function getAddListTipoPanel(){ 
+        $data = Obj::run()->tipoPanelModel->getLastTipoPanel();
+        
+        echo json_encode($data);
+    }
+        
     public static function getTipoPanel(){ 
         $data = Obj::run()->tipoPanelModel->getTipoPanel();
         

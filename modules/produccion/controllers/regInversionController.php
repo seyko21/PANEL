@@ -56,7 +56,7 @@ class regInversionController extends Controller{
                  if ($aRow['monto_invertido'] == 0)
                     $chk = '<input id=\"c_'.(++$key).'\" type=\"checkbox\" name=\"'.TAB_SOCIO.'chk_delete[]\" value=\"'.$encryptReg.'\">';
                 else {
-                    $chk = '';
+                    $chk = '<input id=\"c_'.(++$key).'\" type=\"checkbox\" name=\"'.TAB_SOCIO.'chk_delete[]\" disabled>';
                 }
                 /*datos de manera manual*/
                 $sOutput .= '["'.$chk.'","'.$aRow['numerodocumento'].'","'.$aRow['nombrecompleto'].'","'.number_format($aRow['monto_invertido'],2).'","'.$estado.'", ';
@@ -118,7 +118,7 @@ class regInversionController extends Controller{
                   if ($aRow['monto_asignado'] == 0)
                     $chk = '<input id=\"c_'.(++$key).'\" type=\"checkbox\" name=\"'.REINV.'chk_chkdelinv[]\" value=\"'.$encryptReg.'\">';
                 else {
-                    $chk = '';
+                    $chk = '<input id=\"c_'.(++$key).'\" type=\"checkbox\" name=\"'.REINV.'chk_chkdelinv[]\" disabled>';
                 }                                
                 
                 /*datos de manera manual*/

@@ -22,11 +22,11 @@ define('LABEL_AA1','Alias');
 define('LABEL_AA2','Debe especificar un alias único para el parámetro');
 define('LABEL_A7','Editar Parámetro');
 /*----------------------TIPO Panel----------------------*/
-define('LABEL_A8','Tipo de Panel ');
-define('LABEL_A9','Nuevo Tipo de Panel');
+define('LABEL_A8','Tipo de Elemento ');
+define('LABEL_A9','Nuevo Elemento');
 define('LABEL_A10','Descripción');
 define('LABEL_A11','Ingrese una Descripción');
-define('LABEL_A12','Editar Tipo de Panel');
+define('LABEL_A12','Editar Elemento');
 /*----------------------Ficha Tecnica----------------------*/
 define('LABEL_A20','Ficha Técnica');
 define('LABEL_A21','Registro de Catálogo');
@@ -36,7 +36,7 @@ define('LABEL_A24','Información');
 define('LABEL_A25','Mapa');
 define('LABEL_A26','Ubicación');
 define('LABEL_A26M','Escriba la dirección donde se encuentra el Panel');
-define('LABEL_A27','Tipo Panel');
+define('LABEL_A27','Elemento');
 define('LABEL_A28','Ancho (m)');
 define('LABEL_A28M','Escriba el ancho en Metros');
 define('LABEL_A29','Alto (m)');
@@ -75,6 +75,7 @@ define('LABEL_A58','Listado de Catálogo');
 define('LABEL_A60','Consulta de Permisos por vencer en 5 meses');
 /*----------------------Catalogo de Precios----------------------*/
 define('LABEL_A70','Listado de Catalogo');
+define('LABEL_A71','Elemento');
 /*----------------------REGISTRAR Socio----------------------*/
 define('LABEL_A80','Socio');
 define('LABEL_A81','Nuevo Socio');

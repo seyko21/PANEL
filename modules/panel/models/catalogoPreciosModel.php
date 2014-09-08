@@ -12,6 +12,7 @@ class catalogoPreciosModel extends Model{
     private $_flag;
     private $_usuario;    
     private $_idCaratula;
+    private $_tipoPanel;
     
     /*para el grid*/
     private $_iDisplayStart;
@@ -28,7 +29,7 @@ class catalogoPreciosModel extends Model{
         $this->_flag                    = Formulario::getParam("_flag");        
         $this->_usuario                 = Session::get("sys_idUsuario");
         $this->_idCaratula = Aes::de(Formulario::getParam('_idCaratula'));  /*se decifra*/         
-        
+        $this->_tipoPanel =   Formulario::getParam("_tipoPanel"); 
         $this->_iDisplayStart  =   Formulario::getParam("iDisplayStart"); 
         $this->_iDisplayLength =   Formulario::getParam("iDisplayLength"); 
         $this->_iSortingCols   =   Formulario::getParam("iSortingCols");
@@ -36,7 +37,7 @@ class catalogoPreciosModel extends Model{
     }
     
     public function getGridProducto(){
-        $aColumns       =   array( 'codigo','distrito','ubicacion','dimesion_area','precio','iluminado','estado' ); //para la ordenacion y pintado en html
+        $aColumns       =   array( 'codigo','distrito','ubicacion','elemento','dimesion_area','precio','iluminado','estado' ); //para la ordenacion y pintado en html
         /*
 	 * Ordenando, se verifica por que columna se ordenara
 	 */
@@ -49,9 +50,10 @@ class catalogoPreciosModel extends Model{
         }        
         $sOrder = substr_replace( $sOrder, "", -1 );
         
-        $query = "call sp_catalogoPreciosGrid(:iDisplayStart,:iDisplayLength,:sOrder,:sSearch);";
+        $query = "call sp_catalogoPreciosGrid(:tipopanel, :iDisplayStart,:iDisplayLength,:sOrder,:sSearch);";
         
         $parms = array(
+            ':tipopanel' => $this->_tipoPanel,
             ':iDisplayStart' => $this->_iDisplayStart,
             ':iDisplayLength' => $this->_iDisplayLength,
             ':sOrder' => $sOrder,
@@ -61,6 +63,19 @@ class catalogoPreciosModel extends Model{
      
         return $data; 
        
+    }
+    public function getTipoPanel(){
+        $query = "SELECT t.id_tipopanel, t.descripcion FROM lgk_tipopanel t
+                 WHERE exists 
+                 (select * from lgk_catalogo c where c.id_tipopanel = t.id_tipopanel and c.estado = 'A'  )
+                  and t.estado = :estado; 
+                 ";
+        
+        $parms = array(
+            ':estado' => 'A'
+        );
+        $data = $this->queryAll($query,$parms);
+        return $data;
     }
     
     public function getRptFichaTecnicaCatalogo(){

@@ -50,11 +50,11 @@ var fichaTecnica_ = function(){
             iDisplayLength: 10,            
             aoColumns: [
                 {sTitle: "<input type='checkbox' id='"+diccionario.tabs.T102+"chk_all' onclick='simpleScript.checkAll(this,\"#"+diccionario.tabs.T102+"gridFichaTecnica\");'>", sWidth: "1%", sClass: "center", bSortable: false},                
-                {sTitle: "Ciudad", sWidth: "18%"},
-                {sTitle: "Ubicación", sWidth: "35%"},
-                {sTitle: "Area m2", sWidth: "8%",  sClass: "center", bSortable: false},
-                {sTitle: "Precio", sWidth: "8%",  sClass: "center", bSortable: false},
-                {sTitle: "Nro Caratulas", sWidth: "5%",  sClass: "center", bSortable: false},
+                {sTitle: "Ciudad", sWidth: "15%"},
+                {sTitle: "Ubicación", sWidth: "25%"},
+                {sTitle: "Elemento", sWidth: "10%"},                
+                {sTitle: "Precio", sWidth: "8%",  sClass: "right"},
+                {sTitle: "N° Caras", sWidth: "5%",  sClass: "center", bSortable: false},
                 {sTitle: "Estado", sWidth: "8%",  sClass: "center", bSortable: false},
                 {sTitle: "Acciones", sWidth: "15%", sClass: "center", bSortable: false}
             ],

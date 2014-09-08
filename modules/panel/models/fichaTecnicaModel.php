@@ -76,7 +76,7 @@ class fichaTecnicaModel extends Model{
        }
     
     public function getGridFichaTecnica(){
-        $aColumns       =   array( 'chk','u.distrito','ubicacion' ); //para la ordenacion y pintado en html
+        $aColumns       =   array( 'chk','u.distrito','ubicacion','elemento','precio' ); //para la ordenacion y pintado en html
         /*
 	 * Ordenando, se verifica por que columna se ordenara
 	 */
@@ -204,7 +204,7 @@ class fichaTecnicaModel extends Model{
         return $data;
     }    
     public function getUbicacion(){
-        $query = " SELECT ubicacion,  FORMAT(dimension_alto,0) as dimension_alto, FORMAT(dimension_ancho,0) as dimension_ancho"
+        $query = " SELECT ubicacion,  FORMAT(dimension_alto,1) as dimension_alto, FORMAT(dimension_ancho,1) as dimension_ancho"
                 . "  FROM lgk_catalogo WHERE id_producto = :id ";
         $parms = array(
             ':id' => $this->_idProducto

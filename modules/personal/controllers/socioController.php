@@ -46,7 +46,7 @@ class socioController extends Controller{
                 if ($aRow['monto_invertido'] == 0)
                     $chk = '<input id=\"c_'.(++$key).'\" type=\"checkbox\" name=\"'.TAB_SOCIO.'chk_delete[]\" value=\"'.$encryptReg.'\">';
                 else {
-                    $chk = '';
+                    $chk = '<input id=\"c_'.(++$key).'\" type=\"checkbox\" name=\"'.TAB_SOCIO.'chk_delete[]\" disabled>';
                 }
                 
                 /*datos de manera manual*/

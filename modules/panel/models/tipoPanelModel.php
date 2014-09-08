@@ -79,6 +79,15 @@ class tipoPanelModel extends Model{
         return $data;
     }
     
+    public function getLastTipoPanel(){
+        $query = " SELECT `id_tipopanel`,`descripcion` FROM lgk_tipopanel WHERE estado = :estado ORDER BY 1 DESC LIMIT 1 ";
+        $parms = array(
+            ':estado' => 'A',
+        );
+        $data = $this->queryOne($query,$parms);
+        return $data;
+    }
+        
     public function mantenimientoTipoPanel(){
         $query = "call sp_catalogoTipoPanelMantenimiento(:flag,:key,:descripcion,:estado,:usuario);";
         $parms = array(

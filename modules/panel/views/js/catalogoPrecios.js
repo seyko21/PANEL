@@ -54,17 +54,21 @@ var catalogoPrecios_ = function(){
             iDisplayLength: 10,            
             aoColumns: [                
                 {sTitle: "Código", sWidth: "8%"},
-                {sTitle: "Ciudad", sWidth: "18%"},
+                {sTitle: "Ciudad", sWidth: "13%"},
                 {sTitle: "Ubicación", sWidth: "35%"},
-                {sTitle: "Area m2", sWidth: "5%",  sClass: "center"},
+                {sTitle: "Elemento", sWidth: "12%"},
+                {sTitle: "Area m2", sWidth: "4%",  sClass: "center"},
                 {sTitle: "Precio", sWidth: "8%",  sClass: "right"},                
-                {sTitle: "Iluminado", sWidth: "8%",  sClass: "center"},
-                {sTitle: "Estado", sWidth: "8%",  sClass: "center"},
-                {sTitle: "Acciones", sWidth: "15%", sClass: "center", bSortable: false}
+                {sTitle: "Iluminado", sWidth: "5%",  sClass: "center"},
+                {sTitle: "Estado", sWidth: "5%",  sClass: "center"},
+                {sTitle: "Acciones", sWidth: "10%", sClass: "center", bSortable: false}
             ],
             aaSorting: [[2, 'asc']],
             sScrollY: "350px",
             sAjaxSource: _private.config.modulo+'getGridProducto',
+            fnServerParams: function(aoData) {
+                aoData.push({"name": "_tipoPanel", "value": $("#"+diccionario.tabs.TAB_CATPRE+"lst_tipopanelsearch").val()});
+            },
             fnDrawCallback: function() {
                 $('#'+diccionario.tabs.TAB_CATPRE+'gridCatalogoPrecio_filter').find('input').attr('placeholder','Buscar por Ciudad o Ubicación').css('width','350px');;                
                 /*para hacer evento invisible*/

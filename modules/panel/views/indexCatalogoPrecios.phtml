@@ -6,8 +6,6 @@
 * Descripcion : indexCatalogoPrecio.phtml
 * ---------------------------------------
 */
-$grabar   = Session::getPermiso("TAB_CATPREGR");
-$eliminar = Session::getPermiso("TAB_CATPREDE");
 echo Functions::widgetOpen(array(
         "id"=>TAB_CATPRE,
         "title"=>LABEL_A70
@@ -15,7 +13,31 @@ echo Functions::widgetOpen(array(
 ?>
 <button id="<?php echo TAB_CATPRE; ?>btnDowPDF" type="button" class="hide" onclick="window.open('<?php echo 'public/files/fichatecnicacatalogo.pdf'?>','_blank');">Descargar</button>
 <button id="<?php echo TAB_CATPRE; ?>btnDowExcel" type="button" class="hide" onclick="window.open('<?php echo 'public/files/fichatecnicacatalogo.xls'?>','_self');">Descargar</button>
-    <div class="widget-body-toolbar"></div>
+
+
+<div class="widget-body-toolbar">
+    <div class="smart-form" style="position: absolute;left: 400px;top:5px">
+        <label class="label col col-7"><?php echo LABEL_A71; ?></label>
+        <label class="select pull-left">
+           <?php
+                $datal = catalogoPreciosController::getListadoTipoPanel();           
+                echo Functions::selectHtml(array(
+                    'data'=>$datal,
+                    'atributes'=>array(
+                        'id'=>TAB_CATPRE.'lst_tipopanelsearch',
+                        'name'=>TAB_CATPRE.'lst_tipopanelsearch',
+                        'onchange'=>'catalogoPrecios.getGridCatalogoPrecios();'
+                    ),
+                    'etiqueta'=>'descripcion',
+                    'value'=>'id_tipopanel',
+                    'defaultEtiqueta'=>'',
+                    'txtAll'=>true
+                ));
+            ?>
+        </label>
+        
+    </div>
+</div>    
     <div class="dataTables_wrapper form-inline" role="grid">
         <div class="dt-top-row">
             <div class="DTTT btn-group">

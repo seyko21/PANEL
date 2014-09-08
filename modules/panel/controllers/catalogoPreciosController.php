@@ -55,7 +55,7 @@ class catalogoPreciosController extends Controller{
                 $idProd = Aes::en($aRow['id_producto']);
                                                 
                 /*datos de manera manual*/
-                $sOutput .= '["'.$aRow['codigo'].'","'.$aRow['distrito'].'","'.$aRow['ubicacion'].'","'.$aRow['dimesion_area'].'","'.number_format($aRow['precio'],2).'","'.$iluminado.'","'.$estado.'", ';
+                $sOutput .= '["'.$aRow['codigo'].'","'.$aRow['distrito'].'","'.$aRow['ubicacion'].'","'.$aRow['elemento'].'","'.$aRow['dimesion_area'].'","'.number_format($aRow['precio'],2).'","'.$iluminado.'","'.$estado.'", ';
                 
                 /*
                  * configurando botones (add/edit/delete etc)
@@ -98,7 +98,10 @@ class catalogoPreciosController extends Controller{
         $data = Obj::run()->fichaTecnicaController->postEditarCaratula();        
         echo $data;        
     }   
-    
+    public static function getListadoTipoPanel(){ 
+       $data = Obj::run()->catalogoPreciosModel->getTipoPanel();            
+       return $data;
+    }
     public function postPDF(){ 
         
         $mpdf = new mPDF('c');
