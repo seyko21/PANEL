@@ -135,7 +135,7 @@ class generarCotizacionModel extends Model{
             ':precio' => '',
             ':produccion' => $this->_costoProduccion,
             ':usuario' => $this->_usuario,
-            ':igv' => $this->_igv,
+            ':igv' => ($this->_igv == '1')?'1':'0',
             ':validez' => $this->_validez,
             ':obs' => $this->_observacion,
             ':campania' => $this->_campania
