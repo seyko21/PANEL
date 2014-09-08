@@ -304,6 +304,7 @@ var generarCotizacion_ = function(){
             data: '&_idCotizacion='+idCot,
             fnCallback: function(data) {
                 if(parseInt(data.result) === 1){
+                    $('#'+diccionario.tabs.T8+'btnDowPDF').attr("onclick","window.open('public/files/"+data.archivo+"','_blank');generarCotizacion.deleteArchivo('"+data.archivo+"');");
                     $('#'+diccionario.tabs.T8+'btnDowPDF').click();
                 }
             }
@@ -317,6 +318,7 @@ var generarCotizacion_ = function(){
             data: '&_idCotizacion='+idCot,
             fnCallback: function(data) {
                 if(parseInt(data.result) === 1){
+                    $('#'+diccionario.tabs.T8+'btnDowExcel').attr("onclick","window.open('public/files/"+data.archivo+"','_self');generarCotizacion.deleteArchivo('"+data.archivo+"');");
                     $('#'+diccionario.tabs.T8+'btnDowExcel').click();
                 }
                 if(!isNaN(data.result) && parseInt(data.result) === 2){
@@ -354,6 +356,13 @@ var generarCotizacion_ = function(){
                     }
                 });
             }
+        });
+    };
+    
+    this.publico.deleteArchivo = function(archivo){
+        simpleAjax.send({
+            root: _private.config.modulo + 'deleteArchivo',
+            data: '&_archivo='+archivo
         });
     };
     

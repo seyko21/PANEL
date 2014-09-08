@@ -131,6 +131,15 @@ define('LABEL_GNC15','Generar cotización');
 define('LABEL_GNC16','Incluye IGV');
 define('LABEL_GNC17','Si');
 define('LABEL_GNC18','No');
+define('LABEL_GNC19','Paso 1');
+define('LABEL_GNC20',' - Información general');
+define('LABEL_GNC21','Paso 2');
+define('LABEL_GNC22',' - Productos');
+define('LABEL_GNC23','Paso 3');
+define('LABEL_GNC24',' - Finalizar');
+define('LABEL_GNC25','Observaciones');
+define('LABEL_GNC26','Campaña');
+define('LABEL_GNC27','Click aquí para generar cotización');
 
 /*----------------------    ASIGNAR CUENTAS----------------------*/
 define('LABEL_ASC1','Cuentas');

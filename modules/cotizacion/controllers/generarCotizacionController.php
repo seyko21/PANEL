@@ -72,7 +72,7 @@ class generarCotizacionController extends Controller{
                     $sOutput .= '    <i class=\"fa fa-copy fa-lg\"></i>';
                     $sOutput .= '</button>';
                 }
-                if($enviaremail['permiso'] ){
+                if($enviaremail['permiso'] && $aRow['estado'] != 'A'){
                     $sOutput .= '<button type=\"button\" class=\"btn btn-primary btn-xs\" title=\"'.$enviaremail['accion'].'\" onclick=\"generarCotizacion.postEmail(this,\''.$encryptReg.'\')\">';
                     $sOutput .= '    <i class=\"fa fa-envelope-o fa-lg\"></i>';
                     $sOutput .= '</button>';
@@ -201,7 +201,6 @@ class generarCotizacionController extends Controller{
         
         $mail->MsgHTML($body);
         $mail->AddAttachment('public/files/cotizacion.pdf');      // attachment
-//        $mail->AddAttachment("public/img/phpmailer_mini.gif"); // attachment
         
         $data = array('result'=>2);
         /*validar si dominio de correo existe*/
@@ -215,9 +214,9 @@ class generarCotizacionController extends Controller{
     }
     
     public function postPDF($n=''){
-        $ar = ROOT.'public'.DS.'files'.DS.'cotizacion.pdf';
-        /*Si existe el archivo, se elimina*/
-        if (file_exists($ar)) unlink($ar);
+        $c = 'cotizacion_'.Obj::run()->generarCotizacionModel->_idCotizacion.'.pdf';
+        
+        $ar = ROOT.'public'.DS.'files'.DS.$c;
                
         $mpdf = new mPDF('c');
 
@@ -242,15 +241,15 @@ class generarCotizacionController extends Controller{
         $mpdf->Output($ar,'F');
         
         if($n != 'N'){
-            $data = array('result'=>1);
+            $data = array('result'=>1,'archivo'=>$c);
             echo json_encode($data);
         }
     }
     
     public function postExcel(){
-        $ar = ROOT.'public'.DS.'files'.DS.'cotizacion.xls';
-        /*se elimina el archivo*/
-        unlink($ar);
+        $c = 'cotizacion_'.Obj::run()->generarCotizacionModel->_idCotizacion.'.xls';
+        
+        $ar = ROOT.'public'.DS.'files'.DS.$c;
         
         $html = $this->getHtmlCotizacion();
         
@@ -259,7 +258,7 @@ class generarCotizacionController extends Controller{
         fwrite($f,  utf8_decode($html));
         fclose($f);
                         
-        $data = array('result'=>1);
+        $data = array('result'=>1,'archivo'=>$c);
         echo json_encode($data);
     }
     
@@ -356,6 +355,14 @@ class generarCotizacionController extends Controller{
         $html .= '<p>'.$data[0]['observaciones'].'</p>';
         
         return $html;
+    }
+    
+    public function deleteArchivo(){
+        $c = Formulario::getParam('_archivo');
+        
+        $filename = ROOT.'public'.DS.'files'.DS.$c;
+        unlink($filename);
+        echo $filename;
     }
     
 }

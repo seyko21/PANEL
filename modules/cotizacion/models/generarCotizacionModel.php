@@ -12,7 +12,7 @@ class generarCotizacionModel extends Model{
     private $_keyPersona;
     private $_idPersona;
     private $_idProducto;
-    private $_idCotizacion;
+    public  $_idCotizacion;
     private $_ubicacion;
     private $_precio;
     private $_produccion;
@@ -25,7 +25,10 @@ class generarCotizacionModel extends Model{
     private $_usuario;
     private $_chkdel;
     private $_xSearch;
-    
+    private $_observacion;
+    private $_campania;
+
+
     /*para el grid*/
     private $_iDisplayStart;
     private $_iDisplayLength;
@@ -55,6 +58,8 @@ class generarCotizacionModel extends Model{
         $this->_usuario     = Session::get('sys_idUsuario');
         $this->_xSearch     = $this->post(T8.'_term');
         $this->_chkdel  = $this->post(T8.'chk_delete');
+        $this->_observacion  = $this->post(T8.'txt_obs');
+        $this->_campania  = $this->post(T8.'txt_campania');
         
         $this->_iDisplayStart  =   $this->post('iDisplayStart'); 
         $this->_iDisplayLength =   $this->post('iDisplayLength'); 
@@ -112,13 +117,12 @@ class generarCotizacionModel extends Model{
     }
 
     public function generarCotizacion(){
-        $query = "CALL sp_cotiGenerarCotizacion(:flag,:idCotizacion,:idRepresentante,:mesesContrato,:diasOferta,:total,:idCaratula,:precio,:produccion,:usuario,:igv,:validez);";
-        
         if($this->_flag == 11){//cuando se clona una cotizacion, hay q anularla
             $this->anularUnaCotizacion();
             $this->_flag = 1; //retorna a 1 para ael SP
         }
         
+        $query = "CALL sp_cotiGenerarCotizacion(:flag,:idCotizacion,:idRepresentante,:mesesContrato,:diasOferta,:total,:idCaratula,:precio,:produccion,:usuario,:igv,:validez,:obs,:campania);";
         $parms = array(
             ':flag' => $this->_flag,
             ':idCotizacion' => '',
@@ -131,10 +135,12 @@ class generarCotizacionModel extends Model{
             ':produccion' => $this->_costoProduccion,
             ':usuario' => $this->_usuario,
             ':igv' => $this->_igv,
-            ':validez' => $this->_validez
+            ':validez' => $this->_validez,
+            ':obs' => $this->_observacion,
+            ':campania' => $this->_campania
         );
         $data = $this->queryOne($query,$parms);  
-        
+ 
         if($data['result'] == 1){
             $item = 0;
             foreach ($this->_idProducto as $key => $prod) {
@@ -151,9 +157,11 @@ class generarCotizacionModel extends Model{
                     ':produccion' => $this->_produccion[$key],
                     ':usuario' => '',
                     ':igv' => '',
-                    ':validez' => ''
+                    ':validez' => '',
+                    ':obs' => '',
+                    ':campania' => ''
                 );
-                $this->execute($query,$parms);             
+                $this->execute($query,$parms);                      
             }
         }
         return $data;
@@ -265,7 +273,9 @@ class generarCotizacionModel extends Model{
                 c.`dias_oferta`,
                 c.`validez`,
                 c.`valor_produccion`,
-                c.incluyeigv as igv 
+                c.incluyeigv as igv,
+                c.observaciones,
+                c.nombre_campania
         FROM `lgk_cotizacion` c
         INNER JOIN mae_persona p ON p.`id_persona`=c.`id_persona`
         WHERE c.`id_cotizacion`=:idCotizacion";
