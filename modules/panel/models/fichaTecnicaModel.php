@@ -11,7 +11,7 @@ class fichaTecnicaModel extends Model{
     private $_flag;
     private $_key;
     private $_usuario;
-    private $_idProducto;
+    public  $_idProducto;
     private $_idDepartamento;
     private $_idProvincia;
     private $_idtipopanel;

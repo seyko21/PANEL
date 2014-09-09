@@ -128,6 +128,7 @@ var catalogoPrecios_ = function(){
               data: '&_idCaratula='+id,
               fnCallback: function(data) {
                   if(parseInt(data.result) === 1){
+                      $('#'+diccionario.tabs.TAB_CATPRE+'btnDowPDF').attr("onclick","window.open('public/files/"+data.archivo+"','_blank');fichaTecnica.deleteArchivo('"+data.archivo+"');");
                       $('#'+diccionario.tabs.TAB_CATPRE+'btnDowPDF').click();
                   }                
               }
@@ -141,6 +142,7 @@ var catalogoPrecios_ = function(){
               data: '&_idCaratula='+id,
               fnCallback: function(data) {
                   if(parseInt(data.result) === 1){
+                     $('#'+diccionario.tabs.TAB_CATPRE+'btnDowExcel').attr("onclick","window.open('public/files/"+data.archivo+"','_self');fichaTecnica.deleteArchivo('"+data.archivo+"');");
                      $('#'+diccionario.tabs.TAB_CATPRE+'btnDowExcel').click();
                   }
                   if(!isNaN(data.result) && parseInt(data.result) === 2){

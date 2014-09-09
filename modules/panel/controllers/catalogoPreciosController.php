@@ -103,7 +103,8 @@ class catalogoPreciosController extends Controller{
        return $data;
     }
     public function postPDF(){ 
-        
+        $c = 'fichatecnicacaratula_'.Obj::run()->catalogoPreciosModel->_idCaratula.'.pdf';
+        $ar = ROOT.'public'.DS.'files'.DS.$c;
         $mpdf = new mPDF('c');
         $mpdf->mirrorMargins = 1;
         $mpdf->defaultheaderfontsize = 11; /* in pts */
@@ -122,36 +123,39 @@ class catalogoPreciosController extends Controller{
         
         $html = $this->getHtmlReporte();        
         $mpdf->WriteHTML($html);
-        $mpdf->Output(ROOT.'public'.DS.'files'.DS.'fichatecnicacatalogo.pdf','F');
+        $mpdf->Output($ar,'F');
                 
-        $data = array('result'=>1);
+        $data = array('result'=>1,'archivo'=>$c);
         echo json_encode($data);
     }
     
     public function postExcel(){
-       
+        $c = 'fichatecnicacaratula_'.Obj::run()->catalogoPreciosModel->_idCaratula.'.xls';
+        $ar = ROOT.'public'.DS.'files'.DS.$c;
         $html = $this->getHtmlReporte();
                 
-        $f=fopen(ROOT.'public'.DS.'files'.DS.'fichatecnicacatalogo.xls','wb');
+        $f=fopen($ar,'wb');
         if(!$f){$data = array('result'=>2);}
         fwrite($f,  utf8_decode($html));
         fclose($f);
                         
-        $data = array('result'=>1);
+        $data = array('result'=>1,'archivo'=>$c);
         echo json_encode($data);
+                
     }
     
     
     public function getHtmlReporte(){
         $data = Obj::run()->catalogoPreciosModel->getRptFichaTecnicaCatalogo();
-        
+        $html = '';
         $iluminado = ($data[0]['iluminado']=='1')?'SI':'NO';
         $estado = ($data[0]['estado']=='D')?'DISPONIBLE':'ALQUILADO';
-        $comision = 100*$data[0]['comision_vendedor'];
+        $comision = number_format(100*$data[0]['comision_vendedor']);
         $vendedor = ($data[0]['vendedor'] == ''?'No se asigno vendedor':$data[0]['vendedor']);
         
         $html .='
-            <style>
+        <style>
+            table,h2,h3,h4{font-family:Arial;} 
             table, table td, table th{ font-size:12px;}
             table{width:100%;}
             table td {padding:4px 3px 4px 0px}
@@ -227,13 +231,13 @@ class catalogoPreciosController extends Controller{
                 <table width="100%" border="0">
                     <tr>
                       <td width="18%"><strong>FECHA INICIO:</strong></td>
-                      <td width="22%">'.functions::cambiaf_a_normal($data[0]['fecha_inicio']).'</td>
+                      <td width="22%">'.Functions::cambiaf_a_normal($data[0]['fecha_inicio']).'</td>
                       <td width="18%"><strong>FECHA FINAL:</strong></td>
-                      <td width="49%">'.functions::cambiaf_a_normal($data[0]['fecha_final']).'</td>
+                      <td width="49%">'.Functions::cambiaf_a_normal($data[0]['fecha_final']).'</td>
                     </tr>
                     <tr>
                       <td><strong>MONTO PAGADO:</strong></td>
-                      <td colspan="2">'.number_format($data[0]['pm_precio']).'</td>
+                      <td colspan="2">S/. '.number_format($data[0]['pm_precio'],2).'</td>
                     </tr>
                     <tr>
                       <td><strong>OBSERVACIONES:</strong></td>

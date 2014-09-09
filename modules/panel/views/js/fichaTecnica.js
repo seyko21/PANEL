@@ -442,6 +442,7 @@ var fichaTecnica_ = function(){
             data: '&_idProducto='+id,
             fnCallback: function(data) {
                 if(parseInt(data.result) === 1){
+                    $('#'+diccionario.tabs.T102+'btnDowPDF').attr("onclick","window.open('public/files/"+data.archivo+"','_blank');fichaTecnica.deleteArchivo('"+data.archivo+"');");
                     $('#'+diccionario.tabs.T102+'btnDowPDF').click();
                 }                
             }
@@ -455,6 +456,7 @@ var fichaTecnica_ = function(){
             data: '&_idProducto='+id,
             fnCallback: function(data) {
                 if(parseInt(data.result) === 1){
+                   $('#'+diccionario.tabs.T102+'btnDowExcel').attr("onclick","window.open('public/files/"+data.archivo+"','_self');fichaTecnica.deleteArchivo('"+data.archivo+"');");
                    $('#'+diccionario.tabs.T102+'btnDowExcel').click();
                 }
                 if(!isNaN(data.result) && parseInt(data.result) === 2){
@@ -466,6 +468,13 @@ var fichaTecnica_ = function(){
         });
     };
     
+    this.publico.deleteArchivo = function(archivo){
+        simpleAjax.send({
+            root: _private.config.modulo + 'deleteArchivo',
+            data: '&_archivo='+archivo
+        });
+    };
+       
     
     return this.publico;
     

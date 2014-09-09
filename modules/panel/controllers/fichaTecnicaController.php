@@ -266,7 +266,8 @@ class fichaTecnicaController extends Controller{
         echo json_encode($data);
     }    
     public function postPDF(){ 
-        
+        $c = 'fichatecnica_'.Obj::run()->fichaTecnicaModel->_idProducto.'.pdf';
+        $ar = ROOT.'public'.DS.'files'.DS.$c;
         $mpdf = new mPDF('c');
 
         $mpdf->mirrorMargins = 1;
@@ -286,33 +287,37 @@ class fichaTecnicaController extends Controller{
         
         $html = $this->getHtmlReporte();        
         $mpdf->WriteHTML($html);
-        $mpdf->Output(ROOT.'public'.DS.'files'.DS.'fichatecnica.pdf','F');
+        $mpdf->Output($ar,'F');
                 
-        $data = array('result'=>1);
+        $data = array('result'=>1,'archivo'=>$c);
         echo json_encode($data);
     }
     
     public function postExcel(){
-       
+        $c = 'fichatecnica_'.Obj::run()->fichaTecnicaModel->_idProducto.'.xls';
+        $ar = ROOT.'public'.DS.'files'.DS.$c;
         $html = $this->getHtmlReporte();
                 
-        $f=fopen(ROOT.'public'.DS.'files'.DS.'fichatecnica.xls','wb');
+        $f=fopen($ar,'wb');
         if(!$f){$data = array('result'=>2);}
         fwrite($f,  utf8_decode($html));
         fclose($f);
                         
-        $data = array('result'=>1);
+        $data = array('result'=>1,'archivo'=>$c);
         echo json_encode($data);
     }
     
     
     public function getHtmlReporte(){
         $data = Obj::run()->fichaTecnicaModel->getRptFichaTecnica();
-                
+        $html = '';        
         $html ='
             <style>
+            table,h1,h2,h3,h4, p{font-family:Arial;} 
             table, table td, table th{ font-size:12px;}
             table{width:100%;}
+            #td2 th, .totales{background:#901D78; color:#FFF; height:25px;}
+            #td2 td{font-size:11px;height:25px;}
         </style>
         <h2>FICHA TECNICA </h2>  
         <table width="100%" border="0">
@@ -347,9 +352,9 @@ class fichaTecnicaController extends Controller{
             </tr>
           </table>              
           <h4>LISTADO DE CARATULAS</h4>
-        <table style="border-collapse:collapse;" border="1">        
-            <tr>
-                <th style="width:20%">CODIGO</th>
+        <table id="td2" style="border-collapse:collapse;" border="1">        
+            <tr >
+                <th  style="width:20%">CODIGO</th>
                 <th style="width:40%">DESCRIPCION</th>
                 <th style="width:10%">PRECIO</th>
                 <th style="width:10%">ILUMINADO</th>           
@@ -372,7 +377,7 @@ class fichaTecnicaController extends Controller{
                 <td style="text-align:right"><b>Vendedor:</b></td>
                 <td>'.strtoupper($vendedor).'</td>
                 <td style="text-align:right"><b>Comisión:</b></td>               
-                <td style="text-align:center">'.number_format($comision,2).'% </td>                
+                <td style="text-align:right">'.number_format($comision).'% </td>                
                 <td style="text-align:center">&nbsp;</td>                                    
             </tr>';
         }
@@ -387,13 +392,13 @@ class fichaTecnicaController extends Controller{
                 <table width="100%" border="0">
                     <tr>
                       <td width="18%"><strong>FECHA INICIO:</strong></td>
-                      <td width="22%">'.functions::cambiaf_a_normal($data[0]['fecha_inicio']).'</td>
+                      <td width="22%">'.Functions::cambiaf_a_normal($data[0]['fecha_inicio']).'</td>
                       <td width="18%"><strong>FECHA FINAL:</strong></td>
-                      <td width="49%">'.functions::cambiaf_a_normal($data[0]['fecha_final']).'</td>
+                      <td width="49%">'.Functions::cambiaf_a_normal($data[0]['fecha_final']).'</td>
                     </tr>
                     <tr>
                       <td><strong>MONTO PAGADO:</strong></td>
-                      <td colspan="2">'.number_format($data[0]['pm_precio']).'</td>
+                      <td colspan="2">S/. '.number_format($data[0]['pm_precio'],2).'</td>
                     </tr>
                     <tr>
                       <td><strong>OBSERVACIONES:</strong></td>
@@ -406,6 +411,13 @@ class fichaTecnicaController extends Controller{
         
     }
     
+    public function deleteArchivo(){
+        $c = Formulario::getParam('_archivo');
+        
+        $filename = ROOT.'public'.DS.'files'.DS.$c;
+        unlink($filename);
+        echo $filename;
+    }  
         
     
 }

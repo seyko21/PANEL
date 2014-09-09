@@ -11,7 +11,7 @@ class catalogoPreciosModel extends Model{
 
     private $_flag;
     private $_usuario;    
-    private $_idCaratula;
+    public $_idCaratula;
     private $_tipoPanel;
     
     /*para el grid*/
