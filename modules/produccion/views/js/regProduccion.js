@@ -43,7 +43,39 @@ var regProduccion_ = function(){
     };
     
     this.publico.getGridRegProduccion = function (){
-        /*------------------LOGICA PARA DATAGRID------------------------*/
+        $('#'+diccionario.tabs.REPRO+'gridRegProduccion').dataTable({
+            bProcessing: true,
+            bServerSide: true,
+            bDestroy: true,
+            sPaginationType: "bootstrap_full", //two_button
+            sServerMethod: "POST",
+            bPaginate: true,
+            iDisplayLength: 10,            
+            aoColumns: [
+                {sTitle: "<input type='checkbox' id='"+diccionario.tabs.REPRO+"chk_all' onclick='simpleScript.checkAll(this,\"#"+diccionario.tabs.REPRO+"gridFichaTecnica\");'>", sWidth: "1%", sClass: "center", bSortable: false},                
+                {sTitle: "Ciudad", sWidth: "15%"},
+                {sTitle: "Fecha", sWidth: "10%",  sClass: "center"},
+                {sTitle: "Ubicación", sWidth: "25%"},
+                {sTitle: "Elemento", sWidth: "10%"},                                
+                {sTitle: "Total", sWidth: "10%",  sClass: "right"},
+                {sTitle: "Asignado", sWidth: "10%",  sClass: "right"},
+                {sTitle: "Saldo", sWidth: "10%",  sClass: "right"},
+                {sTitle: "Acciones", sWidth: "15%", sClass: "center", bSortable: false}
+            ],
+            aaSorting: [[2, 'asc']],
+            sScrollY: "350px",
+            sAjaxSource: _private.config.modulo+'getGridRegProduccion',
+            fnDrawCallback: function() {
+                $('#'+diccionario.tabs.REPRO+'gridRegProduccion_filter').find('input').attr('placeholder','Buscar por Ciudad o Ubicación').css('width','350px');               
+                /*para hacer evento invisible*/
+                simpleScript.removeAttr.click({
+                    container: '#widget_'+diccionario.tabs.REPRO, //widget del datagrid
+                    typeElement: 'button, #'+diccionario.tabs.REPRO+'chk_all'
+                });
+            }
+        });
+        setup_widgets_desktop();                
+        
     };
     
     this.publico.getFormNewRegProduccion = function(btn){

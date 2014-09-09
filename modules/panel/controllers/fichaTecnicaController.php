@@ -130,8 +130,8 @@ class fichaTecnicaController extends Controller{
                 
                 if($aRow['estado'] == 'D'){
                     $estado = '<span class=\"label label-success\">Disponible</span>';
-                }elseif($aRow['estado'] == 'N'){
-                    $estado = '<span class=\"label label-danger\">Alquilado</span>';
+                }elseif($aRow['estado'] == 'A'){
+                    $estado = '<span class=\"label label-warning\">Alquilado</span>';
                 }
                 
                 if($aRow['iluminado'] == 1){

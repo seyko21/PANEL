@@ -120,5 +120,11 @@ define('LABEL_A111M','Debe de especificar la Comisión de ganancia del vendedor.
 define('LABEL_A112','Vendedor');
 define('LABEL_A113','Panel');
 define('LABEL_A114','Código');
+/*----------------------Consulta: Mis cuentas Vendedor----------------------*/
+define('LABEL_A120','Mis cuentas asignadas');
+define('LABEL_A121','');
+/*----------------------Registrar Produccion----------------------*/
+define('LABEL_A130','Registro de Producción del Producto');
+
 
 ?>

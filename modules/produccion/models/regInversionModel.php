@@ -64,7 +64,6 @@ class regInversionModel extends Model{
             ':sSearch' => $this->_sSearch,
         );
         $data = $this->queryAll($query,$parms);
-      
         return $data;
     }    
     public function getGridInversion() {

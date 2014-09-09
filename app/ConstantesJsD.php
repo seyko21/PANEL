@@ -6,7 +6,8 @@
         TAB_CONPER: '<?php echo TAB_CONPER; ?>',
         TAB_SOCIO: '<?php echo TAB_SOCIO; ?>',
         REINV: '<?php echo REINV; ?>',
-        REPRO: '<?php echo REPRO; ?>'
+        REPRO: '<?php echo REPRO; ?>',
+        MISPA: '<?php echo MISPA; ?>'
     }
 };
 </script>
