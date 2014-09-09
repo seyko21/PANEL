@@ -168,4 +168,6 @@ define('SEGCO_7','Orden de servicio');
 define('SEGCO_8','Rechazado');
 define('SEGCO_9','Estado');
 
+/*----------------------    ORDEN DE SERVICIO  ----------------------*/
+define('GNOSE_1','Ordenes de Servicio');
 ?>

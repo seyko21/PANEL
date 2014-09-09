@@ -31,13 +31,9 @@ class loginController extends Controller{
              * verifico si es SUPER ADMINISTRADOR (001) o ADMINISTRADOR (002)
              * esto servira para los reportes, si es super o adm tendra acceso a toda la informacion
              */
-            foreach ($rol as $r) {
-                if($r['id_rol'] == APP_COD_SADM || $r['id_rol'] == APP_COD_ADM){
-                    Session::set('sys_all','S');
-                    break;
-                }else{
-                    Session::set('sys_all','N');
-                }
+            Session::set('sys_all','N');
+            if(Session::get('sys_defaultRol') == APP_COD_SADM || Session::get('sys_defaultRol') == APP_COD_ADM){
+                Session::set('sys_all','S');
             }
         }
         echo json_encode($data);

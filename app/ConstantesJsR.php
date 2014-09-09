@@ -22,3 +22,4 @@ var diccionario = {
         CLIT: '<?php echo CLIT; ?>',
         REGCL: '<?php echo REGCL; ?>',
         SEGCO: '<?php echo SEGCO; ?>',
+        GNOSE: '<?php echo GNOSE; ?>',
