@@ -72,6 +72,7 @@ class misCuentasModel extends Model{
             ':sSearch' => $this->_sSearch,
         );
         $data = $this->queryAll($query,$parms);
+        print_r($parms);
         return $data; 
        
     }
