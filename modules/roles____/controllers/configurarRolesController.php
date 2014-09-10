@@ -19,7 +19,6 @@ class configurarRolesController extends Controller{
     public function getRoles(){ 
         $accesos  = Session::getPermiso('CROAC');
         $eliminar = Session::getPermiso('CRODE');
-        $editar   = Session::getPermiso('CROED');
         
         $sEcho          =   $this->post('sEcho');
         
@@ -54,20 +53,20 @@ class configurarRolesController extends Controller{
                 $sOutput .= '"<div data-key=\"'.$encryptReg.'\" class=\"btn-group\">';
                 
                 
-                if($editar['permiso']){
-                    $sOutput .= '<button type=\"button\" class=\"'.$editar['theme'].'\" title=\"'.$editar['accion'].'\" onclick=\"configurarRoles.getRol(\''.$encryptReg.'\')\">';
-                    $sOutput .= '    <i class=\"'.$editar['icono'].'\"></i>';
-                    $sOutput .= '</button>';
-                }
-                if($eliminar['permiso']){
-                    $sOutput .= '<button type=\"button\" class=\"'.$eliminar['theme'].'\" title=\"'.$eliminar['accion'].'\" onclick=\"configurarRoles.postDeleteRol(\''.$encryptReg.'\')\">';
-                    $sOutput .= '    <i class=\"'.$eliminar['icono'].'\"></i>';
+                
+                $sOutput .= '<button type=\"button\" class=\"btn btn-primary btnEditarRol\" title=\"Editar\" onclick=\"configurarRoles.getRol(\''.$encryptReg.'\')\">';
+                $sOutput .= '    <i class=\"fa fa-edit fa-lg\"></i>';
+                $sOutput .= '</button>';
+                
+                if($eliminar['permiso'] == 1){
+                    $sOutput .= '<button type=\"button\" class=\"btn btn-danger btnDeleteRol\" title=\"'.$eliminar['accion'].'\" onclick=\"configurarRoles.postDeleteRol(\''.$encryptReg.'\')\">';
+                    $sOutput .= '    <i class=\"fa fa-ban fa-lg\"></i>';
                     $sOutput .= '</button>';
                 }
                 
-                if($accesos['permiso']){
-                    $sOutput .= '<button type=\"button\" class=\"'.$accesos['theme'].'\" title=\"'.$accesos['accion'].'\" onclick=\"configurarRoles.getAccesos(\''.$encryptReg.'\',\''.$aRow['rol'].'\')\">';
-                    $sOutput .= '    <i class=\"'.$accesos['icono'].'\"></i>';
+                if($accesos['permiso'] == 1){
+                    $sOutput .= '<button type=\"button\" class=\"btn btn-primary btnAccesosRol\" title=\"'.$accesos['accion'].'\" onclick=\"configurarRoles.getAccesos(\''.$encryptReg.'\',\''.$aRow['rol'].'\')\">';
+                    $sOutput .= '    <i class=\"fa fa-unlock fa-lg\"></i>';
                     $sOutput .= '</button>';
                 }
                 

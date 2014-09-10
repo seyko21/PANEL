@@ -31,12 +31,34 @@ $grabar = Session::getPermiso('ACCGR');
                 <section>
                     <div class="row">
                         <label class="label col col-2">Alias</label>
-                        <div class="col col-2">
+                        <div class="col col-3">
                             <label class="input"> 
                                 <input type="text" id="CRDACtxt_alias" name="CRDACtxt_alias"></input>
                             </label>
                         </div>
                         <?php echo Functions::help('Alias debe ser entre 2 y 5 caracteres'); ?>
+                    </div>
+                </section>
+                <section>
+                    <div class="row">
+                        <label class="label col col-2">Icono</label>
+                        <div class="col col-5">
+                            <label class="input"> 
+                                <input type="text" id="CRDACtxt_icono" name="CRDACtxt_icono"></input>
+                            </label>
+                        </div>
+                        <?php echo Functions::help('Css para el icono del botón.'); ?>
+                    </div>
+                </section>
+                <section>
+                    <div class="row">
+                        <label class="label col col-2">Theme</label>
+                        <div class="col col-5">
+                            <label class="input"> 
+                                <input type="text" id="CRDACtxt_theme" name="CRDACtxt_theme"></input>
+                            </label>
+                        </div>
+                        <?php echo Functions::help('Css para el diseño del botón.'); ?>
                     </div>
                 </section>
                 <section>
@@ -54,12 +76,12 @@ $grabar = Session::getPermiso('ACCGR');
             </div>
             <div class="modal-footer">
                 <?php if($grabar['permiso']):?>
-                <button id="CRDACbtnGrabaAccion" type="submit" class="btn txt-color-white bg-color-blueDark">
-                    <i class="fa fa-save"></i> <?php echo $grabar['accion']; ?>
+                <button id="CRDACbtnGrabaAccion" type="submit" class="<?php echo $grabar['theme']; ?>">
+                    <i class="<?php echo $grabar['icono']; ?>"></i> <?php echo $grabar['accion']; ?>
                 </button>
                 <?php endif; ?>
-                <button type="button" class="btn btn-default xClose">
-                    <i class="fa fa-ban"></i> Cerrar
+                <button type="button" class="<?php echo THEME_CLOSE; ?>">
+                    <i class="<?php echo ICON_CLOSE; ?>"></i> <?php echo BTN_CLOSE; ?>
                 </button>
             </div>
         </div><!-- /.modal-content -->

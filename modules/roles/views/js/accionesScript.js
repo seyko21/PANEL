@@ -16,6 +16,16 @@ var accionesScript_ = function(){
                             regular: true,
                             minlength: 2,
                             maxlength: 5
+                    },
+                    CRDACtxt_icono : {
+                            required : true,
+                            regular: true,
+                            minlength: 3
+                    },
+                    CRDACtxt_theme : {
+                            required : true,
+                            regular: true,
+                            minlength: 3
                     }
             },
 

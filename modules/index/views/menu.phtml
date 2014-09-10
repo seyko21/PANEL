@@ -26,6 +26,8 @@ if (Session::get('sys_menu')):
             $permisos[] = array(
                 'opcion' => $aliasopcion . $val['aliasaccion'],
                 'accion' => $val['accion'],
+                'icono' => $val['icono'],
+                'theme' => $val['theme'],
                 'permiso' => $val['activo']
             );
         }

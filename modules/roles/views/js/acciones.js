@@ -42,7 +42,8 @@ var acciones_ = function(){
             iDisplayLength: 10,            
             aoColumns: [
                 {sTitle: "Código", sClass: "center",sWidth: "10%"},
-                {sTitle: "Acción", sWidth: "50%"},
+                {sTitle: "Acción", sWidth: "25%"},
+                {sTitle: "Diseño", sWidth: "15%", sClass: "center", bSortable: false},
                 {sTitle: "Alias", sWidth: "10%"},
                 {sTitle: "Estado", sWidth: "10%", sClass: "center", bSortable: false},
                 {sTitle: "Acciones", sWidth: "15%", sClass: "center", bSortable: false}

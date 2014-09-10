@@ -11,6 +11,8 @@ class accionesModel extends Model{
     private $_accion;
     private $_alias;
     private $_activo;
+    private $_icono;
+    private $_theme;
     private $_usuario;
     
     /*para el grid*/
@@ -29,6 +31,8 @@ class accionesModel extends Model{
         $this->_key     = Aes::de($this->post('_key'));    /*se decifra*/
         $this->_accion  = $this->post('CRDACtxt_accion');
         $this->_alias   = $this->post('CRDACtxt_alias');
+        $this->_icono   = $this->post('CRDACtxt_icono');
+        $this->_theme   = $this->post('CRDACtxt_theme');
         $this->_activo  = $this->post('CRDACchk_activo');
         $this->_usuario = Session::get('sys_usuario');
         
@@ -74,13 +78,15 @@ class accionesModel extends Model{
     }
     
     public function mantenimientoAccion(){
-        $query = "call sp_rolesAccionesMantenimiento(:flag,:key,:accion,:alias,:activo,:usuario);";
+        $query = "call sp_rolesAccionesMantenimiento(:flag,:key,:accion,:alias,:activo,:icono,:theme,:usuario);";
         $parms = array(
             ':flag' => $this->_flag,
             ':key' => $this->_key,
             ':accion' => $this->_accion,
             ':alias' => $this->_alias,
             ':activo' => $this->_activo,
+            ':icono' => $this->_icono,
+            ':theme' => $this->_theme,
             ':usuario' => $this->_usuario
         );
         $data = $this->queryOne($query,$parms);

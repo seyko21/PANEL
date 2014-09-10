@@ -228,6 +228,7 @@ var configurarRoles_ = function(){
             fnCallback: function(data) {
                 if(!isNaN(data.result) && parseInt(data.result) === 1){
                     /*se activa boton acciones y se agrega evento*/
+//                    alert(simpleAjax.stringGet(idRol)+simpleAjax.stringGet(idOpcion)+'---'+idOpcion)
                     $('#btn_'+simpleAjax.stringGet(idRol)+simpleAjax.stringGet(idOpcion)+'').attr('disabled',false);
                     simpleScript.setEvent.click({
                         element: '#btn_'+simpleAjax.stringGet(idRol)+simpleAjax.stringGet(idOpcion),
@@ -247,6 +248,7 @@ var configurarRoles_ = function(){
                         content: mensajes.MSG_4
                     });
                 }else if(!isNaN(data.result) && parseInt(data.result) === 3){
+//                    alert(simpleAjax.stringGet(idRol)+simpleAjax.stringGet(idOpcion)+'---'+idOpcion)
                     /*se desactiva boton acciones y quita evento*/
                     $('#btn_'+simpleAjax.stringGet(idRol)+simpleAjax.stringGet(idOpcion)+'').attr('disabled',true).removeAttr('onclick');
                     $('#btn_'+simpleAjax.stringGet(idRol)+simpleAjax.stringGet(idOpcion)+'').off('click');

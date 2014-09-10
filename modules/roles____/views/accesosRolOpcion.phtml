@@ -1,0 +1,90 @@
+<?php
+/*
+ * Documento   : accesosRolOpcion
+ * Creado      : 04-jul-2014
+ * Autor       : ..... .....
+ * Descripcion : 
+ */
+$dataAcciones = configurarRolesController::getAcciones($this->_rolOpcion);
+
+?>
+<style>
+#lista1<?php echo AesCtr::de($this->_rolOpcion); ?>, #lista2<?php echo AesCtr::de($this->_rolOpcion); ?> {
+    width:160px;
+    margin: 0px;
+    height:150px;
+    overflow: auto;
+    float:right;
+    margin-right:5px;
+}
+</style>
+<div id="acc_<?php echo AesCtr::de($this->_rolOpcion); ?>" class="accionesOpcion">
+    <!--INICIO ACCIONES-->
+    <ul id="lista1<?php echo AesCtr::de($this->_rolOpcion); ?>" class="si-access">
+        <?php foreach ($dataAcciones as $acc): ?>
+        <?php if($acc['selected']):?>
+            <li class="move-cursor" data-rolOpcion="<?php echo $this->_rolOpcion; ?>" data-accion="<?php echo AesCtr::en($acc['id_acciones']); ?>"><span><?php echo $acc['accion']; ?></span></li> 
+        <?php endif; ?>
+        <?php endforeach; ?>
+    </ul>
+    <ul id="lista2<?php echo AesCtr::de($this->_rolOpcion); ?>" class="no-access">
+        <?php foreach ($dataAcciones as $acc): ?>
+        <?php if(!$acc['selected']):?>
+            <li class="move-cursor" data-rolOpcion="<?php echo $this->_rolOpcion; ?>" data-accion="<?php echo AesCtr::en($acc['id_acciones']); ?>"><span><?php echo $acc['accion']; ?></span></li> 
+        <?php endif; ?>
+        <?php endforeach; ?>
+    </ul>
+    <!--FIN ACCIONES-->
+</div>
+<script>
+        var $lista1 = $('#lista1<?php echo AesCtr::de($this->_rolOpcion); ?>'), $lista2 = $('#lista2<?php echo AesCtr::de($this->_rolOpcion); ?>');
+        // lista 1
+        $('li', $lista1).draggable({
+            revert: 'invalid',
+            helper: 'clone',
+            cursor: 'move'
+        });
+        $lista1.droppable({
+            accept: '#lista2<?php echo AesCtr::de($this->_rolOpcion); ?> li',
+            drop: function(ev, ui) {
+                deleteLista2(ui.draggable);
+            }
+        });
+        /* lista2 */
+        $('li', $lista2).draggable({
+            revert: 'invalid',
+            helper: 'clone',
+            cursor: 'move'
+        });
+        $lista2.droppable({
+            accept: '#lista1<?php echo AesCtr::de($this->_rolOpcion); ?> > li',
+            drop: function(ev, ui) {
+                deleteLista1(ui.draggable);
+            }
+        });
+        // listas	
+        function deleteLista1($item) {
+            //alert('quitar')
+            var rolOpcion = $item.attr('data-rolOpcion');
+            var accion    = $item.attr('data-accion');
+          
+            configurarRoles.postAccionOpcionRol(7,rolOpcion,accion);
+            
+            $item.fadeOut(function() {
+                $($item).appendTo($lista2).fadeIn();
+                ;
+            });
+            $item.fadeIn();
+        }
+        function deleteLista2($item) {
+            //alert('agregar')
+            var rolOpcion = $item.attr('data-rolOpcion');
+            var accion    = $item.attr('data-accion');
+          
+            configurarRoles.postAccionOpcionRol(6,rolOpcion,accion);
+            
+            $item.fadeOut(function() {
+                $item.appendTo($lista1).fadeIn();
+            });
+        }
+</script>

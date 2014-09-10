@@ -18,6 +18,7 @@ class accionesController extends Controller{
     }
     
     public function getAcciones(){ 
+        $editar   = Session::getPermiso('ACCED');
         $eliminar = Session::getPermiso('ACCDE');
         
         $sEcho          =   $this->post('sEcho');
@@ -39,9 +40,9 @@ class accionesController extends Controller{
                 }else{
                     $estado = '<span class=\"label label-danger\">'.$aRow['estado'].'</span>';
                 }
-                
+                $t='<button type=\"button\" class=\"'.$aRow['theme'].'\"><i class=\"'.$aRow['icono'].'\"></i></button>';
                 /*datos de manera manual*/
-                $sOutput .= '["'.$aRow['id_acciones'].'","'.$aRow['accion'].'","'.$aRow['alias'].'","'.$estado.'", ';
+                $sOutput .= '["'.$aRow['id_acciones'].'","'.$aRow['accion'].'","'.$t.'","'.$aRow['alias'].'","'.$estado.'", ';
 
                 /*antes de enviar id se encrypta*/
                 $encryptReg = Aes::en($aRow['id_acciones']);
@@ -52,13 +53,14 @@ class accionesController extends Controller{
                  */
                 $sOutput .= '"<div class=\"btn-group\">';
                 
-                $sOutput .= '<button type=\"button\" class=\"btn btn-primary btnEditarAxion\" title=\"Editar\" onclick=\"acciones.getAccion(\''.$encryptReg.'\')\">';
-                $sOutput .= '    <i class=\"fa fa-edit fa-lg\"></i>';
-                $sOutput .= '</button>';
-                
-                if($eliminar['permiso'] == 1){
-                    $sOutput .= '<button type=\"button\" class=\"btn btn-danger btnDeleteAxion\" title=\"'.$eliminar['accion'].'\" onclick=\"acciones.postDeleteAccion(\''.$encryptReg.'\')\">';
-                    $sOutput .= '    <i class=\"fa fa-ban fa-lg\"></i>';
+                if($editar['permiso']){
+                    $sOutput .= '<button type=\"button\" class=\"'.$editar['theme'].'\" title=\"'.$editar['accion'].'\" onclick=\"acciones.getAccion(\''.$encryptReg.'\')\">';
+                    $sOutput .= '    <i class=\"'.$editar['icono'].'\"></i>';
+                    $sOutput .= '</button>';
+                }
+                if($eliminar['permiso']){
+                    $sOutput .= '<button type=\"button\" class=\"'.$eliminar['theme'].'\" title=\"'.$eliminar['accion'].'\" onclick=\"acciones.postDeleteAccion(\''.$encryptReg.'\')\">';
+                    $sOutput .= '    <i class=\"'.$eliminar['icono'].'\"></i>';
                     $sOutput .= '</button>';
                 }
                 

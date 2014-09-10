@@ -1,0 +1,235 @@
+<?php
+/*
+ * Documento   : accesos
+ * Creado      : 02-jul-2014
+ * Autor       : ..... .....
+ * Descripcion : 
+ */
+$dataDom = configurarRolesController::getDominios($this->keyRol);
+
+?>
+<div id="CRDCRformAccesos" name="CRDCRformAccesos" class="modal fade">
+    <div class="modal-dialog" style="width:70%">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close"  aria-hidden="true">
+                    &times;
+                </button>
+                <h4 class="modal-title">Accesos de Rol</h4>
+            </div>
+            <div class="modal-body smart-form">
+                Opciones a los cuales <b id="cont-rol"></b> tendra acceso:
+                <p><a href="javascript:;" onclick="colapse()">Collapse</a></p>
+                <button id="CRDCRbtnNewAxion" type="button" class="btn txt-color-white bg-color-blueDark pull-right" style="padding: 5px;margin-top: -45px" onclick="acciones.getNuevaAccion('#'+this.id)">
+                    <i class="fa fa-save"></i> Nueva acción
+                </button>
+                <div class="clearfix"></div>
+                <div class="well" style="height: 320px;overflow: auto;margin-bottom: 0px">
+                    <div class="tree smart-form">
+                        <ul>
+                            <?php foreach ($dataDom as $dom):?>
+                            <li>
+                                <span class="clickColapse"><i class="fa fa-lg fa-folder-open"></i> <?php echo $dom['dominio']; ?></span>
+                                <!-- los modulos -->
+                                <ul>
+                                    <?php $dataMod = configurarRolesController::getModulos(Aes::en($dom['id_dominio'])); 
+                                    foreach ($dataMod as $mod):
+                                    ?>
+                                    <li>
+                                        <span class="clickColapse"><i class="fa fa-lg fa-minus-circle"></i> <?php echo $mod['modulo']; ?></span>
+                                        <!-- menu principal -->
+                                        <ul>
+                                            <?php $dataMenup = configurarRolesController::getMenuOpciones($this->keyRol,Aes::en($mod['id_modulo'])); 
+                                            foreach ($dataMenup as $men):
+                                                $idOpcion = AesCtr::en($men['id_menuprincipal']);
+                                                $idRolOpciones = AesCtr::en($men['id_rolopciones']);
+                                            ?>
+                                            <li class="wopcion">
+                                                <!--<span class="clickColapse"><i class="fa fa-lg fa-plus-circle"></i> <?php // echo $men['menuprincipal']; ?></span>-->
+                                                <span> 
+                                                    <label class="checkbox inline-block">
+                                                        <input onclick="configurarRoles.postOpcion(this,<?php echo ($men['selected'] == 1)?5:4;?>,'<?php echo $this->keyRol; ?>','<?php echo $idOpcion; ?>');" type="checkbox" name="checkbox-inline" <?php echo ($men['selected'] == 1)?'checked':'';?>>
+                                                        <i></i><?php echo $men['menuprincipal']; ?>
+
+                                                    </label> 
+                                                </span>
+                                                
+                                                
+                                                
+                                                <button id="btn_<?php echo AesCtr::de($this->keyRol).$men['id_menuprincipal']; ?>" type="button" class="btn btn-primary btn-xs" <?php echo ($men['selected'] == 1)?'onclick="configurarRoles.getAccionesRolOpcion(\''.AesCtr::de($this->keyRol).$men['id_menuprincipal'].'\',\''.$idRolOpciones.'\');"':'disabled';?> style="padding: 5px;">
+                                                    <i class="fa fa-play-circle"></i> Acciones
+                                                </button>
+
+
+                                                <!-- las acciones -->
+                                                <div id="cont-acciones<?php echo AesCtr::de($this->keyRol).$men['id_menuprincipal']; ?>" class="accionesOpcion-cont" style="position: relative">
+                                                </div>
+                                                <!-- fin las acciones -->
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                            </li>
+                                            <?php endforeach; ?>
+                                        </ul>
+                                    </li>
+                                    <?php endforeach; ?>
+                                    
+                                </ul>
+                            </li>
+                            <?php endforeach; ?>
+                            
+                            
+                        </ul>
+                    </div>
+
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default xClose">
+                    <i class="fa fa-ban"></i> Cerrar
+                </button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+    
+<!--<div id="CRDCRformAccesos" name="CRDCRformAccesos" class="modal fade">
+    <div class="modal-dialog" style="width:70%">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close"  aria-hidden="true">
+                    &times;
+                </button>
+                <h4 class="modal-title">Accesos de Rol</h4>
+            </div>
+            <div class="modal-body smart-form">
+                Opciones a los cuales <b id="cont-rol"></b> tendra acceso:
+                <p><a href="javascript:;" onclick="colapse()">Collapse</a></p>
+                <button id="CRDCRbtnNewAxion" type="button" class="btn txt-color-white bg-color-blueDark pull-right" style="padding: 5px;margin-top: -45px" onclick="acciones.getNuevaAccion('#'+this.id)">
+                    <i class="fa fa-save"></i> Nueva acción
+                </button>
+                <div class="clearfix"></div>
+                <div class="well" style="height: 320px;overflow: auto;margin-bottom: 0px">
+                    <div class="tree smart-form">
+                        <ul>
+                            <?php foreach ($dataDom as $dom):?>
+                            <li>
+                                <span class="clickColapse"><i class="fa fa-lg fa-folder-open"></i> <?php echo $dom['dominio']; ?></span>
+                                 los modulos 
+                                <ul>
+                                    <?php // $dataMod = configurarRolesController::getModulos(Aes::en($dom['id_dominio'])); 
+                                    foreach ($dataMod as $mod):
+                                    ?>
+                                    <li>
+                                        <span class="clickColapse"><i class="fa fa-lg fa-minus-circle"></i> <?php echo $mod['modulo']; ?></span>
+                                         menu principal 
+                                        <ul>
+                                            <?php // $dataMenup = configurarRolesController::getMenuPrincipal(Aes::en($mod['id_modulo'])); 
+                                            foreach ($dataMenup as $men):
+                                            ?>
+                                            <li>
+                                                <span class="clickColapse"><i class="fa fa-lg fa-plus-circle"></i> <?php echo $men['menuprincipal']; ?></span>
+                                                 las opciones 
+                                                <ul>
+                                                    <?php // $dataOpciones = configurarRolesController::getMenuOpciones($this->keyRol,Aes::en($men['id_menuprincipal'])); 
+                                                    foreach ($dataOpciones as $op):
+//                                                        $idOpcion = AesCtr::en($op['id_opciones']);
+//                                                        $idRolOpciones = AesCtr::en($op['id_rolopciones']);
+                                                    ?>
+                                                    <li class="wopcion" style="display:none">
+                                                        <span> 
+                                                            <label class="checkbox inline-block">
+                                                                <input onclick="configurarRoles.postOpcion(this,<?php echo ($op['selected'] == 1)?5:4;?>,'<?php echo $this->keyRol; ?>','<?php echo $idOpcion; ?>');" type="checkbox" name="checkbox-inline" <?php echo ($op['selected'] == 1)?'checked':'';?>>
+                                                                <i></i><?php echo $op['opcion']; ?>
+                                                                
+                                                            </label> 
+                                                        </span>
+                                                        
+                                                        
+                                                        <button id="btn_<?php echo AesCtr::de($this->keyRol).$op['id_opciones']; ?>" type="button" class="btn btn-primary btn-xs" <?php echo ($op['selected'] == 1)?'onclick="configurarRoles.getAccionesRolOpcion(\''.AesCtr::de($this->keyRol).$op['id_opciones'].'\',\''.$idRolOpciones.'\');"':'disabled';?> style="padding: 5px;">
+                                                            <i class="fa fa-play-circle"></i> Acciones
+                                                        </button>
+                                                        
+                                                        
+                                                         las acciones 
+                                                        <div id="cont-acciones<?php echo AesCtr::de($this->keyRol).$op['id_opciones']; ?>" class="accionesOpcion-cont" style="position: relative">
+                                                        </div>
+                                                         fin las acciones 
+                                                        
+                                                        
+                                                        
+                                                    </li>
+                                                    <?php endforeach; ?>
+                                                </ul>
+                                            </li>
+                                            <?php endforeach; ?>
+                                        </ul>
+                                    </li>
+                                    <?php endforeach; ?>
+                                    
+                                </ul>
+                            </li>
+                            <?php endforeach; ?>
+                            
+                            
+                        </ul>
+                    </div>
+
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default xClose">
+                    <i class="fa fa-ban"></i> Cerrar
+                </button>
+            </div>
+        </div> /.modal-content 
+    </div> /.modal-dialog -->
+<script>
+    $('.tree > ul').attr('role', 'tree').find('ul').attr('role', 'group');
+	$('.tree').find('li:has(ul)').addClass('parent_li').attr('role', 'treeitem').find(' > span').attr('title', 'Colapsar').on('click', function(e) {
+		var children = $(this).parent('li.parent_li').find(' > ul > li');
+		if (children.is(':visible')) {
+			children.hide('fast');
+			$(this).attr('title', 'Expandir').find(' > i').removeClass().addClass('fa fa-lg fa-plus-circle');
+		} else {
+			children.show('fast');
+			$(this).attr('title', 'Colapsar').find(' > i').removeClass().addClass('fa fa-lg fa-minus-circle');
+		}
+		e.stopPropagation();
+	});
+var colapse = function(){
+    $('.clickColapse').click();
+};
+
+setTimeout('colapse()',500);
+
+
+/*para hacer evento invisible*/
+simpleScript.removeAttr.click({
+    container: '#CRDCRformAccesos',
+    typeElement: 'button,input:checkbox'
+});
+</script>
+</div>
