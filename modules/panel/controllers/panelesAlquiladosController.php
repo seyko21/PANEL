@@ -49,7 +49,7 @@ class panelesAlquiladosController extends Controller{
                 $encryptReg = Aes::en($aRow['id_caratula']);
                                                                         
                 /*datos de manera manual*/
-                $sOutput .= '["'.$aRow['codigo'].'","'.$aRow['distrito'].'","'.$aRow['ubicacion'].'","'.$aRow['elemento'].'","'.$aRow['dimesion_area'].'","'.number_format($aRow['precio'],2).'","'.$iluminado.'","'.$estado.'", ';
+                $sOutput .= '["'.$aRow['codigo'].'","'.$aRow['distrito'].'","'.$aRow['ubicacion'].'","'.$aRow['elemento'].'","'.$aRow['dimesion_area'].'","'.$iluminado.'","'.$estado.'", ';
                  
                  //Visualizar Detalle
                 $sOutput .= '"<div class=\"btn-group\">';   

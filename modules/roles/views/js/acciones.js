@@ -31,7 +31,7 @@ var acciones_ = function(){
         });
     };
     
-    this.public.getGridAcciones = function (){
+    this.public.getGridAcciones = function (){        
         var oTable = $('#gridAcciones').dataTable({
             bProcessing: true,
             bServerSide: true,
@@ -144,8 +144,8 @@ var acciones_ = function(){
                     simpleScript.notify.ok({
                         content: mensajes.MSG_3,
                         callback: function(){
-                            acciones.getGridAcciones();
-                            simpleScript.closeModal('#CRDACformEditAccion');
+                           simpleScript.reloadGrid('#gridAcciones');
+                           simpleScript.closeModal('#CRDACformEditAccion');
                         }
                     });
                 }else if(!isNaN(data.result) && parseInt(data.result) === 2){

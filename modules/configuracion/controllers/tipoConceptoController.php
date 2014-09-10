@@ -65,15 +65,15 @@ class tipoConceptoController extends Controller{
                 $sOutput .= '"<div class=\"btn-group\">';
                 
                 if($editar['permiso'] == 1){
-                    $sOutput .= '<button type=\"button\" class=\"btn btn-primary btn-xs\" title=\"'.$editar['accion'].'\" onclick=\"tipoConcepto.getEditarTipoConcepto(\''.$encryptReg.'\')\">';
-                    $sOutput .= '    <i class=\"fa fa-edit fa-lg\"></i>';
+                    $sOutput .= '<button type=\"button\" class=\"'.$editar['theme'].'\" title=\"'.$editar['accion'].'\" onclick=\"tipoConcepto.getEditarTipoConcepto(\''.$encryptReg.'\')\">';
+                    $sOutput .= '    <i class=\"'.$editar['icono'].'\"></i>';
                     $sOutput .= '</button>';
                 }
-                if($eliminar['permiso'] == 1){
-                    $sOutput .= '<button type=\"button\" class=\"btn btn-danger btn-xs\" title=\"'.$eliminar['accion'].'\" onclick=\"tipoConcepto.postDeleteTipoConcepto(\''.$encryptReg.'\')\">';
-                    $sOutput .= '    <i class=\"fa fa-ban fa-lg\"></i>';
-                    $sOutput .= '</button>';
-                }
+//                if($eliminar['permiso'] == 1){
+//                    $sOutput .= '<button type=\"button\" class=\"'.$eliminar['theme'].'\" title=\"'.$eliminar['accion'].'\" onclick=\"tipoConcepto.postDeleteTipoConcepto(\''.$encryptReg.'\')\">';
+//                    $sOutput .= '    <i class=\"'.$eliminar['icono'].'\"></i>';
+//                    $sOutput .= '</button>';
+//                }
                 
                 $sOutput .= ' </div>" ';
 

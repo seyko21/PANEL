@@ -20,7 +20,7 @@ class regInversionController extends Controller{
     
     public function getGridSocio(){
         $editar = Session::getPermiso('REINVED');
-        $agre = Session::getPermiso('REINVAG');
+        $agre = Session::getPermiso('REINVVP');
         
         $sEcho          =   $this->post('sEcho');
         
@@ -69,13 +69,13 @@ class regInversionController extends Controller{
                 $sOutput .= '"<div class=\"btn-group\">';
                 
                 if($editar['permiso']){
-                    $sOutput .= '<button type=\"button\" class=\"btn btn-primary btn-xs\" title=\"'.$editar['accion'].'\" onclick=\"regInversion.getFormEditSocio(this,\''.$encryptReg.'\')\">';
-                    $sOutput .= '    <i class=\"fa fa-edit fa-lg\"></i>';
+                    $sOutput .= '<button type=\"button\" class=\"'.$editar['theme'].'\" title=\"'.$editar['accion'].'\" onclick=\"regInversion.getFormEditSocio(this,\''.$encryptReg.'\')\">';
+                    $sOutput .= '    <i class=\"'.$editar['icono'].'\"></i>';
                     $sOutput .= '</button>';
                 }                               
                 if($agre['permiso'] == 1){
-                    $sOutput .= '<button type=\"button\" class=\"btn bg-color-green txt-color-white btn-xs\" title=\"'.LABEL_A101.'\" onclick=\"regInversion.getGridInversion(\''.$encryptReg.'\',\''.$aRow['nombrecompleto'].'\')\">';
-                    $sOutput .= '    <i class=\"fa fa-money fa-lg\"></i>';
+                    $sOutput .= '<button type=\"button\" class=\"'.$agre['theme'].'\" title=\"'.$agre['accion'].'\" onclick=\"regInversion.getGridInversion(\''.$encryptReg.'\',\''.$aRow['nombrecompleto'].'\')\">';
+                    $sOutput .= '    <i class=\"'.$agre['icono'].'\"></i>';
                     $sOutput .= '</button>';
                 }
                 $sOutput .= ' </div>" ';
@@ -93,8 +93,7 @@ class regInversionController extends Controller{
     }
     
      public function getGridInversion(){
-        $editar = Session::getPermiso('REINVED');
-        $agre = Session::getPermiso('REINVAG');
+        $editar = Session::getPermiso('REINVED');        
         
         $sEcho          =   $this->post('sEcho');
         
@@ -131,8 +130,8 @@ class regInversionController extends Controller{
                 $sOutput .= '"<div class=\"btn-group\">';
                 
                 if($editar['permiso'] == 1){
-                    $sOutput .= '<button type=\"button\" class=\"btn btn-primary btn-xs\" title=\"'.$editar['accion'].'\" onclick=\"regInversion.getEditarInversion(this,\''.$encryptReg.'\')\">';
-                    $sOutput .= '    <i class=\"fa fa-edit fa-lg\"></i>';
+                    $sOutput .= '<button type=\"button\" class=\"'.$editar['theme'].'\" title=\"'.$editar['accion'].'\" onclick=\"regInversion.getEditarInversion(this,\''.$encryptReg.'\')\">';
+                    $sOutput .= '    <i class=\"'.$editar['icono'].'\"></i>';
                     $sOutput .= '</button>';
                 }
                

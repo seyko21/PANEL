@@ -174,6 +174,7 @@ var configurarRoles_ = function(){
                         content: mensajes.MSG_3,
                         callback: function(){
                             configurarRoles.getGridRoles();
+                            simpleScript.reloadGrid('#gridRoles');
                             simpleScript.closeModal('#CRDCRformEditRol');
                         }
                     });

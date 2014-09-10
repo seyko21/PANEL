@@ -54,8 +54,8 @@ class asignarCuentaController extends Controller{
                  */
                 $sOutput .= '"<div class=\"btn-group\">';
                 if($editar['permiso'] == 1 and $aRow['estado'] == 'R'){
-                    $sOutput .= '<button type=\"button\" class=\"btn btn-primary btn-xs\" title=\"'.$editar['accion'].'\" onclick=\"asignarCuenta.getEditarCuenta(this,\''.$encryptReg.'\')\">';
-                    $sOutput .= '    <i class=\"fa fa-edit fa-lg\"></i>';
+                    $sOutput .= '<button type=\"button\" class=\"'.$editar['theme'].'\" title=\"'.$editar['accion'].'\" onclick=\"asignarCuenta.getEditarCuenta(this,\''.$encryptReg.'\')\">';
+                    $sOutput .= '    <i class=\"'.$editar['icono'].'\"></i>';
                     $sOutput .= '</button>';
                 }
                 $sOutput .= ' </div>" ';

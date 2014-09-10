@@ -60,8 +60,8 @@ class socioController extends Controller{
                 $sOutput .= '"<div class=\"btn-group\">';
                 
                 if($editar['permiso']){
-                    $sOutput .= '<button type=\"button\" class=\"btn btn-primary btn-xs\" title=\"'.$editar['accion'].'\" onclick=\"socio.getFormEditSocio(this,\''.$encryptReg.'\')\">';
-                    $sOutput .= '    <i class=\"fa fa-edit fa-lg\"></i>';
+                    $sOutput .= '<button type=\"button\" class=\"'.$editar['theme'].'\" title=\"'.$editar['accion'].'\" onclick=\"socio.getFormEditSocio(this,\''.$encryptReg.'\')\">';
+                    $sOutput .= '    <i class=\"'.$editar['icono'].'\"></i>';
                     $sOutput .= '</button>';
                 }               
                 $sOutput .= ' </div>" ';

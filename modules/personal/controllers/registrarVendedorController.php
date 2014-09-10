@@ -62,18 +62,18 @@ class registrarVendedorController extends Controller {
                 $sOutput .= '"<div class=\"btn-group\">';
 
                 if ($editar['permiso']) {
-                    $sOutput .= '<button type=\"button\" class=\"btn btn-primary btn-xs\" title=\"' . $editar['accion'] . '\" onclick=\"registrarVendedor.getEditarVendedor(this,\'' . $encryptReg . '\')\">';
-                    $sOutput .= '    <i class=\"fa fa-edit fa-lg\"></i>';
+                    $sOutput .= '<button type=\"button\" class=\"'.$editar['theme'].'\" title=\"' . $editar['accion'] . '\" onclick=\"registrarVendedor.getEditarVendedor(this,\'' . $encryptReg . '\')\">';
+                    $sOutput .= '    <i class=\"'.$editar['icono'].'\"></i>';
                     $sOutput .= '</button>';
                 }
                 if ($adjuntar['permiso']) {
-                    $sOutput .= '<button type=\"button\" class=\"btn bg-color-orange txt-color-white btn-xs\" title=\"' . $adjuntar['accion'] . ' documento\" onclick=\"registrarVendedor.getFormAdjuntar(this,\'' . $encryptReg . '\')\">';
-                    $sOutput .= '    <i class=\"fa fa-external-link fa-lg\"></i>';
+                    $sOutput .= '<button type=\"button\" class=\"'.$adjuntar['theme'].'\" title=\"' . $adjuntar['accion'] . ' documento\" onclick=\"registrarVendedor.getFormAdjuntar(this,\'' . $encryptReg . '\')\">';
+                    $sOutput .= '    <i class=\"'.$adjuntar['icono'].'\"></i>';
                     $sOutput .= '</button>';
                 }
                 if ($mail['permiso']) {
-                    $sOutput .= '<button type=\"button\" class=\"btn bg-color-purple txt-color-white btn-xs\" title=\"Enviar acceso\" onclick=\"registrarVendedor.postAccesoVendedor(this,\'' . $idUser . '\',\'' . $aRow['nombrecompleto'] . '\',\'' . $aRow['email'] . '\')\">';
-                    $sOutput .= '    <i class=\"fa fa-envelope-o fa-lg\"></i>';
+                    $sOutput .= '<button type=\"button\" class=\"'.$mail['theme'].'\" title=\"' . $mail['accion'] . '\" onclick=\"registrarVendedor.postAccesoVendedor(this,\'' . $idUser . '\',\'' . $aRow['nombrecompleto'] . '\',\'' . $aRow['email'] . '\')\">';
+                    $sOutput .= '    <i class=\"'.$mail['icono'].'\"></i>';
                     $sOutput .= '</button>';
                 }
                 $sOutput .= ' </div>" ';

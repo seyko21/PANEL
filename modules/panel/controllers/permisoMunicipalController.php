@@ -18,8 +18,8 @@ class permisoMunicipalController extends Controller{
     }
     
     public function getGridFichaTecnica(){              
-       $agregar = Session::getPermiso('PERMUAG');    
-       
+      $crearOpcion = Session::getPermiso('FITECCO');    
+      $consultar = Session::getPermiso('FITECCC'); 
        $sEcho          =   $this->post('sEcho');
         
         $rResult = Obj::run()->permisoMunicipalModel->getGridFichaTecnica();
@@ -55,12 +55,14 @@ class permisoMunicipalController extends Controller{
                 $sOutput .= '"<div class=\"btn-group\">';
                 
                 //Visualizar Detalle
-                $sOutput .= '<button id=\"'.PERMU.'btnProducto'.$idx.'\" type=\"button\" class=\"btn bg-color-blue txt-color-white btn-xs\" title=\"Listar Caratula\" onclick=\"permisoMunicipal.getGridPermisoMunicipal(\''.$encryptReg.'\')\">';
-                $sOutput .= '    <i class=\"fa fa-search-plus fa-lg\"></i>';
-                $sOutput .= '</button>';          
-                if($agregar['permiso'] == 1){
-                    $sOutput .= '<button type=\"button\" class=\"btn bg-color-pink txt-color-white btn-xs\" title=\"'.$agregar['accion'].' Permiso Municipal\" onclick=\"permisoMunicipal.getFormNewPermisoMunicipal(this, \''.$encryptReg.'\')\">';
-                    $sOutput .= '    <i class=\"fa fa-plus-circle fa-lg\"></i>';
+                if($consultar['permiso'] == 1){
+                    $sOutput .= '<button id=\"'.PERMU.'btnProducto'.$idx.'\" type=\"button\" class=\"'.$consultar['theme'].'\" title=\"'.$consultar['accion'].' Caratula\" onclick=\"permisoMunicipal.getGridPermisoMunicipal(\''.$encryptReg.'\')\">';
+                    $sOutput .= '    <i class=\"'.$consultar['icono'].'\"></i>';
+                    $sOutput .= '</button>';      
+                }
+               if($crearOpcion['permiso'] == 1){
+                    $sOutput .= '<button type=\"button\" class=\"'.$crearOpcion['theme'].'\" title=\"'.$crearOpcion['accion'].' Permiso Municipal\" onclick=\"permisoMunicipal.getFormNewPermisoMunicipal(this, \''.$encryptReg.'\')\">';
+                    $sOutput .= '    <i class=\"'.$crearOpcion['icono'].'\"></i>';
                     $sOutput .= '</button>';
                 }                                      
                 
@@ -121,13 +123,13 @@ public function getGridPermisoMunicipal(){
        
                 //Acciones: 
                 if($editar['permiso'] == 1){
-                    $sOutput .= '<button type=\"button\" class=\"btn btn-primary btn-xs\" title=\"'.$editar['accion'].'\" onclick=\"permisoMunicipal.getEditarPermisoMunicipal(\''.$encryptReg.'\',\''.$idProd.'\')\">';
-                    $sOutput .= '    <i class=\"fa fa-edit fa-lg\"></i>';
+                    $sOutput .= '<button type=\"button\" class=\"'.$editar['theme'].'\" title=\"'.$editar['accion'].'\" onclick=\"permisoMunicipal.getEditarPermisoMunicipal(\''.$encryptReg.'\',\''.$idProd.'\')\">';
+                    $sOutput .= '    <i class=\"'.$editar['icono'].'\"></i>';
                     $sOutput .= '</button>';
                 }      
                  if($eliminar['permiso'] == 1){
-                    $sOutput .= '<button type=\"button\" class=\"btn btn-danger btn-xs\" title=\"'.$eliminar['accion'].'\" onclick=\"permisoMunicipal.postDeletePermisoMunicipal(this,\''.$encryptReg.'\')\">';
-                    $sOutput .= '    <i class=\"fa fa-ban fa-lg\"></i>';
+                    $sOutput .= '<button type=\"button\" class=\"'.$eliminar['theme'].'\" title=\"'.$eliminar['accion'].'\" onclick=\"permisoMunicipal.postDeletePermisoMunicipal(this,\''.$encryptReg.'\')\">';
+                    $sOutput .= '    <i class=\"'.$eliminar['icono'].'\"></i>';
                     $sOutput .= '</button>';
                 }       
                 

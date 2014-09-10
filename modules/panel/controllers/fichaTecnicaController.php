@@ -33,9 +33,10 @@ class fichaTecnicaController extends Controller{
    public function getGridFichaTecnica(){
        $editar = Session::getPermiso('FITECED');
        $eliminar = Session::getPermiso('FITECDE');
-       $agregar = Session::getPermiso('FITECAG'); 
+       $crearOpcion = Session::getPermiso('FITECCO'); 
        $exportarpdf   = Session::getPermiso('FITECEP');
        $exportarexcel = Session::getPermiso('FITECEX');
+       $consultar = Session::getPermiso('FITECVP'); 
        $sEcho          =   $this->post('sEcho');
         
        $rResult = Obj::run()->fichaTecnicaModel->getGridFichaTecnica();
@@ -71,27 +72,29 @@ class fichaTecnicaController extends Controller{
                 $sOutput .= '"<div class=\"btn-group\">';
                 
                 //Visualizar Detalle
-                $sOutput .= '<button id=\"'.T102.'btnProducto'.$idx.'\" type=\"button\" class=\"btn bg-color-blue txt-color-white btn-xs\" title=\"Listar Caratula\" onclick=\"fichaTecnica.getGridCaratula(\''.$encryptReg.'\')\">';
-                $sOutput .= '    <i class=\"fa fa-search-plus fa-lg\"></i>';
-                $sOutput .= '</button>';          
-                if($agregar['permiso'] == 1){
-                    $sOutput .= '<button type=\"button\" class=\"btn bg-color-pink txt-color-white btn-xs\" title=\"'.$agregar['accion'].' Caratula\" onclick=\"fichaTecnica.getNuevoCaratula(this, \''.$encryptReg.'\')\">';
-                    $sOutput .= '    <i class=\"fa fa-plus-circle fa-lg\"></i>';
+                if($consultar['permiso'] == 1){
+                    $sOutput .= '<button id=\"'.T102.'btnProducto'.$idx.'\" type=\"button\" class=\"'.$consultar['theme'].'\" title=\"'.$consultar['accion'].' Caratula\" onclick=\"fichaTecnica.getGridCaratula(\''.$encryptReg.'\')\">';
+                    $sOutput .= '    <i class=\"'.$consultar['icono'].'\"></i>';
+                    $sOutput .= '</button>'; 
+                }
+                if($crearOpcion['permiso'] == 1){
+                    $sOutput .= '<button type=\"button\" class=\"'.$crearOpcion['theme'].'\" title=\"'.$crearOpcion['accion'].' Caratula\" onclick=\"fichaTecnica.getNuevoCaratula(this, \''.$encryptReg.'\')\">';
+                    $sOutput .= '    <i class=\"'.$crearOpcion['icono'].'\"></i>';
                     $sOutput .= '</button>';
                 }                        
                 if($editar['permiso'] == 1){
-                    $sOutput .= '<button type=\"button\" class=\"btn btn-primary btn-xs\" title=\"'.$editar['accion'].' Ficha Técnica\" onclick=\"fichaTecnica.getEditarFichaTecnica(\''.$encryptReg.'\')\">';
-                    $sOutput .= '    <i class=\"fa fa-edit fa-lg\"></i>';
+                    $sOutput .= '<button type=\"button\" class=\"'.$editar['theme'].'\" title=\"'.$editar['accion'].' Ficha Técnica\" onclick=\"fichaTecnica.getEditarFichaTecnica(\''.$encryptReg.'\')\">';
+                    $sOutput .= '    <i class=\"'.$editar['icono'].'\"></i>';
                     $sOutput .= '</button>';
                 }   
                 if($exportarpdf['permiso'] == 1){
-                    $sOutput .= '<button type=\"button\" class=\"btn txt-color-white bg-color-blueDark btn-xs\" title=\"'.$exportarpdf['accion'].'\" onclick=\"fichaTecnica.postPDF(this,\''.$encryptReg.'\')\">';
-                    $sOutput .= '    <i class=\"fa fa-file-pdf-o fa-lg\"></i>';
+                    $sOutput .= '<button type=\"button\" class=\"'.$exportarpdf['theme'].'\" title=\"'.$exportarpdf['accion'].'\" onclick=\"fichaTecnica.postPDF(this,\''.$encryptReg.'\')\">';
+                    $sOutput .= '    <i class=\"'.$exportarpdf['icono'].'\"></i>';
                     $sOutput .= '</button>';
                 }
                 if($exportarexcel['permiso'] == 1){
-                    $sOutput .= '<button type=\"button\" class=\"btn btn-success btn-xs\" title=\"'.$exportarexcel['accion'].'\" onclick=\"fichaTecnica.postExcel(this,\''.$encryptReg.'\')\">';
-                    $sOutput .= '    <i class=\"fa fa-file-excel-o fa-lg\"></i>';
+                    $sOutput .= '<button type=\"button\" class=\"'.$exportarexcel['theme'].'\" title=\"'.$exportarexcel['accion'].'\" onclick=\"fichaTecnica.postExcel(this,\''.$encryptReg.'\')\">';
+                    $sOutput .= '    <i class=\"'.$exportarexcel['icono'].'\"></i>';
                     $sOutput .= '</button>';
                 }
                 
@@ -155,13 +158,13 @@ class fichaTecnicaController extends Controller{
                 
                 //Visualizar Detalle                
                 if($editar['permiso'] == 1){
-                    $sOutput .= '<button type=\"button\" class=\"btn btn-primary btn-xs\" title=\"'.$editar['accion'].'\" onclick=\"fichaTecnica.getEditarCaratula(\''.$encryptReg.'\',\''.$idProd.'\')\">';
-                    $sOutput .= '    <i class=\"fa fa-edit fa-lg\"></i>';
+                    $sOutput .= '<button type=\"button\" class=\"'.$editar['theme'].'\" title=\"'.$editar['accion'].'\" onclick=\"fichaTecnica.getEditarCaratula(\''.$encryptReg.'\',\''.$idProd.'\')\">';
+                    $sOutput .= '    <i class=\"'.$editar['icono'].'\"></i>';
                     $sOutput .= '</button>';
                 }      
                  if($eliminar['permiso'] == 1){
-                    $sOutput .= '<button type=\"button\" class=\"btn btn-danger btn-xs\" title=\"'.$eliminar['accion'].'\" onclick=\"fichaTecnica.postDeleteCaratula(this,\''.$encryptReg.'\')\">';
-                    $sOutput .= '    <i class=\"fa fa-ban fa-lg\"></i>';
+                    $sOutput .= '<button type=\"button\" class=\"'.$eliminar['theme'].'\" title=\"'.$eliminar['accion'].'\" onclick=\"fichaTecnica.postDeleteCaratula(this,\''.$encryptReg.'\')\">';
+                    $sOutput .= '    <i class=\"'.$eliminar['icono'].'\"></i>';
                     $sOutput .= '</button>';
                 }
                 

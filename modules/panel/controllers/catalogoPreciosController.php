@@ -65,18 +65,18 @@ class catalogoPreciosController extends Controller{
                 
                 //Visualizar Detalle                
                 if($editar['permiso'] == 1){
-                    $sOutput .= '<button type=\"button\" class=\"btn btn-primary btn-xs\" title=\"'.$editar['accion'].'\" onclick=\"catalogoPrecios.getEditarCaratula(\''.$encryptReg.'\',\''.$idProd.'\')\">';
-                    $sOutput .= '    <i class=\"fa fa-edit fa-lg\"></i>';
+                    $sOutput .= '<button type=\"button\" class=\"'.$editar['theme'].'\" title=\"'.$editar['accion'].'\" onclick=\"catalogoPrecios.getEditarCaratula(\''.$encryptReg.'\',\''.$idProd.'\')\">';
+                    $sOutput .= '    <i class=\"'.$editar['icono'].'\"></i>';
                     $sOutput .= '</button>';
                 }
                 if($exportarpdf['permiso'] == 1){
-                    $sOutput .= '<button type=\"button\" class=\"btn txt-color-white bg-color-blueDark btn-xs\" title=\"'.$exportarpdf['accion'].'\" onclick=\"catalogoPrecios.postPDF(this,\''.$encryptReg.'\')\">';
-                    $sOutput .= '    <i class=\"fa fa-file-pdf-o fa-lg\"></i>';
+                    $sOutput .= '<button type=\"button\" class=\"'.$exportarpdf['theme'].'\" title=\"'.$exportarpdf['accion'].'\" onclick=\"catalogoPrecios.postPDF(this,\''.$encryptReg.'\')\">';
+                    $sOutput .= '    <i class=\"'.$exportarpdf['icono'].'\"></i>';
                     $sOutput .= '</button>';
                 }
                 if($exportarexcel['permiso'] == 1){
-                    $sOutput .= '<button type=\"button\" class=\"btn btn-success btn-xs\" title=\"'.$exportarexcel['accion'].'\" onclick=\"catalogoPrecios.postExcel(this,\''.$encryptReg.'\')\">';
-                    $sOutput .= '    <i class=\"fa fa-file-excel-o fa-lg\"></i>';
+                    $sOutput .= '<button type=\"button\" class=\"'.$exportarexcel['theme'].'\" title=\"'.$exportarexcel['accion'].'\" onclick=\"catalogoPrecios.postExcel(this,\''.$encryptReg.'\')\">';
+                    $sOutput .= '    <i class=\"'.$exportarexcel['icono'].'\"></i>';
                     $sOutput .= '</button>';
                 }
                 

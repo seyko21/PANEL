@@ -19,7 +19,7 @@ class clienteController extends Controller{
     
     public function getGridCliente(){
         $editar = Session::getPermiso('REGCLED');
-        $agre = Session::getPermiso('REGCLAG');
+        $agre = Session::getPermiso('REGCLVP');
         
         $sEcho          =   $this->post('sEcho');
         
@@ -67,13 +67,13 @@ class clienteController extends Controller{
                 $sOutput .= '"<div class=\"btn-group\">';
                 
                 if($editar['permiso'] == 1){
-                    $sOutput .= '<button type=\"button\" class=\"btn btn-primary btn-xs\" title=\"'.$editar['accion'].'\" onclick=\"cliente.getEditarCliente(this,\''.$encryptReg.'\')\">';
-                    $sOutput .= '    <i class=\"fa fa-edit fa-lg\"></i>';
+                    $sOutput .= '<button type=\"button\" class=\"'.$editar['theme'].'\" title=\"'.$editar['accion'].'\" onclick=\"cliente.getEditarCliente(this,\''.$encryptReg.'\')\">';
+                    $sOutput .= '    <i class=\"'.$editar['icono'].'\"></i>';
                     $sOutput .= '</button>';
                 }
                 if($agre['permiso'] == 1){
-                    $sOutput .= '<button type=\"button\" class=\"btn bg-color-green txt-color-white btn-xs\" title=\"'.LABEL_RC5.'\" onclick=\"cliente.getGridRepresentantes(\''.$encryptReg.'\',\''.$aRow['nombrecompleto'].'\')\">';
-                    $sOutput .= '    <i class=\"fa fa-user fa-lg\"></i>';
+                    $sOutput .= '<button type=\"button\" class=\"'.$agre['theme'].'\" title=\"'.LABEL_RC5.'\" onclick=\"cliente.getGridRepresentantes(\''.$encryptReg.'\',\''.$aRow['nombrecompleto'].'\')\">';
+                    $sOutput .= '    <i class=\"'.$agre['icono'].'\"></i>';
                     $sOutput .= '</button>';
                 }
                 $sOutput .= ' </div>" ';
@@ -140,8 +140,8 @@ class clienteController extends Controller{
                 $sOutput .= '"<div class=\"btn-group\">';
                 
                 if($editar['permiso'] == 1){
-                    $sOutput .= '<button type=\"button\" class=\"btn btn-primary btn-xs\" title=\"'.$editar['accion'].'\" onclick=\"cliente.getEditarRepresentante(this,\''.$encryptReg.'\')\">';
-                    $sOutput .= '    <i class=\"fa fa-edit fa-lg\"></i>';
+                    $sOutput .= '<button type=\"button\" class=\"'.$editar['theme'].'\" title=\"'.$editar['accion'].'\" onclick=\"cliente.getEditarRepresentante(this,\''.$encryptReg.'\')\">';
+                    $sOutput .= '    <i class=\"'.$editar['icono'].'\"></i>';
                     $sOutput .= '</button>';
                 }
                

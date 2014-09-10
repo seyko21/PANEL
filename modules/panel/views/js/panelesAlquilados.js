@@ -54,13 +54,12 @@ var panelesAlquilados_ = function(){
             aoColumns: [                
                 {sTitle: "Código", sWidth: "8%"},
                 {sTitle: "Ciudad", sWidth: "13%"},
-                {sTitle: "Ubicación", sWidth: "35%"},
+                {sTitle: "Ubicación", sWidth: "30%"},
                 {sTitle: "Elemento", sWidth: "10%"},
-                {sTitle: "Area m2", sWidth: "4%",  sClass: "center"},
-                {sTitle: "Precio", sWidth: "8%",  sClass: "right"},                
+                {sTitle: "Area m2", sWidth: "4%",  sClass: "center"},                
                 {sTitle: "Iluminado", sWidth: "5%",  sClass: "center"},
                 {sTitle: "Estado", sWidth: "5%",  sClass: "center"},
-                {sTitle: "Acciones", sWidth: "10%", sClass: "center", bSortable: false}
+                {sTitle: "Acciones", sWidth: "8%", sClass: "center", bSortable: false}
             ],
             aaSorting: [[2, 'asc']],
             sScrollY: "350px",
