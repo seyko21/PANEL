@@ -49,7 +49,7 @@ class generarCotizacionController extends Controller{
                 }     
                                                 
                 /*datos de manera manual*/
-                $sOutput .= '["'.$chk.'","'.$aRow['cotizacion_numero'].'","'.$aRow['nombrecompleto'].'","'.$aRow['fechacoti'].'","'.$aRow['meses_contrato'].'","'.Functions::cambiaf_a_normal($aRow['vencimiento']).'","'.  number_format($aRow['total'],2).'","'.$estado.'", ';
+                $sOutput .= '["'.$chk.'","'.$aRow['cotizacion_numero'].'","'.$aRow['nombrecompleto'].'","'.$aRow['vendedor'].'","'.$aRow['fechacoti'].'","'.Functions::cambiaf_a_normal($aRow['vencimiento']).'","'.  number_format($aRow['total'],2).'","'.$estado.'", ';
 
                 /*
                  * configurando botones (add/edit/delete etc)
@@ -67,7 +67,7 @@ class generarCotizacionController extends Controller{
                     $sOutput .= '    <i class=\"fa fa-file-excel-o fa-lg\"></i>';
                     $sOutput .= '</button>';
                 }
-                if($clonar['permiso']){
+                if($clonar['permiso'] && $aRow['estado'] != 'A'){
                     $sOutput .= '<button type=\"button\" class=\"btn bg-color-purple txt-color-white btn-xs\" title=\"'.$clonar['accion'].'\" onclick=\"generarCotizacion.getClonar(\''.$aRow['cotizacion_numero'].'\',\''.$encryptReg.'\')\">';
                     $sOutput .= '    <i class=\"fa fa-copy fa-lg\"></i>';
                     $sOutput .= '</button>';
