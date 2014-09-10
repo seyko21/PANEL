@@ -21,7 +21,7 @@ class Formulario{
             if(is_array($_POST[$parametro])){
                 return $_POST[$parametro];
             }else{
-                return trim($_POST[$parametro]);
+                return htmlspecialchars(trim($_POST[$parametro]),ENT_QUOTES);
             }
         }else{
             return false;

@@ -83,6 +83,15 @@ var simpleAjax_ = function(){
                 }
             },
             success: function(data){
+                /*validar error del SP*/
+                if(typeData === 'json'){
+                    /*no es un array, servidor devuelve cadena, y el unico q devuelve cadena es el ERROR del SP*/
+                    if(data instanceof Object === false){
+                        simpleScript.notify.error({
+                            content: data
+                        });
+                    }
+                }
                 if(obj.fnCallback !== undefined){//si existe callback
                     var callBback = obj.fnCallback;
                     callBback(data);

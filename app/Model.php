@@ -14,55 +14,60 @@ class Model{
     }
     
     public function execute($query,$arrayValues){
-        try {
-            $statement = $this->_db->prepare($query);
-            $statement->execute($arrayValues);
+        $statement = $this->_db->prepare($query);
+        $statement->execute($arrayValues);
+
+        $bug = $statement->errorInfo();
+
+        if($bug[0] == '00000'){// ok
             $result = true;
-        } catch (PDOException $e) {
-            $er = $e->getTrace();
-            $bug = $er[1]['args'][0];
-            if(DB_ENTORNO == 'D'){ /*D:Desarrollo, P:Produccion*/
-                $result = array('error'=>'ERROR FATAL:: '.$e->errorInfo[2].'<br>SP:: '.$bug);
+        }else{//error
+            if(DB_ENTORNO == 'D'){
+                $result = array('error'=>'ERROR:: '.$bug[2]);
             }elseif(DB_ENTORNO == 'P'){
-                $result = array('error'=>'ERROR FATAL:: '.$this->messageError($e->errorInfo[1]));
+                $result = array('error'=>'ERROR:: '.$this->messageError($bug[1]));
             }
         }
-
+         
         return $result;
     }
     
     public function queryOne($query,$arrayValues){
-        try {
-            $statement = $this->_db->prepare($query);
-            $statement->execute($arrayValues);
-            $result = $statement->fetch(PDO::FETCH_ASSOC);            
-        } catch (PDOException $e) {
-            $er = $e->getTrace();
-            $bug = $er[1]['args'][0];
+        $statement = $this->_db->prepare($query);
+        $statement->execute($arrayValues);
+
+        $bug = $statement->errorInfo();
+
+        if($bug[0] == '00000'){// ok
+            $result = $statement->fetch(PDO::FETCH_ASSOC);
+        }else{//error
             if(DB_ENTORNO == 'D'){
-                $result = array('error'=>'ERROR:: '.$e->errorInfo[2].'<br>SP:: '.$bug);
+                $result = array('error'=>'ERROR:: '.$bug[2]);
             }elseif(DB_ENTORNO == 'P'){
-                $result = array('error'=>'ERROR:: '.$this->messageError($e->errorInfo[1]));
+                $result = array('error'=>'ERROR:: '.$this->messageError($bug[1]));
             }
         }
+         
         return $result;
     }
     
     public function queryAll($query,$arrayValues){
-        try {
-            $statement = $this->_db->prepare($query);
-            $statement->execute($arrayValues);
+        $statement = $this->_db->prepare($query);
+        $statement->execute($arrayValues);
+
+        $bug = $statement->errorInfo();
+
+        if($bug[0] == '00000'){// ok
             $result = $statement->fetchAll(PDO::FETCH_ASSOC);
-        } catch (PDOException $e) {
-            $er = $e->getTrace();
-            $bug = $er[1]['args'][0];
+        }else{//error
             if(DB_ENTORNO == 'D'){
-                $result = array('error'=>'ERROR:: '.$e->errorInfo[2].'<br>SP:: '.$bug);
+                $result = array('error'=>'ERROR:: '.$bug[2]);
             }elseif(DB_ENTORNO == 'P'){
-                $result = array('error'=>'ERROR:: '.$this->messageError($e->errorInfo[1]));
+                $result = array('error'=>'ERROR:: '.$this->messageError($bug[1]));
             }
         }
-        return $result; 
+         
+        return $result;
     }
     
     private function messageError($code) {
@@ -79,6 +84,9 @@ class Model{
                 break;
             case 547:
                 $msg = 'No se puede eliminar el registro porque se necesitan en otras tablas.';
+                break;
+            case 1451:
+                $msg = 'No se pudo eliminar el registro debido a que está siendo utilizada en otras operaciones.';
                 break;
             case 1452:
                 $msg = 'Algunas claves primarias no existen en las tablas maestras. No se pudo realizar la relaci&oacute;n.';
@@ -122,7 +130,7 @@ class Model{
         }else{
             return false;
         }
-    }
+    }   
     
 }
 ?>
