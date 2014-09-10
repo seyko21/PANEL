@@ -23,6 +23,8 @@ define('BTN_DESACT','Desactivar');
 define('LABEL_ADV','Advertencia');
 define('LABEL_ADVMSN','Todas las caratulas han sido cotizadas.');
 define('COPY','Copyright SmartAdmin 2014-2020.');
+define('ICON_CLOSE','fa fa-ban');
+define('THEME_CLOSE','btn btn-default xClose');
 
 /*FORMULARIO LOGIN*/
 define('L_TITLE','Ingresar');

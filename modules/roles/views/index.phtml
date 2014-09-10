@@ -1,5 +1,5 @@
 <?php 
-$nuevo = Session::getPermiso('CRONEW');
+$nuevo = Session::getPermiso('CROGR');
 
 echo Functions::widgetOpen(array(
         'id'=>T1.'roles',
@@ -12,7 +12,7 @@ echo Functions::widgetOpen(array(
         <div class="dt-top-row">
             <div class="DTTT btn-group">
                 <?php if($nuevo['permiso']):?>
-                <button id="CRDCRbtnNew" class="<?php echo $nuevo['theme'];?>" onclick="configurarRoles.getNuevoRol()"><i class="<?php echo $nuevo['icono'];?>"></i> <?php echo $nuevo['accion'];?></button>
+                <button id="CRDCRbtnNew" class="<?php echo $nuevo['theme'];?>" onclick="configurarRoles.getNuevoRol()"><i class="<?php echo $nuevo['icono'];?>"></i> <?php echo BTN_NUEVO;?></button>
                 <?php endif; ?>
             </div>
         </div>

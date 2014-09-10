@@ -44,7 +44,9 @@ class Session{
             if($value['opcion'] == $clave){
                 return array(
                     'accion'=>$value['accion'],
-                    'permiso'=>$value['permiso']
+                    'permiso'=>$value['permiso'],
+                    'icono'=>$value['icono'],
+                    'theme'=>$value['theme']
                 );
                 exit;
             }

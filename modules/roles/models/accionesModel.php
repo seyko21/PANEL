@@ -84,7 +84,7 @@ class accionesModel extends Model{
             ':key' => $this->_key,
             ':accion' => $this->_accion,
             ':alias' => $this->_alias,
-            ':activo' => $this->_activo,
+            ':activo' => ($this->_activo == '1')?1:0,
             ':icono' => $this->_icono,
             ':theme' => $this->_theme,
             ':usuario' => $this->_usuario

@@ -6,7 +6,7 @@
  * Autor       : ..... .....
  * Descripcion : 
  */
-$editar = Session::getPermiso('ACCACT');
+$editar = Session::getPermiso('ACCED');
 
 $data = accionesController::getAccion($this->key);
 ?>
@@ -78,8 +78,8 @@ $data = accionesController::getAccion($this->key);
             </div>
             <div class="modal-footer">
                 <?php if($editar['permiso']):?>
-                <button id="CRDACbtnEditaAccion" type="submit" class="<?php echo $editar['theme']; ?>">
-                    <i class="<?php echo $editar['icono']; ?>"></i> <?php echo $editar['accion']; ?>
+                <button id="CRDACbtnEditaAccion" type="submit" class="btn txt-color-white bg-color-blueDark">
+                    <i class="fa fa-save"></i> <?php echo $editar['accion']; ?>
                 </button>
                 <?php endif; ?>
                 <button type="button" class="<?php echo THEME_CLOSE; ?>">

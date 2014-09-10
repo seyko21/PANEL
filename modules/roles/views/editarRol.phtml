@@ -1,7 +1,7 @@
 <?php
 $data = configurarRolesController::getRol($this->key);
 
-$editar = Session::getPermiso('CROACT');
+$editar = Session::getPermiso('CROED');
 ?>
 <form id="CRDCRformEditRol" name="CRDCRformEditRol" class="modal fade">
     <div class="modal-dialog">
@@ -13,6 +13,10 @@ $editar = Session::getPermiso('CROACT');
                 <h4 class="modal-title">Editar Rol</h4>
             </div>
             <div class="modal-body smart-form">
+                
+                
+                
+                
                 <section>
                     <div class="row">
                         <label class="label col col-2">Rol</label>
@@ -38,12 +42,12 @@ $editar = Session::getPermiso('CROACT');
             </div>
             <div class="modal-footer">
                 <?php if($editar['permiso']):?>
-                <button id="CRDCRbtnEditaRol" type="submit" class="<?php echo $editar['theme']; ?>">
-                    <i class="<?php echo $editar['icono']; ?>"></i> <?php echo $editar['accion']; ?>
+                <button id="CRDCRbtnEditaRol" type="submit" class="btn txt-color-white bg-color-blueDark">
+                    <i class="fa fa-edit"></i> <?php echo $editar['accion']; ?>
                 </button>
                 <?php endif; ?>
-                <button type="button" class="<?php echo THEME_CLOSE; ?>">
-                    <i class="<?php echo ICON_CLOSE; ?>"></i> <?php echo BTN_CLOSE; ?>
+                <button type="button" class="btn btn-default xClose">
+                    <i class="fa fa-ban"></i> Cerrar
                 </button>
             </div>
         </div><!-- /.modal-content -->
