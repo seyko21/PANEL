@@ -55,7 +55,7 @@ var panelesAlquilados_ = function(){
                 {sTitle: "Código", sWidth: "8%"},
                 {sTitle: "Ciudad", sWidth: "13%"},
                 {sTitle: "Ubicación", sWidth: "35%"},
-                {sTitle: "Elemento", sWidth: "12%"},
+                {sTitle: "Elemento", sWidth: "10%"},
                 {sTitle: "Area m2", sWidth: "4%",  sClass: "center"},
                 {sTitle: "Precio", sWidth: "8%",  sClass: "right"},                
                 {sTitle: "Iluminado", sWidth: "5%",  sClass: "center"},
