@@ -69,8 +69,7 @@ class catalogoPreciosModel extends Model{
                  WHERE exists 
                  (select * from lgk_catalogo c where c.id_tipopanel = t.id_tipopanel and c.estado = 'A'  )
                   and t.estado = :estado; 
-                 ";
-        
+                 ";        
         $parms = array(
             ':estado' => 'A'
         );

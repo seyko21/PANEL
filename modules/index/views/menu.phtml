@@ -85,7 +85,18 @@ Session::set('sys_permisos', $permisos);
 <?php 
         endif;
         $dominioTMP = $menu['id_dominio'];
-endforeach;?>
+endforeach;
+
+ /*
+    * Verifico si es SUPER ADMINISTRADOR (001) o ADMINISTRADOR (002)
+    * esto servira para los reportes, si es super o adm tendra acceso a toda la informacion
+ */
+    Session::set('sys_all','N');
+        if(Session::get('sys_defaultRol') == APP_COD_SADM || Session::get('sys_defaultRol') == APP_COD_ADM){
+            Session::set('sys_all','S');
+       }
+
+?>
 <script>
     function noneEvtMenu(){
         if($('#nav_modulos').length > 0){

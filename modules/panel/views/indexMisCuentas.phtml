@@ -2,30 +2,30 @@
 /*
 * ---------------------------------------
 * --------- CREATED BY CREATOR ----------
-* fecha: 27-08-2014 02:08:12 
-* Descripcion : indexCatalogoPrecio.phtml
+* fecha: 09-09-2014 04:09:19 
+* Descripcion : indexMisCuentas.phtml
 * ---------------------------------------
 */
+$grabar   = Session::getPermiso("MISPAGR");
+$eliminar = Session::getPermiso("MISPADE");
 echo Functions::widgetOpen(array(
-        "id"=>TAB_CATPRE,
-        "title"=>LABEL_A70
+        "id"=>MISPA,
+        "title"=>LABEL_A120
     )); 
 ?>
-<button id="<?php echo TAB_CATPRE; ?>btnDowPDF" type="button" class="hide">Descargar</button>
-<button id="<?php echo TAB_CATPRE; ?>btnDowExcel" type="button" class="hide">Descargar</button>
 
 <div class="widget-body-toolbar">
     <div class="smart-form" style="position: absolute;left: 400px;top:5px">
         <label class="label col col-7"><?php echo LABEL_A71; ?></label>
         <label class="select pull-left">
            <?php
-                $datal = catalogoPreciosController::getListadoTipoPanel();           
+               $datal = misCuentasController::getListadoTipoPanelCuenta();           
                 echo Functions::selectHtml(array(
                     'data'=>$datal,
                     'atributes'=>array(
-                        'id'=>TAB_CATPRE.'lst_tipopanelsearch',
-                        'name'=>TAB_CATPRE.'lst_tipopanelsearch',
-                        'onchange'=>'catalogoPrecios.getGridCatalogoPrecios();'
+                        'id'=>MISPA.'lst_tipopanelsearch',
+                        'name'=>MISPA.'lst_tipopanelsearch',
+                        'onchange'=>'misCuentas.getGridMisCuentas();'
                     ),
                     'etiqueta'=>'descripcion',
                     'value'=>'id_tipopanel',
@@ -46,7 +46,7 @@ echo Functions::widgetOpen(array(
         </div>
 
     </div>
-    <form id="<?php echo TAB_CATPRE; ?>formGridCatalogoPrecio" name="<?php echo TAB_CATPRE; ?>formGridCatalogoPrecio">
-        <table id="<?php echo TAB_CATPRE; ?>gridCatalogoPrecio" class="table table-striped table-bordered table-hover table-condensed" style="width:100%"></table>
+    <form id="<?php echo MISPA; ?>formGridMisCuentas" name="<?php echo MISPA; ?>formGridMisCuentas">
+        <table id="<?php echo MISPA; ?>gridMisCuentas" class="table table-striped table-bordered table-hover table-condensed" style="width:100%"></table>
     </form>
 <?php echo Functions::widgetClose(); ?>

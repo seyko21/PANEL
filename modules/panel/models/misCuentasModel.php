@@ -2,16 +2,17 @@
 /*
 * ---------------------------------------
 * --------- CREATED BY CREATOR ----------
-* fecha: 05-09-2014 23:09:58 
-* Descripcion : regProduccionModel.php
+* fecha: 09-09-2014 04:09:19 
+* Descripcion : misCuentasModel.php
 * ---------------------------------------
 */ 
 
-class regProduccionModel extends Model{
+class misCuentasModel extends Model{
 
     private $_flag;
-    private $_idRegProduccion;
-    private $_usuario;
+    private $_idPersona;
+    private $_idCaratula;
+    private $_tipoPanel;
     
     /*para el grid*/
     private $_iDisplayStart;
@@ -25,9 +26,10 @@ class regProduccionModel extends Model{
     }
     
     private function _set(){
-        $this->_flag                    = Formulario::getParam("_flag");
-        $this->_idRegProduccion   = Aes::de(Formulario::getParam("_idRegProduccion"));    /*se decifra*/
-        $this->_usuario                 = Session::get("sys_idUsuario");
+        $this->_flag                    = Formulario::getParam("_flag");        
+        $this->_idPersona                 = Session::get("sys_idPersona");
+        $this->_tipoPanel =   Formulario::getParam("_tipoPanel"); 
+        $this->_idCaratula = Aes::de(Formulario::getParam('_idCaratula'));  /*se decifra*/         
         
         $this->_iDisplayStart  =   Formulario::getParam("iDisplayStart"); 
         $this->_iDisplayLength =   Formulario::getParam("iDisplayLength"); 
@@ -35,8 +37,17 @@ class regProduccionModel extends Model{
         $this->_sSearch        =   Formulario::getParam("sSearch");
     }
     
-    public function getGridProduccion(){
-        $aColumns       =   array( 'chk','u.distrito','fecha','ubicacion','elemento','total_produccion','total_asignado','total_saldo' ); //para la ordenacion y pintado en html
+     public function getTipoPanelCuenta(){
+        $query = "call sp_catalogoTipoPanelConsultas(:acceso, :usuario); ";        
+        $parms = array(
+            ':acceso' => Session::get('sys_all'),
+            ':usuario' => $this->_idPersona            
+        );
+        $data = $this->queryAll($query,$parms);
+        return $data;
+    }
+    public function getGridProducto(){
+        $aColumns       =   array( 'codigo','distrito','ubicacion','elemento','dimesion_area','precio','iluminado','estado' ); //para la ordenacion y pintado en html
         /*
 	 * Ordenando, se verifica por que columna se ordenara
 	 */
@@ -46,22 +57,25 @@ class regProduccionModel extends Model{
                         $sOrder .= " ".$aColumns[ intval( Formulario::getParam("iSortCol_".$i) ) ]." ".
                                 (Formulario::getParam("sSortDir_".$i)==="asc" ? "asc" : 'desc') .",";
                 }
-        }
+        }        
         $sOrder = substr_replace( $sOrder, "", -1 );
-        $query = "call sp_prodProduccionGrid(:iDisplayStart,:iDisplayLength,:sOrder,:sSearch);";
+        
+        $query = "call sp_catalogoMisCuentasGrid(:acceso,:usuario,:tipopanel,:iDisplayStart,:iDisplayLength,:sOrder,:sSearch);";
         
         $parms = array(
+            ':acceso' => Session::get('sys_all'),
+            ':usuario' => $this->_idPersona, 
+            ':tipopanel' => $this->_tipoPanel,
             ':iDisplayStart' => $this->_iDisplayStart,
             ':iDisplayLength' => $this->_iDisplayLength,
             ':sOrder' => $sOrder,
             ':sSearch' => $this->_sSearch,
         );
         $data = $this->queryAll($query,$parms);
-        
+     
         return $data; 
        
     }
-    
 }
 
 ?>
