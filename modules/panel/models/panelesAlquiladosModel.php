@@ -2,18 +2,18 @@
 /*
 * ---------------------------------------
 * --------- CREATED BY CREATOR ----------
-* fecha: 09-09-2014 04:09:19 
-* Descripcion : misCuentasModel.php
+* fecha: 10-09-2014 14:09:04 
+* Descripcion : panelesAlquiladosModel.php
 * ---------------------------------------
 */ 
 
-class misCuentasModel extends Model{
+class panelesAlquiladosModel extends Model{
 
-    private $_flag;
+    private $_flag;    
+    private $_usuario;
     private $_idPersona;
     private $_idCaratula;
     private $_tipoPanel;
-    
     /*para el grid*/
     private $_iDisplayStart;
     private $_iDisplayLength;
@@ -27,9 +27,10 @@ class misCuentasModel extends Model{
     
     private function _set(){
         $this->_flag                    = Formulario::getParam("_flag");        
+        $this->_usuario                 = Session::get("sys_idUsuario");
         $this->_idPersona                 = Session::get("sys_idPersona");
         $this->_tipoPanel =   Formulario::getParam("_tipoPanel"); 
-        $this->_idCaratula = Aes::de(Formulario::getParam('_idCaratula'));  /*se decifra*/         
+        $this->_idCaratula = Aes::de(Formulario::getParam('_idCaratula'));  /*se decifra*/ 
         
         $this->_iDisplayStart  =   Formulario::getParam("iDisplayStart"); 
         $this->_iDisplayLength =   Formulario::getParam("iDisplayLength"); 
@@ -37,12 +38,12 @@ class misCuentasModel extends Model{
         $this->_sSearch        =   Formulario::getParam("sSearch");
     }
     
-     public function getTipoPanelCuenta(){
+    public function getTipoPanelCuenta(){
         $query = "call sp_catalogoTipoPanelConsultas(:acceso, :usuario,:estado); ";        
         $parms = array(
             ':acceso' => Session::get('sys_all'),
             ':usuario' => $this->_idPersona,
-            ':estado' => '' 
+            ':estado' => 'A' 
         );
         $data = $this->queryAll($query,$parms);
         return $data;
@@ -66,7 +67,7 @@ class misCuentasModel extends Model{
         $parms = array(
             ':acceso' => Session::get('sys_all'),
             ':usuario' => $this->_idPersona, 
-            ':estado' => '',
+            ':estado' => 'A', 
             ':tipopanel' => $this->_tipoPanel,
             ':iDisplayStart' => $this->_iDisplayStart,
             ':iDisplayLength' => $this->_iDisplayLength,
@@ -78,6 +79,7 @@ class misCuentasModel extends Model{
         return $data; 
        
     }
+    
 }
 
 ?>

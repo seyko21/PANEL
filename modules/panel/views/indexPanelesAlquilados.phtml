@@ -1,0 +1,52 @@
+<?php 
+/*
+* ---------------------------------------
+* --------- CREATED BY CREATOR ----------
+* fecha: 10-09-2014 14:09:04 
+* Descripcion : indexPanelesAlquilados.phtml
+* ---------------------------------------
+*/
+$grabar   = Session::getPermiso("PAALGR");
+$eliminar = Session::getPermiso("PAALDE");
+echo Functions::widgetOpen(array(
+        "id"=>PAAL,
+        "title"=>LABEL_A121
+    )); 
+?>
+
+<div class="widget-body-toolbar">
+    <div class="smart-form" style="position: absolute;left: 400px;top:5px">
+        <label class="label col col-7"><?php echo LABEL_A71; ?></label>
+        <label class="select pull-left">
+           <?php
+               $datal = panelesAlquiladosController::getListadoTipoPanelCuenta();           
+                echo Functions::selectHtml(array(
+                    'data'=>$datal,
+                    'atributes'=>array(
+                        'id'=>PAAL.'lst_tipopanelsearch',
+                        'name'=>PAAL.'lst_tipopanelsearch',
+                        'onchange'=>'panelesAlquilados.getGridPanelesAlquilados();'
+                    ),
+                    'etiqueta'=>'descripcion',
+                    'value'=>'id_tipopanel',
+                    'defaultEtiqueta'=>'',
+                    'txtAll'=>true
+                ));
+            ?>
+            <i></i>
+        </label>
+        
+    </div>
+</div>    
+    <div class="dataTables_wrapper form-inline" role="grid">
+        <div class="dt-top-row">
+            <div class="DTTT btn-group">
+              
+            </div>
+        </div>
+
+    </div>
+    <form id="<?php echo PAAL; ?>formGridPanelesAlquilados" name="<?php echo PAAL; ?>formGridPanelesAlquilados">
+        <table id="<?php echo PAAL; ?>gridPanelesAlquilados" class="table table-striped table-bordered table-hover table-condensed" style="width:100%"></table>
+    </form>
+<?php echo Functions::widgetClose(); ?>

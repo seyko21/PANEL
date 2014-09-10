@@ -16,4 +16,5 @@ define("TAB_SOCIO","VSOCIO");             /*tab modulo SOCIO*/
 define("REINV","VREINV");             /*tab modulo REGINVERSION*/
 define("REPRO","REPRO");             /*tab modulo REGPRODUCCION*/
 define("MISPA","MISPA");             /*tab modulo MISCUENTAS*/
+define("PAAL","XPAAL");             /*tab modulo PANELESALQUILADOS*/
 ?>

@@ -7,7 +7,8 @@
         TAB_SOCIO: '<?php echo TAB_SOCIO; ?>',
         REINV: '<?php echo REINV; ?>',
         REPRO: '<?php echo REPRO; ?>',
-        MISPA: '<?php echo MISPA; ?>'
+        MISPA: '<?php echo MISPA; ?>',
+        PAAL: '<?php echo PAAL; ?>'
     }
 };
 </script>
