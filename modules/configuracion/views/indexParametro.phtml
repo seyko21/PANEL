@@ -1,7 +1,7 @@
 <?php 
-$grabar = Session::getPermiso('PARMGR');
-$eliminar = Session::getPermiso('PARMDE');
-        
+$nuevo = Session::getPermiso('PARMNEW');
+$eliminar = Session::getPermiso('PARMDEL');
+
 echo Functions::widgetOpen(array(
         'id'=>T100,
         'title'=>LABEL_A1
@@ -12,14 +12,14 @@ echo Functions::widgetOpen(array(
     <div class="dataTables_wrapper form-inline" role="grid">
         <div class="dt-top-row">
             <div class="DTTT btn-group">
-                <?php if($grabar['permiso']): ?>
-                <button id="<?php echo T100; ?>btnNew" type="button" onclick="parametro.getNuevoParametro(this);" class="btn txt-color-white bg-color-blueDark">
-                    <i class="fa fa-file-o"></i> <?php echo BTN_NUEVO; ?>
+                <?php if($nuevo['permiso']): ?>
+                <button id="<?php echo T100; ?>btnNew" type="button" onclick="parametro.getNuevoParametro(this);" class="<?php echo $nuevo['theme']; ?>">
+                    <i class="<?php echo $nuevo['icono']; ?>"></i> <?php echo $nuevo['accion']; ?>
                 </button>
                 <?php endif; ?>
                 <?php if($eliminar['permiso']): ?>
-                <button id="<?php echo T100; ?>btnNew" type="button" onclick="parametro.postDeleteParametroAll(this);" class="btn txt-color-white bg-color-blueDark">
-                    <i class="fa fa-ban"></i> <?php echo BTN_DELETE; ?>
+                <button id="<?php echo T100; ?>btnNew" type="button" onclick="parametro.postDeleteParametroAll(this);" class="<?php echo $eliminar['theme']; ?>">
+                    <i class="<?php echo $eliminar['icono']; ?>"></i> <?php echo $eliminar['accion'];  ?>
                 </button>
                 <?php endif; ?>
             </div>

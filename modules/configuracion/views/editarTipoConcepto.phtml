@@ -6,7 +6,7 @@
  * Autor       : ..... .....
  * Descripcion : 
  */
-$editar = Session::getPermiso('TICNED');
+$editar = Session::getPermiso('TICNACT');
 $tconc = tipoConceptoController::getTipoConcepto();
 ?>
 <form id="<?php echo T5; ?>formTipoConcepto" name="<?php echo T5; ?>formTipoConcepto" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -31,7 +31,7 @@ $tconc = tipoConceptoController::getTipoConcepto();
                         </div>
                     </div>
                 </section>
-                <section>
+<!--                <section>
                     <div class="row">
                         <label class="label col col-2"></label>
                         <div class="col col-3">
@@ -42,16 +42,16 @@ $tconc = tipoConceptoController::getTipoConcepto();
                             </label>
                         </div>
                     </div>
-                </section>
+                </section>-->
             </div>
             <div class="modal-footer">
                 <?php if($editar['permiso']):?>
-                <button id="<?php echo T5; ?>btnGtconc" type="submit" class="btn txt-color-white bg-color-blueDark">
-                    <i class="fa fa-save"></i> <?php echo $editar['accion']; ?>
+                <button id="<?php echo T5; ?>btnGtconc" type="submit" class="<?php echo $editar['theme'];?>">
+                    <i class="<?php echo $editar['icono'];?>"></i> <?php echo $editar['accion']; ?>
                 </button>
                 <?php endif; ?>
-                <button type="button" class="btn btn-default xClose">
-                    <i class="fa fa-ban"></i> <?php echo BTN_CLOSE; ?>
+                <button type="button" class="<?php echo THEME_CLOSE; ?>">
+                    <i class="<?php echo ICON_CLOSE; ?>"></i> <?php echo BTN_CLOSE; ?> 
                 </button>
             </div>
         </div><!-- /.modal-content -->

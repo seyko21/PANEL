@@ -5,8 +5,8 @@
  * Autor       : ..... .....
  * Descripcion : 
  */
-$grabar = Session::getPermiso('CONCGR');
-$editar = Session::getPermiso('CONCED');
+$nuevo = Session::getPermiso('TICNNEW');
+$editar = Session::getPermiso('CONCACT');
 $data = conceptoController::getConcepto();
 ?>
 <form id="<?php echo T6; ?>formConcepto" name="<?php echo T6; ?>formConcepto" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -41,9 +41,9 @@ $data = conceptoController::getConcepto();
                                 ?><i></i>
                             </label>                            
                         </div>
-                        <?php if ($grabar['permiso']): ?>
-                        <button id="<?php echo T6; ?>btnNew" type="button" onclick="tipoConcepto.getNuevoTipoConcepto(this,'#<?php echo T6; ?>lst_tipoconcento');" class="btn txt-color-white bg-color-blueDark" title="<?php echo BTN_NUEVO; ?>">
-                                <i class="fa fa-file-o pd8"></i>
+                        <?php if ($nuevo['permiso']): ?>
+                         <button id="<?php echo T6; ?>btnNew" type="button" onclick="tipoConcepto.getNuevoTipoConcepto(this,'#<?php echo T6; ?>lst_tipoconcento');" class="<?php echo $nuevo['theme'];?>" title="<?php echo $nuevo['accion'];?>">
+                                <i class="<?php echo $nuevo['icono'];?> pd8"></i>
                             </button>
                         <?php endif; ?>
                     </div>
@@ -72,7 +72,7 @@ $data = conceptoController::getConcepto();
                         </div>
                     </div>
                 </section>
-                <section>
+<!--                <section>
                     <div class="row">
                         <label class="label col col-3"></label>
                         <div class="col col-3">
@@ -83,16 +83,16 @@ $data = conceptoController::getConcepto();
                             </label>
                         </div>
                     </div>
-                </section>
+                </section>-->
             </div>
             <div class="modal-footer">
                 <?php if($editar['permiso']):?>
-                <button id="<?php echo T6; ?>btnEconc" type="submit" class="btn txt-color-white bg-color-blueDark">
-                    <i class="fa fa-save"></i> <?php echo $editar['accion']; ?>
+                <button id="<?php echo T6; ?>btnEconc" type="submit" class="<?php echo $editar['theme'];?>">
+                    <i class="<?php echo $editar['icono'];?>"></i> <?php echo $editar['accion']; ?>
                 </button>
                 <?php endif; ?>
-                <button type="button" class="btn btn-default xClose">
-                    <i class="fa fa-ban"></i> <?php echo BTN_CLOSE; ?>
+                <button type="button" class="<?php echo THEME_CLOSE; ?>">
+                    <i class="<?php echo ICON_CLOSE; ?>"></i> <?php echo BTN_CLOSE; ?> 
                 </button>
             </div>
         </div><!-- /.modal-content -->

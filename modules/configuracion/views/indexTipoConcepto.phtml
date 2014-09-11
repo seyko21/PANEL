@@ -1,6 +1,6 @@
 <?php 
-$grabar = Session::getPermiso('TICNGR');
-$eliminar = Session::getPermiso('TICNDE');
+$nuevo = Session::getPermiso('TICNNEW');
+$eliminar = Session::getPermiso('TICNDEL');
         
 echo Functions::widgetOpen(array(
         'id'=>T5.'tipoconceptos',
@@ -12,14 +12,14 @@ echo Functions::widgetOpen(array(
     <div class="dataTables_wrapper form-inline" role="grid">
         <div class="dt-top-row">
             <div class="DTTT btn-group">
-                <?php if($grabar['permiso']): ?>
-                <button id="<?php echo T5; ?>btnNew" type="button" onclick="tipoConcepto.getNuevoTipoConcepto(this,'');" class="btn txt-color-white bg-color-blueDark">
-                    <i class="fa fa-file-o"></i> <?php echo BTN_NUEVO; ?>
+                <?php if($nuevo['permiso']): ?>
+                <button id="<?php echo T5; ?>btnNew" type="button" onclick="tipoConcepto.getNuevoTipoConcepto(this,'');" class="<?php echo $nuevo['theme']; ?>">
+                    <i class="<?php echo $nuevo['icono']; ?>"></i> <?php echo $nuevo['accion']; ?>
                 </button>
                 <?php endif; ?>
                 <?php if($eliminar['permiso']): ?>
-                <button id="<?php echo T5; ?>btnNew" type="button" onclick="tipoConcepto.postDeleteTipoConceptoAll(this);" class="btn txt-color-white bg-color-blueDark">
-                    <i class="fa fa-ban"></i> <?php echo BTN_DELETE; ?>
+                <button id="<?php echo T5; ?>btnDelete" type="button" onclick="tipoConcepto.postDeleteTipoConceptoAll(this);" class="<?php echo $eliminar['theme']; ?>">
+                    <i class="<?php echo $eliminar['icono']; ?>"></i> <?php echo $eliminar['accion']; ?>
                 </button>
                 <?php endif; ?>
             </div>

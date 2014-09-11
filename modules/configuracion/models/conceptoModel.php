@@ -90,14 +90,13 @@ class conceptoModel extends Model{
     }
     
     public function mantenimientoConcepto(){
-        $query = "call sp_configConceptoMantenimiento(:flag,:key,:idTipoConcepto,:descripcion,:importe,:estado,:usuario);";
+        $query = "call sp_configConceptoMantenimiento(:flag,:key,:idTipoConcepto,:descripcion,:importe,:usuario);";
         $parms = array(
             ':flag' => $this->_flag,
             ':key' => $this->_idConcepto,
             ':idTipoConcepto' => $this->_idTipoConcepto,
             ':descripcion' => $this->_descripcion,
             ':importe' => $this->_importe,
-            ':estado' => ($this->_estado == 'A')?'A':'I',
             ':usuario' => $this->_usuario
         );
         $data = $this->queryOne($query,$parms);
@@ -107,14 +106,13 @@ class conceptoModel extends Model{
     public function mantenimientoConceptoAll(){
 //                print_r($this->_chkdel);
         foreach ($this->_chkdel as $value) {
-            $query = "call sp_configConceptoMantenimiento(:flag,:key,:idTipoConcepto,:descripcion,:importe,:estado,:usuario);";
+            $query = "call sp_configConceptoMantenimiento(:flag,:key,:idTipoConcepto,:descripcion,:importe,:usuario);";
             $parms = array(
                 ':flag' => $this->_flag,
                 ':key' => Aes::de($value),
                 ':idTipoConcepto' => '',
                 ':descripcion' => '',
                 ':importe' => '',
-                ':estado' => '',
                 ':usuario' => $this->_usuario
             );
             $this->execute($query,$parms);

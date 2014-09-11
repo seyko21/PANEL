@@ -85,12 +85,11 @@ class tipoConceptoModel extends Model{
     }
     
     public function mantenimientoTipoConcepto(){
-        $query = "call sp_configTipoConceptoMantenimiento(:flag,:key,:descripcion,:estado,:usuario);";
+        $query = "call sp_configTipoConceptoMantenimiento(:flag,:key,:descripcion,:usuario);";
         $parms = array(
             ':flag' => $this->_flag,
             ':key' => $this->_idTipoConcepto,
-            ':descripcion' => $this->_descripcion,
-            ':estado' => ($this->_estado == 'A')?'A':'I',
+            ':descripcion' => $this->_descripcion,            
             ':usuario' => $this->_usuario
         );
         $data = $this->queryOne($query,$parms);
@@ -99,12 +98,11 @@ class tipoConceptoModel extends Model{
     
     public function mantenimientoTipoConceptoAll(){
         foreach ($this->_chkdel as $value) {
-            $query = "call sp_configTipoConceptoMantenimiento(:flag,:key,:descripcion,:estado,:usuario);";
+            $query = "call sp_configTipoConceptoMantenimiento(:flag,:key,:descripcion,:usuario);";
             $parms = array(
                 ':flag' => $this->_flag,
                 ':key' => Aes::de($value),
-                ':descripcion' => '',
-                ':estado' => '',
+                ':descripcion' => '',                
                 ':usuario' => $this->_usuario
             );
             $this->execute($query,$parms);

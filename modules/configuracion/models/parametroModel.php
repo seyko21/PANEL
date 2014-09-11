@@ -70,8 +70,7 @@ class parametroModel extends Model{
             ':sSearch' => $this->_sSearch,
         );
         $data = $this->queryAll($query,$parms);
-        return $data; 
-       
+        return $data;        
     }
     
      public function getParametro(){
@@ -84,14 +83,13 @@ class parametroModel extends Model{
     }
     
     public function mantenimientoParametro(){
-        $query = "call sp_configParametroMantenimiento(:flag,:key,:nombre,:valor,:alias,:estado,:usuario);";
+        $query = "call sp_configParametroMantenimiento(:flag,:key,:nombre,:valor,:alias,:usuario);";
         $parms = array(
             ':flag' => $this->_flag,
             ':key' => $this->_idParametro,
             ':nombre' => $this->_nombre,
             ':valor' => $this->_valor,
             ':alias' => $this->_alias,
-            ':estado' => ($this->_estado == 'A')?'A':'I',
             ':usuario' => $this->_usuario
         );
         $data = $this->queryOne($query,$parms);  
@@ -100,14 +98,13 @@ class parametroModel extends Model{
     
     public function mantenimientoParametroAll(){        
         foreach ($this->_chkdel as $value) {
-            $query = "call sp_configParametroMantenimiento(:flag,:key,:nombre,:valor,:alias,:estado,:usuario);";
+            $query = "call sp_configParametroMantenimiento(:flag,:key,:nombre,:valor,:alias,:usuario);";
             $parms = array(
                 ':flag' => $this->_flag,
                 ':key' => Aes::de($value),
                 ':nombre' => '',
                 ':valor' => '', 
                 ':alias' => '',
-                ':estado' => '',
                 ':usuario' => $this->_usuario
             );
             $this->execute($query,$parms);
