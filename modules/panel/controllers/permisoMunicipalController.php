@@ -19,7 +19,7 @@ class permisoMunicipalController extends Controller{
     
     public function getGridFichaTecnica(){              
       $crearOpcion = Session::getPermiso('FITECCO');    
-      $consultar = Session::getPermiso('FITECCC'); 
+      $consultar = Session::getPermiso('FITECVP'); 
        $sEcho          =   $this->post('sEcho');
         
         $rResult = Obj::run()->permisoMunicipalModel->getGridFichaTecnica();

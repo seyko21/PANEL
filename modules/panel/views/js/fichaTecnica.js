@@ -34,7 +34,7 @@ var fichaTecnica_ = function(){
                 fichaTecnica.getGridFichaTecnica();
                 setTimeout(function(){         
                     $("#"+diccionario.tabs.T102+"btnProducto1").click();                                    
-                }, 1000);     
+                }, 2000);     
             }
         });
     };
@@ -98,7 +98,7 @@ var fichaTecnica_ = function(){
             fnServerParams: function(aoData) {
                 aoData.push({"name": "_idProducto", "value": _private.idProducto});                
             },
-            fnDrawCallback: function() {                
+            fnDrawCallback: function() {       
                 /*para hacer evento invisible*/
                 simpleScript.removeAttr.click({
                     container: '#widget_'+diccionario.tabs.T102+'Caratula', //widget del datagrid

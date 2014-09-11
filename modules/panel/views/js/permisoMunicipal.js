@@ -41,7 +41,7 @@ var permisoMunicipal_ = function(){
                 permisoMunicipal.getGridFichaTecnica();
                 setTimeout(function(){            
                     $("#"+diccionario.tabs.PERMU+"btnProducto1").click();
-                }, 1000);     
+                }, 2000);     
                 
             }
         });
@@ -104,7 +104,7 @@ var permisoMunicipal_ = function(){
             fnServerParams: function(aoData){
                 aoData.push({"name": "_idProducto", "value": _private.idProducto});                
             },
-            fnDrawCallback: function() {                
+            fnDrawCallback: function() {        
                 /*para hacer evento invisible*/
                 simpleScript.removeAttr.click({
                     container: '#widget_'+diccionario.tabs.PERMU+'pm', //widget del datagrid
