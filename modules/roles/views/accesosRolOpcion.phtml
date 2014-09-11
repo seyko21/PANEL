@@ -19,8 +19,13 @@ $dataAcciones = configurarRolesController::getAcciones($this->_rolOpcion);
 }
 </style>
 <div id="acc_<?php echo AesCtr::de($this->_rolOpcion); ?>" class="accionesOpcion">
-    <!--INICIO ACCIONES-->
-    <ul id="lista1<?php echo AesCtr::de($this->_rolOpcion); ?>" class="si-access">
+    <div>
+        <label style="color: #fff;padding: 2px; margin-bottom: 0px;font-weight: bold;margin-left:8px" class="pull-left label label-danger">Sin asignar</label>
+        <label style="color: #fff;padding: 2px;margin-bottom: 0px;font-weight: bold;margin-right: 5px" class="pull-right label label-success">Asignados</label>
+    </div>
+    <div class="clearfix"></div>
+    <!--INICIO ACCIONES-->    
+    <ul id="lista1<?php echo AesCtr::de($this->_rolOpcion); ?>" class="si-access">        
         <?php foreach ($dataAcciones as $acc): ?>
         <?php if($acc['selected']):?>
             <li class="move-cursor" data-rolOpcion="<?php echo $this->_rolOpcion; ?>" data-accion="<?php echo AesCtr::en($acc['id_acciones']); ?>"><span><?php echo $acc['accion']; ?></span></li> 
