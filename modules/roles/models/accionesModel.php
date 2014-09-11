@@ -43,7 +43,7 @@ class accionesModel extends Model{
     }
     
     public function getAcciones(){
-        $aColumns       =   array( 'id_acciones','accion','alias' ); //para la ordenacion y pintado en html
+        $aColumns       =   array( 'id_acciones','accion','','alias' ); //para la ordenacion y pintado en html
         /*
 	 * Ordenando, se verifica por que columna se ordenara
 	 */
