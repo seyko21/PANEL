@@ -89,12 +89,11 @@ class tipoPanelModel extends Model{
     }
         
     public function mantenimientoTipoPanel(){
-        $query = "call sp_catalogoTipoPanelMantenimiento(:flag,:key,:descripcion,:estado,:usuario);";
+        $query = "call sp_catalogoTipoPanelMantenimiento(:flag,:key,:descripcion,:usuario);";
         $parms = array(
             ':flag' => $this->_flag,
             ':key' => $this->_idTipoPanel,
             ':descripcion' => $this->_descripcion,            
-            ':estado' => ($this->_estado == 'A')?'A':'I',
             ':usuario' => $this->_usuario
         );
         $data = $this->queryOne($query,$parms);        
@@ -103,12 +102,11 @@ class tipoPanelModel extends Model{
     
     public function mantenimientoTipoPanelAll(){        
         foreach ($this->_chkdel as $value) {
-            $query = "call sp_catalogoTipoPanelMantenimiento(:flag,:key,:descripcion,:estado,:usuario);";
+            $query = "call sp_catalogoTipoPanelMantenimiento(:flag,:key,:descripcion,:usuario);";
             $parms = array(
                 ':flag' => $this->_flag,
                 ':key' => Aes::de($value),
                 ':descripcion' => '',                        
-                ':estado' => '',
                 ':usuario' => $this->_usuario
             );
             $this->execute($query,$parms);

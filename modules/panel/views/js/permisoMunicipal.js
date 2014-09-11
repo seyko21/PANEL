@@ -157,8 +157,8 @@ var permisoMunicipal_ = function(){
     this.publico.postNewPermisoMunicipal = function(){
        var fi;
        var ff; 
-       fi = $('#'+diccionario.tabs.PERMU+'txt_fi').val();
-       ff = $('#'+diccionario.tabs.PERMU+'txt_ff').val();       
+       fi = new Date($('#'+diccionario.tabs.PERMU+'txt_fi').val());
+       ff = new Date($('#'+diccionario.tabs.PERMU+'txt_ff').val());      
        if( fi >= ff ){
            simpleScript.notify.warning({
                   content: 'La fecha Inicio no puede ser mayor que la fecha final.'      
@@ -197,8 +197,9 @@ var permisoMunicipal_ = function(){
     this.publico.postEditarPermisoMunicipal = function(){    
        var fi;
        var ff; 
-       fi = $('#'+diccionario.tabs.PERMU+'txt_fi').val();
-       ff = $('#'+diccionario.tabs.PERMU+'txt_ff').val();       
+       fi = new Date($('#'+diccionario.tabs.PERMU+'txt_fi').val());
+       ff = new Date($('#'+diccionario.tabs.PERMU+'txt_ff').val());      
+       
        if( fi >= ff ){
            simpleScript.notify.warning({
                   content: 'La fecha Inicio no puede ser mayor que la fecha final.'      
@@ -207,7 +208,7 @@ var permisoMunicipal_ = function(){
        }
         simpleAjax.send({
             flag: 2,
-            element: '#'+diccionario.tabs.PERMU+'btnGrPermisoMunicipal',
+            element: '#'+diccionario.tabs.PERMU+'btnAPermisoMunicipal',
             root: _private.config.modulo + 'postEditarPermisoMunicipal',
             form: '#'+diccionario.tabs.PERMU+'formPermisoMunicipal',
             data: '&_idPermisoMuni='+_private.idPermisoMunicipal+'&_idProducto='+_private.idProducto,

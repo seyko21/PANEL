@@ -18,8 +18,8 @@ class permisoMunicipalController extends Controller{
     }
     
     public function getGridFichaTecnica(){              
-      $crearOpcion = Session::getPermiso('FITECCO');    
-      $consultar = Session::getPermiso('FITECVP'); 
+      $crearOpcion = Session::getPermiso('PERMUCO');    
+      $consultar = Session::getPermiso('PERMUVP'); 
        $sEcho          =   $this->post('sEcho');
         
         $rResult = Obj::run()->permisoMunicipalModel->getGridFichaTecnica();
@@ -82,8 +82,8 @@ class permisoMunicipalController extends Controller{
     }
     
 public function getGridPermisoMunicipal(){              
-       $editar = Session::getPermiso('FITECED');
-       $eliminar = Session::getPermiso('FITECDE');   
+       $editar = Session::getPermiso('PERMUED');
+       $eliminar = Session::getPermiso('PERMUDE');   
        
        $sEcho          =   $this->post('sEcho');
         

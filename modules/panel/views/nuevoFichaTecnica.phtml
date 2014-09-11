@@ -6,6 +6,7 @@
  * Descripcion : 
  */
 $grabar = Session::getPermiso('FITECGR');
+$nuevo = Session::getPermiso('TIPANEW');
 ?>
 <form id="<?php echo T102; ?>formFichaTecnica" name="<?php echo T102; ?>formFichaTecnica" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">
@@ -119,10 +120,10 @@ $grabar = Session::getPermiso('FITECGR');
                                         ?><i></i>
                                     </label>
                                 </div>
-                                <?php if ($grabar['permiso']): ?>
-                                <button id="<?php echo T102; ?>btnNew" type="button" onclick="tipoPanel.getNuevoTipoPanel(this,'#<?php echo T102; ?>lst_tipopanel');" class="btn txt-color-white bg-color-blueDark" title="<?php echo BTN_NUEVO; ?>">
-                                        <i class="fa fa-file-o pd8"></i>
-                                    </button>
+                                <?php if ($nuevo['permiso']): ?>
+                                <button id="<?php echo T102; ?>btnNew" type="button" onclick="tipoPanel.getNuevoTipoPanel(this,'#<?php echo T102; ?>lst_tipopanel');" class="<?php echo $nuevo['theme'];?>" title="<?php echo $nuevo['accion'];?>">
+                                        <i class="<?php echo $nuevo['icono'];?> pd8"></i>
+                                </button>
                                 <?php endif; ?>
                             </div>
                         </section>                        
@@ -204,12 +205,12 @@ $grabar = Session::getPermiso('FITECGR');
             </div>
             <div class="modal-footer">
                 <?php if ($grabar['permiso']): ?>
-                    <button id="<?php echo T102; ?>btnGfitec" type="submit" class="btn txt-color-white bg-color-blueDark">
-                        <i class="fa fa-save"></i> <?php echo $grabar['accion']; ?>
+                    <button id="<?php echo T102; ?>btnGfitec" type="submit" class="<?php echo $grabar['theme'];?>">
+                        <i class="<?php echo $grabar['icono'];?>"></i> <?php echo $grabar['accion']; ?>
                     </button>
                 <?php endif; ?>
-                <button type="button" class="btn btn-default xClose">
-                    <i class="fa fa-ban"></i> <?php echo BTN_CLOSE; ?>
+                <button type="button" class="<?php echo THEME_CLOSE; ?>">
+                    <i class="<?php echo ICON_CLOSE; ?>"></i> <?php echo BTN_CLOSE; ?> 
                 </button>
             </div>
         </div><!-- /.modal-content -->

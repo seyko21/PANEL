@@ -122,7 +122,7 @@ var tipoPanel_ = function(){
                             }
                             /*se verifica si existe tabb para recargar grid*/
                             if($('#'+diccionario.tabs.T101+'_CONTAINER').length > 0){
-                               tipoPanel.getGridTipoPanel();
+                              tipoPanel.getGridTipoPanel();
                             }
                                                         
                         }
@@ -140,7 +140,7 @@ var tipoPanel_ = function(){
         
         simpleAjax.send({
             flag: 2,
-            element: '#'+diccionario.tabs.T101+'btnGtipa',
+            element: '#'+diccionario.tabs.T101+'btnAtipa',
             root: _private.config.modulo + 'postEditarTipoPanel',
             form: '#'+diccionario.tabs.T101+'formTipoPanel',
             data: '&_idTipoPanel='+_private.idTipoPanel,
