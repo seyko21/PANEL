@@ -476,6 +476,16 @@ var simpleScript_ = function(){
         $(g+'_wrapper').find('.dataTables_paginate').find('ul').find('.active').click();
     };
     
+    /*recarga grid despues de una accion eliminar*/
+    this.public.reloadGridDelete = function(g){
+        if($(g).find('tbody').find('tr').length > 1){
+            $(g+'_wrapper').find('.dataTables_paginate').find('ul').find('.active').click();
+        }else{
+            $(g+'_wrapper').find('.dataTables_paginate').find('ul').find('.active').prev().click();
+        }
+        
+    };
+    
     /*cambia la busqueda sencible por el enter*/
     this.public.enterSearch = function(g,oTable){
         $(g+'_filter').find('input').unbind();

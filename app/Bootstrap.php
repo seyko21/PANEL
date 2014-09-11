@@ -32,7 +32,12 @@ class Bootstrap {
                 call_user_func(array(Obj::run()->$controller, $metodo));
             }
         } else {
-            throw new Exception('Error de Controlador: <b>'.$rutaControlador.'</b> no encontrado.');
+            /*error de codumento no encontrado*/
+            if($peticion->getControlador() == 'files'){
+                header('location:' . BASE_URL.'index/index/errorPage/');
+            }else{
+                throw new Exception('Error de Controlador: <b>'.$rutaControlador.'</b> no encontrado.');
+            }
         }
     }
 

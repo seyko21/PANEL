@@ -86,9 +86,13 @@ var simpleAjax_ = function(){
                 /*validar error del SP*/
                 if(typeData === 'json'){
                     /*no es un array, servidor devuelve cadena, y el unico q devuelve cadena es el ERROR del SP*/
-                    if(data instanceof Object === false){
+                    if(data instanceof Object === false || data.error !== undefined){
+                        var msn = data;
+                        if(data.error !== undefined){
+                            msn = data.error;
+                        }
                         simpleScript.notify.error({
-                            content: data
+                            content: msn
                         });
                     }
                 }

@@ -60,6 +60,10 @@ class indexController extends Controller{
         Obj::run()->View->render('lock');
     }
     
+    public function errorPage(){
+        Obj::run()->View->render('errorPage',false);
+    }
+    
 }
 
 ?>
