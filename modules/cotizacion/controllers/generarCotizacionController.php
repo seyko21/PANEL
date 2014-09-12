@@ -58,23 +58,23 @@ class generarCotizacionController extends Controller{
                 $sOutput .= '"<div class=\"btn-group\">';
                 
                 if($exportarpdf['permiso']){
-                    $sOutput .= '<button type=\"button\" class=\"btn txt-color-white bg-color-blueDark btn-xs\" title=\"'.$exportarpdf['accion'].'\" onclick=\"generarCotizacion.postPDF(this,\''.$encryptReg.'\')\">';
-                    $sOutput .= '    <i class=\"fa fa-file-pdf-o fa-lg\"></i>';
+                    $sOutput .= '<button type=\"button\" class=\"'.$exportarpdf['theme'].'\" title=\"'.$exportarpdf['accion'].'\" onclick=\"generarCotizacion.postPDF(this,\''.$encryptReg.'\')\">';
+                    $sOutput .= '    <i class=\"'.$exportarpdf['icono'].'\"></i>';
                     $sOutput .= '</button>';
                 }
                 if($exportarexcel['permiso']){
-                    $sOutput .= '<button type=\"button\" class=\"btn btn-success btn-xs\" title=\"'.$exportarexcel['accion'].'\" onclick=\"generarCotizacion.postExcel(this,\''.$encryptReg.'\')\">';
-                    $sOutput .= '    <i class=\"fa fa-file-excel-o fa-lg\"></i>';
+                    $sOutput .= '<button type=\"button\" class=\"'.$exportarexcel['theme'].'\" title=\"'.$exportarexcel['accion'].'\" onclick=\"generarCotizacion.postExcel(this,\''.$encryptReg.'\')\">';
+                    $sOutput .= '    <i class=\"'.$exportarexcel['icono'].'\"></i>';
                     $sOutput .= '</button>';
                 }
                 if($clonar['permiso'] && $aRow['estado'] != 'A'){
-                    $sOutput .= '<button type=\"button\" class=\"btn bg-color-purple txt-color-white btn-xs\" title=\"'.$clonar['accion'].'\" onclick=\"generarCotizacion.getClonar(\''.$aRow['cotizacion_numero'].'\',\''.$encryptReg.'\')\">';
-                    $sOutput .= '    <i class=\"fa fa-copy fa-lg\"></i>';
+                    $sOutput .= '<button type=\"button\" class=\"'.$clonar['theme'].'\" title=\"'.$clonar['accion'].'\" onclick=\"generarCotizacion.getClonar(\''.$aRow['cotizacion_numero'].'\',\''.$encryptReg.'\')\">';
+                    $sOutput .= '    <i class=\"'.$clonar['icono'].'\"></i>';
                     $sOutput .= '</button>';
                 }
                 if($enviaremail['permiso'] && $aRow['estado'] != 'A'){
-                    $sOutput .= '<button type=\"button\" class=\"btn btn-primary btn-xs\" title=\"'.$enviaremail['accion'].'\" onclick=\"generarCotizacion.postEmail(this,\''.$encryptReg.'\')\">';
-                    $sOutput .= '    <i class=\"fa fa-envelope-o fa-lg\"></i>';
+                    $sOutput .= '<button type=\"button\" class=\"'.$enviaremail['theme'].'\" title=\"'.$enviaremail['accion'].'\" onclick=\"generarCotizacion.postEmail(this,\''.$encryptReg.'\')\">';
+                    $sOutput .= '    <i class=\"'.$enviaremail['icono'].'\"></i>';
                     $sOutput .= '</button>';
                 }
                 
