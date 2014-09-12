@@ -1,5 +1,5 @@
 <?php
-$editar = Session::getPermiso('REGCLED');
+$editar = Session::getPermiso('REGCLACT');
 
 $data = clienteController::findCliente();
 ?>
@@ -222,12 +222,12 @@ $data = clienteController::findCliente();
             </div>
             <div class="modal-footer">
                 <?php if($editar['permiso']):?>
-                <button id="<?php echo REGCL; ?>btnEcli" type="submit" class="btn txt-color-white bg-color-blueDark">
-                    <i class="fa fa-save"></i> <?php echo $editar['accion']; ?>
+                <button id="<?php echo REGCL; ?>btnEcli" type="submit" class="<?php echo $editar['icono'];?>">
+                    <i class="<?php echo $editar['icono'];?>"></i> <?php echo $editar['accion']; ?>
                 </button>
                 <?php endif; ?>
-                <button type="button" class="btn btn-default xClose">
-                    <i class="fa fa-ban"></i> <?php echo BTN_CLOSE; ?>
+               <button type="button" class="<?php echo THEME_CLOSE; ?>">
+                    <i class="<?php echo ICON_CLOSE; ?>"></i> <?php echo BTN_CLOSE; ?> 
                 </button>
             </div>
         </div><!-- /.modal-content -->

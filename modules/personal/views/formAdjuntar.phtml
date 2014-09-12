@@ -1,4 +1,5 @@
 <?php
+$grabar = Session::getPermiso('REGVEGR');
 $doc = $data = Obj::run()->registrarVendedorModel->getAdjuntado();
 ?>
 <div id="<?php echo T7; ?>formAdjuntar" name="<?php echo T7; ?>formAdjuntar" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -30,7 +31,7 @@ $doc = $data = Obj::run()->registrarVendedorModel->getAdjuntado();
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 
-    <!-- si no riene permiso se anula submit desde cualquier input -->
+    <!-- si no tiene permiso se anula submit desde cualquier input -->
     <?php if (!$grabar['permiso']): ?>
         <script>
             simpleScript.noSubmit('#<?php echo T7; ?>formAdjuntar');

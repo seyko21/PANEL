@@ -7,7 +7,7 @@
 */
 
 /*prefijo: TAB_SOCIO debe ser alias en tabla men_menuprincipal*/
-$editar = Session::getPermiso('REGSOED');
+$editar = Session::getPermiso('REGSOACT');
 $data = socioController::findSocio();
 ?>
 <form id="<?php echo TAB_SOCIO; ?>formEditSocio" name="<?php echo TAB_SOCIO; ?>formEditSocio" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -250,12 +250,12 @@ $data = socioController::findSocio();
             </div>
             <div class="modal-footer">
                 <?php if($editar['permiso']):?>
-                <button id="<?php echo TAB_SOCIO; ?>btnGsocio" type="submit" class="btn txt-color-white bg-color-blueDark">
-                    <i class="fa fa-save"></i> <?php echo $editar['accion']; ?>
+                <button id="<?php echo TAB_SOCIO; ?>btnGsocio" type="submit" class="<?php echo $editar['theme'];?>">
+                    <i class="<?php echo $editar['icono'];?>"></i> <?php echo $editar['accion']; ?>
                 </button>
                 <?php endif; ?>
-                <button type="button" class="btn btn-default xClose">
-                    <i class="fa fa-ban"></i> <?php echo BTN_CLOSE; ?>
+                <button type="button" class="<?php echo THEME_CLOSE; ?>">
+                    <i class="<?php echo ICON_CLOSE; ?>"></i> <?php echo BTN_CLOSE; ?> 
                 </button>
             </div>
         </div><!-- /.modal-content -->
@@ -313,10 +313,7 @@ $data = socioController::findSocio();
                 <?php echo TAB_SOCIO; ?>txt_email : {
                         required : true,
                         email: true
-                },
-                <?php echo TAB_SOCIO; ?>txt_telefonos : {
-                        regular2: true
-                }       
+                }    
         },
 
         // Do not change code below

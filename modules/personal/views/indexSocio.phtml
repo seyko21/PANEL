@@ -6,8 +6,8 @@
 * Descripcion : indexSocio.phtml
 * ---------------------------------------
 */
-$grabar   = Session::getPermiso("REGSOGR");
-$eliminar = Session::getPermiso("REGSODE");
+$nuevo   = Session::getPermiso("REGSONEW");
+$eliminar = Session::getPermiso("REGSODEL");
 echo Functions::widgetOpen(array(
         "id"=>TAB_SOCIO,
         "title"=>LABEL_A80
@@ -19,15 +19,15 @@ echo Functions::widgetOpen(array(
         <div class="dt-top-row">
             <div class="DTTT btn-group">
                 <!-- verificar permisos -->
-                <?php if($grabar["permiso"]): ?>
-                <button id="<?php echo TAB_SOCIO; ?>btnNewSocio" type="button" onclick="socio.getFormNewSocio(this);" class="btn txt-color-white bg-color-blueDark">
-                    <i class="fa fa-file-o"></i> <?php echo BTN_NUEVO; ?>
+                <?php if($nuevo["permiso"]): ?>
+                <button id="<?php echo TAB_SOCIO; ?>btnNewSocio" type="button" onclick="socio.getFormNewSocio(this);" class="<?php echo $nuevo['theme'];?>">
+                    <i class="<?php echo $nuevo['icono'];?>"></i> <?php echo $nuevo['accion']; ?>
                 </button>
                 <?php endif; ?>
                 <!-- verificar permisos -->
                 <?php if($eliminar["permiso"]): ?>
-                <button id="<?php echo TAB_SOCIO; ?>btnDeleteSocio" type="button" onclick="socio.postDeleteSocioAll(this);" class="btn txt-color-white bg-color-blueDark">
-                    <i class="fa fa-trash-o"></i> <?php echo BTN_DELETE; ?>
+                <button id="<?php echo TAB_SOCIO; ?>btnDeleteSocio" type="button" onclick="socio.postDeleteSocioAll(this);" class="<?php echo $eliminar['theme'];?>">
+                    <i class="<?php echo $eliminar['icono'];?>"></i> <?php echo $eliminar['accion']; ?>
                 </button>
                 <?php endif; ?>
             </div>

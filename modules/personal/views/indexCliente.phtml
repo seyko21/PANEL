@@ -6,8 +6,8 @@
 * Descripcion : indexCliente.phtml
 * ---------------------------------------
 */
-$grabar   = Session::getPermiso("REGCLGR");
-$eliminar = Session::getPermiso("REGCLDE");
+$nuevo   = Session::getPermiso("REGCLNEW");
+$eliminar = Session::getPermiso("REGCLDEL");
 echo Functions::widgetOpen(array(
         "id"=>REGCL,
         "title"=>"Cliente"
@@ -19,15 +19,15 @@ echo Functions::widgetOpen(array(
         <div class="dt-top-row pull-left" style="width: 49%">
             <div class="DTTT btn-group">
                 <!-- verificar permisos -->
-                <?php if($grabar["permiso"]): ?>
-                <button id="<?php echo REGCL; ?>btnNewCliente" type="button" onclick="cliente.getFormNewCliente(this);" class="btn txt-color-white bg-color-blueDark">
-                    <i class="fa fa-file-o"></i> <?php echo BTN_NUEVO; ?>
+                <?php if($nuevo["permiso"]): ?>
+                <button id="<?php echo REGCL; ?>btnNewCliente" type="button" onclick="cliente.getFormNewCliente(this);" class="<?php echo $nuevo['theme'];?>">
+                    <i class="<?php echo $nuevo['icono'];?>"></i> <?php echo $nuevo['accion'];?>
                 </button>
                 <?php endif; ?>
                 <!-- verificar permisos -->
                 <?php if($eliminar["permiso"]): ?>
-                <button id="<?php echo REGCL; ?>btnDeleteCliente" type="button" onclick="cliente.postDeleteClienteAll(this);" class="btn txt-color-white bg-color-blueDark">
-                    <i class="fa fa-trash-o"></i> <?php echo BTN_DELETE; ?>
+                <button id="<?php echo REGCL; ?>btnDeleteCliente" type="button" onclick="cliente.postDeleteClienteAll(this);" class="<?php echo $eliminar['theme'];?>">
+                    <i class="<?php echo $eliminar['icono'];?>"></i> <?php echo $eliminar['accion'];?>
                 </button>
                 <?php endif; ?>
             </div>
@@ -36,15 +36,15 @@ echo Functions::widgetOpen(array(
             <button type="button" class="btn btn-warning" style="position:absolute;margin-top:-38px"><?php echo LABEL_RC6; ?> <span id="<?php echo REGCL; ?>cliente-cont"></span></button>
             <div class="DTTT btn-group">
                 <!-- verificar permisos -->
-                <?php if($grabar["permiso"]): ?>
-                <button id="<?php echo REGCL; ?>btnNewRe" type="button" onclick="cliente.getFormNewRepresentante(this);" class="btn txt-color-white bg-color-blueDark">
-                    <i class="fa fa-file-o"></i> <?php echo BTN_NUEVO; ?>
+                <?php if($nuevo["permiso"]): ?>
+                <button id="<?php echo REGCL; ?>btnNewRe" type="button" onclick="cliente.getFormNewRepresentante(this);" class="<?php echo $nuevo['theme'];?>">
+                    <i class="<?php echo $nuevo['icono'];?>"></i> <?php echo $nuevo['accion'];?>
                 </button>
                 <?php endif; ?>
                 <!-- verificar permisos -->
                 <?php if($eliminar["permiso"]): ?>
-                <button id="<?php echo REGCL; ?>btnDeleteRe" type="button" onclick="cliente.postDeleteRepresentanteAll(this);" class="btn txt-color-white bg-color-blueDark">
-                    <i class="fa fa-trash-o"></i> <?php echo BTN_DELETE; ?>
+                <button id="<?php echo REGCL; ?>btnDeleteRe" type="button" onclick="cliente.postDeleteRepresentanteAll(this);" class="<?php echo $eliminar['theme'];?>">
+                    <i class="<?php echo $eliminar['icono'];?>"></i> <?php echo $eliminar['accion'];?>
                 </button>
                 <?php endif; ?>
             </div>
