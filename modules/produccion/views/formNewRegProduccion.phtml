@@ -23,12 +23,12 @@ $grabar = Session::getPermiso("REPROGR");
             </div>
             <div class="modal-footer">
                 <?php if($grabar["permiso"]):?>
-                <button id="<?php echo REPRO; ?>btnGrRegProduccion" type="submit" class="btn txt-color-white bg-color-blueDark">
-                    <i class="fa fa-save"></i> <?php echo $grabar["accion"]; ?>
+                <button id="<?php echo REPRO; ?>btnGrRegProduccion" type="submit" class="<?php echo $nuevo['theme'];?>">
+                    <i class="<?php echo $nuevo['icono'];?>"></i> <?php echo $grabar["accion"]; ?>
                 </button>
                 <?php endif; ?>
-                <button type="button" class="btn btn-default xClose">
-                    <i class="fa fa-ban"></i> Cerrar
+                 <button type="button" class="<?php echo THEME_CLOSE; ?>">
+                    <i class="<?php echo ICON_CLOSE; ?>"></i> <?php echo BTN_CLOSE; ?> 
                 </button>
             </div>
         </div><!-- /.modal-content -->

@@ -6,8 +6,8 @@
 * Descripcion : indexRegProduccion.phtml
 * ---------------------------------------
 */
-$grabar   = Session::getPermiso("REPROGR");
-$eliminar = Session::getPermiso("REPRODE");
+$nuevo   = Session::getPermiso("REPRONEW");
+$eliminar = Session::getPermiso("REPRODEL");
 echo Functions::widgetOpen(array(
         "id"=>REPRO,
         "title"=>LABEL_A130
@@ -19,15 +19,15 @@ echo Functions::widgetOpen(array(
         <div class="dt-top-row">
             <div class="DTTT btn-group">
                 <!-- verificar permisos -->
-                <?php if($grabar["permiso"]): ?>
-                <button id="<?php echo REPRO; ?>btnNewRegProduccion" type="button" onclick="regProduccion.getFormNewRegProduccion(this);" class="btn txt-color-white bg-color-blueDark">
-                    <i class="fa fa-file-o"></i> <?php echo BTN_NUEVO; ?>
+                <?php if($nuevo["permiso"]): ?>
+                <button id="<?php echo REPRO; ?>btnNewRegProduccion" type="button" onclick="regProduccion.getFormNewRegProduccion(this);" class="<?php echo $nuevo['theme'];?>">
+                    <i class="<?php echo $nuevo['icono'];?>"></i> <?php echo $nuevo['accion'];?>
                 </button>
                 <?php endif; ?>
                 <!-- verificar permisos -->
                 <?php if($eliminar["permiso"]): ?>
-                <button id="<?php echo REPRO; ?>btnDeleteRegProduccion" type="button" onclick="regProduccion.postDeleteRegProduccionAll(this);" class="btn txt-color-white bg-color-blueDark">
-                    <i class="fa fa-trash-o"></i> <?php echo BTN_DELETE; ?>
+                <button id="<?php echo REPRO; ?>btnDeleteRegProduccion" type="button" onclick="regProduccion.postDeleteRegProduccionAll(this);" class="<?php echo $eliminar['theme'];?>">
+                    <i class="<?php echo $eliminar['icono'];?>"></i> <?php echo $eliminar['accion'];?>
                 </button>
                 <?php endif; ?>
             </div>

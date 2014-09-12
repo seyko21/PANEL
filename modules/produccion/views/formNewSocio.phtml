@@ -219,12 +219,12 @@ $grabar = Session::getPermiso("REGSOGR");
             </div>
             <div class="modal-footer">
                 <?php if($grabar['permiso']):?>
-                <button id="<?php echo REINV; ?>btnGsocio" type="submit" class="btn txt-color-white bg-color-blueDark">
-                    <i class="fa fa-save"></i> <?php echo $grabar['accion']; ?>
+                <button id="<?php echo REINV; ?>btnGsocio" type="submit" class="<?php echo $grabar['theme'];?>">
+                    <i class="<?php echo $grabar['icono'];?>"></i> <?php echo $grabar['accion']; ?>
                 </button>
                 <?php endif; ?>
-                <button type="button" class="btn btn-default xClose">
-                    <i class="fa fa-ban"></i> <?php echo BTN_CLOSE; ?>
+                <button type="button" class="<?php echo THEME_CLOSE; ?>">
+                    <i class="<?php echo ICON_CLOSE; ?>"></i> <?php echo BTN_CLOSE; ?> 
                 </button>
             </div>
         </div><!-- /.modal-content -->
@@ -282,10 +282,7 @@ $grabar = Session::getPermiso("REGSOGR");
                 <?php echo TAB_SOCIO; ?>txt_email : {
                         required : true,
                         email: true
-                },
-                <?php echo TAB_SOCIO; ?>txt_telefonos : {
-                        regular2: true
-                }       
+                }                  
         },
 
         // Do not change code below

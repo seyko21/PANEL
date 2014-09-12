@@ -6,8 +6,10 @@
 * Descripcion : indexRegInversion.phtml
 * ---------------------------------------
 */
-$grabar   = Session::getPermiso("REINVGR");
-$eliminar = Session::getPermiso("REINVDE");
+$nuevo   = Session::getPermiso("REGSONEW");
+$eliminar = Session::getPermiso("REGSODEL");
+$nuevo2   = Session::getPermiso("REINVNEW");
+$eliminar2 = Session::getPermiso("REINVDEL");
 echo Functions::widgetOpen(array(
         "id"=>REINV,
         "title"=>LABEL_A100
@@ -19,15 +21,15 @@ echo Functions::widgetOpen(array(
         <div class="dt-top-row pull-left" style="width: 49%">
             <div class="DTTT btn-group">
                 <!-- verificar permisos -->
-                <?php if($grabar["permiso"]): ?>
-                <button id="<?php echo REINV; ?>btnNewSocio" type="button" onclick="regInversion.getFormNewSocio(this);" class="btn txt-color-white bg-color-blueDark">
-                    <i class="fa fa-file-o"></i> <?php echo BTN_NUEVO; ?>
+                <?php if($nuevo["permiso"]): ?>
+                <button id="<?php echo REINV; ?>btnNewSocio" type="button" onclick="regInversion.getFormNewSocio(this);" class="<?php echo $nuevo['theme'];?>">
+                    <i class="<?php echo $nuevo['icono'];?>"></i> <?php echo $nuevo['accion'];?>
                 </button>
                 <?php endif; ?>
                 <!-- verificar permisos -->
                 <?php if($eliminar["permiso"]): ?>
-                <button id="<?php echo REINV; ?>btnDeleteSocio" type="button" onclick="regInversion.postDeleteSocioAll(this);" class="btn txt-color-white bg-color-blueDark">
-                    <i class="fa fa-trash-o"></i> <?php echo BTN_DELETE; ?>
+                <button id="<?php echo REINV; ?>btnDeleteSocio" type="button" onclick="regInversion.postDeleteSocioAll(this);" class="<?php echo $eliminar['theme'];?>">
+                    <i class="<?php echo $eliminar['icono'];?>"></i> <?php echo $eliminar['accion'];?>
                 </button>
                 <?php endif; ?>
             </div>
@@ -39,15 +41,15 @@ echo Functions::widgetOpen(array(
             </button>
             <div class="DTTT btn-group">
                 <!-- verificar permisos -->
-                <?php if($grabar["permiso"]): ?>
-                <button id="<?php echo REINV; ?>btnNewInv" type="button" onclick="regInversion.getFormNewRegInversion(this);" class="btn txt-color-white bg-color-blueDark">
-                    <i class="fa fa-file-o"></i> <?php echo BTN_NUEVO; ?>
+                <?php if($nuevo2["permiso"]): ?>
+                <button id="<?php echo REINV; ?>btnNewInv" type="button" onclick="regInversion.getFormNewRegInversion(this);" class="<?php echo $nuevo2['theme'];?>">
+                    <i class="<?php echo $nuevo2['icono'];?>"></i> <?php echo $nuevo2['accion'];?>
                 </button>
                 <?php endif; ?>
                 <!-- verificar permisos -->
-                <?php if($eliminar["permiso"]): ?>
-                <button id="<?php echo REINV; ?>btnDeleteInv" type="button" onclick="regInversion.postDeleteInversionAll(this);" class="btn txt-color-white bg-color-blueDark">
-                    <i class="fa fa-trash-o"></i> <?php echo BTN_DELETE; ?>
+                <?php if($eliminar2["permiso"]): ?>
+                <button id="<?php echo REINV; ?>btnDeleteInv" type="button" onclick="regInversion.postDeleteInversionAll(this);" class="<?php echo $eliminar2['theme'];?>">
+                    <i class="<?php echo $eliminar2['icono'];?>"></i> <?php echo $eliminar2['accion'];?>
                 </button>
                 <?php endif; ?>
             </div>
