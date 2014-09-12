@@ -6,7 +6,7 @@
  * Config.php
  * --------------------------------------
  */
-define('BASE_URL','http://localhost/PANEL/');#accede a las vistas delusuario
+define('BASE_URL','http://'.$_SERVER['HTTP_HOST'].'/PANEL/');#accede a las vistas delusuario
 define('DEFAULT_CONTROLLER','index');
 define('DEFAULT_LAYOUT','stardadmin');
 
@@ -25,7 +25,7 @@ define('DB_MOTOR','mysql');
 define('DB_HOST','localhost');
 define('DB_USER','root');
 define('DB_PASS','');
-define('DB_NAME','beholiac_sevend_v2');
+define('DB_NAME','beholiac_sevend');
 
 define('DB_PORT','3306');
 define('DB_CHARSET','utf8');
