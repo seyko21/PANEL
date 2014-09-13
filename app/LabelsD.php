@@ -57,6 +57,7 @@ define('LABEL_A39','Precio');
 define('LABEL_A39M','Ingrese el precio Unitario.');
 define('LABEL_A40','Iluminado');
 define('LABEL_A41','Subir Imagen');
+define('LABEL_A42','Adjuntar Imagen');
 /*----------------------Permiso Municipal----------------------*/
 define('LABEL_A50','Permiso Municipal de Panel');
 define('LABEL_A51','Registro de Permiso Municipal');

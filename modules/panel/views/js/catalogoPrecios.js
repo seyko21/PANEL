@@ -54,13 +54,14 @@ var catalogoPrecios_ = function(){
             iDisplayLength: 10,            
             aoColumns: [                
                 {sTitle: "Código", sWidth: "8%"},
-                {sTitle: "Ciudad", sWidth: "13%"},
-                {sTitle: "Ubicación", sWidth: "35%"},
-                {sTitle: "Elemento", sWidth: "12%"},
-                {sTitle: "Area m2", sWidth: "4%",  sClass: "center"},
-                {sTitle: "Precio", sWidth: "8%",  sClass: "right"},                
-                {sTitle: "Iluminado", sWidth: "5%",  sClass: "center"},
+                {sTitle: "Ciudad", sWidth: "10%"},
+                {sTitle: "Ubicación", sWidth: "25%"},
+                {sTitle: "Elemento", sWidth: "10%"},
+                {sTitle: "Area m2", sWidth: "3%",  sClass: "center"},
+                {sTitle: "Precio", sWidth: "5%",  sClass: "right"},                
+                {sTitle: "Iluminado", sWidth: "5%",  sClass: "center"},                
                 {sTitle: "Estado", sWidth: "5%",  sClass: "center"},
+                {sTitle: "Imagen", sWidth: "8%",  sClass: "center", bSortable: false},
                 {sTitle: "Acciones", sWidth: "10%", sClass: "center", bSortable: false}
             ],
             aaSorting: [[2, 'asc']],
@@ -70,7 +71,7 @@ var catalogoPrecios_ = function(){
                 aoData.push({"name": "_tipoPanel", "value": $("#"+diccionario.tabs.TAB_CATPRE+"lst_tipopanelsearch").val()});
             },
             fnDrawCallback: function() {
-                $('#'+diccionario.tabs.TAB_CATPRE+'gridCatalogoPrecio_filter').find('input').attr('placeholder','Buscar por Ciudad o Ubicación').css('width','350px');;                
+                $('#'+diccionario.tabs.TAB_CATPRE+'gridCatalogoPrecio_filter').find('input').attr('placeholder','Buscar por Código o Ciudad o Ubicación').css('width','350px');;                
                 /*para hacer evento invisible*/
                 simpleScript.removeAttr.click({
                     container: '#widget_'+diccionario.tabs.TAB_CATPRE, //widget del datagrid

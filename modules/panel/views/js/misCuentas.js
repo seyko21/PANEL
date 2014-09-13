@@ -55,12 +55,13 @@ var misCuentas_ = function(){
             aoColumns: [                
                 {sTitle: "Código", sWidth: "8%"},
                 {sTitle: "Ciudad", sWidth: "13%"},
-                {sTitle: "Ubicación", sWidth: "35%"},
+                {sTitle: "Ubicación", sWidth: "30%"},
                 {sTitle: "Elemento", sWidth: "12%"},
                 {sTitle: "Area m2", sWidth: "4%",  sClass: "center"},
                 {sTitle: "Precio", sWidth: "8%",  sClass: "right"},                
                 {sTitle: "Iluminado", sWidth: "5%",  sClass: "center"},
-                {sTitle: "Estado", sWidth: "5%",  sClass: "center"}                
+                {sTitle: "Estado", sWidth: "5%",  sClass: "center"},
+                {sTitle: "Imagen", sWidth: "8%",  sClass: "center", bSortable: false}
             ],
             aaSorting: [[2, 'asc']],
             sScrollY: "350px",
@@ -69,7 +70,7 @@ var misCuentas_ = function(){
                 aoData.push({"name": "_tipoPanel", "value": $("#"+diccionario.tabs.MISPA+"lst_tipopanelsearch").val()});
             },
             fnDrawCallback: function() {
-                $('#'+diccionario.tabs.MISPA+'gridMisCuentas_filter').find('input').attr('placeholder','Buscar por Ciudad o Ubicación').css('width','350px');;                
+                $('#'+diccionario.tabs.MISPA+'gridMisCuentas_filter').find('input').attr('placeholder','Buscar por Código o Ciudad o Ubicación').css('width','350px');;                
                 /*para hacer evento invisible*/
                 simpleScript.removeAttr.click({
                     container: '#widget_'+diccionario.tabs.MISPA, //widget del datagrid

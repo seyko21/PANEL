@@ -22,7 +22,7 @@ class fichaTecnicaModel extends Model{
     private $_googlelatitud;
     private $_googlelongitud;
     private $_observacion;
-    private $_idCaratula; 
+    public $_idCaratula; 
     private $_codigo;				
     private $_descripcion; 
     private $_precio;
@@ -301,7 +301,49 @@ class fichaTecnicaModel extends Model{
         );
         $data = $this->queryOne($query,$parms);            
         return $data;
-    }    
+    }   
+    
+    public function adjuntarImagen($img){
+        $query = "UPDATE lgk_caratula SET 
+                    `imagen` = :img
+                WHERE `id_caratula` = :id;";
+        $parms = array(
+            ':id' => $this->_idCaratula,
+            ':img' => $img
+        );
+        $this->execute($query,$parms);
+
+        $data = array('result'=>1);
+        return $data;
+    }
+    
+    public function getAdjuntado(){
+        $query = "SELECT 
+                    imagen, id_producto
+                FROM lgk_caratula WHERE id_caratula = :id;";
+        
+        $parms = array(
+            ':id'=>$this->_idCaratula
+        );
+        
+        $data = $this->queryOne($query,$parms);
+        return $data;
+    }
+    
+    public function deleteAdjuntar(){
+        $query = "UPDATE  lgk_caratula SET
+                    imagen = ''
+                WHERE id_caratula = :id;";
+        
+        $parms = array(
+            ':id'=>$this->_idCaratula
+        );
+        
+        $this->execute($query,$parms);
+        
+        $data = array('result'=>1);
+        return $data;
+    }        
     
     
     

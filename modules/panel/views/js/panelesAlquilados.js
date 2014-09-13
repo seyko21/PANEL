@@ -54,11 +54,12 @@ var panelesAlquilados_ = function(){
             aoColumns: [                
                 {sTitle: "Código", sWidth: "8%"},
                 {sTitle: "Ciudad", sWidth: "13%"},
-                {sTitle: "Ubicación", sWidth: "30%"},
-                {sTitle: "Elemento", sWidth: "10%"},
+                {sTitle: "Ubicación", sWidth: "27%"},
+                {sTitle: "Elemento", sWidth: "12%"},
                 {sTitle: "Area m2", sWidth: "4%",  sClass: "center"},                
                 {sTitle: "Iluminado", sWidth: "5%",  sClass: "center"},
                 {sTitle: "Estado", sWidth: "5%",  sClass: "center"},
+                {sTitle: "Imagen", sWidth: "8%",  sClass: "center", bSortable: false},
                 {sTitle: "Acciones", sWidth: "8%", sClass: "center", bSortable: false}
             ],
             aaSorting: [[2, 'asc']],
@@ -68,7 +69,7 @@ var panelesAlquilados_ = function(){
                 aoData.push({"name": "_tipoPanel", "value": $("#"+diccionario.tabs.PAAL+"lst_tipopanelsearch").val()});
             },
             fnDrawCallback: function() {
-                $('#'+diccionario.tabs.PAAL+'gridPanelesAlquilados_filter').find('input').attr('placeholder','Buscar por Ciudad o Ubicación').css('width','350px');;                
+                $('#'+diccionario.tabs.PAAL+'gridPanelesAlquilados_filter').find('input').attr('placeholder','Buscar por Código o Ciudad o Ubicación').css('width','350px');;                
                 /*para hacer evento invisible*/
                 simpleScript.removeAttr.click({
                     container: '#widget_'+diccionario.tabs.PAAL, //widget del datagrid

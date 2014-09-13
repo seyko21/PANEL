@@ -45,11 +45,16 @@ class panelesAlquiladosController extends Controller{
                     $iluminado = '<span class=\"label label-danger\">NO</span>';
                 }
                 
+                if($aRow['imagen'] != '' or $aRow['imagen'] != null){
+                    $imagen = '<a href=\"'.BASE_URL.'public/img/uploads/'.$aRow['imagen'].'\" target=\"_blank\" ><img border=\"0\" src=\"'.BASE_URL.'public/img/uploads/'.$aRow['imagen'].'\" style=\"width:70px; height:40px;\" /></a>';
+                }else{
+                    $imagen = '<img src=\"'.BASE_URL.'public/img/sin_foto.jpg\" style=\"width:70px; height:40px;\" />';
+                }
                 /*antes de enviar id se encrypta*/
                 $encryptReg = Aes::en($aRow['id_caratula']);
                                                                         
                 /*datos de manera manual*/
-                $sOutput .= '["'.$aRow['codigo'].'","'.$aRow['distrito'].'","'.$aRow['ubicacion'].'","'.$aRow['elemento'].'","'.$aRow['dimesion_area'].'","'.$iluminado.'","'.$estado.'", ';
+                $sOutput .= '["'.$aRow['codigo'].'","'.$aRow['distrito'].'","'.$aRow['ubicacion'].'","'.$aRow['elemento'].'","'.$aRow['dimesion_area'].'","'.$iluminado.'","'.$estado.'","'.$imagen.'", ';
                  
                  //Visualizar Detalle
                 $sOutput .= '"<div class=\"btn-group\">';   

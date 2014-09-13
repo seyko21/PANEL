@@ -30,6 +30,10 @@ class fichaTecnicaController extends Controller{
     public function getEditarCaratula(){ 
         Obj::run()->View->render('editarCaratula');
     }          
+    public function getFormAdjuntar() {    
+        Obj::run()->View->idCaratula = Formulario::getParam('_idCaratula');
+        Obj::run()->View->render('formAdjuntarImg');
+    }    
    public function getGridFichaTecnica(){
        $editar = Session::getPermiso('FITECED');
        $eliminar = Session::getPermiso('FITECDE');
@@ -116,7 +120,7 @@ class fichaTecnicaController extends Controller{
     public function getGridCaratula(){
        $editar = Session::getPermiso('FITECED');
        $eliminar = Session::getPermiso('FITECDE');
-        
+       $adjuntar = Session::getPermiso('FITECAJ'); 
         $sEcho          =   $this->post('sEcho');
         
         $rResult = Obj::run()->fichaTecnicaModel->getGridCaratula();
@@ -142,13 +146,18 @@ class fichaTecnicaController extends Controller{
                 }elseif($aRow['iluminado'] == 0){
                     $iluminado = '<span class=\"label label-danger\">NO</span>';
                 }
+                if($aRow['imagen'] != '' or $aRow['imagen'] != null){
+                    $imagen = '<a href=\"'.BASE_URL.'public/img/uploads/'.$aRow['imagen'].'\" target=\"_blank\" ><img border=\"0\" src=\"'.BASE_URL.'public/img/uploads/'.$aRow['imagen'].'\" style=\"width:70px; height:40px;\" /></a>';
+                }else{
+                    $imagen = '<img src=\"'.BASE_URL.'public/img/sin_foto.jpg\" style=\"width:70px; height:40px;\" />';
+                }
                 
                 /*antes de enviar id se encrypta*/
                 $encryptReg = Aes::en($aRow['id_caratula']);
                 $idProd = Aes::en($aRow['id_producto']);
                                                 
                 /*datos de manera manual*/
-                $sOutput .= '["'.$aRow['codigo'].'","'.$aRow['descripcion'].'","'.number_format($aRow['precio'],2).'","'.$iluminado.'","'.$estado.'", ';
+                $sOutput .= '["'.$aRow['codigo'].'","'.$aRow['descripcion'].'","'.number_format($aRow['precio'],2).'","'.$imagen.'","'.$iluminado.'","'.$estado.'", ';
                 
                 /*
                  * configurando botones (add/edit/delete etc)
@@ -162,11 +171,17 @@ class fichaTecnicaController extends Controller{
                     $sOutput .= '    <i class=\"'.$editar['icono'].'\"></i>';
                     $sOutput .= '</button>';
                 }      
+                if($adjuntar['permiso']){
+                    $sOutput .= '<button type=\"button\" class=\"'.$adjuntar['theme'].'\" title=\"'.$adjuntar['accion'].' (Imagen)\" onclick=\"fichaTecnica.getFormAdjuntar(this,\''.$encryptReg.'\')\">';
+                    $sOutput .= '    <i class=\"'.$adjuntar['icono'].'\"></i>';
+                    $sOutput .= '</button>';
+                }
                  if($eliminar['permiso'] == 1){
                     $sOutput .= '<button type=\"button\" class=\"'.$eliminar['theme'].'\" title=\"'.$eliminar['accion'].'\" onclick=\"fichaTecnica.postDeleteCaratula(this,\''.$encryptReg.'\')\">';
                     $sOutput .= '    <i class=\"'.$eliminar['icono'].'\"></i>';
                     $sOutput .= '</button>';
                 }
+               
                 
                 $sOutput .= ' </div>" ';
 
@@ -421,7 +436,41 @@ class fichaTecnicaController extends Controller{
         unlink($filename);
         echo $filename;
     }  
+   
+    public function adjuntarImagen() {
+//        header("Access-Control-Allow-Origin: *");
+//        header('Content-type: application/json');
+        $p = Obj::run()->fichaTecnicaModel->_idCaratula;
         
+        if (!empty($_FILES)) {
+            $targetPath = ROOT . 'public' . DS .'img' .DS . 'uploads' . DS;
+            $tempFile = $_FILES['file']['tmp_name'];                     
+            
+            $file = $p.'_'.time().rand(0,10).'_'.$_FILES['file']['name'];               
+            $targetFile = $targetPath.$file;            
+            
+            if (move_uploaded_file($tempFile, $targetFile)) {
+               $array = array("img" => $targetPath, "thumb" => $targetPath,'archivo'=>$file);
+               
+               Obj::run()->fichaTecnicaModel->adjuntarImagen($file);
+            }
+            echo json_encode($array);
+        }
+    }
+    
+    public function deleteAdjuntar() {
+        $data = Obj::run()->fichaTecnicaModel->deleteAdjuntar();
+        
+        $file = Formulario::getParam('_img');
+        
+        $file = str_replace("/","\\", $file);
+        
+        $targetPath =  $file;
+        
+        unlink($targetPath);
+        
+        echo json_encode($data);
+    }          
     
 }
 

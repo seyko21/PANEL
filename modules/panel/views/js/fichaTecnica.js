@@ -90,6 +90,7 @@ var fichaTecnica_ = function(){
                 {sTitle: "Código", sWidth: "10%",bSortable: false},
                 {sTitle: "Descripción", sWidth: "30%",bSortable: false},
                 {sTitle: "Precio", sWidth: "8%",  sClass: "right", bSortable: false},
+                {sTitle: "Imagen", sWidth: "8%",  sClass: "center", bSortable: false},
                 {sTitle: "Iluminado", sWidth: "8%",  sClass: "center", bSortable: false},
                 {sTitle: "Estado", sWidth: "8%",  sClass: "center", bSortable: false},
                 {sTitle: "Acciones", sWidth: "15%", sClass: "center", bSortable: false}
@@ -233,6 +234,22 @@ var fichaTecnica_ = function(){
             }
         });
     };   
+       
+    this.publico.getFormAdjuntar = function(btn,id){
+        _private.idCaratula = id;
+
+        simpleAjax.send({
+            element: btn,
+            dataType: 'html',
+            gifProcess: true,
+            data: '&_idCaratula='+id,
+            root: _private.config.modulo + 'getFormAdjuntar',
+            fnCallback: function(data){
+                $('#cont-modal').append(data);
+                $('#'+diccionario.tabs.T102+'formAdjuntar').modal('show');
+            }
+        });
+    };           
        
     this.publico.postNuevoFichaTecnica = function(){        
         //Validar Manualmente:
@@ -476,7 +493,31 @@ var fichaTecnica_ = function(){
             });
         },7000);
     };
-       
+    
+    this.publico.deleteAdjuntar = function(btn,id,img){
+        simpleScript.notify.confirm({
+            content: mensajes.MSG_7,
+            callbackSI: function(){
+                simpleAjax.send({
+                    element: btn,
+                    root: _private.config.modulo + 'deleteAdjuntar',
+                    data: '&_idCaratula='+id+'&_img='+img,
+                    fnCallback: function(data){
+                        if(!isNaN(data.result) && parseInt(data.result) === 1){
+                            simpleScript.notify.ok({
+                                content: mensajes.MSG_8,
+                                callback: function(){
+                                    $('#'+diccionario.tabs.T102+'dow').attr('onclick','');
+                                    $('#'+diccionario.tabs.T102+'dow').html(''); 
+                                    $('#'+diccionario.tabs.T102+'btndow').css('display','none');
+                                }
+                            });
+                        }
+                    }
+                });
+            }
+        });
+    };   
     
     return this.publico;
     

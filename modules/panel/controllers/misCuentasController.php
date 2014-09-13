@@ -46,13 +46,18 @@ public function getGridProducto(){
                 }elseif($aRow['iluminado'] == 0){
                     $iluminado = '<span class=\"label label-danger\">NO</span>';
                 }
-                
+              
+                if($aRow['imagen'] != '' or $aRow['imagen'] != null){
+                    $imagen = '<a href=\"'.BASE_URL.'public/img/uploads/'.$aRow['imagen'].'\" target=\"_blank\" ><img border=\"0\" src=\"'.BASE_URL.'public/img/uploads/'.$aRow['imagen'].'\" style=\"width:70px; height:40px;\" /></a>';
+                }else{
+                    $imagen = '<img src=\"'.BASE_URL.'public/img/sin_foto.jpg\" style=\"width:70px; height:40px;\" />';
+                }
                 /*antes de enviar id se encrypta*/
                 //$encryptReg = Aes::en($aRow['id_caratula']);
                 //$idProd = Aes::en($aRow['id_producto']);
                                                 
                 /*datos de manera manual*/
-                $sOutput .= '["'.$aRow['codigo'].'","'.$aRow['distrito'].'","'.$aRow['ubicacion'].'","'.$aRow['elemento'].'","'.$aRow['dimesion_area'].'","'.number_format($aRow['precio'],2).'","'.$iluminado.'","'.$estado.'" ';
+                $sOutput .= '["'.$aRow['codigo'].'","'.$aRow['distrito'].'","'.$aRow['ubicacion'].'","'.$aRow['elemento'].'","'.$aRow['dimesion_area'].'","'.number_format($aRow['precio'],2).'","'.$iluminado.'","'.$estado.'","'.$imagen.'" ';
                                                                                           
                 $sOutput = substr_replace( $sOutput, "", -1 );
                 $sOutput .= '],';
