@@ -121,7 +121,7 @@ class regInversionController extends Controller{
                 }                                
                 
                 /*datos de manera manual*/
-                $sOutput .= '["'.$chk.'","'.functions::cambiaf_a_normal($aRow['fecha_inversion']).'","'.number_format($aRow['monto_invertido'],2).'","'.number_format($aRow['monto_asignado'],2).'","'.number_format($aRow['monto_saldo'],2).'",';
+                $sOutput .= '["'.$chk.'","'.Functions::cambiaf_a_normal($aRow['fecha_inversion']).'","'.number_format($aRow['monto_invertido'],2).'","'.number_format($aRow['monto_asignado'],2).'","'.number_format($aRow['monto_saldo'],2).'",';
                 
                 /*
                  * configurando botones (add/edit/delete etc)
