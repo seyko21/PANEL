@@ -1,0 +1,66 @@
+<?php
+$grabar = Session::getPermiso('CONTRGR');
+$doc = Obj::run()->contratoModel->getAdjuntado();
+?>
+<div id="<?php echo CONTR; ?>formAdjuntar" name="<?php echo CONTR; ?>formAdjuntar" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close"  aria-hidden="true">
+                    &times;
+                </button>
+                <h4 class="modal-title"><?php echo LABEL_A156; ?></h4>
+            </div>
+            <div class="modal-body smart-form">
+                <form class="dropzone" id="mydropzone">
+                    <input type="hidden" id="_idContrato" name="_idContrato" value="<?php echo $this->idContrato; ?>">
+                </form>
+                <?php if(sizeof($doc) && (isset($doc['imagen_firma']) && ($doc['imagen_firma'] != '' or $doc['imagen_firma']!= NULL ))) :?>
+                <a id="<?php echo CONTR; ?>dow" href="javascript:;" onclick="window.open('<?php echo 'public/img/uploads/'.$doc['imagen_firma']; ?>','_blank');"><?php echo $doc['imagen_firma'];?></a>
+                <button id="<?php echo CONTR; ?>btndow" type="button" class="btn btn-danger" style="padding: 5px" onclick="contrato.deleteAdjuntar(this,'<?php echo $this->idContrato; ?>','<?php echo 'public/img/uploads/'.$doc['imagen_firma']; ?>');"><i class="fa fa-trash-o"></i> Eliminar</button>
+                <?php else: ?>
+                <a id="<?php echo CONTR; ?>dow" href="javascript:;"></a>
+                 <button id="<?php echo CONTR; ?>btndow" type="button" class="btn btn-danger" style="padding: 5px;display: none"><i class="fa fa-trash-o"></i> Eliminar</button>
+                <?php endif; ?>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="<?php echo THEME_CLOSE; ?>">
+                    <i class="<?php echo ICON_CLOSE; ?>"></i> <?php echo BTN_CLOSE; ?> 
+                </button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+
+    <!-- si no tiene permiso se anula submit desde cualquier input -->
+    <?php if (!$grabar['permiso']): ?>
+        <script>
+            simpleScript.noSubmit('#<?php echo CONTR; ?>formAdjuntar');
+        </script>
+    <?php endif; ?>
+    <script>
+        Dropzone.autoDiscover = false;
+        $("#mydropzone").dropzone({
+            acceptedFiles: ".jpeg,.jpg,.png,.gif,.JPEG,.JPG,.PNG,.GIF",
+            url: '<?php echo BASE_URL; ?>configuracion/contrato/adjuntarImagen',
+            maxFiles: 1, // Number of files at a time
+            maxFilesize: 10, //in MB
+            addRemoveLinks: true,
+            dictResponseError: 'Error al cargar imagen!',
+            maxfilesexceeded: function(f){
+                 simpleScript.notify.error({
+                        content: 'Usted ha subido más de 1 imagen. Sólo el primer archivo se cargará!'
+                 });
+            },
+            dictDefaultMessage: 'Arrastre aquí una imagen',
+            complete: function(data){   
+                if (data.xhr != undefined){
+                    var json = JSON.parse(data.xhr.responseText);                 
+                    $('#<?php echo CONTR; ?>dow').attr('onclick',"window.open('public/img/uploads/"+json.archivo+"','_blank');");
+                    $('#<?php echo CONTR; ?>dow').html(json.archivo); 
+                    $('#<?php echo CONTR; ?>btndow').attr('onclick',"contrato.deleteAdjuntar(this,<?php echo Aes::de($this->idContrato); ?>,'public/img/uploads/"+json.archivo+"');");
+                    $('#<?php echo CONTR; ?>btndow').css('display','block');  
+                }
+            }
+        });
+    </script>
+</div>

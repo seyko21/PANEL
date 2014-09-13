@@ -19,7 +19,7 @@ $grabar = Session::getPermiso("CONTRGR");
         <div class="modal-body smart-form" > 
             <section>
                 <div class="row">
-                    <label class="label col col-1"><?php echo LABEL_A153; ?></label>
+                    <label class="label col col-2"><?php echo LABEL_A153; ?></label>
                     <div class="col col-10">
                         <label class="input"> 
                             <i class="icon-append fa fa-keyboard-o"></i>
@@ -33,10 +33,7 @@ $grabar = Session::getPermiso("CONTRGR");
         <article class="col-sm-12 col-md-12 col-lg-6 sortable-grid ui-sortable" style="width: 100%; ">
 <div class="jarviswidget jarviswidget-color-blueDark" id="wid-id-0" data-widget-colorbutton="false" 
  data-widget-editbutton="false" data-widget-togglebutton="false" data-widget-fullscreenbutton="false" data-widget-sortable="false">				
-                            <header>
-                                    <span class="widget-icon"> <i class="fa fa-pencil"></i> </span>
-                                    <h2><?php echo LABEL_A154; ?></h2>
-                            </header>
+                           <header><h2><?php echo LABEL_A154; ?></h2></header>
                             <!-- widget div-->
                             <div>
                                     <!-- widget edit box -->
@@ -63,7 +60,7 @@ $grabar = Session::getPermiso("CONTRGR");
                             <!-- end widget div -->
                     </div>	
         </article>
-
+        <textarea id="<?php echo CONTR; ?>txt_cuerpo" name="<?php echo CONTR; ?>txt_cuerpo" class="hide" rows="3"></textarea>
         <div class="modal-footer">
             <div class="foot-obligar"></div>
             <?php if($grabar["permiso"]):?>
@@ -71,7 +68,7 @@ $grabar = Session::getPermiso("CONTRGR");
                 <i class="<?php echo $grabar["icono"]; ?>"></i> <?php echo $grabar["accion"]; ?>
             </button>
             <?php endif; ?>
-            <button type="button" class="<?php echo THEME_CLOSE; ?>" onclick="contrato.closeTabNew();" >
+            <button type="button" class="<?php echo THEME_CLOSE; ?>" onclick="simpleScript.closeTab(diccionario.tabs.CONTR+'new');" >
                 <i class="<?php echo ICON_CLOSE; ?>"></i> <?php echo BTN_CLOSE; ?>
             </button>
         </div>        
@@ -133,7 +130,7 @@ $grabar = Session::getPermiso("CONTRGR");
         },
 
         submitHandler: function(){
-            //save();
+            $("#<?php echo CONTR; ?>txt_cuerpo").val($('#<?php echo CONTR; ?>formNewContrato .summernote').code());
             contrato.postNewContrato();
         }   
  });

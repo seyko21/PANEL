@@ -2,20 +2,20 @@
 * ---------------------------------------
 * --------- CREATED BY CREATOR ----------
 * fecha: 12-09-2014 17:09:13 
-* Descripcion : formEditContrato.phtml
+* Descripcion : formClonContrato.phtml
 * ---------------------------------------
 */
 /*prefijo: CONTR debe ser alias en tabla men_menuprincipal*/
 
 echo Functions::widgetOpen(array(
-    'id' => CONTR.'edit',
-    'title' => LABEL_A152    
+    'id' => CONTR.'clon',
+    'title' => LABEL_A155    
 ));
-$editar = Session::getPermiso("CONTRACT");
+$grabar = Session::getPermiso("CONTRGR");
 $data = contratoController::findContrato();
 
 ?>
-<form id="<?php echo CONTR; ?>formEditContrato" name="<?php echo CONTR; ?>formEditContrato"  >
+<form id="<?php echo CONTR; ?>formClonContrato" name="<?php echo CONTR; ?>formClonContrato"  >
     <div class="row" style="padding:10px;">
         
         <div class="modal-body smart-form" > 
@@ -25,7 +25,7 @@ $data = contratoController::findContrato();
                     <div class="col col-10">
                         <label class="input"> 
                             <i class="icon-append fa fa-keyboard-o"></i>
-                            <input type="text" id="<?php echo CONTR; ?>txt_nombre" name="<?php echo CONTR; ?>txt_nombre" value="<?php echo $data['nombre']; ?>" >
+                            <input type="text" id="<?php echo CONTR; ?>txt_nombre" name="<?php echo CONTR; ?>txt_nombre" value="<?php echo $data['nombre']; ?> " >
                             <b class="tooltip tooltip-top-right"><i class="fa fa-keyboard-o txt-color-teal"></i> <?php echo LABEL_A153M; ?></b>
                         </label>
                     </div>
@@ -66,12 +66,12 @@ $data = contratoController::findContrato();
         <textarea id="<?php echo CONTR; ?>txt_cuerpo" name="<?php echo CONTR; ?>txt_cuerpo" class="hide" rows="3"></textarea>
         <div class="modal-footer">
             <div class="foot-obligar"></div>
-            <?php if($editar["permiso"]):?>
-            <button id="<?php echo CONTR; ?>btnEdContrato" type="submit" class="<?php echo $editar["theme"]; ?>">
-                <i class="<?php echo $editar["icono"]; ?>"></i> <?php echo $editar["accion"]; ?>
+            <?php if($grabar["permiso"]):?>
+            <button id="<?php echo CONTR; ?>btnCdContrato" type="submit" class="<?php echo $grabar["theme"]; ?>">
+                <i class="<?php echo $grabar["icono"]; ?>"></i> <?php echo $grabar["accion"]; ?>
             </button>
             <?php endif; ?>
-            <button type="button" class="<?php echo THEME_CLOSE; ?>" onclick="simpleScript.closeTab(diccionario.tabs.CONTR+'edit');" >
+            <button type="button" class="<?php echo THEME_CLOSE; ?>" onclick="simpleScript.closeTab(diccionario.tabs.CONTR+'clon');" >
                 <i class="<?php echo ICON_CLOSE; ?>"></i> <?php echo BTN_CLOSE; ?>
             </button>
         </div>        
@@ -80,9 +80,9 @@ $data = contratoController::findContrato();
 
  <?php echo Functions::widgetClose(); ?>
 <!-- si no tiene permiso se anula submit desde cualquier input -->
-<?php if(!$editar["permiso"]): ?>
+<?php if(!$grabar["permiso"]): ?>
 <script>
-    simpleScript.noSubmit("#<?php echo CONTR; ?>formEditContrato");
+    simpleScript.noSubmit("#<?php echo CONTR; ?>formClonContrato");
 </script>
 <?php endif; ?>
 <script>
@@ -100,7 +100,7 @@ $data = contratoController::findContrato();
     };	
         
     var save = function() {
-        var aHTML = $( '#'+diccionario.tabs.CONTR+'formEditContrato .summernote').code(); //save HTML If you need(aHTML: array).
+        var aHTML = $( '#'+diccionario.tabs.CONTR+'formClonContrato .summernote').code(); //save HTML If you need(aHTML: array).
         alert(aHTML);
        //
     }
@@ -117,7 +117,7 @@ $data = contratoController::findContrato();
     
 
     /*configurar validacion de formulario -- este codigo es de ejemplo*/
-    $("#<?php echo CONTR; ?>formEditContrato").validate({
+    $("#<?php echo CONTR; ?>formClonContrato").validate({
         // Rules for form validation
         rules : {
             <?php echo CONTR; ?>txt_nombre : {
@@ -133,11 +133,11 @@ $data = contratoController::findContrato();
         },
 
         submitHandler: function(){
-            $("#<?php echo CONTR; ?>txt_cuerpo").val($('#<?php echo CONTR; ?>formEditContrato .summernote').code());
-            contrato.postEditContrato();
+            $("#<?php echo CONTR; ?>txt_cuerpo").val($('#<?php echo CONTR; ?>formClonContrato .summernote').code());
+            contrato.postClonContrato();
         }   
  });
   
-    $('#<?php echo CONTR; ?>formEditContrato .note-toolbar .note-help').css('display','none');  
+    $('#<?php echo CONTR; ?>formClonContrato .note-toolbar .note-help').css('display','none');  
         
 </script>

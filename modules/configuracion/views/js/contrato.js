@@ -53,17 +53,17 @@ var contrato_ = function(){
             iDisplayLength: 10,            
             aoColumns: [
                 {sTitle: "<input type='checkbox' id='"+diccionario.tabs.CONTR+"chk_all' onclick='simpleScript.checkAll(this,\"#"+diccionario.tabs.CONTR+"gridContrato\");'>", sWidth: "1%", sClass: "center", bSortable: false},
-                {sTitle: "Nombre", sWidth: "35%"},
-                {sTitle: "Fecha Creado", sClass: "center", sWidth: "25%"},
+                {sTitle: "Nombre", sWidth: "45%"},
+                {sTitle: "Fecha Creado", sClass: "center", sWidth: "15%"},
                 {sTitle: "Estado", sWidth: "10%", sClass: "center", bSortable: false},                
-                {sTitle: "Acciones", sWidth: "8%", sClass: "center", bSortable: false}
+                {sTitle: "Acciones", sWidth: "15%", sClass: "center", bSortable: false}
             ],
             aaSorting: [[2, "asc"]],
             sScrollY: "300px",
             sAjaxSource: _private.config.modulo+"getGridContrato",
             fnDrawCallback: function() {
-                $("#"+diccionario.tabs.CONTR+"gridContrato_filter").find("input").attr("placeholder","Buscar por Contrato").css("width","250px");
-                simpleScript.enterSearch("#"+diccionario.tabs.CONTR+"gridContrato",oTable);
+                $("#"+diccionario.tabs.CONTR+"gridContrato_filter").find("input").attr("placeholder","Buscar por nombre").css("width","250px");
+                //simpleScript.enterSearch("#"+diccionario.tabs.CONTR+"gridContrato",oTable);
                 /*para hacer evento invisible*/
                 simpleScript.removeAttr.click({
                     container: "#widget_"+diccionario.tabs.CONTR,
@@ -79,54 +79,86 @@ var contrato_ = function(){
             id : diccionario.tabs.CONTR+'new',
             label: 'Nuevo Contrato',
             fnCallback: function(){
-                contrato.getContratoNew();
+                simpleAjax.send({
+                    dataType: 'html',
+                    root: _private.config.modulo+'getFormNewContrato',
+                    fnCallback: function(data){
+                        $('#'+diccionario.tabs.CONTR+'new_CONTAINER').html(data);
+                    }
+                });
             }
         });               
-    };
+    };     
+    
+    this.publico.getFormEditContrato = function(id){
+        _private.idContrato = id;
         
-    this.publico.getContratoNew = function(){
+        simpleScript.addTab({
+            id : diccionario.tabs.CONTR+'edit',
+            label: 'Editar Contrato',
+            fnCallback: function(){
+                simpleAjax.send({
+                    dataType: 'html',
+                    root: _private.config.modulo+'getFormEditContrato',
+                     data: '&_idContrato='+_private.idContrato,
+                    fnCallback: function(data){
+                        $('#'+diccionario.tabs.CONTR+'edit_CONTAINER').html(data);
+                    }
+                });
+            }
+        });                  
+    };
+    
+    this.publico.getClonar = function(idd){
+        //cerrar tab nuevo
+        simpleScript.closeTab(diccionario.tabs.CONTR+'new');
+        
+        _private.idContrato = idd;
+        
+        simpleScript.addTab({
+            id : diccionario.tabs.CONTR+'clon',
+            label: 'Clonar Contrato',
+            fnCallback: function(){
+                 simpleAjax.send({
+                    dataType: 'html',
+                    root: _private.config.modulo+'getFormClonarContrato',
+                    data: '&_idContrato='+_private.idContrato,
+                    fnCallback: function(data){
+                        $('#'+diccionario.tabs.CONTR+'clon_CONTAINER').html(data);
+                    }
+                });
+            }
+        });
+    };
+    
+    this.publico.getFormAdjuntar = function(btn,id){
         simpleAjax.send({
+            element: btn,
             dataType: 'html',
-            root: _private.config.modulo+'getFormNewContrato',
+            gifProcess: true,
+            data: '&_idContrato='+id,
+            root: _private.config.modulo + 'getFormAdjuntar',
             fnCallback: function(data){
-                $('#'+diccionario.tabs.CONTR+'new_CONTAINER').html(data);
+                $('#cont-modal').append(data);
+                $('#'+diccionario.tabs.CONTR+'formAdjuntar').modal('show');
             }
         });
     };    
     
-    this.publico.closeTabNew = function(){
-        simpleScript.closeTab(diccionario.tabs.CONTR+'new');  
-    };
-    
-    this.publico.getFormEditContrato = function(btn,id){
-        _private.idContrato = id;
-            
-        simpleAjax.send({
-            element: btn,
-            dataType: "html",
-            root: _private.config.modulo + "getFormEditContrato",
-            data: "&_idContrato="+_private.idContrato,
-            fnCallback: function(data){
-                $("#cont-modal").append(data);  /*los formularios con append*/
-                $("#"+diccionario.tabs.CONTR+"formEditContrato").modal("show");
-            }
-        });
-    };
-    
     this.publico.postNewContrato = function(){
+                                
         simpleAjax.send({
             flag: 1,
             element: "#"+diccionario.tabs.CONTR+"btnGrContrato",
             root: _private.config.modulo + "postNewContrato",
             form: "#"+diccionario.tabs.CONTR+"formNewContrato",
-            data: "&_cuerpo="+$('#'+diccionario.tabs.CONTR+'formNewContrato .summernote').code(),
             clear: true,
             fnCallback: function(data) {
                 if(!isNaN(data.result) && parseInt(data.result) === 1){
                     simpleScript.notify.ok({
                         content: mensajes.MSG_3,
                         callback: function(){
-                            contrato.closeTabNew()
+                            simpleScript.closeTab(diccionario.tabs.CONTR+'new');  
                             contrato.getGridContrato();                                                        
                         }
                     });
@@ -139,88 +171,154 @@ var contrato_ = function(){
         });
     };
     
-//    this.publico.postEditContrato = function(){
-//        simpleAjax.send({
-//            flag: AQUI FLAG,
-//            element: "#"+diccionario.tabs.CONTR+"btnEdContrato",
-//            root: _private.config.modulo + "postEditContrato",
-//            form: "#"+diccionario.tabs.CONTR+"formEditContrato",
-//            data: "&_idContrato="+_private.idContrato,
-//            clear: true,
-//            fnCallback: function(data) {
-//                if(!isNaN(data.result) && parseInt(data.result) === 1){
-//                    simpleScript.notify.ok({
-//                        content: mensajes.MSG_10,
-//                        callback: function(){
-//                            _private.idContrato = 0;
-//                            simpleScript.closeModal("#"+diccionario.tabs.CONTR+"formEditContrato");
-//                            simpleScript.reloadGrid("#"+diccionario.tabs.CONTR+"gridContrato");
-//                        }
-//                    });
-//                }else if(!isNaN(data.result) && parseInt(data.result) === 2){
-//                    simpleScript.notify.error({
-//                        content: "Contrato ya existe."
-//                    });
-//                }
-//            }
-//        });
-//    };
-//    
-//    this.publico.postDeleteContrato = function(btn,id){
-//        simpleScript.notify.confirm({
-//            content: mensajes.MSG_5,
-//            callbackSI: function(){
-//                simpleAjax.send({
-//                    flag: AQUI FLAG,
-//                    element: btn,
-//                    gifProcess: true,
-//                    data: "&_idContrato="+id,
-//                    root: _private.config.modulo + "postDeleteContrato",
-//                    fnCallback: function(data) {
-//                        if(!isNaN(data.result) && parseInt(data.result) === 1){
-//                            simpleScript.notify.ok({
-//                                content: mensajes.MSG_6,
-//                                callback: function(){
-//                                    simpleScript.reloadGrid("#"+diccionario.tabs.CONTR+"gridContrato");
-//                                }
-//                            });
-//                        }
-//                    }
-//                });
-//            }
-//        });
-//    };
-//    
-//    this.publico.postDeleteContratoAll = function(btn){
-//        simpleScript.validaCheckBox({
-//            id: "#"+diccionario.tabs.CONTR+"gridContrato",
-//            msn: mensajes.MSG_9,
-//            fnCallback: function(){
-//                simpleScript.notify.confirm({
-//                    content: mensajes.MSG_7,
-//                    callbackSI: function(){
-//                        simpleAjax.send({
-//                            flag: 3, //si se usa SP usar flag, sino se puede eliminar esta linea
-//                            element: btn,
-//                            form: "#"+diccionario.tabs.CONTR+"formGridContrato",
-//                            root: _private.config.modulo + "postDeleteContratoAll",
-//                            fnCallback: function(data) {
-//                                if(!isNaN(data.result) && parseInt(data.result) === 1){
-//                                    simpleScript.notify.ok({
-//                                        content: mensajes.MSG_8,
-//                                        callback: function(){
-//                                            contrato.getGridContrato();
-//                                        }
-//                                    });
-//                                }
-//                            }
-//                        });
-//                    }
-//                });
-//            }
-//        });
-//    };
+    this.publico.postEditContrato = function(){
+        simpleAjax.send({
+            flag: 2,
+            element: "#"+diccionario.tabs.CONTR+"btnEdContrato",
+            root: _private.config.modulo + "postEditContrato",
+            form: "#"+diccionario.tabs.CONTR+"formEditContrato",
+            data: "&_idContrato="+_private.idContrato,
+            clear: true,
+            fnCallback: function(data) {
+                if(!isNaN(data.result) && parseInt(data.result) === 1){
+                    simpleScript.notify.ok({
+                        content: mensajes.MSG_3,
+                        callback: function(){
+                            _private.idContrato = 0;
+                            simpleScript.closeTab(diccionario.tabs.CONTR+'edit');  
+                            simpleScript.reloadGrid("#"+diccionario.tabs.CONTR+"gridContrato");
+                        }
+                    });
+                }else if(!isNaN(data.result) && parseInt(data.result) === 2){
+                    simpleScript.notify.error({
+                        content: mensajes.MSG_4
+                    });
+                }
+            }
+        });
+    };
     
+     this.publico.postClonContrato = function(){
+                                
+        simpleAjax.send({
+            flag: 1,
+            element: "#"+diccionario.tabs.CONTR+"btnCdContrato",
+            root: _private.config.modulo + "postNewContrato",
+            form: "#"+diccionario.tabs.CONTR+"formClonContrato",
+            clear: true,
+            fnCallback: function(data) {
+                if(!isNaN(data.result) && parseInt(data.result) === 1){
+                    simpleScript.notify.ok({
+                        content: mensajes.MSG_3,
+                        callback: function(){
+                            simpleScript.closeTab(diccionario.tabs.CONTR+'clon');  
+                            contrato.getGridContrato();                                                        
+                        }
+                    });
+                }else if(!isNaN(data.result) && parseInt(data.result) === 2){
+                    simpleScript.notify.error({
+                        content: mensajes.MSG_4
+                    });
+                }
+            }
+        });
+    };
+    
+
+    this.publico.postDeleteContratoAll = function(btn){
+        simpleScript.validaCheckBox({
+            id: "#"+diccionario.tabs.CONTR+"gridContrato",
+            msn: mensajes.MSG_9,
+            fnCallback: function(){
+                simpleScript.notify.confirm({
+                    content: mensajes.MSG_7,
+                    callbackSI: function(){
+                        simpleAjax.send({
+                            flag: 3, //si se usa SP usar flag, sino se puede eliminar esta linea
+                            element: btn,
+                            form: "#"+diccionario.tabs.CONTR+"formGridContrato",
+                            root: _private.config.modulo + "postDeleteContratoAll",
+                            fnCallback: function(data) {
+                                if(!isNaN(data.result) && parseInt(data.result) === 1){
+                                    simpleScript.notify.ok({
+                                        content: mensajes.MSG_8,
+                                        callback: function(){
+                                            contrato.getGridContrato();
+                                        }
+                                    });
+                                }
+                            }
+                        });
+                    }
+                });
+            }
+        });
+    };
+    
+    
+  this.publico.postDesactivar = function(btn,id){
+           simpleAjax.send({
+               element: btn,
+               root: _private.config.modulo + 'postDesactivar',
+               data: '&_idContrato='+id,
+               clear: true,
+               fnCallback: function(data) {
+                   if(!isNaN(data.result) && parseInt(data.result) === 1){
+                       simpleScript.notify.ok({
+                           content: 'Contrato se desactivo correctamente',
+                           callback: function(){
+                               simpleScript.reloadGrid('#'+diccionario.tabs.CONTR+'gridContrato');
+                           }
+                       });
+                   }
+               }
+           });
+       };
+    
+    this.publico.postActivar = function(btn,id){
+        simpleAjax.send({
+            element: btn,
+            root: _private.config.modulo + 'postActivar',
+            data: '&_idContrato='+id,
+            clear: true,
+            fnCallback: function(data){
+                if(!isNaN(data.result) && parseInt(data.result) === 1){
+                    simpleScript.notify.ok({
+                        content: 'Contrato se activo correctamente',
+                        callback: function(){
+                            simpleScript.reloadGrid('#'+diccionario.tabs.CONTR+'gridContrato');
+                        }
+                    });
+                }
+            }
+        });
+    };   
+    
+    this.publico.deleteAdjuntar = function(btn,id,img){
+        simpleScript.notify.confirm({
+            content: mensajes.MSG_7,
+            callbackSI: function(){
+                simpleAjax.send({
+                    element: btn,
+                    root: _private.config.modulo + 'deleteAdjuntar',
+                    data: '&_idContrato='+id+'&_img='+img,
+                    fnCallback: function(data) {
+                        if(!isNaN(data.result) && parseInt(data.result) === 1){
+                            simpleScript.notify.ok({
+                                content: mensajes.MSG_8,
+                                callback: function(){
+                                    $('#'+diccionario.tabs.CONTR+'dow').attr('onclick','');
+                                    $('#'+diccionario.tabs.CONTR+'dow').html(''); 
+                                    $('#'+diccionario.tabs.CONTR+'btndow').css('display','none');
+                                }
+                            });
+                        }
+                    }
+                });
+            }
+        });
+    };
+        
     return this.publico;
     
 };

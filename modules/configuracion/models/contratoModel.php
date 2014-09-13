@@ -10,7 +10,7 @@
 class contratoModel extends Model{
 
     private $_flag;
-    private $_idContrato;    
+    public $_idContrato;    
     private $_usuario;
     private $_nombre;
     private $_cuerpo;
@@ -31,7 +31,8 @@ class contratoModel extends Model{
         $this->_idContrato   = Aes::de(Formulario::getParam("_idContrato"));    /*se decifra*/
         $this->_usuario     = Session::get("sys_idUsuario");
         $this->_nombre     = Formulario::getParam(CONTR.'txt_nombre');
-        $this->_cuerpo     = Formulario::getParam('_cuerpo');
+        $this->_cuerpo     = Formulario::getParam(CONTR.'txt_cuerpo');
+        $this->_chkdel  = Formulario::getParam(CONTR.'chk_delete');
         
         $this->_iDisplayStart  = Formulario::getParam("iDisplayStart"); 
         $this->_iDisplayLength = Formulario::getParam("iDisplayLength"); 
@@ -128,6 +129,47 @@ class contratoModel extends Model{
         $data = array('result'=>1);
         return $data;
     }       
+    public function adjuntarImagen($img){
+        $query = "UPDATE lgk_contrato SET 
+                    `imagen_firma` = :img
+                WHERE `id_contrato` = :id;";
+        $parms = array(
+            ':id' => $this->_idContrato,
+            ':img' => $img
+        );
+        $this->execute($query,$parms);
+
+        $data = array('result'=>1);
+        return $data;
+    }
+    
+    public function getAdjuntado(){
+        $query = "SELECT 
+                    imagen_firma
+                FROM lgk_contrato WHERE id_contrato = :id;";
+        
+        $parms = array(
+            ':id'=>$this->_idContrato
+        );
+        
+        $data = $this->queryOne($query,$parms);
+        return $data;
+    }
+    
+    public function deleteAdjuntar(){
+        $query = "UPDATE  lgk_contrato SET
+                    imagen_firma = ''
+                WHERE id_contrato = :id;";
+        
+        $parms = array(
+            ':id'=>$this->_idContrato
+        );
+        
+        $this->execute($query,$parms);
+        
+        $data = array('result'=>1);
+        return $data;
+    }    
     
 }
 

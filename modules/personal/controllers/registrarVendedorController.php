@@ -242,7 +242,7 @@ class registrarVendedorController extends Controller {
             $file = $p.'_'.$_FILES['file']['name'];
             $targetFile = $targetPath.$file;
             if (move_uploaded_file($tempFile, $targetFile)) {
-               $array = array("img" => $targetPath, "thumb" => $targetPath,'xx'=>$file);
+               $array = array("img" => $targetPath, "thumb" => $targetPath,'archivo'=>$file);
                
                Obj::run()->registrarVendedorModel->adjuntarDocumento($file);
             }

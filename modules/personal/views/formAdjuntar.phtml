@@ -24,8 +24,8 @@ $doc = $data = Obj::run()->registrarVendedorModel->getAdjuntado();
                 <?php endif; ?>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default xClose">
-                    <i class="fa fa-ban"></i> <?php echo BTN_CLOSE; ?>
+               <button type="button" class="<?php echo THEME_CLOSE; ?>">
+                    <i class="<?php echo ICON_CLOSE; ?>"></i> <?php echo BTN_CLOSE; ?> 
                 </button>
             </div>
         </div><!-- /.modal-content -->
@@ -47,11 +47,19 @@ $doc = $data = Obj::run()->registrarVendedorModel->getAdjuntado();
             addRemoveLinks: true,
             dictResponseError: 'Error uploading file!',
             dictDefaultMessage: 'Arrastre aquí una imagen',
+             maxfilesexceeded: function(f){
+                 simpleScript.notify.error({
+                        content: 'Usted ha subido más de 1 imagen. Sólo el primer archivo se cargará!'
+                 });
+            },
             complete: function(data){
-                $('#<?php echo T7; ?>dow').attr('onclick',"window.open('public/files/docs/<?php echo Aes::de($this->idVendedor); ?>_"+data.name+"','_blank');");
-                $('#<?php echo T7; ?>dow').html('<?php echo Aes::de($this->idVendedor); ?>'+data.name); 
-                $('#<?php echo T7; ?>btndow').attr('onclick',"registrarVendedor.deleteAdjuntar(this,'<?php echo $this->idVendedor; ?>','public/files/docs/<?php echo Aes::de($this->idVendedor); ?>_"+data.name+"');");
-                $('#<?php echo T7; ?>btndow').css('display','block');
+                 if (data.xhr != undefined){
+                    var json = JSON.parse(data.xhr.responseText);   
+                    $('#<?php echo T7; ?>dow').attr('onclick',"window.open('public/files/docs/"+json.archivo+"','_blank');");
+                    $('#<?php echo T7; ?>dow').html(json.archivo); 
+                    $('#<?php echo T7; ?>btndow').attr('onclick',"registrarVendedor.deleteAdjuntar(this,'<?php echo $this->idVendedor; ?>','public/files/docs/"+json.archivo+"');");
+                    $('#<?php echo T7; ?>btndow').css('display','block');
+                }
             }
         });
     </script>

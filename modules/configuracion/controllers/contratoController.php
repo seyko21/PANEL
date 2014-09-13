@@ -20,8 +20,8 @@ class contratoController extends Controller{
     public function getGridContrato(){
         $editar   = Session::getPermiso('CONTRED');
         $adjuntar = Session::getPermiso('CONTRAJ');
-        
-        $sEcho          =   $this->post('sEcho');
+        $clonar   = Session::getPermiso('CONTRCL');
+        $sEcho    =   $this->post('sEcho');
         
         $rResult = Obj::run()->contratoModel->getContrato();
         
@@ -47,13 +47,13 @@ class contratoController extends Controller{
                 
                 if($aRow['estado'] == 'A'){
                     if($editar['permiso']){
-                        $estado = '<button type=\"button\" class=\"btn btn-success btn-xs\" title=\"'.BTN_DESACT.'\" onclick=\"parametro.postDesactivar(this,\''.$encryptReg.'\')\"><i class=\"fa fa-check\"></i> '.LABEL_ACT.'</button>';
+                        $estado = '<button type=\"button\" class=\"btn btn-success btn-xs\" title=\"'.BTN_DESACT.'\" onclick=\"contrato.postDesactivar(this,\''.$encryptReg.'\')\"><i class=\"fa fa-check\"></i> '.LABEL_ACT.'</button>';
                     }else{
                         $estado = '<span class=\"label label-success\">'.LABEL_ACT.'</span>';
                     }
                 }elseif($aRow['estado'] == 'I'){
                     if($editar['permiso']){
-                        $estado = '<button type=\"button\" class=\"btn btn-danger btn-xs\" title=\"'.BTN_ACT.'\" onclick=\"parametro.postActivar(this,\''.$encryptReg.'\')\"><i class=\"fa fa-ban\"></i> '.LABEL_DESACT.'</button>';
+                        $estado = '<button type=\"button\" class=\"btn btn-danger btn-xs\" title=\"'.BTN_ACT.'\" onclick=\"contrato.postActivar(this,\''.$encryptReg.'\')\"><i class=\"fa fa-ban\"></i> '.LABEL_DESACT.'</button>';
                     }else{
                         $estado = '<span class=\"label label-danger\">'.LABEL_DESACT.'</span>';
                     }
@@ -68,7 +68,7 @@ class contratoController extends Controller{
                 $axion = '"<div class=\"btn-group\">';
                  
                 if($editar['permiso']){
-                    $axion .= '<button type=\"button\" class=\"'.$editar['theme'].'\" title=\"'.$editar['accion'].'\" onclick=\"contrato.getFormEditContrato(this,\''.$encryptReg.'\')\">';
+                    $axion .= '<button type=\"button\" class=\"'.$editar['theme'].'\" title=\"'.$editar['accion'].'\" onclick=\"contrato.getFormEditContrato(\''.$encryptReg.'\')\">';
                     $axion .= '    <i class=\"'.$editar['icono'].'\"></i>';
                     $axion .= '</button>';
                 }
@@ -77,11 +77,16 @@ class contratoController extends Controller{
                     $axion .= '    <i class=\"'.$adjuntar['icono'].'\"></i>';
                     $axion .= '</button>';
                 }
+                if($clonar['permiso'] ){
+                    $axion .= '<button type=\"button\" class=\"'.$clonar['theme'].'\" title=\"'.$clonar['accion'].'\" onclick=\"contrato.getClonar(\''.$encryptReg.'\')\">';
+                    $axion .= '    <i class=\"'.$clonar['icono'].'\"></i>';
+                    $axion .= '</button>';
+                }
                 
                 $axion .= ' </div>" ';
                 
                 /*registros a mostrar*/
-                $sOutput .= '["'.$chk.'","'.$aRow['nombre'].'","'.  Functions::cambiaf_a_normal($aRow['fecha_creacion']).'","'.$estado.','.$axion.'" ';
+                $sOutput .= '["'.$chk.'","'.$aRow['nombre'].'","'.Functions::cambiaf_a_normal($aRow['fecha_creacion']).'","'.$estado.'",'.$axion.' ';
                 
                 $sOutput .= '],';
 
@@ -105,6 +110,16 @@ class contratoController extends Controller{
     public function getFormEditContrato(){
         Obj::run()->View->render("formEditContrato");
     }
+    
+    public function getFormClonarContrato(){
+        Obj::run()->View->render('formClonarContrato'); 
+    }
+    
+    public function getFormAdjuntar() {    
+        Obj::run()->View->idContrato = Formulario::getParam('_idContrato');
+        Obj::run()->View->render('formAdjuntarImgContrato');
+    }
+
     
     /*busca data para editar registro: Contrato*/
     public static function findContrato(){
@@ -134,6 +149,52 @@ class contratoController extends Controller{
         echo json_encode($data);
     }
     
+    public function postDesactivar(){
+        $data = Obj::run()->contratoModel->postDesactivar();
+        
+        echo json_encode($data);
+    }
+    
+    public function postActivar(){
+        $data = Obj::run()->contratoModel->postActivar();
+        
+        echo json_encode($data);
+    }       
+    
+    public function adjuntarImagen() {
+//        header("Access-Control-Allow-Origin: *");
+//        header('Content-type: application/json');
+        $p = Obj::run()->contratoModel->_idContrato;
+        
+        if (!empty($_FILES)) {
+            $targetPath = ROOT . 'public' . DS .'img' .DS . 'uploads' . DS;
+            $tempFile = $_FILES['file']['tmp_name'];                     
+            
+            $file = $p.'_'.time().rand(0,10).'_'.$_FILES['file']['name'];               
+            $targetFile = $targetPath.$file;            
+            
+            if (move_uploaded_file($tempFile, $targetFile)) {
+               $array = array("img" => $targetPath, "thumb" => $targetPath,'archivo'=>$file);
+               
+               Obj::run()->contratoModel->adjuntarImagen($file);
+            }
+            echo json_encode($array);
+        }
+    }
+    
+    public function deleteAdjuntar() {
+        $data = Obj::run()->contratoModel->deleteAdjuntar();
+        
+        $file = Formulario::getParam('_img');
+        
+        $file = str_replace("/","\\", $file);
+        
+        $targetPath =  $file;
+        
+        unlink($targetPath);
+        
+        echo json_encode($data);
+    }    
 }
 
 ?>
