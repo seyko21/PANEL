@@ -469,10 +469,12 @@ var fichaTecnica_ = function(){
     };
     
     this.publico.deleteArchivo = function(archivo){
-        simpleAjax.send({
-            root: _private.config.modulo + 'deleteArchivo',
-            data: '&_archivo='+archivo
-        });
+       setTimeout(function(){
+            simpleAjax.send({
+                root: _private.config.modulo + 'deleteArchivo',
+                data: '&_archivo='+archivo
+            });
+        },7000);
     };
        
     
