@@ -8,7 +8,8 @@
         REINV: '<?php echo REINV; ?>',
         REPRO: '<?php echo REPRO; ?>',
         MISPA: '<?php echo MISPA; ?>',
-        PAAL: '<?php echo PAAL; ?>'
+        PAAL: '<?php echo PAAL; ?>',
+        CONTR: '<?php echo CONTR; ?>'
     }
 };
 </script>

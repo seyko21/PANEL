@@ -1,0 +1,143 @@
+<?php /*
+* ---------------------------------------
+* --------- CREATED BY CREATOR ----------
+* fecha: 12-09-2014 17:09:13 
+* Descripcion : formNewContrato.phtml
+* ---------------------------------------
+*/
+/*prefijo: CONTR debe ser alias en tabla men_menuprincipal*/
+
+echo Functions::widgetOpen(array(
+    'id' => CONTR.'new',
+    'title' => LABEL_A151    
+));
+$grabar = Session::getPermiso("CONTRGR");
+?>
+<form id="<?php echo CONTR; ?>formNewContrato" name="<?php echo CONTR; ?>formNewContrato"  >
+    <div class="row" style="padding:10px;">
+        
+        <div class="modal-body smart-form" > 
+            <section>
+                <div class="row">
+                    <label class="label col col-1"><?php echo LABEL_A153; ?></label>
+                    <div class="col col-10">
+                        <label class="input"> 
+                            <i class="icon-append fa fa-keyboard-o"></i>
+                            <input type="text" id="<?php echo CONTR; ?>txt_nombre" name="<?php echo CONTR; ?>txt_nombre" >
+                            <b class="tooltip tooltip-top-right"><i class="fa fa-keyboard-o txt-color-teal"></i> <?php echo LABEL_A153M; ?></b>
+                        </label>
+                    </div>
+                </div>
+            </section>                  
+        </div>            
+        <article class="col-sm-12 col-md-12 col-lg-6 sortable-grid ui-sortable" style="width: 100%; ">
+<div class="jarviswidget jarviswidget-color-blueDark" id="wid-id-0" data-widget-colorbutton="false" 
+ data-widget-editbutton="false" data-widget-togglebutton="false" data-widget-fullscreenbutton="false" data-widget-sortable="false">				
+                            <header>
+                                    <span class="widget-icon"> <i class="fa fa-pencil"></i> </span>
+                                    <h2><?php echo LABEL_A154; ?></h2>
+                            </header>
+                            <!-- widget div-->
+                            <div>
+                                    <!-- widget edit box -->
+                                    <div class="jarviswidget-editbox">
+                                            <!-- This area used as dropdown edit box -->                                                    
+                                    </div>
+                                    <!-- end widget edit box -->
+                                    <!-- widget content -->
+                                    <div class="widget-body no-padding">
+                                            <div class="summernote">							
+                                            </div>						
+                                            <div class="widget-footer smart-form">
+                                                <div class="btn-group">
+                                                        <!--
+                                                        <button class="btn btn-sm btn-primary" type="button">
+                                                                <i class="fa fa-times"></i> Cancel
+                                                        </button>	
+                                                        -->			
+                                                </div>				
+                                            </div>						
+                                    </div>
+                                    <!-- end widget content -->
+                            </div>
+                            <!-- end widget div -->
+                    </div>	
+        </article>
+
+        <div class="modal-footer">
+            <div class="foot-obligar"></div>
+            <?php if($grabar["permiso"]):?>
+            <button id="<?php echo CONTR; ?>btnGrContrato" type="submit" class="<?php echo $grabar["theme"]; ?>">
+                <i class="<?php echo $grabar["icono"]; ?>"></i> <?php echo $grabar["accion"]; ?>
+            </button>
+            <?php endif; ?>
+            <button type="button" class="<?php echo THEME_CLOSE; ?>" onclick="contrato.closeTabNew();" >
+                <i class="<?php echo ICON_CLOSE; ?>"></i> <?php echo BTN_CLOSE; ?>
+            </button>
+        </div>        
+    </div><!-- /.modal-dialog -->
+</form>
+
+ <?php echo Functions::widgetClose(); ?>
+<!-- si no tiene permiso se anula submit desde cualquier input -->
+<?php if(!$grabar["permiso"]): ?>
+<script>
+    simpleScript.noSubmit("#<?php echo CONTR; ?>formNewContrato");
+</script>
+<?php endif; ?>
+<script>
+    
+    pageSetUp();
+    // PAGE RELATED SCRIPTS
+    // pagefunction	
+    var pagefunction = function() {		
+            // summernote
+            $('.summernote').summernote({
+                    height : 300,
+                    focus : true,
+                    tabsize : 2
+            });				
+    };	
+        
+    var save = function() {
+        var aHTML = $( '#'+diccionario.tabs.CONTR+'formNewContrato .summernote').code(); //save HTML If you need(aHTML: array).
+        alert(aHTML);
+       //
+    }
+        
+    // end pagefunction	
+    // load summernote, and all markdown related plugins
+    loadScript("theme/<?php echo DEFAULT_LAYOUT ?>/js/plugin/summernote/summernote.js", function(){
+            loadScript("theme/<?php echo DEFAULT_LAYOUT ?>/js/plugin/markdown/markdown.min.js", function(){
+                    //loadScript("theme/<?php echo DEFAULT_LAYOUT ?>js/plugin/markdown/to-markdown.js", function(){
+                            loadScript("theme/<?php echo DEFAULT_LAYOUT ?>/js/plugin/markdown/bootstrap-markdown.min.js", pagefunction);
+                    //});
+            });
+    });
+    
+
+    /*configurar validacion de formulario -- este codigo es de ejemplo*/
+    $("#<?php echo CONTR; ?>formNewContrato").validate({
+        // Rules for form validation
+        rules : {
+            <?php echo CONTR; ?>txt_nombre : {
+                required : true,
+                regular: true,
+                minlength: 3
+            }
+        },       
+
+        // No cambie el código de abajo
+        errorPlacement : function(error, element) {
+            error.insertAfter(element.parent());
+        },
+
+        submitHandler: function(){
+            //save();
+            contrato.postNewContrato();
+        }   
+ });
+  
+    $('#<?php echo CONTR; ?>formNewContrato .note-toolbar .note-help').css('display','none');  
+        
+</script>

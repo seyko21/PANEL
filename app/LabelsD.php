@@ -126,5 +126,13 @@ define('LABEL_A121','Paneles Alquilados');
 /*----------------------Registrar Produccion----------------------*/
 define('LABEL_A130','Registro de Producción del Producto');
 
+/*----------------------Registrar Contrato----------------------*/
+define('LABEL_A150','Contratos');
+define('LABEL_A151','Nuevo Contrato');
+define('LABEL_A152','Editar Contrato');
+define('LABEL_A153','Nombre');
+define('LABEL_A153M','Ingrese el nombre de la plantilla');
+define('LABEL_A154','Plantilla de Contrato');
+
 
 ?>
