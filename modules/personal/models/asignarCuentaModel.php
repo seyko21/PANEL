@@ -187,6 +187,20 @@ class asignarCuentaModel extends Model{
         return $data;
     }
    
+    public function getComision(){
+        $query = "SELECT `valor`
+                FROM `pub_parametro`
+                WHERE `alias` = :alias AND estado = :estado";
+        
+        $parms = array(
+            ':alias'=>'COVEN',
+            ':estado'=>'A'
+        );
+        
+        $data = $this->queryOne($query,$parms);
+        return $data;
+   
+    }    
     
 }
 

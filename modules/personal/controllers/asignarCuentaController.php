@@ -88,6 +88,12 @@ class asignarCuentaController extends Controller{
         
         return $data;
     }
+    //Comision por defecto que viene de pub_parametro
+    public static function getComision(){
+        $data = Obj::run()->asignarCuentaModel->getComision();
+        
+        return $data;
+    }
     
     /*envia datos para grabar registro: AsignarCuenta*/
     public function postNewAsignarCuenta(){

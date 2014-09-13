@@ -10,6 +10,9 @@
 /* prefijo: ASCU debe ser alias en tabla men_menuprincipal */
 $grabar = Session::getPermiso("ASCUGR");
 $buscar = Session::getPermiso("ASCUBS");
+
+$comision = asignarCuentaController::getComision();
+
 ?>
 <form id="<?php echo ASCU; ?>formNewAsignarCuenta" name="<?php echo ASCU; ?>formNewAsignarCuenta" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog" style="width: 60%">
@@ -39,7 +42,7 @@ $buscar = Session::getPermiso("ASCUBS");
                     <label class="control-label col-md-2" for="prepend"><?php echo LABEL_ASC3; ?></label>
                     <div class="col-md-10">
                         <div class="input-group input-group-sm">
-                            <input class="form-control" type="text" id="<?php echo ASCU; ?>txt_comision" name="<?php echo ASCU; ?>txt_comision">
+                            <input class="form-control" type="text" id="<?php echo ASCU; ?>txt_comision" name="<?php echo ASCU; ?>txt_comision" value="<?php echo $comision['valor'] ?>">
                         </div>
                     </div>
                 </div>
@@ -174,7 +177,7 @@ $buscar = Session::getPermiso("ASCUBS");
                     },
 <?php echo ASCU; ?>txt_comision: {
                         required: true,
-                        decimal: true,
+                        number: true  
                         maxlength: 4
                     }
                 },
