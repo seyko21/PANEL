@@ -172,4 +172,6 @@ define('SEGCO_9','Estado');
 
 /*----------------------    ORDEN DE SERVICIO  ----------------------*/
 define('GNOSE_1','Ordenes de Servicio');
+define('GNOSE_2','Cronograma');
+define('GNOSE_3','Cronograma de Pagos');
 ?>

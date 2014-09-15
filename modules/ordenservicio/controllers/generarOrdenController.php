@@ -18,9 +18,10 @@ class generarOrdenController extends Controller{
     }
     
     public function getGridGenerarOrden(){
-        $editar   = Session::getPermiso('GNOSEED');
-        $eliminar = Session::getPermiso('GNOSEDE');
-        
+        $editar   = Session::getPermiso('ORSERED');
+        $eliminar = Session::getPermiso('ORSERDE');
+        $generar  = Session::getPermiso('ORSERGN');
+       
         $sEcho          =   $this->post('sEcho');
         
         $rResult = Obj::run()->generarOrdenModel->getGenerarOrden();
@@ -56,7 +57,7 @@ class generarOrdenController extends Controller{
                 
                 
                 /*registros a mostrar*/
-                $sOutput .= '["'.($num++).'","'.$aRow['orden_numero'].'","'.$aRow['nombrecompleto'].'","'.$aRow['cliente'].'","xx", ';
+                $sOutput .= '["'.($num++).'","'.$aRow['orden_numero'].'","'.$aRow['nombrecompleto'].'","'.$aRow['cliente'].'","xx",';
                 
                 /*
                  * configurando botones (add/edit/delete etc)
@@ -64,9 +65,9 @@ class generarOrdenController extends Controller{
                  */
                 $sOutput .= '"<div class=\"btn-group\">';
                  
-                if($editar['permiso']){
-                    $sOutput .= '<button type=\"button\" class=\"btn btn-primary btn-xs\" title=\"'.$editar['accion'].'\" onclick=\"generarOrden.getFormEditGenerarOrden(this,\''.$encryptReg.'\')\">';
-                    $sOutput .= '    <i class=\"fa fa-edit fa-lg\"></i>';
+                if($generar['permiso']){
+                    $sOutput .= '<button type=\"button\" class=\"'.$generar['theme'].'\" title=\"'.$generar['accion'].' '.GNOSE_2.'\" onclick=\"generarOrden.getFormCronograma(this,\''.$encryptReg.'\')\">';
+                    $sOutput .= '    <i class=\"'.$generar['icono'].'\"></i>';
                     $sOutput .= '</button>';
                 }
 //                if($eliminar['permiso']){
@@ -75,9 +76,8 @@ class generarOrdenController extends Controller{
 //                    $axion .= '</button>';
 //                }
                 
-                $sOutput .= ' </div>" ';
+                $sOutput .= '</div>"';
                 
-                $sOutput = substr_replace( $sOutput, "", -1 );
                 $sOutput .= '],';
 
             }
@@ -91,21 +91,8 @@ class generarOrdenController extends Controller{
 
     }
     
-    /*carga formulario (newGenerarOrden.phtml) para nuevo registro: GenerarOrden*/
-    public function getFormNewGenerarOrden(){
-        Obj::run()->View->render("formNewGenerarOrden");
-    }
-    
-    /*carga formulario (editGenerarOrden.phtml) para editar registro: GenerarOrden*/
-    public function getFormEditGenerarOrden(){
-        Obj::run()->View->render("formEditGenerarOrden");
-    }
-    
-    /*busca data para editar registro: GenerarOrden*/
-    public static function findGenerarOrden(){
-        $data = Obj::run()->generarOrdenModel->findGenerarOrden();
-            
-        return $data;
+    public function getFormCronograma(){
+        Obj::run()->View->render("formCronograma");
     }
     
     /*envia datos para grabar registro: GenerarOrden*/
@@ -115,26 +102,11 @@ class generarOrdenController extends Controller{
         echo json_encode($data);
     }
     
-    /*envia datos para editar registro: GenerarOrden*/
-    public function postEditGenerarOrden(){
-        $data = Obj::run()->generarOrdenModel->editGenerarOrden();
-        
-        echo json_encode($data);
-    }
+   
     
-    /*envia datos para eliminar registro: GenerarOrden*/
-    public function postDeleteGenerarOrden(){
-        $data = Obj::run()->generarOrdenModel->deleteGenerarOrden();
-        
-        echo json_encode($data);
-    }
     
-    /*envia datos para eliminar registros: GenerarOrden*/
-    public function postDeleteGenerarOrdenAll(){
-        $data = Obj::run()->generarOrdenModel->deleteGenerarOrdenAll();
-        
-        echo json_encode($data);
-    }
+    
+    
     
 }
 

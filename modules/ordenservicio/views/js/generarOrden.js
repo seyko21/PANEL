@@ -74,68 +74,14 @@ var generarOrden_ = function(){
         setup_widgets_desktop();
     };
     
-    this.publico.getFormNewGenerarOrden = function(btn){
+    this.publico.getFormCronograma = function(btn){
         simpleAjax.send({
             element: btn,
             dataType: "html",
-            root: _private.config.modulo + "getFormNewGenerarOrden",
+            root: _private.config.modulo + "getFormCronograma",
             fnCallback: function(data){
                 $("#cont-modal").append(data);  /*los formularios con append*/
-                $("#"+diccionario.tabs.GNOSE+"formNewGenerarOrden").modal("show");
-            }
-        });
-    };
-    
-    this.publico.postNewGenerarOrden = function(){
-        simpleAjax.send({
-            flag: 1,
-            element: "#"+diccionario.tabs.GNOSE+"btnGrGenerarOrden",
-            root: _private.config.modulo + "postNewGenerarOrden",
-            form: "#"+diccionario.tabs.GNOSE+"formNewGenerarOrden",
-            clear: true,
-            fnCallback: function(data) {
-                if(!isNaN(data.result) && parseInt(data.result) === 1){
-                    simpleScript.notify.ok({
-                        content: mensajes.MSG_3,
-                        callback: function(){
-                            simpleScript.reloadGrid("#"+diccionario.tabs.GNOSE+"gridGenerarOrden");
-                        }
-                    });
-                }else if(!isNaN(data.result) && parseInt(data.result) === 2){
-                    simpleScript.notify.error({
-                        content: "GenerarOrden ya existe."
-                    });
-                }
-            }
-        });
-    };
-    
-    this.publico.postDeleteGenerarOrdenAll = function(btn){
-        simpleScript.validaCheckBox({
-            id: "#"+diccionario.tabs.GNOSE+"gridGenerarOrden",
-            msn: mensajes.MSG_9,
-            fnCallback: function(){
-                simpleScript.notify.confirm({
-                    content: mensajes.MSG_7,
-                    callbackSI: function(){
-                        simpleAjax.send({
-                            flag: 3, //si se usa SP usar flag, sino se puede eliminar esta linea
-                            element: btn,
-                            form: "#"+diccionario.tabs.GNOSE+"formGridGenerarOrden",
-                            root: _private.config.modulo + "postDeleteGenerarOrdenAll",
-                            fnCallback: function(data) {
-                                if(!isNaN(data.result) && parseInt(data.result) === 1){
-                                    simpleScript.notify.ok({
-                                        content: mensajes.MSG_8,
-                                        callback: function(){
-                                            generarOrden.getGridGenerarOrden();
-                                        }
-                                    });
-                                }
-                            }
-                        });
-                    }
-                });
+                $("#"+diccionario.tabs.GNOSE+"formCronograma").modal("show");
             }
         });
     };
