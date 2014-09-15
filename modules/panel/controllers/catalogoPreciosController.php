@@ -24,6 +24,7 @@ class catalogoPreciosController extends Controller{
        $editar = Session::getPermiso('CATPRED');       
        $exportarpdf   = Session::getPermiso('CATPREP');
        $exportarexcel = Session::getPermiso('CATPREX'); 
+       $adjuntar = Session::getPermiso('CATPRAJ'); 
        $sEcho          =   $this->post('sEcho');
         
         $rResult = Obj::run()->catalogoPreciosModel->getGridProducto();
@@ -71,6 +72,11 @@ class catalogoPreciosController extends Controller{
                 if($editar['permiso'] == 1){
                     $sOutput .= '<button type=\"button\" class=\"'.$editar['theme'].'\" title=\"'.$editar['accion'].'\" onclick=\"catalogoPrecios.getEditarCaratula(\''.$encryptReg.'\',\''.$idProd.'\')\">';
                     $sOutput .= '    <i class=\"'.$editar['icono'].'\"></i>';
+                    $sOutput .= '</button>';
+                }
+                 if($adjuntar['permiso']){
+                    $sOutput .= '<button type=\"button\" class=\"'.$adjuntar['theme'].'\" title=\"'.$adjuntar['accion'].' (Imagen)\" onclick=\"catalogoPrecios.getFormAdjuntar(this,\''.$encryptReg.'\')\">';
+                    $sOutput .= '    <i class=\"'.$adjuntar['icono'].'\"></i>';
                     $sOutput .= '</button>';
                 }
                 if($exportarpdf['permiso'] == 1){
@@ -253,8 +259,17 @@ class catalogoPreciosController extends Controller{
         return $html;
         
     }
-        
-  
+    public function getFormAdjuntar() {    
+        Obj::run()->View->idCaratula = Formulario::getParam('_idCaratula');
+        Obj::run()->View->render('formAdjuntarImgCP');
+    }       
+   public function adjuntarImagen() {
+       echo Obj::run()->fichaTecnicaController->adjuntarImagen();
+    }
+    
+    public function deleteAdjuntar() {
+        echo Obj::run()->fichaTecnicaController->deleteAdjuntar();     
+    }           
     
 }
 

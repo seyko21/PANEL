@@ -9,9 +9,12 @@ $doc = Obj::run()->contratoModel->getAdjuntado();
                 <button type="button" class="close"  aria-hidden="true">
                     &times;
                 </button>
-                <h4 class="modal-title"><?php echo LABEL_A156; ?></h4>
+                <h4 class="modal-title"><?php echo LABEL_A156 ?></h4>
             </div>
             <div class="modal-body smart-form">
+                <h4>
+                <?php echo $doc['nombre']; ?>
+                </h4>
                 <form class="dropzone" id="mydropzone">
                     <input type="hidden" id="_idContrato" name="_idContrato" value="<?php echo $this->idContrato; ?>">
                 </form>

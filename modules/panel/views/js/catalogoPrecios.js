@@ -55,14 +55,14 @@ var catalogoPrecios_ = function(){
             aoColumns: [                
                 {sTitle: "Código", sWidth: "8%"},
                 {sTitle: "Ciudad", sWidth: "10%"},
-                {sTitle: "Ubicación", sWidth: "25%"},
+                {sTitle: "Ubicación", sWidth: "22%"},
                 {sTitle: "Elemento", sWidth: "10%"},
                 {sTitle: "Area m2", sWidth: "3%",  sClass: "center"},
                 {sTitle: "Precio", sWidth: "5%",  sClass: "right"},                
                 {sTitle: "Iluminado", sWidth: "5%",  sClass: "center"},                
                 {sTitle: "Estado", sWidth: "5%",  sClass: "center"},
                 {sTitle: "Imagen", sWidth: "8%",  sClass: "center", bSortable: false},
-                {sTitle: "Acciones", sWidth: "10%", sClass: "center", bSortable: false}
+                {sTitle: "Acciones", sWidth: "13%", sClass: "center", bSortable: false}
             ],
             aaSorting: [[2, 'asc']],
             sScrollY: "350px",
@@ -96,6 +96,22 @@ var catalogoPrecios_ = function(){
             }
         });
     };     
+    
+    this.publico.getFormAdjuntar = function(btn,id){
+        _private.idCaratula = id;
+        
+        simpleAjax.send({
+            element: btn,
+            dataType: 'html',
+            gifProcess: true,
+            data: '&_idCaratula='+id,
+            root: _private.config.modulo + 'getFormAdjuntar',
+            fnCallback: function(data){
+                $('#cont-modal').append(data);
+                $('#'+diccionario.tabs.TAB_CATPRE+'formAdjuntar').modal('show');
+            }
+        });
+    };       
     
     this.publico.postEditarCaratula = function(){       
         simpleAjax.send({
@@ -153,7 +169,32 @@ var catalogoPrecios_ = function(){
                   }
               }
           });
-      };    
+      };  
+      
+    this.publico.deleteAdjuntar = function(btn,id,img){
+        simpleScript.notify.confirm({
+            content: mensajes.MSG_7,
+            callbackSI: function(){
+                simpleAjax.send({
+                    element: btn,
+                    root: _private.config.modulo + 'deleteAdjuntar',
+                    data: '&_idCaratula='+id+'&_img='+img,
+                    fnCallback: function(data){
+                        if(!isNaN(data.result) && parseInt(data.result) === 1){
+                            simpleScript.notify.ok({
+                                content: mensajes.MSG_8,
+                                callback: function(){
+                                    $('#'+diccionario.tabs.TAB_CATPRE+'dow').attr('onclick','');
+                                    $('#'+diccionario.tabs.TAB_CATPRE+'dow').html(''); 
+                                    $('#'+diccionario.tabs.TAB_CATPRE+'btndow').css('display','none');
+                                }
+                            });
+                        }
+                    }
+                });
+            }
+        });
+    };         
     
     return this.publico;
     

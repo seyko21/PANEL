@@ -145,7 +145,7 @@ class contratoModel extends Model{
     
     public function getAdjuntado(){
         $query = "SELECT 
-                    imagen_firma
+                    imagen_firma, nombre
                 FROM lgk_contrato WHERE id_contrato = :id;";
         
         $parms = array(

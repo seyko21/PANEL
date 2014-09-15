@@ -1,8 +1,8 @@
 <?php
-$grabar = Session::getPermiso('FITECGR');
+$grabar = Session::getPermiso('TAB_CATPREGR');
 $doc = Obj::run()->fichaTecnicaModel->getAdjuntado();
 ?>
-<div id="<?php echo T102; ?>formAdjuntar" name="<?php echo T102; ?>formAdjuntar" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div id="<?php echo TAB_CATPRE; ?>formAdjuntar" name="<?php echo TAB_CATPRE; ?>formAdjuntar" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -16,11 +16,11 @@ $doc = Obj::run()->fichaTecnicaModel->getAdjuntado();
                     <input type="hidden" id="_idCaratula" name="_idCaratula" value="<?php echo $this->idCaratula; ?>">
                 </form>
                 <?php if(sizeof($doc) && (isset($doc['imagen']) && ($doc['imagen'] != '' or $doc['imagen']!= NULL ))) :?>
-                <a id="<?php echo T102; ?>dow" href="javascript:;" onclick="window.open('<?php echo 'public/img/uploads/'.$doc['imagen']; ?>','_blank');"><?php echo $doc['imagen'];?></a>
-                <button id="<?php echo T102; ?>btndow" type="button" class="btn btn-danger" style="padding: 5px" onclick="contrato.deleteAdjuntar(this,'<?php echo $this->idCaratula; ?>','<?php echo 'public/img/uploads/'.$doc['imagen']; ?>');"><i class="fa fa-trash-o"></i> Eliminar</button>
+                <a id="<?php echo TAB_CATPRE; ?>dow" href="javascript:;" onclick="window.open('<?php echo 'public/img/uploads/'.$doc['imagen']; ?>','_blank');"><?php echo $doc['imagen'];?></a>
+                <button id="<?php echo TAB_CATPRE; ?>btndow" type="button" class="btn btn-danger" style="padding: 5px" onclick="contrato.deleteAdjuntar(this,'<?php echo $this->idCaratula; ?>','<?php echo 'public/img/uploads/'.$doc['imagen']; ?>');"><i class="fa fa-trash-o"></i> Eliminar</button>
                 <?php else: ?>
-                <a id="<?php echo T102; ?>dow" href="javascript:;"></a>
-                 <button id="<?php echo T102; ?>btndow" type="button" class="btn btn-danger" style="padding: 5px;display: none"><i class="fa fa-trash-o"></i> Eliminar</button>
+                <a id="<?php echo TAB_CATPRE; ?>dow" href="javascript:;"></a>
+                 <button id="<?php echo TAB_CATPRE; ?>btndow" type="button" class="btn btn-danger" style="padding: 5px;display: none"><i class="fa fa-trash-o"></i> Eliminar</button>
                 <?php endif; ?>
             </div>
             <div class="modal-footer">
@@ -34,14 +34,14 @@ $doc = Obj::run()->fichaTecnicaModel->getAdjuntado();
     <!-- si no tiene permiso se anula submit desde cualquier input -->
     <?php if (!$grabar['permiso']): ?>
         <script>
-            simpleScript.noSubmit('#<?php echo T102; ?>formAdjuntar');
+            simpleScript.noSubmit('#<?php echo TAB_CATPRE; ?>formAdjuntar');
         </script>
     <?php endif; ?>
     <script>
         Dropzone.autoDiscover = false;
         $("#mydropzone").dropzone({
             acceptedFiles: ".jpeg,.jpg,.png,.gif,.JPEG,.JPG,.PNG,.GIF",
-            url: '<?php echo BASE_URL; ?>panel/fichaTecnica/adjuntarImagen',
+            url: '<?php echo BASE_URL; ?>panel/catalogoPrecios/adjuntarImagen',
             maxFiles: 1, // Number of files at a time
             maxFilesize: 10, //in MB
             addRemoveLinks: true,
@@ -55,11 +55,11 @@ $doc = Obj::run()->fichaTecnicaModel->getAdjuntado();
             complete: function(data){   
                 if (data.xhr != undefined){
                     var json = JSON.parse(data.xhr.responseText);                 
-                    $('#<?php echo T102; ?>dow').attr('onclick',"window.open('public/img/uploads/"+json.archivo+"','_blank');");
-                    $('#<?php echo T102; ?>dow').html(json.archivo); 
-                    $('#<?php echo T102; ?>btndow').attr('onclick',"contrato.deleteAdjuntar(this,<?php echo Aes::de($this->idCaratula); ?>,'public/img/uploads/"+json.archivo+"');");
-                    $('#<?php echo T102; ?>btndow').css('display','block');  
-                    fichaTecnica.getGridCaratula('<?php echo Aes::en($doc['id_producto']); ?>');  
+                    $('#<?php echo TAB_CATPRE; ?>dow').attr('onclick',"window.open('public/img/uploads/"+json.archivo+"','_blank');");
+                    $('#<?php echo TAB_CATPRE; ?>dow').html(json.archivo); 
+                    $('#<?php echo TAB_CATPRE; ?>btndow').attr('onclick',"contrato.deleteAdjuntar(this,<?php echo Aes::de($this->idCaratula); ?>,'public/img/uploads/"+json.archivo+"');");
+                    $('#<?php echo TAB_CATPRE; ?>btndow').css('display','block');  
+                    simpleScript.reloadGrid('#<?php echo TAB_CATPRE; ?>gridCatalogoPrecio'); 
                 }
             }
         });

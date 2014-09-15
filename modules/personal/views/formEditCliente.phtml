@@ -12,7 +12,7 @@ $data = clienteController::findCliente();
                 </button>
                 <h4 class="modal-title"><?php echo LABEL_RC3;?></h4>
             </div>
-            <div class="modal-body smart-form">
+            <div class="modal-body smart-form scroll-form">
                 <section>
                     <div class="row">
                         <label class="label col col-3"><?php echo LABEL_RC4; ?></label>
@@ -222,7 +222,7 @@ $data = clienteController::findCliente();
             </div>
             <div class="modal-footer">
                 <?php if($editar['permiso']):?>
-                <button id="<?php echo REGCL; ?>btnEcli" type="submit" class="<?php echo $editar['icono'];?>">
+                <button id="<?php echo REGCL; ?>btnEcli" type="submit" class="<?php echo $editar['theme'];?>">
                     <i class="<?php echo $editar['icono'];?>"></i> <?php echo $editar['accion']; ?>
                 </button>
                 <?php endif; ?>

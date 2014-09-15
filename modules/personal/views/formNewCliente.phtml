@@ -19,7 +19,7 @@ $grabar = Session::getPermiso("REGCLGR");
                 </button>
                 <h4 class="modal-title"><?php echo LABEL_RC1;?></h4>
             </div>
-            <div class="modal-body smart-form">
+            <div class="modal-body smart-form scroll-form">
                 <section>
                     <div class="row">
                         <label class="label col col-3"><?php echo LABEL_RC4; ?></label>
@@ -135,7 +135,7 @@ $grabar = Session::getPermiso("REGCLGR");
             </div>
             <div class="modal-footer">
                 <?php if($grabar['permiso']):?>
-                <button id="<?php echo REGCL; ?>btnGrCliente" type="submit" class="<?php echo $grabar['icono'];?>">
+                <button id="<?php echo REGCL; ?>btnGrCliente" type="submit" class="<?php echo $grabar['theme'];?>">
                     <i class="<?php echo $grabar['icono'];?>"></i> <?php echo $grabar['accion']; ?>
                 </button>
                 <?php endif; ?>

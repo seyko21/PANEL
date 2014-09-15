@@ -319,7 +319,7 @@ class fichaTecnicaModel extends Model{
     
     public function getAdjuntado(){
         $query = "SELECT 
-                    imagen, id_producto
+                    imagen, id_producto, codigo
                 FROM lgk_caratula WHERE id_caratula = :id;";
         
         $parms = array(
