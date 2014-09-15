@@ -169,37 +169,37 @@ class registrarVendedorController extends Controller {
     }
 
     public function postAccesoVendedor() {
-        $idVendedor = Formulario::getParam('_idVendedor');
+        $idVendedor = trim(Formulario::getParam('_idVendedor'));
         $nomVendedor = Formulario::getParam('_vendedor');
         $email = Formulario::getParam('_mail');
-
-
+        $data = Obj::run()->registrarVendedorModel->getEmailEmpresa();        
+        $emailEmpresa = $data['valor'];
+        
         $cad = explode('@', $email);
 
         $body = '
-            <h3>ACCESOS</h3>
+            <h3><b>ACCESOS</b></h3>
             <h3>Estimado: ' . $nomVendedor . '</h3>
-        <table border="1" style="border-collapse:collapse">
-           <tr>
-                <td style="text-align:center">
-                    <p>Usted a sido agregado como usuario a SEVEND.</p>
-                    <p><a href="' . BASE_URL . 'personal/registrarVendedor/confirm/' . $idVendedor . '/' . $nomVendedor . '">Pulse aquí</a> para ingresar al sistema.</p>
-                </td>
-           </tr>
-        </table>';
+            <p>Este es un mensaje automatico enviado desde www.sevend.pe</p>
+            <table border="0" style="border-collapse:collapse">
+               <tr>
+                    <td>
+                        <p>El motivo del mensaje es porque Usted a sido agregado como usuario al sistema de SEVEND.</p>
+                        <p><a href="' . BASE_URL . 'personal/registrarVendedor/confirm/'.$idVendedor.'/'.$nomVendedor.'">Pulse aqui</a> para ingresar al sistema.</p>
+                    </td>
+               </tr>
+            </table>';
 
 
         $mail = new PHPMailer(); // defaults to using php "mail()"
 //        $body             = file_get_contents('contents.html');
 //        $body             = eregi_replace("[\]",'',$html);
 
-        $mail->AddReplyTo("name@gmail.com", "First Last");
+        $mail->SetFrom($emailEmpresa, 'SevenD Marketing');
 
-        $mail->SetFrom('name@gmail.com', 'First Last');
+//        $mail->AddReplyTo("name@gmail.com", "First Last");
 
-        $mail->AddReplyTo("name@gmail.com", "First Last");
-
-        $mail->AddAddress($email, 'admin@adm.com');
+        $mail->AddAddress($email, $nomVendedor);
 
         $mail->Subject = "Accesos a SEVEND";
 

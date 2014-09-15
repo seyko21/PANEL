@@ -268,6 +268,21 @@ class registrarVendedorModel extends Model{
         return $data;
     }
     
+    public function getEmailEmpresa(){
+        $query = "SELECT
+            `valor`, `alias`
+          FROM `pub_parametro`
+          WHERE estado = :estado AND alias = :alias; ";
+        
+        $parms = array(
+            ':estado'=>'A',
+            ':alias'=>'EMAIL'
+        );
+        
+        $data = $this->queryOne($query,$parms);
+        return $data;
+    }
+    
 }
 
 ?>
