@@ -19,7 +19,7 @@ class generarOrdenController extends Controller{
     
     public function getGridGenerarOrden(){
         $editar   = Session::getPermiso('ORSERED');
-        $eliminar = Session::getPermiso('ORSERDE');
+        $email    = Session::getPermiso('ORSEREE');
         $generar  = Session::getPermiso('ORSERGN');
        
         $sEcho          =   $this->post('sEcho');
@@ -53,11 +53,11 @@ class generarOrdenController extends Controller{
                 
                 /*antes de enviar id se encrypta*/
                 $encryptReg = Aes::en($aRow['id_ordenservicio']);
-                
+                $idUser = Aes::en($aRow['id_usuario']);
                 
                 
                 /*registros a mostrar*/
-                $sOutput .= '["'.($num++).'","'.$aRow['orden_numero'].'","'.$aRow['nombrecompleto'].'","'.$aRow['cliente'].'","xx",';
+                $sOutput .= '["'.($num++).'","'.$aRow['orden_numero'].'","'.$aRow['cotizacion_numero'].'","'.$aRow['nombrecompleto'].'","'.$aRow['cliente'].'","xx",';
                 
                 /*
                  * configurando botones (add/edit/delete etc)
@@ -70,11 +70,11 @@ class generarOrdenController extends Controller{
                     $sOutput .= '    <i class=\"'.$generar['icono'].'\"></i>';
                     $sOutput .= '</button>';
                 }
-//                if($eliminar['permiso']){
-//                    $axion .= '<button type=\"button\" class=\"'.$eliminar['theme'].'\" title=\"'.$eliminar['accion'].'\" onclick=\"generarOrden.postDeleteGenerarOrden(this,\''.$encryptReg.'\')\">';
-//                    $axion .= '    <i class=\"'.$eliminar['icono'].'\"></i>';
-//                    $axion .= '</button>';
-//                }
+                if($email['permiso']){
+                    $sOutput .= '<button type=\"button\" class=\"'.$email['theme'].'\" title=\"'.$email['accion'].'\" onclick=\"registrarVendedor.postAccesoVendedor(this,\'' . $idUser . '\',\'' . $aRow['nombrecompleto'] . '\',\'' . $aRow['email'] . '\')\">';
+                    $sOutput .= '    <i class=\"'.$email['icono'].'\"></i>';
+                    $sOutput .= '</button>';
+                }
                 
                 $sOutput .= '</div>"';
                 

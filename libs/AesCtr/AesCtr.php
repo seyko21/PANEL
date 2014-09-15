@@ -88,7 +88,7 @@ class AesCtr extends Aes {
     $ciphertext = $ctrTxt . implode('', $ciphertxt);
     $ciphertext = base64_encode($ciphertext);
     $ciphertext = str_replace("+", "**", $ciphertext);
-    $ciphertext = str_replace("/", "¿¿", $ciphertext);
+    $ciphertext = str_replace("/", "^^", $ciphertext);
     $ciphertext = str_replace("=", "@", $ciphertext);
     return $ciphertext;
   }
@@ -105,7 +105,7 @@ class AesCtr extends Aes {
   public static function decrypt($ciphertext, $password, $nBits) {
     $ciphertext = str_replace("**", "+", $ciphertext);
     $ciphertext = str_replace("**", " ", $ciphertext);
-    $ciphertext = str_replace("¿¿", "/", $ciphertext);
+    $ciphertext = str_replace("^^", "/", $ciphertext);
     $ciphertext = str_replace("@", "=", $ciphertext);
     
     $blockSize = 16;  // block size fixed at 16 bytes / 128 bits (Nb=4) for AES

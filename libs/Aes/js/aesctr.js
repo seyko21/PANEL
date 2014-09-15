@@ -63,27 +63,27 @@ Aes.Ctr.post = function(plaintext, nBits) {
   
   //alert((new Date()) - t);
   ciphertext = ciphertext.replace("+","**"); 
-  ciphertext = ciphertext.replace("/","¿¿"); 
+  ciphertext = ciphertext.replace("/","^^"); 
   ciphertext = ciphertext.replace("=","@"); 
   ciphertext = ciphertext.replace("=","@"); 
   
   ciphertext = ciphertext.replace("+","**"); 
-  ciphertext = ciphertext.replace("/","¿¿"); 
+  ciphertext = ciphertext.replace("/","^^"); 
   ciphertext = ciphertext.replace("=","@"); 
   ciphertext = ciphertext.replace("=","@"); 
   
   ciphertext = ciphertext.replace("+","**"); 
-  ciphertext = ciphertext.replace("/","¿¿"); 
+  ciphertext = ciphertext.replace("/","^^"); 
   ciphertext = ciphertext.replace("=","@"); 
   ciphertext = ciphertext.replace("=","@"); 
   
   ciphertext = ciphertext.replace("+","**"); 
-  ciphertext = ciphertext.replace("/","¿¿"); 
+  ciphertext = ciphertext.replace("/","^^"); 
   ciphertext = ciphertext.replace("=","@"); 
   ciphertext = ciphertext.replace("=","@"); 
   
   ciphertext = ciphertext.replace("+","**"); 
-  ciphertext = ciphertext.replace("/","¿¿"); 
+  ciphertext = ciphertext.replace("/","^^"); 
   ciphertext = ciphertext.replace("=","@"); 
   ciphertext = ciphertext.replace("=","@"); 
   return ciphertext;
@@ -92,27 +92,27 @@ Aes.Ctr.post = function(plaintext, nBits) {
 
 Aes.Ctr.get = function(ciphertext, nBits) {
   ciphertext = ciphertext.replace("**","+"); 
-  ciphertext = ciphertext.replace("¿¿","/"); 
+  ciphertext = ciphertext.replace("^^","/"); 
   ciphertext = ciphertext.replace("@","=");
   ciphertext = ciphertext.replace("@","=");
   
   ciphertext = ciphertext.replace("**","+"); 
-  ciphertext = ciphertext.replace("¿¿","/"); 
+  ciphertext = ciphertext.replace("^^","/"); 
   ciphertext = ciphertext.replace("@","=");
   ciphertext = ciphertext.replace("@","=");
   
   ciphertext = ciphertext.replace("**","+"); 
-  ciphertext = ciphertext.replace("¿¿","/"); 
+  ciphertext = ciphertext.replace("^^","/"); 
   ciphertext = ciphertext.replace("@","=");
   ciphertext = ciphertext.replace("@","=");
   
   ciphertext = ciphertext.replace("**","+"); 
-  ciphertext = ciphertext.replace("¿¿","/"); 
+  ciphertext = ciphertext.replace("^^","/"); 
   ciphertext = ciphertext.replace("@","=");
   ciphertext = ciphertext.replace("@","=");
   
   ciphertext = ciphertext.replace("**","+"); 
-  ciphertext = ciphertext.replace("¿¿","/"); 
+  ciphertext = ciphertext.replace("^^","/"); 
   ciphertext = ciphertext.replace("@","=");
   ciphertext = ciphertext.replace("@","=");
   

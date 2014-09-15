@@ -53,7 +53,8 @@ var generarOrden_ = function(){
             iDisplayLength: 10,            
             aoColumns: [
                 {sTitle: "N°", sWidth: "1%",bSortable: false},
-                {sTitle: "Código", sWidth: "10%"},
+                {sTitle: "Código", sWidth: "10%",sClass: "center"},
+                {sTitle: "Nro. Cotización", sWidth: "10%",sClass: "center"},
                 {sTitle: "Representante", sWidth: "25%"},
                 {sTitle: "Cliente", sWidth: "25%"},
                 {sTitle: "Estado", sWidth: "10%", sClass: "center", bSortable: false},
@@ -63,7 +64,7 @@ var generarOrden_ = function(){
             sScrollY: "300px",
             sAjaxSource: _private.config.modulo+"getGridGenerarOrden",
             fnDrawCallback: function() {
-                $("#"+diccionario.tabs.GNOSE+"gridGenerarOrden_filter").find("input").attr("placeholder","Buscar por GenerarOrden").css("width","250px");
+                $("#"+diccionario.tabs.GNOSE+"gridGenerarOrden_filter").find("input").attr("placeholder","Buscar por código, cotización o representante").css("width","340px");
                 /*para hacer evento invisible*/
                 simpleScript.removeAttr.click({
                     container: "#widget_"+diccionario.tabs.GNOSE,

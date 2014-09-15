@@ -38,7 +38,7 @@ class generarOrdenModel extends Model{
     
     /*data para el grid: GenerarOrden*/
     public function getGenerarOrden(){
-        $aColumns       =   array("","2","6","11" ); //para la ordenacion y pintado en html
+        $aColumns       =   array("","2","4","6","11" ); //para la ordenacion y pintado en html
         /*
 	 * Ordenando, se verifica por que columna se ordenara
 	 */
