@@ -175,8 +175,6 @@ class registrarVendedorController extends Controller {
         $data = Obj::run()->registrarVendedorModel->getEmailEmpresa();        
         $emailEmpresa = $data['valor'];
         
-        $cad = explode('@', $email);
-
         $body = '
             <h3><b>ACCESOS</b></h3>
             <h3>Estimado: ' . $nomVendedor . '</h3>
@@ -190,14 +188,11 @@ class registrarVendedorController extends Controller {
                </tr>
             </table>';
 
-
         $mail = new PHPMailer(); // defaults to using php "mail()"
-//        $body             = file_get_contents('contents.html');
-//        $body             = eregi_replace("[\]",'',$html);
 
+        //$mail->IsSMTP();
+    
         $mail->SetFrom($emailEmpresa, 'SevenD Marketing');
-
-//        $mail->AddReplyTo("name@gmail.com", "First Last");
 
         $mail->AddAddress($email, $nomVendedor);
 
@@ -205,17 +200,11 @@ class registrarVendedorController extends Controller {
 
         $mail->MsgHTML($body);
 
-//        $mail->AddAttachment("public/img/phpmailer.gif");      // attachment
-//        $mail->AddAttachment("public/img/phpmailer_mini.gif"); // attachment
-
-        $data = array('result' => 2);
         /* validar si dominio de correo existe */
-        if (checkdnsrr($cad[1])) {
-            if ($mail->Send()) {
-                $data = array('result' => 1);
-            } else {
-                $data = array('result' => 2);
-            }
+        if ($mail->Send()) {
+            $data = array('result' => 1);
+        } else {
+            $data = array('result' => 2);
         }
 
         echo json_encode($data);

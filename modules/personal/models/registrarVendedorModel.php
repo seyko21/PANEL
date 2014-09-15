@@ -216,11 +216,13 @@ class registrarVendedorModel extends Model{
     
     public function postPassVendedor(){
         $query = "UPDATE `mae_usuario` SET
-                    `clave` = :clave
+                    `clave` = :clave,
+                    clave_comun = :comun
                 WHERE `id_usuario` = :idPersona;";
         $parms = array(
             ':idPersona' => $this->_idPersona,
-            ':clave' => md5($this->_pass.APP_PASS_KEY)
+            ':clave' => md5($this->_pass.APP_PASS_KEY),
+            ':comun' => $this->_pass
         );
         $this->execute($query,$parms);
         $data = array('result'=>1);
