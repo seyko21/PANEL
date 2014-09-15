@@ -10,7 +10,7 @@ var generarOrden_ = function(){
     /*metodos privados*/
     var _private = {};
     
-    _private.idGenerarOrden = 0;
+    _private.idOrden = 0;
     
     _private.config = {
         modulo: "ordenservicio/generarOrden/"
@@ -75,7 +75,9 @@ var generarOrden_ = function(){
         setup_widgets_desktop();
     };
     
-    this.publico.getFormCronograma = function(btn){
+    this.publico.getFormCronograma = function(btn,id){
+        _private.idOrden = id;
+        
         simpleAjax.send({
             element: btn,
             dataType: "html",

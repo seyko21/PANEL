@@ -1,5 +1,4 @@
 <?php
-
 /*
  * Documento   : nuevaAccion
  * Creado      : 07-jul-2014
@@ -19,15 +18,36 @@ $grabar = Session::getPermiso('ORSERGR');
             </div>
             <div class="modal-body smart-form">
                
-             
+                <section>
+                    <div class="row">
+                        <label class="label col col-2"><?php echo GNOSE_4; ?></label>
+                        <div class="col col-3">
+                            <label class="input"> 
+                                <i class="icon-append fa fa-keyboard-o"></i>
+                                <input type="text" id="<?php echo GNOSE; ?>txt_descripcion" name="<?php echo GNOSE; ?>txt_descripcion">
+                                <b class="tooltip tooltip-top-right"><i class="fa fa-keyboard-o txt-color-teal"></i> <?php echo GNOSE_5; ?></b>
+                            </label>
+                        </div>
+                        
+                        
+                        <label class="label col col-2"><?php echo GNOSE_6; ?></label>
+                        <div class="col col-3">
+                            <label class="input"> 
+                                <i class="icon-append fa fa-calendar-o "></i>
+                                <input type="text" id="<?php echo GNOSE; ?>txt_fechapago" name="<?php echo GNOSE; ?>txt_fechapago">
+                                <b class="tooltip tooltip-top-right"><i class="fa fa-question-circle txt-color-teal"></i> <?php echo GNOSE_7; ?></b>
+                            </label>
+                        </div>
+                        <?php if($grabar['permiso']):?>
+                        <button id="CRDACbtnGrabaAccion" type="submit" class="<?php echo $grabar['theme']; ?>" style="padding: 5px">
+                            <i class="<?php echo $grabar['icono']; ?>"></i> <?php echo $grabar['accion']; ?>
+                        </button>
+                        <?php endif; ?>
+                    </div>
+                </section>
                
             </div>
-            <div class="modal-footer">
-                <?php if($grabar['permiso']):?>
-                <button id="CRDACbtnGrabaAccion" type="submit" class="<?php echo $grabar['theme']; ?>">
-                    <i class="<?php echo $grabar['icono']; ?>"></i> <?php echo $grabar['accion']; ?>
-                </button>
-                <?php endif; ?>
+            <div class="modal-footer">                
                 <button type="button" class="<?php echo THEME_CLOSE; ?>">
                     <i class="<?php echo ICON_CLOSE; ?>"></i> <?php echo BTN_CLOSE; ?>
                 </button>
@@ -42,5 +62,7 @@ $grabar = Session::getPermiso('ORSERGR');
 </script>
 <?php endif; ?>
 <script>
-    $('.xhelp').tooltip({placement:'right'});
+    simpleScript.setEvent.date({
+      element: '#<?php echo GNOSE; ?>txt_fechapago' 
+    });
 </script>

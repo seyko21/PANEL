@@ -174,4 +174,8 @@ define('SEGCO_9','Estado');
 define('GNOSE_1','Ordenes de Servicio');
 define('GNOSE_2','Cronograma');
 define('GNOSE_3','Cronograma de Pagos');
+define('GNOSE_4','Monto');
+define('GNOSE_5','Ingrese monto de la cuota a programar');
+define('GNOSE_6','Fecha de pago');
+define('GNOSE_7','Ingrese la fecha de pago de la cuota');
 ?>
