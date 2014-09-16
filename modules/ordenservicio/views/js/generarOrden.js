@@ -135,6 +135,7 @@ var generarOrden_ = function(){
             element: btn,
             dataType: "html",
             root: _private.config.modulo + "getFormEditOrden",
+            data: '&_idOrden='+_private.idOrden,
             fnCallback: function(data){
                 $("#cont-modal").append(data);  /*los formularios con append*/
                 $("#"+diccionario.tabs.GNOSE+"formEditOrden").modal("show");
@@ -166,6 +167,26 @@ var generarOrden_ = function(){
                 }
             });
         }
+    };
+    
+    this.publico.postEditOrden = function(){
+        simpleAjax.send({
+            element: '#'+diccionario.tabs.GNOSE+'btnEdOrd',
+            root: _private.config.modulo + 'postEditOrden',
+            form: '#'+diccionario.tabs.GNOSE+'formEditOrden',
+            data: '&_idOrden='+_private.idOrden,
+            clear: true,
+            fnCallback: function(data) {
+                if(!isNaN(data.result) && parseInt(data.result) === 1){
+                    simpleScript.notify.ok({
+                        content: mensajes.MSG_3,
+                        callback: function(){
+                            simpleScript.closeModal('#'+diccionario.tabs.GNOSE+'formEditOrden');
+                        }
+                    });
+                }
+            }
+        });
     };
     
     return this.publico;

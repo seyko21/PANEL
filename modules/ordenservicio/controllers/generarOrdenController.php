@@ -162,6 +162,18 @@ class generarOrdenController extends Controller{
 
     }
     
+    public function postEditOrden(){
+        $data = Obj::run()->generarOrdenModel->editOrden();
+        
+        echo json_encode($data);
+    }
+    
+    public function findOrden(){
+        $data = Obj::run()->generarOrdenModel->findOrden();
+        
+        return $data;
+    }
+    
 }
 
 ?>

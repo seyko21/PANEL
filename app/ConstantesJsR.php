@@ -23,3 +23,4 @@ var diccionario = {
         REGCL: '<?php echo REGCL; ?>',
         SEGCO: '<?php echo SEGCO; ?>',
         GNOSE: '<?php echo GNOSE; ?>',
+        SEGPA: '<?php echo SEGPA; ?>',

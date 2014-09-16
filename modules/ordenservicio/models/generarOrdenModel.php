@@ -13,6 +13,7 @@ class generarOrdenModel extends Model{
     private $_idOrden;
     private $_monto;
     private $_fechaPago;
+    private $_descuento;
     private $_usuario;
     
     /*para el grid*/
@@ -31,6 +32,7 @@ class generarOrdenModel extends Model{
         $this->_idOrden   = Aes::de(Formulario::getParam("_idOrden"));    /*se decifra*/
         $this->_usuario     = Session::get("sys_idUsuario");
         $this->_monto  = Formulario::getParam(GNOSE."txt_monto"); 
+        $this->_descuento  = str_replace(',','',Formulario::getParam(GNOSE."txt_descuento"));
         $this->_fechaPago  = Functions::cambiaf_a_mysql(Formulario::getParam(GNOSE."txt_fechapago")); 
         
         $this->_iDisplayStart  = Formulario::getParam("iDisplayStart"); 
@@ -103,6 +105,32 @@ class generarOrdenModel extends Model{
             ":sSearch" => $this->_sSearch,
         );
         $data = $this->queryAll($query,$parms);
+        return $data;
+    }
+    
+    public function editOrden(){
+        $query = "CALL sp_ordseOrdenServicioCuota(:flag,:idOrden,:monto,:fechaPago,:usuario);";
+        
+        $parms = array(
+            ':flag'=>2,
+            ':idOrden'=>$this->_idOrden,
+            ':monto'=>$this->_descuento,
+            ':fechaPago'=>$this->_fechaPago,
+            ':usuario'=>$this->_usuario,
+        );
+        
+        $data = $this->queryOne($query,$parms);
+        return $data;
+    }
+    
+    public function findOrden(){
+        $query = " SELECT fecha_orden,descuentos FROM lgk_ordenservicio WHERE id_ordenservicio = :idOrden; ";
+        
+        $parms = array(
+            ':idOrden'=>$this->_idOrden
+        );
+        
+        $data = $this->queryOne($query,$parms);
         return $data;
     }
     

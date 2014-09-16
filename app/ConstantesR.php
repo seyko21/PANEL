@@ -18,4 +18,5 @@ define("CLIT","CLIT");             /*tab modulo CLIENTE*/
 define("REGCL","REGCL");             /*tab modulo CLIENTE*/
 define("SEGCO","CEGCO");             /*tab modulo SEGUIMIENTOCOTIZACION*/
 define("GNOSE","JNOSE");             /*tab modulo GENERARORDEN*/
+define("SEGPA","SEGPA");             /*tab modulo SEGUIMIENTOPAGO*/
 ?>
