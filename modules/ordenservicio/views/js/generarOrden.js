@@ -90,8 +90,8 @@ var generarOrden_ = function(){
             iDisplayLength: 50,            
             aoColumns: [
                 {sTitle: "N°", sWidth: "1%",bSortable: false},
-                {sTitle: "Monto", sWidth: "30%",sClass: "right",bSortable: false},
-                {sTitle: "Fecha Pago", sWidth: "10%",sClass: "center",bSortable: false},
+                {sTitle: "Monto", sWidth: "10%",sClass: "right",bSortable: false},
+                {sTitle: "Fecha Pago", sWidth: "20%",sClass: "center",bSortable: false},
                 {sTitle: "Acciones", sWidth: "8%", sClass: "center", bSortable: false}
             ],
             aaSorting: [[0, "asc"]],
@@ -112,7 +112,7 @@ var generarOrden_ = function(){
         setup_widgets_desktop();
     };
     
-    this.publico.getFormCronograma = function(btn,id,monto){
+    this.publico.getFormCronograma = function(btn,id,monto,norden){
         _private.idOrden = id;
         _private.montoTotal = monto;
         
@@ -120,6 +120,7 @@ var generarOrden_ = function(){
             element: btn,
             dataType: "html",
             root: _private.config.modulo + "getFormCronograma",
+            data: '&_norden='+norden,
             fnCallback: function(data){
                 $("#cont-modal").append(data);  /*los formularios con append*/
                 $("#"+diccionario.tabs.GNOSE+"formCronograma").modal("show");
@@ -127,41 +128,44 @@ var generarOrden_ = function(){
         });
     };
     
-    this.publico.postCuota = function(){
-        var c = 0,n=0;
-        $('#'+diccionario.tabs.GNOSE+'gridCuotas').find('tbody').find('tr').each(function(){
-            n = simpleScript.deleteComa($.trim($(this).find('td:eq(1)').html()));
-            c += parseFloat(n);
-        });
-        
-        if(c > _private.montoTotal){
-            simpleScript.notify.warning({
-                content: 'Cuotas superan monto total ('+parseFloat(_private.montoTotal).toFixed(2)+') de orden de servicio'
-            });
-            return false;
-        }
+    this.publico.getFormEditOrden = function(btn,id){
+        _private.idOrden = id;
         
         simpleAjax.send({
-            element: '#'+diccionario.tabs.GNOSE+'btnGrCro',
-            root: _private.config.modulo + 'postCuota',
-            form: '#'+diccionario.tabs.GNOSE+'formCronograma',
-            data: '&_idOrden='+_private.idOrden,
-            clear: true,
-            fnCallback: function(data) {
-                if(!isNaN(data.result) && parseInt(data.result) === 1){
-                    simpleScript.notify.ok({
-                        content: mensajes.MSG_3,
-                        callback: function(){
-                            generarOrden.getGridCuotas();
-                        }
-                    });
-                }else if(!isNaN(data.result) && parseInt(data.result) === 2){
-                    simpleScript.notify.error({
-                        content: mensajes.MSG_4
-                    });
-                }
+            element: btn,
+            dataType: "html",
+            root: _private.config.modulo + "getFormEditOrden",
+            fnCallback: function(data){
+                $("#cont-modal").append(data);  /*los formularios con append*/
+                $("#"+diccionario.tabs.GNOSE+"formEditOrden").modal("show");
             }
         });
+    };
+    
+    this.publico.postCuota = function(){
+        if(!generarOrdenScript.validaCuota(_private.montoTotal)){
+            simpleAjax.send({
+                element: '#'+diccionario.tabs.GNOSE+'btnGrCro',
+                root: _private.config.modulo + 'postCuota',
+                form: '#'+diccionario.tabs.GNOSE+'formCronograma',
+                data: '&_idOrden='+_private.idOrden,
+                clear: true,
+                fnCallback: function(data) {
+                    if(!isNaN(data.result) && parseInt(data.result) === 1){
+                        simpleScript.notify.ok({
+                            content: mensajes.MSG_3,
+                            callback: function(){
+                                generarOrden.getGridCuotas();
+                            }
+                        });
+                    }else if(!isNaN(data.result) && parseInt(data.result) === 2){
+                        simpleScript.notify.error({
+                            content: mensajes.MSG_4
+                        });
+                    }
+                }
+            });
+        }
     };
     
     return this.publico;

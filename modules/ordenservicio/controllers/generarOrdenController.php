@@ -65,8 +65,13 @@ class generarOrdenController extends Controller{
                  */
                 $sOutput .= '"<div class=\"btn-group\">';
                  
+                if($editar['permiso']){
+                    $sOutput .= '<button type=\"button\" class=\"'.$editar['theme'].'\" title=\"'.$editar['accion'].'\" onclick=\"generarOrden.getFormEditOrden(this,\''.$encryptReg.'\')\">';
+                    $sOutput .= '    <i class=\"'.$editar['icono'].'\"></i>';
+                    $sOutput .= '</button>';
+                }
                 if($generar['permiso']){
-                    $sOutput .= '<button type=\"button\" class=\"'.$generar['theme'].'\" title=\"'.$generar['accion'].' '.GNOSE_2.'\" onclick=\"generarOrden.getFormCronograma(this,\''.$encryptReg.'\',\''.$aRow['monto_total'].'\')\">';
+                    $sOutput .= '<button type=\"button\" class=\"'.$generar['theme'].'\" title=\"'.$generar['accion'].' '.GNOSE_2.'\" onclick=\"generarOrden.getFormCronograma(this,\''.$encryptReg.'\',\''.$aRow['monto_total'].'\',\''.$aRow['orden_numero'].'\')\">';
                     $sOutput .= '    <i class=\"'.$generar['icono'].'\"></i>';
                     $sOutput .= '</button>';
                 }
@@ -93,6 +98,10 @@ class generarOrdenController extends Controller{
     
     public function getFormCronograma(){
         Obj::run()->View->render("formCronograma");
+    }
+    
+    public function getFormEditOrden(){
+        Obj::run()->View->render("formEditOrden");
     }
     
     public function postCuota(){
