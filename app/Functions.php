@@ -194,9 +194,11 @@ class Functions{
     }
     
     public static function cambiaf_a_mysql($fecha){
-	$mifecha = explode("/",$fecha);
-	$lafecha=$mifecha[2]."-".$mifecha[1]."-".$mifecha[0];
-    	return $lafecha; 		
+        if(!empty($fecha)){
+            $mifecha = explode("/",$fecha);
+            $lafecha=$mifecha[2]."-".$mifecha[1]."-".$mifecha[0];
+            return $lafecha; 
+        }
     } 	
     
     public static function cambiaf_a_normal($fecha){

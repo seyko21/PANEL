@@ -57,7 +57,7 @@ class generarOrdenController extends Controller{
                 
                 
                 /*registros a mostrar*/
-                $sOutput .= '["'.($num++).'","'.$aRow['orden_numero'].'","'.$aRow['cotizacion_numero'].'","'.$aRow['nombrecompleto'].'","'.$aRow['cliente'].'","xx",';
+                $sOutput .= '["'.($num++).'","'.$aRow['orden_numero'].'","'.$aRow['cotizacion_numero'].'","'.$aRow['nombrecompleto'].'","'.$aRow['cliente'].'","'.number_format($aRow['monto_total'],2).'",';
                 
                 /*
                  * configurando botones (add/edit/delete etc)
@@ -66,7 +66,7 @@ class generarOrdenController extends Controller{
                 $sOutput .= '"<div class=\"btn-group\">';
                  
                 if($generar['permiso']){
-                    $sOutput .= '<button type=\"button\" class=\"'.$generar['theme'].'\" title=\"'.$generar['accion'].' '.GNOSE_2.'\" onclick=\"generarOrden.getFormCronograma(this,\''.$encryptReg.'\')\">';
+                    $sOutput .= '<button type=\"button\" class=\"'.$generar['theme'].'\" title=\"'.$generar['accion'].' '.GNOSE_2.'\" onclick=\"generarOrden.getFormCronograma(this,\''.$encryptReg.'\',\''.$aRow['monto_total'].'\')\">';
                     $sOutput .= '    <i class=\"'.$generar['icono'].'\"></i>';
                     $sOutput .= '</button>';
                 }
@@ -95,18 +95,63 @@ class generarOrdenController extends Controller{
         Obj::run()->View->render("formCronograma");
     }
     
-    /*envia datos para grabar registro: GenerarOrden*/
-    public function postNewGenerarOrden(){
-        $data = Obj::run()->generarOrdenModel->newGenerarOrden();
+    public function postCuota(){
+        $data = Obj::run()->generarOrdenModel->insertCuota();
         
         echo json_encode($data);
     }
     
-   
-    
-    
-    
-    
+    public function getGridCuotas(){
+        $eliminar   = Session::getPermiso('ORSERDE');
+       
+        $sEcho          =   $this->post('sEcho');
+        
+        $rResult = Obj::run()->generarOrdenModel->getGridCuotas();
+        
+        if(!isset($rResult['error'])){  
+            $iTotal         = isset($rResult[0]['total'])?$rResult[0]['total']:0;
+            
+            $sOutput = '{';
+            $sOutput .= '"sEcho": '.intval($sEcho).', ';
+            $sOutput .= '"iTotalRecords": '.$iTotal.', ';
+            $sOutput .= '"iTotalDisplayRecords": '.$iTotal.', ';
+            $sOutput .= '"aaData": [ ';     
+            
+            foreach ( $rResult as $aRow ){
+                
+                
+                /*antes de enviar id se encrypta*/
+                $encryptReg = Aes::en($aRow['id_ordenservicio']);
+                
+                /*registros a mostrar*/
+                $sOutput .= '["'.$aRow['numero_cuota'].'","'.number_format($aRow['monto_pago'], 2).'","'.$aRow['fechapago'].'","xx",';
+                
+                /*
+                 * configurando botones (add/edit/delete etc)
+                 * se verifica si tiene permisos para editar
+                 */
+                $sOutput .= '"<div class=\"btn-group\">';
+                 
+                if($eliminar['permiso']){
+                    $sOutput .= '<button type=\"button\" class=\"'.$eliminar['theme'].'\" title=\"'.$eliminar['accion'].'\" onclick=\"generarOrden.getFormCronograma(this,\''.$encryptReg.'\')\">';
+                    $sOutput .= '    <i class=\"'.$eliminar['icono'].'\"></i>';
+                    $sOutput .= '</button>';
+                }
+                
+                $sOutput .= '</div>"';
+                
+                $sOutput .= '],';
+
+            }
+            $sOutput = substr_replace( $sOutput, "", -1 );
+            $sOutput .= '] }';
+        }else{
+            $sOutput = $rResult['error'];
+        }
+        
+        echo $sOutput;
+
+    }
     
 }
 

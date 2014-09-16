@@ -513,6 +513,10 @@ var simpleScript_ = function(){
         });
     };
     
+    this.public.deleteComa = function(v){
+        return v.replace(",","");
+    };
+    
     return this.public;
     
 };

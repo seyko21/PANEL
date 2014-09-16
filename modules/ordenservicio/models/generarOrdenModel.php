@@ -10,8 +10,9 @@
 class generarOrdenModel extends Model{
 
     private $_flag;
-    private $_idGenerarOrden;
-    private $_activo;
+    private $_idOrden;
+    private $_monto;
+    private $_fechaPago;
     private $_usuario;
     
     /*para el grid*/
@@ -27,8 +28,10 @@ class generarOrdenModel extends Model{
     
     private function _set(){
         $this->_flag        = Formulario::getParam("_flag");
-        $this->_idGenerarOrden   = Aes::de(Formulario::getParam("_idGenerarOrden"));    /*se decifra*/
+        $this->_idOrden   = Aes::de(Formulario::getParam("_idOrden"));    /*se decifra*/
         $this->_usuario     = Session::get("sys_idUsuario");
+        $this->_monto  = Formulario::getParam(GNOSE."txt_monto"); 
+        $this->_fechaPago  = Functions::cambiaf_a_mysql(Formulario::getParam(GNOSE."txt_fechapago")); 
         
         $this->_iDisplayStart  = Formulario::getParam("iDisplayStart"); 
         $this->_iDisplayLength = Formulario::getParam("iDisplayLength"); 
@@ -62,24 +65,45 @@ class generarOrdenModel extends Model{
         return $data;
     }
     
-    /*grabar nuevo registro: GenerarOrden*/
-    public function newGenerarOrden(){
-        /*-------------------------LOGICA PARA EL INSERT------------------------*/
+    public function insertCuota(){
+        $query = "CALL sp_ordseOrdenServicioCuota(:flag,:idOrden,:monto,:fechaPago,:usuario);";
+        
+        $parms = array(
+            ':flag'=>1,
+            ':idOrden'=>$this->_idOrden,
+            ':monto'=>$this->_monto,
+            ':fechaPago'=>$this->_fechaPago,
+            ':usuario'=>$this->_usuario,
+        );
+        
+        $data = $this->queryOne($query,$parms);
+        return $data;
     }
     
-    /*seleccionar registro a editar: GenerarOrden*/
-    public function findGenerarOrden(){
-        /*-----------------LOGICA PARA SELECT REGISTRO A EDITAR-----------------*/
-    }
-    
-    /*editar registro: GenerarOrden*/
-    public function editGenerarOrden(){
-        /*-------------------------LOGICA PARA EL UPDATE------------------------*/
-    }
-    
-    /*eliminar varios registros: GenerarOrden*/
-    public function deleteGenerarOrdenAll(){
-        /*--------------------------LOGICA PARA DELETE--------------------------*/
+    public function getGridCuotas(){
+        $aColumns       =   array("","2","4","6","11" ); //para la ordenacion y pintado en html
+        /*
+	 * Ordenando, se verifica por que columna se ordenara
+	 */
+        $sOrder = "";
+        for ( $i=0 ; $i<intval( $this->_iSortingCols ) ; $i++ ){
+                if ( $this->post( "bSortable_".intval($this->post("iSortCol_".$i)) ) == "true" ){
+                        $sOrder .= " ".$aColumns[ intval( $this->post("iSortCol_".$i) ) ]." ".
+                                ($this->post("sSortDir_".$i)==="asc" ? "asc" : "desc") ." ";
+                }
+        }
+        
+        $query = "call sp_ordseOrdenServicioCuotasGrid(:idOrden,:iDisplayStart,:iDisplayLength,:sOrder,:sSearch);";
+        
+        $parms = array(
+            ":idOrden" => $this->_idOrden,
+            ":iDisplayStart" => $this->_iDisplayStart,
+            ":iDisplayLength" => $this->_iDisplayLength,
+            ":sOrder" => $sOrder,
+            ":sSearch" => $this->_sSearch,
+        );
+        $data = $this->queryAll($query,$parms);
+        return $data;
     }
     
 }
