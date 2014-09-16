@@ -11,6 +11,19 @@ var generarOrdenScript_ = function(){
         var c = 0,n=0,f1;
         var f2 = $('#'+diccionario.tabs.GNOSE+'txt_fechapago').val();
         var m = parseFloat($('#'+diccionario.tabs.GNOSE+'txt_monto').val());
+        
+        var f = new Date();
+        var fechaActual = f.getDate() + "/" + (f.getMonth() +1) + "/" + f.getFullYear();
+        
+        
+        /*fecha ingresada debe ser mayor a fecha actual*/
+        if(simpleScript.dateDiff(fechaActual,f2) < 1){
+            simpleScript.notify.warning({
+                content: 'Fecha debe ser mayor a la fecha actual: '+fechaActual
+            });
+            retorna = 1;
+        }
+        
         $('#'+diccionario.tabs.GNOSE+'gridCuotas').find('tbody').find('tr').each(function(){
             n = simpleScript.deleteComa($.trim($(this).find('td:eq(1)').html()));
             c += parseFloat(n);
