@@ -1,4 +1,4 @@
-var registrarVendedorScript_ = function(){
+var socioScript_ = function(){
     
     this.publico = {};
     
@@ -19,7 +19,7 @@ var registrarVendedorScript_ = function(){
 //            },
 //
 //            submitHandler: function(){
-//                registrarVendedor.postPassVendedor();
+//                socio.postPassVendedor();
 //            }   
 //        });
         if($('#txtNewClave').val().length === 0){
@@ -31,11 +31,11 @@ var registrarVendedorScript_ = function(){
                 content: 'La clave debe tener como mínimo 6 caracteres.'
             });
         }else{
-            registrarVendedor.postPassVendedor();
+            socio.postPass();
         }
     };
     
     return this.publico;
     
 };
-var registrarVendedorScript = new registrarVendedorScript_();
+var socioScript = new socioScript_();

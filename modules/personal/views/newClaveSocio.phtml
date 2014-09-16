@@ -5,7 +5,7 @@
  * Autor       : ..... .....
  * Descripcion : 
  */
-$v = $this->vendedor;
+$v = $this->idd;
 $n = $this->nombres;
 ?>
 <form id="fromchange_pass" name="fromchange_pass" class="lockscreen animated flipInY" onsubmit="return false;">
@@ -27,7 +27,7 @@ $n = $this->nombres;
                 <input type="hidden" name="txtUser" id="txtUser" value="<?php echo $v ?>">
                 <input class="form-control" type="password" placeholder="Contraseña" id="txtNewClave" name="txtNewClave">
                 <div class="input-group-btn" style="z-index: 1">
-                    <button id="btnEntrar" class="btn btn-primary" type="button" onclick="registrarVendedorScript.validaChangePass();">
+                    <button id="btnEntrar" class="btn btn-primary" type="button" onclick="socioScript.validaChangePass();">
                         <i class="fa fa-save"></i> Enviar
                     </button>
                 </div>

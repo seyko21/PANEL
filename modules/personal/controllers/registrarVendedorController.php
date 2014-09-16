@@ -167,14 +167,19 @@ class registrarVendedorController extends Controller {
         $data = Obj::run()->registrarVendedorModel->postPassVendedor();
         echo json_encode($data);
     }
-
+    public function getParametros($p) {
+        $data = Obj::run()->registrarVendedorModel->getParametros($p);
+        return $data;
+    }   
     public function postAccesoVendedor() {
-        $idVendedor = trim(Formulario::getParam('_idVendedor'));
-        $nomVendedor = Formulario::getParam('_vendedor');
+        $idVendedor = Formulario::getParam('_id');
+        $nomVendedor = Formulario::getParam('_nombres');
         $email = Formulario::getParam('_mail');
-        $data = Obj::run()->registrarVendedorModel->getEmailEmpresa();        
+        $data = $this->getParametros('EMAIL');        
+        $data1 = $this->getParametros('EMCO');        
         $emailEmpresa = $data['valor'];
-        
+        $empresa = $data1['valor'];
+        $vendedor = str_replace(' ', '_',$nomVendedor );
         $body = '
             <h3><b>ACCESOS</b></h3>
             <h3>Estimado: ' . $nomVendedor . '</h3>
@@ -183,7 +188,7 @@ class registrarVendedorController extends Controller {
                <tr>
                     <td>
                         <p>El motivo del mensaje es porque Usted a sido agregado como usuario al sistema de SEVEND.</p>
-                        <p><a href="' . BASE_URL . 'personal/registrarVendedor/confirm/'.$idVendedor.'/'.$nomVendedor.'">Pulse aqui</a> para ingresar al sistema.</p>
+                        <p><a href="' . BASE_URL . 'personal/registrarVendedor/confirm/'.$idVendedor.'/'.$vendedor.'">Pulse aqui</a> para ingresar al sistema.</p>
                     </td>
                </tr>
             </table>';
@@ -192,7 +197,7 @@ class registrarVendedorController extends Controller {
 
         //$mail->IsSMTP();
     
-        $mail->SetFrom($emailEmpresa, 'SevenD Marketing');
+        $mail->SetFrom($emailEmpresa, $empresa);
 
         $mail->AddAddress($email, $nomVendedor);
 
@@ -212,9 +217,9 @@ class registrarVendedorController extends Controller {
 
     /* llama html para actualizar clave de vendedor */
     public function confirm($id, $nom) {
-        Obj::run()->View->vendedor = $id;
-        Obj::run()->View->nombres = $nom;
-
+        Obj::run()->View->idd = $id;
+        Obj::run()->View->nombres = str_replace('_', ' ',$nom );
+        
         $v = AesCtr::de($id);
 
         Obj::run()->View->render('newClaveVendedor', false);

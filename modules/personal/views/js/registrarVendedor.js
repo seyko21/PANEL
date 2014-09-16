@@ -267,7 +267,7 @@ var registrarVendedor_ = function(){
         simpleAjax.send({
             element: btn,
             root: _private.config.modulo + 'postAccesoVendedor',
-            data: '&_vendedor='+vend+'&_idVendedor='+id+'&_mail='+mail,
+            data: '&_nombres='+vend+'&_id='+id+'&_mail='+mail,
             clear: true,
             fnCallback: function(data) {
                 if(!isNaN(data.result) && parseInt(data.result) === 1){

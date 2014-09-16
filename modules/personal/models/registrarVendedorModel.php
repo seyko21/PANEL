@@ -270,7 +270,7 @@ class registrarVendedorModel extends Model{
         return $data;
     }
     
-    public function getEmailEmpresa(){
+    public function getParametros($alias){
         $query = "SELECT
             `valor`, `alias`
           FROM `pub_parametro`
@@ -278,7 +278,7 @@ class registrarVendedorModel extends Model{
         
         $parms = array(
             ':estado'=>'A',
-            ':alias'=>'EMAIL'
+            ':alias'=>$alias
         );
         
         $data = $this->queryOne($query,$parms);
