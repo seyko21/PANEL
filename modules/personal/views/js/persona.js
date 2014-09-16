@@ -1,49 +1,49 @@
 /*
 * ---------------------------------------
 * --------- CREATED BY CREATOR ----------
-* fecha: 03-09-2014 02:09:26 
-* Descripcion : socio.js
+* fecha: 16-09-2014 03:09:14 
+* Descripcion : persona.js
 * ---------------------------------------
 */
-var socio_ = function(){
+var persona_ = function(){
     
     /*metodos privados*/
     var _private = {};
     
-    _private.idSocio = 0;
+    _private.idPersona = 0;
     
     _private.config = {
-        modulo: "personal/socio/"
+        modulo: "Personal/persona/"
     };
 
     /*metodos publicos*/
     this.publico = {};
     
-    /*crea tab : Socio*/
+    /*crea tab : Persona*/
     this.publico.main = function(element){
         simpleScript.addTab({
-            id : diccionario.tabs.TAB_SOCIO,
+            id : diccionario.tabs.REPER,
             label: $(element).attr("title"),
             fnCallback: function(){
-                socio.getContenido();
+                persona.getContenido();
             }
         });
     };
     
-    /*contenido de tab: Socio*/
+    /*contenido de tab: Persona*/
     this.publico.getContenido = function(){
         simpleAjax.send({
             dataType: "html",
             root: _private.config.modulo,
             fnCallback: function(data){
-                $("#"+diccionario.tabs.TAB_SOCIO+"_CONTAINER").html(data);
-                socio.getGridSocio();
+                $("#"+diccionario.tabs.REPER+"_CONTAINER").html(data);
+                persona.getGridPersona();
             }
         });
     };
     
-    this.publico.getGridSocio = function (){
-        $('#'+diccionario.tabs.TAB_SOCIO+'gridSocio').dataTable({
+    this.publico.getGridPersona = function (){
+     $('#'+diccionario.tabs.REPER+'gridPersona').dataTable({
             bProcessing: true,
             bServerSide: true,
             bDestroy: true,
@@ -52,57 +52,55 @@ var socio_ = function(){
             bPaginate: true,
             iDisplayLength: 10,            
             aoColumns: [
-                {sTitle: "<input type='checkbox' id='"+diccionario.tabs.TAB_SOCIO+"chk_all' onclick='simpleScript.checkAll(this,\"#"+diccionario.tabs.TAB_SOCIO+"gridSocio\");'>", sWidth: "1%", sClass: "center", bSortable: false},
-                {sTitle: "RUC", sClass: "center", sWidth: "10%"},               
-                {sTitle: "Nombres y Apellidos", sWidth: "20%"},
+                {sTitle: "<input type='checkbox' id='"+diccionario.tabs.REPER+"chk_all' onclick='simpleScript.checkAll(this,\"#"+diccionario.tabs.REPER+"gridPersona\");'>", sWidth: "1%", sClass: "center", bSortable: false},              
+                {sTitle: "Nombres y Apellidos", sWidth: "35%"},
                 {sTitle: "Email", sWidth: "20%"},
-                {sTitle: "Teléfonos", sWidth: "5%"},
-                {sTitle: "Invertido", sWidth: "10%",  sClass: "right"},
-                {sTitle: "Asignado", sWidth: "10%",  sClass: "right"},
-                {sTitle: "Saldo", sWidth: "10%",  sClass: "right"},
-                {sTitle: "Estado", sWidth: "8%",  sClass: "center", bSortable: false},                
+                {sTitle: "Teléfonos", sWidth: "10%"},  
+                {sTitle: "DNI", sClass: "center", sWidth: "10%"},  
+                {sTitle: "Ciudad", sWidth: "25%"}, 
+                {sTitle: "Estado", sWidth: "9%",  sClass: "center", bSortable: false},                
                 {sTitle: "Acciones", sWidth: "15%", sClass: "center", bSortable: false}
             ],
             aaSorting: [[1, 'asc']],
             sScrollY: "300px",
-            sAjaxSource: _private.config.modulo+'getGridSocio',
+            sAjaxSource: _private.config.modulo+'getGridPersona',
             fnDrawCallback: function() {
-                $('#'+diccionario.tabs.TAB_SOCIO+'gridSocio_filter').find('input').attr('placeholder','Buscar por nombre o nro documento').css('width','300px');;
+                $('#'+diccionario.tabs.REPER+'gridPersona_filter').find('input').attr('placeholder','Buscar por Nombre o nro documento').css('width','300px');
                 /*para hacer evento invisible*/
                 simpleScript.removeAttr.click({
-                    container: '#widget_'+diccionario.tabs.TAB_SOCIO, //widget del datagrid
-                    typeElement: 'button, #'+diccionario.tabs.TAB_SOCIO+'chk_all'
+                    container: '#widget_'+diccionario.tabs.REPER, //widget del datagrid
+                    typeElement: 'button, #'+diccionario.tabs.REPER+'chk_all'
                 });
             }
         });
         setup_widgets_desktop();
     };
     
-    //Ventana Nuevo Socio
-    this.publico.getFormNewSocio = function(btn){
+    this.publico.getFormNewPersona = function(btn){
         simpleAjax.send({
             element: btn,
             dataType: "html",
-            root: _private.config.modulo + "getFormNewSocio",
+            root: _private.config.modulo + "getFormNewPersona",
             fnCallback: function(data){
                 $("#cont-modal").append(data);  /*los formularios con append*/
-                $("#"+diccionario.tabs.TAB_SOCIO+"formNewSocio").modal("show");
+                $("#"+diccionario.tabs.REPER+"formNewPersona").modal("show");
             }
         });
     };
-    //Ventana Editar Socio
-     this.publico.getFormEditSocio = function(btn,id){
-        _private.idSocio = id;
+    
+    //Ventana Editar Persona
+    this.publico.getFormEditPersona = function(btn,id){
+        _private.idPersona = id;
        
         simpleAjax.send({
             element: btn,
             dataType: 'html',
             gifProcess: true,
-            data: '&_idPersona='+_private.idSocio,
-            root: _private.config.modulo + 'getFormEditSocio',
+            data: '&_idPersona='+_private.idPersona,
+            root: _private.config.modulo + 'getFormEditPersona',
             fnCallback: function(data){
                 $('#cont-modal').append(data);
-                $('#'+diccionario.tabs.TAB_SOCIO+'formEditSocio').modal('show');
+                $('#'+diccionario.tabs.REPER+'formEditPersona').modal('show');
             }
         });
     };
@@ -129,7 +127,7 @@ var socio_ = function(){
                         simpleScript.setEvent.change({
                             element: '#'+obj.idElement,
                             event: function(){
-                                socio.getUbigeo({
+                                persona.getUbigeo({
                                     idProvincia: $('#'+obj.idElement).val(),
                                     content: obj.contentUbigeo,
                                     idElement: obj.idUbigeo,
@@ -166,20 +164,20 @@ var socio_ = function(){
         });
     };    
     
-    this.publico.postNuevoSocio = function(){
+    this.publico.postNewPersona = function(){
         simpleAjax.send({
             flag: 1,
-            element: '#'+diccionario.tabs.TAB_SOCIO+'btnGsocio',
-            root: _private.config.modulo + 'postNewSocio',
-            form: '#'+diccionario.tabs.TAB_SOCIO+'formNewSocio',
+            element: '#'+diccionario.tabs.REPER+'btnGpersona',
+            root: _private.config.modulo + 'postNewPersona',
+            form: '#'+diccionario.tabs.REPER+'formNewPersona',
             clear: true,
             fnCallback: function(data) {
                 if(!isNaN(data.result) && parseInt(data.result) === 1){
                     simpleScript.notify.ok({
                         content: mensajes.MSG_3,
                         callback: function(){
-                           socio.getGridSocio();
-                           simpleScript.closeModal('#'+diccionario.tabs.TAB_SOCIO+'formNewSocio');
+                           persona.getGridPersona();
+                           simpleScript.closeModal('#'+diccionario.tabs.REPER+'formNewPersona');
                         }
                     });
                 }else if(!isNaN(data.result) && parseInt(data.result) === 2){
@@ -191,22 +189,22 @@ var socio_ = function(){
         });
     };
     
- this.publico.postEditarSocio = function(){
+ this.publico.postEditarPersona = function(){
         simpleAjax.send({
             flag: 2,
-            element: '#'+diccionario.tabs.TAB_SOCIO+'btnGsocio',
-            root: _private.config.modulo + 'postEditSocio',
-            form: '#'+diccionario.tabs.TAB_SOCIO+'formEditSocio',
-            data: '&_idPersona='+_private.idSocio,
+            element: '#'+diccionario.tabs.REPER+'btnEpersona',
+            root: _private.config.modulo + 'postEditPersona',
+            form: '#'+diccionario.tabs.REPER+'formEditPersona',
+            data: '&_idPersona='+_private.idPersona,
             clear: true,
             fnCallback: function(data) {
                 if(!isNaN(data.result) && parseInt(data.result) === 1){
                     simpleScript.notify.ok({
                         content: mensajes.MSG_3,
                         callback: function(){
-                            _private.idSocio = 0;
-                            simpleScript.reloadGrid('#'+diccionario.tabs.TAB_SOCIO+'gridSocio'); 
-                            simpleScript.closeModal('#'+diccionario.tabs.TAB_SOCIO+'formEditSocio');
+                            _private.idPersona = 0;
+                            simpleScript.reloadGrid('#'+diccionario.tabs.REPER+'gridPersona'); 
+                            simpleScript.closeModal('#'+diccionario.tabs.REPER+'formEditPersona');
                         }
                     });
                 }else if(!isNaN(data.result) && parseInt(data.result) === 2){
@@ -218,9 +216,9 @@ var socio_ = function(){
         });
     };    
     
-    this.publico.postDeleteSocioAll = function(btn){
+    this.publico.postDeletePersonaAll = function(btn){
         simpleScript.validaCheckBox({
-            id: "#"+diccionario.tabs.TAB_SOCIO+"gridSocio",
+            id: "#"+diccionario.tabs.REPER+"gridPersona",
             msn: mensajes.MSG_9,
             fnCallback: function(){
                 simpleScript.notify.confirm({
@@ -228,14 +226,14 @@ var socio_ = function(){
                     callbackSI: function(){
                         simpleAjax.send({
                             element: btn,
-                            form: "#"+diccionario.tabs.TAB_SOCIO+"formGridSocio",
-                            root: _private.config.modulo + "postDeleteSocioAll",
+                            form: "#"+diccionario.tabs.REPER+"formGridPersona",
+                            root: _private.config.modulo + "postDeletePersonaAll",
                             fnCallback: function(data) {
                                 if(!isNaN(data.result) && parseInt(data.result) === 1){
                                     simpleScript.notify.ok({
                                         content: mensajes.MSG_8,
                                         callback: function(){
-                                            socio.getGridSocio();
+                                            persona.getGridPersona();
                                         }
                                     });
                                 }
@@ -247,18 +245,18 @@ var socio_ = function(){
         });
     };
     
-    this.publico.postDesactivarSocio = function(btn,id){
+    this.publico.postDesactivarPersona = function(btn,id){
         simpleAjax.send({
             element: btn,
-            root: _private.config.modulo + 'postDesactivarSocio',
+            root: _private.config.modulo + 'postDesactivar',
             data: '&_idPersona='+id,
             clear: true,
             fnCallback: function(data) {
                 if(!isNaN(data.result) && parseInt(data.result) === 1){
                     simpleScript.notify.ok({
-                        content: 'Socio se desactivo correctamente',
+                        content: 'Persona se desactivo correctamente',
                         callback: function(){
-                           simpleScript.reloadGrid('#'+diccionario.tabs.TAB_SOCIO+'gridSocio'); 
+                           simpleScript.reloadGrid('#'+diccionario.tabs.REPER+'gridPersona'); 
                         }
                     });
                 }
@@ -266,55 +264,19 @@ var socio_ = function(){
         });
     };
     
-    this.publico.postActivarSocio = function(btn,id){
+    this.publico.postActivarPersona = function(btn,id){
         simpleAjax.send({
             element: btn,
-            root: _private.config.modulo + 'postActivarSocio',
+            root: _private.config.modulo + 'postActivar',
             data: '&_idPersona='+id,
             clear: true,
             fnCallback: function(data) {
                 if(!isNaN(data.result) && parseInt(data.result) === 1){
                     simpleScript.notify.ok({
-                        content: 'Socio se activo correctamente',
+                        content: 'Persona se activo correctamente',
                         callback: function(){
-                            simpleScript.reloadGrid('#'+diccionario.tabs.TAB_SOCIO+'gridSocio'); 
+                            simpleScript.reloadGrid('#'+diccionario.tabs.REPER+'gridPersona'); 
                         }
-                    });
-                }
-            }
-        });
-    };
-    
-     this.publico.postPass = function(){
-        window.history.pushState('data', "Titulo", "../../../../");
-        simpleAjax.send({
-            flag: 1,
-            element: '#btnEntrar',
-            root: _private.config.modulo + 'postPass',
-            form: '#formVendedor',
-            data: '&_idPersona='+$('#txtUser').val()+'&_pass='+simpleAjax.stringPost($('#txtNewClave').val()),
-            clear: true,
-            fnCallback: function(data) {
-                if(!isNaN(data.result) && parseInt(data.result) === 1){
-                    simpleScript.notify.ok({
-                        content: mensajes.MSG_3
-                    });
-                    simpleScript.redirect('index');
-                }
-            }
-        });
-    };
-    
-    this.publico.postAcceso = function(btn,id,vend,mail){
-        simpleAjax.send({
-            element: btn,
-            root: _private.config.modulo + 'postAcceso',
-            data: '&_nombres='+vend+'&_id='+id+'&_mail='+mail,
-            clear: true,
-            fnCallback: function(data) {
-                if(!isNaN(data.result) && parseInt(data.result) === 1){
-                    simpleScript.notify.ok({
-                        content: 'Acceso se envió correctamente'
                     });
                 }
             }
@@ -324,4 +286,4 @@ var socio_ = function(){
     return this.publico;
     
 };
-var socio = new socio_();
+var persona = new persona_();

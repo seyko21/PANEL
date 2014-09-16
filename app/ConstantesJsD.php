@@ -9,7 +9,8 @@
         REPRO: '<?php echo REPRO; ?>',
         MISPA: '<?php echo MISPA; ?>',
         PAAL: '<?php echo PAAL; ?>',
-        CONTR: '<?php echo CONTR; ?>'
+        CONTR: '<?php echo CONTR; ?>',
+        REPER: '<?php echo REPER; ?>'
     }
 };
 </script>

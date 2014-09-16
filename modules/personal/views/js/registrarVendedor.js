@@ -56,7 +56,7 @@ var registrarVendedor_ = function(){
             sScrollY: "300px",
             sAjaxSource: _private.config.modulo+'getGridVendedor',
             fnDrawCallback: function() {
-                $('#'+diccionario.tabs.T7+'getGridVendedor_filter').find('input').attr('placeholder','Buscar');
+                $('#'+diccionario.tabs.T7+'getGridVendedor_filter').find('input').attr('placeholder','Buscar por nombre o nro documento').css('width','300px');;
                 /*para hacer evento invisible*/
                 simpleScript.removeAttr.click({
                     container: '#widget_'+diccionario.tabs.T7, //widget del datagrid

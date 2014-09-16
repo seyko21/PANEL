@@ -1,0 +1,267 @@
+<?php /*
+* ---------------------------------------
+* --------- CREATED BY CREATOR ----------
+* fecha: 16-09-2014 03:09:14 
+* Descripcion : formNewPersona.phtml
+* ---------------------------------------
+*/
+
+/*prefijo: REPER debe ser alias en tabla men_menuprincipal*/
+$grabar = Session::getPermiso("REPERGR");
+?>
+<form id="<?php echo REPER; ?>formNewPersona" name="<?php echo REPER; ?>formNewPersona" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+   <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close"  aria-hidden="true">
+                    &times;
+                </button>
+                <h4 class="modal-title"><?php echo LABEL_A161;?></h4>
+            </div>
+            <div class="modal-body smart-form" style="height: 350px;overflow-y: auto;overflow-x: hidden;">
+                <section>
+                    <div class="row">
+                        <label class="label col col-3"><?php echo LABEL_A83; ?></label>
+                        <div class="col col-8">
+                            <label class="input"> 
+                                <i class="icon-append fa fa-user"></i>
+                                <input type="text" id="<?php echo REPER; ?>txt_nombres" name="<?php echo REPER; ?>txt_nombres">
+                                <b class="tooltip tooltip-top-right"><i class="fa fa-user txt-color-teal"></i> <?php echo LABEL_A83M; ?></b>
+                            </label>
+                        </div>
+                    </div>
+                </section>
+                <section>
+                    <div class="row">
+                        <label class="label col col-3"><?php echo LABEL_A84; ?></label>
+                        <div class="col col-8">
+                            <label class="input"> 
+                                <i class="icon-append fa fa-user"></i>
+                                <input type="text" id="<?php echo REPER; ?>txt_apellidopaterno" name="<?php echo REPER; ?>txt_apellidopaterno">
+                                <b class="tooltip tooltip-top-right"><i class="fa fa-user txt-color-teal"></i> <?php echo LABEL_A84M; ?></b>
+                            </label>
+                        </div>
+                    </div>
+                </section>
+                <section>
+                    <div class="row">
+                        <label class="label col col-3"><?php echo LABEL_A85; ?></label>
+                        <div class="col col-8">
+                            <label class="input"> 
+                                <i class="icon-append fa fa-user"></i>
+                                <input type="text" id="<?php echo REPER; ?>txt_apellidomaterno" name="<?php echo REPER; ?>txt_apellidomaterno">
+                                <b class="tooltip tooltip-top-right"><i class="fa fa-user txt-color-teal"></i> <?php echo LABEL_A85M; ?></b>
+                            </label>
+                        </div>
+                    </div>
+                </section>   
+                <section>
+                    <div class="row">
+                        <label class="label col col-3"><?php echo LABEL_A90; ?></label>
+                        <div class="col col-8">
+                            <label class="input"> 
+                                <i class="icon-append fa fa-keyboard-o"></i>
+                                <input type="text" id="<?php echo REPER; ?>txt_nrodocumento" name="<?php echo REPER; ?>txt_nrodocumento">
+                                <b class="tooltip tooltip-top-right"><i class="fa fa-keyboard-o txt-color-teal"></i> <?php echo LABEL_A90M; ?></b>
+                            </label>
+                        </div>
+                    </div>
+                </section>
+                <section>
+                    <div class="row">
+                        <label class="label col col-3"><?php echo LABEL_A95; ?></label>
+                        <div class="col col-8">
+                            <label class="input"> 
+                                <i class="icon-append fa fa-keyboard-o"></i>
+                                <input type="text" id="<?php echo REPER; ?>txt_dni" name="<?php echo REPER; ?>txt_dni">
+                                <b class="tooltip tooltip-top-right"><i class="fa fa-keyboard-o txt-color-teal"></i> <?php echo LABEL_A95M; ?></b>
+                            </label>
+                        </div>
+                    </div>
+                </section>
+                <section>
+                    <div class="row">
+                        <label class="label col col-3"><?php echo LABEL_A91; ?></label>
+                        <div class="col col-8">
+                            <label class="select"> 
+                                <?php
+                                    $data = personaController::getDepartamentos();                                    
+                                    echo Functions::selectHtml(array(
+                                        'data'=>$data,
+                                        'atributes'=>array(
+                                            'id'=>REPER.'lst_departamento',
+                                            'name'=>REPER.'lst_departamento',
+                                            'onchange'=>'registrarVendedor.getProvincias({
+                                                            idDepartamento: $(\'#'.REPER.'lst_departamento\').val(),
+                                                            content: \'#'.REPER.'cont-provincias\',
+                                                            idElement: \''.REPER.'lst_provincia\',
+                                                            nameElement: \''.REPER.'lst_provincia\',
+                                                            contentUbigeo: \'#'.REPER.'cont-ubigeo\',
+                                                            idUbigeo: \''.REPER.'lst_ubigeo\'
+                                                        });'
+                                        ),
+                                        'etiqueta'=>'departamento',
+                                        'value'=>'id_departamento',
+                                        'defaultEtiqueta'=>'',
+                                        'txtSelect'=>true
+                                    ));
+                                ?><i></i>
+                            </label>
+                        </div>
+                    </div>
+                </section>
+                <section>
+                    <div class="row">
+                        <label class="label col col-3"><?php echo LABEL_A92; ?></label>
+                        <div class="col col-8">
+                            <label class="select" id="<?php echo REPER; ?>cont-provincias"> 
+                                <select id="<?php echo REPER; ?>lst_provincia" name="<?php echo REPER; ?>lst_provincia">
+                                    <option value="">Seleccionar</option>
+                                </select>
+                                <i></i>
+                            </label>
+                        </div>
+                    </div>
+                </section>
+                <section>
+                    <div class="row">
+                        <label class="label col col-3"><?php echo LABEL_A93; ?></label>
+                        <div class="col col-8">
+                            <label class="select" id="<?php echo REPER; ?>cont-ubigeo"> 
+                                <select id="<?php echo REPER; ?>lst_ubigeo" name="<?php echo REPER; ?>lst_ubigeo">
+                                    <option value="">Seleccionar</option>
+                                </select>
+                                <i></i>
+                            </label>
+                        </div>
+                    </div>
+                </section>
+                <section>
+                    <div class="row">
+                        <label class="label col col-3"><?php echo LABEL_A86; ?></label>
+                        <div class="col col-8">
+                            <label class="input"> 
+                                <i class="icon-append fa fa-keyboard-o"></i>
+                                <input type="text" id="<?php echo REPER; ?>txt_direccion" name="<?php echo REPER; ?>txt_direccion">
+                                <b class="tooltip tooltip-top-right"><i class="fa fa-keyboard-o txt-color-teal"></i> <?php echo LABEL_A86M; ?></b>
+                            </label>
+                        </div>
+                    </div>
+                </section>
+                <section>
+                    <div class="row">
+                        <label class="label col col-3"><?php echo LABEL_A87; ?></label>
+                        <div class="col col-8">
+                            <label class="input"> 
+                                <i class="icon-append fa fa-keyboard-o"></i>
+                                <input type="text" id="<?php echo REPER; ?>txt_email" name="<?php echo REPER; ?>txt_email">
+                                <b class="tooltip tooltip-top-right"><i class="fa fa-keyboard-o txt-color-teal"></i> <?php echo LABEL_A87M; ?></b>
+                            </label>
+                        </div>
+                    </div>
+                </section>
+                <section>
+                    <div class="row">
+                        <label class="label col col-3"><?php echo LABEL_A88; ?></label>
+                        <div class="inline-group col col-8">
+                            <label class="radio"> 
+                                <input name="<?php echo REPER; ?>rd_sexo" id="<?php echo REPER; ?>rd_sexoH" checked type="radio" value="H">
+                                <i></i>Hombre
+                            </label>
+                            <label class="radio"> 
+                                <input name="<?php echo REPER; ?>rd_sexo" id="<?php echo REPER; ?>rd_sexoM" type="radio" value="M">
+                                <i></i>Mujer
+                            </label>
+                        </div>
+                    </div>
+                </section>
+                <section>
+                    <div class="row">
+                        <label class="label col col-3"><?php echo LABEL_A89; ?></label>
+                        <div class="col col-8">
+                            <label class="input"> 
+                                <i class="icon-append fa fa-keyboard-o"></i>
+                                <input type="text" id="<?php echo REPER; ?>txt_telefonos" name="<?php echo REPER; ?>txt_telefonos">
+                                <b class="tooltip tooltip-top-right"><i class="fa fa-keyboard-o txt-color-teal"></i> <?php echo LABEL_A89M; ?></b>
+                            </label>
+                        </div>
+                    </div>
+                </section>
+            </div>   
+            <div class="modal-footer">
+                <?php if($grabar["permiso"]):?>
+                <button id="<?php echo REPER; ?>btnGpersona" type="submit" class="<?php echo $grabar['theme'];?>">
+                    <i class="<?php echo $grabar['icono'];?>"></i> <?php echo $grabar['accion']; ?>
+                </button>
+                <?php endif; ?>
+                <button type="button" class="<?php echo THEME_CLOSE; ?>">
+                    <i class="<?php echo ICON_CLOSE; ?>"></i> <?php echo BTN_CLOSE; ?> 
+                </button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</form>
+<!-- si no tiene permiso se anula submit desde cualquier input -->
+<?php if(!$grabar["permiso"]): ?>
+<script>
+    simpleScript.noSubmit("#<?php echo REPER; ?>formNewPersona");
+</script>
+<?php endif; ?>
+<script>
+/*configurar validacion de formulario -- este codigo es de ejemplo*/
+$("#<?php echo REPER; ?>formNewPersona").validate({
+    // Rules for form validation
+      rules : {
+                <?php echo REPER; ?>txt_nombres : {
+                        required : true,
+                        regular: true,
+                        minlength: 3
+                },
+                <?php echo REPER; ?>txt_apellidopaterno : {
+                        required : true,
+                        regular: true,
+                        minlength: 3
+                },
+                <?php echo REPER; ?>txt_apellidomaterno : {
+                        required : true,
+                        regular: true,
+                        minlength: 3
+                },
+                <?php echo REPER; ?>txt_nrodocumento:{
+                        number: true,
+                        maxlength: 12
+                },
+                <?php echo REPER; ?>txt_dni:{
+                        required: true,
+                        number: true,
+                        maxlength: 8
+                },        
+                <?php echo REPER; ?>lst_departamento : {
+                        required : true
+                },
+                <?php echo REPER; ?>lst_provincia : {
+                        required : true
+                },
+                <?php echo REPER; ?>lst_ubigeo : {
+                        required : true
+                },
+                <?php echo REPER; ?>txt_direccion : {
+                        required : true,
+                        regular2: true,
+                        minlength: 3
+                },
+                <?php echo REPER; ?>txt_email : {
+                        required : true,
+                        email: true
+                }    
+        },  
+    // No cambie el código de abajo
+    errorPlacement : function(error, element) {
+        error.insertAfter(element.parent());
+    },
+
+    submitHandler: function(){
+        persona.postNewPersona();
+    }   
+});
+</script>

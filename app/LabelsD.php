@@ -136,6 +136,9 @@ define('LABEL_A153M','Ingrese el nombre de la plantilla');
 define('LABEL_A154','Plantilla de Contrato');
 define('LABEL_A155','Clonar Contrato');
 define('LABEL_A156','Adjuntar Firma');
-
+/*----------------------Registrar Persona----------------------*/
+define('LABEL_A160','Registro de Persona');
+define('LABEL_A161','Nueva Persona');
+define('LABEL_A162','Editar Persona');
 
 ?>
