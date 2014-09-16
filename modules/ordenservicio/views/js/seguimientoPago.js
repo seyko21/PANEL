@@ -53,17 +53,17 @@ var seguimientoPago_ = function(){
             iDisplayLength: 10,            
             aoColumns: [
                 {sTitle: "N°", sWidth: "1%",bSortable: false},
-                {sTitle: "Acciones", sWidth: "8%", sClass: "center", bSortable: false},
-                {sTitle: "CAMPO 1", sWidth: "25%"},
-                {sTitle: "CAMPO 2", sWidth: "25%", bSortable: false},
-                {sTitle: "Estado", sWidth: "10%", sClass: "center", bSortable: false}                
+                {sTitle: "Código", sWidth: "10%",sClass: "center"},
+                {sTitle: "Representante", sWidth: "25%"},
+                {sTitle: "Cliente", sWidth: "25%"},
+                {sTitle: "Monto", sWidth: "10%", sClass: "right", bSortable: false},
+                {sTitle: "Acciones", sWidth: "8%", sClass: "center", bSortable: false}            
             ],
             aaSorting: [[2, "asc"]],
             sScrollY: "300px",
             sAjaxSource: _private.config.modulo+"getGridSeguimientoPago",
             fnDrawCallback: function() {
-                $("#"+diccionario.tabs.SEGPA+"gridSeguimientoPago_filter").find("input").attr("placeholder","Buscar por SeguimientoPago").css("width","250px");
-                simpleScript.enterSearch("#"+diccionario.tabs.SEGPA+"gridSeguimientoPago",oTable);
+                $("#"+diccionario.tabs.SEGPA+"gridSeguimientoPago_filter").find("input").attr("placeholder","Buscar por código o representante").css("width","250px");
                 /*para hacer evento invisible*/
                 simpleScript.removeAttr.click({
                     container: "#widget_"+diccionario.tabs.SEGPA,
@@ -74,135 +74,43 @@ var seguimientoPago_ = function(){
         setup_widgets_desktop();
     };
     
-    this.publico.getFormNewSeguimientoPago = function(btn){
-        simpleAjax.send({
-            element: btn,
-            dataType: "html",
-            root: _private.config.modulo + "getFormNewSeguimientoPago",
-            fnCallback: function(data){
-                $("#cont-modal").append(data);  /*los formularios con append*/
-                $("#"+diccionario.tabs.SEGPA+"formNewSeguimientoPago").modal("show");
-            }
-        });
-    };
-    
-    this.publico.getFormEditSeguimientoPago = function(btn,id){
+    this.publico.getFormPagarOrden = function(btn,id,norden){
         _private.idSeguimientoPago = id;
             
         simpleAjax.send({
             element: btn,
             dataType: "html",
-            root: _private.config.modulo + "getFormEditSeguimientoPago",
-            data: "&_idSeguimientoPago="+_private.idSeguimientoPago,
+            root: _private.config.modulo + "getFormPagarOrden",
+            data: "&_idOrden="+_private.idSeguimientoPago+'&_norden='+norden,
             fnCallback: function(data){
                 $("#cont-modal").append(data);  /*los formularios con append*/
-                $("#"+diccionario.tabs.SEGPA+"formEditSeguimientoPago").modal("show");
+                $("#"+diccionario.tabs.SEGPA+"formPagarOrden").modal("show");
             }
         });
     };
     
-    this.publico.postNewSeguimientoPago = function(){
+    this.publico.postPagarOrden = function(btn,fila,idCompromiso){
+        var fech = $("#"+fila+diccionario.tabs.SEGPA+"txt_fechapago").val();
+        
+        if(!$.validator.prototype.dateValid(fech)){
+            simpleScript.notify.warning({
+                content: 'Fecha es incorrecta'
+            });
+            return false;
+        }
         simpleAjax.send({
-            flag: 1,
-            element: "#"+diccionario.tabs.SEGPA+"btnGrSeguimientoPago",
-            root: _private.config.modulo + "postNewSeguimientoPago",
-            form: "#"+diccionario.tabs.SEGPA+"formNewSeguimientoPago",
-            clear: true,
+            element: btn,
+            root: _private.config.modulo + "postPagarOrden",
+            data: "&_fecha="+fech+"&_idCompromiso="+idCompromiso,
             fnCallback: function(data) {
                 if(!isNaN(data.result) && parseInt(data.result) === 1){
                     simpleScript.notify.ok({
                         content: mensajes.MSG_3,
                         callback: function(){
-                            simpleScript.reloadGrid("#"+diccionario.tabs.SEGPA+"gridSeguimientoPago");
+                            
                         }
-                    });
-                }else if(!isNaN(data.result) && parseInt(data.result) === 2){
-                    simpleScript.notify.error({
-                        content: "SeguimientoPago ya existe."
                     });
                 }
-            }
-        });
-    };
-    
-    this.publico.postEditSeguimientoPago = function(){
-        simpleAjax.send({
-            flag: 2,
-            element: "#"+diccionario.tabs.SEGPA+"btnEdSeguimientoPago",
-            root: _private.config.modulo + "postEditSeguimientoPago",
-            form: "#"+diccionario.tabs.SEGPA+"formEditSeguimientoPago",
-            data: "&_idSeguimientoPago="+_private.idSeguimientoPago,
-            clear: true,
-            fnCallback: function(data) {
-                if(!isNaN(data.result) && parseInt(data.result) === 1){
-                    simpleScript.notify.ok({
-                        content: mensajes.MSG_10,
-                        callback: function(){
-                            _private.idSeguimientoPago = 0;
-                            simpleScript.closeModal("#"+diccionario.tabs.SEGPA+"formEditSeguimientoPago");
-                            simpleScript.reloadGrid("#"+diccionario.tabs.SEGPA+"gridSeguimientoPago");
-                        }
-                    });
-                }else if(!isNaN(data.result) && parseInt(data.result) === 2){
-                    simpleScript.notify.error({
-                        content: "SeguimientoPago ya existe."
-                    });
-                }
-            }
-        });
-    };
-    
-    this.publico.postDeleteSeguimientoPago = function(btn,id){
-        simpleScript.notify.confirm({
-            content: mensajes.MSG_5,
-            callbackSI: function(){
-                simpleAjax.send({
-                    flag: 3,
-                    element: btn,
-                    gifProcess: true,
-                    data: "&_idSeguimientoPago="+id,
-                    root: _private.config.modulo + "postDeleteSeguimientoPago",
-                    fnCallback: function(data) {
-                        if(!isNaN(data.result) && parseInt(data.result) === 1){
-                            simpleScript.notify.ok({
-                                content: mensajes.MSG_6,
-                                callback: function(){
-                                    simpleScript.reloadGridDelete("#"+diccionario.tabs.SEGPA+"gridSeguimientoPago");
-                                }
-                            });
-                        }
-                    }
-                });
-            }
-        });
-    };
-    
-    this.publico.postDeleteSeguimientoPagoAll = function(btn){
-        simpleScript.validaCheckBox({
-            id: "#"+diccionario.tabs.SEGPA+"gridSeguimientoPago",
-            msn: mensajes.MSG_9,
-            fnCallback: function(){
-                simpleScript.notify.confirm({
-                    content: mensajes.MSG_7,
-                    callbackSI: function(){
-                        simpleAjax.send({
-                            flag: 3, //si se usa SP usar flag, sino se puede eliminar esta linea
-                            element: btn,
-                            form: "#"+diccionario.tabs.SEGPA+"formGridSeguimientoPago",
-                            root: _private.config.modulo + "postDeleteSeguimientoPagoAll",
-                            fnCallback: function(data) {
-                                if(!isNaN(data.result) && parseInt(data.result) === 1){
-                                    simpleScript.notify.ok({
-                                        content: mensajes.MSG_8,
-                                        callback: function(){
-                                            seguimientoPago.getGridSeguimientoPago();
-                                        }
-                                    });
-                                }
-                            }
-                        });
-                    }
-                });
             }
         });
     };

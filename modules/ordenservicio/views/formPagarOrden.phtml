@@ -1,0 +1,113 @@
+<?php /*
+* ---------------------------------------
+* --------- CREATED BY CREATOR ----------
+* fecha: 16-09-2014 22:09:43 
+* Descripcion : formPagarOrden.phtml
+* ---------------------------------------
+*/
+
+/*prefijo: SEGPA debe ser alias en tabla men_menuprincipal*/
+$grabar = Session::getPermiso("SEGPAGR");
+
+$norden = Formulario::getParam('_norden');
+?>
+<form id="<?php echo SEGPA; ?>formPagarOrden" name="<?php echo SEGPA; ?>formPagarOrden" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close"  aria-hidden="true">
+                    &times;
+                </button>
+                <h4 class="modal-title"><?php echo GNOSE_3.$norden?></h4>
+            </div>
+            <div class="modal-body smart-form"> 
+                <table class="table table-striped table-hover dataTable">
+                    <thead>
+                        <tr>
+                            <th class="center"><?php echo SEGPA_2 ?></th>
+                            <th class="center"><?php echo SEGPA_3 ?></th>
+                            <th class="center" style="width: 25%"><?php echo SEGPA_4 ?></th>
+                            <th class="center"><?php echo SEGPA_5 ?></th>
+                            <th class="center" style="width: 15%">...</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php 
+                            $data = Obj::run()->seguimientoPagoController->getCronograma();
+                            $key = 0;
+                            foreach ($data as $value):
+                                $key++;
+                        ?>
+                        <tr>
+                            <td><?php echo $value['numero_cuota'] ?></td>
+                            <td class="right"><?php echo number_format($value['monto_pago'],2) ?></td>
+                            <td class="center"><?php echo Functions::cambiaf_a_normal($value['fecha_programada']) ?></td>
+                            <td>
+                                <!--si es pagado o anulado solo se visualizara la fecha de pago-->
+                                <?php if($value['estado'] == 'P' || $value['estado'] == 'A'):?>
+                                <?php echo Functions::cambiaf_a_normal($value['fecha_pagoreal']) ?>
+                                <?php else:?>
+                                <div class="row">
+                                    <div class="col col-8">
+                                        <label class="input"> 
+                                            <i class="icon-append fa fa-calendar-o "></i>
+                                            <input class="fechapago" type="text" id="<?php echo $key.SEGPA; ?>txt_fechapago" name="<?php echo $key.SEGPA; ?>txt_fechapago" value="<?php echo Functions::cambiaf_a_normal($value['fecha_pagoreal']) ?>">
+                                            <b class="tooltip tooltip-top-right"><i class="fa fa-question-circle txt-color-teal"></i> <?php echo GNOSE_7; ?></b>
+                                        </label>
+                                    </div>
+                                </div>
+                                <?php endif; ?>
+                            </td>
+                            <td>
+                                <?php
+                                /*debe ser diferente de anulado y pagado para mostrar boton grabar*/
+                                if($value['estado'] != 'P' && $value['estado'] != 'A'):
+                                ?>
+                                
+                                <?php if($grabar["permiso"]):?>
+                                <button type="button" class="<?php echo $grabar["theme"]; ?>" style="padding: 5px" onclick="seguimientoPago.postPagarOrden(this,'<?php echo $key?>','<?php echo AesCtr::en($value['id_compromisopago']) ?>');">
+                                    <i class="<?php echo $grabar["icono"]; ?>"></i> <?php echo $grabar["accion"]; ?>
+                                </button>
+                                <?php endif; ?>
+                                
+                                
+                                <?php else: ?>
+                                
+                                
+                                <?php if($grabar["permiso"]):?>
+                                <button type="button" class="<?php echo $grabar["theme"]; ?>" style="padding: 5px" disabled="disabled">
+                                    <i class="<?php echo $grabar["icono"]; ?>"></i> <?php echo $grabar["accion"]; ?>
+                                </button>
+                                <?php endif; ?>
+                                
+                                
+                                <?php endif; ?>
+                            </td>
+                        </tr>
+                        <?php endforeach;?>
+                    </tbody>
+                </table>
+            </div>
+            <div class="modal-footer">                
+                <button type="button" class="<?php echo THEME_CLOSE; ?>">
+                    <i class="<?php echo ICON_CLOSE; ?>"></i> <?php echo BTN_CLOSE; ?>
+                </button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</form>
+<!-- si no tiene permiso se anula submit desde cualquier input -->
+<?php if(!$grabar["permiso"]): ?>
+<script>
+    simpleScript.noSubmit("#<?php echo SEGPA; ?>formPagarOrden");
+</script>
+<?php endif; ?>
+<script>
+    simpleScript.setEvent.date({
+      element: '.fechapago' 
+    });
+    simpleScript.removeAttr.click({
+        container: "#<?php echo SEGPA; ?>formPagarOrden",
+        typeElement: "button"
+    });
+</script>

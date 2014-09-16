@@ -183,4 +183,11 @@ define('GNOSE_9','Ingrese la fecha de la orden de servicio');
 define('GNOSE_10','Descuento');
 define('GNOSE_11','Ingrese monto a descontar');
 define('GNOSE_12','Editar Orden');
+
+/*---------------------- SEGUIMIENTO DE PAGOS----------------*/
+define('SEGPA_1','Seguimiento de Pagos');
+define('SEGPA_2','Cuota');
+define('SEGPA_3','Monto');
+define('SEGPA_4','Fecha Programada');
+define('SEGPA_5','Fecha de Pago');
 ?>

@@ -18,8 +18,7 @@ class seguimientoPagoController extends Controller{
     }
     
     public function getGridSeguimientoPago(){
-        $editar   = Session::getPermiso('SEGPAED');
-        $eliminar = Session::getPermiso('SEGPADE');
+        $pagar   = Session::getPermiso('SEGPAPG');
         
         $sEcho          =   $this->post('sEcho');
         
@@ -43,38 +42,25 @@ class seguimientoPagoController extends Controller{
             
             foreach ( $rResult as $aRow ){
                 
-                /*campo que maneja los estados, para el ejemplo aqui es ACTIVO, coloca tu campo*/
-                if($aRow['activo'] == 1){
-                    $estado = '<span class=\"label label-success\">'.LABEL_ACT.'</span>';
-                }else{
-                    $estado = '<span class=\"label label-danger\">'.LABEL_DES.'</span>';
-                }
-                
                 /*antes de enviar id se encrypta*/
-                $encryptReg = Aes::en($aRow['ID_REGISTRO']);
+                $encryptReg = Aes::en($aRow['id_ordenservicio']);
+                
+                /*registros a mostrar*/
+                $sOutput .= '["'.($num++).'","'.$aRow['orden_numero'].'","'.$aRow['nombrecompleto'].'","'.$aRow['cliente'].'","'.number_format($aRow['monto_total'],2).'",';
                 
                 /*
                  * configurando botones (add/edit/delete etc)
                  * se verifica si tiene permisos para editar
                  */
-                $axion = '"<div class=\"btn-group\">';
+                $sOutput .= '"<div class=\"btn-group\">';
                  
-                if($editar['permiso']){
-                    $axion .= '<button type=\"button\" class=\"'.$editar['theme'].'\" title=\"'.$editar['accion'].'\" onclick=\"seguimientoPago.getFormEditSeguimientoPago(this,\''.$encryptReg.'\')\">';
-                    $axion .= '    <i class=\"'.$editar['icono'].'\"></i>';
-                    $axion .= '</button>';
+                if($pagar['permiso']){
+                    $sOutput .= '<button type=\"button\" class=\"'.$pagar['theme'].'\" title=\"'.$pagar['accion'].'\" onclick=\"seguimientoPago.getFormPagarOrden(this,\''.$encryptReg.'\',\''.$aRow['orden_numero'].'\')\">';
+                    $sOutput .= '    <i class=\"'.$pagar['icono'].'\"></i>';
+                    $sOutput .= '</button>';
                 }
-                if($eliminar['permiso']){
-                    $axion .= '<button type=\"button\" class=\"'.$eliminar['theme'].'\" title=\"'.$eliminar['accion'].'\" onclick=\"seguimientoPago.postDeleteSeguimientoPago(this,\''.$encryptReg.'\')\">';
-                    $axion .= '    <i class=\"'.$eliminar['icono'].'\"></i>';
-                    $axion .= '</button>';
-                }
+                $sOutput .= '</div>"';
                 
-                $axion .= ' </div>" ';
-                
-                /*registros a mostrar*/
-                $sOutput .= '["'.($num++).'",'.$axion.',"'.$aRow['CAMPO 1'].'","'.$aRow['CAMPO 2'].'","'.$estado.'" ';
-
                 $sOutput .= '],';
 
             }
@@ -88,47 +74,18 @@ class seguimientoPagoController extends Controller{
 
     }
     
-    /*carga formulario (newSeguimientoPago.phtml) para nuevo registro: SeguimientoPago*/
-    public function getFormNewSeguimientoPago(){
-        Obj::run()->View->render("formNewSeguimientoPago");
+    public function getFormPagarOrden(){
+        Obj::run()->View->render("formPagarOrden");
     }
     
-    /*carga formulario (editSeguimientoPago.phtml) para editar registro: SeguimientoPago*/
-    public function getFormEditSeguimientoPago(){
-        Obj::run()->View->render("formEditSeguimientoPago");
-    }
-    
-    /*busca data para editar registro: SeguimientoPago*/
-    public static function findSeguimientoPago(){
-        $data = Obj::run()->seguimientoPagoModel->findSeguimientoPago();
+    public static function getCronograma(){
+        $data = Obj::run()->seguimientoPagoModel->getCronograma();
             
         return $data;
     }
     
-    /*envia datos para grabar registro: SeguimientoPago*/
-    public function postNewSeguimientoPago(){
-        $data = Obj::run()->seguimientoPagoModel->newSeguimientoPago();
-        
-        echo json_encode($data);
-    }
-    
-    /*envia datos para editar registro: SeguimientoPago*/
-    public function postEditSeguimientoPago(){
-        $data = Obj::run()->seguimientoPagoModel->editSeguimientoPago();
-        
-        echo json_encode($data);
-    }
-    
-    /*envia datos para eliminar registro: SeguimientoPago*/
-    public function postDeleteSeguimientoPago(){
-        $data = Obj::run()->seguimientoPagoModel->deleteSeguimientoPago();
-        
-        echo json_encode($data);
-    }
-    
-    /*envia datos para eliminar registros: SeguimientoPago*/
-    public function postDeleteSeguimientoPagoAll(){
-        $data = Obj::run()->seguimientoPagoModel->deleteSeguimientoPagoAll();
+    public function postPagarOrden(){
+        $data = Obj::run()->seguimientoPagoModel->postPagarOrden();
         
         echo json_encode($data);
     }

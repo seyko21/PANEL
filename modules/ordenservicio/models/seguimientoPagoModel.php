@@ -10,8 +10,9 @@
 class seguimientoPagoModel extends Model{
 
     private $_flag;
-    private $_idSeguimientoPago;
-    private $_activo;
+    private $_idOrden;
+    private $_idCompromiso;
+    private $_fecha;
     private $_usuario;
     
     /*para el grid*/
@@ -27,8 +28,10 @@ class seguimientoPagoModel extends Model{
     
     private function _set(){
         $this->_flag        = Formulario::getParam("_flag");
-        $this->_idSeguimientoPago   = Aes::de(Formulario::getParam("_idSeguimientoPago"));    /*se decifra*/
+        $this->_idOrden   = Aes::de(Formulario::getParam("_idOrden"));    /*se decifra*/
+        $this->_idCompromiso   = Aes::de(Formulario::getParam("_idCompromiso"));    /*se decifra*/
         $this->_usuario     = Session::get("sys_idUsuario");
+        $this->_fecha  = Functions::cambiaf_a_mysql(Formulario::getParam("_fecha"));
         
         $this->_iDisplayStart  = Formulario::getParam("iDisplayStart"); 
         $this->_iDisplayLength = Formulario::getParam("iDisplayLength"); 
@@ -38,7 +41,7 @@ class seguimientoPagoModel extends Model{
     
     /*data para el grid: SeguimientoPago*/
     public function getSeguimientoPago(){
-        $aColumns       =   array("","","REGISTRO_A_ORDENAR" ); //para la ordenacion y pintado en html
+        $aColumns       =   array("","2","6","11" ); //para la ordenacion y pintado en html
         /*
 	 * Ordenando, se verifica por que columna se ordenara
 	 */
@@ -50,7 +53,7 @@ class seguimientoPagoModel extends Model{
                 }
         }
         
-        $query = "call sp [NOMBRE_PROCEDIMIENTO_GRID] Grid(:iDisplayStart,:iDisplayLength,:sOrder,:sSearch);";
+        $query = "call sp_ordseSeguimientoPagoGrid(:iDisplayStart,:iDisplayLength,:sOrder,:sSearch);";
         
         $parms = array(
             ":iDisplayStart" => $this->_iDisplayStart,
@@ -62,24 +65,39 @@ class seguimientoPagoModel extends Model{
         return $data;
     }
     
-    /*grabar nuevo registro: SeguimientoPago*/
-    public function newSeguimientoPago(){
-        /*-------------------------LOGICA PARA EL INSERT------------------------*/
+    public function getCronograma(){
+        $query = "
+        SELECT 
+                `id_compromisopago`,
+                `numero_cuota`,
+                `monto_pago`,
+                `fecha_programada`,
+                `fecha_pagoreal`,
+                estado
+        FROM `lgk_compromisopago`
+        WHERE `id_ordenservicio` = :idOrden;";
+        
+        $parms = array(
+            ":idOrden" => $this->_idOrden
+        );
+        $data = $this->queryAll($query,$parms);
+        return $data;
     }
     
-    /*seleccionar registro a editar: SeguimientoPago*/
-    public function findSeguimientoPago(){
-        /*-----------------LOGICA PARA SELECT REGISTRO A EDITAR-----------------*/
-    }
-    
-    /*editar registro: SeguimientoPago*/
-    public function editSeguimientoPago(){
-        /*-------------------------LOGICA PARA EL UPDATE------------------------*/
-    }
-    
-    /*eliminar varios registros: SeguimientoPago*/
-    public function deleteSeguimientoPagoAll(){
-        /*--------------------------LOGICA PARA DELETE--------------------------*/
+    public function postPagarOrden(){
+        $query = "
+        UPDATE `lgk_compromisopago` SET
+                `fecha_pagoreal` = :fecha,
+                `estado` = 'P'
+        WHERE `id_compromisopago` = :idCompromiso;";
+        
+        $parms = array(
+            ":idCompromiso" => $this->_idCompromiso,
+            ":fecha" => $this->_fecha
+        );
+        $this->execute($query,$parms);
+        $data = array('result'=>1);
+        return $data;
     }
     
 }
