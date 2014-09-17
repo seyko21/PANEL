@@ -161,7 +161,7 @@ define('LABEL_RC8','Editar Representante');
 
 /*----------------------    SEGUIMIENTO DE COTIZACION  ----------------------*/
 define('SEGCO_1','Seguimiento de Cotización');
-define('SEGCO_2','Observación');
+define('SEGCO_2','Observación - Cotización Nro.: ');
 define('SEGCO_3','Ingrese una observación para el cambio de estado');
 define('SEGCO_4','Todos');
 define('SEGCO_5','Emitido');
@@ -169,6 +169,7 @@ define('SEGCO_6','Procesado');
 define('SEGCO_7','Orden de servicio');
 define('SEGCO_8','Rechazado');
 define('SEGCO_9','Estado');
+define('SEGCO_10','Observación');
 
 /*----------------------    ORDEN DE SERVICIO  ----------------------*/
 define('GNOSE_1','Ordenes de Servicio');
@@ -178,11 +179,16 @@ define('GNOSE_4','Monto');
 define('GNOSE_5','Ingrese monto de la cuota a programar');
 define('GNOSE_6','Fecha de pago');
 define('GNOSE_7','Ingrese la fecha de pago de la cuota');
-define('GNOSE_8','Fecha');
+define('GNOSE_8','Fecha de orden');
 define('GNOSE_9','Ingrese la fecha de la orden de servicio');
 define('GNOSE_10','Descuento');
 define('GNOSE_11','Ingrese monto a descontar');
 define('GNOSE_12','Editar Orden');
+define('GNOSE_13','Fecha de contrato');
+define('GNOSE_14','Ingrese la fecha del contrato');
+define('GNOSE_15','Contrato');
+define('GNOSE_16','Enviar accesos a email');
+define('GNOSE_17','Exportar contrato');
 
 /*---------------------- SEGUIMIENTO DE PAGOS----------------*/
 define('SEGPA_1','Seguimiento de Pagos');

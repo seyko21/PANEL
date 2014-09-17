@@ -57,12 +57,13 @@ var generarOrden_ = function(){
                 {sTitle: "N°", sWidth: "1%",bSortable: false},
                 {sTitle: "Código", sWidth: "10%",sClass: "center"},
                 {sTitle: "Nro. Cotización", sWidth: "10%",sClass: "center"},
-                {sTitle: "Representante", sWidth: "25%"},
-                {sTitle: "Cliente", sWidth: "25%"},
-                {sTitle: "Monto", sWidth: "10%", sClass: "right", bSortable: false},
-                {sTitle: "Acciones", sWidth: "8%", sClass: "center", bSortable: false}
+                {sTitle: "Representante", sWidth: "20%"},
+                {sTitle: "Cliente", sWidth: "20%"},
+                {sTitle: "Fecha", sWidth: "10%"},
+                {sTitle: "Monto", sWidth: "8%", sClass: "right", bSortable: false},
+                {sTitle: "Acciones", sWidth: "15%", sClass: "center", bSortable: false}
             ],
-            aaSorting: [[2, "asc"]],
+            aaSorting: [[1, "desc"]],
             sScrollY: "300px",
             sAjaxSource: _private.config.modulo+"getGridGenerarOrden",
             fnDrawCallback: function() {
@@ -107,7 +108,23 @@ var generarOrden_ = function(){
                     container: "#"+diccionario.tabs.GNOSE+'gridCuotas',
                     typeElement: "button"
                 });
-            }
+            },
+            fnInfoCallback: function( oSettings, iStart, iEnd, iMax, iTotal, sPre ) {
+                var m=0;
+                $("#"+diccionario.tabs.GNOSE+"gridCuotas").find('tbody').find('tr').each(function(){
+                    m += parseFloat(simpleScript.deleteComa($(this).find('td:eq(1)').html()));
+                });
+                
+                var saldo = _private.montoTotal - m;
+                
+                if(isNaN(m)){
+                    m = 0;
+                }
+                if(isNaN(saldo)){
+                    saldo = 0;
+                }
+                return 'Monto programado: <b>'+m.toFixed(2)+'</b><br> Saldo: <b>'+parseFloat(saldo).toFixed(2)+'</b><br>Monto total: <b>'+parseFloat(_private.montoTotal).toFixed(2)+'</br>';
+            }                  
         });
         setup_widgets_desktop();
     };
@@ -184,6 +201,51 @@ var generarOrden_ = function(){
                             simpleScript.closeModal('#'+diccionario.tabs.GNOSE+'formEditOrden');
                         }
                     });
+                }
+            }
+        });
+    };
+    
+    this.publico.postDeleteCuota = function(btn,id){
+        simpleScript.notify.confirm({
+            content: mensajes.MSG_7,
+            callbackSI: function(){
+                simpleAjax.send({
+                    element: btn,
+                    root: _private.config.modulo + "postDeleteCuota",
+                    data: '&_idCuota='+id,
+                    fnCallback: function(data) {
+                        if(!isNaN(data.result) && parseInt(data.result) === 1){
+                            simpleScript.notify.ok({
+                                content: mensajes.MSG_8,
+                                callback: function(){
+                                    generarOrden.getGridCuotas();
+                                }
+                            });
+                        }
+                    }
+                });
+            }
+        });
+    };
+    
+    this.publico.postDeleteCuotaNo = function(){
+        simpleScript.notify.warning({
+            content: 'Cuota no puede ser eliminada'
+        });
+    };
+    
+    this.publico.postExportarContratoPDF = function(btn,id){
+        simpleAjax.send({
+            element: btn,
+            root: _private.config.modulo + 'postExportarContratoPDF',
+            data: '&_idOrden='+id,
+            fnCallback: function(data) {
+                if(parseInt(data.result) === 1){
+                    $('#'+diccionario.tabs.GNOSE+'btnDowPDF').off('onclick');
+                    $('#'+diccionario.tabs.GNOSE+'btnDowPDF').off('click');
+                    $('#'+diccionario.tabs.GNOSE+'btnDowPDF').attr("onclick","window.open('public/files/"+data.archivo+"','_blank');generarCotizacion.deleteArchivo('"+data.archivo+"');");
+                    $('#'+diccionario.tabs.GNOSE+'btnDowPDF').click();
                 }
             }
         });

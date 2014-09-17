@@ -48,9 +48,8 @@ class seguimientoCotizacionController extends Controller{
                 
                 
                 
-                $chk = '<input id=\"c_'.$p.'\" type=\"checkbox\" name=\"'.SEGCO.'chk_delete[]\" value=\"'.$encryptReg.'\">';
                 /*datos de manera manual*/
-                $sOutput .= '["'.$chk.'","'.$aRow['cotizacion_numero'].'","'.$aRow['nombrecompleto'].'","'.$aRow['fechacoti'].'","'.$aRow['meses_contrato'].'","'.Functions::cambiaf_a_normal($aRow['vencimiento']).'","'.  number_format($aRow['mtotal'],2).'", ';
+                $sOutput .= '["'.$aRow['cotizacion_numero'].'","'.$aRow['nombrecompleto'].'","'.$aRow['fechacoti'].'","'.$aRow['meses_contrato'].'","'.Functions::cambiaf_a_normal($aRow['vencimiento']).'","'.  number_format($aRow['mtotal'],2).'", ';
 
                 /*
                  * configurando botones (add/edit/delete etc)
@@ -82,7 +81,7 @@ class seguimientoCotizacionController extends Controller{
                 if($aRow['estado'] == 'E'){
                     $sOutput .= '"<div class=\"smart-form\">';
                     $sOutput .= '<label class=\"select\">';
-                    $sOutput .= '<select id=\"'.SEGCO.$p.'lst_estado\" onchange=\"seguimientoCotizacion.getFormObservacion(\''.$encryptReg.'\',this.value,\''.$aRow['estado'].'\',\''.SEGCO.$p.'lst_estado\');\">';
+                    $sOutput .= '<select id=\"'.SEGCO.$p.'lst_estado\" onchange=\"seguimientoCotizacion.getFormObservacion(\''.$encryptReg.'\',this.value,\''.$aRow['estado'].'\',\''.SEGCO.$p.'lst_estado\',\''.$aRow['cotizacion_numero'].'\');\">';
                     $sOutput .= '<option value=\"E\" '.$selE.'>'.SEGCO_5.'</option>';
                     $sOutput .= '<option value=\"P\" '.$selP.'>'.SEGCO_6.'</option>';
     //                $sOutput .= '<option value=\"O\" '.$selO.'>'.SEGCO_7.'</option>';

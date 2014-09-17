@@ -29,6 +29,15 @@ $data = Obj::run()->generarOrdenController->findOrden();
                                 <b class="tooltip tooltip-top-right"><i class="fa fa-question-circle txt-color-teal"></i> <?php echo GNOSE_9; ?></b>
                             </label>
                         </div>
+                        
+                        <label class="label col col-3"><?php echo GNOSE_13; ?></label>
+                        <div class="col col-3">
+                            <label class="input"> 
+                                <i class="icon-append fa fa-calendar-o "></i>
+                                <input type="text" id="<?php echo GNOSE; ?>txt_fechacontrato" name="<?php echo GNOSE; ?>txt_fechacontrato" value="<?php echo Functions::cambiaf_a_normal($data['fecha_contrato'])?>">
+                                <b class="tooltip tooltip-top-right"><i class="fa fa-question-circle txt-color-teal"></i> <?php echo GNOSE_14; ?></b>
+                            </label>
+                        </div>
                     </div>
                 </section>
                 <section>
@@ -39,6 +48,27 @@ $data = Obj::run()->generarOrdenController->findOrden();
                                 <i class="icon-append fa fa-keyboard-o"></i>
                                 <input class="right" type="text" id="<?php echo GNOSE; ?>txt_descuento" name="<?php echo GNOSE; ?>txt_descuento" value="<?php echo number_format($data['descuentos'],2)?>">
                                 <b class="tooltip tooltip-top-right"><i class="fa fa-keyboard-o txt-color-teal"></i> <?php echo GNOSE_11; ?></b>
+                            </label>
+                        </div>
+                        
+                        <label class="label col col-3"><?php echo GNOSE_15; ?></label>
+                        <div class="col col-3">
+                            <label class="select"> 
+                                <?php
+                                    $datac = Obj::run()->generarOrdenController->getContratos();
+                                    
+                                    echo Functions::selectHtml(array(
+                                        'data'=>$datac,
+                                        'atributes'=>array(
+                                            'id'=>GNOSE.'lst_contrato',
+                                            'name'=>GNOSE.'lst_contrato'
+                                        ),
+                                        'etiqueta'=>'nombre',
+                                        'value'=>'id_contrato',
+                                        'defaultEtiqueta'=>$data['id_contrato'],
+                                        'txtSelect'=>true
+                                    ));
+                                ?><i></i>
                             </label>
                         </div>
                     </div>
@@ -65,7 +95,7 @@ $data = Obj::run()->generarOrdenController->findOrden();
 <?php endif; ?>
 <script>
     simpleScript.setEvent.date({
-      element: '#<?php echo GNOSE; ?>txt_fechapago' 
+      element: '#<?php echo GNOSE; ?>txt_fechapago, #<?php echo GNOSE; ?>txt_fechacontrato' 
     });
 $("#<?php echo GNOSE; ?>formEditOrden").validate({
     // Rules for form validation
@@ -74,9 +104,15 @@ $("#<?php echo GNOSE; ?>formEditOrden").validate({
             required : true,
             date: true     
         },
+        <?php echo GNOSE; ?>txt_fechacontrato : {
+            date: true     
+        },
         <?php echo GNOSE; ?>txt_descuento : {
             number: true     
-        }
+        },
+        <?php echo GNOSE; ?>lst_contrato : {
+            required : true
+        }        
     },
     // No cambie el código de abajo
     errorPlacement : function(error, element) {

@@ -514,7 +514,9 @@ var simpleScript_ = function(){
     };
     
     this.public.deleteComa = function(v){
-        return v.replace(",","");
+        if(v !== undefined){
+            return v.replace(",","");
+        }
     };
     
     this.public.dateDiff = function(f1,f2){

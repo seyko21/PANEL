@@ -202,9 +202,11 @@ class Functions{
     } 	
     
     public static function cambiaf_a_normal($fecha){
-	preg_match( "/([0-9]{2,4})-([0-9]{1,2})-([0-9]{1,2})/", $fecha, $mifecha);
-	$lafecha=$mifecha[3]."/".$mifecha[2]."/".$mifecha[1];
-	return $lafecha;
+        if(!empty($fecha)){
+            $mifecha = explode("-",$fecha);
+            $lafecha=$mifecha[2]."/".$mifecha[1]."/".$mifecha[0];
+            return $lafecha; 
+        }
     }     
     
 }

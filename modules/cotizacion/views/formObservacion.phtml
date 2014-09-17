@@ -6,6 +6,7 @@
  * Descripcion : 
  */
 $grabar = Session::getPermiso('SEGCOGR');
+$ncoti = Formulario::getParam('_ncoti');
 ?>
 <form id="<?php echo SEGCO; ?>formObservacion" name="<?php echo SEGCO; ?>formObservacion" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">
@@ -14,12 +15,12 @@ $grabar = Session::getPermiso('SEGCOGR');
                 <button type="button" class="close"  aria-hidden="true" onclick="seguimientoCotizacion.cancelEstado();">
                     &times;
                 </button>
-                <h4 class="modal-title"><?php  echo SEGCO_2; ?></h4>
+                <h4 class="modal-title"><?php  echo SEGCO_2.$ncoti; ?></h4>
             </div>
             <div class="modal-body smart-form">
                 <section>
                     <div class="row">
-                        <label class="label col col-2"><?php echo SEGCO_2; ?></label>
+                        <label class="label col col-2"><?php echo SEGCO_10; ?></label>
                         <div class="col col-8">
                             <label class="textarea"> 
                                 <i class="icon-append fa fa-keyboard-o"></i>

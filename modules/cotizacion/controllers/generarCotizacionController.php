@@ -39,7 +39,8 @@ class generarCotizacionController extends Controller{
                 /*antes de enviar id se encrypta*/
                 $encryptReg = Aes::en($aRow['id_cotizacion']);
                 
-                
+                $chk = '';
+                $estado = '';
                 if($aRow['estado'] == 'E'){
                     $estado = '<span class=\"label label-success\">'.SEGCO_5.'</span>';                    
                     $chk = '<input id=\"c_'.(++$key).'\" type=\"checkbox\" name=\"'.T8.'chk_delete[]\" value=\"'.$encryptReg.'\"  >'; 

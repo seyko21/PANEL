@@ -7,7 +7,7 @@
 */
 
 /*prefijo: SEGPA debe ser alias en tabla men_menuprincipal*/
-$grabar = Session::getPermiso("SEGPAGR");
+$grabar = Session::getPermiso("SEGPAPG");
 
 $norden = Formulario::getParam('_norden');
 ?>
@@ -47,11 +47,11 @@ $norden = Formulario::getParam('_norden');
                                 <?php if($value['estado'] == 'P' || $value['estado'] == 'A'):?>
                                 <?php echo Functions::cambiaf_a_normal($value['fecha_pagoreal']) ?>
                                 <?php else:?>
-                                <div class="row">
+                                <div class="row hide">
                                     <div class="col col-8">
                                         <label class="input"> 
                                             <i class="icon-append fa fa-calendar-o "></i>
-                                            <input class="fechapago" type="text" id="<?php echo $key.SEGPA; ?>txt_fechapago" name="<?php echo $key.SEGPA; ?>txt_fechapago" value="<?php echo Functions::cambiaf_a_normal($value['fecha_pagoreal']) ?>">
+                                            <input class="fechapago" type="text" id="<?php echo $key.SEGPA; ?>txt_fechapago" name="<?php echo $key.SEGPA; ?>txt_fechapago" value="<?php echo '16/09/2014' //Functions::cambiaf_a_normal($value['fecha_pagoreal']) ?>">
                                             <b class="tooltip tooltip-top-right"><i class="fa fa-question-circle txt-color-teal"></i> <?php echo GNOSE_7; ?></b>
                                         </label>
                                     </div>
