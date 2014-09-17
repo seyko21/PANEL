@@ -10,7 +10,7 @@ var panelesAlquilados_ = function(){
     /*metodos privados*/
     var _private = {};
     
-    _private.idPanelesAlquilados = 0;
+    _private.idCaratula = 0;
     
     _private.config = {
         modulo: "panel/panelesAlquilados/"
@@ -41,7 +41,6 @@ var panelesAlquilados_ = function(){
             }
         });
     };
-    
     this.publico.getGridPanelesAlquilados = function (){
          $('#'+diccionario.tabs.PAAL+'gridPanelesAlquilados').dataTable({
             bProcessing: true,
@@ -78,9 +77,52 @@ var panelesAlquilados_ = function(){
             }
         });
         setup_widgets_desktop();
+    }; 
+    this.publico.getGridPAOS = function (){
+         $('#'+diccionario.tabs.PAAL+'gridPAOS').dataTable({
+            bProcessing: true,
+            bServerSide: true,
+            bDestroy: true,
+            sPaginationType: "bootstrap_full", //two_button
+            sServerMethod: "POST",
+            bPaginate: true,
+            iDisplayLength: 10,   
+            sSearch: false,
+            bFilter: false,
+            aoColumns: [                
+                {sTitle: "Código", sWidth: "8%"},
+                {sTitle: "Fecha", sWidth: "10%", sClass: "center"},
+                {sTitle: "Precio", sWidth: "10%", sClass: "right"},
+                {sTitle: "Cliente", sWidth: "25%"},
+                {sTitle: "Usuario", sWidth: "25%"}                
+            ],
+            aaSorting: [[1, 'asc']],
+            sScrollY: "350px",
+            sAjaxSource: _private.config.modulo+'getGridOrdenServicio',
+            fnServerParams: function(aoData) {
+                aoData.push({"name": "_idCaratula", "value": _private.idCaratula});
+            }
+        });
+        setup_widgets_desktop();
     };
     
-  
+    this.publico.getConsulta = function(id){
+        _private.idCaratula = id;               
+        simpleAjax.send({
+            gifProcess: true,
+            dataType: 'html',
+            root: _private.config.modulo + 'getConsulta',
+            data: '&_idCaratula='+_private.idCaratula,
+            fnCallback: function(data){
+                $('#cont-modal').append(data);  /*los formularios con append*/
+                $('#'+diccionario.tabs.PAAL+'formPAOS').modal('show');
+                setTimeout(function(){                    
+                    panelesAlquilados.getGridPAOS()
+                }, 500);
+                
+            }
+        });
+    };   
     
     return this.publico;
     

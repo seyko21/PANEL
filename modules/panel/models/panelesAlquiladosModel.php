@@ -27,8 +27,8 @@ class panelesAlquiladosModel extends Model{
     
     private function _set(){
         $this->_flag                    = Formulario::getParam("_flag");        
-        $this->_usuario                 = Session::get("sys_idUsuario");
-        $this->_idPersona                 = Session::get("sys_idPersona");
+        $this->_usuario                 = Session::get("sys_usuario");
+        $this->_idPersona               = Session::get("sys_idPersona");
         $this->_tipoPanel =   Formulario::getParam("_tipoPanel"); 
         $this->_idCaratula = Aes::de(Formulario::getParam('_idCaratula'));  /*se decifra*/ 
         
@@ -62,11 +62,11 @@ class panelesAlquiladosModel extends Model{
         }        
         $sOrder = substr_replace( $sOrder, "", -1 );
         
-        $query = "call sp_catalogoMisCuentasGrid(:acceso,:usuario,:estado,:tipopanel,:iDisplayStart,:iDisplayLength,:sOrder,:sSearch);";
+        $query = "call sp_catalogoMisCuentasGrid(:acceso,:idPersona,:estado,:tipopanel,:iDisplayStart,:iDisplayLength,:sOrder,:sSearch);";
         
         $parms = array(
             ':acceso' => Session::get('sys_all'),
-            ':usuario' => $this->_idPersona, 
+            ':idPersona' => $this->_idPersona, 
             ':estado' => 'A', 
             ':tipopanel' => $this->_tipoPanel,
             ':iDisplayStart' => $this->_iDisplayStart,
@@ -79,6 +79,37 @@ class panelesAlquiladosModel extends Model{
         return $data; 
        
     }
+    
+    public function getGridOrdenServicio(){
+        $aColumns       =   array('orden_numero','fecha_orden','precio','cliente','responsable','creador' ); //para la ordenacion y pintado en html
+        /*
+	 * Ordenando, se verifica por que columna se ordenara
+	 */
+        $sOrder = "";
+        for ( $i=0 ; $i<intval( $this->_iSortingCols ) ; $i++ ){
+                if ( Formulario::getParam( "bSortable_".intval(Formulario::getParam("iSortCol_".$i)) ) == "true" ){
+                        $sOrder .= " ".$aColumns[ intval( Formulario::getParam("iSortCol_".$i) ) ]." ".
+                                (Formulario::getParam("sSortDir_".$i)==="asc" ? "asc" : 'desc') .",";
+                }
+        }        
+        $sOrder = substr_replace( $sOrder, "", -1 );
+        
+        $query = "call sp_catalogoConsultaOSGrid(:acceso,:usuario,:idCaratula,:iDisplayStart,:iDisplayLength,:sOrder);";
+        
+        $parms = array(
+            ':acceso' => Session::get('sys_all'),
+            ':usuario' => $this->_usuario, 
+            ':idCaratula' => $this->_idCaratula,
+            ':iDisplayStart' => $this->_iDisplayStart,
+            ':iDisplayLength' => $this->_iDisplayLength,
+            ':sOrder' => $sOrder
+        );
+        
+        $data = $this->queryAll($query,$parms);
+     
+        return $data; 
+       
+    }    
     
 }
 

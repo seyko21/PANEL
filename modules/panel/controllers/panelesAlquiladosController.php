@@ -16,7 +16,9 @@ class panelesAlquiladosController extends Controller{
     public function index(){ 
         Obj::run()->View->render("indexPanelesAlquilados");
     }
-    
+    public function getConsulta(){ 
+        Obj::run()->View->render('consultarPanelAlquilado');
+    }  
    public function getGridProducto(){
 //      $consultar = Session::getPermiso('CATPRED');       
        $sEcho          =   $this->post('sEcho');
@@ -81,6 +83,37 @@ class panelesAlquiladosController extends Controller{
        $data = Obj::run()->panelesAlquiladosModel->getTipoPanelCuenta();            
        return $data;
     }
+    
+    public function getGridOrdenServicio(){
+      
+       $sEcho  =   $this->post('sEcho');
+        
+        $rResult = Obj::run()->panelesAlquiladosModel->getGridOrdenServicio();
+        
+        if(!isset($rResult['error'])){  
+            $iTotal         = isset($rResult[0]['total'])?$rResult[0]['total']:0;
+            
+            $sOutput = '{';
+            $sOutput .= '"sEcho": '.intval($sEcho).', ';
+            $sOutput .= '"iTotalRecords": '.$iTotal.', ';
+            $sOutput .= '"iTotalDisplayRecords": '.$iTotal.', ';
+            $sOutput .= '"aaData": [ ';
+            foreach ( $rResult as $key=>$aRow ){
+                /*datos de manera manual*/
+                $sOutput .= '["'.$aRow['orden_numero'].'","'.Functions::cambiaf_a_normal($aRow['fecha_orden']).'","'.number_format($aRow['precio'],2).'","'.$aRow['cliente'].' - '.$aRow['responsable'].'","'.$aRow['creador'].'" ';
+                               
+                $sOutput = substr_replace( $sOutput, "", -1 );
+                $sOutput .= '],';
+            }
+            $sOutput = substr_replace( $sOutput, "", -1 );
+            $sOutput .= '] }';
+        }else{
+            $sOutput = $rResult['error'];
+        }
+        
+        echo $sOutput;
+    }           
+    
 }
 
 ?>
