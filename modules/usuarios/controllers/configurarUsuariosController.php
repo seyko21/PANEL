@@ -163,8 +163,8 @@ class configurarUsuariosController extends Controller{
         echo json_encode($data);
     }
     public function postPass() {
-        $data = Obj::run()->registrarVendedorController->postPassVendedor();
-        echo $data;
+         $data = Obj::run()->configurarUsuariosModel->postPass();
+        echo json_encode($data);
     }
 
     public function postAcceso() {
@@ -213,7 +213,7 @@ class configurarUsuariosController extends Controller{
 
     /* llama html para actualizar clave de Socio */
     public function confirm($id, $nom) {
-        Obj::run()->View->vendedor = $id;
+        Obj::run()->View->idd = $id;
         Obj::run()->View->nombres = str_replace('_', ' ',$nom );
         
         $v = AesCtr::de($id);

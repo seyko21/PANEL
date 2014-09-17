@@ -10,13 +10,14 @@ class configurarUsuariosModel extends Model{
     private $_key;
     private $_empleado;
     private $_idUsuario;
+    private $_pass;
     private $_clave = '1234567';
     private $_mail;
     private $_activo;
     private $_roles;
     private $_usuario;
     private $_rol;
-    
+     public  $_idPersona;
     /*para el grid*/
     private $_iDisplayStart;
     private $_iDisplayLength;
@@ -44,6 +45,9 @@ class configurarUsuariosModel extends Model{
         $this->_iDisplayLength =   $this->post('iDisplayLength'); 
         $this->_iSortingCols   =   $this->post('iSortingCols');
         $this->_sSearch        =   $this->post('sSearch');
+        
+        $this->_idPersona     = Aes::de($this->post('_idPersona'));    /*se decifra*/        
+        $this->_pass     = Aes::de($this->post('_pass'));    /*se decifra*/
     }
     
     public function getUsuarios(){
@@ -218,6 +222,21 @@ class configurarUsuariosModel extends Model{
         $res = array('result'=>1);
         return $res;
     }
+    
+    public function postPass(){
+        $query = "UPDATE `mae_usuario` SET
+                    `clave` = :clave,
+                    clave_comun = :comun
+                WHERE `id_usuario` = :idPersona;";
+        $parms = array(
+            ':idPersona' => $this->_idPersona,
+            ':clave' => md5($this->_pass.APP_PASS_KEY),
+            ':comun' => $this->_pass
+        );
+        $this->execute($query,$parms);
+        $data = array('result'=>1);
+        return $data;
+    } 
 
 }
 ?>
