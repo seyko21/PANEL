@@ -124,6 +124,7 @@ define('LABEL_A114','Código');
 /*----------------------Consulta: Mis cuentas Vendedor----------------------*/
 define('LABEL_A120','Mis cuentas asignadas');
 define('LABEL_A121','Paneles Alquilados');
+define('LABEL_A122','Listado de Ordenes de Servicio');
 /*----------------------Registrar Produccion----------------------*/
 define('LABEL_A130','Registro de Producción del Producto');
 
