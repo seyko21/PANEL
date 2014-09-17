@@ -58,6 +58,21 @@ class contratoController extends Controller{
                         $estado = '<span class=\"label label-danger\">'.LABEL_DESACT.'</span>';
                     }
                 }     
+                
+                 if($aRow['visible'] == '1'){
+                    if($editar['permiso']){
+                        $visible = '<button type=\"button\" class=\"btn btn-success btn-xs\" title=\"'.BTN_DESACT.'\" onclick=\"contrato.postDesactivarVisible(this,\''.$encryptReg.'\')\"><i class=\"fa fa-check\"></i> '.LABEL_ACT.'</button>';
+                    }else{
+                        $visible = '<span class=\"label label-success\">'.LABEL_ACT.'</span>';
+                    }
+                }elseif($aRow['visible'] == '0'){
+                    if($editar['permiso']){
+                        $visible = '<button type=\"button\" class=\"btn btn-danger btn-xs\" title=\"'.BTN_ACT.'\" onclick=\"contrato.postActivarVisible(this,\''.$encryptReg.'\')\"><i class=\"fa fa-ban\"></i> '.LABEL_DESACT.'</button>';
+                    }else{
+                        $visible = '<span class=\"label label-danger\">'.LABEL_DESACT.'</span>';
+                    }
+                }     
+                
                 $chk = '<input id=\"c_'.(++$key).'\" type=\"checkbox\" name=\"'.CONTR.'chk_delete[]\" value=\"'.$encryptReg.'\">';
                                 
                 
@@ -86,7 +101,7 @@ class contratoController extends Controller{
                 $axion .= ' </div>" ';
                 
                 /*registros a mostrar*/
-                $sOutput .= '["'.$chk.'","'.$aRow['nombre'].'","'.Functions::cambiaf_a_normal($aRow['fecha_creacion']).'","'.$estado.'",'.$axion.' ';
+                $sOutput .= '["'.$chk.'","'.$aRow['nombre'].'","'.Functions::cambiaf_a_normal($aRow['fecha_creacion']).'","'.$visible.'","'.$estado.'",'.$axion.' ';
                 
                 $sOutput .= '],';
 
@@ -157,6 +172,18 @@ class contratoController extends Controller{
     
     public function postActivar(){
         $data = Obj::run()->contratoModel->postActivar();
+        
+        echo json_encode($data);
+    }       
+    
+    public function postDesactivarVisible(){
+        $data = Obj::run()->contratoModel->postDesactivarVisible();
+        
+        echo json_encode($data);
+    }
+    
+    public function postActivarVisible(){
+        $data = Obj::run()->contratoModel->postActivarVisible();
         
         echo json_encode($data);
     }       

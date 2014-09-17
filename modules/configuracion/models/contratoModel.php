@@ -105,6 +105,7 @@ class contratoModel extends Model{
         $data = array('result'=>1);
         return $data;
     }
+    
     public function postDesactivar(){
         $query = "UPDATE `lgk_contrato` SET
                     `estado` = 'I'
@@ -129,6 +130,32 @@ class contratoModel extends Model{
         $data = array('result'=>1);
         return $data;
     }       
+    
+    public function postDesactivarVisible(){
+        $query = "UPDATE `lgk_contrato` SET
+                    `visible` = 0
+                WHERE `id_contrato` = :id;";
+        $parms = array(
+            ':id' => $this->_idContrato
+        );
+        $this->execute($query,$parms);
+        $data = array('result'=>1);    
+        
+        return $data;
+    }    
+    
+    public function postActivarVisible(){
+        $query = "UPDATE `lgk_contrato` SET
+                    `visible` = 1
+                WHERE `id_contrato` = :id;";
+        $parms = array(
+            ':id' => $this->_idContrato
+        );
+        $this->execute($query,$parms);
+        $data = array('result'=>1);
+        return $data;
+    }    
+    
     public function adjuntarImagen($img){
         $query = "UPDATE lgk_contrato SET 
                     `imagen_firma` = :img

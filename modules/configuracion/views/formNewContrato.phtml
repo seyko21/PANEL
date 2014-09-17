@@ -92,7 +92,17 @@ $grabar = Session::getPermiso("CONTRGR");
             $('.summernote').summernote({
                     height : 300,
                     focus : true,
-                    tabsize : 2
+                    tabsize : 2,
+                    toolbar: [
+                    //[groupname, [button list]]
+                    ['style', ['style','bold', 'italic', 'underline', 'clear']],                    
+                    ['fontsize', ['fontsize']],
+                    ['color', ['color']],
+                    ['para', ['ul', 'ol', 'paragraph']],
+                    ['table', ['table']],
+                    ['height', ['height']],
+                    ['Misc',['fullscreen','codeview']],
+                  ]
             });				
     };	
         
@@ -104,7 +114,7 @@ $grabar = Session::getPermiso("CONTRGR");
         
     // end pagefunction	
     // load summernote, and all markdown related plugins
-    loadScript("theme/<?php echo DEFAULT_LAYOUT ?>/js/plugin/summernote/summernote.js", function(){
+    loadScript("theme/<?php echo DEFAULT_LAYOUT ?>/js/plugin/summernote/summernote.min.js", function(){
             loadScript("theme/<?php echo DEFAULT_LAYOUT ?>/js/plugin/markdown/markdown.min.js", function(){
                     //loadScript("theme/<?php echo DEFAULT_LAYOUT ?>js/plugin/markdown/to-markdown.js", function(){
                             loadScript("theme/<?php echo DEFAULT_LAYOUT ?>/js/plugin/markdown/bootstrap-markdown.min.js", pagefunction);

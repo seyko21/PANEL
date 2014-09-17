@@ -53,8 +53,9 @@ var contrato_ = function(){
             iDisplayLength: 10,            
             aoColumns: [
                 {sTitle: "<input type='checkbox' id='"+diccionario.tabs.CONTR+"chk_all' onclick='simpleScript.checkAll(this,\"#"+diccionario.tabs.CONTR+"gridContrato\");'>", sWidth: "1%", sClass: "center", bSortable: false},
-                {sTitle: "Nombre", sWidth: "45%"},
+                {sTitle: "Nombre", sWidth: "40%"},
                 {sTitle: "Fecha Creado", sClass: "center", sWidth: "15%"},
+                {sTitle: "Visible", sWidth: "10%", sClass: "center", bSortable: false},    
                 {sTitle: "Estado", sWidth: "10%", sClass: "center", bSortable: false},                
                 {sTitle: "Acciones", sWidth: "15%", sClass: "center", bSortable: false}
             ],
@@ -293,6 +294,44 @@ var contrato_ = function(){
             }
         });
     };   
+    
+    this.publico.postDesactivarVisible = function(btn,id){
+           simpleAjax.send({
+               element: btn,
+               root: _private.config.modulo + 'postDesactivarVisible',
+               data: '&_idContrato='+id,
+               clear: true,
+               fnCallback: function(data) {
+                   if(!isNaN(data.result) && parseInt(data.result) === 1){
+                       simpleScript.notify.ok({
+                           content: 'Contrato se desactivo su Visibilidad correctamente',
+                           callback: function(){
+                               simpleScript.reloadGrid('#'+diccionario.tabs.CONTR+'gridContrato');
+                           }
+                       });
+                   }
+               }
+           });
+       };
+    
+    this.publico.postActivarVisible = function(btn,id){
+        simpleAjax.send({
+            element: btn,
+            root: _private.config.modulo + 'postActivarVisible',
+            data: '&_idContrato='+id,
+            clear: true,
+            fnCallback: function(data){
+                if(!isNaN(data.result) && parseInt(data.result) === 1){
+                    simpleScript.notify.ok({
+                        content: 'Contrato se activo su Visibilidad correctamente',
+                        callback: function(){
+                            simpleScript.reloadGrid('#'+diccionario.tabs.CONTR+'gridContrato');
+                        }
+                    });
+                }
+            }
+        });
+    };       
     
     this.publico.deleteAdjuntar = function(btn,id,img){
         simpleScript.notify.confirm({
