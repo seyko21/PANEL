@@ -46,7 +46,7 @@ class seguimientoPagoController extends Controller{
                 $encryptReg = Aes::en($aRow['id_ordenservicio']);
                 
                 /*registros a mostrar*/
-                $sOutput .= '["'.($num++).'","'.$aRow['orden_numero'].'","'.$aRow['nombrecompleto'].'","'.$aRow['cliente'].'","'.number_format($aRow['monto_total'],2).'",';
+                $sOutput .= '["'.($num++).'","'.$aRow['orden_numero'].'","'.$aRow['nombrecompleto'].'","'.$aRow['cliente'].'","'.$aRow['fecha'].'","'.number_format($aRow['monto_total'],2).'",';
                 
                 /*
                  * configurando botones (add/edit/delete etc)

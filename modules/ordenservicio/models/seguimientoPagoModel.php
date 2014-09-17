@@ -41,7 +41,7 @@ class seguimientoPagoModel extends Model{
     
     /*data para el grid: SeguimientoPago*/
     public function getSeguimientoPago(){
-        $aColumns       =   array("","2","6","11" ); //para la ordenacion y pintado en html
+        $aColumns       =   array("","2","7","13","5" ); //para la ordenacion y pintado en html
         /*
 	 * Ordenando, se verifica por que columna se ordenara
 	 */

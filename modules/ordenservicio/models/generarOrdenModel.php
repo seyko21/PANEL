@@ -10,11 +10,13 @@
 class generarOrdenModel extends Model{
 
     private $_flag;
-    private $_idOrden;
+    public  $_idOrden;
     private $_idCuota;
     private $_monto;
     private $_fechaPago;
     private $_descuento;
+    private $_idContrato;
+    private $_fechaContrato;
     private $_usuario;
     
     /*para el grid*/
@@ -36,6 +38,8 @@ class generarOrdenModel extends Model{
         $this->_monto  = Formulario::getParam(GNOSE."txt_monto"); 
         $this->_descuento  = str_replace(',','',Formulario::getParam(GNOSE."txt_descuento"));
         $this->_fechaPago  = Functions::cambiaf_a_mysql(Formulario::getParam(GNOSE."txt_fechapago")); 
+        $this->_fechaContrato  = Functions::cambiaf_a_mysql(Formulario::getParam(GNOSE."txt_fechacontrato"));
+        $this->_idContrato  = Formulario::getParam(GNOSE."lst_contrato"); 
         
         $this->_iDisplayStart  = Formulario::getParam("iDisplayStart"); 
         $this->_iDisplayLength = Formulario::getParam("iDisplayLength"); 
@@ -45,7 +49,7 @@ class generarOrdenModel extends Model{
     
     /*data para el grid: GenerarOrden*/
     public function getGenerarOrden(){
-        $aColumns       =   array("","2","4","6","11" ); //para la ordenacion y pintado en html
+        $aColumns       =   array("","2","4","7","13","5" ); //para la ordenacion y pintado en html
         /*
 	 * Ordenando, se verifica por que columna se ordenara
 	 */
@@ -72,13 +76,15 @@ class generarOrdenModel extends Model{
     }
     
     public function insertCuota(){
-        $query = "CALL sp_ordseOrdenServicioCuota(:flag,:idOrden,:monto,:fechaPago,:usuario);";
+        $query = "CALL sp_ordseOrdenServicioCuota(:flag,:idOrden,:monto,:fechaPago,:fechaContrato,:idContrato,:usuario);";
         
         $parms = array(
             ':flag'=>1,
             ':idOrden'=>$this->_idOrden,
             ':monto'=>$this->_monto,
             ':fechaPago'=>$this->_fechaPago,
+            ':fechaContrato'=>'',
+            ':idContrato'=>'',
             ':usuario'=>$this->_usuario,
         );
         
@@ -113,13 +119,15 @@ class generarOrdenModel extends Model{
     }
     
     public function editOrden(){
-        $query = "CALL sp_ordseOrdenServicioCuota(:flag,:idOrden,:monto,:fechaPago,:usuario);";
+        $query = "CALL sp_ordseOrdenServicioCuota(:flag,:idOrden,:monto,:fechaPago,:fechaContrato,:idContrato,:usuario);";
         
         $parms = array(
             ':flag'=>2,
             ':idOrden'=>$this->_idOrden,
             ':monto'=>$this->_descuento,
             ':fechaPago'=>$this->_fechaPago,
+            ':fechaContrato'=>$this->_fechaContrato,
+            ':idContrato'=>$this->_idContrato,
             ':usuario'=>$this->_usuario,
         );
         
@@ -128,7 +136,7 @@ class generarOrdenModel extends Model{
     }
     
     public function findOrden(){
-        $query = " SELECT fecha_orden,descuentos FROM lgk_ordenservicio WHERE id_ordenservicio = :idOrden; ";
+        $query = " SELECT fecha_orden,descuentos,fecha_contrato,id_contrato FROM lgk_ordenservicio WHERE id_ordenservicio = :idOrden; ";
         
         $parms = array(
             ':idOrden'=>$this->_idOrden
@@ -139,17 +147,59 @@ class generarOrdenModel extends Model{
     }
     
     public function postDeleteCuota(){
-        $query = "CALL sp_ordseOrdenServicioCuota(:flag,:idCuota,:monto,:fechaPago,:usuario);";
+        $query = "CALL sp_ordseOrdenServicioCuota(:flag,:idCuota,:monto,:fechaPago,:fechaContrato,:idContrato,:usuario);";
         
         $parms = array(
             ':flag'=>3,
             ':idCuota'=>$this->_idCuota,
             ':monto'=>'',
             ':fechaPago'=>'',
+            ':fechaContrato'=>'',
+            ':idContrato'=>'',
             ':usuario'=>$this->_usuario,
         );
         
         $data = $this->queryOne($query,$parms);
+        return $data;
+    }
+    
+    public function getContratos(){
+        $v = '';
+        /*si no es ADMIN solo vera los contratos visibles*/
+        if(Session::get('sys_all') == 'N'){
+            $v = " `visible` = 1 AND ";
+        }
+        $query = " SELECT `id_contrato`,`nombre` FROM `lgk_contrato` WHERE ".$v." `estado`= :estado; ";
+        
+        $parms = array(
+            ':estado'=> 'A'
+        );
+        
+        $data = $this->queryAll($query,$parms);
+        return $data;
+    }
+    
+    public function getContrato(){
+        $query = " CALL sp_ordseOrdenServicioConsultas(:flag,:idOrden);";
+        
+        $parms = array(
+            ':flag'=> 1,
+            ':idOrden'=> $this->_idOrden
+        );
+       
+        $data = $this->queryOne($query,$parms);
+        return $data;
+    }
+    
+    public function getCronograma(){
+        $query = " CALL sp_ordseOrdenServicioConsultas(:flag,:idOrden);";
+        
+        $parms = array(
+            ':flag'=> 2,
+            ':idOrden'=> $this->_idOrden
+        );
+       
+        $data = $this->queryAll($query,$parms);
         return $data;
     }
     

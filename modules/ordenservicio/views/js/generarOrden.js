@@ -57,10 +57,11 @@ var generarOrden_ = function(){
                 {sTitle: "N°", sWidth: "1%",bSortable: false},
                 {sTitle: "Código", sWidth: "10%",sClass: "center"},
                 {sTitle: "Nro. Cotización", sWidth: "10%",sClass: "center"},
-                {sTitle: "Representante", sWidth: "25%"},
-                {sTitle: "Cliente", sWidth: "25%"},
-                {sTitle: "Monto", sWidth: "10%", sClass: "right", bSortable: false},
-                {sTitle: "Acciones", sWidth: "8%", sClass: "center", bSortable: false}
+                {sTitle: "Representante", sWidth: "20%"},
+                {sTitle: "Cliente", sWidth: "20%"},
+                {sTitle: "Fecha", sWidth: "10%"},
+                {sTitle: "Monto", sWidth: "8%", sClass: "right", bSortable: false},
+                {sTitle: "Acciones", sWidth: "15%", sClass: "center", bSortable: false}
             ],
             aaSorting: [[1, "desc"]],
             sScrollY: "300px",
@@ -116,6 +117,12 @@ var generarOrden_ = function(){
                 
                 var saldo = _private.montoTotal - m;
                 
+                if(isNaN(m)){
+                    m = 0;
+                }
+                if(isNaN(saldo)){
+                    saldo = 0;
+                }
                 return 'Monto programado: <b>'+m.toFixed(2)+'</b><br> Saldo: <b>'+parseFloat(saldo).toFixed(2)+'</b><br>Monto total: <b>'+parseFloat(_private.montoTotal).toFixed(2)+'</br>';
             }                  
         });
@@ -225,6 +232,22 @@ var generarOrden_ = function(){
     this.publico.postDeleteCuotaNo = function(){
         simpleScript.notify.warning({
             content: 'Cuota no puede ser eliminada'
+        });
+    };
+    
+    this.publico.postExportarContratoPDF = function(btn,id){
+        simpleAjax.send({
+            element: btn,
+            root: _private.config.modulo + 'postExportarContratoPDF',
+            data: '&_idOrden='+id,
+            fnCallback: function(data) {
+                if(parseInt(data.result) === 1){
+                    $('#'+diccionario.tabs.GNOSE+'btnDowPDF').off('onclick');
+                    $('#'+diccionario.tabs.GNOSE+'btnDowPDF').off('click');
+                    $('#'+diccionario.tabs.GNOSE+'btnDowPDF').attr("onclick","window.open('public/files/"+data.archivo+"','_blank');generarCotizacion.deleteArchivo('"+data.archivo+"');");
+                    $('#'+diccionario.tabs.GNOSE+'btnDowPDF').click();
+                }
+            }
         });
     };
     

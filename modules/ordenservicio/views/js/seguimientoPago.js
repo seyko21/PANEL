@@ -56,6 +56,7 @@ var seguimientoPago_ = function(){
                 {sTitle: "Código", sWidth: "10%",sClass: "center"},
                 {sTitle: "Representante", sWidth: "25%"},
                 {sTitle: "Cliente", sWidth: "25%"},
+                {sTitle: "Fecha", sWidth: "10%"},
                 {sTitle: "Monto", sWidth: "10%", sClass: "right", bSortable: false},
                 {sTitle: "Acciones", sWidth: "8%", sClass: "center", bSortable: false}            
             ],
