@@ -239,9 +239,9 @@ class generarOrdenController extends Controller{
         
         $cro = '<table style="width:100%" border="1">'
                 . '<tr>'
-                . '<th style="width:3%">Cuota</th>'
-                . '<th>Monto</th>'
-                . '<th>Fecha Pago</th>'
+                . '<th style="width:3%">'.GNOSE_18.'</th>'
+                . '<th>'.GNOSE_18.'</th>'
+                . '<th>'.GNOSE_18.'</th>'
                 . '</tr>';
         foreach ($cronograma as $value) {
             $cro .= '<tr>';

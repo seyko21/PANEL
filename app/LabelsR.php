@@ -189,6 +189,9 @@ define('GNOSE_14','Ingrese la fecha del contrato');
 define('GNOSE_15','Contrato');
 define('GNOSE_16','Enviar accesos a email');
 define('GNOSE_17','Exportar contrato');
+define('GNOSE_18','Cuota');
+define('GNOSE_19','Mmonto');
+define('GNOSE_20','Fecha de Pago');
 
 /*---------------------- SEGUIMIENTO DE PAGOS----------------*/
 define('SEGPA_1','Seguimiento de Pagos');
