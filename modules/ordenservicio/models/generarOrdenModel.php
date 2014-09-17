@@ -11,6 +11,7 @@ class generarOrdenModel extends Model{
 
     private $_flag;
     private $_idOrden;
+    private $_idCuota;
     private $_monto;
     private $_fechaPago;
     private $_descuento;
@@ -30,6 +31,7 @@ class generarOrdenModel extends Model{
     private function _set(){
         $this->_flag        = Formulario::getParam("_flag");
         $this->_idOrden   = Aes::de(Formulario::getParam("_idOrden"));    /*se decifra*/
+        $this->_idCuota   = Aes::de(Formulario::getParam("_idCuota"));    /*se decifra*/
         $this->_usuario     = Session::get("sys_idUsuario");
         $this->_monto  = Formulario::getParam(GNOSE."txt_monto"); 
         $this->_descuento  = str_replace(',','',Formulario::getParam(GNOSE."txt_descuento"));
@@ -55,9 +57,11 @@ class generarOrdenModel extends Model{
                 }
         }
         
-        $query = "call sp_ordseOrdenServicioGrid(:iDisplayStart,:iDisplayLength,:sOrder,:sSearch);";
+        $query = "call sp_ordseOrdenServicioGrid(:acceso,:usuario,:iDisplayStart,:iDisplayLength,:sOrder,:sSearch);";
         
         $parms = array(
+            ":acceso" => Session::get('sys_all'),
+            ":usuario" => $this->_usuario,
             ":iDisplayStart" => $this->_iDisplayStart,
             ":iDisplayLength" => $this->_iDisplayLength,
             ":sOrder" => $sOrder,
@@ -128,6 +132,21 @@ class generarOrdenModel extends Model{
         
         $parms = array(
             ':idOrden'=>$this->_idOrden
+        );
+        
+        $data = $this->queryOne($query,$parms);
+        return $data;
+    }
+    
+    public function postDeleteCuota(){
+        $query = "CALL sp_ordseOrdenServicioCuota(:flag,:idCuota,:monto,:fechaPago,:usuario);";
+        
+        $parms = array(
+            ':flag'=>3,
+            ':idCuota'=>$this->_idCuota,
+            ':monto'=>'',
+            ':fechaPago'=>'',
+            ':usuario'=>$this->_usuario,
         );
         
         $data = $this->queryOne($query,$parms);

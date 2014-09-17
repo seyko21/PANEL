@@ -58,7 +58,6 @@ var seguimientoCotizacion_ = function(){
             bPaginate: true,
             iDisplayLength: 10,            
             aoColumns: [
-                {sTitle: "<input type='checkbox' id='"+diccionario.tabs.SEGCO+"chk_all' onclick='simpleScript.checkAll(this,\"#"+diccionario.tabs.SEGCO+"gridSeguimientoCotizacion\");'>", sWidth: "1%", sClass: "center", bSortable: false},
                 {sTitle: "Código", sClass: "center",sWidth: "15%"},
                 {sTitle: "Prospecto", sWidth: "25%"},
                 {sTitle: "Fecha", sWidth: "10%",sClass: "center"},
@@ -67,7 +66,7 @@ var seguimientoCotizacion_ = function(){
                 {sTitle: "Total", sWidth: "10%", sClass: "right"},
                 {sTitle: "Estado", sWidth: "15%", sClass: "center", bSortable: false}              
             ],
-            aaSorting: [[2, "asc"]],
+            aaSorting: [[0, "desc"]],
             sScrollY: "300px",
             sAjaxSource: _private.config.modulo+"getGridSeguimientoCotizacion",
             fnServerParams: function(aoData) {
@@ -96,7 +95,7 @@ var seguimientoCotizacion_ = function(){
         setup_widgets_desktop();
     };
     
-    this.publico.getFormObservacion = function(id,newest,actest,cb){
+    this.publico.getFormObservacion = function(id,newest,actest,cb,ncoti){
         _private.idCotizacion = id;
     
         _private.newEstado = newest;
@@ -109,6 +108,7 @@ var seguimientoCotizacion_ = function(){
             gifProcess: true,
             dataType: "html",
             root: _private.config.modulo + "getFormObservacion",
+            data: '&_ncoti='+ncoti,
             fnCallback: function(data){
                 $("#cont-modal").append(data);  /*los formularios con append*/
                 $("#"+diccionario.tabs.SEGCO+"formObservacion").modal("show");

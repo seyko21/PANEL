@@ -107,7 +107,7 @@ var seguimientoPago_ = function(){
                     simpleScript.notify.ok({
                         content: mensajes.MSG_3,
                         callback: function(){
-                            
+                            //simpleScript.closeModal('#'+diccionario.tabs.SEGPA+'formPagarOrden');
                         }
                     });
                 }

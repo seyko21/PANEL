@@ -161,7 +161,7 @@ define('LABEL_RC8','Editar Representante');
 
 /*----------------------    SEGUIMIENTO DE COTIZACION  ----------------------*/
 define('SEGCO_1','Seguimiento de Cotización');
-define('SEGCO_2','Observación');
+define('SEGCO_2','Observación - Cotización Nro.: ');
 define('SEGCO_3','Ingrese una observación para el cambio de estado');
 define('SEGCO_4','Todos');
 define('SEGCO_5','Emitido');
@@ -169,6 +169,7 @@ define('SEGCO_6','Procesado');
 define('SEGCO_7','Orden de servicio');
 define('SEGCO_8','Rechazado');
 define('SEGCO_9','Estado');
+define('SEGCO_10','Observación');
 
 /*----------------------    ORDEN DE SERVICIO  ----------------------*/
 define('GNOSE_1','Ordenes de Servicio');

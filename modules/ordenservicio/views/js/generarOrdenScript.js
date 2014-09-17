@@ -17,9 +17,9 @@ var generarOrdenScript_ = function(){
         
         
         /*fecha ingresada debe ser mayor a fecha actual*/
-        if(simpleScript.dateDiff(fechaActual,f2) < 1){
+        if(simpleScript.dateDiff(fechaActual,f2) < 0){
             simpleScript.notify.warning({
-                content: 'Fecha debe ser mayor a la fecha actual: '+fechaActual
+                content: 'Fecha debe ser mayor o igual a la fecha actual: '+fechaActual
             });
             retorna = 1;
         }

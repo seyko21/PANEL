@@ -76,7 +76,7 @@ class generarOrdenController extends Controller{
                     $sOutput .= '</button>';
                 }
                 if($email['permiso']){
-                    $sOutput .= '<button type=\"button\" class=\"'.$email['theme'].'\" title=\"'.$email['accion'].'\" onclick=\"registrarVendedor.postAccesoVendedor(this,\'' . $idUser . '\',\'' . $aRow['nombrecompleto'] . '\',\'' . $aRow['email'] . '\')\">';
+                    $sOutput .= '<button type=\"button\" class=\"'.$email['theme'].'\" title=\"Enviar accesos a email\" onclick=\"registrarVendedor.postAccesoVendedor(this,\'' . $idUser . '\',\'' . $aRow['nombrecompleto'] . '\',\'' . $aRow['email'] . '\')\">';
                     $sOutput .= '    <i class=\"'.$email['icono'].'\"></i>';
                     $sOutput .= '</button>';
                 }
@@ -130,10 +130,10 @@ class generarOrdenController extends Controller{
                 
                 
                 /*antes de enviar id se encrypta*/
-                $encryptReg = Aes::en($aRow['id_ordenservicio']);
+                $encryptReg = Aes::en($aRow['id_compromisopago']);
                 
                 /*registros a mostrar*/
-                $sOutput .= '["'.$aRow['numero_cuota'].'","'.number_format($aRow['monto_pago'], 2).'","'.$aRow['fechapago'].'","xx",';
+                $sOutput .= '["'.$aRow['numero_cuota'].'","'.number_format($aRow['monto_pago'], 2).'","'.$aRow['fechapago'].'",';
                 
                 /*
                  * configurando botones (add/edit/delete etc)
@@ -142,9 +142,15 @@ class generarOrdenController extends Controller{
                 $sOutput .= '"<div class=\"btn-group\">';
                  
                 if($eliminar['permiso']){
-                    $sOutput .= '<button type=\"button\" class=\"'.$eliminar['theme'].'\" title=\"'.$eliminar['accion'].'\" onclick=\"generarOrden.getFormCronograma(this,\''.$encryptReg.'\')\">';
-                    $sOutput .= '    <i class=\"'.$eliminar['icono'].'\"></i>';
-                    $sOutput .= '</button>';
+                    if($aRow['estado'] == 'E'){ #solo se eliminan los que estan en estdo E
+                        $sOutput .= '<button type=\"button\" class=\"'.$eliminar['theme'].'\" title=\"'.$eliminar['accion'].'\" onclick=\"generarOrden.postDeleteCuota(this,\''.$encryptReg.'\')\">';
+                        $sOutput .= '    <i class=\"'.$eliminar['icono'].'\"></i>';
+                        $sOutput .= '</button>';
+                    }else{
+                        $sOutput .= '<button type=\"button\" class=\"'.$eliminar['theme'].'\" title=\"'.$eliminar['accion'].'\" onclick=\"generarOrden.postDeleteCuotaNo()\">';
+                        $sOutput .= '    <i class=\"'.$eliminar['icono'].'\"></i>';
+                        $sOutput .= '</button>';
+                    }
                 }
                 
                 $sOutput .= '</div>"';
@@ -172,6 +178,12 @@ class generarOrdenController extends Controller{
         $data = Obj::run()->generarOrdenModel->findOrden();
         
         return $data;
+    }
+    
+    public function postDeleteCuota(){
+        $data = Obj::run()->generarOrdenModel->postDeleteCuota();
+        
+        echo json_encode($data);
     }
     
 }

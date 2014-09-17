@@ -87,13 +87,13 @@ class seguimientoPagoModel extends Model{
     public function postPagarOrden(){
         $query = "
         UPDATE `lgk_compromisopago` SET
-                `fecha_pagoreal` = :fecha,
+                `fecha_pagoreal` = CURDATE(),
                 `estado` = 'P'
         WHERE `id_compromisopago` = :idCompromiso;";
         
         $parms = array(
-            ":idCompromiso" => $this->_idCompromiso,
-            ":fecha" => $this->_fecha
+            ":idCompromiso" => $this->_idCompromiso
+//            ":fecha" => $this->_fecha
         );
         $this->execute($query,$parms);
         $data = array('result'=>1);
