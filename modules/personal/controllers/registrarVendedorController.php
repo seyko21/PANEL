@@ -12,6 +12,7 @@ class registrarVendedorController extends Controller {
     public function __construct() {
         $this->loadModel(array('modulo' => 'personal', 'modelo' => 'registrarVendedor'));
         $this->loadController(array('modulo' => 'index', 'controller' => 'login'));
+        $this->loadController(array('modulo' => 'usuarios', 'controller' => 'configurarUsuarios'));
     }
 
     public function index() {
@@ -161,68 +162,11 @@ class registrarVendedorController extends Controller {
         $data = Obj::run()->registrarVendedorModel->postActivarVendedor();
 
         echo json_encode($data);
-    }
-
-    public function postPassVendedor() {
-        $data = Obj::run()->registrarVendedorModel->postPassVendedor();
-        echo json_encode($data);
-    }
-    public function getParametros($p) {
-        $data = Obj::run()->registrarVendedorModel->getParametros($p);
-        return $data;
-    }   
-    public function postAccesoVendedor() {
-        $idVendedor = Formulario::getParam('_id');
-        $nomVendedor = Formulario::getParam('_nombres');
-        $email = Formulario::getParam('_mail');
-        $data = $this->getParametros('EMAIL');        
-        $data1 = $this->getParametros('EMCO');        
-        $emailEmpresa = $data['valor'];
-        $empresa = $data1['valor'];
-        $vendedor = str_replace(' ', '_',$nomVendedor );
-        $body = '
-            <h3><b>ACCESOS</b></h3>
-            <h3>Estimado: ' . $nomVendedor . '</h3>
-            <p>Este es un mensaje automatico enviado desde www.sevend.pe</p>
-            <table border="0" style="border-collapse:collapse">
-               <tr>
-                    <td>
-                        <p>El motivo del mensaje es porque Usted a sido agregado como usuario al sistema de SEVEND.</p>
-                        <p><a href="' . BASE_URL . 'personal/registrarVendedor/confirm/'.$idVendedor.'/'.$vendedor.'">Pulse aqui</a> para ingresar al sistema.</p>
-                    </td>
-               </tr>
-            </table>';
-
-        $mail = new PHPMailer(); // defaults to using php "mail()"
-
-        //$mail->IsSMTP();
+    }  
     
-        $mail->SetFrom($emailEmpresa, $empresa);
-
-        $mail->AddAddress($email, $nomVendedor);
-
-        $mail->Subject = "Accesos a SEVEND";
-
-        $mail->MsgHTML($body);
-
-        /* validar si dominio de correo existe */
-        if ($mail->Send()) {
-            $data = array('result' => 1);
-        } else {
-            $data = array('result' => 2);
-        }
-
-        echo json_encode($data);
-    }
-
-    /* llama html para actualizar clave de vendedor */
-    public function confirm($id, $nom) {
-        Obj::run()->View->idd = $id;
-        Obj::run()->View->nombres = str_replace('_', ' ',$nom );
-        
-        $v = AesCtr::de($id);
-
-        Obj::run()->View->render('newClaveVendedor', false);
+    public function postAccesoVendedor() {
+        $data = Obj::run()->configurarUsuariosController->postAcceso();
+        echo $data;
     }
 
     public function adjuntarDocumento() {

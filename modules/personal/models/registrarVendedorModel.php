@@ -268,22 +268,7 @@ class registrarVendedorModel extends Model{
         
         $data = array('result'=>1);
         return $data;
-    }
-    
-    public function getParametros($alias){
-        $query = "SELECT
-            `valor`, `alias`
-          FROM `pub_parametro`
-          WHERE estado = :estado AND alias = :alias; ";
-        
-        $parms = array(
-            ':estado'=>'A',
-            ':alias'=>$alias
-        );
-        
-        $data = $this->queryOne($query,$parms);
-        return $data;
-    }
+    }      
     
 }
 

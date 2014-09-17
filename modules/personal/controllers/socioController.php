@@ -11,7 +11,8 @@ class socioController extends Controller{
 
     public function __construct() {
         $this->loadModel(array('modulo'=>'personal','modelo'=>'socio'));
-        $this->loadController(array('modulo'=>'personal','controller'=>'registrarVendedor')); 
+        $this->loadController(array('modulo'=>'personal','controller'=>'registrarVendedor'));   
+        
     }
     
     public function index(){ 
@@ -154,65 +155,12 @@ class socioController extends Controller{
         
         echo json_encode($data);
     }    
-  
-    public function postPass() {
-        $data = Obj::run()->registrarVendedorController->postPassVendedor();
+   
+    public function postAcceso() {
+        $data = Obj::run()->configurarUsuariosController->postAcceso();
         echo $data;
     }
-
-    public function postAcceso() {
-        $idd = Formulario::getParam('_id');
-        $nombres = Formulario::getParam('_nombres');
-        $email = Formulario::getParam('_mail');
-        $data = Obj::run()->registrarVendedorController->getParametros('EMAIL');        
-        $data1 = Obj::run()->registrarVendedorController->getParametros('EMCO');        
-        $emailEmpresa = $data['valor'];
-        $empresa = $data1['valor'];
-        $persona = str_replace(' ', '_',$nombres );
-        $body = '
-            <h3><b>ACCESOS</b></h3>
-            <h3>Estimado: ' . $nombres . '</h3>
-            <p>Este es un mensaje automatico enviado desde www.sevend.pe</p>
-            <table border="0" style="border-collapse:collapse">
-               <tr>
-                    <td>
-                        <p>El motivo del mensaje es porque Usted a sido agregado como usuario al sistema de SEVEND.</p>
-                        <p><a href="' . BASE_URL . 'personal/socio/confirm/'.$idd.'/'.$persona.'">Pulse aqui</a> para ingresar al sistema.</p>
-                    </td>
-               </tr>
-            </table>';
-
-        $mail = new PHPMailer(); // defaults to using php "mail()"
-
-        //$mail->IsSMTP();
-    
-        $mail->SetFrom($emailEmpresa, $empresa);
-
-        $mail->AddAddress($email, $nombres);
-
-        $mail->Subject = "Accesos a SEVEND";
-
-        $mail->MsgHTML($body);
-
-        /* validar si dominio de correo existe */
-        if ($mail->Send()) {
-            $data = array('result' => 1);
-        } else {
-            $data = array('result' => 2);
-        }
-
-        echo json_encode($data);
-    }
-
-    /* llama html para actualizar clave de Socio */
-    public function confirm($id, $nom) {
-        Obj::run()->View->vendedor = $id;
-        Obj::run()->View->nombres = str_replace('_', ' ',$nom );
-        
-        $v = AesCtr::de($id);
-
-        Obj::run()->View->render('newClaveSocio', false);
-    } 
+   
 }
 
 ?>

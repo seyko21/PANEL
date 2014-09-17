@@ -9,8 +9,7 @@
 class configurarUsuariosController extends Controller{
     
     public function __construct() {
-        $this->loadModel('configurarUsuarios');        
-        $this->loadController(array('modulo' => 'personal', 'controller' => 'registrarVendedor'));
+        $this->loadModel(array('modulo' => 'usuarios', 'modelo' => 'configurarUsuarios'));        
     }
 
     public function index(){ 
@@ -166,13 +165,18 @@ class configurarUsuariosController extends Controller{
          $data = Obj::run()->configurarUsuariosModel->postPass();
         echo json_encode($data);
     }
+    
+    public function getParametros($p) {
+        $data = Obj::run()->configurarUsuariosModel->getParametros($p);
+        return $data;
+    }   
 
     public function postAcceso() {
         $idd = Formulario::getParam('_id');
         $nombres = Formulario::getParam('_nombres');
         $email = Formulario::getParam('_mail');
-        $data = Obj::run()->registrarVendedorController->getParametros('EMAIL');        
-        $data1 = Obj::run()->registrarVendedorController->getParametros('EMCO');        
+        $data = Obj::run()->configurarUsuariosController->getParametros('EMAIL');        
+        $data1 = Obj::run()->configurarUsuariosController->getParametros('EMCO');        
         $emailEmpresa = $data['valor'];
         $empresa = $data1['valor'];
         $persona = str_replace(' ', '_',$nombres );

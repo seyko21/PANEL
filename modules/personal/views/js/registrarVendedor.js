@@ -303,27 +303,7 @@ var registrarVendedor_ = function(){
             }
         });
     };
-    
-    this.publico.postPassVendedor = function(){
-        window.history.pushState('data', "Titulo", "../../../../");
-        simpleAjax.send({
-            flag: 1,
-            element: '#btnEntrar',
-            root: _private.config.modulo + 'postPassVendedor',
-            form: '#fromchange_pass',
-            data: '&_idPersona='+$('#txtUser').val()+'&_pass='+simpleAjax.stringPost($('#txtNewClave').val()),
-            clear: true,
-            fnCallback: function(data) {
-                if(!isNaN(data.result) && parseInt(data.result) === 1){
-                    simpleScript.notify.ok({
-                        content: mensajes.MSG_3
-                    });
-                    simpleScript.redirect('index');
-                }
-            }
-        });
-    };
-    
+       
     this.publico.deleteAdjuntar = function(btn,id,doc){
         simpleScript.notify.confirm({
             content: mensajes.MSG_7,
