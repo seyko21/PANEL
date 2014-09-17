@@ -310,7 +310,7 @@ var registrarVendedor_ = function(){
             flag: 1,
             element: '#btnEntrar',
             root: _private.config.modulo + 'postPassVendedor',
-            form: '#formVendedor',
+            form: '#fromchange_pass',
             data: '&_idPersona='+$('#txtUser').val()+'&_pass='+simpleAjax.stringPost($('#txtNewClave').val()),
             clear: true,
             fnCallback: function(data) {

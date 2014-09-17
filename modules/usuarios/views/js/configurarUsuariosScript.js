@@ -36,7 +36,19 @@ var configurarUsuariosScript_ = function(){
             });
        }
    };
-   
+     this.public.validaChangePass = function(){  
+        if($('#txtNewClave').val().length === 0){
+            simpleScript.notify.error({
+                content: 'Ingrese su clave'
+            });
+        }else if($('#txtNewClave').val().length < 6){
+            simpleScript.notify.error({
+                content: 'La clave debe tener como mínimo 6 caracteres.'
+            });
+        }else{
+            configurarUsuarios.postPass();
+        }
+    };
    return this.public;
     
 };

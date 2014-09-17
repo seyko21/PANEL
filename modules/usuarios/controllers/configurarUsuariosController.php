@@ -9,7 +9,8 @@
 class configurarUsuariosController extends Controller{
     
     public function __construct() {
-        $this->loadModel('configurarUsuarios');
+        $this->loadModel('configurarUsuarios');        
+        $this->loadController(array('modulo' => 'personal', 'controller' => 'registrarVendedor'));
     }
 
     public function index(){ 
@@ -19,7 +20,7 @@ class configurarUsuariosController extends Controller{
     public function getUsuarios(){ 
         $editar = Session::getPermiso('CUSED');
         $eliminar = Session::getPermiso('CUSDE');
-        
+        $mail = Session::getPermiso('CUSEE');
         $sEcho          =   $this->post('sEcho');
         
         $rResult = Obj::run()->configurarUsuariosModel->getUsuarios();
@@ -60,6 +61,11 @@ class configurarUsuariosController extends Controller{
                 if($eliminar['permiso'] == 1){
                     $sOutput .= '<button type=\"button\" class=\"'.$eliminar['theme'].'\" title=\"'.$eliminar['accion'].'\" onclick=\"configurarUsuarios.postDeleteUsuario(\''.$encryptReg.'\')\">';
                     $sOutput .= '    <i class=\"'.$eliminar['icono'].'\"></i>';
+                    $sOutput .= '</button>';
+                } 
+                if ($mail['permiso']) {
+                    $sOutput .= '<button type=\"button\" class=\"'.$mail['theme'].'\" title=\"' . $mail['accion'] . '\" onclick=\"configurarUsuarios.postAcceso(this,\'' . $encryptReg . '\',\'' . $aRow['nombrecompleto'] . '\',\'' . $aRow['usuario'] . '\')\">';
+                    $sOutput .= '    <i class=\"'.$mail['icono'].'\"></i>';
                     $sOutput .= '</button>';
                 }
                 
@@ -156,7 +162,64 @@ class configurarUsuariosController extends Controller{
         
         echo json_encode($data);
     }
+    public function postPass() {
+        $data = Obj::run()->registrarVendedorController->postPassVendedor();
+        echo $data;
+    }
+
+    public function postAcceso() {
+        $idd = Formulario::getParam('_id');
+        $nombres = Formulario::getParam('_nombres');
+        $email = Formulario::getParam('_mail');
+        $data = Obj::run()->registrarVendedorController->getParametros('EMAIL');        
+        $data1 = Obj::run()->registrarVendedorController->getParametros('EMCO');        
+        $emailEmpresa = $data['valor'];
+        $empresa = $data1['valor'];
+        $persona = str_replace(' ', '_',$nombres );
+        $body = '
+            <h3><b>ACCESOS</b></h3>
+            <h3>Estimado: ' . $nombres . '</h3>
+            <p>Este es un mensaje automatico enviado desde www.sevend.pe</p>
+            <table border="0" style="border-collapse:collapse">
+               <tr>
+                    <td>
+                        <p>El motivo del mensaje es porque Usted a sido agregado como usuario al sistema de SEVEND.</p>
+                        <p><a href="' . BASE_URL . 'usuarios/configurarUsuarios/confirm/'.$idd.'/'.$persona.'">Pulse aqui</a> para ingresar al sistema.</p>
+                    </td>
+               </tr>
+            </table>';
+
+        $mail = new PHPMailer(); // defaults to using php "mail()"
+
+        //$mail->IsSMTP();
     
+        $mail->SetFrom($emailEmpresa, $empresa);
+
+        $mail->AddAddress($email, $nombres);
+
+        $mail->Subject = "Accesos a SEVEND";
+
+        $mail->MsgHTML($body);
+
+        /* validar si dominio de correo existe */
+        if ($mail->Send()) {
+            $data = array('result' => 1);
+        } else {
+            $data = array('result' => 2);
+        }
+
+        echo json_encode($data);
+    }
+
+    /* llama html para actualizar clave de Socio */
+    public function confirm($id, $nom) {
+        Obj::run()->View->vendedor = $id;
+        Obj::run()->View->nombres = str_replace('_', ' ',$nom );
+        
+        $v = AesCtr::de($id);
+
+        Obj::run()->View->render('newClavePersona', false);
+    }    
 }
 
 ?>

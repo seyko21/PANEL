@@ -164,14 +164,6 @@ class configurarUsuariosModel extends Model{
 //            ':idUsuario' => $this->_idUsuario
 //        );
 //        $this->execute($query,$parms);
-        
-        
-        
-        
-        
-        
-        
-        
         $query = "call sp_usuariosConfigurarUsuariosMantenimiento(:flag,:key,:empleado,:usuario,:clave,:activo,:user);";
         $parms = array(
             ':flag' => 3,
@@ -226,6 +218,6 @@ class configurarUsuariosModel extends Model{
         $res = array('result'=>1);
         return $res;
     }
-    
+
 }
 ?>

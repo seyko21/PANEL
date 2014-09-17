@@ -222,6 +222,42 @@ var configurarUsuarios_ = function(){
         });
     };
     
+    this.public.postPass = function(){
+        window.history.pushState('data', "Titulo", "../../../../");
+        simpleAjax.send({
+            flag: 1,
+            element: '#btnEntrar',
+            root: _private.config.modulo + 'postPass',
+            form: '#fromchange_pass',
+            data: '&_idPersona='+$('#txtUser').val()+'&_pass='+simpleAjax.stringPost($('#txtNewClave').val()),
+            clear: true,
+            fnCallback: function(data) {
+                if(!isNaN(data.result) && parseInt(data.result) === 1){
+                    simpleScript.notify.ok({
+                        content: mensajes.MSG_3
+                    });
+                    simpleScript.redirect('index');
+                }
+            }
+        });
+    };
+    
+    this.public.postAcceso = function(btn,id,vend,mail){
+        simpleAjax.send({
+            element: btn,
+            root: _private.config.modulo + 'postAcceso',
+            data: '&_nombres='+vend+'&_id='+id+'&_mail='+mail,
+            clear: true,
+            fnCallback: function(data) {
+                if(!isNaN(data.result) && parseInt(data.result) === 1){
+                    simpleScript.notify.ok({
+                        content: 'Acceso se envió correctamente'
+                    });
+                }
+            }
+        });
+    };
+    
     return this.public;
     
 };
