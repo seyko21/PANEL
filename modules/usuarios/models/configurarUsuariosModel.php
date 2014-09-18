@@ -46,7 +46,6 @@ class configurarUsuariosModel extends Model{
         $this->_iSortingCols   =   $this->post('iSortingCols');
         $this->_sSearch        =   $this->post('sSearch');
         
-        $this->_idPersona     = Aes::de($this->post('_idPersona'));    /*se decifra*/        
         $this->_pass     = Aes::de($this->post('_pass'));    /*se decifra*/
     }
     
@@ -227,9 +226,9 @@ class configurarUsuariosModel extends Model{
         $query = "UPDATE `mae_usuario` SET
                     `clave` = :clave,
                     clave_comun = :comun
-                WHERE `id_usuario` = :idPersona;";
+                WHERE `id_usuario` = :idUsuario;";
         $parms = array(
-            ':idPersona' => $this->_idPersona,
+            ':idUsuario' => $this->_idUsuario,
             ':clave' => md5($this->_pass.APP_PASS_KEY),
             ':comun' => $this->_pass
         );
@@ -237,6 +236,7 @@ class configurarUsuariosModel extends Model{
         $data = array('result'=>1);
         return $data;
     } 
+    
    public function getParametros($alias){
         $query = "SELECT
             `valor`, `alias`

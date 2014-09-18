@@ -229,7 +229,7 @@ var configurarUsuarios_ = function(){
             element: '#btnEntrar',
             root: _private.config.modulo + 'postPass',
             form: '#fromchange_pass',
-            data: '&_idPersona='+$('#txtUser').val()+'&_pass='+simpleAjax.stringPost($('#txtNewClave').val()),
+            data: '&_idUsuario='+$('#txtIDUser').val()+'&_pass='+simpleAjax.stringPost($('#txtNewClave').val()),
             clear: true,
             fnCallback: function(data) {
                 if(!isNaN(data.result) && parseInt(data.result) === 1){
