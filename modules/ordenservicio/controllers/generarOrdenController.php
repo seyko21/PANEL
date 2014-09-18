@@ -217,7 +217,7 @@ class generarOrdenController extends Controller{
         
         $mpdf->SetHTMLHeader('<div style="margin:0 auto; width:137px;"><img src="'.ROOT.'public'.DS.'img'.DS.'logotipo.png" width="137" height="68" /></div>','',TRUE);
         $mpdf->SetHTMLFooter('<table width="100%" style="vertical-align: bottom; font-family: serif; font-size: 8pt; color: #000000; font-weight: bold;"><tr>
-                                <td width="33%"><span style="font-weight: bold;">{DATE j-m-Y}</span></td>
+                                <td width="33%"><span style="font-weight: bold;">Contrato</span></td>
                                 <td width="33%" align="center" style="font-weight: bold;">{PAGENO}/{nbpg}</td>
                                 <td width="33%" style="text-align: right; ">SEVEND.pe</td>
                              </tr></table>');

@@ -101,7 +101,7 @@ class contratoController extends Controller{
                 $axion .= ' </div>" ';
                 
                 /*registros a mostrar*/
-                $sOutput .= '["'.$chk.'","'.$aRow['nombre'].'","'.Functions::cambiaf_a_normal($aRow['fecha_creacion']).'","'.$visible.'","'.$estado.'",'.$axion.' ';
+                $sOutput .= '["'.$chk.'","'.$aRow['nombre'].'","'.$aRow['fecha_creacion'].'","'.$visible.'","'.$estado.'",'.$axion.' ';
                 
                 $sOutput .= '],';
 
