@@ -193,7 +193,8 @@ define('GNOSE_17','Exportar contrato');
 define('GNOSE_18','Cuota');
 define('GNOSE_19','Monto');
 define('GNOSE_20','Fecha de Pago');
-
+define('GNOSE_21','Dias de Oferta');
+define('GNOSE_22','Ingrese días de Oferta despues de culminar el alquiler.');
 
 /*---------------------- SEGUIMIENTO DE PAGOS----------------*/
 define('SEGPA_1','Seguimiento de Pagos');
