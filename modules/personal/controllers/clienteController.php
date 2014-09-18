@@ -16,7 +16,9 @@ class clienteController extends Controller{
     public function index(){ 
         Obj::run()->View->render("indexCliente");
     }
-    
+    public function getFormPersona(){ 
+        Obj::run()->View->render('buscarPersona');
+    }
     public function getGridCliente(){
         $editar = Session::getPermiso('REGCLED');
         $agre = Session::getPermiso('REGCLVP');
@@ -159,6 +161,42 @@ class clienteController extends Controller{
         echo $sOutput;
     }
     
+     public function getPersonas(){ 
+        $tab = $this->post('_tab');
+        $sEcho          =   $this->post('sEcho');
+        
+        $rResult = Obj::run()->clienteModel->getPersonas();
+        
+        if(!isset($rResult['error'])){  
+            $iTotal         = isset($rResult[0]['total'])?$rResult[0]['total']:0;
+            
+            $sOutput = '{';
+            $sOutput .= '"sEcho": '.intval($sEcho).', ';
+            $sOutput .= '"iTotalRecords": '.$iTotal.', ';
+            $sOutput .= '"iTotalDisplayRecords": '.$iTotal.', ';
+            $sOutput .= '"aaData": [ ';
+            foreach ( $rResult as $key=>$aRow ){
+                /*antes de enviar id se encrypta*/
+                
+                $encryptReg  = Aes::en($aRow['persona']);
+                $encryptReg2 = Aes::en($aRow['id_persona']);
+                
+                $nom = '<a href=\"javascript:;\" onclick=\"cliente.postNewResponsable2(\''.$encryptReg2.'\');\" >'.$aRow['nombrecompleto'].'</a>';
+                
+                /*datos de manera manual*/
+                $sOutput .= '["'.(++$key).'","'.$nom.'" ';
+
+                $sOutput .= '],';
+            }
+            $sOutput = substr_replace( $sOutput, "", -1 );
+            $sOutput .= '] }';
+        }else{
+            $sOutput = $rResult['error'];
+        }
+        
+        echo $sOutput;
+    }
+    
     /*carga formulario (newCliente.phtml) para nuevo registro: Cliente*/
     public function getFormNewCliente(){
         Obj::run()->View->render("formNewCliente");
@@ -210,6 +248,12 @@ class clienteController extends Controller{
     
     public function postNewRepresentante(){
         $data = Obj::run()->clienteModel->newRepresentante();
+        
+        echo json_encode($data);
+    }
+    
+    public function postActualizarRepresentante(){
+        $data = Obj::run()->clienteModel->actualizarRepresentante();
         
         echo json_encode($data);
     }

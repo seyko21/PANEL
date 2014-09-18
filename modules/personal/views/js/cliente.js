@@ -13,9 +13,7 @@ var cliente_ = function(){
     _private.idCliente = 0;
     
     _private.idAncestro = 0;
-    
-    _private.ancestro = 0;
-    
+        
     _private.nameCliente = '';
     
     _private.config = {
@@ -83,10 +81,10 @@ var cliente_ = function(){
 //                return false;
 //            }
 //        });
-    };
+    };       
     
     this.publico.getGridRepresentantes = function(id,cl){
-        _private.ancestro = id;
+        _private.idAncestro = id;
         _private.nameCliente = cl;
         
         var oTable = $('#'+diccionario.tabs.REGCL+'gridRepresentantes').dataTable({
@@ -106,7 +104,7 @@ var cliente_ = function(){
                 {sTitle: "Acciones", sWidth: "15%", sClass: "center", bSortable: false}
             ],
             fnServerParams: function(aoData) {
-                aoData.push({"name": "_idPersona", "value": _private.ancestro});
+                aoData.push({"name": "_idPersona", "value": _private.idAncestro});
             },
             aaSorting: [[1, 'asc']],
             sScrollY: "300px",
@@ -123,6 +121,39 @@ var cliente_ = function(){
         });
         setup_widgets_desktop();
     };
+    
+    this.publico.getPersona = function(){
+        $('#'+diccionario.tabs.REGCL+'gridPersonasFound_filter').remove();
+        $('#'+diccionario.tabs.REGCL+'gridPersonasFound').dataTable({
+            bProcessing: true,
+            bServerSide: true,
+            bDestroy: true,
+            sServerMethod: "POST",
+            bPaginate: false,
+            aoColumns: [
+                {sTitle: "Nro.", sClass: "center",sWidth: "2%",  bSortable: false},
+                {sTitle: "Nombres y Apellidos", sWidth: "88%"}
+            ],
+            aaSorting: [[1, 'asc']],
+            sScrollY: "250px",
+            sAjaxSource: _private.config.modulo+'getPersonas',
+            fnServerParams: function(aoData) {
+                aoData.push({"name": diccionario.tabs.REGCL+"_term", "value": $('#'+diccionario.tabs.REGCL+'txt_search').val()});
+                aoData.push({"name": "_tab", "value": _private.tab});                
+            },
+            fnDrawCallback: function() {
+                $('#'+diccionario.tabs.REGCL+'gridPersonasFound_filter').remove();
+                $('#'+diccionario.tabs.REGCL+'gridPersonasFound_wrapper').find('.dt-bottom-row').remove();
+                $('#'+diccionario.tabs.REGCL+'gridPersonasFound_wrapper').find('.dataTables_scrollBody').css('overflow-x','hidden');
+                /*para hacer evento invisible*/
+                simpleScript.removeAttr.click({
+                    container: '#'+diccionario.tabs.REGCL+'gridPersonasFound',
+                    typeElement: 'a'
+                });
+            }
+        });
+        $('#'+diccionario.tabs.REGCL+'gridPersonasFound_filter').remove();
+    };    
     
     this.publico.getFormNewCliente = function(btn){
         simpleAjax.send({
@@ -180,6 +211,18 @@ var cliente_ = function(){
         });
     };
     
+    this.publico.getFormPersona = function(btn,label){
+         simpleAjax.send({
+            element: btn,
+            dataType: 'html',
+            root: _private.config.modulo + 'getFormPersona',            
+            fnCallback: function(data){
+                $('#cont-modal').append(data);  /*los formularios con append*/                
+                $('#'+diccionario.tabs.REGCL+'formBuscarPersona').modal('show');
+                $('#'+diccionario.tabs.REGCL+'formBuscarPersona h4.modal-title').html(label);
+            }
+        });
+    };
     this.publico.postNewCliente = function(){
         simpleAjax.send({
             flag: 1,
@@ -211,14 +254,14 @@ var cliente_ = function(){
             element: '#'+diccionario.tabs.REGCL+'btnGrRep',
             root: _private.config.modulo + 'postNewRepresentante',
             form: '#'+diccionario.tabs.REGCL+'formNewRepresentante',
-            data : '&_ancestro='+_private.ancestro,
+            data : '&_ancestro='+_private.idAncestro,
             clear: true,
             fnCallback: function(data) {
                 if(!isNaN(data.result) && parseInt(data.result) === 1){
                     simpleScript.notify.ok({
                         content: mensajes.MSG_3,
                         callback: function(){
-                            cliente.getGridRepresentantes(_private.ancestro,_private.nameCliente);
+                            cliente.getGridRepresentantes(_private.idAncestro,_private.nameCliente);
                             simpleScript.closeModal('#'+diccionario.tabs.REGCL+'formNewRepresentante');
                         }
                     });
@@ -271,8 +314,7 @@ var cliente_ = function(){
                     simpleScript.notify.ok({
                         content: mensajes.MSG_3,
                         callback: function(){
-                            _private.idAncestro = 0;
-                            cliente.getGridRepresentantes(_private.ancestro,_private.nameCliente);
+                            cliente.getGridRepresentantes(_private.idAncestro,_private.nameCliente);
                             simpleScript.closeModal('#'+diccionario.tabs.REGCL+'formEditarRepresentante');
                         }
                     });
@@ -284,6 +326,27 @@ var cliente_ = function(){
             }
         });
     };
+    
+    this.publico.postNewResponsable2 = function(id){
+        simpleAjax.send({
+            root: _private.config.modulo + 'postActualizarRepresentante',            
+            data: '&_ancestro='+_private.idAncestro+'&_idPersona='+id,
+            clear: true,
+            fnCallback: function(data) {
+                if(!isNaN(data.result) && parseInt(data.result) === 1){
+                    simpleScript.notify.ok({
+                        content: mensajes.MSG_3,
+                        callback: function(){                            
+                            cliente.getGridRepresentantes(_private.idAncestro,_private.nameCliente);                            
+                            simpleScript.closeModal('#'+diccionario.tabs.REGCL+'formBuscarPersona');
+                            simpleScript.closeModal('#'+diccionario.tabs.REGCL+'formNewRepresentante');
+                        }
+                    });
+                }
+            }
+        });
+    };
+    
     
     this.publico.postDesactivarCliente = function(btn,id){
         simpleAjax.send({
@@ -334,7 +397,7 @@ var cliente_ = function(){
                     simpleScript.notify.ok({
                         content: 'Representante se desactivo correctamente',
                         callback: function(){
-                            cliente.getGridRepresentantes(_private.ancestro,_private.nameCliente);
+                            cliente.getGridRepresentantes(_private.idAncestro,_private.nameCliente);
                         }
                     });
                 }
@@ -353,7 +416,7 @@ var cliente_ = function(){
                     simpleScript.notify.ok({
                         content: 'Representante se activo correctamente',
                         callback: function(){
-                            cliente.getGridRepresentantes(_private.ancestro,_private.nameCliente);
+                            cliente.getGridRepresentantes(_private.idAncestro,_private.nameCliente);
                         }
                     });
                 }
@@ -411,7 +474,7 @@ var cliente_ = function(){
                                     simpleScript.notify.ok({
                                         content: mensajes.MSG_8,
                                         callback: function(){
-                                            cliente.getGridRepresentantes(_private.ancestro,_private.nameCliente);
+                                            cliente.getGridRepresentantes(_private.idAncestro,_private.nameCliente);
                                         }
                                     });
                                 }

@@ -8,7 +8,7 @@
 
 /*prefijo: REGCL debe ser alias en tabla men_menuprincipal*/
 $grabar = Session::getPermiso("REGCLGR");
-
+$buscar = Session::getPermiso('REGCLBS');
 ?>
 <form id="<?php echo REGCL; ?>formNewRepresentante" name="<?php echo REGCL; ?>formNewRepresentante" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">
@@ -30,6 +30,11 @@ $grabar = Session::getPermiso("REGCLGR");
                                 <b class="tooltip tooltip-top-right"><i class="fa fa-user txt-color-teal"></i> <?php echo LABEL_RV6; ?></b>
                             </label>
                         </div>
+                         <?php if ($buscar['permiso']): ?>
+                            <button id="<?php echo REGCL; ?>btnBuscar" type="button" class="<?php echo $buscar['theme'];?>" onclick="cliente.getFormPersona(this,'<?php echo LABEL_BSPER; ?>');">
+                                <i class="<?php echo $buscar['icono'];?>" style="padding: 8px"></i>
+                            </button>
+                         <?php  endif; ?>
                     </div>
                 </section>
                 <section>

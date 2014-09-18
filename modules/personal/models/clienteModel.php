@@ -59,6 +59,8 @@ class clienteModel extends Model{
         $this->_chkdelrp  = $this->post(REGCL.'chk_deleterp');
         $this->_usuario = Session::get("sys_idUsuario");
         
+        $this->_xsearch  = $this->post(REGCL.'_term');
+        
         $this->_iDisplayStart  =   Formulario::getParam("iDisplayStart"); 
         $this->_iDisplayLength =   Formulario::getParam("iDisplayLength"); 
         $this->_iSortingCols   =   Formulario::getParam("iSortingCols");
@@ -285,13 +287,39 @@ class clienteModel extends Model{
     public function deleteClienteAllRp(){
         foreach ($this->_chkdelrp as $value) {
             $query = "UPDATE `mae_persona` SET
-			`estado` = '0'
+			`id_personapadre` = NULL
                     WHERE `id_persona` = :idPersona;";
             $parms = array(
                 ':idPersona' => Aes::de($value)
             );
             $this->execute($query,$parms);
         }
+        $data = array('result'=>1);
+        return $data;
+    }
+    public function getPersonas(){
+        
+        $query = 'call sp_perBuscarPersona(:flag, :nombre, :estado);';
+        
+        $parms = array(
+            ':flag' => 3,
+            ':nombre'=> $this->_xsearch,
+            ':estado' => 'A',
+        );
+        $data = $this->queryAll($query,$parms);
+        return $data;
+    }
+    
+     public function actualizarRepresentante(){
+        $query = "UPDATE `mae_persona` SET
+                    `id_personapadre` = :ancestro
+                WHERE `id_persona` = :idPersona;";
+        $parms = array(
+            ':ancestro' => $this->_ancestro,
+            ':idPersona' => $this->_idPersona
+        );
+        $this->execute($query,$parms);
+        
         $data = array('result'=>1);
         return $data;
     }
