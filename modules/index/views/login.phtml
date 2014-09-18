@@ -20,13 +20,13 @@
 
         <div class="row">
             <div class="col-xs-12 col-sm-12 col-md-7 col-lg-8 hidden-xs hidden-sm">
-                <h1 class="txt-color-red login-header-big">Bienvenido:</h1>
+                <h1 class="txt-color-red login-header-big"><?php echo LOGIN_TITULO;?></h1>
                 <div class="hero">
 
                     <div class="pull-left login-desc-box-l">
-                        <h4 class="paragraph-header">Gracias por confiar en SEVEND, para ingresar al sistema debe de indicar su correo electrónico (e-mail) y luego su contraseña. Para mayor información en informes@sevend.pe</h4>                                                
-                        <div class="login-app-icons">                            
-                            <a href="javascript:void(0);" class="btn btn-danger btn-sm">Soporte técnico</a>                            
+                        <h4 class="paragraph-header"><?php echo LOGIN_BIENVENIDA; ?></h4>                                                
+                        <div class="login-app-icons">                             
+                            <a href="<?php echo URL_WEBSITE; ?>" target="_blank" class="btn btn-danger btn-sm"><?php echo LABEL_URL; ?></a>                            
                         </div>
                     </div>
 
@@ -72,7 +72,7 @@
                                     <input type="password" name="txtClave" id="txtClave" value="123456">
                                     <b class="tooltip tooltip-top-right"><i class="fa fa-lock txt-color-teal"></i> <?php echo L_L_PASS; ?></b> </label>
                                 <div class="note">
-                                    <a href="forgotpassword.html"><?php echo L_OLVIDE; ?></a>
+                                    <a href="<?php echo BASE_URL; ?>index/index/forgotpassword"><?php echo L_OLVIDE; ?></a>
                                 </div>
                             </section>
                         </fieldset>
@@ -86,14 +86,14 @@
 
                 </div>
 
-                <h5 class="text-center"> - Redes Sociales -</h5>
+                <h5 class="text-center"> <?php echo LABEL_REDSOCIAL; ?></h5>
 
                 <ul class="list-inline text-center">
                     <li>
-                        <a href="http://fb.com/sevendcorp" class="btn btn-primary btn-circle"><i class="fa fa-facebook"></i></a>
+                        <a href="<?php echo URL_FACEBOOK; ?>" target="_blank" class="btn btn-primary btn-circle"><i class="fa fa-facebook"></i></a>
                     </li>
                     <li>
-                        <a href="https://twitter.com/sevendcorp" class="btn btn-info btn-circle"><i class="fa fa-twitter"></i></a>
+                        <a href="<?php echo URL_TWITTER; ?>" target="_blank" class="btn btn-info btn-circle"><i class="fa fa-twitter"></i></a>
                     </li>
                    <!-- <li>
                         <a href="javascript:void(0);" class="btn btn-warning btn-circle"><i class="fa fa-linkedin"></i></a>

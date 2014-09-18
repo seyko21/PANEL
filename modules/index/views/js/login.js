@@ -31,7 +31,7 @@ var login_  = function(){
                 }
             });
     };
-    
+   
     return this.public;
 };
 

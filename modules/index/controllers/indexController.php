@@ -64,6 +64,10 @@ class indexController extends Controller{
         Obj::run()->View->render('errorPage',false);
     }
     
+    public function forgotpassword(){
+        Obj::run()->View->render('forgotpassword',false);
+    }
+    
 }
 
 ?>

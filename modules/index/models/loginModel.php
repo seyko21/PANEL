@@ -70,5 +70,21 @@ class loginModel extends Model{
         return $data;
     }
     
+     public function getBuscarUsuario(){        
+        $user = Formulario::getParam('txtUser');
+        
+        $query = " SELECT DISTINCT u.`id_usuario`, p.`nombrecompleto`
+                FROM `mae_usuario` u 
+                        INNER JOIN `mae_persona` p ON
+                                p.`persona` = u.`persona`
+                WHERE u.`usuario` = :usuario  ";
+        $parms = array(
+            ':usuario' => $user           
+        );
+        $data = $this->queryOne($query,$parms);
+        return $data;
+        
+    }
+    
 }
 ?>

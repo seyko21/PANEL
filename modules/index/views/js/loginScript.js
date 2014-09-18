@@ -38,6 +38,7 @@ var loginScript_ = function(){
                 login.postEntrar();
             }   
         });
+                
     };
     
     return this.public;
