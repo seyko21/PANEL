@@ -1,14 +1,6 @@
 <?php
-/*
-* ---------------------------------------
-* --------- CREATED BY CREATOR ----------
-* fecha: 16-09-2014 22:09:43 
-* Descripcion : seguimientoPagoModel.php
-* ---------------------------------------
-*/ 
-
-class seguimientoPagoModel extends Model{
-
+class cronogramaPagoModel extends Model{
+    
     private $_flag;
     private $_idOrden;
     private $_idCompromiso;
@@ -33,9 +25,9 @@ class seguimientoPagoModel extends Model{
         $this->_idOrden   = Aes::de(Formulario::getParam("_idOrden"));    /*se decifra*/
         $this->_idCompromiso   = Aes::de(Formulario::getParam("_idCompromiso"));    /*se decifra*/
         $this->_usuario     = Session::get("sys_idUsuario");
-        $this->_tipoDoc  = Formulario::getParam(SEGPA."lst_tipodoc");
-        $this->_numDoc  = Formulario::getParam(SEGPA."txt_seriedoc");
-        $this->_serieDoc  = Formulario::getParam(SEGPA."txt_numdoc");
+        $this->_tipoDoc  = Formulario::getParam(CROPA."lst_tipodoc");
+        $this->_numDoc  = Formulario::getParam(CROPA."txt_seriedoc");
+        $this->_serieDoc  = Formulario::getParam(CROPA."txt_numdoc");
         
         $this->_iDisplayStart  = Formulario::getParam("iDisplayStart"); 
         $this->_iDisplayLength = Formulario::getParam("iDisplayLength"); 
@@ -43,8 +35,7 @@ class seguimientoPagoModel extends Model{
         $this->_sSearch        = Formulario::getParam("sSearch");
     }
     
-    /*data para el grid: SeguimientoPago*/
-    public function getSeguimientoPago(){
+    public function getOrdenes(){
         $aColumns       =   array("","2","7","13","12","5" ); //para la ordenacion y pintado en html
         /*
 	 * Ordenando, se verifica por que columna se ordenara
@@ -96,5 +87,3 @@ class seguimientoPagoModel extends Model{
     }
     
 }
-
-?>

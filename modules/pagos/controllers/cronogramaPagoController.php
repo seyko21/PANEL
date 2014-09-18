@@ -1,30 +1,22 @@
 <?php
-/*
-* ---------------------------------------
-* --------- CREATED BY CREATOR ----------
-* fecha: 16-09-2014 22:09:43 
-* Descripcion : seguimientoPagoController.php
-* ---------------------------------------
-*/    
-
-class seguimientoPagoController extends Controller{
-
+class cronogramaPagoController extends Controller{
+    
     public function __construct() {
-        $this->loadModel("seguimientoPago");
+        $this->loadModel("cronogramaPago");
     }
     
     public function index(){ 
-        Obj::run()->View->render("indexSeguimientoPago");
+        Obj::run()->View->render("indexCronogramaPago");
     }
     
-    public function getGridSeguimientoPago(){
-        $pagar   = Session::getPermiso('SEGPAPG');
+    public function getGridOrdenes(){
+        $pagar   = Session::getPermiso('CROPAPG');
         
         $sEcho          =   $this->post('sEcho');
         
-        $rResult = Obj::run()->seguimientoPagoModel->getSeguimientoPago();
+        $rResult = Obj::run()->cronogramaPagoModel->getOrdenes();
         
-        $num = Obj::run()->seguimientoPagoModel->_iDisplayStart;
+        $num = Obj::run()->cronogramaPagoModel->_iDisplayStart;
         if($num >= 10){
             $num++;
         }else{
@@ -72,7 +64,7 @@ class seguimientoPagoController extends Controller{
                 $sOutput .= '"<div class=\"btn-group\">';
                  
                 if($pagar['permiso']){
-                    $sOutput .= '<button type=\"button\" class=\"'.$pagar['theme'].'\" title=\"'.$pagar['accion'].'\" onclick=\"seguimientoPago.getFormPagarOrden(this,\''.$encryptReg.'\',\''.$aRow['orden_numero'].'\')\">';
+                    $sOutput .= '<button type=\"button\" class=\"'.$pagar['theme'].'\" title=\"'.$pagar['accion'].'\" onclick=\"cronogramaPago.getFormPagarOrden(this,\''.$encryptReg.'\',\''.$aRow['orden_numero'].'\')\">';
                     $sOutput .= '    <i class=\"'.$pagar['icono'].'\"></i>';
                     $sOutput .= '</button>';
                 }
@@ -99,18 +91,20 @@ class seguimientoPagoController extends Controller{
         Obj::run()->View->render("formPagarOrdenParametros");
     }
     
+    public function getFormReprogramar(){
+        Obj::run()->View->render("formReprogramar");
+    }
+    
     public function getCronograma(){
-        $data = Obj::run()->seguimientoPagoModel->getCronograma();
+        $data = Obj::run()->cronogramaPagoModel->getCronograma();
             
         return $data;
     }
     
     public function postPagarOrden(){
-        $data = Obj::run()->seguimientoPagoModel->postPagarOrden();
+        $data = Obj::run()->cronogramaPagoModel->postPagarOrden();
         
         echo json_encode($data);
     }
     
 }
-
-?>

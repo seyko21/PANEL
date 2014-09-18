@@ -25,6 +25,7 @@ define('LABEL_ADVMSN','Todas las caratulas han sido cotizadas.');
 define('COPY','Copyright SmartAdmin 2014-2020.');
 define('ICON_CLOSE','fa fa-ban');
 define('THEME_CLOSE','btn btn-default xClose');
+define('ACTIONS','Acciones');
 
 /*FORMULARIO LOGIN*/
 define('L_TITLE','Ingresar');
@@ -210,4 +211,12 @@ define('SEGPA_23','Nro. de documento');
 define('SEGPA_24','Serie de documento');
 define('SEGPA_25','Ingrese el número del documento');
 define('SEGPA_26','Ingrese la serie del documento');
+define('SEGPA_27','Estado');
+
+/*---------------------- CRONOGRAMA DE PAGOS----------------*/
+define('CROPA_1','Cronograma de Pagos');
+define('CROPA_2','Emitido');
+define('CROPA_3','Pagado');
+define('CROPA_4','Reprogramado');
+define('CROPA_5','Reprogramar Cuota Nro.: ');
 ?>

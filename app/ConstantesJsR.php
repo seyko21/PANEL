@@ -24,3 +24,4 @@ var diccionario = {
         SEGCO: '<?php echo SEGCO; ?>',
         GNOSE: '<?php echo GNOSE; ?>',
         SEGPA: '<?php echo SEGPA; ?>',
+        CROPA: '<?php echo CROPA; ?>',
