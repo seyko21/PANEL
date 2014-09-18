@@ -51,8 +51,20 @@ $data = Obj::run()->generarOrdenController->findOrden();
                             </label>
                         </div>
                         
-                        <label class="label col col-3"><?php echo GNOSE_15; ?></label>
+                        <label class="label col col-3"><?php echo GNOSE_21; ?></label>
                         <div class="col col-3">
+                            <label class="input"> 
+                                <i class="icon-append fa fa-clock-o"></i>
+                                <input class="right" type="text" id="<?php echo GNOSE; ?>txt_oferta" name="<?php echo GNOSE; ?>txt_oferta" value="<?php echo number_format($data['dias_oferta'])?>">
+                                <b class="tooltip tooltip-top-right"><i class="fa fa-keyboard-o txt-color-teal"></i> <?php echo GNOSE_22; ?></b>
+                            </label>
+                        </div>
+                    </div>
+                </section>
+                <section>
+                    <div class="row">
+                        <label class="label col col-2"><?php echo GNOSE_15; ?></label>
+                        <div class="col col-10">
                             <label class="select"> 
                                 <?php
                                     $datac = Obj::run()->generarOrdenController->getContratos();
@@ -73,6 +85,10 @@ $data = Obj::run()->generarOrdenController->findOrden();
                         </div>
                     </div>
                 </section>
+                
+                
+                
+                
             </div>
             <div class="modal-footer">    
                 <?php if($editar['permiso']):?>
@@ -112,7 +128,10 @@ $("#<?php echo GNOSE; ?>formEditOrden").validate({
         },
         <?php echo GNOSE; ?>lst_contrato : {
             required : true
-        }        
+        },<?php echo GNOSE; ?>txt_oferta: {
+            number: true,
+            integer: true
+        },
     },
     // No cambie el código de abajo
     errorPlacement : function(error, element) {

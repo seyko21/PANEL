@@ -17,6 +17,7 @@ class generarOrdenModel extends Model{
     private $_descuento;
     private $_idContrato;
     private $_fechaContrato;
+    private $_oferta;
     private $_usuario;
     
     /*para el grid*/
@@ -40,6 +41,7 @@ class generarOrdenModel extends Model{
         $this->_fechaPago  = Functions::cambiaf_a_mysql(Formulario::getParam(GNOSE."txt_fechapago")); 
         $this->_fechaContrato  = Functions::cambiaf_a_mysql(Formulario::getParam(GNOSE."txt_fechacontrato"));
         $this->_idContrato  = Formulario::getParam(GNOSE."lst_contrato"); 
+        $this->_oferta  = Formulario::getParam(GNOSE."txt_oferta"); 
         
         $this->_iDisplayStart  = Formulario::getParam("iDisplayStart"); 
         $this->_iDisplayLength = Formulario::getParam("iDisplayLength"); 
@@ -76,7 +78,7 @@ class generarOrdenModel extends Model{
     }
     
     public function insertCuota(){
-        $query = "CALL sp_ordseOrdenServicioCuota(:flag,:idOrden,:monto,:fechaPago,:fechaContrato,:idContrato,:usuario);";
+        $query = "CALL sp_ordseOrdenServicioCuota(:flag,:idOrden,:monto,:fechaPago,:fechaContrato,:idContrato,:oferta,:usuario);";
         
         $parms = array(
             ':flag'=>1,
@@ -85,6 +87,7 @@ class generarOrdenModel extends Model{
             ':fechaPago'=>$this->_fechaPago,
             ':fechaContrato'=>'',
             ':idContrato'=>'',
+            ':oferta'=>'',
             ':usuario'=>$this->_usuario,
         );
         
@@ -119,7 +122,7 @@ class generarOrdenModel extends Model{
     }
     
     public function editOrden(){
-        $query = "CALL sp_ordseOrdenServicioCuota(:flag,:idOrden,:monto,:fechaPago,:fechaContrato,:idContrato,:usuario);";
+        $query = "CALL sp_ordseOrdenServicioCuota(:flag,:idOrden,:monto,:fechaPago,:fechaContrato,:idContrato,:oferta,:usuario);";
         
         $parms = array(
             ':flag'=>2,
@@ -128,6 +131,7 @@ class generarOrdenModel extends Model{
             ':fechaPago'=>$this->_fechaPago,
             ':fechaContrato'=>$this->_fechaContrato,
             ':idContrato'=>$this->_idContrato,
+            ':oferta'=>$this->_oferta,
             ':usuario'=>$this->_usuario,
         );
         
@@ -136,7 +140,7 @@ class generarOrdenModel extends Model{
     }
     
     public function findOrden(){
-        $query = " SELECT fecha_orden,descuentos,fecha_contrato,id_contrato FROM lgk_ordenservicio WHERE id_ordenservicio = :idOrden; ";
+        $query = " SELECT fecha_orden,descuentos,fecha_contrato,id_contrato, dias_oferta FROM lgk_ordenservicio WHERE id_ordenservicio = :idOrden; ";
         
         $parms = array(
             ':idOrden'=>$this->_idOrden
@@ -147,7 +151,7 @@ class generarOrdenModel extends Model{
     }
     
     public function postDeleteCuota(){
-        $query = "CALL sp_ordseOrdenServicioCuota(:flag,:idCuota,:monto,:fechaPago,:fechaContrato,:idContrato,:usuario);";
+        $query = "CALL sp_ordseOrdenServicioCuota(:flag,:idCuota,:monto,:fechaPago,:fechaContrato,:idContrato,:oferta,:usuario);";
         
         $parms = array(
             ':flag'=>3,
@@ -156,6 +160,7 @@ class generarOrdenModel extends Model{
             ':fechaPago'=>'',
             ':fechaContrato'=>'',
             ':idContrato'=>'',
+            ':oferta'=>'',
             ':usuario'=>$this->_usuario,
         );
         
