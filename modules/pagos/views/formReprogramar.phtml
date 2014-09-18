@@ -12,7 +12,7 @@ $grabar = Session::getPermiso("CROPAGR");
 $ncuota = Formulario::getParam('_ncuota');
 ?>
 <form id="<?php echo CROPA; ?>formReprogramar" name="<?php echo CROPA; ?>formReprogramar" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="modal-dialog" style="width: 60%">
+    <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close"  aria-hidden="true">
@@ -20,8 +20,19 @@ $ncuota = Formulario::getParam('_ncuota');
                 </button>
                 <h4 class="modal-title"><?php echo CROPA_5.$ncuota?></h4>
             </div>
-            <div class="modal-body"> 
-               
+            <div class="modal-body smart-form"> 
+                <section>
+                    <div class="row">
+                        <label class="label col col-2"><?php echo CROPA_6; ?></label>
+                        <div class="col col-3">
+                            <label class="input"> 
+                                <i class="icon-append fa fa-keyboard-o"></i>
+                                <input type="text" id="<?php echo CROPA; ?>txt_fechare" name="<?php echo CROPA; ?>txt_fechare" >
+                                <b class="tooltip tooltip-top-right"><i class="fa fa-question-circle txt-color-teal"></i> <?php echo CROPA_7; ?></b>
+                            </label>
+                        </div>
+                    </div>
+                </section>
                          
             </div>
             <div class="modal-footer"> 
@@ -44,11 +55,28 @@ $ncuota = Formulario::getParam('_ncuota');
 </script>
 <?php endif; ?>
 <script>
-//    simpleScript.setEvent.date({
-//      element: '.fechapago' 
-//    });
+    simpleScript.setEvent.date({
+      element: '#<?php echo CROPA; ?>txt_fechare' 
+    });
     simpleScript.removeAttr.click({
         container: "#<?php echo CROPA; ?>formReprogramar",
         typeElement: "button"
     });
+    
+    $("#<?php echo CROPA; ?>formReprogramar").validate({
+        // Rules for form validation
+        rules: {
+                    <?php echo CROPA; ?>txt_fechare: {
+                        required: true,
+                        date: true
+                    }
+                },
+                // No cambie el código de abajo
+                errorPlacement: function(error, element) {
+                    error.insertAfter(element.parent());
+                },
+                submitHandler: function() {
+                    cronogramaPago.postReprogramar();
+                }
+            });
 </script>

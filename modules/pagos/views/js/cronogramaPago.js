@@ -7,6 +7,8 @@ var cronogramaPago_ = function(){
     
     _private.nOrden = 0;
     
+    _private.idOrden = 0;
+    
     _private.idCompromiso = 0;
     
     _private.fila = 0;
@@ -79,12 +81,13 @@ var cronogramaPago_ = function(){
     
     this.publico.getFormPagarOrden = function(btn,id,norden){
         _private.nOrden = norden;
+        _private.idOrden = id;
         
         simpleAjax.send({
             element: btn,
             dataType: "html",
             root: _private.config.modulo + "getFormPagarOrden",
-            data: "&_idOrden="+id+'&_norden='+_private.nOrden,
+            data: "&_idOrden="+_private.idOrden+'&_norden='+_private.nOrden,
             fnCallback: function(data){
                 $("#cont-modal").append(data);  /*los formularios con append*/
                 $("#"+diccionario.tabs.CROPA+"formPagarOrden").modal("show");
@@ -124,6 +127,18 @@ var cronogramaPago_ = function(){
         });
     };
     
+    this.publico.getTableCronograma = function(){
+        simpleAjax.send({
+            gifProcess: true,
+            dataType: "html",
+            root: _private.config.modulo + "getTableCronograma",
+            data: "&_idOrden="+_private.idOrden,
+            fnCallback: function(data){
+                $("#"+diccionario.tabs.CROPA+"tabCronograma").html(data);
+            }
+        });
+    };
+    
     this.publico.postPagarOrden = function(){
         simpleAjax.send({
             element: "#"+diccionario.tabs.CROPA+"btnGpr",
@@ -149,6 +164,26 @@ var cronogramaPago_ = function(){
         });
     };
     
+    this.publico.postReprogramar = function(){
+        simpleAjax.send({
+            element: "#"+diccionario.tabs.CROPA+"btnGrep",
+            root: _private.config.modulo + "postReprogramar",
+            form: "#"+diccionario.tabs.CROPA+"formReprogramar",
+            data: "&_idCompromiso="+_private.idCompromiso,
+            fnCallback: function(data) {
+                if(!isNaN(data.result) && parseInt(data.result) === 1){
+                    simpleScript.notify.ok({
+                        content: mensajes.MSG_3,
+                        callback: function(){
+                            cronogramaPago.getTableCronograma();
+                            simpleScript.closeModal('#'+diccionario.tabs.CROPA+'formReprogramar');
+                            _private.idCompromiso = 0;
+                        }
+                    });
+                }
+            }
+        });
+    };
     
     
     return this.publico;

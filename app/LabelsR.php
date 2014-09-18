@@ -220,4 +220,6 @@ define('CROPA_2','Emitido');
 define('CROPA_3','Pagado');
 define('CROPA_4','Reprogramado');
 define('CROPA_5','Reprogramar Cuota Nro.: ');
+define('CROPA_6','Fecha');
+define('CROPA_7','Ingrese nueva fecha de cuota');
 ?>

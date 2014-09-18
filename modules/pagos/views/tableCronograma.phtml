@@ -1,0 +1,99 @@
+<?php
+$grabar = Session::getPermiso("CROPAPG");
+$reprogramar = Session::getPermiso("CROPARPG");
+?>
+
+<table class="table table-striped table-hover dataTable">
+    <thead>
+        <tr>
+            <th class="center"><?php echo SEGPA_2 ?></th>
+            <th class="center"><?php echo SEGPA_3 ?></th>
+            <th class="center" style="width: 25%"><?php echo SEGPA_4 ?></th>
+            <th class="center"><?php echo SEGPA_5 ?></th>
+            <th class="center"><?php echo SEGPA_27 ?></th>
+            <th class="center" style="width: 30%"><?php echo ACTIONS ?></th>
+        </tr>
+    </thead>
+    <tbody>
+        <?php
+        $data = Obj::run()->cronogramaPagoController->getCronograma();
+        $key = 0;
+        foreach ($data as $value):
+            $key++;
+            ?>
+            <tr>
+                <td><?php echo $value['numero_cuota'] ?></td>
+                <td class="right"><?php echo number_format($value['monto_pago'], 2) ?></td>
+                <td class="center">
+                    <?php echo Functions::cambiaf_a_normal($value['fecha_programada']) ?>
+                </td>
+                <td>
+                    <!--si es pagado o anulado solo se visualizara la fecha de pago-->
+                    <?php if ($value['estado'] == 'P' || $value['estado'] == 'A'): ?>
+                        <?php echo Functions::cambiaf_a_normal($value['fecha_pagoreal']) ?>
+                    <?php else: ?>
+                        <div id="<?php echo $key . CROPA; ?>dfecha"></div>
+                    <?php endif; ?>
+                </td>
+                <td class="center">
+                    <?php
+                    switch ($value['estado']) {
+                        case 'E': #emitido
+                            $estado = '<span class="label label-default">' . CROPA_2 . '</span>';
+                            break;
+                        case 'P': #pagado
+                            $estado = '<span class="label label-success">' . CROPA_3 . '</span>';
+                            break;
+                        case 'R': #reprogramado
+                            $estado = '<span class="label label-warning">' . CROPA_4 . '</span>';
+                            break;
+                        default:
+                            $estado = '';
+                            break;
+                    }
+                    echo $estado;
+                    ?>
+                </td>
+                <td class="center">
+                    <?php
+                    /* debe ser emitido para mostrar boton pagar */
+                    if ($value['estado'] == 'E'):
+                        ?>
+
+                        <?php if ($grabar["permiso"]): ?>
+                            <button type="button" class="<?php echo $grabar["theme"]; ?>" style="padding: 5px" onclick="cronogramaPago.getFormPagarOrdenParametros(this, '<?php echo $key ?>', '<?php echo AesCtr::en($value['id_compromisopago']) ?>', '<?php echo $value['numero_cuota'] ?>');">
+                                <i class="<?php echo $grabar["icono"]; ?>"></i> <?php echo $grabar["accion"]; ?>
+                            </button>
+                        <?php endif; ?>
+
+
+                    <?php else: ?>
+
+                        <!--se muestra el boton desactivado y sin onclick-->
+                        <?php if ($grabar["permiso"]): ?>
+                            <button type="button" class="<?php echo $grabar["theme"]; ?>" style="padding: 5px" disabled="disabled">
+                                <i class="<?php echo $grabar["icono"]; ?>"></i> <?php echo $grabar["accion"]; ?>
+                            </button>
+                        <?php endif; ?>
+
+
+                    <?php endif; ?>
+                    <!--boton reprogramar-->
+                    <!--solo se reprograma los que estan en estado E y activaReprogramacion = S-->
+                    <?php if ($value['estado'] == 'E' && $value['activaReprogramacion'] == 'S'): ?>
+                        <?php if ($reprogramar['permiso']): ?>
+                            <button type="button" class="<?php echo $reprogramar["theme"]; ?>" style="padding: 5px" onclick="cronogramaPago.getFormReprogramar(this, '<?php echo AesCtr::en($value['id_compromisopago']) ?>', '<?php echo $value['numero_cuota'] ?>');">
+                                <i class="<?php echo $reprogramar["icono"]; ?>"></i> <?php echo $reprogramar["accion"]; ?>
+                            </button>
+                        <?php endif; ?>
+                    <?php else: ?>
+                        <button type="button" class="<?php echo $reprogramar["theme"]; ?> disabled" style="padding: 5px">
+                            <i class="<?php echo $reprogramar["icono"]; ?>"></i> <?php echo $reprogramar["accion"]; ?>
+                        </button>
+                    <?php endif; ?>
+                </td>
+            </tr>
+        <?php endforeach; ?>
+    </tbody>
+</table>
+

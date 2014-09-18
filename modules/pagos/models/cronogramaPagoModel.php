@@ -7,6 +7,7 @@ class cronogramaPagoModel extends Model{
     private $_tipoDoc;
     private $_numDoc;
     private $_serieDoc;
+    private $_fechaRepro;
     private $_usuario;
     
     /*para el grid*/
@@ -28,6 +29,7 @@ class cronogramaPagoModel extends Model{
         $this->_tipoDoc  = Formulario::getParam(CROPA."lst_tipodoc");
         $this->_numDoc  = Formulario::getParam(CROPA."txt_seriedoc");
         $this->_serieDoc  = Formulario::getParam(CROPA."txt_numdoc");
+        $this->_fechaRepro  = Functions::cambiaf_a_mysql(Formulario::getParam(CROPA."txt_fechare"));
         
         $this->_iDisplayStart  = Formulario::getParam("iDisplayStart"); 
         $this->_iDisplayLength = Formulario::getParam("iDisplayLength"); 
@@ -80,6 +82,21 @@ class cronogramaPagoModel extends Model{
             ":tipoDoc" => $this->_tipoDoc,
             ":numDoc" => $this->_numDoc,
             ":serieDdoc" => $this->_serieDoc,
+            ":usuario" => $this->_usuario
+        );
+        $data = $this->queryOne($query,$parms);
+        return $data;
+    }
+    
+    public function postReprogramar(){
+        $query = "CALL sp_ordseSeguimientoPagoPagarCuota(:flag,:idCompromiso,:tipoDoc,:numDoc,:serieDdoc,:usuario);";
+        
+        $parms = array(
+            ":flag" => 2,
+            ":idCompromiso" => $this->_idCompromiso,
+            ":tipoDoc" => '',
+            ":numDoc" => $this->_fechaRepro,
+            ":serieDdoc" => '',
             ":usuario" => $this->_usuario
         );
         $data = $this->queryOne($query,$parms);

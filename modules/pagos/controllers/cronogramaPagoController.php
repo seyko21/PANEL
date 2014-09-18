@@ -95,6 +95,10 @@ class cronogramaPagoController extends Controller{
         Obj::run()->View->render("formReprogramar");
     }
     
+    public function getTableCronograma(){
+        Obj::run()->View->render("tableCronograma");
+    }
+    
     public function getCronograma(){
         $data = Obj::run()->cronogramaPagoModel->getCronograma();
             
@@ -103,6 +107,12 @@ class cronogramaPagoController extends Controller{
     
     public function postPagarOrden(){
         $data = Obj::run()->cronogramaPagoModel->postPagarOrden();
+        
+        echo json_encode($data);
+    }
+    
+    public function postReprogramar(){
+        $data = Obj::run()->cronogramaPagoModel->postReprogramar();
         
         echo json_encode($data);
     }
