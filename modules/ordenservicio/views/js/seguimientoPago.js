@@ -12,6 +12,14 @@ var seguimientoPago_ = function(){
     
     _private.idSeguimientoPago = 0;
     
+    _private.nOrden = 0;
+    
+    _private.idCompromiso = 0;
+    
+    _private.fila = 0;
+    
+    _private.boton = 0;
+    
     _private.config = {
         modulo: "ordenservicio/seguimientoPago/"
     };
@@ -56,6 +64,7 @@ var seguimientoPago_ = function(){
                 {sTitle: "Código", sWidth: "10%",sClass: "center"},
                 {sTitle: "Representante", sWidth: "25%"},
                 {sTitle: "Cliente", sWidth: "25%"},
+                {sTitle: "Estado", sWidth: "10%"},
                 {sTitle: "Fecha", sWidth: "10%"},
                 {sTitle: "Monto", sWidth: "10%", sClass: "right", bSortable: false},
                 {sTitle: "Acciones", sWidth: "8%", sClass: "center", bSortable: false}            
@@ -76,13 +85,13 @@ var seguimientoPago_ = function(){
     };
     
     this.publico.getFormPagarOrden = function(btn,id,norden){
-        _private.idSeguimientoPago = id;
-            
+        _private.nOrden = norden;
+        
         simpleAjax.send({
             element: btn,
             dataType: "html",
             root: _private.config.modulo + "getFormPagarOrden",
-            data: "&_idOrden="+_private.idSeguimientoPago+'&_norden='+norden,
+            data: "&_idOrden="+id+'&_norden='+_private.nOrden,
             fnCallback: function(data){
                 $("#cont-modal").append(data);  /*los formularios con append*/
                 $("#"+diccionario.tabs.SEGPA+"formPagarOrden").modal("show");
@@ -90,25 +99,50 @@ var seguimientoPago_ = function(){
         });
     };
     
-    this.publico.postPagarOrden = function(btn,fila,idCompromiso){
-        var fech = $("#"+fila+diccionario.tabs.SEGPA+"txt_fechapago").val();
+    
+    this.publico.getFormPagarOrdenParametros = function(btn,fila,idCompromiso,cuota){
+        _private.idCompromiso = idCompromiso;
+        _private.fila = fila;
+        _private.boton = btn;
         
-        if(!$.validator.prototype.dateValid(fech)){
-            simpleScript.notify.warning({
-                content: 'Fecha es incorrecta'
-            });
-            return false;
-        }
         simpleAjax.send({
             element: btn,
+            dataType: "html",
+            root: _private.config.modulo + "getFormPagarOrdenParametros",
+            data: '&_norden='+_private.nOrden+'&_ncuota='+cuota,
+            fnCallback: function(data){
+                $("#cont-modal").append(data);  /*los formularios con append*/
+                $("#"+diccionario.tabs.SEGPA+"formPagarOrdenParametros").modal("show");
+            }
+        });
+    };
+    
+    
+    this.publico.postPagarOrden = function(){
+        
+//        if(!$.validator.prototype.dateValid(fech)){
+//            simpleScript.notify.warning({
+//                content: 'Fecha es incorrecta'
+//            });
+//            return false;
+//        }
+        simpleAjax.send({
+            element: "#"+diccionario.tabs.SEGPA+"btnGpr",
             root: _private.config.modulo + "postPagarOrden",
-            data: "&_fecha="+fech+"&_idCompromiso="+idCompromiso,
+            form: "#"+diccionario.tabs.SEGPA+"formPagarOrdenParametros",
+            data: "&_idCompromiso="+_private.idCompromiso,
             fnCallback: function(data) {
                 if(!isNaN(data.result) && parseInt(data.result) === 1){
                     simpleScript.notify.ok({
                         content: mensajes.MSG_3,
                         callback: function(){
-                            //simpleScript.closeModal('#'+diccionario.tabs.SEGPA+'formPagarOrden');
+                            seguimientoPago.getGridSeguimientoPago();
+                            simpleScript.closeModal('#'+diccionario.tabs.SEGPA+'formPagarOrdenParametros');
+                            $("#"+_private.fila+diccionario.tabs.SEGPA+"dfecha").html(data.fecha);
+                            $(_private.boton).off('click');
+                            $(_private.boton).addClass('disabled');
+                            _private.idCompromiso = 0;
+                            _private.boton = 0;
                         }
                     });
                 }

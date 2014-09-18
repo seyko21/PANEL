@@ -12,7 +12,9 @@ class seguimientoPagoModel extends Model{
     private $_flag;
     private $_idOrden;
     private $_idCompromiso;
-    private $_fecha;
+    private $_tipoDoc;
+    private $_numDoc;
+    private $_serieDoc;
     private $_usuario;
     
     /*para el grid*/
@@ -31,7 +33,9 @@ class seguimientoPagoModel extends Model{
         $this->_idOrden   = Aes::de(Formulario::getParam("_idOrden"));    /*se decifra*/
         $this->_idCompromiso   = Aes::de(Formulario::getParam("_idCompromiso"));    /*se decifra*/
         $this->_usuario     = Session::get("sys_idUsuario");
-        $this->_fecha  = Functions::cambiaf_a_mysql(Formulario::getParam("_fecha"));
+        $this->_tipoDoc  = Formulario::getParam(SEGPA."lst_tipodoc");
+        $this->_numDoc  = Formulario::getParam(SEGPA."txt_seriedoc");
+        $this->_serieDoc  = Formulario::getParam(SEGPA."txt_numdoc");
         
         $this->_iDisplayStart  = Formulario::getParam("iDisplayStart"); 
         $this->_iDisplayLength = Formulario::getParam("iDisplayLength"); 
@@ -41,7 +45,7 @@ class seguimientoPagoModel extends Model{
     
     /*data para el grid: SeguimientoPago*/
     public function getSeguimientoPago(){
-        $aColumns       =   array("","2","7","13","5" ); //para la ordenacion y pintado en html
+        $aColumns       =   array("","2","7","13","12","5" ); //para la ordenacion y pintado en html
         /*
 	 * Ordenando, se verifica por que columna se ordenara
 	 */
@@ -85,18 +89,17 @@ class seguimientoPagoModel extends Model{
     }
     
     public function postPagarOrden(){
-        $query = "
-        UPDATE `lgk_compromisopago` SET
-                `fecha_pagoreal` = CURDATE(),
-                `estado` = 'P'
-        WHERE `id_compromisopago` = :idCompromiso;";
+        $query = "CALL sp_ordseSeguimientoPagoPagarCuota(:flag,:idCompromiso,:tipoDoc,:numDoc,:serieDdoc,:usuario);";
         
         $parms = array(
-            ":idCompromiso" => $this->_idCompromiso
-//            ":fecha" => $this->_fecha
+            ":flag" => 1,
+            ":idCompromiso" => $this->_idCompromiso,
+            ":tipoDoc" => $this->_tipoDoc,
+            ":numDoc" => $this->_numDoc,
+            ":serieDdoc" => $this->_serieDoc,
+            ":usuario" => $this->_usuario
         );
-        $this->execute($query,$parms);
-        $data = array('result'=>1);
+        $data = $this->queryOne($query,$parms);
         return $data;
     }
     

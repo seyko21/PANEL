@@ -190,8 +190,9 @@ define('GNOSE_15','Contrato');
 define('GNOSE_16','Enviar accesos a email');
 define('GNOSE_17','Exportar contrato');
 define('GNOSE_18','Cuota');
-define('GNOSE_19','Mmonto');
+define('GNOSE_19','Monto');
 define('GNOSE_20','Fecha de Pago');
+
 
 /*---------------------- SEGUIMIENTO DE PAGOS----------------*/
 define('SEGPA_1','Seguimiento de Pagos');
@@ -199,4 +200,14 @@ define('SEGPA_2','Cuota');
 define('SEGPA_3','Monto');
 define('SEGPA_4','Fecha Programada');
 define('SEGPA_5','Fecha de Pago');
+define('SEGPA_6','Emitido');
+define('SEGPA_7','Pago Parcial');
+define('SEGPA_8','Pago Total');
+define('SEGPA_9','Anulado');
+define('SEGPA_21','Datos de Pago - Orden Nro.: ');
+define('SEGPA_22','Tipo de documento');
+define('SEGPA_23','Nro. de documento');
+define('SEGPA_24','Serie de documento');
+define('SEGPA_25','Ingrese el número del documento');
+define('SEGPA_26','Ingrese la serie del documento');
 ?>

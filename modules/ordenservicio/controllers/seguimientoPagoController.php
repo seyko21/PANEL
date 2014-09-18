@@ -45,8 +45,25 @@ class seguimientoPagoController extends Controller{
                 /*antes de enviar id se encrypta*/
                 $encryptReg = Aes::en($aRow['id_ordenservicio']);
                 
+                switch($aRow['estado']){
+                    case 'E':
+                        $estado = '<span class=\"label label-default\">'.SEGPA_6.'</span>';
+                        break;
+                    case 'T':
+                        $estado = '<span class=\"label label-success\">'.SEGPA_8.'</span>';
+                        break;
+                    case 'P':
+                        $estado = '<span class=\"label label-warning\">'.SEGPA_7.'</span>';
+                        break;
+                    case 'A':
+                        $estado = '<span class=\"label label-danger\">'.SEGPA_9.'</span>';
+                        break;
+                    default:
+                        $estado = '';
+                        break;
+                }
                 /*registros a mostrar*/
-                $sOutput .= '["'.($num++).'","'.$aRow['orden_numero'].'","'.$aRow['nombrecompleto'].'","'.$aRow['cliente'].'","'.$aRow['fecha'].'","'.number_format($aRow['monto_total'],2).'",';
+                $sOutput .= '["'.($num++).'","'.$aRow['orden_numero'].'","'.$aRow['nombrecompleto'].'","'.$aRow['cliente'].'","'.$estado.'","'.$aRow['fecha'].'","'.number_format($aRow['monto_total'],2).'",';
                 
                 /*
                  * configurando botones (add/edit/delete etc)
@@ -76,6 +93,10 @@ class seguimientoPagoController extends Controller{
     
     public function getFormPagarOrden(){
         Obj::run()->View->render("formPagarOrden");
+    }
+    
+    public function getFormPagarOrdenParametros(){
+        Obj::run()->View->render("formPagarOrdenParametros");
     }
     
     public static function getCronograma(){

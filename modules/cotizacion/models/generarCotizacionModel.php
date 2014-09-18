@@ -131,7 +131,7 @@ class generarCotizacionModel extends Model{
             ':idRepresentante' => $this->_keyPersona,
             ':mesesContrato' => $this->_meses,
             ':diasOferta' => $this->_oferta,
-            ':total' => $this->_total,
+            ':total' => str_replace(',','', $this->_total),
             ':idCaratula' => '',
             ':precio' => '',
             ':produccion' => $this->_costoProduccion,
