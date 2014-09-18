@@ -207,7 +207,13 @@ class Functions{
             $lafecha=$mifecha[2]."/".$mifecha[1]."/".$mifecha[0];
             return $lafecha; 
         }
-    }     
+    } 
+    
+    public static function nombremes($mes){
+        setlocale(LC_TIME, 'spanish');
+        $nombre=strftime("%B",mktime(0, 0, 0, $mes, 1, 2000));
+        return $nombre;
+    } 
     
 }
 ?>

@@ -247,17 +247,18 @@ $data = generarCotizacionController::findCotizacion();
 <?php echo T8; ?>txt_meses: {
                                     required: true,
                                     maxlength: 4
-                                },
+                                }, 
 <?php echo T8; ?>txt_oferta: {
-                                    number: true,
-                                    max: 3
-                                },
+                        number: true,
+                        integer: true
+                    },
 <?php echo T8; ?>txt_diasvalidez: {
-                                    required: true,
-                                    number: true,
-                                    integer: true,
-                                    maxlength: 3
-                                },
+                        required: true,
+                        number: true,
+                        integer: true,
+                        maxlength: 3,
+                        max: 3
+                    },
 <?php echo T8; ?>txt_produccion: {
                                     required: true,
                                     number: true

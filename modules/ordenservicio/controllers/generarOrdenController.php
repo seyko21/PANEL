@@ -215,7 +215,7 @@ class generarOrdenController extends Controller{
         $mpdf->defaultfooterfontstyle = B; /* blank, B, I, or BI */
         $mpdf->defaultfooterline = 1; /* 1 to include line below header/above footer */
         
-        $mpdf->SetHTMLHeader('<img src="'.ROOT.'public'.DS.'img'.DS.'logotipo.png" width="137" height="68" />','',TRUE);
+        $mpdf->SetHTMLHeader('<div style="margin:0 auto; width:137px;"><img src="'.ROOT.'public'.DS.'img'.DS.'logotipo.png" width="137" height="68" /></div>','',TRUE);
         $mpdf->SetHTMLFooter('<table width="100%" style="vertical-align: bottom; font-family: serif; font-size: 8pt; color: #000000; font-weight: bold;"><tr>
                                 <td width="33%"><span style="font-weight: bold;">{DATE j-m-Y}</span></td>
                                 <td width="33%" align="center" style="font-weight: bold;">{PAGENO}/{nbpg}</td>
@@ -232,37 +232,78 @@ class generarOrdenController extends Controller{
     }
     
     private function getHtmlContrato(){
-        $contrato = Obj::run()->generarOrdenModel->getContrato();
-        
+        $contrato = Obj::run()->generarOrdenModel->getContrato();        
         $cronograma = Obj::run()->generarOrdenModel->getCronograma();
+        $caratula = Obj::run()->generarOrdenModel->getCaratula();
+
         $html = $contrato['cuerpo_contrato'];
         
-        $cro = '<table style="width:100%" border="1">'
+        //Panel: Caratula
+        $panel = '<table border="0" style="width:100%; font-family:Arial; font-size:12px;"> '
                 . '<tr>'
-                . '<th style="width:3%">'.GNOSE_18.'</th>'
-                . '<th>'.GNOSE_18.'</th>'
-                . '<th>'.GNOSE_18.'</th>'
+                . '<th style="width:7%;border-bottom:solid 1px #000">'.LABEL_A37.'</th>'  
+                . '<th style="width:20%;border-bottom:solid 1px #000">'.LABEL_A27.'</th>'
+                . '<th style="width:50%;border-bottom:solid 1px #000">'.LABEL_A38.'</th>'                  
+                . '<th style="width:10%;border-bottom:solid 1px #000">'.LABEL_A44.'</th>' 
+                . '<th style="width:5%;border-bottom:solid 1px #000">'.LABEL_A45.'</th>' 
+                . '</tr>';
+        foreach ($caratula as $v) {
+            $panel .= '<tr>';
+            $panel .=  '   <td style="text-align:center; font-size:11px;">'.$v['codigo'].'</td>';
+            $panel .=  '   <td style="text-align:center; font-size:11px;">'.$v['elemento'].'</td>';
+            $panel .= '    <td style="font-size:11px;">'.$v['ubicacion'].' - '.$v['medidas'].' Area: '.$v['dimesion_area'].' m<sup>2</sup></td>';            
+            $panel .=  '   <td style="text-align:center; font-size:11px;">'.$v['distrito'].'</td>';  
+            $panel .=  '   <td style="text-align:center; font-size:11px;">'.($v['flag_produccion'] == '0'?'NO':'SI').'</td>';
+            $panel .=  '</tr>';
+        }
+        $panel .= '</table>';
+        
+        //Cronograma
+        $cro = '<table border="0" style="width:70%; font-family:Arial; font-size:12px;"> '
+                . '<tr>'
+                . '<th style="width:5%;border-bottom:solid 1px #000">'.GNOSE_18.'</th>'                
+                . '<th style="border-bottom:solid 1px #000">'.GNOSE_20.'</th>'
+                . '<th style="border-bottom:solid 1px #000">'.GNOSE_19.'</th>'
                 . '</tr>';
         foreach ($cronograma as $value) {
             $cro .= '<tr>';
-            $cro .= '    <td style="text-align:center">'.$value['numero_cuota'].'</td>';
-            $cro .= '    <td style="text-align:right">'.number_format($value['monto_pago'],2).'</td>';
+            $cro .= '    <td style="text-align:center">'.$value['numero_cuota'].'</td>';            
             $cro .= '    <td style="text-align:center">'.$value['fechapro'].'</td>';
+            $cro .= '    <td style="text-align:right">S/. '.number_format($value['monto_pago'],2).'</td>';            
             $cro .= '</tr>';
         }
         $cro .= '</table>';
-    
+                        
+        $ruc = '';
+        if($contrato['numerodocumento'] != ''){ $ruc = ' con RUC '.$contrato['numerodocumento']; }
+                
+        if ($contrato['incluyeIGV'] == '0')
+            $incluyeIGV = 'Los precios no incluyen IGV';
+        else
+            $incluyeIGV = 'Los precios incluyen IGV';
+        $diaoferta = '';
+         if ( $contrato['dias_oferta'] > 0){
+            $diaoferta = 'La empresa SEVEND S.A.C. adiciona un plus promocional de '.$contrato['dias_oferta'].' días calendarios luego de haber finalizado la publicación.';
+         }
         $html = str_replace('{{CLIENTE_EMPRESA}}',$contrato['cliente'], $html);
         $html = str_replace('{{CLIENTE_DIRECCION}}',$contrato['direccion'], $html);
-        $html = str_replace('{{CLIENTE_RUC}}','RUC '.$contrato['numerodocumento'], $html);
+        $html = str_replace('{{CLIENTE_RUC}}',$ruc, $html);
         $html = str_replace('{{REPRESENTANTE}}',$contrato['representante'], $html);
         $html = str_replace('{{REPRESENTANTE_DNI}}',$contrato['docrepresentante'], $html);
         $html = str_replace('{{CONTRATO_CANTIDADITEM}}',$contrato['npaneles'], $html);
-        $html = str_replace('{{CONTRATO_MONTO}}',  number_format($contrato['monto_venta'],2), $html);
+        $html = str_replace('{{CONTRATO_MONTO}}',  number_format($contrato['monto_total'],2), $html);
+        $html = str_replace('{{DIA_CONTRATO}}',$contrato['dia'], $html);
+        $html = str_replace('{{MES_CONTRATO}}', ucwords(Functions::nombremes($contrato['mes'])), $html);
+        $html = str_replace('{{ANIO_CONTRATO}}',$contrato['anio'], $html);
+        $html = str_replace('{{INCLUYE_IGV}}',$incluyeIGV, $html);
+        $html = str_replace('{{FOR_CARATULAS}}',$panel, $html);
         $html = str_replace('{{FOR_COMPROMISOPAGO}}',$cro, $html);
+        $html = str_replace('{{CONTRATO_MESES}}',$contrato['meses_contrato'], $html);
+        $html = str_replace('{{DIAS_OFERTA}}',$diaoferta, $html);
+        
         
         $nl = new numerosALetras();
-        $html = str_replace('{{CONTRATO_DINERO_EN_LETRAS}}',  $nl->convertir($contrato['monto_venta']), $html);
+        $html = str_replace('{{CONTRATO_DINERO_EN_LETRAS}}',  $nl->convertir($contrato['monto_total']), $html);
         
         
         return html_entity_decode($html);

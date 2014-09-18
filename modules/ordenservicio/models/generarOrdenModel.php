@@ -203,6 +203,18 @@ class generarOrdenModel extends Model{
         return $data;
     }
     
+     public function getCaratula(){
+        $query = " CALL sp_ordseOrdenServicioConsultas(:flag,:idOrden);";
+        
+        $parms = array(
+            ':flag'=> 3,
+            ':idOrden'=> $this->_idOrden
+        );
+       
+        $data = $this->queryAll($query,$parms);
+        return $data;
+    }    
+    
 }
 
 ?>

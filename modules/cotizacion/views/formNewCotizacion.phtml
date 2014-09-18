@@ -218,13 +218,14 @@ $buscar = Session::getPermiso('GNCOTBS');
                     },   
                     <?php echo T8; ?>txt_oferta: {
                         number: true,
-                        max: 3
+                        integer: true
                     },
                     <?php echo T8; ?>txt_diasvalidez: {
                         required: true,
                         number: true,
                         integer: true,
-                        maxlength: 3
+                        maxlength: 3,
+                        max: 3
                     },
                     <?php echo T8; ?>txt_produccion: {
                         required: true,
