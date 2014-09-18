@@ -61,7 +61,7 @@ class panelesAlquiladosController extends Controller{
                  //Visualizar Detalle
                 $sOutput .= '"<div class=\"btn-group\">';   
                 //if($consultar['permiso'] == 1){
-                    $sOutput .= '<button type=\"button\" class=\"btn bg-color-blue txt-color-white btn-xs\" title=\"Consultar\" onclick=\"panelesAlquilados.getConsulta(\''.$encryptReg.'\')\">';
+                    $sOutput .= '<button type=\"button\" class=\"btn bg-color-blue txt-color-white btn-xs\" title=\"Consultar\" onclick=\"panelesAlquilados.getConsulta(\''.$encryptReg.'\',\''.$aRow['codigo'].'\')\">';
                     $sOutput .= '    <i class=\"fa fa-search-plus fa-lg\"></i>';
                     $sOutput .= '</button>';    
                 //}

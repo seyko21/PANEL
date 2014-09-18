@@ -106,13 +106,13 @@ var panelesAlquilados_ = function(){
         setup_widgets_desktop();
     };
     
-    this.publico.getConsulta = function(id){
+    this.publico.getConsulta = function(id, cod){
         _private.idCaratula = id;               
         simpleAjax.send({
             gifProcess: true,
             dataType: 'html',
             root: _private.config.modulo + 'getConsulta',
-            data: '&_idCaratula='+_private.idCaratula,
+            data: '&_idCaratula='+_private.idCaratula+'&_codCaratula='+cod,
             fnCallback: function(data){
                 $('#cont-modal').append(data);  /*los formularios con append*/
                 $('#'+diccionario.tabs.PAAL+'formPAOS').modal('show');

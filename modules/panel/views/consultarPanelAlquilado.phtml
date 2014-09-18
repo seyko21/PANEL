@@ -6,7 +6,7 @@
  * Autor       : ..... .....
  * Descripcion : 
  */
-
+$codigoCaratula = Formulario::getParam('_codCaratula');
 ?>
 <form id="<?php echo PAAL; ?>formPAOS" name="<?php echo PAAL; ?>formPAOS" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog" style="width:80%">
@@ -15,7 +15,7 @@
                 <button type="button" class="close"  aria-hidden="true">
                     &times;
                 </button>
-                <h4 class="modal-title"><?php echo LABEL_A122;?></h4>
+                <h4 class="modal-title"><?php echo LABEL_A122.' | '.$codigoCaratula;?></h4>
             </div>
             <br />
             <table id="<?php echo PAAL; ?>gridPAOS" class="table table-striped table-hover table-condensed" style="width:98%"></table>          
