@@ -50,11 +50,10 @@ var generarCotizacionScript_ = function(){
                             /*guardo idProducto decifrado en temporal para validar ducplicidad*/
                             _private.prodAdd.push(simpleAjax.stringGet(idProducto));
 
-                            tr += '<tr id="'+diccionario.tabs.T8+'tr_'+idProducto+'">\n\
+                            tr += '<tr id="'+diccionario.tabs.T8+'tr_'+simpleAjax.stringGet(idProducto)+'">\n\
                                 <td>\n\
-                                    <input type="hidden" id="'+diccionario.tabs.T8+'hhddIdProducto" name="'+diccionario.tabs.T8+'hhddIdProducto[]" value="'+idProducto+'">\n\
-                                    <input type="hidden" id="'+diccionario.tabs.T8+'hhddProduccion" name="'+diccionario.tabs.T8+'hhddProduccion[]" value="'+produccion+'">\n\
-                                    <input type="hidden" class="'+diccionario.tabs.T8+'hhddubigeo" name="'+diccionario.tabs.T8+'hhddubigeo[]" value="'+ubigeo+'">\n\
+                                    <input type="hidden" class="'+diccionario.tabs.T8+'hhddIdProducto" id="'+diccionario.tabs.T8+index+'hhddIdProducto" name="'+diccionario.tabs.T8+'hhddIdProducto[]" value="'+idProducto+'">\n\
+                                    <input type="hidden" class="'+diccionario.tabs.T8+'hhddProduccion" id="'+diccionario.tabs.T8+index+'hhddProduccion" name="'+diccionario.tabs.T8+'hhddProduccion[]" value="'+produccion+'">\n\
                                     '+descripcion+'\
                                 </td>\n\
                                 <td class="right">'+area+'</td>\n\
@@ -62,6 +61,9 @@ var generarCotizacionScript_ = function(){
                                     <label class="input"><input type="text" id="'+diccionario.tabs.T8+'hhddPrecio" name="'+diccionario.tabs.T8+'hhddPrecio[]" value="'+precio+'" data-value="'+precio+'" style="text-align:right"></label>\n\
                                 </td>\n\
                                 <td class="right">'+meses+'</td>\n\
+                                <td class="center">\n\
+                                    <input type="checkbox" id="'+diccionario.tabs.T8+index+'chk_disenio" name="chk_disenio[]" onclick="generarCotizacionScript.setDisenio(this,'+index+',\''+idProducto+'\');" checked="checked">\n\
+                                </td>\n\
                                 <td class="right">'+produccion.toFixed(2)+'</td>\n\
                                 <td class="right">'+total.toFixed(2)+'</td>\n\
                                 <td>\n\
@@ -75,6 +77,7 @@ var generarCotizacionScript_ = function(){
                 });
                 
                 if(tr !== ''){
+                    generarCotizacionScript.resetArrayProducto();
                     /*agrego los registros*/
                     $('#'+diccionario.tabs.T8+'gridProductos').find('tbody').html(tr);
                     /*total de registros*/
@@ -84,7 +87,7 @@ var generarCotizacionScript_ = function(){
                         diff = 5 - allTr;
                         tr = simpleScript.createCell({
                             rows: diff,
-                            cols: 7
+                            cols: 8
                         });
                         $('#'+diccionario.tabs.T8+'gridProductos').find('tbody').append(tr);
                     }
@@ -97,18 +100,32 @@ var generarCotizacionScript_ = function(){
                             simpleScript.closeModal('#'+diccionario.tabs.T8+'formBuscarProducto');
                         }
                     });
-                    generarCotizacionScript.calculaPrecio();
-                    generarCotizacionScript.resetArrayProducto();
+                    generarCotizacionScript.calculaPrecio();                    
                 }
             }
         });
+    };
+    
+    this.publico.setDisenio = function(radio,index,idProducto){
+        var vprod = $('#'+diccionario.tabs.T8+'txt_produccion').val();
+        var area  = $.trim($('#'+diccionario.tabs.T8+'tr_'+simpleAjax.stringGet(idProducto)).find('td:eq(1)').html());
+        
+        if($(radio).is(':checked')){
+            var m = parseFloat(vprod) * parseFloat(area);
+            $('#'+diccionario.tabs.T8+index+'hhddProduccion').val(parseFloat(m));
+            $('#'+diccionario.tabs.T8+'tr_'+simpleAjax.stringGet(idProducto)).find('td:eq(5)').html(parseFloat(m).toFixed(2));
+        }else{
+            $('#'+diccionario.tabs.T8+index+'hhddProduccion').val(0);
+            $('#'+diccionario.tabs.T8+'tr_'+simpleAjax.stringGet(idProducto)).find('td:eq(5)').html(0);
+        }
+        generarCotizacionScript.reCalcular();
     };
     
     this.publico.calculaPrecio = function(){
         var collection = $('#'+diccionario.tabs.T8+'gridProductos').find('tbody').find('tr');
         $.each(collection,function(){
             var tthis = $(this);
-            var produccion = $(this).find('td:eq(0)').find('#'+diccionario.tabs.T8+'hhddProduccion').val();
+            var produccion = $(this).find('td:eq(0)').find('.'+diccionario.tabs.T8+'hhddProduccion').val();
             var meses = $('#'+diccionario.tabs.T8+'txt_meses').val();
             
             $(this).find('td:eq(2)').find('input:text').keyup(function(){
@@ -121,18 +138,18 @@ var generarCotizacionScript_ = function(){
                     
                     var total = (parseFloat(precio) * parseFloat(meses)) + parseFloat(produccion);
                     
-                    tthis.find('td:eq(5)').html(total.toFixed(2));
-                    generarCotizacionScript.calculoTotal();
+                    tthis.find('td:eq(6)').html(total.toFixed(2));
                 }
             });
         });
+        generarCotizacionScript.calculoTotal();
     };
     
     this.publico.calculoTotal = function(){
         var collection = $('#'+diccionario.tabs.T8+'gridProductos').find('tbody').find('tr');
         var t = 0;
         $.each(collection,function(){
-            var tt = simpleScript.deleteComa($.trim($(this).find('td:eq(5)').text()));
+            var tt = simpleScript.deleteComa($.trim($(this).find('td:eq(6)').text()));
             if(tt.length > 0){
                 t += parseFloat(tt);
             }
@@ -146,10 +163,11 @@ var generarCotizacionScript_ = function(){
         var collection = $('#'+diccionario.tabs.T8+'gridProductos').find('tbody').find('tr');
         $.each(collection,function(){
             var area = $.trim($(this).find('td:eq(1)').text());
+            var chk  = $(this).find('td:eq(4)').find('input:checkbox');
             var costoprod = parseFloat(prod) * parseFloat(area);
-            if(area !== ''){
-                $(this).find('td:eq(0)').find('#'+diccionario.tabs.T8+'hhddProduccion').val(costoprod);
-                $(this).find('td:eq(4)').html(costoprod.toFixed(2));
+            if(area !== '' && chk.is(':checked')){
+                $(this).find('td:eq(0)').find('.'+diccionario.tabs.T8+'hhddProduccion').val(costoprod);
+                $(this).find('td:eq(5)').html(costoprod.toFixed(2));
             }
         });
         generarCotizacionScript.reCalcular();
@@ -159,7 +177,7 @@ var generarCotizacionScript_ = function(){
         var collection = $('#'+diccionario.tabs.T8+'gridProductos').find('tbody').find('tr');
         $.each(collection,function(){
             var tthis = $(this);
-            var produccion = $(this).find('td:eq(0)').find('#'+diccionario.tabs.T8+'hhddProduccion').val();
+            var produccion = $(this).find('td:eq(0)').find('.'+diccionario.tabs.T8+'hhddProduccion').val();
             if(produccion >= 0){
                 var meses = $('#'+diccionario.tabs.T8+'txt_meses').val();
                 var precio = $(this).find('td:eq(2)').find('input:text').val();
@@ -167,7 +185,7 @@ var generarCotizacionScript_ = function(){
 
                 var total = (parseFloat(precio) * parseFloat(meses)) + parseFloat(produccion);
 
-                tthis.find('td:eq(5)').html(total.toFixed(2));
+                tthis.find('td:eq(6)').html(total.toFixed(2));
                 generarCotizacionScript.calculoTotal();
                 if(y === 1){
                     tthis.find('td:eq(3)').html(meses);
@@ -183,7 +201,7 @@ var generarCotizacionScript_ = function(){
                 _private.prodAdd[x] = null;
             }
         }
-        $('#'+diccionario.tabs.T8+'tr_'+idProd).remove();
+        $('#'+diccionario.tabs.T8+'tr_'+simpleAjax.stringGet(idProd)).remove();
         //_private.total -= precio;
 //        $('#'+diccionario.tabs.T8+'txt_total').val(parseFloat(_private.total).toFixed(2));
         generarCotizacionScript.calculoTotal();

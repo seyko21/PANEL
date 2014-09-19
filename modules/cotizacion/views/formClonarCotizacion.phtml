@@ -120,6 +120,7 @@ $data = generarCotizacionController::findCotizacion();
                                 <th style="width:8%">Area</th>
                                 <th style="width:10%">Precio</th>
                                 <th style="width:10%">Meses</th>
+                                <th style="width:7%">Diseño?</th>
                                 <th style="width:10%">Producción</th>
                                 <th style="width:10%">Total</th>
                                 <th style="width:1%">...</th>
@@ -129,15 +130,19 @@ $data = generarCotizacionController::findCotizacion();
                                     $datac = generarCotizacionController::getProductosCotizados();
                                     $f = 0;
                                     $rows = sizeof($datac);
-                                    foreach ($datac as $value):
+                                    foreach ($datac as $key=>$value):
                                         $idProducto = AesCtr::en($value['id_caratula']);
+                                        /*para check de diseño*/
+                                        $chk = '';
+                                        if($value['costo_produccion'] > 0){
+                                            $chk = 'checked="checked"';
+                                        }
                                         ?>
-                                        <tr id="<?php echo T8; ?>tr_<?php echo $idProducto; ?>">
+                                        <tr id="<?php echo T8; ?>tr_<?php echo $value['id_caratula']; ?>">
 
                                             <td>
-                                                <input id="<?php echo T8; ?>hhddIdProducto" name="<?php echo T8; ?>hhddIdProducto[]" value="<?php echo $idProducto; ?>" type="hidden">
-                                                <input id="<?php echo T8; ?>hhddProduccion" name="<?php echo T8; ?>hhddProduccion[]" value="<?php echo $value['costo_produccion']; ?>" type="hidden">
-                                                <input class="<?php echo T8; ?>hhddubigeo" name="<?php echo T8; ?>hhddubigeo[]" value="021809" type="hidden">
+                                                <input class="<?php echo T8; ?>hhddIdProducto" id="<?php echo T8.$key; ?>hhddIdProducto" name="<?php echo T8; ?>hhddIdProducto[]" value="<?php echo $idProducto; ?>" type="hidden">
+                                                <input class="<?php echo T8; ?>hhddProduccion" id="<?php echo T8.$key; ?>hhddProduccion" name="<?php echo T8; ?>hhddProduccion[]" value="<?php echo $value['costo_produccion']; ?>" type="hidden">
                                                 <?php echo $value['ubicacion'].' - '.$value['descripcion'].' ('.$value['ancho'].' x '.$value['alto'].' mt)'; ?>
                                             </td>
                                             <td class="right"><?php echo $value['aarea']; ?></td>
@@ -145,6 +150,12 @@ $data = generarCotizacionController::findCotizacion();
                                                 <label class="input"><input id="<?php echo T8; ?>hhddPrecio" name="<?php echo T8; ?>hhddPrecio[]" value="<?php echo number_format($value['precio'],2); ?>" data-value="<?php echo $value['precio']; ?>" style="text-align:right" type="text"></label>
                                             </td>
                                             <td class="right"><?php echo $value['cantidad_mes']; ?></td>
+                                            
+                                            <td class="center">
+                                                <input <?php echo $chk?> type="checkbox" id="<?php echo T8.$key; ?>chk_disenio" name="chk_disenio[]" onclick="generarCotizacionScript.setDisenio(this,<?php echo $key; ?>,'<?php echo $idProducto; ?>');">
+                                            </td>
+                                
+                                
                                             <td class="right"><?php echo number_format($value['costo_produccion'],2); ?></td>
                                             <td class="right"><?php echo number_format($value['importe'],2); ?></td>
                                             <td>
@@ -157,7 +168,7 @@ $data = generarCotizacionController::findCotizacion();
                                     $diff = 0;
                                     if ($rows < 5) {
                                         $diff = 7 - $rows;
-                                        echo Functions::createCell(array('row' => ($diff), 'cols' => 7));
+                                        echo Functions::createCell(array('row' => ($diff), 'cols' => 8));
                                     }
                                     ?>
                                 </tbody>
