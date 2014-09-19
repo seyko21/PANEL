@@ -207,13 +207,13 @@ class generarOrdenController extends Controller{
                
         $mpdf = new mPDF('c');
 
-        $mpdf->mirrorMargins = 1;
-        $mpdf->defaultheaderfontsize = 10; /* in pts */
-        $mpdf->defaultheaderfontstyle = B; /* blank, B, I, or BI */
-        $mpdf->defaultheaderline = 1; /* 1 to include line below header/above footer */
-        $mpdf->defaultfooterfontsize = 12; /* in pts */
-        $mpdf->defaultfooterfontstyle = B; /* blank, B, I, or BI */
-        $mpdf->defaultfooterline = 1; /* 1 to include line below header/above footer */
+//        $mpdf->mirrorMargins = 1;
+//        $mpdf->defaultheaderfontsize = 10; /* in pts */
+//        $mpdf->defaultheaderfontstyle = B; /* blank, B, I, or BI */
+//        $mpdf->defaultheaderline = 1; /* 1 to include line below header/above footer */
+//        $mpdf->defaultfooterfontsize = 12; /* in pts */
+//        $mpdf->defaultfooterfontstyle = B; /* blank, B, I, or BI */
+//        $mpdf->defaultfooterline = 1; /* 1 to include line below header/above footer */
         
         $mpdf->SetHTMLHeader('<div style="margin:0 auto; width:137px;"><img src="'.ROOT.'public'.DS.'img'.DS.'logotipo.png" width="137" height="68" /></div>','',TRUE);
         $mpdf->SetHTMLFooter('<table width="100%" style="vertical-align: bottom; font-family: serif; font-size: 8pt; color: #000000; font-weight: bold;"><tr>
