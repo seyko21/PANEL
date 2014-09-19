@@ -26,6 +26,10 @@ define('COPY','Copyright SmartAdmin 2014-2020.');
 define('ICON_CLOSE','fa fa-ban');
 define('THEME_CLOSE','btn btn-default xClose');
 define('ACTIONS','Acciones');
+define('BTN_SEARCH','Buscar');
+define('LABEL_ANT','Anterior');
+define('LABEL_SIG','Siguiente');
+define('LABEL_NRO','Nro.');
 
 /*FORMULARIO LOGIN*/
 define('L_TITLE','Ingresar');
@@ -222,4 +226,21 @@ define('CROPA_4','Reprogramado');
 define('CROPA_5','Reprogramar Cuota Nro.: ');
 define('CROPA_6','Fecha');
 define('CROPA_7','Ingrese nueva fecha de cuota');
+
+/*---------------------- ORDEN DE INSTALACION ----------------*/
+define('ORINS_1','Orden de Instalación');
+define('ORINS_2','Nueva Instalación');
+define('ORINS_3','Instalación');
+define('ORINS_4','Información general');
+define('ORINS_5','Conceptos');
+define('ORINS_6','Finalizar');
+define('ORINS_7','Carátula');
+define('ORINS_8','Buscar Carátula');
+define('ORINS_9','Carátula');
+define('ORINS_10','Escriba OS y presione enter para buscar');
+define('ORINS_11','Fecha');
+define('ORINS_12','Buscar Conceptos');
+define('ORINS_13','Concepto');
+define('ORINS_14','Escriba concepto para buscar');
+define('ORINS_15','Precio');
 ?>

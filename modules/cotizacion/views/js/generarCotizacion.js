@@ -6,6 +6,8 @@ var generarCotizacion_ = function(){
     
     _private.numeroCotizacion = 0;
     
+    _private.tab = null;
+    
     _private.config = {
         modulo: 'cotizacion/generarCotizacion/'
     };

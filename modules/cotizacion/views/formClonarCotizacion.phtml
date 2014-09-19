@@ -166,7 +166,7 @@ $data = generarCotizacionController::findCotizacion();
                         <div class="form-group" style="margin-top:5px">
                             <div class="col-md-2 pull-right">
                                 <div class="input">
-                                    <input class="form-control right" type="text" id="<?php echo T8; ?>txt_total" name="<?php echo T8; ?>txt_total" readonly="" value="<?php echo number_format($datac[0]['total'], 2); ?>">
+                                    <input class="form-control right" type="text" id="<?php echo T8; ?>txt_total" name="<?php echo T8; ?>txt_total" readonly="">
                                 </div>
                             </div>
                             <label class="control-label col-md-2 pull-right" for="prepend"><?php echo LABEL_T; ?></label>
@@ -345,6 +345,7 @@ $data = generarCotizacionController::findCotizacion();
                             container: '#<?php echo T8; ?>formGenerarCotizacion',
                             typeElement: 'input'
                         });
+                        generarCotizacionScript.calculoTotal();
         </script>
     </form>
 </div>

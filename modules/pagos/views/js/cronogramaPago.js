@@ -64,7 +64,7 @@ var cronogramaPago_ = function(){
                 {sTitle: "Monto", sWidth: "10%", sClass: "right", bSortable: false},
                 {sTitle: "Acciones", sWidth: "8%", sClass: "center", bSortable: false}            
             ],
-            aaSorting: [[2, "asc"]],
+            aaSorting: [[1, "desc"]],
             sScrollY: "300px",
             sAjaxSource: _private.config.modulo+"getGridOrdenes",
             fnDrawCallback: function() {

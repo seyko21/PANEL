@@ -98,6 +98,7 @@ var generarCotizacionScript_ = function(){
                         }
                     });
                     generarCotizacionScript.calculaPrecio();
+                    generarCotizacionScript.resetArrayProducto();
                 }
             }
         });
@@ -131,7 +132,7 @@ var generarCotizacionScript_ = function(){
         var collection = $('#'+diccionario.tabs.T8+'gridProductos').find('tbody').find('tr');
         var t = 0;
         $.each(collection,function(){
-            var tt = $.trim($(this).find('td:eq(5)').text());
+            var tt = simpleScript.deleteComa($.trim($(this).find('td:eq(5)').text()));
             if(tt.length > 0){
                 t += parseFloat(tt);
             }

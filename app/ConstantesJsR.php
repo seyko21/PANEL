@@ -25,3 +25,4 @@ var diccionario = {
         GNOSE: '<?php echo GNOSE; ?>',
         SEGPA: '<?php echo SEGPA; ?>',
         CROPA: '<?php echo CROPA; ?>',
+        ORINS: '<?php echo ORINS; ?>',

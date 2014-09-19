@@ -10,7 +10,7 @@ $agregar = Session::getPermiso('GNCOTAG');
 $buscar = Session::getPermiso('GNCOTBS');
 ?>
 <div class="row">
-    <form id="<?php echo T8; ?>formGenerarCotizacion" novalidate="novalidate">
+    <form id="<?php echo T8; ?>formGenerarCotizacion" name="<?php echo T8; ?>formGenerarCotizacion" novalidate="novalidate">
         <div id="bootstrap-wizard-1" class="col-sm-12">
             <div class="form-bootstrapWizard">
                 <ul class="bootstrapWizard form-wizard">
@@ -186,13 +186,13 @@ $buscar = Session::getPermiso('GNCOTBS');
                                 <a href="javascript:void(0);" class="btn btn-lg btn-default"> First </a>
                                 </li>-->
                                 <li class="previous disabled">
-                                    <a href="javascript:void(0);" class="btn btn-lg btn-default"> Anterior </a>
+                                    <a href="javascript:void(0);" class="btn btn-lg btn-default"> <?php echo LABEL_ANT?> </a>
                                 </li>
                                 <!--<li class="next last">
                                 <a href="javascript:void(0);" class="btn btn-lg btn-primary"> Last </a>
                                 </li>-->
                                 <li class="next">
-                                    <a href="javascript:void(0);" class="btn btn-lg txt-color-darken"> Siguiente </a>
+                                    <a href="javascript:void(0);" class="btn btn-lg txt-color-darken"> <?php echo LABEL_SIG?> </a>
                                 </li>
                             </ul>
                         </div>
@@ -202,7 +202,7 @@ $buscar = Session::getPermiso('GNCOTBS');
             </div>
         </div>
 
-        <?php echo Functions::widgetClose(); ?>
+        
         <script>
             var $validator = $("#<?php echo T8; ?>formGenerarCotizacion").validate({
                 rules: {
@@ -316,3 +316,5 @@ $buscar = Session::getPermiso('GNCOTBS');
         </script>
     </form>
 </div>
+
+<?php echo Functions::widgetClose(); ?>

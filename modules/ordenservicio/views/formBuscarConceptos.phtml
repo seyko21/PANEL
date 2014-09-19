@@ -1,0 +1,109 @@
+<?php
+/*
+ * Documento   : buscarEmpleado
+ * Creado      : 03-ago-2014
+ * Autor       : ..... .....
+ * Descripcion : 
+ */
+
+$buscar = Session::getPermiso('ORINSBS');
+
+?>
+<form id="<?php echo ORINS; ?>formBuscarConceptos" name="<?php echo ORINS; ?>formBuscarConceptos" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog" style="width: 70%">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close"  aria-hidden="true">
+                    &times;
+                </button>
+                <h4 class="modal-title"><?php echo ORINS_12; ?></h4>
+            </div>
+            <div class="modal-body smart-form">
+                <section>
+                    <div class="row">
+                        <label class="label col col-2"><?php echo ORINS_13; ?></label>
+                        <div class="col col-8">
+                            <label class="input"> 
+                                <input type="text" id="<?php echo ORINS; ?>txt_search" name="<?php echo ORINS; ?>txt_search" placeholder="<?php echo ORINS_14; ?>" onkeypress="simpleScript.triggerSearch(this,'#<?php echo ORINS; ?>gridConceptosFound',2);"></input>
+                            </label>
+                        </div>
+                    </div>
+                </section>
+                <div class="well" style="overflow: auto;height: 300px;overflow-x: hidden">
+                    <table id="<?php echo ORINS; ?>gridConceptosFound" class="table table-bordered table-striped table-condensed smart-form table-hover has-tickbox" style="width:100%">
+                        <thead>
+                            <th><?php echo LABEL_NRO?></th>
+                            <th style="width: 3%">
+                                <label class="checkbox">
+                                    <input type="checkbox" id="<?php echo ORINS; ?>chk_all" name="<?php echo ORINS; ?>chk_all" onclick="simpleScript.checkAll(this,'#<?php echo ORINS; ?>gridConceptosFound');"><i></i>
+                                </label>
+                            </th>
+                            <th class="center"><?php echo ORINS_13?></th>
+                            <th class="center"><?php echo ORINS_15?></th>
+                        </thead>
+                        <tbody>
+                            <?php 
+                                $f = 0;
+                                $datap = Obj::run()->instalacionController->getConceptos(); 
+                                $rows = sizeof($datap);
+                                foreach ($datap as $value):
+                                    $f++;
+                                    $prod = AesCtr::en($value['id_concepto']).'~'.$value['descripcion'].' '.$value['precio'];
+                            ?>
+                            <tr>
+                                <td><?php echo $f; ?></td>
+                                <td>
+                                    <label class="checkbox">
+                                        <input type="checkbox" id="<?php echo $f.ORINS; ?>chk_prod" name="<?php echo ORINS; ?>chk_prod[]" value="<?php echo $prod; ?>"><i></i>
+                                    </label>
+                                </td>
+                                <td><?php echo $value['descripcion']; ?></td>
+                                <td style="text-align: right"><?php echo number_format($value['precio'],2); ?></td>
+                            </tr>
+                            <?php endforeach; ?> 
+                            <?php 
+                            $diff = 0;
+                            if($rows < 7 && $rows > 0){
+                                $diff = 7 - $rows;
+                                echo Functions::createCell(array('row'=>($diff),'cols'=>4)); 
+                            }elseif($rows == 0){
+                            ?>  
+                            <tr>
+                                <td colspan="4">
+                                    <div class="alert alert-block alert-warning">
+                                        <h4 class="alert-heading"><?php echo LABEL_ADV?></h4>
+                                        <?php echo LABEL_ADVMSN?>
+                                    </div>
+                                </td>
+                            </tr>
+                            <?php
+                            }
+                            ?>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button id="<?php echo ORINS; ?>btnSubSearchPro" type="submit" class="hide">
+                    <i class="fa fa-ban"></i> <?php echo BTN_CLOSE; ?>
+                </button>
+                
+                <button id="<?php echo ORINS; ?>btnAddProd" type="button" class="btn txt-color-white bg-color-blueDark" onclick="instalacionScript.addConcepto();">
+                    <i class="fa fa-plus-circle"></i> <?php echo BTN_ADD; ?>
+                </button>
+                <button type="button" class="btn btn-default xClose">
+                    <i class="fa fa-ban"></i> <?php echo BTN_CLOSE; ?>
+                </button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</form>
+<!-- si no riene permiso se anula submit desde cualquier input -->
+<script>
+    simpleScript.noSubmit('#<?php echo ORINS; ?>formBuscarConceptos');
+    
+    simpleScript.removeAttr.click({
+        container: '#<?php echo ORINS; ?>formBuscarConceptos',
+        typeElement: 'button'
+    });
+</script>

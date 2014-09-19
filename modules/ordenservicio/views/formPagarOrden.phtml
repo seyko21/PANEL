@@ -36,6 +36,7 @@ $norden = Formulario::getParam('_norden');
                             $data = Obj::run()->seguimientoPagoController->getCronograma();
                             $key = 0;
                             foreach ($data as $value):
+                                if($value['estado'] == 'E' || $value['estado'] == 'P'){
                                 $key++;
                         ?>
                         <tr>
@@ -53,7 +54,7 @@ $norden = Formulario::getParam('_norden');
                             <td>
                                 <?php
                                 /*debe ser diferente de anulado y pagado para mostrar boton pagar*/
-                                if($value['estado'] != 'P' && $value['estado'] != 'A'):
+                                if($value['estado'] == 'E'):
                                 ?>
                                 
                                 <?php if($grabar["permiso"]):?>
@@ -76,7 +77,7 @@ $norden = Formulario::getParam('_norden');
                                 <?php endif; ?>
                             </td>
                         </tr>
-                        <?php endforeach;?>
+                            <?php } endforeach;?>
                     </tbody>
                 </table>
             </div>

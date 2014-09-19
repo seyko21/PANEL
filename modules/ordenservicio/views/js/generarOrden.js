@@ -90,9 +90,10 @@ var generarOrden_ = function(){
             bPaginate: true,
             iDisplayLength: 50,            
             aoColumns: [
-                {sTitle: "N°", sWidth: "1%",bSortable: false},
+                {sTitle: "N°", sWidth: "1%"},
                 {sTitle: "Monto", sWidth: "10%",sClass: "right",bSortable: false},
                 {sTitle: "Fecha Pago", sWidth: "20%",sClass: "center",bSortable: false},
+                {sTitle: "Estado", sWidth: "10%",sClass: "center",bSortable: false},
                 {sTitle: "Acciones", sWidth: "8%", sClass: "center", bSortable: false}
             ],
             aaSorting: [[0, "asc"]],
@@ -174,6 +175,7 @@ var generarOrden_ = function(){
                             content: mensajes.MSG_3,
                             callback: function(){
                                 generarOrden.getGridCuotas();
+                                setTimeout(function(){generarOrden.getGridGenerarOrden();},2000);
                             }
                         });
                     }else if(!isNaN(data.result) && parseInt(data.result) === 2){

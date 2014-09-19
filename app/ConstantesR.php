@@ -20,4 +20,5 @@ define("SEGCO","CEGCO");             /*tab modulo SEGUIMIENTOCOTIZACION*/
 define("GNOSE","JNOSE");             /*tab modulo GENERARORDEN*/
 define("SEGPA","KEGPA");             /*tab modulo SEGUIMIENTOPAGO*/
 define("CROPA","CROPA");             /*tab modulo CRONOGRAMA DE PAGOS*/
+define("ORINS","ORINS");             /*tab modulo INSTALACION*/
 ?>

@@ -96,7 +96,7 @@ class generarOrdenModel extends Model{
     }
     
     public function getGridCuotas(){
-        $aColumns       =   array("","2","4","6","11" ); //para la ordenacion y pintado en html
+        $aColumns       =   array("numero_cuota" ); //para la ordenacion y pintado en html
         /*
 	 * Ordenando, se verifica por que columna se ordenara
 	 */
