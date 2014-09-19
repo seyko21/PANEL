@@ -212,7 +212,7 @@ class generarOrdenModel extends Model{
         $query = " CALL sp_ordseOrdenServicioConsultas(:flag,:idOrden);";
         
         $parms = array(
-            ':flag'=> 3,
+            ':flag'=> 4,
             ':idOrden'=> $this->_idOrden
         );
        
