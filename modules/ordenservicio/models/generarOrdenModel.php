@@ -218,7 +218,19 @@ class generarOrdenModel extends Model{
        
         $data = $this->queryAll($query,$parms);
         return $data;
-    }    
+    } 
+    
+     public function getCronogramaContrato(){
+        $query = " CALL sp_ordseOrdenServicioConsultas(:flag,:idOrden);";
+        
+        $parms = array(
+            ':flag'=> 5,
+            ':idOrden'=> $this->_idOrden
+        );
+       
+        $data = $this->queryAll($query,$parms);
+        return $data;
+    }
     
 }
 

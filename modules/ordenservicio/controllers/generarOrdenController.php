@@ -249,7 +249,7 @@ class generarOrdenController extends Controller{
     
     private function getHtmlContrato(){
         $contrato = Obj::run()->generarOrdenModel->getContrato();        
-        $cronograma = Obj::run()->generarOrdenModel->getCronograma();
+        $cronograma = Obj::run()->generarOrdenModel->getCronogramaContrato();
         $caratula = Obj::run()->generarOrdenModel->getCaratula();
 
         $html = $contrato['cuerpo_contrato'];
