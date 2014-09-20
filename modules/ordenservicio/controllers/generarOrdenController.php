@@ -134,6 +134,7 @@ class generarOrdenController extends Controller{
             $sOutput .= '"iTotalDisplayRecords": '.$iTotal.', ';
             $sOutput .= '"aaData": [ ';     
             
+            $noDelete = 0;
             foreach ( $rResult as $aRow ){
                 
                 switch($aRow['estado']){
@@ -141,6 +142,7 @@ class generarOrdenController extends Controller{
                         $estado = '<span class=\"label label-default\" style=\"text-align:center;color:#fff\">'.CROPA_2.'</span>';
                         break;
                     case 'P':
+                        $noDelete = 1;
                         $estado = '<span class=\"label label-success\" style=\"text-align:center;color:#fff\">'.CROPA_3.'</span>';
                         break;
                     case 'R':
@@ -164,7 +166,7 @@ class generarOrdenController extends Controller{
                 $sOutput .= '"<div class=\"btn-group\">';
                  
                 if($eliminar['permiso']){
-                    if($aRow['estado'] == 'E'){ #solo se eliminan los que estan en estdo E
+                    if($aRow['estado'] == 'E' && $noDelete == 0){ #solo se eliminan los que estan en estdo E, si hay un solo pago q esta pagado se bloquea eliminar
                         $sOutput .= '<button type=\"button\" class=\"'.$eliminar['theme'].'\" title=\"'.$eliminar['accion'].'\" onclick=\"generarOrden.postDeleteCuota(this,\''.$encryptReg.'\')\">';
                         $sOutput .= '    <i class=\"'.$eliminar['icono'].'\"></i>';
                         $sOutput .= '</button>';
