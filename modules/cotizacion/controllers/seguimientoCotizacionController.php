@@ -61,10 +61,12 @@ class seguimientoCotizacionController extends Controller{
                 $estado = '';
                 switch($aRow['estado']) {
                     case "E":
+                        $et = 'label label-default';
                         $selE = 'selected=\"selected\"';
                         $estado = SEGCO_5;
                         break;
                     case "P":
+                        $et = 'label label-success';
                         $selP = 'selected=\"selected\"';
                         $estado = SEGCO_6;
                         break;
@@ -73,8 +75,14 @@ class seguimientoCotizacionController extends Controller{
                         $estado = SEGCO_7;
                         break;
                     case "R":
+                        $et = 'label label-warning';
                         $selR = 'selected=\"selected\"';
                         $estado = SEGCO_8;
+                        break;
+                    case "A":
+                        $et = 'label label-danger';
+                        $selR = '';
+                        $estado = SEGPA_9;
                         break;
                 }
                 if($aRow['estado'] == 'E'){
@@ -89,7 +97,7 @@ class seguimientoCotizacionController extends Controller{
                     $sOutput .= '</label>';
                     $sOutput .= ' </div>"';
                 }else{
-                    $sOutput .= '"<div class=\"label label-success\">'.$estado.'</div>"';
+                    $sOutput .= '"<div class=\"'.$et.'\">'.$estado.'</div>"';
                 }
                 
                 $sOutput .= ',"<div class=\"btn-group\">';                

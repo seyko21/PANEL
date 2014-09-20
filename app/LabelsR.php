@@ -176,6 +176,7 @@ define('SEGCO_7','Orden de servicio');
 define('SEGCO_8','Rechazado');
 define('SEGCO_9','Estado');
 define('SEGCO_10','Observación');
+define('SEGCO_11','Anulados');
 
 /*----------------------    ORDEN DE SERVICIO  ----------------------*/
 define('GNOSE_1','Ordenes de Servicio');
