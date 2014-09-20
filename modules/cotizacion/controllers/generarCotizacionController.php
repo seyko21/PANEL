@@ -344,15 +344,28 @@ class generarCotizacionController extends Controller{
                 <th style="width:12%">Total</th>
             </tr>';
         foreach ($data as $value) {
+            
+            if($value['incluyeigv'] == '1'){
+                $icl = 'Si';
+                $precio = number_format($value['precio_incigv'],3);
+                $produccion = number_format($value['produccion_incigv'],3);
+                $importe = number_format($value['importe_incigv'],3);
+            }else{
+                $icl = 'No';
+                $precio = number_format($value['precio'],2);
+                $produccion = number_format($value['costo_produccion'],2);
+                $importe = number_format($value['importe'],2);
+            }  
+
             $html .= '<tr>
                 <td style="text-align:center">'.$value['codigo'].'</td>
                 <td>'.$value['elemento'].'</td>
                 <td>'.$value['producto'].' - '.number_format($value['dimension_ancho'],1).' x '.number_format($value['dimension_alto'],1).' mts'.'</td>
                 <td style="text-align:center">'.number_format($value['dimesion_area'],2).' m<sup>2</sup></td>
                 <td style="text-align:center">'.number_format($value['cantidad_mes']).'</td>
-                <td style="text-align:right">S/.'.number_format($value['precio'],2).'</td>
-                <td style="text-align:right">S/.'.number_format($value['costo_produccion'],2).'</td>
-                <td style="text-align:right">S/.'.number_format($value['importe'],2).'</td>
+                <td style="text-align:right">S/.'.$precio.'</td>
+                <td style="text-align:right">S/.'.$produccion.'</td>
+                <td style="text-align:right">S/.'.$importe.'</td>
             </tr>';
         }    
         $html .= '<tr><td colspan="6"></td><td>Importe:</td><td style="text-align:right">S/.'.number_format($data[0]['subtotal'],2).'</td></tr>';
@@ -361,11 +374,7 @@ class generarCotizacionController extends Controller{
         
         $html .='</table>';
         
-        if($data[0]['incluyeigv'] == '1'){
-            $icl = 'Si';
-        }else{
-            $icl = 'No';
-        }        
+            
         $html .= '<h3 style="color:#F00">* Las Tarifas Son Netas y '.$icl.' Incluyen IGV.</h3>';
         $html .= '<h4 style="color:#000">Comentarios:</h4>';
         if ($data[0]['valor_produccion'] > 0 ):

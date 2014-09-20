@@ -73,8 +73,8 @@ define('LABEL_A40','Iluminado');
 define('LABEL_A41','Subir Imagen');
 define('LABEL_A42','Adjuntar Imagen');
 define('LABEL_A43','Medidas');
-define('LABEL_A44','Ciudad');
-define('LABEL_A45','Incl. Diseño');
+define('LABEL_A44','Precio');
+define('LABEL_A45','Producción');
 /*----------------------Permiso Municipal----------------------*/
 define('LABEL_A50','Permiso Municipal de Panel');
 define('LABEL_A51','Registro de Permiso Municipal');
