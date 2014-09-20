@@ -103,6 +103,7 @@ var terminarContrato_ = function(){
                         content: mensajes.MSG_3,
                         callback: function(){
                             simpleScript.reloadGrid("#"+diccionario.tabs.TERCO+"gridTerminarContrato");
+                            simpleScript.closeModal('#'+diccionario.tabs.T100+'formTerminarContrato');
                             _private.idOrden = 0;
                         }
                     });
