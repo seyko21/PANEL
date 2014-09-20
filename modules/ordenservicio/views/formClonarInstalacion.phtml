@@ -17,6 +17,7 @@ echo Functions::widgetOpen(array(
     'padding' => true,
     'wizard' => true
 ));
+
 ?>
 <div class="row">
     <form id="<?php echo ORINS; ?>formNewInstalacion" name="<?php echo ORINS; ?>formNewInstalacion" novalidate="novalidate">
@@ -96,6 +97,28 @@ echo Functions::widgetOpen(array(
                                     <th style="width:1%">...</th>
                                 </thead>
                                 <tbody>
+                                    <?php 
+                                        $data = Obj::run()->instalacionController->findInstalacionDetalle();
+                                        foreach ($data as $key => $value): 
+                                            $idConcepto = AesCtr::en($value['id_concepto']);
+                                    ?>
+                                    <tr id="<?php echo ORINS?>tr_<?php echo $value['id_concepto']?>">
+                                        <td>
+                                            <input type="hidden" id="<?php echo ORINS.$key?>hhddIdConcepto" name="<?php echo ORINS?>hhddIdConcepto[]" value="<?php echo $idConcepto?>">
+                                            <?php echo $value['concepto']?>
+                                        </td>
+                                        <td>
+                                            <label class="input"><input type="text" id="<?php echo ORINS.$key?>txt_cantidad" name="<?php echo ORINS?>txt_cantidad[]" value="1" style="text-align:right" data-index="<?php echo $key?>"></label>
+                                        </td>
+                                        <td class="right">
+                                            <label class="input"><input type="text" id="<?php echo ORINS.$key?>txt_precio" name="<?php echo ORINS?>txt_precio[]" value="<?php echo $value['precio']?>" data-value="<?php echo $value['precio']?>" data-index="<?php echo $key?>" style="text-align:right"></label>
+                                        </td>
+                                        <td class="right"><?php echo $value['costo_total']?></td>
+                                        <td>
+                                            <button type="button" class="btn btn-danger btn-xs" onclick="instalacionScript.removeCaratula('<?php echo $idConcepto?>');"><i class="fa fa-trash-o"></i></a>
+                                        </td>
+                                    </tr>    
+                                    <?php endforeach; ?>
                                 </tbody>
                             </table>
                         </div>
@@ -256,6 +279,8 @@ echo Functions::widgetOpen(array(
                 container: '#<?php echo ORINS; ?>formNewInstalacion',
                 typeElement: 'input'
             });
+            instalacionScript.calculoTotal();
+            instalacionScript.calculoTotalFilaUp();
 </script>
     </form>
 </div>

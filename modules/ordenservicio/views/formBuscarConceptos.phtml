@@ -38,6 +38,7 @@ $buscar = Session::getPermiso('ORINSBS');
                                     <input type="checkbox" id="<?php echo ORINS; ?>chk_all" name="<?php echo ORINS; ?>chk_all" onclick="simpleScript.checkAll(this,'#<?php echo ORINS; ?>gridConceptosFound');"><i></i>
                                 </label>
                             </th>
+                            <th class="center"><?php echo ORINS_16?></th>
                             <th class="center"><?php echo ORINS_13?></th>
                             <th class="center"><?php echo ORINS_15?></th>
                         </thead>
@@ -48,7 +49,7 @@ $buscar = Session::getPermiso('ORINSBS');
                                 $rows = sizeof($datap);
                                 foreach ($datap as $value):
                                     $f++;
-                                    $prod = AesCtr::en($value['id_concepto']).'~'.$value['descripcion'].' '.$value['precio'];
+                                    $prod = AesCtr::en($value['id_concepto']).'~'.$value['descripcion'].'~'.$value['precio'];
                             ?>
                             <tr>
                                 <td><?php echo $f; ?></td>
@@ -57,6 +58,7 @@ $buscar = Session::getPermiso('ORINSBS');
                                         <input type="checkbox" id="<?php echo $f.ORINS; ?>chk_prod" name="<?php echo ORINS; ?>chk_prod[]" value="<?php echo $prod; ?>"><i></i>
                                     </label>
                                 </td>
+                                <td><?php echo $value['tconcepto']; ?></td>
                                 <td><?php echo $value['descripcion']; ?></td>
                                 <td style="text-align: right"><?php echo number_format($value['precio'],2); ?></td>
                             </tr>
@@ -65,14 +67,14 @@ $buscar = Session::getPermiso('ORINSBS');
                             $diff = 0;
                             if($rows < 7 && $rows > 0){
                                 $diff = 7 - $rows;
-                                echo Functions::createCell(array('row'=>($diff),'cols'=>4)); 
+                                echo Functions::createCell(array('row'=>($diff),'cols'=>5)); 
                             }elseif($rows == 0){
                             ?>  
                             <tr>
-                                <td colspan="4">
+                                <td colspan="5">
                                     <div class="alert alert-block alert-warning">
                                         <h4 class="alert-heading"><?php echo LABEL_ADV?></h4>
-                                        <?php echo LABEL_ADVMSN?>
+                                        <?php echo LABEL_NOREG?>
                                     </div>
                                 </td>
                             </tr>

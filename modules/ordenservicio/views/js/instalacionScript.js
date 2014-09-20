@@ -14,7 +14,7 @@ var instalacionScript_ = function(){
             msn: mensajes.MSG_9,
             fnCallback: function(){
                 var collection = $('#'+diccionario.tabs.ORINS+'gridConceptosFound').find('tbody').find('tr'),
-                    chk,cad,idConcepto,descripcion,precio,tr='',total,allTr,duplicado;
+                    chk,cad,idConcepto,descripcion,precio,tr='',duplicado;
                  
                 /*recorriendo productos seleccionados*/
                 $.each(collection,function(index,value){
@@ -25,7 +25,6 @@ var instalacionScript_ = function(){
                         descripcion = cad[1];
                         precio = parseFloat(cad[2]).toFixed(2);
                         
-                        total = parseFloat(precio);
                         duplicado = 0;                        
                         
                         /*validanco duplicidad*/
@@ -44,50 +43,45 @@ var instalacionScript_ = function(){
                             /*guardo idConcepto decifrado en temporal para validar ducplicidad*/
                             _private.conceptoAdd.push(simpleAjax.stringGet(idConcepto));
 
-                            tr += '<tr id="'+diccionario.tabs.ORINS+'tr_'+idConcepto+'">\n\
+                            tr += '<tr id="'+diccionario.tabs.ORINS+'tr_'+simpleAjax.stringGet(idConcepto)+'">\n\
                                 <td>\n\
-                                    <input type="hidden" id="'+diccionario.tabs.ORINS+'hhddIdConcepto" name="'+diccionario.tabs.ORINS+'hhddIdConcepto[]" value="'+idConcepto+'">\n\
+                                    <input type="hidden" id="'+diccionario.tabs.ORINS+index+'hhddIdConcepto" name="'+diccionario.tabs.ORINS+'hhddIdConcepto[]" value="'+idConcepto+'">\n\
                                     '+descripcion+'\
                                 </td>\n\
-                                <td class="right">\n\
-                                    <label class="input"><input type="text" id="'+diccionario.tabs.ORINS+'txt_precio" name="'+diccionario.tabs.ORINS+'txt_precio[]" value="'+precio+'" data-value="'+precio+'" style="text-align:right"></label>\n\
+                                <td>\n\
+                                    <label class="input"><input type="text" id="'+diccionario.tabs.ORINS+index+'txt_cantidad" name="'+diccionario.tabs.ORINS+'txt_cantidad[]" value="1" style="text-align:right" data-index="'+index+'"></label>\n\
                                 </td>\n\
+                                <td class="right">\n\
+                                    <label class="input"><input type="text" id="'+diccionario.tabs.ORINS+index+'txt_precio" name="'+diccionario.tabs.ORINS+'txt_precio[]" value="'+precio+'" data-value="'+precio+'" data-index="'+index+'" style="text-align:right"></label>\n\
+                                </td>\n\
+                                <td class="right">'+precio+'</td>\n\
                                 <td>\n\
                                     <button type="button" class="btn btn-danger btn-xs" onclick="instalacionScript.removeCaratula(\''+idConcepto+'\');"><i class="fa fa-trash-o"></i></a>\n\
                                 </td>\n\
                             </tr>';
-                            
-                            _private.total += total;
                         }
                     }
                 });
                 
                 if(tr !== ''){
                     /*agrego los registros*/
-                    $('#'+diccionario.tabs.ORINS+'gridConceptos').find('tbody').html(tr);
-                    /*total de registros*/
-                    allTr = $('#'+diccionario.tabs.ORINS+'gridConceptos').find('tbody').find('tr').length;
-                    var diff = 0;
-                    if(allTr < 5){
-                        diff = 5 - allTr;
-                        tr = simpleScript.createCell({
-                            rows: diff,
-                            cols: 3
-                        });
-                        $('#'+diccionario.tabs.ORINS+'gridConceptos').find('tbody').append(tr);
-                    }
-                    /*cargando total*/
-                    $('#'+diccionario.tabs.ORINS+'txt_total').val(parseFloat(_private.total).toFixed(2));
-                    /*mensaje u cierro ventana*/
+                    $('#'+diccionario.tabs.ORINS+'gridConceptos').find('tbody').append(tr);
+                    
+                    /*mensaje de cierre ventana*/
                     simpleScript.notify.ok({
                         content: 'Conceptos se agregaron correctamente',
                         callback: function(){
                             simpleScript.closeModal('#'+diccionario.tabs.ORINS+'formBuscarConceptos');
                         }
                     });
-//                    generarCotizacionScript.calculaPrecio();
+                    instalacionScript.calculoTotal();
+                    instalacionScript.calculoTotalFilaUp();
                 }
             }
+        });
+        simpleScript.removeAttr.click({
+            container: '#'+diccionario.tabs.ORINS+'gridConceptos',
+            typeElement: 'button'
         });
     };
     
@@ -98,8 +92,75 @@ var instalacionScript_ = function(){
                 _private.conceptoAdd[x] = null;
             }
         }
-        $('#'+diccionario.tabs.ORINS+'tr_'+idConc).remove();
-//        generarCotizacionScript.calculoTotal();
+        $('#'+diccionario.tabs.ORINS+'tr_'+simpleAjax.stringGet(idConc)).remove();
+        instalacionScript.calculoTotal();
+    };
+    
+    this.publico.calculoTotal = function(){
+        var collection = $('#'+diccionario.tabs.ORINS+'gridConceptos').find('tbody').find('tr');
+        var t = 0;
+        $.each(collection,function(){
+            var tt = simpleScript.deleteComa($.trim($(this).find('td:eq(3)').text()));
+            if(tt.length > 0){
+                t += parseFloat(tt);
+            }
+        });
+        _private.total = t;
+        $('#'+diccionario.tabs.ORINS+'txt_total').val(_private.total.toFixed(2));
+    };
+    
+    this.publico.calculoTotalFilaUp = function(){
+        var collection = $('#'+diccionario.tabs.ORINS+'gridConceptos').find('tbody').find('tr');
+        
+        
+        
+        $.each(collection,function(){
+            var tthis = $(this);
+            
+            /*keyup para cantidad*/
+            $(this).find('td:eq(1)').find('input:text').keyup(function(){
+                if(isNaN($(this).val())){
+                    $(this).val(1);
+                }else{
+                    var cn = $(this).val();
+                    var index = $(this).attr('data-index');
+                    var precio = $('#'+diccionario.tabs.ORINS+index+'txt_precio').val();
+                    
+                    cn = cn.replace(",","");
+                  
+                    var total = parseFloat(precio) * parseFloat(cn);
+                    
+                    tthis.find('td:eq(3)').html(total.toFixed(2));
+                    instalacionScript.calculoTotal();
+                }
+            });
+            
+            /*keyup para precio*/
+            $(this).find('td:eq(2)').find('input:text').keyup(function(){
+                if(isNaN($(this).val())){
+                    var d = $(this).attr('data-value');
+                    $(this).val(d);
+                }else{
+                    var pr = $(this).val();
+                    var index = $(this).attr('data-index');
+                    var cantidad = $('#'+diccionario.tabs.ORINS+index+'txt_cantidad').val();
+                    
+                    pr = pr.replace(",","");
+                    
+                    var total = parseFloat(pr) * parseFloat(cantidad);
+                    
+                    tthis.find('td:eq(3)').html(total.toFixed(2));
+                    instalacionScript.calculoTotal();
+                }
+            });
+            
+        });
+        
+    };
+    
+    this.publico.resetArrayConcepto = function(){
+        _private.conceptoAdd = [];
+        _private.total = 0;
     };
     
     return this.publico;

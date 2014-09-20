@@ -10,10 +10,19 @@
 class instalacionModel extends Model{
 
     private $_flag;
-    private $_idInstalacion;
+    public $_idInstalacion;
     private $_xSearch;
     private $_usuario;
     
+    private $_fecha;
+    private $_idOrdenDetalle;
+    private $_montoTotal;
+    private $_observacion;
+    private $_idConcepto;
+    private $_cantidad;
+    private $_precio;
+
+
     /*para el grid*/
     public  $_iDisplayStart;
     private $_iDisplayLength;
@@ -29,7 +38,15 @@ class instalacionModel extends Model{
         $this->_flag        = Formulario::getParam("_flag");
         $this->_idInstalacion   = Aes::de(Formulario::getParam("_idInstalacion"));    /*se decifra*/
         $this->_usuario     = Session::get("sys_idUsuario");
-        $this->_xSearch     = $this->post(ORINS.'_term');
+        $this->_xSearch     = Formulario::getParam(ORINS."_term");
+        
+        $this->_fecha     = Functions::cambiaf_a_mysql(Formulario::getParam(ORINS."txt_fechains"));
+        $this->_idOrdenDetalle     = AesCtr::de(Formulario::getParam(ORINS."txt_idcaratula"));
+        $this->_montoTotal     = Functions::deleteComa(Formulario::getParam(ORINS."txt_total"));
+        $this->_observacion     = Formulario::getParam(ORINS."txt_obs");
+        $this->_idConcepto     = Formulario::getParam(ORINS."hhddIdConcepto"); #array
+        $this->_cantidad     = Formulario::getParam(ORINS."txt_cantidad");#array
+        $this->_precio     = Formulario::getParam(ORINS."txt_precio");#array
         
         $this->_iDisplayStart  = Formulario::getParam("iDisplayStart"); 
         $this->_iDisplayLength = Formulario::getParam("iDisplayLength"); 
@@ -38,8 +55,8 @@ class instalacionModel extends Model{
     }
     
     /*data para el grid: Instalacion*/
-    public function getInstalacion(){
-        $aColumns       =   array("","","REGISTRO_A_ORDENAR" ); //para la ordenacion y pintado en html
+    public function getInstalaciones(){
+        $aColumns       =   array("","ordenin_numero","orden_numero","fecha_instalacion","monto_total" ); //para la ordenacion y pintado en html
         /*
 	 * Ordenando, se verifica por que columna se ordenara
 	 */
@@ -51,9 +68,11 @@ class instalacionModel extends Model{
                 }
         }
         
-        $query = "call sp [NOMBRE_PROCEDIMIENTO_GRID] Grid(:iDisplayStart,:iDisplayLength,:sOrder,:sSearch);";
+        $query = "call sp_ordseIinstalacionGrid(:acceso,:usuario,:iDisplayStart,:iDisplayLength,:sOrder,:sSearch);";
         
         $parms = array(
+            ":acceso" => Session::get('sys_all'),
+            ":usuario" => $this->_usuario,
             ":iDisplayStart" => $this->_iDisplayStart,
             ":iDisplayLength" => $this->_iDisplayLength,
             ":sOrder" => $sOrder,
@@ -89,12 +108,15 @@ class instalacionModel extends Model{
     
     public function getConceptos(){
         $query = "
-         SELECT 
-                `id_concepto`,
-                `descripcion`,
-                `precio`
-        FROM `pub_concepto` WHERE `estado` = :estado
-        ORDER BY descripcion; ";
+        SELECT 
+                c.`id_concepto`,
+                c.`descripcion`,
+                c.`precio`,
+                tc.`descripcion` AS tconcepto
+        FROM `pub_concepto` c 
+        INNER JOIN `pub_tipoconcepto` tc ON tc.`id_tipo`=c.`id_tipo`
+        WHERE c.`estado` = :estado
+        ORDER BY 4,2; ";
         
         $parms = array(
             ':estado'=>'A'
@@ -103,19 +125,88 @@ class instalacionModel extends Model{
         return $data;
     }
 
-
-
-
     /*grabar nuevo registro: Instalacion*/
     public function newInstalacion(){
-        /*-------------------------LOGICA PARA EL INSERT------------------------*/
+        $query = "CALL sp_ordseInstalacionMantenimiento("
+                . ":flag,"
+                . ":idInstalacion,"
+                . ":fecha,"
+                . ":idOrdenDetalle,"
+                . ":montoTotal,"
+                . ":obs,"
+                . ":idConcepto,"
+                . ":cantidad,"
+                . ":precio,"
+                . ":usuario"
+            . "); ";
+        
+        $parms = array(
+            ':flag'=> 1,
+            ':idInstalacion'=>'',
+            ':fecha'=> $this->_fecha,
+            ':idOrdenDetalle'=> $this->_idOrdenDetalle,
+            ':montoTotal'=> $this->_montoTotal,
+            ':obs'=> $this->_observacion,
+            ':idConcepto'=> '',
+            ':cantidad'=> '',
+            ':precio'=> '',
+            ':usuario'=> $this->_usuario
+        );
+        $data = $this->queryOne($query,$parms);
+        
+        $idInstalacion = $data['idInstalacion'];
+        
+        if($data['result'] == '1'){
+            /*detalle de instalacion*/
+            foreach ($this->_idConcepto as $key=>$idConcepto) {
+                $parmsx = array(
+                    ':flag'=> 2,
+                    ':idInstalacion'=>$idInstalacion,
+                    ':fecha'=> '',
+                    ':idOrdenDetalle'=> '',
+                    ':montoTotal'=> '',
+                    ':obs'=> '',
+                    ':idConcepto'=> AesCtr::de($idConcepto),
+                    ':cantidad'=> Functions::deleteComa($this->_cantidad[$key]),
+                    ':precio'=> Functions::deleteComa($this->_precio[$key]),
+                    ':usuario'=> $this->_usuario
+                );
+                $this->execute($query,$parmsx);
+            }
+        }
+        $datax = array('result'=>1);
+        return $datax;
     }
     
-   
+    public function findInstalacionDetalle(){
+       $query = "
+        SELECT 
+                od.`id_concepto`,
+                c.`descripcion` AS concepto,
+                od.`cantidad`,
+                od.`costo_importe` AS precio,
+                od.`costo_total`
+        FROM `lgk_ordeninstalaciond`  od
+        INNER JOIN `pub_concepto` c ON c.`id_concepto`=od.`id_concepto`
+        WHERE od.`id_ordeninstalacion` = :idInstalacion; ";
+        
+        $parms = array(
+            ':idInstalacion'=>  $this->_idInstalacion
+        );
+        $data = $this->queryAll($query,$parms);
+        return $data; 
+    }
     
-    
-    
-   
+    public function getOrdenInstalacion(){
+        $query = "CALL sp_ordseIinstalacionConsultas(:flag,:idInstalacion);";
+        
+        $parms = array(
+            ':flag'=>  1,
+            ':idInstalacion'=>  $this->_idInstalacion
+        );
+        $data = $this->queryAll($query,$parms);
+        return $data; 
+    }
     
 }
 

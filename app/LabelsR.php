@@ -30,6 +30,7 @@ define('BTN_SEARCH','Buscar');
 define('LABEL_ANT','Anterior');
 define('LABEL_SIG','Siguiente');
 define('LABEL_NRO','Nro.');
+define('LABEL_NOREG','No se encontraron registros');
 
 /*FORMULARIO LOGIN*/
 define('L_TITLE','Ingresar');
@@ -243,4 +244,8 @@ define('ORINS_12','Buscar Conceptos');
 define('ORINS_13','Concepto');
 define('ORINS_14','Escriba concepto para buscar');
 define('ORINS_15','Precio');
+define('ORINS_16','Tipo de Concepto');
+define('ORINS_17','Cantidad');
+define('ORINS_18','Total');
+define('ORINS_19','Click para finalizar Orden de Instalación');
 ?>

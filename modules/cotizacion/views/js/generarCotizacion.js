@@ -70,7 +70,7 @@ var generarCotizacion_ = function(){
         setup_widgets_desktop();
     };
     
-    this.publico.getNuevoGenerarCotizacion = function(btn){
+    this.publico.getNuevoGenerarCotizacion = function(btn){   
         generarCotizacionScript.resetArrayProducto();
         simpleAjax.send({
             element: btn,
@@ -84,6 +84,9 @@ var generarCotizacion_ = function(){
     };
         
     this.publico.getNuevoGenerarCotizacion2 = function(element){
+        //cerrartab clon
+        simpleScript.closeTab(diccionario.tabs.T8+'clon');
+        
         generarCotizacionScript.resetArrayProducto();
         simpleScript.addTab({
             id : diccionario.tabs.T8+'new',

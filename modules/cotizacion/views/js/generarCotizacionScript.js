@@ -100,9 +100,14 @@ var generarCotizacionScript_ = function(){
                             simpleScript.closeModal('#'+diccionario.tabs.T8+'formBuscarProducto');
                         }
                     });
-                    generarCotizacionScript.calculaPrecio();                    
+                    generarCotizacionScript.calculaPrecio();   
+                    generarCotizacionScript.calculoTotal();
                 }
             }
+        });
+        simpleScript.removeAttr.click({
+            container: '#'+diccionario.tabs.T8+'gridProductos',
+            typeElement: 'button'
         });
     };
     
@@ -139,10 +144,10 @@ var generarCotizacionScript_ = function(){
                     var total = (parseFloat(precio) * parseFloat(meses)) + parseFloat(produccion);
                     
                     tthis.find('td:eq(6)').html(total.toFixed(2));
+                    generarCotizacionScript.calculoTotal();
                 }
             });
         });
-        generarCotizacionScript.calculoTotal();
     };
     
     this.publico.calculoTotal = function(){

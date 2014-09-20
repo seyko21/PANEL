@@ -215,5 +215,9 @@ class Functions{
         return $nombre;
     } 
     
+    public static function deleteComa($val){
+        return str_replace(',', '', $val);
+    }
+    
 }
 ?>

@@ -54,18 +54,18 @@ var instalacion_ = function(){
             bPaginate: true,
             iDisplayLength: 10,            
             aoColumns: [
-                {sTitle: "N°", sWidth: "1%",bSortable: false},
-                {sTitle: "Acciones", sWidth: "8%", sClass: "center", bSortable: false},
-                {sTitle: "CAMPO 1", sWidth: "25%"},
-                {sTitle: "CAMPO 2", sWidth: "25%", bSortable: false},
-                {sTitle: "Estado", sWidth: "10%", sClass: "center", bSortable: false}                
+                {sTitle: "<input type='checkbox' id='"+diccionario.tabs.ORINS+"chk_all' onclick='simpleScript.checkAll(this,\"#"+diccionario.tabs.ORINS+"gridInstalacion\");'>", sWidth: "1%", sClass: "center", bSortable: false},
+                {sTitle: "Código OI", sWidth: "10%", sClass: "center"},
+                {sTitle: "Código OS", sWidth: "10%", sClass: "center"},
+                {sTitle: "Fecha", sWidth: "10%", sClass: "center"},
+                {sTitle: "Monto", sWidth: "10%", sClass: "right"},
+                {sTitle: "Acciones", sWidth: "10%", sClass: "center", bSortable: false}                
             ],
-            aaSorting: [[2, "asc"]],
+            aaSorting: [[1, "desc"]],
             sScrollY: "300px",
             sAjaxSource: _private.config.modulo+"getGridInstalacion",
             fnDrawCallback: function() {
-                $("#"+diccionario.tabs.ORINS+"gridInstalacion_filter").find("input").attr("placeholder","Buscar por Instalacion").css("width","250px");
-                simpleScript.enterSearch("#"+diccionario.tabs.ORINS+"gridInstalacion",oTable);
+                $("#"+diccionario.tabs.ORINS+"gridInstalacion_filter").find("input").attr("placeholder","Buscar por OI o OS").css("width","250px");
                 /*para hacer evento invisible*/
                 simpleScript.removeAttr.click({
                     container: "#widget_"+diccionario.tabs.ORINS,
@@ -77,6 +77,9 @@ var instalacion_ = function(){
     };
     
     this.publico.getFormNewInstalacion = function(btn){
+        //cerrartab clon
+        simpleScript.closeTab(diccionario.tabs.ORINS+'clon');
+        
         simpleScript.addTab({
             id : diccionario.tabs.ORINS+'new',
             label: $(btn).attr("title"),
@@ -87,6 +90,7 @@ var instalacion_ = function(){
     };
     
     this.publico.getContenidoNew = function(){
+        instalacionScript.resetArrayConcepto();
         simpleAjax.send({
             dataType: "html",
             root: _private.config.modulo+'getFormNewInstalacion',
@@ -156,21 +160,37 @@ var instalacion_ = function(){
         });
     };
     
+    this.publico.getClonar = function(idCot){
+        //cerrartab nuevo
+        simpleScript.closeTab(diccionario.tabs.ORINS+'new');
+        
+        _private.idInstalacion = idCot;
+        
+        simpleScript.addTab({
+            id : diccionario.tabs.ORINS+'clon',
+            label: 'Clonar Orden de Instalación',
+            fnCallback: function(){
+                instalacion.getContClonar();
+                instalacionScript.resetArrayConcepto();
+            }
+        });
+    };
     
-    
-    
-    
-    
-    
-    
-    
-    
-    
+    this.publico.getContClonar = function(){
+        simpleAjax.send({
+            dataType: 'html',
+            root: _private.config.modulo+'getFormClonarInstalacion',
+            data: '&_idInstalacion='+_private.idInstalacion,
+            fnCallback: function(data){
+                $('#'+diccionario.tabs.ORINS+'clon_CONTAINER').html(data);
+                _private.idInstalacion = 0;
+            }
+        });
+    };
     
     this.publico.postNewInstalacion = function(){
         simpleAjax.send({
-            flag: 1,
-            element: "#"+diccionario.tabs.ORINS+"btnGrInstalacion",
+            element: "#"+diccionario.tabs.ORINS+"btnGinst",
             root: _private.config.modulo + "postNewInstalacion",
             form: "#"+diccionario.tabs.ORINS+"formNewInstalacion",
             clear: true,
@@ -179,47 +199,70 @@ var instalacion_ = function(){
                     simpleScript.notify.ok({
                         content: mensajes.MSG_3,
                         callback: function(){
-                            simpleScript.reloadGrid("#"+diccionario.tabs.ORINS+"gridInstalacion");
+                            simpleScript.closeTab(diccionario.tabs.ORINS+'new');
+                            simpleScript.closeTab(diccionario.tabs.ORINS+'clon');
+                            instalacion.getGridInstalacion();
                         }
-                    });
-                }else if(!isNaN(data.result) && parseInt(data.result) === 2){
-                    simpleScript.notify.error({
-                        content: "Instalacion ya existe."
                     });
                 }
             }
         });
     };
     
-    this.publico.postDeleteInstalacionAll = function(btn){
-        simpleScript.validaCheckBox({
-            id: "#"+diccionario.tabs.ORINS+"gridInstalacion",
-            msn: mensajes.MSG_9,
-            fnCallback: function(){
-                simpleScript.notify.confirm({
-                    content: mensajes.MSG_7,
-                    callbackSI: function(){
-                        simpleAjax.send({
-                            flag: 3, //si se usa SP usar flag, sino se puede eliminar esta linea
-                            element: btn,
-                            form: "#"+diccionario.tabs.ORINS+"formGridInstalacion",
-                            root: _private.config.modulo + "postDeleteInstalacionAll",
-                            fnCallback: function(data) {
-                                if(!isNaN(data.result) && parseInt(data.result) === 1){
-                                    simpleScript.notify.ok({
-                                        content: mensajes.MSG_8,
-                                        callback: function(){
-                                            instalacion.getGridInstalacion();
-                                        }
-                                    });
-                                }
-                            }
-                        });
-                    }
-                });
+    this.publico.postPDF = function(btn,id){
+        simpleAjax.send({
+            element: btn,
+            root: _private.config.modulo + 'postPDF',
+            data: '&_idInstalacion='+id,
+            fnCallback: function(data) {
+                if(parseInt(data.result) === 1){
+                    $('#'+diccionario.tabs.ORINS+'btnDowPDF').off('click');
+                    $('#'+diccionario.tabs.ORINS+'btnDowPDF').attr("onclick","window.open('public/files/"+data.archivo+"','_blank');generarCotizacion.deleteArchivo('"+data.archivo+"');");
+                    $('#'+diccionario.tabs.ORINS+'btnDowPDF').click();
+                }
             }
         });
     };
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+//    this.publico.postDeleteInstalacionAll = function(btn){
+//        simpleScript.validaCheckBox({
+//            id: "#"+diccionario.tabs.ORINS+"gridInstalacion",
+//            msn: mensajes.MSG_9,
+//            fnCallback: function(){
+//                simpleScript.notify.confirm({
+//                    content: mensajes.MSG_7,
+//                    callbackSI: function(){
+//                        simpleAjax.send({
+//                            flag: 3, //si se usa SP usar flag, sino se puede eliminar esta linea
+//                            element: btn,
+//                            form: "#"+diccionario.tabs.ORINS+"formGridInstalacion",
+//                            root: _private.config.modulo + "postDeleteInstalacionAll",
+//                            fnCallback: function(data) {
+//                                if(!isNaN(data.result) && parseInt(data.result) === 1){
+//                                    simpleScript.notify.ok({
+//                                        content: mensajes.MSG_8,
+//                                        callback: function(){
+//                                            instalacion.getGridInstalacion();
+//                                        }
+//                                    });
+//                                }
+//                            }
+//                        });
+//                    }
+//                });
+//            }
+//        });
+//    };
     
     return this.publico;
     
