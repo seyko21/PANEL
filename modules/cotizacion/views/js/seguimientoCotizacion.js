@@ -64,7 +64,8 @@ var seguimientoCotizacion_ = function(){
                 {sTitle: "Meses", sWidth: "10%",sClass: "center"},
                 {sTitle: "Fec. Venc.", sWidth: "10%", sClass: "center"},
                 {sTitle: "Total", sWidth: "10%", sClass: "right"},
-                {sTitle: "Estado", sWidth: "15%", sClass: "center", bSortable: false}              
+                {sTitle: "Estado", sWidth: "15%", sClass: "center", bSortable: false},
+                {sTitle: "Acciones", sWidth: "10%", sClass: "center", bSortable: false}
             ],
             aaSorting: [[0, "desc"]],
             sScrollY: "300px",
@@ -142,7 +143,20 @@ var seguimientoCotizacion_ = function(){
         $('#'+_private.combo).val(_private.actEstado);
         _private.newEstado = '';
     };
-            
+    
+    this.publico.postPDF = function(btn,idCot){
+        simpleAjax.send({
+            element: btn,
+            root: _private.config.modulo + 'postPDF',
+            data: '&_idCotizacion='+idCot,
+            fnCallback: function(data) {
+                if(parseInt(data.result) === 1){
+                    $('#'+diccionario.tabs.SEGCO+'btnDowPDF').attr("onclick","window.open('public/files/"+data.archivo+"','_blank');generarCotizacion.deleteArchivo('"+data.archivo+"');");
+                    $('#'+diccionario.tabs.SEGCO+'btnDowPDF').click();
+                }
+            }
+        });
+    };            
     return this.publico;
     
 };

@@ -11,6 +11,7 @@ class seguimientoCotizacionController extends Controller{
 
     public function __construct() {
         $this->loadModel("seguimientoCotizacion");
+        $this->loadController(array('modulo' => 'cotizacion', 'controller' => 'generarCotizacion'));  
     }
     
     public function index(){ 
@@ -18,8 +19,8 @@ class seguimientoCotizacionController extends Controller{
     }
     
     public function getGridSeguimientoCotizacion(){
-        $editar   = Session::getPermiso('SEGCOED');
-        $eliminar = Session::getPermiso('SEGCODE');
+
+        $exportarpdf   = Session::getPermiso('SEGCOEP');
         
         $sEcho          =   $this->post('sEcho');
         
@@ -45,8 +46,6 @@ class seguimientoCotizacionController extends Controller{
                 $p++;
                 /*antes de enviar id se encrypta*/
                 $encryptReg = Aes::en($aRow['id_cotizacion']);
-                
-                
                 
                 /*datos de manera manual*/
                 $sOutput .= '["'.$aRow['cotizacion_numero'].'","'.$aRow['nombrecompleto'].'","'.$aRow['fechacoti'].'","'.$aRow['meses_contrato'].'","'.Functions::cambiaf_a_normal($aRow['vencimiento']).'","'.  number_format($aRow['mtotal'],2).'", ';
@@ -88,10 +87,20 @@ class seguimientoCotizacionController extends Controller{
                     $sOutput .= '<option value=\"R\" '.$selR.'>'.SEGCO_8.'</option>';
                     $sOutput .= '</select><i></i>';
                     $sOutput .= '</label>';
-                    $sOutput .= ' </div>" ';
+                    $sOutput .= ' </div>"';
                 }else{
-                    $sOutput .= '"<div class=\"label label-success\">'.$estado.'</div>" ';
+                    $sOutput .= '"<div class=\"label label-success\">'.$estado.'</div>"';
                 }
+                
+                $sOutput .= ',"<div class=\"btn-group\">';                
+                if($exportarpdf['permiso']){
+                    $sOutput .= '<button type=\"button\" class=\"'.$exportarpdf['theme'].'\" title=\"'.$exportarpdf['accion'].'\" onclick=\"seguimientoCotizacion.postPDF(this,\''.$encryptReg.'\')\">';
+                    $sOutput .= '    <i class=\"'.$exportarpdf['icono'].'\"></i>';
+                    $sOutput .= '</button>';
+                }
+                $sOutput .= ' </div>" ';
+                                
+                
                 $sOutput = substr_replace( $sOutput, "", -1 );
                 $sOutput .= '],';
 
@@ -111,6 +120,10 @@ class seguimientoCotizacionController extends Controller{
         Obj::run()->View->render("formObservacion");
     }
     
+    public function postPDF($n=''){
+         $data = Obj::run()->generarCotizacionController->postPDF($n);
+         return $data;
+    }
     /*envia datos para grabar registro: SeguimientoCotizacion*/
     public function postObservacion(){
         $data = Obj::run()->seguimientoCotizacionModel->newSeguimientoCotizacion();
