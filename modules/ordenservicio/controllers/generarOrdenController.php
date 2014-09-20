@@ -136,12 +136,26 @@ class generarOrdenController extends Controller{
             
             foreach ( $rResult as $aRow ){
                 
+                switch($aRow['estado']){
+                    case 'E':
+                        $estado = '<span class=\"label label-default\" style=\"text-align:center;color:#fff\">'.CROPA_2.'</span>';
+                        break;
+                    case 'P':
+                        $estado = '<span class=\"label label-success\" style=\"text-align:center;color:#fff\">'.CROPA_3.'</span>';
+                        break;
+                    case 'R':
+                        $estado = '<span class=\"label label-warning\" style=\"text-align:center;color:#fff\">'.CROPA_4.'</span>';
+                        break;
+                    default:
+                        $estado = '';
+                        break;
+                }
                 
                 /*antes de enviar id se encrypta*/
                 $encryptReg = Aes::en($aRow['id_compromisopago']);
                 
                 /*registros a mostrar*/
-                $sOutput .= '["'.$aRow['numero_cuota'].'","'.number_format($aRow['monto_pago'], 2).'","'.$aRow['fechapago'].'",';
+                $sOutput .= '["'.$aRow['numero_cuota'].'","'.number_format($aRow['monto_pago'], 2).'","'.$aRow['fechapago'].'","'.$estado.'",';
                 
                 /*
                  * configurando botones (add/edit/delete etc)
