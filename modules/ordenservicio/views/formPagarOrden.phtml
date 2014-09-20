@@ -28,6 +28,7 @@ $norden = Formulario::getParam('_norden');
                             <th class="center"><?php echo SEGPA_3 ?></th>
                             <th class="center" style="width: 25%"><?php echo SEGPA_4 ?></th>
                             <th class="center"><?php echo SEGPA_5 ?></th>
+                            <th class="center"><?php echo CROPA_8 ?></th>
                             <th class="center" style="width: 15%">...</th>
                         </tr>
                     </thead>
@@ -51,6 +52,7 @@ $norden = Formulario::getParam('_norden');
                                 <div id="<?php echo $key.SEGPA; ?>dfecha"></div>
                                 <?php endif; ?>
                             </td>
+                            <td class="right"><?php echo number_format($value['mora'],2) ?></td>
                             <td>
                                 <?php
                                 /*debe ser diferente de anulado y pagado para mostrar boton pagar*/
