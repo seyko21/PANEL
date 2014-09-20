@@ -201,6 +201,7 @@ var generarOrden_ = function(){
                     simpleScript.notify.ok({
                         content: mensajes.MSG_3,
                         callback: function(){
+                            simpleScript.reloadGrid('#'+diccionario.tabs.GNOSE+'gridGenerarOrden');
                             simpleScript.closeModal('#'+diccionario.tabs.GNOSE+'formEditOrden');
                         }
                     });
