@@ -1,7 +1,7 @@
 <?php   
-$grabar = Session::getPermiso('GNCOTGR');
+$nuevo = Session::getPermiso('GNCOTNEW');
 $anular = Session::getPermiso('GNCOTAN');
-        
+
 echo Functions::widgetOpen(array(
         'id'=>T8,
         'title'=>LABEL_GNC1
@@ -14,19 +14,14 @@ echo Functions::widgetOpen(array(
     <div class="dataTables_wrapper form-inline" role="grid">
         <div class="dt-top-row">
             <div class="DTTT btn-group">
-                <?php if($grabar['permiso']): ?>
-                <button id="<?php echo T8; ?>btnNew" type="button" onclick="generarCotizacion.getNuevoGenerarCotizacion(this);" class="btn txt-color-white bg-color-blueDark hide">
-                    <i class="fa fa-file-o"></i> <?php echo BTN_NUEVO; ?>
-                </button>
-                <?php endif; ?>
-                <?php if($grabar['permiso']): ?>
+                <?php if($nuevo['permiso']): ?>
                 <button id="<?php echo T8; ?>btnNew" type="button" onclick="generarCotizacion.getNuevoGenerarCotizacion2(this);" class="btn txt-color-white bg-color-blueDark">
-                    <i class="fa fa-file-o"></i> <?php echo BTN_NUEVO; ?>
+                     <i class="<?php echo $nuevo['icono'];?>"></i> <?php echo BTN_NUEVO; ?>
                 </button>
                 <?php endif; ?>
                 <?php if($anular['permiso']): ?>
-                <button id="<?php echo T8; ?>btnNew" type="button" onclick="generarCotizacion.postAnularCotizacionAll(this);" class="btn txt-color-white bg-color-blueDark">
-                    <i class="fa fa-ban"></i> <?php echo $anular['accion']; ?>
+                <button id="<?php echo T8; ?>btnAnular" type="button" onclick="generarCotizacion.postAnularCotizacionAll(this);" class="btn txt-color-white bg-color-blueDark">
+                  <i class="<?php echo $anular['icono'];?>"></i> <?php echo $anular["accion"]; ?>
                 </button>
                 <?php endif; ?>
             </div>

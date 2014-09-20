@@ -10,6 +10,7 @@ class generarCotizacionController extends Controller{
 
     public function __construct() {
         $this->loadModel('generarCotizacion');
+        $this->loadController(array('modulo' => 'usuarios', 'controller' => 'configurarUsuarios'));    
     }
     
     public function index(){ 
@@ -179,38 +180,52 @@ class generarCotizacionController extends Controller{
     public function postEmail(){ 
         $this->postPDF('N');
         Obj::run()->generarCotizacionModel->postTiempoCotizacion();
-                       
+        $data = Obj::run()->generarCotizacionModel->getCotizacion();
+        $data0 = Obj::run()->configurarUsuariosController->getParametros('EMAIL');        
+        $data1 = Obj::run()->configurarUsuariosController->getParametros('EMCO');        
+        $emailEmpresa = $data0['valor'];
+        $empresa = $data1['valor'];
+        
         $emailCliente = $data[0]['email'];
         $cliente = $data[0]['nombrecompleto'];
         $emailUser = $data[0]['mail_user'];
-        
+        $idCotizacion = $data[0]['id_cotizacion'];
+        $vendedor = $data[0]['vendedor'];
+        $numCotizacion = $data[0]['cotizacion_numero'];
+        $numVendedor = $data[0]['telefono_vendedor'];
+        $archivo = 'cotizacion_'.$idCotizacion.'.pdf';
         //Html de Cotizacion:
-        $body = $this->getHtmlCotizacion();        
+         $body = '
+            <h3>Estimado: ' . $cliente . '</h3>
+            <p>Muchas gracias por confiar en <b>SEVEND</b>, le enviamos nuestra cotizacion acerca del Servicio.
+            <br/>Esperamos su pronta respuesta.</p>
+            <hr>
+            <p>Atte:<br/>
+            <b>'.$vendedor.'</b><br/>
+            <i>Representante Corporativo</i><br/>
+            Cel#: '.$numVendedor.'<br/>
+            <a href="http://.sevend.pe">www.sevend.pe</a></p>';
+         
+        //$body = $this->getHtmlCotizacion();        
         
         $mail             = new PHPMailer(); // defaults to using php "mail()"
  
-//        $body             = file_get_contents('contents.html');
-//        $body             = eregi_replace("[\]",'',$html);
-
-        $mail->AddReplyTo($emailUser,"VENDEDOR");
-        //$mail->SetFrom('correoempresa@sevend.pe', 'SEVEND');
-        $mail->AddReplyTo("correoempresa@sevend.pe","SEVEND");
+        $mail->SetFrom($emailUser, $vendedor);
+        
         $mail->AddAddress($emailCliente, $cliente);
-        $mail->AddAddress($emailUser, $emailUser);
-        $mail->Subject    = "Cotizacion";
-        $mail->AltBody    = "To view the message, please use an HTML compatible email viewer!"; // optional, comment out and test
+        $mail->AddBCC($emailEmpresa, $empresa);
+        $mail->Subject    = "Cotizacion Nro: ".$numCotizacion;
         
         $mail->MsgHTML($body);
-        $mail->AddAttachment('public/files/cotizacion.pdf');      // attachment
+        $mail->AddAttachment('public/files/'.$archivo);      // attachment
         
         $data = array('result'=>2);
-        /*validar si dominio de correo existe*/
         if($mail->Send()) {
-            $data = array('result'=>1);
+            $data = array('result'=>1,'archivo'=>$archivo);
         } else {
             $data = array('result'=>2);
         }
-        
+               
         echo json_encode($data);
     }
     

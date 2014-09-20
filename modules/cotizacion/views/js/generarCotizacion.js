@@ -293,6 +293,7 @@ var generarCotizacion_ = function(){
                     simpleScript.notify.ok({
                         content: 'Cotización se envió correctamente.'
                     });
+                    generarCotizacion.deleteArchivo(data.archivo);
                 }
                 if(!isNaN(data.result) && parseInt(data.result) === 2){
                     simpleScript.notify.error({

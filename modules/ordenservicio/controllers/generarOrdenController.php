@@ -76,13 +76,13 @@ class generarOrdenController extends Controller{
                     $sOutput .= '    <i class=\"'.$generar['icono'].'\"></i>';
                     $sOutput .= '</button>';
                 }
-                if($email['permiso']){
-                    $sOutput .= '<button type=\"button\" class=\"'.$email['theme'].'\" title=\"'.GNOSE_16.'\" onclick=\"registrarVendedor.postAccesoVendedor(this,\'' . $idUser . '\',\'' . $aRow['nombrecompleto'] . '\',\'' . $aRow['email'] . '\')\">';
-                    $sOutput .= '    <i class=\"'.$email['icono'].'\"></i>';
-                    $sOutput .= '</button>';
-                }
                 /*solo si tiene compromisos se podra exportar contrato*/
                 if($aRow['compromisos'] && $aRow['id_contrato'] != '0'){
+                    if($email['permiso']){
+                       $sOutput .= '<button type=\"button\" class=\"'.$email['theme'].'\" title=\"'.GNOSE_16.'\" onclick=\"registrarVendedor.postAccesoVendedor(this,\'' . $idUser . '\',\'' . $aRow['nombrecompleto'] . '\',\'' . $aRow['email'] . '\')\">';
+                        $sOutput .= '    <i class=\"'.$email['icono'].'\"></i>';
+                        $sOutput .= '</button>';
+                    }
                     if($pdf['permiso']){
                         $sOutput .= '<button type=\"button\" class=\"'.$pdf['theme'].'\" title=\"'.GNOSE_17.'\" onclick=\"generarOrden.postExportarContratoPDF(this,\'' . $encryptReg . '\')\">';
                         $sOutput .= '    <i class=\"'.$pdf['icono'].'\"></i>';

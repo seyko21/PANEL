@@ -171,7 +171,7 @@ class generarCotizacionModel extends Model{
     
     public function getCotizacion(){
         $query = "
-        SELECT 
+        SELECT  co.id_cotizacion,
                 c.`codigo`,
                 CONCAT(ct.`ubicacion`,' - ',c.`descripcion`)AS producto,
                 cd.`precio`,
@@ -187,6 +187,12 @@ class generarCotizacionModel extends Model{
                 ct.`dimesion_area`,
                 tp.descripcion AS elemento,
                 (SELECT usuario FROM mae_usuario WHERE id_usuario=co.`usuario_creacion`)AS mail_user,
+                (SELECT pp.nombrecompleto FROM mae_usuario uu
+			INNER JOIN mae_persona pp ON pp.persona = uu.persona
+                WHERE id_usuario=co.`usuario_creacion`)AS vendedor,
+                (SELECT pp.telefono FROM mae_usuario uu
+			INNER JOIN mae_persona pp ON pp.persona = uu.persona
+                WHERE id_usuario=co.`usuario_creacion`)AS telefono_vendedor,
                 co.nombre_campania,
                 (select pp.nombrecompleto from `mae_persona` pp where pp.id_persona = p.`id_personapadre` ) as razonsocial,
                 (select pp.numerodocumento from `mae_persona` pp where pp.id_persona = p.`id_personapadre` ) as ruccliente,

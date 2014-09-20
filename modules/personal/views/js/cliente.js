@@ -286,9 +286,8 @@ var cliente_ = function(){
                 if(!isNaN(data.result) && parseInt(data.result) === 1){
                     simpleScript.notify.ok({
                         content: mensajes.MSG_3,
-                        callback: function(){
-                            _private.idCliente = 0;
-                            cliente.getGridCliente();
+                        callback: function(){                           
+                            simpleScript.reloadGrid('#'+diccionario.tabs.REGCL+'gridCliente');
                             simpleScript.closeModal('#'+diccionario.tabs.REGCL+'formEditCliente');
                         }
                     });
@@ -314,7 +313,7 @@ var cliente_ = function(){
                     simpleScript.notify.ok({
                         content: mensajes.MSG_3,
                         callback: function(){
-                            cliente.getGridRepresentantes(_private.idAncestro,_private.nameCliente);
+                            simpleScript.reloadGrid('#'+diccionario.tabs.REGCL+'gridRepresentantes');
                             simpleScript.closeModal('#'+diccionario.tabs.REGCL+'formEditarRepresentante');
                         }
                     });
