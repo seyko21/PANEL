@@ -61,7 +61,8 @@ var cronogramaPago_ = function(){
                 {sTitle: "Cliente", sWidth: "25%"},
                 {sTitle: "Estado", sWidth: "10%"},
                 {sTitle: "Fecha", sWidth: "10%"},
-                {sTitle: "Monto", sWidth: "10%", sClass: "right", bSortable: false},
+                {sTitle: "Mora", sWidth: "10%", sClass: "right"},
+                {sTitle: "Monto", sWidth: "10%", sClass: "right"},
                 {sTitle: "Acciones", sWidth: "8%", sClass: "center", bSortable: false}            
             ],
             aaSorting: [[1, "desc"]],
@@ -112,8 +113,9 @@ var cronogramaPago_ = function(){
         });
     };
     
-    this.publico.getFormReprogramar = function(btn,idc,cuota){
+    this.publico.getFormReprogramar = function(btn,idc,cuota,fila){
         _private.idCompromiso = idc;
+        _private.fila = fila;
         
         simpleAjax.send({
             element: btn,
@@ -158,6 +160,7 @@ var cronogramaPago_ = function(){
                             $(_private.boton).addClass('disabled');
                             _private.idCompromiso = 0;
                             _private.boton = 0;
+                            _private.fila = 0;
                         }
                     });
                 }
@@ -166,6 +169,27 @@ var cronogramaPago_ = function(){
     };
     
     this.publico.postReprogramar = function(){
+        
+        var fechaPrev = $.trim($('#tr_cuotas'+_private.fila+diccionario.tabs.CROPA).find('td:eq(2)').html());
+        var fechaAct  = $('#CROPAtxt_fechare').val();
+        var fechaNext = $.trim($('#tr_cuotas'+(parseInt(_private.fila) + 1)+diccionario.tabs.CROPA).find('td:eq(2)').html());
+        
+        var diffAntes   = simpleScript.dateDiff(fechaPrev,fechaAct);
+        var diffDespues = simpleScript.dateDiff(fechaNext,fechaAct);
+        
+        if(diffAntes <= 0){/*no pasa, fecha reprogramada es menor que fecha anterior*/
+            simpleScript.notify.warning({
+                content: 'Fecha a reprogramar es menor o igual que fecha actual de cuota'
+            });
+            return false;
+        }
+        if(diffDespues >= 0){/*no pasa, fecha reprogramada es mayor que fecha siguiente*/
+            simpleScript.notify.warning({
+                content: 'Fecha a reprogramar es mayor o igual que fecha siguiente'
+            });
+            return false;
+        }
+
         simpleAjax.send({
             element: "#"+diccionario.tabs.CROPA+"btnGrep",
             root: _private.config.modulo + "postReprogramar",
@@ -179,6 +203,7 @@ var cronogramaPago_ = function(){
                             cronogramaPago.getTableCronograma();
                             simpleScript.closeModal('#'+diccionario.tabs.CROPA+'formReprogramar');
                             _private.idCompromiso = 0;
+                            _private.fila = 0;
                         }
                     });
                 }

@@ -229,6 +229,8 @@ define('CROPA_4','Reprogramado');
 define('CROPA_5','Reprogramar Cuota Nro.: ');
 define('CROPA_6','Fecha');
 define('CROPA_7','Ingrese nueva fecha de cuota');
+define('CROPA_8','Mora');
+define('CROPA_9','Ingresar la mora de cuota');
 
 /*---------------------- ORDEN DE INSTALACION ----------------*/
 define('ORINS_1','Orden de Instalación');
