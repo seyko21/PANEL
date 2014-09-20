@@ -27,7 +27,7 @@ echo Functions::widgetOpen(array(
                 <?php endif; ?>
                 <!-- verificar permisos -->
                 <?php if($eliminar["permiso"]): ?>
-                <button id="<?php echo ORINS; ?>btnDeleteInstalacion" type="button" onclick="instalacion.postDeleteInstalacionAll(this);" class="<?php echo $eliminar["theme"]; ?>">
+                <button id="<?php echo ORINS; ?>btnDeleteInstalacion" type="button" onclick="instalacion.postAnularInstalacionAll(this);" class="<?php echo $eliminar["theme"]; ?>">
                     <i class="<?php echo $eliminar["icono"]; ?>"></i> <?php echo $eliminar["accion"]; ?>
                 </button>
                 <?php endif; ?>

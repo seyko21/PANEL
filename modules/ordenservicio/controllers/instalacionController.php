@@ -42,21 +42,20 @@ class instalacionController extends Controller{
             $sOutput .= '"aaData": [ ';     
             
             foreach ( $rResult as $key=>$aRow ){
-                
-                /*campo que maneja los estados, para el ejemplo aqui es ACTIVO, coloca tu campo*/
-//                if($aRow['activo'] == 1){
-//                    $estado = '<span class=\"label label-success\">'.LABEL_ACT.'</span>';
-//                }else{
-//                    $estado = '<span class=\"label label-danger\">'.LABEL_DES.'</span>';
-//                }
-                
                 /*antes de enviar id se encrypta*/
                 $encryptReg = Aes::en($aRow['id_ordeninstalacion']);
                 
-                $chk = '<input id=\"c_'.(++$key).'\" type=\"checkbox\" name=\"'.ORINS.'chk_delete[]\" value=\"'.$encryptReg.'\"  >'; 
+                /*campo que maneja los estados, para el ejemplo aqui es ACTIVO, coloca tu campo*/
+                if($aRow['estado'] == 'E'){
+                    $chk = '<input id=\"c_'.(++$key).'\" type=\"checkbox\" name=\"'.ORINS.'chk_delete[]\" value=\"'.$encryptReg.'\"  >'; 
+                    $estado = '<span class=\"label label-success\">'.SEGCO_5.'</span>';
+                }else{
+                    $chk = '<input id=\"c_'.(++$key).'\" type=\"checkbox\" disabled=\"disabled\"  >'; 
+                    $estado = '<span class=\"label label-danger\">'.SEGPA_9.'</span>';
+                }
                 
                 /*registros a mostrar*/
-                $sOutput .= '["'.$chk.'",'.$aRow['ordenin_numero'].',"'.$aRow['orden_numero'].'","'.$aRow['fecha_instalacion'].'","'.number_format($aRow['monto_total'],2).'", ';
+                $sOutput .= '["'.$chk.'",'.$aRow['ordenin_numero'].',"'.$aRow['orden_numero'].'","'.$aRow['codigo'].'","'.$aRow['ubicacion'].' - '.$aRow['descripcion'].'","'.$aRow['fecha_instalacion'].'","'.number_format($aRow['monto_total'],2).'","'.$estado.'", ';
                 
                 /*
                  * configurando botones (add/edit/delete etc)
@@ -246,12 +245,12 @@ class instalacionController extends Controller{
     }
     
     
-    /*envia datos para eliminar registros: Instalacion*/
-//    public function postDeleteInstalacionAll(){
-//        $data = Obj::run()->instalacionModel->deleteInstalacionAll();
-//        
-//        echo json_encode($data);
-//    }
+    /*envia datos para anular registros: Instalacion*/
+    public function postAnularInstalacionAll(){
+        $data = Obj::run()->instalacionModel->anularInstalacionAll();
+        
+        echo json_encode($data);
+    }
     
 }
 

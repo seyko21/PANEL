@@ -26,3 +26,4 @@ var diccionario = {
         SEGPA: '<?php echo SEGPA; ?>',
         CROPA: '<?php echo CROPA; ?>',
         ORINS: '<?php echo ORINS; ?>',
+        TERCO: '<?php echo TERCO; ?>',

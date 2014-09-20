@@ -73,7 +73,7 @@ abstract class Controller extends Obj{
     /*retorna parametros*/
     protected function post($parametro){
         if(isset($_POST[$parametro]) && !empty($_POST[$parametro])){
-            return $_POST[$parametro];
+            return htmlspecialchars(trim($_POST[$parametro]),ENT_QUOTES);
         }else{
             return false;
         }

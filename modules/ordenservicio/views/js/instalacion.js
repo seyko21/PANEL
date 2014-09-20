@@ -57,8 +57,11 @@ var instalacion_ = function(){
                 {sTitle: "<input type='checkbox' id='"+diccionario.tabs.ORINS+"chk_all' onclick='simpleScript.checkAll(this,\"#"+diccionario.tabs.ORINS+"gridInstalacion\");'>", sWidth: "1%", sClass: "center", bSortable: false},
                 {sTitle: "Código OI", sWidth: "10%", sClass: "center"},
                 {sTitle: "Código OS", sWidth: "10%", sClass: "center"},
+                {sTitle: "Código Prod.", sWidth: "10%", sClass: "center"},
+                {sTitle: "Producto", sWidth: "25%"},
                 {sTitle: "Fecha", sWidth: "10%", sClass: "center"},
                 {sTitle: "Monto", sWidth: "10%", sClass: "right"},
+                {sTitle: "Estado", sWidth: "8%", sClass: "center", bSortable: false},    
                 {sTitle: "Acciones", sWidth: "10%", sClass: "center", bSortable: false}                
             ],
             aaSorting: [[1, "desc"]],
@@ -224,45 +227,35 @@ var instalacion_ = function(){
         });
     };
     
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-//    this.publico.postDeleteInstalacionAll = function(btn){
-//        simpleScript.validaCheckBox({
-//            id: "#"+diccionario.tabs.ORINS+"gridInstalacion",
-//            msn: mensajes.MSG_9,
-//            fnCallback: function(){
-//                simpleScript.notify.confirm({
-//                    content: mensajes.MSG_7,
-//                    callbackSI: function(){
-//                        simpleAjax.send({
-//                            flag: 3, //si se usa SP usar flag, sino se puede eliminar esta linea
-//                            element: btn,
-//                            form: "#"+diccionario.tabs.ORINS+"formGridInstalacion",
-//                            root: _private.config.modulo + "postDeleteInstalacionAll",
-//                            fnCallback: function(data) {
-//                                if(!isNaN(data.result) && parseInt(data.result) === 1){
-//                                    simpleScript.notify.ok({
-//                                        content: mensajes.MSG_8,
-//                                        callback: function(){
-//                                            instalacion.getGridInstalacion();
-//                                        }
-//                                    });
-//                                }
-//                            }
-//                        });
-//                    }
-//                });
-//            }
-//        });
-//    };
+    this.publico.postAnularInstalacionAll = function(btn){
+        simpleScript.validaCheckBox({
+            id: "#"+diccionario.tabs.ORINS+"gridInstalacion",
+            msn: mensajes.MSG_9,
+            fnCallback: function(){
+                simpleScript.notify.confirm({
+                    content: mensajes.MSG_16,
+                    callbackSI: function(){
+                        simpleAjax.send({
+                            flag: 3, //si se usa SP usar flag, sino se puede eliminar esta linea
+                            element: btn,
+                            form: "#"+diccionario.tabs.ORINS+"formGridInstalacion",
+                            root: _private.config.modulo + "postAnularInstalacionAll",
+                            fnCallback: function(data) {
+                                if(!isNaN(data.result) && parseInt(data.result) === 1){
+                                    simpleScript.notify.ok({
+                                        content: mensajes.MSG_8,
+                                        callback: function(){
+                                            instalacion.getGridInstalacion();
+                                        }
+                                    });
+                                }
+                            }
+                        });
+                    }
+                });
+            }
+        });
+    };
     
     return this.publico;
     

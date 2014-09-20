@@ -13,6 +13,7 @@ class instalacionModel extends Model{
     public $_idInstalacion;
     private $_xSearch;
     private $_usuario;
+    private $_chkdel;
     
     private $_fecha;
     private $_idOrdenDetalle;
@@ -39,7 +40,7 @@ class instalacionModel extends Model{
         $this->_idInstalacion   = Aes::de(Formulario::getParam("_idInstalacion"));    /*se decifra*/
         $this->_usuario     = Session::get("sys_idUsuario");
         $this->_xSearch     = Formulario::getParam(ORINS."_term");
-        
+        $this->_chkdel  = $this->post(ORINS.'chk_delete');
         $this->_fecha     = Functions::cambiaf_a_mysql(Formulario::getParam(ORINS."txt_fechains"));
         $this->_idOrdenDetalle     = AesCtr::de(Formulario::getParam(ORINS."txt_idcaratula"));
         $this->_montoTotal     = Functions::deleteComa(Formulario::getParam(ORINS."txt_total"));
@@ -56,7 +57,7 @@ class instalacionModel extends Model{
     
     /*data para el grid: Instalacion*/
     public function getInstalaciones(){
-        $aColumns       =   array("","ordenin_numero","orden_numero","fecha_instalacion","monto_total" ); //para la ordenacion y pintado en html
+        $aColumns       =   array("","ordenin_numero","orden_numero","codigo","ubicacion","fecha_instalacion","monto_total" ); //para la ordenacion y pintado en html
         /*
 	 * Ordenando, se verifica por que columna se ordenara
 	 */
@@ -206,6 +207,39 @@ class instalacionModel extends Model{
         );
         $data = $this->queryAll($query,$parms);
         return $data; 
+    }
+    
+    public function anularInstalacionAll(){
+        $query = "CALL sp_ordseInstalacionMantenimiento("
+                . ":flag,"
+                . ":idInstalacion,"
+                . ":fecha,"
+                . ":idOrdenDetalle,"
+                . ":montoTotal,"
+                . ":obs,"
+                . ":idConcepto,"
+                . ":cantidad,"
+                . ":precio,"
+                . ":usuario"
+            . "); ";
+        
+        foreach ($this->_chkdel as $value) {
+            $parms = array(
+                ':flag'=> 3,
+                ':idInstalacion'=>Aes::de($value),
+                ':fecha'=> '',
+                ':idOrdenDetalle'=> '',
+                ':montoTotal'=> '',
+                ':obs'=> '',
+                ':idConcepto'=> '',
+                ':cantidad'=> '',
+                ':precio'=> '',
+                ':usuario'=> $this->_usuario
+            );
+            $this->execute($query,$parms);
+        }
+        $data = array('result'=>1);
+        return $data;
     }
     
 }
