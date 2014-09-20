@@ -11,7 +11,7 @@ var cliente_ = function(){
     var _private = {};
     
     _private.idCliente = 0;
-    
+    _private.idRepresentante = 0; 
     _private.idAncestro = 0;
         
     _private.nameCliente = '';
@@ -196,13 +196,13 @@ var cliente_ = function(){
     };
     
     this.publico.getEditarRepresentante = function(btn,id){
-        _private.idAncestro = id;
+        _private.idRepresentante = id;
        
         simpleAjax.send({
             element: btn,
             dataType: 'html',
             gifProcess: true,
-            data: '&_idPersona='+_private.idAncestro,
+            data: '&_idPersona='+_private.idRepresentante,
             root: _private.config.modulo + 'getEditarRepresentante',
             fnCallback: function(data){
                 $('#cont-modal').append(data);
@@ -254,7 +254,7 @@ var cliente_ = function(){
             element: '#'+diccionario.tabs.REGCL+'btnGrRep',
             root: _private.config.modulo + 'postNewRepresentante',
             form: '#'+diccionario.tabs.REGCL+'formNewRepresentante',
-            data : '&_ancestro='+_private.idAncestro,
+            data : '&_ancestro='+_private.idRepresentante,
             clear: true,
             fnCallback: function(data) {
                 if(!isNaN(data.result) && parseInt(data.result) === 1){
@@ -306,7 +306,7 @@ var cliente_ = function(){
             element: '#'+diccionario.tabs.REGCL+'btnERep',
             root: _private.config.modulo + 'postNewRepresentante',
             form: '#'+diccionario.tabs.REGCL+'formEditarRepresentante',
-            data: '&_idPersona='+_private.idAncestro,
+            data: '&_idPersona='+_private.idRepresentante,
             clear: true,
             fnCallback: function(data) {
                 if(!isNaN(data.result) && parseInt(data.result) === 1){
