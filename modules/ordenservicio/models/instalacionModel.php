@@ -83,7 +83,7 @@ class instalacionModel extends Model{
     }
     
     public function getCaratulas(){
-        /*bueca en las ordenes en estado T o P, pagado parcial o total*/
+        /*bueca en las ordenes en estado T o P, pagado parcial o total y flag_instalacion = 0*/
         $u = '';
         if(!empty($this->_xSearch)){
             $u = " AND o.`orden_numero`='".$this->_xSearch."' ";
@@ -99,7 +99,7 @@ class instalacionModel extends Model{
         INNER JOIN `lgk_caratula` c ON c.`id_caratula`=od.`id_caratula`
         INNER JOIN `lgk_catalogo` ct ON ct.`id_producto`=c.`id_producto`
         INNER JOIN `lgk_ordenservicio` o ON o.`id_ordenservicio`=od.`id_ordenservicio`
-        WHERE (o.`estado`='T' OR o.`estado`='P') ".$u." ; ";
+        WHERE (o.`estado`='T' OR o.`estado`='P') AND od.flag_instalacion = '0' ".$u." ; ";
         
         $parms = array();
         $data = $this->queryAll($query,$parms);
