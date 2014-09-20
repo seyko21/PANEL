@@ -153,6 +153,7 @@ var cronogramaPago_ = function(){
                             cronogramaPago.getGridOrdenes();
                             simpleScript.closeModal('#'+diccionario.tabs.CROPA+'formPagarOrdenParametros');
                             $("#"+_private.fila+diccionario.tabs.CROPA+"dfecha").html(data.fecha);
+                            $("#"+_private.fila+diccionario.tabs.CROPA+"tr_estado").html('<span class="label label-success">Pagado</span>');
                             $(_private.boton).off('click');
                             $(_private.boton).addClass('disabled');
                             _private.idCompromiso = 0;

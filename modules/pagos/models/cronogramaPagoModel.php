@@ -8,6 +8,7 @@ class cronogramaPagoModel extends Model{
     private $_numDoc;
     private $_serieDoc;
     private $_fechaRepro;
+    private $_fecha;
     private $_usuario;
     
     /*para el grid*/
@@ -30,6 +31,7 @@ class cronogramaPagoModel extends Model{
         $this->_numDoc  = Formulario::getParam(CROPA."txt_seriedoc");
         $this->_serieDoc  = Formulario::getParam(CROPA."txt_numdoc");
         $this->_fechaRepro  = Functions::cambiaf_a_mysql(Formulario::getParam(CROPA."txt_fechare"));
+        $this->_fecha  = Functions::cambiaf_a_mysql(Formulario::getParam(CROPA."txt_fechapago"));
         
         $this->_iDisplayStart  = Formulario::getParam("iDisplayStart"); 
         $this->_iDisplayLength = Formulario::getParam("iDisplayLength"); 
@@ -74,7 +76,7 @@ class cronogramaPagoModel extends Model{
     }
     
     public function postPagarOrden(){
-        $query = "CALL sp_ordseSeguimientoPagoPagarCuota(:flag,:idCompromiso,:tipoDoc,:numDoc,:serieDdoc,:usuario);";
+        $query = "CALL sp_ordseSeguimientoPagoPagarCuota(:flag,:idCompromiso,:tipoDoc,:numDoc,:serieDdoc,:usuario,:fecha);";
         
         $parms = array(
             ":flag" => 1,
@@ -82,14 +84,15 @@ class cronogramaPagoModel extends Model{
             ":tipoDoc" => $this->_tipoDoc,
             ":numDoc" => $this->_numDoc,
             ":serieDdoc" => $this->_serieDoc,
-            ":usuario" => $this->_usuario
+            ":usuario" => $this->_usuario,
+            ":fecha" => $this->_fecha
         );
         $data = $this->queryOne($query,$parms);
         return $data;
     }
     
     public function postReprogramar(){
-        $query = "CALL sp_ordseSeguimientoPagoPagarCuota(:flag,:idCompromiso,:tipoDoc,:numDoc,:serieDdoc,:usuario);";
+        $query = "CALL sp_ordseSeguimientoPagoPagarCuota(:flag,:idCompromiso,:tipoDoc,:numDoc,:serieDdoc,:usuario,:fecha);";
         
         $parms = array(
             ":flag" => 2,
@@ -97,7 +100,8 @@ class cronogramaPagoModel extends Model{
             ":tipoDoc" => '',
             ":numDoc" => $this->_fechaRepro,
             ":serieDdoc" => '',
-            ":usuario" => $this->_usuario
+            ":usuario" => $this->_usuario,
+            ":fecha" => ''
         );
         $data = $this->queryOne($query,$parms);
         return $data;

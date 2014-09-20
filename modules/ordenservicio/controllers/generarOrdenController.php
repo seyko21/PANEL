@@ -46,11 +46,23 @@ class generarOrdenController extends Controller{
             foreach ( $rResult as $aRow ){
                 
                 /*campo que maneja los estados, para el ejemplo aqui es ACTIVO, coloca tu campo*/
-//                if($aRow['estado'] == 1){
-//                    $estado = '<span class=\"label label-success\">'.LABEL_ACT.'</span>';
-//                }else{
-//                    $estado = '<span class=\"label label-danger\">'.LABEL_DES.'</span>';
-//                }
+                switch($aRow['estado']){
+                    case 'E':
+                        $estado = '<span class=\"label label-default\">'.SEGCO_5.'</span>';
+                        break;
+                    case 'T':
+                        $estado = '<span class=\"label label-success\">'.SEGPA_8.'</span>';
+                        break;
+                    case 'P':
+                        $estado = '<span class=\"label label-warning\">'.SEGPA_7.'</span>';
+                        break;
+                    case 'A':
+                        $estado = '<span class=\"label label-danger\">'.SEGPA_9.'</span>';
+                        break;
+                    case 'F':
+                        $estado = '<span class=\"label label-info\">'.SEGPA_29.'</span>';
+                        break;
+                }
                 
                 /*antes de enviar id se encrypta*/
                 $encryptReg = Aes::en($aRow['id_ordenservicio']);
@@ -58,7 +70,7 @@ class generarOrdenController extends Controller{
                 
                 
                 /*registros a mostrar*/
-                $sOutput .= '["'.($num++).'","'.$aRow['orden_numero'].'","'.$aRow['cotizacion_numero'].'","'.$aRow['nombrecompleto'].'","'.$aRow['cliente'].'","'.$aRow['fecha'].'","'.number_format($aRow['monto_total'],2).'",';
+                $sOutput .= '["'.($num++).'","'.$aRow['orden_numero'].'","'.$aRow['cotizacion_numero'].'","'.$aRow['nombrecompleto'].'","'.  number_format($aRow['descuentos'],2).'","'.$aRow['fecha'].'","'.number_format($aRow['monto_total'],2).'","'.$estado.'",';
                 
                 /*
                  * configurando botones (add/edit/delete etc)
@@ -67,7 +79,7 @@ class generarOrdenController extends Controller{
                 $sOutput .= '"<div class=\"btn-group\">';
                  
                 if($editar['permiso']){
-                    $sOutput .= '<button type=\"button\" class=\"'.$editar['theme'].'\" title=\"'.$editar['accion'].'\" onclick=\"generarOrden.getFormEditOrden(this,\''.$encryptReg.'\')\">';
+                    $sOutput .= '<button type=\"button\" class=\"'.$editar['theme'].'\" title=\"'.$editar['accion'].'\" onclick=\"generarOrden.getFormEditOrden(this,\''.$encryptReg.'\',\''.$aRow['estado'].'\')\">';
                     $sOutput .= '    <i class=\"'.$editar['icono'].'\"></i>';
                     $sOutput .= '</button>';
                 }
@@ -76,13 +88,13 @@ class generarOrdenController extends Controller{
                     $sOutput .= '    <i class=\"'.$generar['icono'].'\"></i>';
                     $sOutput .= '</button>';
                 }
+                if($email['permiso']){
+                    $sOutput .= '<button type=\"button\" class=\"'.$email['theme'].'\" title=\"'.GNOSE_16.'\" onclick=\"registrarVendedor.postAccesoVendedor(this,\'' . $idUser . '\',\'' . $aRow['nombrecompleto'] . '\',\'' . $aRow['email'] . '\')\">';
+                    $sOutput .= '    <i class=\"'.$email['icono'].'\"></i>';
+                    $sOutput .= '</button>';
+                }
                 /*solo si tiene compromisos se podra exportar contrato*/
                 if($aRow['compromisos'] && $aRow['id_contrato'] != '0'){
-                    if($email['permiso']){
-                       $sOutput .= '<button type=\"button\" class=\"'.$email['theme'].'\" title=\"'.GNOSE_16.'\" onclick=\"registrarVendedor.postAccesoVendedor(this,\'' . $idUser . '\',\'' . $aRow['nombrecompleto'] . '\',\'' . $aRow['email'] . '\')\">';
-                        $sOutput .= '    <i class=\"'.$email['icono'].'\"></i>';
-                        $sOutput .= '</button>';
-                    }
                     if($pdf['permiso']){
                         $sOutput .= '<button type=\"button\" class=\"'.$pdf['theme'].'\" title=\"'.GNOSE_17.'\" onclick=\"generarOrden.postExportarContratoPDF(this,\'' . $encryptReg . '\')\">';
                         $sOutput .= '    <i class=\"'.$pdf['icono'].'\"></i>';

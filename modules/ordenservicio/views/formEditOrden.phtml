@@ -8,6 +8,8 @@
 $editar = Session::getPermiso('ORSERACT');
 $data = Obj::run()->generarOrdenController->findOrden();
 
+$estado = Formulario::getParam('_estado');
+
 ?>
 <form id="<?php echo GNOSE; ?>formEditOrden" name="<?php echo GNOSE; ?>formEditOrden" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">
@@ -64,7 +66,7 @@ $data = Obj::run()->generarOrdenController->findOrden();
                 <section>
                     <div class="row">
                         <label class="label col col-2"><?php echo GNOSE_15; ?></label>
-                        <div class="col col-10">
+                        <div class="col col-9">
                             <label class="select"> 
                                 <?php
                                     $datac = Obj::run()->generarOrdenController->getContratos();
@@ -91,7 +93,8 @@ $data = Obj::run()->generarOrdenController->findOrden();
                 
             </div>
             <div class="modal-footer">    
-                <?php if($editar['permiso']):?>
+                <!--solo se edita si el estado es EMITIDO-->
+                <?php if($editar['permiso'] && $estado == 'E'):?>
                 <button id="<?php echo GNOSE; ?>btnEdOrd" type="submit" class="<?php echo $editar['theme']; ?>" style="padding: 5px">
                     <i class="<?php echo $editar['icono']; ?>"></i> <?php echo $editar['accion']; ?>
                 </button>

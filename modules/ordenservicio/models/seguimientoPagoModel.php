@@ -15,6 +15,7 @@ class seguimientoPagoModel extends Model{
     private $_tipoDoc;
     private $_numDoc;
     private $_serieDoc;
+    private $_fecha;
     private $_usuario;
     
     /*para el grid*/
@@ -36,6 +37,7 @@ class seguimientoPagoModel extends Model{
         $this->_tipoDoc  = Formulario::getParam(SEGPA."lst_tipodoc");
         $this->_numDoc  = Formulario::getParam(SEGPA."txt_seriedoc");
         $this->_serieDoc  = Formulario::getParam(SEGPA."txt_numdoc");
+        $this->_fecha  = Functions::cambiaf_a_mysql(Formulario::getParam(SEGPA."txt_fechapago"));
         
         $this->_iDisplayStart  = Formulario::getParam("iDisplayStart"); 
         $this->_iDisplayLength = Formulario::getParam("iDisplayLength"); 
@@ -81,7 +83,7 @@ class seguimientoPagoModel extends Model{
     }
     
     public function postPagarOrden(){
-        $query = "CALL sp_ordseSeguimientoPagoPagarCuota(:flag,:idCompromiso,:tipoDoc,:numDoc,:serieDdoc,:usuario);";
+        $query = "CALL sp_ordseSeguimientoPagoPagarCuota(:flag,:idCompromiso,:tipoDoc,:numDoc,:serieDdoc,:usuario,:fecha);";
         
         $parms = array(
             ":flag" => 1,
@@ -89,7 +91,8 @@ class seguimientoPagoModel extends Model{
             ":tipoDoc" => $this->_tipoDoc,
             ":numDoc" => $this->_numDoc,
             ":serieDdoc" => $this->_serieDoc,
-            ":usuario" => $this->_usuario
+            ":usuario" => $this->_usuario,
+            ":fecha" => $this->_fecha
         );
         $data = $this->queryOne($query,$parms);
         return $data;

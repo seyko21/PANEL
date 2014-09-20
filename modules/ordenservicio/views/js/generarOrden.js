@@ -58,9 +58,10 @@ var generarOrden_ = function(){
                 {sTitle: "Código", sWidth: "10%",sClass: "center"},
                 {sTitle: "Nro. Cotización", sWidth: "10%",sClass: "center"},
                 {sTitle: "Representante", sWidth: "20%"},
-                {sTitle: "Cliente", sWidth: "20%"},
+                {sTitle: "Descuento", sWidth: "10%", sClass: "right"},
                 {sTitle: "Fecha", sWidth: "10%"},
                 {sTitle: "Monto", sWidth: "8%", sClass: "right", bSortable: false},
+                {sTitle: "Estado", sWidth: "8%", sClass: "center", bSortable: false},
                 {sTitle: "Acciones", sWidth: "15%", sClass: "center", bSortable: false}
             ],
             aaSorting: [[1, "desc"]],
@@ -146,14 +147,14 @@ var generarOrden_ = function(){
         });
     };
     
-    this.publico.getFormEditOrden = function(btn,id){
+    this.publico.getFormEditOrden = function(btn,id,estado){
         _private.idOrden = id;
         
         simpleAjax.send({
             element: btn,
             dataType: "html",
             root: _private.config.modulo + "getFormEditOrden",
-            data: '&_idOrden='+_private.idOrden,
+            data: '&_idOrden='+_private.idOrden+'&_estado='+estado,
             fnCallback: function(data){
                 $("#cont-modal").append(data);  /*los formularios con append*/
                 $("#"+diccionario.tabs.GNOSE+"formEditOrden").modal("show");

@@ -218,6 +218,8 @@ define('SEGPA_24','Serie de documento');
 define('SEGPA_25','Ingrese el número del documento');
 define('SEGPA_26','Ingrese la serie del documento');
 define('SEGPA_27','Estado');
+define('SEGPA_28','Ingrese la fecha de pago');
+define('SEGPA_29','Finalizado');
 
 /*---------------------- CRONOGRAMA DE PAGOS----------------*/
 define('CROPA_1','Cronograma de Pagos');

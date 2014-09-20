@@ -48,6 +48,15 @@ $ncuota = Formulario::getParam('_ncuota');
                                 ?><i></i>
                             </label>
                         </div>
+                        
+                        <label class="label col col-3"><?php echo SEGPA_5; ?></label>
+                        <div class="col col-3">
+                            <label class="input"> 
+                                <i class="icon-append fa fa-calendar-o"></i>
+                                <input type="text" id="<?php echo SEGPA; ?>txt_fechapago" name="<?php echo SEGPA; ?>txt_fechapago" >
+                                <b class="tooltip tooltip-top-right"><i class="fa fa-question-circle txt-color-teal"></i> <?php echo SEGPA_28; ?></b>
+                            </label>
+                        </div>
                     </div>
                 </section>
                 <section>
@@ -92,9 +101,9 @@ $ncuota = Formulario::getParam('_ncuota');
 </script>
 <?php endif; ?>
 <script>
-//    simpleScript.setEvent.date({
-//      element: '.fechapago' 
-//    });
+    simpleScript.setEvent.date({
+      element: '#<?php echo SEGPA; ?>txt_fechapago' 
+    });
     simpleScript.removeAttr.click({
         container: "#<?php echo SEGPA; ?>formPagarOrdenParametros",
         typeElement: "button"
@@ -106,6 +115,10 @@ $ncuota = Formulario::getParam('_ncuota');
                     <?php echo SEGPA; ?>lst_tipodoc: {
                         required: true
                     },
+                    <?php echo SEGPA; ?>txt_fechapago: {
+                        required: true,
+                        date: true
+                    },        
                     <?php echo SEGPA; ?>txt_seriedoc: {
                             required: true,
                         number: true  
