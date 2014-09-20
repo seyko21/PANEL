@@ -132,6 +132,7 @@ var seguimientoCotizacion_ = function(){
                         callback: function(){
                             simpleScript.closeModal('#'+diccionario.tabs.SEGCO+'formObservacion');
                             simpleScript.reloadGrid("#"+diccionario.tabs.SEGCO+"gridSeguimientoCotizacion");
+                            generarCotizacion.getGridCotizacion();
                         }
                     });
                 }
