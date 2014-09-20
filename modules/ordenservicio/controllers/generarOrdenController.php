@@ -43,11 +43,17 @@ class generarOrdenController extends Controller{
             $sOutput .= '"iTotalDisplayRecords": '.$iTotal.', ';
             $sOutput .= '"aaData": [ ';     
             
-            foreach ( $rResult as $aRow ){
+            foreach ( $rResult as $key=>$aRow ){
+                /*antes de enviar id se encrypta*/
+                $encryptReg = Aes::en($aRow['id_ordenservicio']);
+                $idUser = Aes::en($aRow['id_usuario']);
                 
+                /*solo se anulara las ordenes que estan en estado E, porque no debde tener ningun pago hecho*/
+                $chk = '<input id=\"c_'.(++$key).'\" type=\"checkbox\" disabled=\"disabled\"  >';
                 /*campo que maneja los estados, para el ejemplo aqui es ACTIVO, coloca tu campo*/
                 switch($aRow['estado']){
                     case 'E':
+                        $chk = '<input id=\"c_'.(++$key).'\" type=\"checkbox\" name=\"'.GNOSE.'chk_delete[]\" value=\"'.$encryptReg.'\"  >'; 
                         $estado = '<span class=\"label label-default\">'.SEGCO_5.'</span>';
                         break;
                     case 'T':
@@ -64,13 +70,8 @@ class generarOrdenController extends Controller{
                         break;
                 }
                 
-                /*antes de enviar id se encrypta*/
-                $encryptReg = Aes::en($aRow['id_ordenservicio']);
-                $idUser = Aes::en($aRow['id_usuario']);
-                
-                
                 /*registros a mostrar*/
-                $sOutput .= '["'.($num++).'","'.$aRow['orden_numero'].'","'.$aRow['cotizacion_numero'].'","'.$aRow['nombrecompleto'].'","'.  number_format($aRow['descuentos'],2).'","'.$aRow['fecha'].'","'.number_format($aRow['monto_total'],2).'","'.$estado.'",';
+                $sOutput .= '["'.$chk.'","'.$aRow['orden_numero'].'","'.$aRow['cotizacion_numero'].'","'.$aRow['nombrecompleto'].'","'.  number_format($aRow['descuentos'],2).'","'.$aRow['fecha'].'","'.number_format($aRow['monto_total'],2).'","'.$estado.'",';
                 
                 /*
                  * configurando botones (add/edit/delete etc)
@@ -270,26 +271,18 @@ class generarOrdenController extends Controller{
         $panel = '<table border="0" style="width:100%; font-family:Arial; font-size:12px;"> '
                 . '<tr>'
                 . '<th style="width:7%;border-bottom:solid 1px #000">'.LABEL_A37.'</th>'  
-                . '<th style="width:15%;border-bottom:solid 1px #000">'.LABEL_A27.'</th>'
-                . '<th style="width:40%;border-bottom:solid 1px #000">'.LABEL_A38.'</th>'                  
-                . '<th style="width:15%;border-bottom:solid 1px #000">'.LABEL_A44.'</th>' 
-                . '<th style="width:15%;border-bottom:solid 1px #000">'.LABEL_A45.'</th>' 
+                . '<th style="width:20%;border-bottom:solid 1px #000">'.LABEL_A27.'</th>'
+                . '<th style="width:50%;border-bottom:solid 1px #000">'.LABEL_A38.'</th>'                  
+                . '<th style="width:10%;border-bottom:solid 1px #000">'.LABEL_A44.'</th>' 
+                . '<th style="width:5%;border-bottom:solid 1px #000">'.LABEL_A45.'</th>' 
                 . '</tr>';
         foreach ($caratula as $v) {
-            
-            if ($v['incluyeIGV'] == '0'){
-                $precio = number_format($v['precio'],2);
-                $produccion = number_format($v['costo_produccion'],2);
-            }else{
-                $precio = number_format($v['precio_incigv'],3);
-                $produccion = number_format($v['produccion_incigv'],3);
-            }
             $panel .= '<tr>';
             $panel .=  '   <td style="text-align:center; font-size:11px;">'.$v['codigo'].'</td>';
             $panel .=  '   <td style="text-align:center; font-size:11px;">'.$v['elemento'].'</td>';
             $panel .= '    <td style="font-size:11px;">'.$v['ubicacion'].' - '.$v['medidas'].' Area: '.$v['dimesion_area'].' m<sup>2</sup></td>';            
-            $panel .=  '   <td style="text-align:right; font-size:11px;">S/.'.$precio.'</td>';  
-            $panel .=  '   <td style="text-align:right; font-size:11px;">S/.'.$produccion.'</td>';
+            $panel .=  '   <td style="text-align:center; font-size:11px;">'.$v['distrito'].'</td>';  
+            $panel .=  '   <td style="text-align:center; font-size:11px;">'.($v['costo_produccion'] > 0?'SI':'NO').'</td>';
             $panel .=  '</tr>';
         }
         $panel .= '</table>';
@@ -318,7 +311,6 @@ class generarOrdenController extends Controller{
         else
             $incluyeIGV = 'Los precios incluyen IGV';
         $diaoferta = '';
-        
          if ( $contrato['dias_oferta'] > 0){
             $diaoferta = 'La empresa SEVEND S.A.C. adiciona un plus promocional de '.$contrato['dias_oferta'].' días calendarios luego de haber finalizado la publicación.';
          }
@@ -332,7 +324,7 @@ class generarOrdenController extends Controller{
         $html = str_replace('{{DIA_CONTRATO}}',$contrato['dia'], $html);
         $html = str_replace('{{MES_CONTRATO}}', ucwords(Functions::nombremes($contrato['mes'])), $html);
         $html = str_replace('{{ANIO_CONTRATO}}',$contrato['anio'], $html);
-//        $html = str_replace('{{INCLUYE_IGV}}',$incluyeIGV, $html);
+        $html = str_replace('{{INCLUYE_IGV}}',$incluyeIGV, $html);
         $html = str_replace('{{FOR_CARATULAS}}',$panel, $html);
         $html = str_replace('{{FOR_COMPROMISOPAGO}}',$cro, $html);
         $html = str_replace('{{CONTRATO_MESES}}',$contrato['meses_contrato'], $html);
@@ -344,6 +336,12 @@ class generarOrdenController extends Controller{
         
         
         return html_entity_decode($html);
+    }
+    
+    public function postAnularOrdenAll(){
+        $data = Obj::run()->generarOrdenModel->anularOrdenAll();
+        
+        echo json_encode($data);
     }
     
 }

@@ -434,8 +434,11 @@ var simpleScript_ = function(){
     this.public.checkAll = function(el,tab){
         var d = $(tab).find('tbody tr');
         if($(el).is(':checked')){
-            d.each(function(){       
-                $(this).find(':checkbox').prop('checked','checked');    
+            d.each(function(){  
+                /*solo marca los que no estan desabiblitados*/
+                if(!$(this).find(':checkbox').is(':disabled')){
+                    $(this).find(':checkbox').prop('checked','checked');  
+                }
             });
         }else{
             d.each(function(){    

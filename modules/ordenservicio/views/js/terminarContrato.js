@@ -66,7 +66,6 @@ var terminarContrato_ = function(){
             sAjaxSource: _private.config.modulo+"getGridTerminarContrato",
             fnDrawCallback: function() {
                 $("#"+diccionario.tabs.TERCO+"gridTerminarContrato_filter").find("input").attr("placeholder","Buscar por OS, cotización o representante").css("width","290px");
-                simpleScript.enterSearch("#"+diccionario.tabs.TERCO+"gridTerminarContrato",oTable);
                 /*para hacer evento invisible*/
                 simpleScript.removeAttr.click({
                     container: "#widget_"+diccionario.tabs.TERCO,

@@ -6,8 +6,7 @@
 * Descripcion : indexGenerarOrden.phtml
 * ---------------------------------------
 */
-$nuevo    = Session::getPermiso("GNOSEGR");
-$eliminar = Session::getPermiso("GNOSEDE");
+$anular = Session::getPermiso("ORSERAN");
 echo Functions::widgetOpen(array(
         "id"=>GNOSE,
         "title"=>GNOSE_1
@@ -20,9 +19,9 @@ echo Functions::widgetOpen(array(
         <div class="dt-top-row">
             <div class="DTTT btn-group">
                 <!-- verificar permisos -->
-                <?php if($nuevo["permiso"]): ?>
-                <button id="<?php echo GNOSE; ?>btnNewGenerarOrden" type="button" onclick="generarOrden.getFormNewGenerarOrden(this);" class="btn txt-color-white bg-color-blueDark">
-                    <i class="fa fa-file-o"></i> <?php echo BTN_NUEVO; ?>
+                <?php if($anular["permiso"]): ?>
+                <button id="<?php echo GNOSE; ?>btnNewGenerarOrden" type="button" onclick="generarOrden.postAnularOrdenAll(this);" class="<?php echo $anular['theme']?>">
+                    <i class="<?php echo $anular['icono']?>"></i> <?php echo $anular['accion']?>
                 </button>
                 <?php endif; ?>
             </div>

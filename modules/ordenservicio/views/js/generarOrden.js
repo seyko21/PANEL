@@ -54,7 +54,7 @@ var generarOrden_ = function(){
             bPaginate: true,
             iDisplayLength: 10,            
             aoColumns: [
-                {sTitle: "N°", sWidth: "1%",bSortable: false},
+                {sTitle: "<input type='checkbox' id='"+diccionario.tabs.ORINS+"chk_all' onclick='simpleScript.checkAll(this,\"#"+diccionario.tabs.GNOSE+"gridGenerarOrden\");'>", sWidth: "1%", sClass: "center", bSortable: false},
                 {sTitle: "Código", sWidth: "10%",sClass: "center"},
                 {sTitle: "Nro. Cotización", sWidth: "10%",sClass: "center"},
                 {sTitle: "Representante", sWidth: "20%"},
@@ -254,6 +254,37 @@ var generarOrden_ = function(){
             }
         });
     };
+    
+    this.publico.postAnularOrdenAll = function(btn){
+        simpleScript.validaCheckBox({
+            id: "#"+diccionario.tabs.GNOSE+"gridGenerarOrden",
+            msn: mensajes.MSG_9,
+            fnCallback: function(){
+                simpleScript.notify.confirm({
+                    content: mensajes.MSG_16,
+                    callbackSI: function(){
+                        simpleAjax.send({
+                            flag: 3, //si se usa SP usar flag, sino se puede eliminar esta linea
+                            element: btn,
+                            form: "#"+diccionario.tabs.GNOSE+"formGridGenerarOrden",
+                            root: _private.config.modulo + "postAnularOrdenAll",
+                            fnCallback: function(data) {
+                                if(!isNaN(data.result) && parseInt(data.result) === 1){
+                                    simpleScript.notify.ok({
+                                        content: mensajes.MSG_8,
+                                        callback: function(){
+                                            simpleScript.reloadGrid('#'+diccionario.tabs.GNOSE+'gridGenerarOrden');
+                                        }
+                                    });
+                                }
+                            }
+                        });
+                    }
+                });
+            }
+        });
+    };
+    
     
     return this.publico;
     

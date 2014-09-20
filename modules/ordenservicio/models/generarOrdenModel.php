@@ -19,6 +19,7 @@ class generarOrdenModel extends Model{
     private $_fechaContrato;
     private $_oferta;
     private $_usuario;
+    private $_chkdel;
     
     /*para el grid*/
     public  $_iDisplayStart;
@@ -42,6 +43,7 @@ class generarOrdenModel extends Model{
         $this->_fechaContrato  = Functions::cambiaf_a_mysql(Formulario::getParam(GNOSE."txt_fechacontrato"));
         $this->_idContrato  = Formulario::getParam(GNOSE."lst_contrato"); 
         $this->_oferta  = Formulario::getParam(GNOSE."txt_oferta"); 
+        $this->_chkdel  = $this->post(GNOSE.'chk_delete');
         
         $this->_iDisplayStart  = Formulario::getParam("iDisplayStart"); 
         $this->_iDisplayLength = Formulario::getParam("iDisplayLength"); 
@@ -229,6 +231,20 @@ class generarOrdenModel extends Model{
         );
        
         $data = $this->queryAll($query,$parms);
+        return $data;
+    }
+    
+    public function anularOrdenAll(){
+        $query = "UPDATE lgk_ordenservicio SET estado = :estado WHERE id_ordenservicio = :idOrden; ";
+        
+        foreach ($this->_chkdel as $value) {
+            $parms = array(
+                ':estado'=> 'A',
+                ':idOrden'=>Aes::de($value)
+            );
+            $this->execute($query,$parms);
+        }
+        $data = array('result'=>1);
         return $data;
     }
     
