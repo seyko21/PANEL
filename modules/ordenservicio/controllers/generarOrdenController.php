@@ -271,18 +271,18 @@ class generarOrdenController extends Controller{
         $panel = '<table border="0" style="width:100%; font-family:Arial; font-size:12px;"> '
                 . '<tr>'
                 . '<th style="width:7%;border-bottom:solid 1px #000">'.LABEL_A37.'</th>'  
-                . '<th style="width:20%;border-bottom:solid 1px #000">'.LABEL_A27.'</th>'
-                . '<th style="width:50%;border-bottom:solid 1px #000">'.LABEL_A38.'</th>'                  
-                . '<th style="width:10%;border-bottom:solid 1px #000">'.LABEL_A44.'</th>' 
-                . '<th style="width:5%;border-bottom:solid 1px #000">'.LABEL_A45.'</th>' 
+                . '<th style="width:15%;border-bottom:solid 1px #000">'.LABEL_A27.'</th>'
+                . '<th style="width:45%;border-bottom:solid 1px #000">'.LABEL_A38.'</th>'                  
+                . '<th style="width:12%;border-bottom:solid 1px #000">'.LABEL_A44.'</th>' 
+                . '<th style="width:8%;border-bottom:solid 1px #000">'.LABEL_A45.'</th>' 
                 . '</tr>';
         foreach ($caratula as $v) {
             $panel .= '<tr>';
             $panel .=  '   <td style="text-align:center; font-size:11px;">'.$v['codigo'].'</td>';
             $panel .=  '   <td style="text-align:center; font-size:11px;">'.$v['elemento'].'</td>';
             $panel .= '    <td style="font-size:11px;">'.$v['ubicacion'].' - '.$v['medidas'].' Area: '.$v['dimesion_area'].' m<sup>2</sup></td>';            
-            $panel .=  '   <td style="text-align:center; font-size:11px;">'.$v['distrito'].'</td>';  
-            $panel .=  '   <td style="text-align:center; font-size:11px;">'.($v['costo_produccion'] > 0?'SI':'NO').'</td>';
+            $panel .=  '   <td style="text-align:right; font-size:11px;">S/. '.number_format($v['importe'],2).'</td>';  
+            $panel .=  '   <td style="text-align:center; font-size:10px;">'.($v['costo_produccion'] > 0?'SI':'NO').'</td>';
             $panel .=  '</tr>';
         }
         $panel .= '</table>';
