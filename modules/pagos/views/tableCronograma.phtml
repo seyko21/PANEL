@@ -24,7 +24,7 @@ $reprogramar = Session::getPermiso("CROPARPG");
             ?>
             <tr id="tr_cuotas<?php echo $key.CROPA?>">
                 <td><?php echo $value['numero_cuota'] ?></td>
-                <td class="right"><?php echo number_format($value['monto_pago'], 2) ?></td>
+                <td class="right"><?php echo number_format(($value['monto_pago'] + $value['mora']), 2) ?></td>
                 <td class="center">
                     <?php echo Functions::cambiaf_a_normal($value['fecha_programada']) ?>
                 </td>
