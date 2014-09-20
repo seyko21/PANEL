@@ -26,9 +26,18 @@ $ncuota = Formulario::getParam('_ncuota');
                         <label class="label col col-2"><?php echo CROPA_6; ?></label>
                         <div class="col col-3">
                             <label class="input"> 
-                                <i class="icon-append fa fa-keyboard-o"></i>
+                                <i class="icon-append fa fa-calendar-o"></i>
                                 <input type="text" id="<?php echo CROPA; ?>txt_fechare" name="<?php echo CROPA; ?>txt_fechare" >
                                 <b class="tooltip tooltip-top-right"><i class="fa fa-question-circle txt-color-teal"></i> <?php echo CROPA_7; ?></b>
+                            </label>
+                        </div>
+                        
+                        <label class="label col col-2"><?php echo CROPA_8; ?></label>
+                        <div class="col col-3">
+                            <label class="input"> 
+                                <i class="icon-append fa fa-keyboard-o"></i>
+                                <input type="text" id="<?php echo CROPA; ?>txt_mora" name="<?php echo CROPA; ?>txt_mora" >
+                                <b class="tooltip tooltip-top-right"><i class="fa fa-question-circle txt-color-teal"></i> <?php echo CROPA_9; ?></b>
                             </label>
                         </div>
                     </div>
@@ -69,7 +78,10 @@ $ncuota = Formulario::getParam('_ncuota');
                     <?php echo CROPA; ?>txt_fechare: {
                         required: true,
                         date: true
-                    }
+                    },
+                    <?php echo CROPA; ?>txt_mora: {
+                        number: true
+                    }        
                 },
                 // No cambie el código de abajo
                 errorPlacement: function(error, element) {

@@ -9,6 +9,7 @@ class cronogramaPagoModel extends Model{
     private $_serieDoc;
     private $_fechaRepro;
     private $_fecha;
+    private $_mora;
     private $_usuario;
     
     /*para el grid*/
@@ -32,6 +33,7 @@ class cronogramaPagoModel extends Model{
         $this->_serieDoc  = Formulario::getParam(CROPA."txt_numdoc");
         $this->_fechaRepro  = Functions::cambiaf_a_mysql(Formulario::getParam(CROPA."txt_fechare"));
         $this->_fecha  = Functions::cambiaf_a_mysql(Formulario::getParam(CROPA."txt_fechapago"));
+        $this->_mora  = Formulario::getParam(CROPA."txt_mora");
         
         $this->_iDisplayStart  = Formulario::getParam("iDisplayStart"); 
         $this->_iDisplayLength = Formulario::getParam("iDisplayLength"); 
@@ -40,7 +42,7 @@ class cronogramaPagoModel extends Model{
     }
     
     public function getOrdenes(){
-        $aColumns       =   array("","2","7","13","12","5" ); //para la ordenacion y pintado en html
+        $aColumns       =   array("","orden_numero","7","13","estado","fecha_orden","16","monto_total"); //para la ordenacion y pintado en html
         /*
 	 * Ordenando, se verifica por que columna se ordenara
 	 */
@@ -99,7 +101,7 @@ class cronogramaPagoModel extends Model{
             ":idCompromiso" => $this->_idCompromiso,
             ":tipoDoc" => '',
             ":numDoc" => $this->_fechaRepro,
-            ":serieDdoc" => '',
+            ":serieDdoc" => $this->_mora,
             ":usuario" => $this->_usuario,
             ":fecha" => ''
         );

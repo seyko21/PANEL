@@ -10,6 +10,7 @@ $reprogramar = Session::getPermiso("CROPARPG");
             <th class="center"><?php echo SEGPA_3 ?></th>
             <th class="center" style="width: 25%"><?php echo SEGPA_4 ?></th>
             <th class="center"><?php echo SEGPA_5 ?></th>
+            <th class="center"><?php echo CROPA_8 ?></th>
             <th class="center"><?php echo SEGPA_27 ?></th>
             <th class="center" style="width: 30%"><?php echo ACTIONS ?></th>
         </tr>
@@ -21,7 +22,7 @@ $reprogramar = Session::getPermiso("CROPARPG");
         foreach ($data as $value):
             $key++;
             ?>
-            <tr>
+            <tr id="tr_cuotas<?php echo $key.CROPA?>">
                 <td><?php echo $value['numero_cuota'] ?></td>
                 <td class="right"><?php echo number_format($value['monto_pago'], 2) ?></td>
                 <td class="center">
@@ -35,6 +36,7 @@ $reprogramar = Session::getPermiso("CROPARPG");
                         <div id="<?php echo $key . CROPA; ?>dfecha"></div>
                     <?php endif; ?>
                 </td>
+                <td class="right"><?php echo number_format($value['mora'],2) ?></td>
                 <td id="<?php echo $key.CROPA?>tr_estado" class="center">
                     <?php
                     switch ($value['estado']) {
@@ -82,7 +84,7 @@ $reprogramar = Session::getPermiso("CROPARPG");
                     <!--solo se reprograma los que estan en estado E y activaReprogramacion = S-->
                     <?php if ($value['estado'] == 'E' && $value['activaReprogramacion'] == 'S'): ?>
                         <?php if ($reprogramar['permiso']): ?>
-                            <button type="button" class="<?php echo $reprogramar["theme"]; ?>" style="padding: 5px" onclick="cronogramaPago.getFormReprogramar(this, '<?php echo AesCtr::en($value['id_compromisopago']) ?>', '<?php echo $value['numero_cuota'] ?>');">
+                            <button type="button" class="<?php echo $reprogramar["theme"]; ?>" style="padding: 5px" onclick="cronogramaPago.getFormReprogramar(this, '<?php echo AesCtr::en($value['id_compromisopago']) ?>', '<?php echo $value['numero_cuota'] ?>','<?php echo $key?>');">
                                 <i class="<?php echo $reprogramar["icono"]; ?>"></i> <?php echo $reprogramar["accion"]; ?>
                             </button>
                         <?php endif; ?>
