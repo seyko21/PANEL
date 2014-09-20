@@ -163,7 +163,7 @@ class instalacionModel extends Model{
                 $parmsx = array(
                     ':flag'=> 2,
                     ':idInstalacion'=>$idInstalacion,
-                    ':fecha'=> '',
+                    ':fecha'=> $this->_fecha,
                     ':idOrdenDetalle'=> '',
                     ':montoTotal'=> '',
                     ':obs'=> '',
