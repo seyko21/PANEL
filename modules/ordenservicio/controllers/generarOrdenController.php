@@ -269,7 +269,7 @@ class generarOrdenController extends Controller{
             $panel .=  '   <td style="text-align:center; font-size:11px;">'.$v['elemento'].'</td>';
             $panel .= '    <td style="font-size:11px;">'.$v['ubicacion'].' - '.$v['medidas'].' Area: '.$v['dimesion_area'].' m<sup>2</sup></td>';            
             $panel .=  '   <td style="text-align:center; font-size:11px;">'.$v['distrito'].'</td>';  
-            $panel .=  '   <td style="text-align:center; font-size:11px;">'.($v['flag_produccion'] == '0'?'NO':'SI').'</td>';
+            $panel .=  '   <td style="text-align:center; font-size:11px;">'.($v['costo_produccion'] > 0?'SI':'NO').'</td>';
             $panel .=  '</tr>';
         }
         $panel .= '</table>';
