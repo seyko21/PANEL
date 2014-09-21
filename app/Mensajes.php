@@ -1,5 +1,5 @@
 <?php
-/*
+/*  
  * Documento   : Mensajes
  * Creado      : 31-ene-2014, 9:15:13
  * Autor       : RDCC
