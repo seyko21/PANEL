@@ -158,5 +158,9 @@ define('LABEL_A156','Adjuntar Firma');
 define('LABEL_A160','Registro de Persona');
 define('LABEL_A161','Nueva Persona');
 define('LABEL_A162','Editar Persona');
+/*----------------------Mis Cotizaciones----------------------*/
+
+define('MISCO_1','Listado de Cotizaciones');
+
 
 ?>

@@ -10,7 +10,8 @@
         MISPA: '<?php echo MISPA; ?>',
         PAAL: '<?php echo PAAL; ?>',
         CONTR: '<?php echo CONTR; ?>',
-        REPER: '<?php echo REPER; ?>'
+        REPER: '<?php echo REPER; ?>',
+        MISCO: '<?php echo MISCO; ?>'   
     }
 };
 </script>
