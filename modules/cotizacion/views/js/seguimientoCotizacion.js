@@ -90,9 +90,6 @@ var seguimientoCotizacion_ = function(){
                 });
             }
         });
-//        $(window).resize(function(){
-//            oTable.fnAdjustColumnSizing();
-//        });
         setup_widgets_desktop();
     };
     
@@ -132,7 +129,10 @@ var seguimientoCotizacion_ = function(){
                         callback: function(){
                             simpleScript.closeModal('#'+diccionario.tabs.SEGCO+'formObservacion');
                             simpleScript.reloadGrid("#"+diccionario.tabs.SEGCO+"gridSeguimientoCotizacion");
-                            setTimeout(function(){generarCotizacion.getGridCotizacion();},1500);
+                            /*si tab cotizaciones esta abienrto recargar grila de cortizaciones*/
+                            if($('#'+diccionario.tabs.T8+'xgridGenerarCotizacion').length > 0){
+                                setTimeout(function(){generarCotizacion.getGridCotizacion();},1500);
+                            }
                         }
                     });
                 }
