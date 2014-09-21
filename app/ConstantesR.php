@@ -22,4 +22,5 @@ define("SEGPA","KEGPA");             /*tab modulo SEGUIMIENTOPAGO*/
 define("CROPA","CROPA");             /*tab modulo CRONOGRAMA DE PAGOS*/
 define("ORINS","ORINS");             /*tab modulo INSTALACION*/
 define("TERCO","TERCO");             /*tab modulo TERMINARCONTRATO*/
+define("COINS","COINS");             /*tab modulo CONFIRMARINSTALACION*/
 ?>

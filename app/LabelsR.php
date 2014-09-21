@@ -260,4 +260,9 @@ define('TERCO_2','Finalizar contrato');
 define('TERCO_3','Motivo');
 define('TERCO_4','Ingrese un motivo por el cual se finaliza el contrato');
 
+/*---------------------- CONFIRMAR INSTALACION ----------------*/
+define('COINS_1','Instalaciones');
+define('COINS_2','Confirmar');
+define('COINS_3','Subir imagen de: ');
+
 ?>

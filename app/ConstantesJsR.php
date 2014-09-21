@@ -27,3 +27,4 @@ var diccionario = {
         CROPA: '<?php echo CROPA; ?>',
         ORINS: '<?php echo ORINS; ?>',
         TERCO: '<?php echo TERCO; ?>',
+        COINS: '<?php echo COINS; ?>',

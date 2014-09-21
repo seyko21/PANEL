@@ -1,0 +1,87 @@
+<?php /*
+* ---------------------------------------
+* --------- CREATED BY CREATOR ----------
+* fecha: 21-09-2014 05:09:42 
+* Descripcion : formConfirmarInstalacion.phtml
+* ---------------------------------------
+*/
+
+/*prefijo: COINS debe ser alias en tabla men_menuprincipal*/
+$grabar = Session::getPermiso("COINSGR");
+
+$codigo = Formulario::getParam('_codigo');
+$idOrdenDetalle = Formulario::getParam('_idOrdenDetalle');
+
+$doc = $data = Obj::run()->confirmarInstalacionController->getImagen();
+
+?>
+<div id="<?php echo COINS; ?>formConfirmarInstalacion" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close"  aria-hidden="true">
+                    &times;
+                </button>
+                <h4 class="modal-title"><?php echo COINS_3.$codigo?></h4>
+            </div>
+            <div class="modal-body smart-form"> 
+                
+                
+                <form class="dropzone" id="<?php echo COINS; ?>mydropzone">
+                    <input type="hidden" id="_idOrdenDetalle" name="_idOrdenDetalle" value="<?php echo $idOrdenDetalle; ?>">
+                </form>
+                <div class="form-inline">
+                    <?php if(sizeof($doc) && isset($doc['imagen'])):?>
+                        <a id="<?php echo COINS; ?>dow" href="javascript:;" onclick="window.open('<?php echo 'public/img/confirmacion/'.$doc['imagen']; ?>','_blank');"><?php echo $doc['imagen'];?></a>
+                        <button id="<?php echo COINS; ?>btndow" type="button" class="btn btn-danger" style="padding: 5px" onclick="confirmarInstalacion.deleteImagen(this,'<?php echo $idOrdenDetalle; ?>','<?php echo 'public/img/confirmacion/'.$doc['imagen']; ?>');"><i class="fa fa-trash-o"></i> Eliminar</button>
+                    <?php else: ?>
+                        <a id="<?php echo COINS; ?>dow" href="javascript:;"></a>
+                        <button id="<?php echo COINS; ?>btndow" type="button" class="btn btn-danger" style="padding: 5px;display: none"><i class="fa fa-trash-o"></i> Eliminar</button>
+                    <?php endif; ?>
+                </div>
+                
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="<?php echo THEME_CLOSE; ?>">
+                    <i class="<?php echo ICON_CLOSE; ?>"></i> <?php echo BTN_CLOSE; ?>
+                </button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+
+<!-- si no tiene permiso se anula submit desde cualquier input -->
+<?php if(!$grabar["permiso"]): ?>
+<script>
+    simpleScript.noSubmit("#<?php echo COINS; ?>formConfirmarInstalacion");
+</script>
+<?php endif; ?>
+<script>
+        Dropzone.autoDiscover = false;
+        $("#<?php echo COINS; ?>mydropzone").dropzone({
+            acceptedFiles: ".png, .jpg",
+            url: '<?php echo BASE_URL; ?>ordenservicio/confirmarInstalacion/postImagen',
+            maxFiles: 1, // Number of files at a time 
+            maxFilesize: 10, //in MB
+            addRemoveLinks: true,
+            dictResponseError: 'Error uploading file!',
+            dictDefaultMessage: 'Arrastre aquí una imagen',
+             maxfilesexceeded: function(f){
+                 simpleScript.notify.error({
+                        content: 'Usted ha subido más de 1 imagen. Sólo el primer archivo se cargará!'
+                 });
+            },
+            complete: function(data){
+                 if (data.xhr != undefined){
+                    var json = JSON.parse(data.xhr.responseText);   
+                    $('#<?php echo COINS; ?>dow').attr('onclick',"window.open('public/img/confirmacion/"+json.archivo+"','_blank');");
+                    $('#<?php echo COINS; ?>dow').html(json.archivo); 
+                    $('#<?php echo COINS; ?>btndow').attr('onclick',"confirmarInstalacion.deleteImagen(this,'<?php echo $idOrdenDetalle; ?>','public/img/confirmacion/"+json.archivo+"');");
+                    $('#<?php echo COINS; ?>btndow').css('display','block');
+                    confirmarInstalacion.resetKey();
+                    simpleScript.reloadGrid('#'+diccionario.tabs.COINS+'gridConfirmarInstalacion');
+                    simpleScript.closeModal('#'+diccionario.tabs.COINS+'formConfirmarInstalacion');
+                }
+            }
+        });
+</script>
+</div>
