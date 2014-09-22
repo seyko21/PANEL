@@ -11,7 +11,8 @@
         PAAL: '<?php echo PAAL; ?>',
         CONTR: '<?php echo CONTR; ?>',
         REPER: '<?php echo REPER; ?>',
-        MISCO: '<?php echo MISCO; ?>'   
+        MISCO: '<?php echo MISCO; ?>',
+        COXVE: '<?php echo COXVE; ?>'   
     }
 };
 </script>

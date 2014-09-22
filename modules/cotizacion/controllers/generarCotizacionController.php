@@ -328,7 +328,9 @@ class generarCotizacionController extends Controller{
           </tr>
           <tr>
             <td><strong>Campaña:</strong></td>
-            <td colspan="5">'.$data[0]['nombre_campania'].'</td>          
+            <td colspan="3">'.$data[0]['nombre_campania'].'</td> 
+            <td><strong>Meses de Alquiler:</strong></td>
+            <td >'.$data[0]['cantidad_mes'].'</td>   
           </tr>
         </table> 
         <br />
@@ -336,9 +338,8 @@ class generarCotizacionController extends Controller{
             <tr>
                 <th style="width:9%" >Código</th>
                 <th style="width:10%">Elemento</th>
-                <th style="width:40%">Ubicación</th>
+                <th style="width:45%">Ubicación</th>
                 <th style="width:8%">Area</th>
-                <th style="width:7%">Meses</th>
                 <th style="width:12%">Alquiler</th>
                 <th style="width:12%">Producción</th>
                 <th style="width:12%">Total</th>
@@ -347,12 +348,12 @@ class generarCotizacionController extends Controller{
             
             if($value['incluyeigv'] == '1'){
                 $icl = 'Si';
-                $precio = number_format($value['precio_incigv'],3);
+                $precio = number_format($value['precio_incigv'] * $value['cantidad_mes'] ,3);
                 $produccion = number_format($value['produccion_incigv'],3);
                 $importe = number_format($value['importe_incigv'],3);
             }else{
                 $icl = 'No';
-                $precio = number_format($value['precio'],2);
+                $precio = number_format($value['precio'] * $value['cantidad_mes'],2);
                 $produccion = number_format($value['costo_produccion'],2);
                 $importe = number_format($value['importe'],2);
             }  
@@ -362,15 +363,14 @@ class generarCotizacionController extends Controller{
                 <td>'.$value['elemento'].'</td>
                 <td>'.$value['producto'].' - '.number_format($value['dimension_ancho'],1).' x '.number_format($value['dimension_alto'],1).' mts'.'</td>
                 <td style="text-align:center">'.number_format($value['dimesion_area'],2).' m<sup>2</sup></td>
-                <td style="text-align:center">'.number_format($value['cantidad_mes']).'</td>
                 <td style="text-align:right">S/.'.$precio.'</td>
                 <td style="text-align:right">S/.'.$produccion.'</td>
                 <td style="text-align:right">S/.'.$importe.'</td>
             </tr>';
         }    
-        $html .= '<tr><td colspan="6"></td><td>Importe:</td><td style="text-align:right">S/.'.number_format($data[0]['subtotal'],2).'</td></tr>';
-        $html .= '<tr><td colspan="6"></td><td>IGV '.(number_format($data[0]['pigv']*100)).'%:</td><td style="text-align:right">S/.'.number_format($data[0]['impuesto'],2).'</td></tr>';
-        $html .= '<tr><td colspan="7"></td><td class="totales" style="text-align:right; font-weight:bold;">S/.'.number_format($data[0]['total'],2).'</td></tr>';
+        $html .= '<tr><td colspan="5"></td><td>Importe:</td><td style="text-align:right">S/.'.number_format($data[0]['subtotal'],2).'</td></tr>';
+        $html .= '<tr><td colspan="5"></td><td>IGV '.(number_format($data[0]['pigv']*100)).'%:</td><td style="text-align:right">S/.'.number_format($data[0]['impuesto'],2).'</td></tr>';
+        $html .= '<tr><td colspan="6"></td><td class="totales" style="text-align:right; font-weight:bold;">S/.'.number_format($data[0]['total'],2).'</td></tr>';
         
         $html .='</table>';
         
