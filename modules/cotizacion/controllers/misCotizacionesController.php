@@ -20,7 +20,7 @@ class misCotizacionesController extends Controller{
     
     public function getGridMisCotizaciones(){
         $exportarpdf   = Session::getPermiso('MISCOEP');
-        
+        $consultar   = Session::getPermiso('MISCOCC');
         $sEcho          =   $this->post('sEcho');
         
         $rResult = Obj::run()->misCotizacionesModel->getGridCotizacion();
@@ -45,6 +45,7 @@ class misCotizacionesController extends Controller{
                 $p++;
                 /*antes de enviar id se encrypta*/
                 $encryptReg = Aes::en($aRow['id_cotizacion']);
+                $numCotizacion = $aRow['cotizacion_numero'];
                 
                 /*datos de manera manual*/
                 $sOutput .= '["'.$aRow['cotizacion_numero'].'","'.$aRow['nombrecompleto'].'","'.$aRow['fechacoti'].'","'.$aRow['meses_contrato'].'","'.Functions::cambiaf_a_normal($aRow['vencimiento']).'","'.  number_format($aRow['mtotal'],2).'", ';
@@ -87,7 +88,12 @@ class misCotizacionesController extends Controller{
                                
                 $sOutput .= '"<div class=\"'.$et.'\">'.$estado.'</div>"';
                                 
-                $sOutput .= ',"<div class=\"btn-group\">';                
+                $sOutput .= ',"<div class=\"btn-group\">';    
+                if($consultar['permiso']){
+                    $sOutput .= '<button type=\"button\" class=\"'.$consultar['theme'].'\" title=\"'.$consultar['accion'].'\" onclick=\"cotizacionVendedor.getConsulta(\''.$encryptReg.'\',\''.$numCotizacion.'\')\">';
+                    $sOutput .= '    <i class=\"'.$consultar['icono'].'\"></i>';
+                    $sOutput .= '</button>';
+                }  
                 if($exportarpdf['permiso']){
                     $sOutput .= '<button type=\"button\" class=\"'.$exportarpdf['theme'].'\" title=\"'.$exportarpdf['accion'].'\" onclick=\"misCotizaciones.postPDF(this,\''.$encryptReg.'\')\">';
                     $sOutput .= '    <i class=\"'.$exportarpdf['icono'].'\"></i>';
