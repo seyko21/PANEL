@@ -52,12 +52,12 @@ var misCotizaciones_ = function(){
             bPaginate: true,
             iDisplayLength: 10,            
             aoColumns: [
-                {sTitle: "Código", sClass: "center",sWidth: "15%"},
+                {sTitle: "Código", sClass: "center",sWidth: "12%"},
                 {sTitle: "Prospecto", sWidth: "35%"},                
                 {sTitle: "Fecha", sWidth: "10%",sClass: "center"},
                 {sTitle: "Meses", sWidth: "10%",sClass: "center"},
                 {sTitle: "Fec. Venc.", sWidth: "10%", sClass: "center"},
-                {sTitle: "Total", sWidth: "10%", sClass: "right"},
+                {sTitle: "Total", sWidth: "12%", sClass: "right"},
                 {sTitle: "Estado", sWidth: "15%", sClass: "center", bSortable: false},
                 {sTitle: "Acciones", sWidth: "10%", sClass: "center", bSortable: false}
             ],
@@ -68,14 +68,7 @@ var misCotizaciones_ = function(){
                 aoData.push({"name": "_estadocb", "value": $("#"+diccionario.tabs.MISCO+"lst_estadosearch").val()});
             },
             fnDrawCallback: function() {
-                $("#"+diccionario.tabs.MISCO+"gridMisCotizaciones_filter").find("input").attr("placeholder","Buscar por código o prospecto").css("width","300px");
-                
-                $('#'+diccionario.tabs.MISCO+'gridMisCotizaciones_filter').find('input').unbind();
-                $('#'+diccionario.tabs.MISCO+'gridMisCotizaciones_filter').find('input').bind('keyup', function(e) {
-                    $("#"+diccionario.tabs.MISCO+"lst_estadosearch").val('T');
-                    oTable.fnFilter(this.value);   
-                });  
-        
+                $("#"+diccionario.tabs.MISCO+"gridMisCotizaciones_filter").find("input").attr("placeholder","Buscar por código o prospecto").css("width","300px");                                        
         
                 /*para hacer evento invisible*/
                 simpleScript.removeAttr.change({

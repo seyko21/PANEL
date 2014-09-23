@@ -37,7 +37,7 @@ class cotizacionVendedorModel extends Model{
     
     /*data para el grid: CotizacionVendedor*/
     public function getCotizacionVendedor(){
-        $aColumns       =   array( 'cotizacion_numero','dni','nombrecompleto' ,'fechacoti','meses_contrato','mtotal','estado'); //para la ordenacion y pintado en html
+        $aColumns       =   array( 'cotizacion_numero','dni','vendedor' ,'fechacoti','meses_contrato','mtotal','estado'); //para la ordenacion y pintado en html
         /*
 	 * Ordenando, se verifica por que columna se ordenara
 	 */

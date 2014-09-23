@@ -52,21 +52,21 @@ var cotizacionVendedor_ = function(){
             bPaginate: true,
             iDisplayLength: 10,            
             aoColumns: [
-                {sTitle: "Código", sClass: "center",sWidth: "15%", bSortable: false},
+                {sTitle: "Código", sClass: "center",sWidth: "12%"},
                 {sTitle: "DNI", sWidth: "10%"},   
-                {sTitle: "Vendedor", sWidth: "30%"},   
+                {sTitle: "Vendedor", sWidth: "25%"},   
                 {sTitle: "Fecha", sWidth: "10%", sClass: "center"},
                 {sTitle: "Meses", sWidth: "10%", sClass: "center"},
                 {sTitle: "Total", sWidth: "10%", sClass: "right"},
                 {sTitle: "Estado", sWidth: "15%", sClass: "center"},
                 {sTitle: "Acciones", sWidth: "10%", sClass: "center", bSortable: false}          
             ],
-            aaSorting: [[1, "desc"]],
+            aaSorting: [[0, "desc"]],
             sScrollY: "300px",
             sAjaxSource: _private.config.modulo+"getGridCotizacionVendedor",
             fnDrawCallback: function() {
                 $("#"+diccionario.tabs.COXVE+"gridCotizacionVendedor_filter").find("input").attr("placeholder","Buscar por Vendedor, DNI o Nro Cotizacion").css("width","350px");
-                simpleScript.enterSearch("#"+diccionario.tabs.COXVE+"gridCotizacionVendedor",oTable);
+                //simpleScript.enterSearch("#"+diccionario.tabs.COXVE+"gridCotizacionVendedor",oTable);
                 /*para hacer evento invisible*/
                 simpleScript.removeAttr.click({
                     container: "#widget_"+diccionario.tabs.COXVE,

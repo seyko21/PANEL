@@ -230,6 +230,8 @@ class generarCotizacionController extends Controller{
     }
     
     public function postPDF($n=''){
+        $data = Obj::run()->generarCotizacionModel->getCotizacion();
+         
         $c = 'cotizacion_'.Obj::run()->generarCotizacionModel->_idCotizacion.'.pdf';
         
         $ar = ROOT.'public'.DS.'files'.DS.$c;
@@ -243,7 +245,10 @@ class generarCotizacionController extends Controller{
         $mpdf->defaultfooterfontsize = 12; /* in pts */
         $mpdf->defaultfooterfontstyle = B; /* blank, B, I, or BI */
         $mpdf->defaultfooterline = 1; /* 1 to include line below header/above footer */
-        
+        if($data[0]['estado'] == 'A'){
+           $mpdf->SetWatermarkText('A N U L A D O');
+           $mpdf->showWatermarkText = true;         
+        }              
         $mpdf->SetHTMLHeader('<img src="'.ROOT.'public'.DS.'img'.DS.'logotipo.png" width="137" height="68" />','',TRUE);
         $mpdf->SetHTMLFooter('<table width="100%" style="vertical-align: bottom; font-family: serif; font-size: 8pt; color: #000000; font-weight: bold;"><tr>
                                 <td width="33%"><span style="font-weight: bold;">{DATE j-m-Y}</span></td>
@@ -299,13 +304,8 @@ class generarCotizacionController extends Controller{
            table{width:100%;}
            #td2 th, .totales{background:#901D78; color:#FFF; height:25px;}
            #td2 td{font-size:11px;height:25px;}
-           #anulado{            
-            font-size:30px; font-family:verdana; color:#F00;  }
         </style>';
-        
-        if($data[0]['estado'] == 'A'){
-            $html .='<span id="anulado">A N U L A D O</span>';
-        }        
+             
         $html .='<table width="100%" border="0" cellpadding="5" cellspacing="3">
           <tr bgcolor="#901D78">
             <th colspan="6"><div align="center"><h2 style="color:#FFF;">PRESUPUESTO DE PANELES</h2></div></th>
