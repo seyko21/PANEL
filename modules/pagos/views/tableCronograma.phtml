@@ -36,7 +36,7 @@ $reprogramar = Session::getPermiso("CROPARPG");
                         <div id="<?php echo $key . CROPA; ?>dfecha"></div>
                     <?php endif; ?>
                 </td>
-                <td class="right"><?php echo number_format($value['mora'],2) ?></td>
+                <td class="right"><?php echo number_format($value['costo_mora'],2) ?></td>
                 <td id="<?php echo $key.CROPA?>tr_estado" class="center">
                     <?php
                     switch ($value['estado']) {
