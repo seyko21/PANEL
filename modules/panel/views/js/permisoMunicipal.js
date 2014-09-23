@@ -155,17 +155,17 @@ var permisoMunicipal_ = function(){
     };       
     
     this.publico.postNewPermisoMunicipal = function(){
-       var fi;
-       var ff; 
-       fi = new Date($('#'+diccionario.tabs.PERMU+'txt_fi').val());
-       ff = new Date($('#'+diccionario.tabs.PERMU+'txt_ff').val());      
-       if( fi >= ff ){
+       var f1;
+       var f2;              
+       f1 = $.datepicker.parseDate('dd/mm/yy', $('#'+diccionario.tabs.PERMU+'txt_fi').val());
+       f2 = $.datepicker.parseDate('dd/mm/yy', $('#'+diccionario.tabs.PERMU+'txt_ff').val());        
+       if( f1 >= f2 ){
            simpleScript.notify.warning({
-                  content: 'La fecha Inicio no puede ser mayor que la fecha final.'      
-            });
-           return;
+                 content: 'La fecha Inicio no puede ser mayor que la fecha final.'      
+            });         
+            return;
        }
-       
+                     
       simpleAjax.send({
             flag: 1,
             element: '#'+diccionario.tabs.PERMU+'btnGrPermisoMunicipal',
@@ -195,17 +195,17 @@ var permisoMunicipal_ = function(){
     };
     
     this.publico.postEditarPermisoMunicipal = function(){    
-       var fi;
-       var ff; 
-       fi = new Date($('#'+diccionario.tabs.PERMU+'txt_fi').val());
-       ff = new Date($('#'+diccionario.tabs.PERMU+'txt_ff').val());      
-       
-       if( fi >= ff ){
+       var f1;
+       var f2;              
+       f1 = $.datepicker.parseDate('dd/mm/yy', $('#'+diccionario.tabs.PERMU+'txt_fi').val());
+       f2 = $.datepicker.parseDate('dd/mm/yy', $('#'+diccionario.tabs.PERMU+'txt_ff').val());        
+       if( f1 >= f2 ){
            simpleScript.notify.warning({
-                  content: 'La fecha Inicio no puede ser mayor que la fecha final.'      
-            });
-           return;
+                 content: 'La fecha Inicio no puede ser mayor que la fecha final.'      
+            });         
+            return;
        }
+       
         simpleAjax.send({
             flag: 2,
             element: '#'+diccionario.tabs.PERMU+'btnAPermisoMunicipal',
