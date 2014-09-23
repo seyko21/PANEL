@@ -12,7 +12,8 @@
         CONTR: '<?php echo CONTR; ?>',
         REPER: '<?php echo REPER; ?>',
         MISCO: '<?php echo MISCO; ?>',
-        COXVE: '<?php echo COXVE; ?>'   
+        COXVE: '<?php echo COXVE; ?>',
+        COGEN: '<?php echo COGEN; ?>'   
     }
 };
 </script>

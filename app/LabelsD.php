@@ -161,6 +161,14 @@ define('LABEL_A161','Nueva Persona');
 define('LABEL_A162','Editar Persona');
 /*----------------------Mis Cotizaciones----------------------*/
 define('MISCO_1','Listado de Cotizaciones');
+/*----------------------Cotizacion por vendedor----------------------*/
 define('COXVE_1','Cotizaciones por Vendedor');
 define('COXVE_2','Historial de Cotización');
+/*----------------------Contratos Generados----------------------*/
+define('COGEN_1','Contratos Generado');
+define('COGEN_2','Desde ');
+define('COGEN_3','hasta ');
+
+
+
 ?>
