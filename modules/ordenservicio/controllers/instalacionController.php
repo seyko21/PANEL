@@ -55,7 +55,7 @@ class instalacionController extends Controller{
                 }
                 
                 /*registros a mostrar*/
-                $sOutput .= '["'.$chk.'",'.$aRow['ordenin_numero'].',"'.$aRow['orden_numero'].'","'.$aRow['codigo'].'","'.$aRow['ubicacion'].' - '.$aRow['descripcion'].'","'.$aRow['fecha_instalacion'].'","'.number_format($aRow['monto_total'],2).'","'.$estado.'", ';
+                $sOutput .= '["'.$chk.'","'.$aRow['ordenin_numero'].'","'.$aRow['orden_numero'].'","'.$aRow['codigo'].'","'.$aRow['ubicacion'].' - '.$aRow['descripcion'].'","'.$aRow['fecha_instalacion'].'","'.number_format($aRow['monto_total'],2).'","'.$estado.'", ';
                 
                 /*
                  * configurando botones (add/edit/delete etc)

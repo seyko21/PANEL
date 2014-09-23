@@ -34,17 +34,21 @@ class asignarCuentaController extends Controller{
             $sOutput .= '"iTotalDisplayRecords": '.$iTotal.', ';
             $sOutput .= '"aaData": [ ';
             foreach ( $rResult as $key=>$aRow ){
-                
-                if($aRow['estado'] == 'R'){
-                    $estado = '<span class=\"label label-success\">'.LABEL_ACT.'</span>';
-                }elseif($aRow['estado'] == 'A'){
-                    $estado = '<span class=\"label label-danger\">'.LABEL_AN.'</span>';
-                }
-                
                 /*antes de enviar id se encrypta*/
                 $encryptReg = Aes::en($aRow['id_asignacion']);
                 
                 $chk = '<input id=\"c_'.(++$key).'\" type=\"checkbox\" name=\"'.ASCU.'chk_delete[]\" value=\"'.$encryptReg.'\">';
+                
+                if($aRow['estado'] == 'R'){
+                    $estado = '<span class=\"label label-success\">'.LABEL_ACT.'</span>';
+                }elseif($aRow['estado'] == 'A'){
+                    $chk = '<input id=\"c_'.(++$key).'\" type=\"checkbox\" name=\"'.ASCU.'chk_delete[]\" disabled=\"disabled\">';
+                    $estado = '<span class=\"label label-danger\">'.LABEL_AN.'</span>';
+                }
+                
+                
+                
+                
                 /*datos de manera manual*/
                 $sOutput .= '["'.$chk.'","'.$aRow['codigo'].'","'.$aRow['fecha_creacion'].'","'.$aRow['ubicacion'].' - '.$aRow['lado'].'","'.$aRow['nombrecompleto'].'","'.$aRow['porcentaje_comision'].'","'.$estado.'" , ';
 

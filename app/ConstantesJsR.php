@@ -28,3 +28,4 @@ var diccionario = {
         ORINS: '<?php echo ORINS; ?>',
         TERCO: '<?php echo TERCO; ?>',
         COINS: '<?php echo COINS; ?>',
+        COMVE: '<?php echo COMVE; ?>',
