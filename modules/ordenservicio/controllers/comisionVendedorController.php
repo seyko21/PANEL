@@ -72,6 +72,16 @@ class comisionVendedorController extends Controller{
         Obj::run()->View->render("formComisionVendedor");
     }
     
+    public function getOrdenesServicio(){
+        $data = Obj::run()->comisionVendedorModel->getOrdenesServicio();
+        return $data;
+    }
+    
+    public function getImagenesConfirmadas($orden){
+        $data = Obj::run()->comisionVendedorModel->getImagenesConfirmadas($orden);
+        return $data;
+    }
+    
     public function postGenerarComisionVendedor(){
         $data = Obj::run()->comisionVendedorModel->generarComisionVendedor();
         

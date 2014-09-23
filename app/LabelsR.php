@@ -268,4 +268,8 @@ define('COINS_3','Subir imagen de: ');
 /*---------------------- GENERAR COMISION VENDEDOR ----------------*/
 define('COMVE_1','Vendedores');
 define('COMVE_2','Generar comisión');
+define('COMVE_3','Generar comisión a: ');
+define('COMVE_4','Confirmados: ');
+define('COMVE_5','Por confirmar: ');
+define('COMVE_6','OS: ');
 ?>

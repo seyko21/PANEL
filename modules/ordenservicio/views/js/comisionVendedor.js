@@ -85,26 +85,27 @@ var comisionVendedor_ = function(){
         });
     };
     
-    this.publico.postGenerarComisionVendedor = function(){
-        simpleAjax.send({
-            flag: 1,
-            element: "#"+diccionario.tabs.COMVE+"btnGrComisionVendedor",
-            root: _private.config.modulo + "postGenerarComisionVendedor",
-            form: "#"+diccionario.tabs.COMVE+"formComisionVendedor",
-            clear: true,
-            fnCallback: function(data) {
-                if(!isNaN(data.result) && parseInt(data.result) === 1){
-                    simpleScript.notify.ok({
-                        content: mensajes.MSG_3,
-                        callback: function(){
-                            simpleScript.reloadGrid("#"+diccionario.tabs.COMVE+"gridComisionVendedor");
+    this.publico.postGenerarComisionVendedor = function(btn,idOrden){
+        simpleScript.notify.confirm({
+            content: '¿Está seguro de generar comisión?',
+            callbackSI: function(){
+                simpleAjax.send({
+                    element: btn,
+                    root: _private.config.modulo + "postGenerarComisionVendedor",
+                    form: "#"+diccionario.tabs.COMVE+"formComisionVendedor",
+                    data: '&_idOrden='+idOrden,
+                    fnCallback: function(data) {
+                        if(!isNaN(data.result) && parseInt(data.result) === 1){
+                            simpleScript.notify.ok({
+                                content: 'Comisión se generó correctamente',
+                                callback: function(){
+                                    simpleScript.closeModal('#'+diccionario.tabs.COMVE+'formComisionVendedor');
+                                    simpleScript.reloadGrid("#"+diccionario.tabs.COMVE+"gridComisionVendedor");
+                                }
+                            });
                         }
-                    });
-                }else if(!isNaN(data.result) && parseInt(data.result) === 2){
-                    simpleScript.notify.error({
-                        content: "ComisionVendedor ya existe."
-                    });
-                }
+                    }
+                });
             }
         });
     };

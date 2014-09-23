@@ -10,7 +10,8 @@
 class comisionVendedorModel extends Model{
 
     private $_flag;
-    private $_idComisionVendedor;
+    private $_idVendedor;
+    private $_idOrden;
     private $_usuario;
     
     /*para el grid*/
@@ -26,7 +27,8 @@ class comisionVendedorModel extends Model{
     
     private function _set(){
         $this->_flag        = Formulario::getParam("_flag");
-        $this->_idComisionVendedor   = Aes::de(Formulario::getParam("_idComisionVendedor"));    /*se decifra*/
+        $this->_idVendedor   = Aes::de(Formulario::getParam("_idVendedor"));    /*se decifra*/
+        $this->_idOrden   = Aes::de(Formulario::getParam("_idOrden"));    /*se decifra*/
         $this->_usuario     = Session::get("sys_idUsuario");
         
         $this->_iDisplayStart  = Formulario::getParam("iDisplayStart"); 
@@ -61,25 +63,48 @@ class comisionVendedorModel extends Model{
         $data = $this->queryAll($query,$parms);
         return $data;
     }
-    
-    /*grabar nuevo registro: ComisionVendedor*/
-    public function newComisionVendedor(){
-        /*-------------------------LOGICA PARA EL INSERT------------------------*/
+      
+    public function getOrdenesServicio(){
+        /*solo las caratulas confirmadas y sin comision venta generada*/
+        $query = "
+        SELECT
+                os.`id_ordenservicio`,
+                os.`orden_numero`,
+                (SELECT COUNT(*) FROM `lgk_ordenserviciod` dd WHERE dd.id_ordenservicio = od.`id_ordenservicio`) AS totales,
+                (SELECT COUNT(*) FROM `lgk_ordenserviciod` bb WHERE bb.id_ordenservicio = od.`id_ordenservicio` AND imagen <>'')AS confirmados
+        FROM `lgk_ordenserviciod` od
+        INNER JOIN `lgk_ordenservicio` os ON os.`id_ordenservicio`=od.`id_ordenservicio`
+        INNER JOIN mae_usuario u ON u.`id_usuario`=os.`usuario_creacion`
+        INNER JOIN mae_persona p ON p.`persona`=u.`persona`
+        WHERE od.`imagen` <> '' AND os.`comision_venta` = 0
+        GROUP BY os.`id_ordenservicio`; ";
+        $parms = array();
+        $data = $this->queryAll($query,$parms);
+        return $data;
     }
     
-    /*seleccionar registro a editar: ComisionVendedor*/
-    public function findComisionVendedor(){
-        /*-----------------LOGICA PARA SELECT REGISTRO A EDITAR-----------------*/
+    public function getImagenesConfirmadas($orden){
+        $query = "
+        SELECT
+                od.`imagen`
+        FROM `lgk_ordenserviciod` od
+        WHERE od.`id_ordenservicio` = :idOrden AND od.`imagen` <> '';";
+        $parms = array(
+            ':idOrden'=>$orden
+        );
+        $data = $this->queryAll($query,$parms);
+        return $data;
     }
     
-    /*editar registro: ComisionVendedor*/
-    public function editComisionVendedor(){
-        /*-------------------------LOGICA PARA EL UPDATE------------------------*/
-    }
-    
-    /*eliminar varios registros: ComisionVendedor*/
-    public function deleteComisionVendedorAll(){
-        /*--------------------------LOGICA PARA DELETE--------------------------*/
+    public function generarComisionVendedor(){
+        $query = "CALL sp_ordseComisionVendedorMantenimiento(:flag,:idOrden,:usuario);";
+        $parms = array(
+            ':flag'=> 1,
+            ':idOrden'=> $this->_idOrden,
+            ':usuario'=> $this->_usuario
+        );
+        $data = $this->queryOne($query,$parms);
+        return $data;
     }
     
 }

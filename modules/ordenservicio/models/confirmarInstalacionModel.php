@@ -79,7 +79,8 @@ class confirmarInstalacionModel extends Model{
     
     public function insertImagen($doc){
         $query = "UPDATE `lgk_ordenserviciod` SET
-                    `imagen` = :doc
+                    `imagen` = :doc,
+                    fecha_imagen = NOW()
                 WHERE `id_ordenserviciod` = :idOrdenDetalle;";
         $parms = array(
             ':idOrdenDetalle' => $this->_idOrdenDetalle,
@@ -92,8 +93,7 @@ class confirmarInstalacionModel extends Model{
     
     public function deleteImagen(){
         $query = "UPDATE  lgk_ordenserviciod SET
-                    imagen = '',
-                    fecha_imagen = NOW()
+                    imagen = ''
                 WHERE id_ordenserviciod = :idOrdenDetalle;";
         
         $parms = array(

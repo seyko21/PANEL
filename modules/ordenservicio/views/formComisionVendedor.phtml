@@ -7,7 +7,9 @@
 */
 
 /*prefijo: COMVE debe ser alias en tabla men_menuprincipal*/
-$grabar = Session::getPermiso("COMVEGR");
+$generar = Session::getPermiso("COMVEGN");
+
+$vendedor = Formulario::getParam('_vendedor');
 ?>
 <form id="<?php echo COMVE; ?>formComisionVendedor" name="<?php echo COMVE; ?>formComisionVendedor" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">
@@ -16,18 +18,53 @@ $grabar = Session::getPermiso("COMVEGR");
                 <button type="button" class="close"  aria-hidden="true">
                     &times;
                 </button>
-                <h4 class="modal-title">TITULO DE FORMULARIO</h4>
+                <h4 class="modal-title"><?php echo COMVE_3.$vendedor?></h4>
             </div>
-            <div class="modal-body smart-form"> 
-                CONTENIDO DEL FORM (utilizar constantes en Labels.php)
+            <div class="modal-body"> 
+                <?php
+                $data = Obj::run()->comisionVendedorController->getOrdenesServicio();
+                
+                foreach ($data as $key => $value):
+                    $idOrden = $value['id_ordenservicio'];
+                    $porConfirmar = $value['totales'] - $value['confirmados'];
+                    $col = 'red';
+                    $label = 'label-danger';
+                    if($porConfirmar == 0){
+                        $col = 'green';
+                        $label = 'label-success';
+                    }
+                ?>
+                <div class="pull-left" style="width: 240px;border: 2px solid <?php echo$col?>;margin-left: 20px">
+                    <span class="label label-success"><?php echo COMVE_4.$value['confirmados']?></span>
+                    <span class="label label-info"><?php echo COMVE_6.$value['orden_numero']?></span>
+                    <br>
+                    <!--seleccionar imagenes confirmadas-->
+                    <?php
+                    $dataIm = Obj::run()->comisionVendedorController->getImagenesConfirmadas($idOrden);
+                    foreach ($dataIm as $key => $im):
+                    ?>
+                    <div class="pull-left" style="width: 104px;height: 104px;border: 2px solid <?php echo$col?>;margin: 7px">
+                        <img src="<?php echo BASE_URL?>public/img/confirmacion/<?php echo $im['imagen']?>" width="100px" height="100px">
+                    </div>
+                    <?php endforeach; ?>
+                    <div class="clearfix"></div>
+                    <span class="label <?php echo $label?>"><?php echo COMVE_5.$porConfirmar?></span>
+                    
+                    <!--si se confirmaron se activa boton generar comision-->
+                    <?php if($porConfirmar == 0): ?>
+                    <button type="button" class="<?php echo $generar["theme"]; ?>" onclick="comisionVendedor.postGenerarComisionVendedor(this,'<?php echo AesCtr::en($idOrden)?>');">
+                            <i class="<?php echo $generar["icono"]; ?>"></i> <?php echo $generar["accion"]; ?>
+                        </button>
+                    <?php else:?>
+                        <button type="button" class="<?php echo $generar["theme"]; ?> disabled">
+                            <i class="<?php echo $generar["icono"]; ?>"></i> <?php echo $generar["accion"]; ?>
+                        </button>
+                    <?php endif; ?>
+                </div>
+                <?php endforeach; ?>
+                <div class="clearfix"></div>
             </div>
             <div class="modal-footer">
-                <div class="foot-obligar"></div>
-                <?php if($grabar["permiso"]):?>
-                <button id="<?php echo COMVE; ?>btnGrComisionVendedor" type="submit" class="<?php echo $grabar["theme"]; ?>">
-                    <i class="<?php echo $grabar["icono"]; ?>"></i> <?php echo $grabar["accion"]; ?>
-                </button>
-                <?php endif; ?>
                 <button type="button" class="<?php echo THEME_CLOSE; ?>">
                     <i class="<?php echo ICON_CLOSE; ?>"></i> <?php echo BTN_CLOSE; ?>
                 </button>
@@ -35,39 +72,3 @@ $grabar = Session::getPermiso("COMVEGR");
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </form>
-<!-- si no tiene permiso se anula submit desde cualquier input -->
-<?php if(!$grabar["permiso"]): ?>
-<script>
-    simpleScript.noSubmit("#<?php echo COMVE; ?>formComisionVendedor");
-</script>
-<?php endif; ?>
-<script>
-/*configurar validacion de formulario -- este codigo es de ejemplo*/
-$("#<?php echo COMVE; ?>formComisionVendedor").validate({
-    // Rules for form validation
-    rules : {
-        <?php echo COMVE; ?>txt_campo : {
-            required : true,
-            regular: true,
-            minlength: 3
-        }
-    },
-
-    // Msn para validacion -- es opcional -- se puede eliminar, validate tiene los msn configurados por defecto
-    messages : {
-        <?php echo COMVE; ?>txt_campo : {
-            required : "Campo requerido",
-            regular: "No se permite caracteres inválidos"
-        }
-    },
-
-    // No cambie el código de abajo
-    errorPlacement : function(error, element) {
-        error.insertAfter(element.parent());
-    },
-
-    submitHandler: function(){
-        comisionVendedor.postNewComisionVendedor();
-    }   
-});
-</script>
