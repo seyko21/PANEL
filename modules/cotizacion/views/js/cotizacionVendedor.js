@@ -61,7 +61,7 @@ var cotizacionVendedor_ = function(){
                 {sTitle: "Estado", sWidth: "15%", sClass: "center"},
                 {sTitle: "Acciones", sWidth: "10%", sClass: "center", bSortable: false}          
             ],
-            aaSorting: [[0, "desc"]],
+            aaSorting: [[3, "desc"]],
             sScrollY: "300px",
             sAjaxSource: _private.config.modulo+"getGridCotizacionVendedor",
             fnDrawCallback: function() {
