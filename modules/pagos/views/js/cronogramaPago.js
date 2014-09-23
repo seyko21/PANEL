@@ -113,7 +113,7 @@ var cronogramaPago_ = function(){
         });
     };
     
-    this.publico.getFormReprogramar = function(btn,idc,cuota,fila){
+    this.publico.getFormReprogramar = function(btn,idc,cuota,fila, fecha){
         _private.idCompromiso = idc;
         _private.fila = fila;
         
@@ -121,7 +121,7 @@ var cronogramaPago_ = function(){
             element: btn,
             dataType: "html",
             root: _private.config.modulo + "getFormReprogramar",
-            data: '&_ncuota='+cuota,
+            data: '&_ncuota='+cuota+'&_fecha='+fecha,
             fnCallback: function(data){
                 $("#cont-modal").append(data);  /*los formularios con append*/
                 $("#"+diccionario.tabs.CROPA+"formReprogramar").modal("show");

@@ -10,6 +10,7 @@
 $grabar = Session::getPermiso("CROPAGR");
 
 $ncuota = Formulario::getParam('_ncuota');
+$fecha = Formulario::getParam('_fecha');
 ?>
 <form id="<?php echo CROPA; ?>formReprogramar" name="<?php echo CROPA; ?>formReprogramar" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">
@@ -18,7 +19,7 @@ $ncuota = Formulario::getParam('_ncuota');
                 <button type="button" class="close"  aria-hidden="true">
                     &times;
                 </button>
-                <h4 class="modal-title"><?php echo CROPA_5.$ncuota?></h4>
+                <h4 class="modal-title"><?php echo CROPA_5.$ncuota.' | Fecha: '.$fecha; ?></h4>
             </div>
             <div class="modal-body smart-form"> 
                 <section>
