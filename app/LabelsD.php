@@ -11,6 +11,7 @@ define('BTN_AANULAR','Anular');
 define('LABEL_AC100','Todas las caratulas han sido asignadas.');
 define('LABEL_BSVEN','Buscar vendedor');
 define('LABEL_BSPER','Buscar Persona');
+define('LABEL_ENVIADO','Enviado');
 
 define('LABEL_REDSOCIAL','- Redes Sociales -');
 define('URL_FACEBOOK','http://fb.com/sevendcorp');
@@ -161,5 +162,5 @@ define('LABEL_A162','Editar Persona');
 /*----------------------Mis Cotizaciones----------------------*/
 define('MISCO_1','Listado de Cotizaciones');
 define('COXVE_1','Cotizaciones por Vendedor');
-
+define('COXVE_2','Historial de Cotización');
 ?>

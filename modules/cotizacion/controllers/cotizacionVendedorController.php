@@ -11,11 +11,16 @@ class cotizacionVendedorController extends Controller{
 
     public function __construct() {
         $this->loadModel("cotizacionVendedor");
+        $this->loadController(array('modulo' => 'cotizacion', 'controller' => 'generarCotizacion')); 
     }
     
     public function index(){ 
         Obj::run()->View->render("indexCotizacionVendedor");
     }
+    
+    public function getConsulta(){ 
+        Obj::run()->View->render('consultarTiempoCotizacion');
+    }  
     
     public function getGridCotizacionVendedor(){
         $consultar   = Session::getPermiso('COXVECC');
@@ -45,26 +50,23 @@ class cotizacionVendedorController extends Controller{
                                
                 /*antes de enviar id se encrypta*/
                 $encryptReg = Aes::en($aRow['id_cotizacion']);
+                $numCotizacion = $aRow['cotizacion_numero'];
                 
                 switch($aRow['estado']) {
                     case "E":
                         $et = 'label label-default';
-                        $selE = 'selected=\"selected\"';
                         $estado = SEGCO_5;
                         break;
                     case "P":
                         $et = 'label label-success';
-                        $selP = 'selected=\"selected\"';
                         $estado = SEGCO_6;
                         break;
                     case "R":
                         $et = 'label label-warning';
-                        $selR = 'selected=\"selected\"';
                         $estado = SEGCO_8;
                         break;
                     case "A":
                         $et = 'label label-danger';
-                        $selR = '';
                         $estado = SEGPA_9;
                         break;
                 }
@@ -73,10 +75,10 @@ class cotizacionVendedorController extends Controller{
                  * configurando botones (add/edit/delete etc)
                  * se verifica si tiene permisos para editar
                  */
-                $axion = '"<div class=\"btn-group\">';
-                 
+                $axion = '"<div class=\"btn-group\">';                                
+                
                 if($consultar['permiso']){
-                    $axion .= '<button type=\"button\" class=\"'.$consultar['theme'].'\" title=\"'.$consultar['accion'].'\" onclick=\"cotizacionVendedor.getFormCotizacion(this,\''.$encryptReg.'\')\">';
+                    $axion .= '<button type=\"button\" class=\"'.$consultar['theme'].'\" title=\"'.$consultar['accion'].'\" onclick=\"cotizacionVendedor.getConsulta(\''.$encryptReg.'\',\''.$numCotizacion.'\')\">';
                     $axion .= '    <i class=\"'.$consultar['icono'].'\"></i>';
                     $axion .= '</button>';
                 }                
@@ -105,12 +107,81 @@ class cotizacionVendedorController extends Controller{
         echo $sOutput;
 
     }
+
+    public function getGridTiempoCoti(){
+       
+        $sEcho          =   $this->post('sEcho');
+        
+        $rResult = Obj::run()->cotizacionVendedorModel->getGridTiempoCoti();
+        
+        $num = Obj::run()->cotizacionVendedorModel->_iDisplayStart;
+        if($num >= 10){
+            $num++;
+        }else{
+            $num = 1;
+        }
+        
+        if(!isset($rResult['error'])){  
+            $iTotal         = isset($rResult[0]['total'])?$rResult[0]['total']:0;
+            
+            $sOutput = '{';
+            $sOutput .= '"sEcho": '.intval($sEcho).', ';
+            $sOutput .= '"iTotalRecords": '.$iTotal.', ';
+            $sOutput .= '"iTotalDisplayRecords": '.$iTotal.', ';
+            $sOutput .= '"aaData": [ ';     
+            
+            foreach ( $rResult as $aRow ){
+                                               
+                switch($aRow['estado']) {
+                    case "E":
+                        $et = 'label label-default';
+                        $estado = SEGCO_5;
+                        break;
+                    case "S":
+                        $et = 'label bg-color-blue txt-color-white';
+                        $estado = LABEL_ENVIADO;
+                        break;                    
+                    case "P":
+                        $et = 'label label-success';
+                        $estado = SEGCO_6;
+                        break;
+                    case "R":
+                        $et = 'label label-warning';
+                        $estado = SEGCO_8;
+                        break;
+                    case "A":
+                        $et = 'label label-danger';
+                        $estado = SEGPA_9;
+                        break;
+                }
+                $xestado = '"<div class=\"'.$et.'\">'.$estado.'</div>"';
+                /*
+                 * configurando botones (add/edit/delete etc)
+                 * se verifica si tiene permisos para editar
+                 */                                            
+                
+                /*registros a mostrar*/
+                $sOutput .= '["'.($num++).'","'.$aRow['fecha_estado'].'","'.$aRow['observacion'].'",'.$xestado.' ';
+                
+                
+                $sOutput .= '],';
+
+            }
+            $sOutput = substr_replace( $sOutput, "", -1 );
+            $sOutput .= '] }';
+        }else{
+            $sOutput = $rResult['error'];
+        }
+        
+        echo $sOutput;
+
+    }    
     
-    /*carga formulario (newCotizacionVendedor.phtml) para nuevo registro: CotizacionVendedor*/
-    public function getFormNewCotizacionVendedor(){
-        Obj::run()->View->render("formNewCotizacionVendedor");
-    }
     
+    public function postPDF($n=''){
+         $data = Obj::run()->generarCotizacionController->postPDF($n);
+         return $data;
+    } 
     
 }
 

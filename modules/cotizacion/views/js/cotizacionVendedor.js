@@ -10,7 +10,7 @@ var cotizacionVendedor_ = function(){
     /*metodos privados*/
     var _private = {};
     
-    _private.idCotizacionVendedor = 0;
+    _private.idCotizacion = 0;
     
     _private.config = {
         modulo: "Cotizacion/cotizacionVendedor/"
@@ -77,7 +77,65 @@ var cotizacionVendedor_ = function(){
         setup_widgets_desktop();
     };
     
-
+    this.publico.getGridTICO = function (){
+         $('#'+diccionario.tabs.COXVE+'gridTICO').dataTable({
+            bProcessing: true,
+            bServerSide: true,
+            bDestroy: true,
+            sPaginationType: "bootstrap_full", //two_button
+            sServerMethod: "POST",
+            bPaginate: true,
+            iDisplayLength: 10,   
+            sSearch: false,
+            bFilter: false,
+            aoColumns: [                
+                {sTitle: "N°", sWidth: "5%", sClass: "center"},
+                {sTitle: "Fecha", sWidth: "20%", sClass: "center"},
+                {sTitle: "Observacion", sWidth: "60%", sClass: "left"},
+                {sTitle: "Estado", sWidth: "10%", bSortable: false}
+            ],
+            aaSorting: [[1, 'asc']],
+            sScrollY: "350px",
+            sAjaxSource: _private.config.modulo+'getGridTiempoCoti',
+            fnServerParams: function(aoData) {
+                aoData.push({"name": "_idCotizacion", "value": _private.idCotizacion });
+            }
+        });
+        setup_widgets_desktop();
+    };
+    
+    this.publico.getConsulta = function(id, cod){
+        _private.idCotizacion = id;               
+        simpleAjax.send({
+            gifProcess: true,
+            dataType: 'html',
+            root: _private.config.modulo + 'getConsulta',
+            data: '&_idCotizacion='+_private.idCotizacion+'&_numeroCotizacion='+cod,
+            fnCallback: function(data){
+                $('#cont-modal').append(data);  /*los formularios con append*/
+                $('#'+diccionario.tabs.COXVE+'formTICO').modal('show');
+                setTimeout(function(){                    
+                    cotizacionVendedor.getGridTICO()
+                }, 500);
+                
+            }
+        });
+    };   
+        
+    
+    this.publico.postPDF = function(btn,idCot){
+        simpleAjax.send({
+            element: btn,
+            root: _private.config.modulo + 'postPDF',
+            data: '&_idCotizacion='+idCot,
+            fnCallback: function(data){
+                if(parseInt(data.result) === 1){
+                    $('#'+diccionario.tabs.COXVE+'btnDowPDF').attr("onclick","window.open('public/files/"+data.archivo+"','_blank');generarCotizacion.deleteArchivo('"+data.archivo+"');");
+                    $('#'+diccionario.tabs.COXVE+'btnDowPDF').click();
+                }
+            }
+        });
+    }; 
     
     return this.publico;
     

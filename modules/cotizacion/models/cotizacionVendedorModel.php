@@ -61,7 +61,34 @@ class cotizacionVendedorModel extends Model{
         return $data;
     }
     
-    
+    public function getGridTiempoCoti(){
+        $aColumns       =   array('','fecha_estado','observacion','estado' ); //para la ordenacion y pintado en html
+        /*
+	 * Ordenando, se verifica por que columna se ordenara
+	 */
+        $sOrder = "";
+        for ( $i=0 ; $i<intval( $this->_iSortingCols ) ; $i++ ){
+                if ( Formulario::getParam( "bSortable_".intval(Formulario::getParam("iSortCol_".$i)) ) == "true" ){
+                        $sOrder .= " ".$aColumns[ intval( Formulario::getParam("iSortCol_".$i) ) ]." ".
+                                (Formulario::getParam("sSortDir_".$i)==="asc" ? "asc" : 'desc') .",";
+                }
+        }        
+        $sOrder = substr_replace( $sOrder, "", -1 );
+        
+        $query = "call sp_cotiConsultaTiempoSGrid(:idCotizacion,:iDisplayStart,:iDisplayLength,:sOrder);";
+        
+        $parms = array(            
+            ':idCotizacion' => $this->_idCotizacion,
+            ':iDisplayStart' => $this->_iDisplayStart,
+            ':iDisplayLength' => $this->_iDisplayLength,
+            ':sOrder' => $sOrder
+        );
+        
+        $data = $this->queryAll($query,$parms);
+     
+        return $data; 
+       
+    }    
     
 }
 

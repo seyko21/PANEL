@@ -142,7 +142,6 @@ class generarCotizacionModel extends Model{
             ':campania' => $this->_campania
         );
         $data = $this->queryOne($query,$parms);  
- 
         if($data['result'] == 1){
             $item = 0;
             foreach ($this->_idProducto as $key => $prod) {
