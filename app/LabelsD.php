@@ -168,7 +168,8 @@ define('COXVE_2','Historial de Cotización');
 define('COGEN_1','Contratos Generado');
 define('COGEN_2','Desde ');
 define('COGEN_3','hasta ');
-
-
+/*----------------------Reeprogramacion----------------------*/
+define('CROPA_D1','Observacion ');
+define('CROPA_D1M','Ingrese el motivo del porque esta reprogramando esta cuota.');
 
 ?>

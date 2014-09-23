@@ -42,7 +42,19 @@ $ncuota = Formulario::getParam('_ncuota');
                         </div>
                     </div>
                 </section>
-                         
+                 <section>
+                        <div class="row">
+                            <label class="label col col-2"><?php echo CROPA_D1; ?></label>
+                            <div class="col col-9">
+                                <label class="textarea textarea-resizable"> 
+                                     <i class="icon-append fa fa-align-justify"></i>
+                                    <textarea id="<?php echo CROPA; ?>txt_observacion" name="<?php echo CROPA; ?>txt_observacion" class="custom-scroll" rows="3"></textarea> 
+                                     <b class="tooltip tooltip-top-right"><i class="fa fa-question-circle txt-color-teal"></i> <?php echo CROPA_D1M; ?></b>
+                                </label>
+
+                            </div>
+                        </div>
+                </section>           
             </div>
             <div class="modal-footer"> 
                 <?php if($grabar["permiso"]):?>

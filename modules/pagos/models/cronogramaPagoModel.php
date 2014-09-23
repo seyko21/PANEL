@@ -10,6 +10,7 @@ class cronogramaPagoModel extends Model{
     private $_fechaRepro;
     private $_fecha;
     private $_mora;
+    private $_observacion;
     private $_usuario;
     
     /*para el grid*/
@@ -34,6 +35,7 @@ class cronogramaPagoModel extends Model{
         $this->_fechaRepro  = Functions::cambiaf_a_mysql(Formulario::getParam(CROPA."txt_fechare"));
         $this->_fecha  = Functions::cambiaf_a_mysql(Formulario::getParam(CROPA."txt_fechapago"));
         $this->_mora  = Formulario::getParam(CROPA."txt_mora");
+        $this->_observacion = Formulario::getParam(CROPA."txt_observacion");
         
         $this->_iDisplayStart  = Formulario::getParam("iDisplayStart"); 
         $this->_iDisplayLength = Formulario::getParam("iDisplayLength"); 
@@ -78,7 +80,7 @@ class cronogramaPagoModel extends Model{
     }
     
     public function postPagarOrden(){
-        $query = "CALL sp_ordseSeguimientoPagoPagarCuota(:flag,:idCompromiso,:tipoDoc,:numDoc,:serieDdoc,:usuario,:fecha);";
+        $query = "CALL sp_ordseSeguimientoPagoPagarCuota(:flag,:idCompromiso,:tipoDoc,:numDoc,:serieDdoc,:usuario,:fecha,:obs);";
         
         $parms = array(
             ":flag" => 1,
@@ -87,14 +89,15 @@ class cronogramaPagoModel extends Model{
             ":numDoc" => $this->_numDoc,
             ":serieDdoc" => $this->_serieDoc,
             ":usuario" => $this->_usuario,
-            ":fecha" => $this->_fecha
+            ":fecha" => $this->_fecha,
+            ":obs" => ''            
         );
         $data = $this->queryOne($query,$parms);
         return $data;
     }
     
     public function postReprogramar(){
-        $query = "CALL sp_ordseSeguimientoPagoPagarCuota(:flag,:idCompromiso,:tipoDoc,:numDoc,:serieDdoc,:usuario,:fecha);";
+        $query = "CALL sp_ordseSeguimientoPagoPagarCuota(:flag,:idCompromiso,:tipoDoc,:numDoc,:serieDdoc,:usuario,:fecha,:obs);";
         
         $parms = array(
             ":flag" => 2,
@@ -103,7 +106,8 @@ class cronogramaPagoModel extends Model{
             ":numDoc" => $this->_fechaRepro,
             ":serieDdoc" => $this->_mora,
             ":usuario" => $this->_usuario,
-            ":fecha" => ''
+            ":fecha" => '',
+            ":obs" => $this->_observacion
         );
         $data = $this->queryOne($query,$parms);
         return $data;
