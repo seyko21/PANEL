@@ -52,7 +52,7 @@ var cotizacionVendedor_ = function(){
             bPaginate: true,
             iDisplayLength: 10,            
             aoColumns: [
-                {sTitle: "Código", sClass: "center",sWidth: "15%"},
+                {sTitle: "Código", sClass: "center",sWidth: "15%", bSortable: false},
                 {sTitle: "DNI", sWidth: "10%"},   
                 {sTitle: "Vendedor", sWidth: "30%"},   
                 {sTitle: "Fecha", sWidth: "10%", sClass: "center"},
