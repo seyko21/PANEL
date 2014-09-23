@@ -37,7 +37,7 @@ class confirmarInstalacionModel extends Model{
     
     /*data para el grid: ConfirmarInstalacion*/
     public function getConfirmarInstalacion(){
-        $aColumns       =   array("orden_numero","codigo","ubicacion","fecha_inicio"); //para la ordenacion y pintado en html
+        $aColumns       =   array("orden_numero","ordenin_numero","codigo","ubicacion","fecha_inicio"); //para la ordenacion y pintado en html
         /*
 	 * Ordenando, se verifica por que columna se ordenara
 	 */

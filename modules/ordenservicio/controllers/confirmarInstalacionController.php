@@ -52,7 +52,7 @@ class confirmarInstalacionController extends Controller{
                 $encryptReg = Aes::en($aRow['id_ordenserviciod']);
                 
                 /*registros a mostrar*/
-                $sOutput .= '["'.$aRow['orden_numero'].'","'.$aRow['codigo'].'","'.$aRow['ubicacion'].' - '.$aRow['descripcion'].'","'.$aRow['fecha_instalacion'].'","'.$conf.'", ';
+                $sOutput .= '["'.$aRow['orden_numero'].'","'.$aRow['ordenin_numero'].'","'.$aRow['codigo'].'","'.$aRow['ubicacion'].' - '.$aRow['descripcion'].'","'.$aRow['fecha_instalacion'].'","'.$conf.'", ';
                 /*
                  * configurando botones (add/edit/delete etc)
                  * se verifica si tiene permisos para editar

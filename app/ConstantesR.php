@@ -23,4 +23,5 @@ define("CROPA","CROPA");             /*tab modulo CRONOGRAMA DE PAGOS*/
 define("ORINS","ORINS");             /*tab modulo INSTALACION*/
 define("TERCO","TERCO");             /*tab modulo TERMINARCONTRATO*/
 define("COINS","COINS");             /*tab modulo CONFIRMARINSTALACION*/
+define("COMVE","COMVE");             /*tab modulo COMISIONVENDEDOR*/
 ?>

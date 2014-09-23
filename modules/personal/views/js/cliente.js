@@ -254,7 +254,7 @@ var cliente_ = function(){
             element: '#'+diccionario.tabs.REGCL+'btnGrRep',
             root: _private.config.modulo + 'postNewRepresentante',
             form: '#'+diccionario.tabs.REGCL+'formNewRepresentante',
-            data : '&_ancestro='+_private.idRepresentante,
+            data : '&_ancestro='+_private.idAncestro,
             clear: true,
             fnCallback: function(data) {
                 if(!isNaN(data.result) && parseInt(data.result) === 1){

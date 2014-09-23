@@ -53,6 +53,7 @@ var confirmarInstalacion_ = function(){
             iDisplayLength: 10,            
             aoColumns: [
                 {sTitle: "Código OS", sWidth: "10%",sClass: "center"},
+                {sTitle: "Código OI", sWidth: "10%",sClass: "center"},
                 {sTitle: "Código Prod.", sWidth: "8%", sClass: "center"},
                 {sTitle: "Producto", sWidth: "25%"},
                 {sTitle: "Fecha Inst.", sWidth: "10%", sClass: "center"},
