@@ -124,7 +124,7 @@ var instalacionScript_ = function(){
                 }else{
                     var cn = $(this).val();
                     var index = $(this).attr('data-index');
-                    var precio = $('#'+diccionario.tabs.ORINS+index+'txt_precio').val();
+                    var precio = simpleScript.deleteComa($('#'+diccionario.tabs.ORINS+index+'txt_precio').val());
                     
                     cn = cn.replace(",","");
                   
@@ -143,7 +143,7 @@ var instalacionScript_ = function(){
                 }else{
                     var pr = $(this).val();
                     var index = $(this).attr('data-index');
-                    var cantidad = $('#'+diccionario.tabs.ORINS+index+'txt_cantidad').val();
+                    var cantidad = simpleScript.deleteComa($('#'+diccionario.tabs.ORINS+index+'txt_cantidad').val());
                     
                     pr = pr.replace(",","");
                     

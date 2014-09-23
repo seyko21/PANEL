@@ -111,9 +111,9 @@ echo Functions::widgetOpen(array(
                                             <label class="input"><input type="text" id="<?php echo ORINS.$key?>txt_cantidad" name="<?php echo ORINS?>txt_cantidad[]" value="1" style="text-align:right" data-index="<?php echo $key?>"></label>
                                         </td>
                                         <td class="right">
-                                            <label class="input"><input type="text" id="<?php echo ORINS.$key?>txt_precio" name="<?php echo ORINS?>txt_precio[]" value="<?php echo $value['precio']?>" data-value="<?php echo $value['precio']?>" data-index="<?php echo $key?>" style="text-align:right"></label>
+                                            <label class="input"><input type="text" id="<?php echo ORINS.$key?>txt_precio" name="<?php echo ORINS?>txt_precio[]" value="<?php echo number_format($value['precio'],2)?>" data-value="<?php echo $value['precio']?>" data-index="<?php echo $key?>" style="text-align:right"></label>
                                         </td>
-                                        <td class="right"><?php echo $value['costo_total']?></td>
+                                        <td class="right"><?php echo number_format($value['costo_total'],2)?></td>
                                         <td>
                                             <button type="button" class="btn btn-danger btn-xs" onclick="instalacionScript.removeCaratula('<?php echo $idConcepto?>');"><i class="fa fa-trash-o"></i></a>
                                         </td>
