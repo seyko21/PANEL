@@ -83,7 +83,7 @@ class seguimientoPagoModel extends Model{
     }
     
     public function postPagarOrden(){
-        $query = "CALL sp_ordseSeguimientoPagoPagarCuota(:flag,:idCompromiso,:tipoDoc,:numDoc,:serieDdoc,:usuario,:fecha);";
+        $query = "CALL sp_ordseSeguimientoPagoPagarCuota(:flag,:idCompromiso,:tipoDoc,:numDoc,:serieDdoc,:usuario,:fecha,:obs);";
         
         $parms = array(
             ":flag" => 1,
@@ -92,7 +92,8 @@ class seguimientoPagoModel extends Model{
             ":numDoc" => $this->_numDoc,
             ":serieDdoc" => $this->_serieDoc,
             ":usuario" => $this->_usuario,
-            ":fecha" => $this->_fecha
+            ":fecha" => $this->_fecha,
+            ":obs" => ''
         );
         $data = $this->queryOne($query,$parms);
         return $data;
