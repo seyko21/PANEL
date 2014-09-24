@@ -276,26 +276,48 @@ class generarOrdenController extends Controller{
                 . '<th style="width:12%;border-bottom:solid 1px #000">'.LABEL_A44.'</th>' 
                 . '<th style="width:8%;border-bottom:solid 1px #000">'.LABEL_A45.'</th>' 
                 . '</tr>';
+        
+        $impuesto = number_format($caratula[0]['monto_impuesto'],2);
+        
         foreach ($caratula as $v) {
             
-            if($v['costo_produccion'] > 0){
-                $precio = 'S/.'.number_format($v['costo_produccion'],2);
-                $align = 'right';
-            }else{
-                $precio = 'NO';
-                $align = 'center';
+            if ($value['incluyeigv'] == '0'){
+                $precio = number_format($v['precio'],2);    
+                $produccion = number_format($v['costo_produccion'],2);    
+            }
+            else{
+                $precio = number_format($v['precio_incigv'],2);     
+                $produccion = number_format($v['produccion_incigv'],2);    
             }
             
+            if($produccion > 0){
+                $produccion = 'S/.'.$produccion;
+                $align = 'right';
+            }else{
+                $produccion = 'NO';
+                $align = 'center';
+            }
+                        
             $panel .= '<tr>';
             $panel .=  '   <td style="text-align:center; font-size:11px;">'.$v['codigo'].'</td>';
             $panel .=  '   <td style="text-align:center; font-size:11px;">'.$v['elemento'].'</td>';
             $panel .= '    <td style="font-size:11px;">'.$v['ubicacion'].' - '.$v['medidas'].' Area: '.$v['dimesion_area'].' m<sup>2</sup></td>';            
-            $panel .=  '   <td style="text-align:right; font-size:11px;">S/. '.number_format($v['importe'],2).'</td>';  
-            $panel .=  '   <td style="text-align:'.$align.'; font-size:10px;">'.$precio.'</td>';
+            $panel .=  '   <td style="text-align:right; font-size:11px;">S/. '.$precio.'</td>';  
+            $panel .=  '   <td style="text-align:'.$align.'; font-size:10px;">'.$produccion.'</td>';
             $panel .=  '</tr>';
         }
         $panel .= '</table>';
-        
+        $panel .= '<br />'
+                . '<table style="width:70%;font-size:11px;" align="right" >'
+                . '<tr>'
+                . '<td style="text-align:right;width:20%"><b>Importe:</b></td>'
+                . '<td style="text-align:right;width:10%">S/.'.number_format($caratula[0]['monto_venta'],2).'</td>'
+                . '<td style="text-align:right;width:20%"><b>IGV '.(number_format($caratula[0]['porcentaje_impuesto']*100)).'%:</b></td>'
+                . '<td style="text-align:right;width:10%">S/.'.number_format($caratula[0]['monto_impuesto'],2).'</td>'
+                . '<td style="text-align:right;width:20%"><b>Total:</b></td>'
+                . '<td style="text-align:right;width:10%">S/.'.number_format($caratula[0]['monto_total'],2).'</td>'
+                . '</tr>'
+                . '</table>';
         //Cronograma
         $cro = '<table border="0" style="width:70%; font-family:Arial; font-size:12px;"> '
                 . '<tr>'
@@ -303,7 +325,7 @@ class generarOrdenController extends Controller{
                 . '<th style="border-bottom:solid 1px #000">'.GNOSE_20.'</th>'
                 . '<th style="border-bottom:solid 1px #000">'.GNOSE_19.'</th>'
                 . '</tr>';
-        foreach ($cronograma as $value) {
+        foreach ($cronograma as $value) {                       
             $cro .= '<tr>';
             $cro .= '    <td style="text-align:center">'.$value['numero_cuota'].'</td>';            
             $cro .= '    <td style="text-align:center">'.$value['fechapro'].'</td>';
@@ -311,18 +333,22 @@ class generarOrdenController extends Controller{
             $cro .= '</tr>';
         }
         $cro .= '</table>';
-                        
+                                                
         $ruc = '';
         if($contrato['numerodocumento'] != ''){ $ruc = ' con RUC '.$contrato['numerodocumento']; }
                 
-        if ($contrato['incluyeIGV'] == '0')
-            $incluyeIGV = 'Los precios no incluyen IGV';
-        else
+        if ($contrato['incluyeIGV'] == '0'){
+            $incluyeIGV = 'Los precios no incluyen IGV';            
+        }
+        else{
             $incluyeIGV = 'Los precios incluyen IGV';
+        }        
+                
         $diaoferta = '';
          if ( $contrato['dias_oferta'] > 0){
             $diaoferta = 'La empresa SEVEND S.A.C. adiciona un plus promocional de '.$contrato['dias_oferta'].' días calendarios luego de haber finalizado la publicación.';
          }
+         
         $html = str_replace('{{CLIENTE_EMPRESA}}',$contrato['cliente'], $html);
         $html = str_replace('{{CLIENTE_DIRECCION}}',$contrato['direccion'], $html);
         $html = str_replace('{{CLIENTE_RUC}}',$ruc, $html);
@@ -338,7 +364,6 @@ class generarOrdenController extends Controller{
         $html = str_replace('{{FOR_COMPROMISOPAGO}}',$cro, $html);
         $html = str_replace('{{CONTRATO_MESES}}',$contrato['meses_contrato'], $html);
         $html = str_replace('{{DIAS_OFERTA}}',$diaoferta, $html);
-        
         
         $nl = new numerosALetras();
         $html = str_replace('{{CONTRATO_DINERO_EN_LETRAS}}',  $nl->convertir($contrato['monto_total']), $html);
