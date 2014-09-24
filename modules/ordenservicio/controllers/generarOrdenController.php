@@ -277,12 +277,21 @@ class generarOrdenController extends Controller{
                 . '<th style="width:8%;border-bottom:solid 1px #000">'.LABEL_A45.'</th>' 
                 . '</tr>';
         foreach ($caratula as $v) {
+            
+            if($v['costo_produccion'] > 0){
+                $precio = 'S/.'.number_format($v['costo_produccion'],2);
+                $align = 'right';
+            }else{
+                $precio = 'NO';
+                $align = 'center';
+            }
+            
             $panel .= '<tr>';
             $panel .=  '   <td style="text-align:center; font-size:11px;">'.$v['codigo'].'</td>';
             $panel .=  '   <td style="text-align:center; font-size:11px;">'.$v['elemento'].'</td>';
             $panel .= '    <td style="font-size:11px;">'.$v['ubicacion'].' - '.$v['medidas'].' Area: '.$v['dimesion_area'].' m<sup>2</sup></td>';            
             $panel .=  '   <td style="text-align:right; font-size:11px;">S/. '.number_format($v['importe'],2).'</td>';  
-            $panel .=  '   <td style="text-align:center; font-size:10px;">'.($v['costo_produccion'] > 0?'SI':'NO').'</td>';
+            $panel .=  '   <td style="text-align:'.$align.'; font-size:10px;">'.$precio.'</td>';
             $panel .=  '</tr>';
         }
         $panel .= '</table>';
