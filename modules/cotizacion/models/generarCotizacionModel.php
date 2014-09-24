@@ -251,10 +251,11 @@ class generarCotizacionModel extends Model{
     
     public function anularCotizacion(){
         foreach ($this->_chkdel as $value) {
-            $query = "call sp_cotiAnulacion(:idCotizacion,:usuario);";
+            $query = "call sp_cotiAnulacion(:idCotizacion,:usuario, :msj);";
             $parms = array(
                 ':idCotizacion' => Aes::de($value),
-                ':usuario' => $this->_usuario
+                ':usuario' => $this->_usuario,
+                ':msj' => 'Cotización anulada.'
             );
             $this->execute($query,$parms);
            // print_r($parms);

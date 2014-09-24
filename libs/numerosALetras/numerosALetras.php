@@ -8,7 +8,7 @@ class numerosALetras {
     var $Zero = "0";
     var $Neg = "Menos";
 
-    function convertir($x, $Moneda='Soles') {
+    function convertir($x, $Moneda='Nuevo Soles') {
         $s = "";
         $Ent = "";
         $Frc = "";

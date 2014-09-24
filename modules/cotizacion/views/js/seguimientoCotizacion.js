@@ -131,7 +131,10 @@ var seguimientoCotizacion_ = function(){
                             simpleScript.reloadGrid("#"+diccionario.tabs.SEGCO+"gridSeguimientoCotizacion");
                             /*si tab cotizaciones esta abienrto recargar grila de cortizaciones*/
                             if($('#'+diccionario.tabs.T8+'xgridGenerarCotizacion').length > 0){
-                                setTimeout(function(){generarCotizacion.getGridCotizacion();},1500);
+                                setTimeout(function(){
+                                   generarCotizacion.getGridCotizacion();
+                                   //simpleScript.reloadGrid('#'+diccionario.tabs.T8+'xgridGenerarCotizacion');
+                                },2000);
                             }
                         }
                     });

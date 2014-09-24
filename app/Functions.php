@@ -219,5 +219,27 @@ class Functions{
         return str_replace(',', '', $val);
     }
     
+    public static function convertirDiaMes($valor){
+        //Entrada: 0.5, 0.6, 1, 1.5, 3.5
+        if ($valor < 1 ){
+           $dia = round(30 * $valor);
+           $resultado = number_format($dia,0).' dias';   
+        }else{
+            $decimal = explode(".",$valor);
+            $nmes = $decimal[0];
+            $ndia = '0.'.$decimal[1];                        
+            $xdia = round(30 * $ndia);
+            
+            if($xdia <= 0){
+                $resultado = number_format($valor,0).' meses'; 
+            }else{
+                $resultado = number_format($nmes,0).' meses y '.$xdia.' dias';                    
+            }
+            
+             
+        }                    
+        return $resultado;
+    }
+    
 }
 ?>

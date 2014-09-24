@@ -305,7 +305,15 @@ class generarCotizacionController extends Controller{
            #td2 th, .totales{background:#901D78; color:#FFF; height:25px;}
            #td2 td{font-size:11px;height:25px;}
         </style>';
-             
+        
+        switch($data[0]['estado']){
+            case 'E': $estado = 'Emitido'; break;
+            case 'P': $estado = 'Procesado - Orden Servicio'; break;
+            case 'R': $estado = 'Rechazado'; break;
+            case 'A': $estado = 'Anulado'; break;
+        }
+        
+        
         $html .='<table width="100%" border="0" cellpadding="5" cellspacing="3">
           <tr bgcolor="#901D78">
             <th colspan="6"><div align="center"><h2 style="color:#FFF;">PRESUPUESTO DE PANELES</h2></div></th>
@@ -320,7 +328,9 @@ class generarCotizacionController extends Controller{
           </tr>
           <tr>
             <td><strong>Cliente:</strong></td>
-            <td colspan="5">'.($data[0]['ruccliente']==''?'':$data[0]['ruccliente'].' - ').$data[0]['razonsocial'].'</td>
+            <td colspan="2">'.($data[0]['ruccliente']==''?'':$data[0]['ruccliente'].' - ').$data[0]['razonsocial'].'</td>
+            <td align="right"><strong>Estado:</strong></td>
+            <td colspan="2">'.$estado.'</td>
           </tr>
           <tr>
             <td><strong>Representante:</strong></td>
@@ -328,9 +338,9 @@ class generarCotizacionController extends Controller{
           </tr>
           <tr>
             <td><strong>Campaña:</strong></td>
-            <td colspan="3">'.$data[0]['nombre_campania'].'</td> 
-            <td><strong>Meses de Alquiler:</strong></td>
-            <td >'.$data[0]['cantidad_mes'].'</td>   
+            <td colspan="2">'.$data[0]['nombre_campania'].'</td> 
+            <td align="right" ><strong>Tiempo :</strong></td>
+            <td colspan="2">'.  Functions::convertirDiaMes($data[0]['cantidad_mes']).'</td>   
           </tr>
         </table> 
         <br />

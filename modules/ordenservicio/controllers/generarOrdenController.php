@@ -362,7 +362,7 @@ class generarOrdenController extends Controller{
         $html = str_replace('{{INCLUYE_IGV}}',$incluyeIGV, $html);
         $html = str_replace('{{FOR_CARATULAS}}',$panel, $html);
         $html = str_replace('{{FOR_COMPROMISOPAGO}}',$cro, $html);
-        $html = str_replace('{{CONTRATO_MESES}}',$contrato['meses_contrato'], $html);
+        $html = str_replace('{{CONTRATO_MESES}}',Functions::convertirDiaMes($contrato['meses_contrato']), $html);
         $html = str_replace('{{DIAS_OFERTA}}',$diaoferta, $html);
         
         $nl = new numerosALetras();

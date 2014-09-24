@@ -235,24 +235,14 @@ class generarOrdenModel extends Model{
     }
     
     public function anularOrdenAll(){
-        $query = "UPDATE lgk_ordenservicio SET estado = :estado WHERE id_ordenservicio = :idOrden; ";
-        
-        $queryx = "UPDATE `lgk_cotizacion` SET `estado` = :estado "
-                . "WHERE `cotizacion_numero` = (SELECT cotizacion_numero FROM lgk_ordenservicio WHERE id_ordenservicio = :idOrden); ";
-        
+        $query = "call sp_ordSeAnulacion(:idOrden,:usuario); ";
+                        
         foreach ($this->_chkdel as $value) {
             $parms = array(
-                ':estado'=> 'A',
-                ':idOrden'=>Aes::de($value)
+                ':idOrden'=>Aes::de($value),
+                ':usuario'=> $this->_usuario 
             );
             $this->execute($query,$parms);
-            
-            #anular cotizaciones de orden servicio
-            $parmsx = array(
-                ':estado'=> 'A',
-                ':idOrden'=>Aes::de($value)
-            );
-            $this->execute($queryx,$parmsx);
         }
         
         $data = array('result'=>1);

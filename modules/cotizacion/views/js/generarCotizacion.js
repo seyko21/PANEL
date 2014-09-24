@@ -239,7 +239,10 @@ var generarCotizacion_ = function(){
                                             //simpleScript.closeModal('#'+diccionario.tabs.T8+'formGenerarCotizacion');
                                             /*si tab seguimiento cotizaciones esta abienrto recargar grila de seguimiento*/
                                             if($('#'+diccionario.tabs.SEGCO+'gridSeguimientoCotizacion').length > 0){
-                                                setTimeout(function(){seguimientoCotizacion.getGridSeguimientoCotizacion();},1500);
+                                                setTimeout(function(){
+                                                    seguimientoCotizacion.getGridSeguimientoCotizacion();
+                                                    //simpleScript.reloadGrid('#'+diccionario.tabs.SEGCO+'gridSeguimientoCotizacion');
+                                                },2000);
                                             }
                                         }
                                     });

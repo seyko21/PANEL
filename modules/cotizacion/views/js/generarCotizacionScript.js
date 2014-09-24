@@ -128,24 +128,32 @@ var generarCotizacionScript_ = function(){
     
     this.publico.calculaPrecio = function(){
         var collection = $('#'+diccionario.tabs.T8+'gridProductos').find('tbody').find('tr');
+        var total = 0;
+        var precio = 0;
         $.each(collection,function(){
             var tthis = $(this);
             var produccion = $(this).find('td:eq(0)').find('.'+diccionario.tabs.T8+'hhddProduccion').val();
             var meses = $('#'+diccionario.tabs.T8+'txt_meses').val();
+            var chk  = $(this).find('td:eq(4)').find('input:checkbox');
             
             $(this).find('td:eq(2)').find('input:text').keyup(function(){
-                if(isNaN($(this).val())){
-                    var d = $(this).attr('data-value');
-                    $(this).val(d);
+                if(isNaN($(this).val()) || $(this).val() == '' ){
+                    var precio = $(this).attr('data-value');
+                    $(this).val(precio);                                                            
                 }else{
-                    var precio = $(this).val();
-                    precio = precio.replace(",","");
-                    
-                    var total = (parseFloat(precio) * parseFloat(meses)) + parseFloat(produccion);
-                    
-                    tthis.find('td:eq(6)').html(total.toFixed(2));
-                    generarCotizacionScript.calculoTotal();
+                   precio = $(this).val();
+                   precio = precio.replace(",","");                                        
                 }
+                
+                if(chk.is(':checked')){
+                    total = (parseFloat(precio) * parseFloat(meses)) + parseFloat(produccion);
+                }else{
+                    total = (parseFloat(precio) * parseFloat(meses)) ;
+                }
+                                        
+                tthis.find('td:eq(6)').html(total.toFixed(2));
+                generarCotizacionScript.calculoTotal();                  
+                
             });
         });
     };
