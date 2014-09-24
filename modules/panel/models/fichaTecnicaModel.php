@@ -27,7 +27,7 @@ class fichaTecnicaModel extends Model{
     private $_descripcion; 
     private $_precio;
     private $_iluminado;
-    private $_imagen;
+    private $_multiple;
         
     /*para el grid*/
     private $_iDisplayStart;
@@ -64,7 +64,7 @@ class fichaTecnicaModel extends Model{
         $this->_descripcion = Formulario::getParam(T102.'txt_descripcion'); 
         $this->_precio =  str_replace(',','',Formulario::getParam(T102.'txt_precio'));  /*quitamos la coma para guardar decimal*/
         $this->_iluminado = Formulario::getParam(T102.'chk_iluminado');
-        $this->_imagen = Formulario::getParam(T102.'txt_imagen');  
+        $this->_multiple = Formulario::getParam(T102.'chk_multi');  
         
         $this->_chkdel  = Formulario::getParam(T102.'chk_delete'); 
          
@@ -156,7 +156,7 @@ class fichaTecnicaModel extends Model{
                 FORMAT(`precio`,2) AS precio,
                 `iluminado`,
                 `estado`,  
-                `imagen`
+                multiplecotizacion
               FROM `lgk_caratula` 
               WHERE id_caratula = :id ";
         $parms = array(
@@ -287,7 +287,7 @@ class fichaTecnicaModel extends Model{
     
     public function mantenimientoCaratula(){
         $query = "call sp_catalogoCaratulaMantenimiento(:flag,:key,:idproducto,				
-				:codigo, :descripcion, :precio, :iluminado, :imagen, :usuario);";
+				:codigo, :descripcion, :precio, :iluminado, :usuario,:multi);";
         $parms = array(
             ':flag' => $this->_flag,
             ':key' => $this->_idCaratula,
@@ -296,10 +296,10 @@ class fichaTecnicaModel extends Model{
             ':descripcion' => $this->_descripcion,   
             ':precio' => $this->_precio,   
             ':iluminado' => $this->_iluminado,   
-            ':imagen' => $this->_imagen,               
-            ':usuario' => $this->_usuario
+            ':usuario' => $this->_usuario,
+            ':multi' => $this->_multiple
         );
-        $data = $this->queryOne($query,$parms);            
+        $data = $this->queryOne($query,$parms); 
         return $data;
     }   
     

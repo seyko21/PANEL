@@ -176,7 +176,11 @@ class asignarCuentaModel extends Model{
         FROM `lgk_caratula` c 
         INNER JOIN `lgk_catalogo` k ON k.`id_producto`=c.`id_producto`
         WHERE c.`estado`='D' AND k.`estado`=:estado
-        and not exists (select * from lgk_asignacioncuenta ac where ac.id_caratula = c.id_caratula and ac.estado='R')
+        and not exists (select * from lgk_asignacioncuenta ac                                 
+                            where ac.id_caratula = c.id_caratula and 
+                                  ac.estado='R' and
+                                  c.multiplecotizacion = 'N' 
+                        )
         order by 2 asc ;";
         
         $parms = array(

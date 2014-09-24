@@ -76,6 +76,7 @@ define('LABEL_A42','Adjuntar Imagen');
 define('LABEL_A43','Medidas');
 define('LABEL_A44','Precio');
 define('LABEL_A45','Producción');
+define('LABEL_A46','Multiple Cotiz');
 /*----------------------Permiso Municipal----------------------*/
 define('LABEL_A50','Permiso Municipal de Panel');
 define('LABEL_A51','Registro de Permiso Municipal');

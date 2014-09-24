@@ -60,8 +60,18 @@ $grabar = Session::getPermiso('FITECGR');
                         </div>
                     </div>
                 </section>
-                <input type="hidden" id="<?php echo T102; ?>txt_imagen" name="<?php echo T102; ?>txt_imagen" value="">                
-                
+                <section>
+                    <div class="row">
+                        <label class="label col col-2"><?php echo LABEL_A46; ?></label>
+                        <div class="col col-3">
+                            <label class="checkbox">
+                                <input type="checkbox" name="<?php echo T102; ?>chk_multi" id="<?php echo T102; ?>chk_multi" value="S" ></input>
+                                <i></i>
+                                <?php echo CK_ACTIVO; ?>
+                            </label>
+                        </div>
+                    </div>
+                </section>
             </div>
             <div class="modal-footer">
                 <?php if($grabar['permiso']):?>
