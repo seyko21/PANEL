@@ -171,5 +171,8 @@ define('COGEN_3','hasta ');
 /*----------------------Reeprogramacion----------------------*/
 define('CROPA_D1','Observacion ');
 define('CROPA_D1M','Ingrese el motivo del porque esta reprogramando esta cuota.');
+/*----------------------Consulta Compromisos----------------------*/
+define('COPAG_1','Consulta de Cronogramas de Pago ');
+
 
 ?>

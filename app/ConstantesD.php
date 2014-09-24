@@ -22,5 +22,6 @@ define("REPER","REPER");             /*tab modulo PERSONA*/
 define("MISCO","MISCO");             /*tab modulo MISCOTIZACIONES*/
 define("COXVE","COXVE");             /*tab modulo COTIZACIONVENDEDOR*/
 define("COGEN","COGEN");             /*tab modulo CONTRATOSGENERADOS*/
+define("COPAG","COPAG");             /*tab modulo COMPROMISOPAGAR*/
 
 ?>

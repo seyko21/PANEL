@@ -13,7 +13,8 @@
         REPER: '<?php echo REPER; ?>',
         MISCO: '<?php echo MISCO; ?>',
         COXVE: '<?php echo COXVE; ?>',
-        COGEN: '<?php echo COGEN; ?>'   
+        COGEN: '<?php echo COGEN; ?>',
+		COPAG: '<?php echo COPAG; ?>'   
     }
 };
 </script>
