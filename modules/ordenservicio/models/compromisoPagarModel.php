@@ -11,7 +11,9 @@ class compromisoPagarModel extends Model{
 
     private $_flag;
     private $_idCompromisoPagar;
-    private $_activo;
+    private $_f1;
+    private $_f2;
+    private $_estado;
     private $_usuario;
     
     /*para el grid*/
@@ -29,6 +31,9 @@ class compromisoPagarModel extends Model{
         $this->_flag        = Formulario::getParam("_flag");
         $this->_idCompromisoPagar   = Aes::de(Formulario::getParam("_idCompromisoPagar"));    /*se decifra*/
         $this->_usuario     = Session::get("sys_idUsuario");
+        $this->_estado        = Formulario::getParam("_estadocb");
+        $this->_f1    = Functions::cambiaf_a_mysql(Formulario::getParam("_f1"));
+        $this->_f2    = Functions::cambiaf_a_mysql(Formulario::getParam("_f2"));
         
         $this->_iDisplayStart  = Formulario::getParam("iDisplayStart"); 
         $this->_iDisplayLength = Formulario::getParam("iDisplayLength"); 
@@ -38,7 +43,7 @@ class compromisoPagarModel extends Model{
     
     /*data para el grid: CompromisoPagar*/
     public function getCompromisoPagar(){
-        $aColumns       =   array("","","REGISTRO_A_ORDENAR" ); //para la ordenacion y pintado en html
+        $aColumns       =   array("orden_numero","numero_cuota","fecha_programada","7","11","monto_pago","estado" ); //para la ordenacion y pintado en html
         /*
 	 * Ordenando, se verifica por que columna se ordenara
 	 */
@@ -46,41 +51,25 @@ class compromisoPagarModel extends Model{
         for ( $i=0 ; $i<intval( $this->_iSortingCols ) ; $i++ ){
                 if ( $this->post( "bSortable_".intval($this->post("iSortCol_".$i)) ) == "true" ){
                         $sOrder .= " ".$aColumns[ intval( $this->post("iSortCol_".$i) ) ]." ".
-                                ($this->post("sSortDir_".$i)==="asc" ? "asc" : "desc") ." ";
+                                ($this->post("sSortDir_".$i)==="asc" ? "asc" : "desc") .",";
                 }
         }
+        $sOrder = substr_replace( $sOrder, "", -1 );
         
-        $query = "call sp [NOMBRE_PROCEDIMIENTO_GRID] Grid(:iDisplayStart,:iDisplayLength,:sOrder,:sSearch);";
+        $query = "call sp_ordSeConsultaCronogramaGrid(:f1,:f2,:estado,:iDisplayStart,:iDisplayLength,:sOrder);";
         
         $parms = array(
+            ":f1" => $this->_f1,
+            ":f2" => $this->_f2,
+            ":estado" => $this->_estado,
             ":iDisplayStart" => $this->_iDisplayStart,
             ":iDisplayLength" => $this->_iDisplayLength,
-            ":sOrder" => $sOrder,
-            ":sSearch" => $this->_sSearch,
+            ":sOrder" => $sOrder
         );
         $data = $this->queryAll($query,$parms);
         return $data;
     }
-    
-    /*grabar nuevo registro: CompromisoPagar*/
-    public function newCompromisoPagar(){
-        /*-------------------------LOGICA PARA EL INSERT------------------------*/
-    }
-    
-    /*seleccionar registro a editar: CompromisoPagar*/
-    public function findCompromisoPagar(){
-        /*-----------------LOGICA PARA SELECT REGISTRO A EDITAR-----------------*/
-    }
-    
-    /*editar registro: CompromisoPagar*/
-    public function editCompromisoPagar(){
-        /*-------------------------LOGICA PARA EL UPDATE------------------------*/
-    }
-    
-    /*eliminar varios registros: CompromisoPagar*/
-    public function deleteCompromisoPagarAll(){
-        /*--------------------------LOGICA PARA DELETE--------------------------*/
-    }
+   
     
 }
 

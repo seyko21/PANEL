@@ -18,8 +18,8 @@ class compromisoPagarController extends Controller{
     }
     
     public function getGridCompromisoPagar(){
-        $editar   = Session::getPermiso('COPAGED');
-        $eliminar = Session::getPermiso('COPAGDE');
+        
+        $consultar   = Session::getPermiso('COPAGCC');
         
         $sEcho          =   $this->post('sEcho');
         
@@ -43,37 +43,41 @@ class compromisoPagarController extends Controller{
             
             foreach ( $rResult as $aRow ){
                 
+                 $encryptReg = Aes::en($aRow['id_ordenservicio']);
+                
                 /*campo que maneja los estados, para el ejemplo aqui es ACTIVO, coloca tu campo*/
-                if($aRow['activo'] == 1){
-                    $estado = '<span class=\"label label-success\">'.LABEL_ACT.'</span>';
-                }else{
-                    $estado = '<span class=\"label label-danger\">'.LABEL_DES.'</span>';
-                }
-                
-                /*antes de enviar id se encrypta*/
-                $encryptReg = Aes::en($aRow['ID_REGISTRO']);
-                
-                /*
-                 * configurando botones (add/edit/delete etc)
-                 * se verifica si tiene permisos para editar
-                 */
+                switch ($aRow['estado']){
+                        case 'E': #emitido
+                            $estado = '<span class=\"label label-default\">' . CROPA_2 . '</span>';
+                            break;
+                        case 'P': #pagado
+                            $estado = '<span class=\"label label-success\">' . CROPA_3 . '</span>';
+                            break;
+                        case 'R': #reprogramado
+                            $estado = '<span class=\"label label-warning\">' . CROPA_4 . '</span>';
+                            break;
+                        default:
+                            $estado = '';
+                            break;
+                 }
+                 
+                                
                 $axion = '"<div class=\"btn-group\">';
                  
-                if($editar['permiso']){
-                    $axion .= '<button type=\"button\" class=\"'.$editar['theme'].'\" title=\"'.$editar['accion'].'\" onclick=\"compromisoPagar.getFormEditCompromisoPagar(this,\''.$encryptReg.'\')\">';
-                    $axion .= '    <i class=\"'.$editar['icono'].'\"></i>';
-                    $axion .= '</button>';
+                if($consultar['permiso']){
+                    if ($aRow['estado'] == 'P'){
+                        $axion .= '<button type=\"button\" class=\"'.$consultar['theme'].'\" title=\"'.$consultar['accion'].' pagos \" onclick=\"compromisoPagar.postExportarContratoPDF(this,\'' . $encryptReg . '\')\"> ';
+                        $axion .= '    <i class=\"'.$consultar['icono'].'\"></i>';
+                        $axion .= '</button>';
+                    }else{
+                        $axion .= '<button type=\"button\" class=\"'.$consultar['theme'].'\" title=\"'.$consultar['accion'].'\" disabled=\"disabled\" > ';
+                        $axion .= '    <i class=\"'.$consultar['icono'].'\"></i>';
+                        $axion .= '</button>';
+                    }
                 }
-                if($eliminar['permiso']){
-                    $axion .= '<button type=\"button\" class=\"'.$eliminar['theme'].'\" title=\"'.$eliminar['accion'].'\" onclick=\"compromisoPagar.postDeleteCompromisoPagar(this,\''.$encryptReg.'\')\">';
-                    $axion .= '    <i class=\"'.$eliminar['icono'].'\"></i>';
-                    $axion .= '</button>';
-                }
-                
                 $axion .= ' </div>" ';
-                
                 /*registros a mostrar*/
-                $sOutput .= '["'.($num++).'",'.$axion.',"'.$aRow['CAMPO 1'].'","'.$aRow['CAMPO 2'].'","'.$estado.'" ';
+                $sOutput .= '["'.$aRow['orden_numero'].'","'.$aRow['numero_cuota'].'","'.$aRow['fecha_programada'].'","'.$aRow['cliente'].' - '.$aRow['representante'].'","'.number_format($aRow['mora'],2).'","'.number_format($aRow['monto_pago'],2).'","'.$estado.'",'.$axion.' ';
 
                 $sOutput .= '],';
 

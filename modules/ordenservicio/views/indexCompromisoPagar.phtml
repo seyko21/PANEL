@@ -32,18 +32,16 @@ echo Functions::widgetOpen(array(
         </div>
         <label class="label col col-1"><?php echo SEGCO_9; ?></label>
         <label class="select col col-2 ">
-            <select id="<?php echo SEGCO; ?>lst_estadosearch" name="<?php echo SEGCO; ?>lst_estadosearch" onchange="seguimientoCotizacion.getGridSeguimientoCotizacion();">
-                <option value="T"><?php echo SEGCO_4; ?></option>
-                <option value="A"><?php echo SEGCO_11; ?></option>
-                <option value="E"><?php echo SEGCO_5; ?></option>
-                <option value="P"><?php echo SEGCO_6; ?></option>
-                <option value="R"><?php echo SEGCO_8; ?></option>
+            <select id="<?php echo COPAG; ?>lst_estadosearch" name="<?php echo COPAG; ?>lst_estadosearch" onchange="seguimientoCotizacion.getGridSeguimientoCotizacion();">
+                <option value="T"><?php echo COPAG_2; ?></option>
+                <option value="E"><?php echo COPAG_3; ?></option>
+                <option value="P"><?php echo COPAG_4; ?></option>                
             </select>
         </label>
         <div class="col col-1" style="padding-left:15px;">
             <div class=" ">
                 <button id="<?php echo COPAG; ?>btnBuscar" type="button" style="padding:6px 10px;"
-                        onclick="contratosGenerados.getGridContratosGenerados();" 
+                        onclick="compromisoPagar.getGridCompromisoPagar();" 
                         class="<?php echo $buscar['theme'];?> btn-sm"  >
                       <i class="<?php echo $buscar['icono'];?>"></i> <?php echo $buscar['accion'];?>
                 </button>
@@ -68,6 +66,6 @@ echo Functions::widgetOpen(array(
 <script>
     
     simpleScript.setEvent.date({
-      element: '#<?php echo COPAG; ?>txt_f1, #<?php echo COGEN; ?>txt_f2' 
+      element: '#<?php echo COPAG; ?>txt_f1, #<?php echo COPAG; ?>txt_f2' 
     });
 </script>

@@ -173,6 +173,9 @@ define('CROPA_D1','Observacion ');
 define('CROPA_D1M','Ingrese el motivo del porque esta reprogramando esta cuota.');
 /*----------------------Consulta Compromisos----------------------*/
 define('COPAG_1','Consulta de Cronogramas de Pago ');
+define('COPAG_2','Todos');
+define('COPAG_3','Emitido');
+define('COPAG_4','Pagado');
 
 
 ?>

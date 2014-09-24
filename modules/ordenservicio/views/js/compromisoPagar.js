@@ -43,6 +43,17 @@ var compromisoPagar_ = function(){
     };
     
     this.publico.getGridCompromisoPagar = function (){
+        var _f1 = $("#"+diccionario.tabs.COPAG+"txt_f1").val();
+        var _f2 = $("#"+diccionario.tabs.COPAG+"txt_f2").val();        
+        var f1, f2;
+        f1 = $.datepicker.parseDate('dd/mm/yy', _f1);
+        f2 = $.datepicker.parseDate('dd/mm/yy', _f2);        
+        if( f1 > f2 ){
+           simpleScript.notify.warning({
+                  content: 'La fecha inicio no puede ser mayor que la fecha final.'      
+            });           
+       }
+        
         var oTable = $("#"+diccionario.tabs.COPAG+"gridCompromisoPagar").dataTable({
             bFilter: false,
             sSearch: false,
@@ -55,8 +66,10 @@ var compromisoPagar_ = function(){
             iDisplayLength: 10,            
             aoColumns: [
                 {sTitle: "N° OS", sWidth: "10%",},                
+                {sTitle: "Cuota", sWidth: "5%",  sClass: "center"},
                 {sTitle: "Fecha", sWidth: "10%",  sClass: "center"},
-                {sTitle: "Cliente", sWidth: "40%"},
+                {sTitle: "Cliente", sWidth: "30%"},
+                {sTitle: "Mora", sWidth: "15%",sClass: "right"},
                 {sTitle: "Total", sWidth: "15%",sClass: "right"},
                 {sTitle: "Estado", sWidth: "10%", sClass: "center"},                
                 {sTitle: "Acciones", sWidth: "8%", sClass: "center", bSortable: false}
@@ -67,6 +80,7 @@ var compromisoPagar_ = function(){
              fnServerParams: function(aoData) {
                 aoData.push({"name": "_f1", "value": _f1});                
                 aoData.push({"name": "_f2", "value": _f2}); 
+                aoData.push({"name": "_estadocb", "value": $("#"+diccionario.tabs.COPAG+"lst_estadosearch").val()}); 
             },            
             fnDrawCallback: function() {
                 /*para hacer evento invisible*/

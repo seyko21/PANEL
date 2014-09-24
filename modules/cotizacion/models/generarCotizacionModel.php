@@ -76,9 +76,10 @@ class generarCotizacionModel extends Model{
         for ( $i=0 ; $i<intval( $this->_iSortingCols ) ; $i++ ){
                 if ( $this->post( 'bSortable_'.intval($this->post('iSortCol_'.$i)) ) == "true" ){
                         $sOrder .= " ".$aColumns[ intval( $this->post('iSortCol_'.$i) ) ]." ".
-                                ($this->post('sSortDir_'.$i)==='asc' ? 'asc' : 'desc') ." ";
+                                ($this->post('sSortDir_'.$i)==='asc' ? 'asc' : 'desc') .",";
                 }
         }
+        $sOrder = substr_replace( $sOrder, "", -1 );
         
         $query = "call sp_cotiGenerarCotizacionGrid(:acceso,:usuario,:iDisplayStart,:iDisplayLength,:sOrder,:sSearch);";
         
