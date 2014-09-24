@@ -1,0 +1,13 @@
+<?php
+echo Functions::widgetOpen(array(
+    'id' => GENRE.'reno',
+    'title' => LABEL_GNC2,
+    'padding' => true,
+    'wizard' => true
+));
+$grabar = Session::getPermiso('GENREGR');
+$agregar = Session::getPermiso('GENREAG');
+$buscar = Session::getPermiso('GENREBS');
+
+$data = Obj::run()->renovacionController->getOrdenServicio();
+?>

@@ -272,4 +272,7 @@ define('COMVE_3','Generar comisión a: ');
 define('COMVE_4','Confirmados: ');
 define('COMVE_5','Por confirmar: ');
 define('COMVE_6','OS: ');
+
+/*----------------------------GENERAR RENOVACION--------------------*/
+define('GENRE_1','Renovar orden');
 ?>

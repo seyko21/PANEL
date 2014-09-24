@@ -1079,14 +1079,14 @@ window.gMapsCallback = function() {
 	gMapsLoaded = true;
 	$(window).trigger('gMapsLoaded');
 }
-window.loadGoogleMaps = function() {
-	if (gMapsLoaded)
-		return window.gMapsCallback();
-	var script_tag = document.createElement('script');
-	script_tag.setAttribute("type", "text/javascript");
-	script_tag.setAttribute("src", "http://maps.google.com/maps/api/js?sensor=false&callback=gMapsCallback");
-	(document.getElementsByTagName("head")[0] || document.documentElement).appendChild(script_tag);
-}
+//window.loadGoogleMaps = function() {
+//	if (gMapsLoaded)
+//		return window.gMapsCallback();
+//	var script_tag = document.createElement('script');
+//	script_tag.setAttribute("type", "text/javascript");
+//	script_tag.setAttribute("src", "http://maps.google.com/maps/api/js?sensor=false&callback=gMapsCallback");
+//	(document.getElementsByTagName("head")[0] || document.documentElement).appendChild(script_tag);
+//}
 /* ~ END: GOOGLE MAPS */
 
 /*

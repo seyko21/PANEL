@@ -1,0 +1,27 @@
+<?php 
+echo Functions::widgetOpen(array(
+        "id"=>GENRE,
+        "title"=>TERCO_1
+    )); 
+
+$anular = Session::getPermiso("GENREAN");
+?>
+
+    <div class="widget-body-toolbar"></div>
+    <div class="dataTables_wrapper form-inline" role="grid">
+        <div class="dt-top-row">
+            <div class="DTTT btn-group">
+                <!-- verificar permisos -->
+                <?php if($anular["permiso"]): ?>
+                <button id="<?php echo GNOSE; ?>btnNewGenerarOrden" type="button" onclick="generarOrden.postAnularOrdenAll(this);" class="<?php echo $anular['theme']?>">
+                    <i class="<?php echo $anular['icono']?>"></i> <?php echo $anular['accion']?>
+                </button>
+                <?php endif; ?>
+            </div>
+        </div>
+
+    </div>
+    <form id="<?php echo GENRE; ?>formGridRenovacion" name="<?php echo GENRE; ?>formGridRenovacion">
+        <table id="<?php echo GENRE; ?>gridRenovacion" class="table table-striped table-hover table-condensed" style="width:100%"></table>
+    </form>
+<?php echo Functions::widgetClose(); ?>
