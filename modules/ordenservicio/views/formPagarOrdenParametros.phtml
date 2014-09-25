@@ -58,20 +58,48 @@ $ncuota = Formulario::getParam('_ncuota');
                             </label>
                         </div>
                     </div>
+                </section>                
+                 <section>
+                    <div class="row">
+                        <label class="label col col-3"><?php echo SEGPA_L23; ?></label>
+                        <div class="col col-9">
+                            <label class="select"> 
+                                <?php
+                                    $datap = array(
+                                        array('valor'=>'E','etiqueta'=>'Efectivo'),
+                                        array('valor'=>'B','etiqueta'=>'Cuenta Bancaria')                                        
+                                    );
+                                    
+                                    echo Functions::selectHtml(array(
+                                        'data'=>$datap,
+                                        'atributes'=>array(
+                                            'id'=>SEGPA.'lst_formaPago',
+                                            'name'=>SEGPA.'lst_formaPago'
+                                        ),
+                                        'etiqueta'=>'etiqueta',
+                                        'value'=>'valor',
+                                        'txtSelect'=>true
+                                    ));
+                                ?><i></i>
+                            </label>
+                        </div>
                 </section>
                 <section>
                     <div class="row">
                         <label class="label col col-3"><?php echo SEGPA_24; ?></label>
-                        <div class="col col-3">
+                        <div class="col col-9">
                             <label class="input"> 
                                 <i class="icon-append fa fa-keyboard-o"></i>
                                 <input type="text" id="<?php echo SEGPA; ?>txt_seriedoc" name="<?php echo SEGPA; ?>txt_seriedoc" >
                                 <b class="tooltip tooltip-top-right"><i class="fa fa-question-circle txt-color-teal"></i> <?php echo SEGPA_26; ?></b>
                             </label>
                         </div>
-                        
-                        <label class="label col col-3"><?php echo SEGPA_23; ?></label>
-                        <div class="col col-3">
+                    </div>
+               </section>        
+                <section>
+                    <div class="row">
+                    <label class="label col col-3"><?php echo SEGPA_23; ?></label>
+                        <div class="col col-9">
                             <label class="input"> 
                                 <i class="icon-append fa fa-keyboard-o"></i>
                                 <input type="text" id="<?php echo SEGPA; ?>txt_numdoc" name="<?php echo SEGPA; ?>txt_numdoc" >

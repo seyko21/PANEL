@@ -185,5 +185,7 @@ define('LABEL_GNCOT_4','Tiempo');
 define('LABEL_GNCOT_5','Diseño?');
 define('LABEL_GNCOT_6','Producción');
 define('LABEL_GNCOT_7','Total');
+/*----------------------Pagos----------------------*/
+define('SEGPA_L23','Forma de Pago');
 
 ?>
