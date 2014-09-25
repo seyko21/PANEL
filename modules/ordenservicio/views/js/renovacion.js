@@ -65,8 +65,9 @@ var renovacion_ = function(){
         setup_widgets_desktop();
     };
     
-    this.publico.getFormRenovacion = function(id){
+    this.publico.getFormRenovacion = function(id,numOr){
         _private.idOrden = id;
+        _private.numeroOrden = numOr;
         
         simpleScript.addTab({
             id : diccionario.tabs.GENRE+'reno',
@@ -85,6 +86,39 @@ var renovacion_ = function(){
             data: '&_idOrden='+_private.idOrden,
             fnCallback: function(data){
                 $('#'+diccionario.tabs.GENRE+'reno_CONTAINER').html(data);
+            }
+        });
+    };
+    
+    this.publico.postRenovacion = function(){
+        simpleScript.validaTable({
+            id: '#'+diccionario.tabs.GENRE+'gridProductos',
+            msn: mensajes.MSG_10,
+            fnCallback: function(){
+                simpleScript.notify.confirm({
+                    content: '¿Está seguro de renovar OS N° '+_private.numeroOrden+'?',
+                    callbackSI: function(){
+                        simpleAjax.send({
+                            element: '#'+diccionario.tabs.GENRE+'btnGcoti',
+                            form: '#'+diccionario.tabs.GENRE+'formRenovacion',
+                            root: _private.config.modulo + 'postRenovacion',
+                            data: '&_idOrden='+_private.idOrden,
+                            fnCallback: function(data) {
+                                if(!isNaN(data.result) && parseInt(data.result) === 1){
+                                    simpleScript.notify.ok({
+                                        content: mensajes.MSG_3,
+                                        callback: function(){
+                                            simpleScript.closeTab(diccionario.tabs.GENRE+'reno');
+                                            _private.idOrden = 0;
+                                            _private.numeroOrden = 0;
+                                            simpleScript.reloadGrid('#'+diccionario.tabs.GENRE+'gridRenovacion');
+                                        }
+                                    });
+                                }
+                            }
+                        });
+                    }
+                });
             }
         });
     };

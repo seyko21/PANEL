@@ -10,4 +10,351 @@ $agregar = Session::getPermiso('GENREAG');
 $buscar = Session::getPermiso('GENREBS');
 
 $data = Obj::run()->renovacionController->getOrdenServicio();
+
 ?>
+<div class="row">
+    <form id="<?php echo GENRE; ?>formRenovacion" name="<?php echo GENRE; ?>formRenovacion" novalidate="novalidate">
+        <div id="<?php echo GENRE; ?>bootstrap-wizard-1" class="col-sm-12">
+            <div class="form-bootstrapWizard">
+                <ul class="bootstrapWizard form-wizard">
+                    <li class="active" data-target="#<?php echo GENRE; ?>step1">
+                        <a href="#<?php echo GENRE; ?>tab1" data-toggle="tab"> <span class="step">1</span> <span class="title">Información general</span> </a>
+                    </li>
+                    <li data-target="#<?php echo GENRE; ?>step2">
+                        <a href="#<?php echo GENRE; ?>tab2" data-toggle="tab"> <span class="step">2</span> <span class="title">Productos</span> </a>
+                    </li>
+                    <li data-target="#<?php echo GENRE; ?>step3">
+                        <a href="#<?php echo GENRE; ?>tab3" data-toggle="tab"> <span class="step">3</span> <span class="title">Finalizar</span> </a>
+                    </li>
+                </ul>
+                <div class="clearfix"></div>
+            </div>
+            
+            <!--INICIO CONTENT DE TABS-->
+            <div class="tab-content">
+                
+                <!--INICIO TAB1-->
+                <div class="tab-pane active form-horizontal" id="<?php echo GENRE; ?>tab1">
+                    <br><br>
+                    <h3><strong><?php echo LABEL_GNC19; ?></strong><?php echo LABEL_GNC20; ?></h3>
+
+                    <div class="form-group">
+                        <label class="control-label col-md-2" for="prepend"><?php echo LABEL_GNC3; ?></label>
+                        <div class="col-md-9">
+                            <div class="input">
+                                <input type="hidden" id="<?php echo GENRE; ?>txt_idpersona" name="<?php echo GENRE; ?>txt_idpersona" value="<?php echo AesCtr::en($data['id_persona']); ?>">
+                                <input class="form-control" type="text" id="<?php echo GENRE; ?>txt_cliente" name="<?php echo GENRE; ?>txt_cliente" readonly value="<?php echo $data['nombrecompleto']; ?>">
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="control-label col-md-2" for="prepend"><?php echo LABEL_GNC4; ?></label>
+                        <div class="col-md-2">
+                            <div class="input">
+                                <input class="form-control" type="text" id="<?php echo GENRE; ?>txt_meses" name="<?php echo GENRE; ?>txt_meses" onkeyup="renovacionScript.reCalcular(1);" value="<?php echo $data['meses_contrato']; ?>">
+                            </div>
+                        </div>
+                        <label class="control-label col-md-3" for="prepend"><?php echo LABEL_GNC5; ?></label>
+                        <div class="col-md-2">
+                            <div class="input">
+                                <input class="form-control" type="text" id="<?php echo GENRE; ?>txt_oferta" name="<?php echo GENRE; ?>txt_oferta" value="<?php echo $data['dias_oferta']; ?>">
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="control-label col-md-2" for="prepend"><?php echo LABEL_GNC13; ?></label>
+                        <div class="col-md-2">
+                            <div class="input">
+                                <input class="form-control" type="text" id="<?php echo GENRE; ?>txt_diasvalidez" name="<?php echo GENRE; ?>txt_diasvalidez" value="<?php echo $data['validez']; ?>">
+                            </div>
+                        </div>
+                        <label class="control-label col-md-3" for="prepend"><?php echo LABEL_GNC14; ?></label>
+                        <div class="col-md-2">
+                            <div class="input">
+                                <input class="form-control" type="text" id="<?php echo GENRE; ?>txt_produccion" name="<?php echo GENRE; ?>txt_produccion" value="<?php echo number_format($data['valor_produccion'], 2); ?>" onkeyup="renovacionScript.changeProduccion(this);">
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="control-label col-md-2" for="prepend"><?php echo LABEL_GNC16; ?></label>
+                        <div class="col-md-2">
+                            <div class="select">
+                                <select id="<?php echo GENRE; ?>lst_igv" name="<?php echo GENRE; ?>lst_igv" class="form-control">
+                                    <option value="1" <?php echo ($data['igv'] == '1')?'selected="selected"':''; ?> ><?php echo LABEL_GNC17; ?></option>
+                                    <option value="0" <?php echo ($data['igv'] == '0')?'selected="selected"':''; ?> ><?php echo LABEL_GNC18; ?></option>
+                                </select><i></i>
+                            </div>
+                        </div>
+                    </div>
+                    
+                </div>
+                <!--FIN TAB1-->
+                
+                <!--INICIO TAB2-->
+                <div class="tab-pane" id="<?php echo GENRE; ?>tab2">
+                    <br>
+                    <h3><strong><?php echo LABEL_GNC21; ?></strong><?php echo LABEL_GNC22; ?></h3>
+
+<!--                    <div class="form-group">
+                        <label class="control-label col-md-2" for="prepend">
+                            <?php if ($agregar['permiso']): ?>
+                                <button id="<?php echo GENRE; ?>btnGadd" type="button" class="btn txt-color-white bg-color-blueDark" onclick="generarCotizacion.getFormBuscarMisProductos(this, '<?php echo GENRE; ?>');"
+                                        rel="popover-hover" data-placement="top" data-original-title="<?php echo LABEL_GNC10; ?>" data-content="<?php echo LABEL_GNC11; ?>">
+                                    <i class="fa fa-plus-circle"></i> <?php echo BTN_ADD; ?>
+                                </button>
+                            <?php endif; ?>
+                        </label>
+                    </div>
+                    <br><br>-->
+                    <div style="padding: 10px">
+                        <div class="si-access" style="min-height: 200px; max-height: auto;">
+                            <table id="<?php echo GENRE; ?>gridProductos" class="table table-bordered table-striped table-condensed table-hover smart-form has-tickbox">
+                                <thead>
+                                <th style="width:59%"><?php echo LABEL_GNCOT_1; ?></th>
+                                <th style="width:8%"><?php echo LABEL_GNCOT_2; ?></th>
+                                <th style="width:10%"><?php echo LABEL_GNCOT_3; ?></th>
+                                <th style="width:10%"><?php echo LABEL_GNCOT_4; ?></th>
+                                <th style="width:7%"><?php echo LABEL_GNCOT_5; ?></th>
+                                <th style="width:10%"><?php echo LABEL_GNCOT_6; ?></th>
+                                <th style="width:10%"><?php echo LABEL_GNCOT_7; ?></th>
+                                <th style="width:1%">...</th>
+                                </thead>
+                                <tbody>
+                                    <?php
+                                    $datac = Obj::run()->renovacionController->getProductosCotizados();
+                                    $f = 0;
+                                    $rows = sizeof($datac);
+                                    foreach ($datac as $key=>$value):
+                                        $idProducto = AesCtr::en($value['id_caratula']);
+                                        /*para check de diseño*/
+                                        $chk = '';
+                                        if($value['costo_produccion'] > 0){
+                                            $chk = 'checked="checked"';
+                                        }
+                                        ?>
+                                        <tr id="<?php echo GENRE; ?>tr_<?php echo $value['id_caratula']; ?>">
+
+                                            <td>
+                                                <input class="<?php echo GENRE; ?>hhddIdProducto" id="<?php echo GENRE.$key; ?>hhddIdProducto" name="<?php echo GENRE; ?>hhddIdProducto[]" value="<?php echo $idProducto; ?>" type="hidden">
+                                                <input class="<?php echo GENRE; ?>hhddProduccion" id="<?php echo GENRE.$key; ?>hhddProduccion" name="<?php echo GENRE; ?>hhddProduccion[]" value="<?php echo $value['costo_produccion']; ?>" type="hidden">
+                                                <?php echo $value['ubicacion'].' - '.$value['descripcion'].' ('.$value['ancho'].' x '.$value['alto'].' mt)'; ?>
+                                            </td>
+                                            <td class="right"><?php echo $value['aarea']; ?></td>
+                                            <td class="right">
+                                                <label class="input"><input id="<?php echo GENRE; ?>hhddPrecio" name="<?php echo GENRE; ?>hhddPrecio[]" value="<?php echo number_format($value['precio'],2); ?>" data-value="<?php echo $value['precio']; ?>" style="text-align:right" type="text"></label>
+                                            </td>
+                                            <td class="right"><?php echo $value['cantidad_mes']; ?></td>
+                                            
+                                            <td class="center">
+                                                <input <?php echo $chk?> type="checkbox" id="<?php echo GENRE.$key; ?>chk_disenio" name="chk_disenio[]" onclick="renovacionScript.setDisenio(this,<?php echo $key; ?>,'<?php echo $idProducto; ?>');">
+                                            </td>
+                                
+                                
+                                            <td class="right"><?php echo number_format($value['costo_produccion'],2); ?></td>
+                                            <td class="right"><?php echo number_format($value['importe'],2); ?></td>
+                                            <td>
+                                                <button type="button" class="btn btn-danger btn-xs" onclick="renovacionScript.removeProducto('<?php echo $idProducto; ?>', '<?php echo $value['precio']; ?>');"><i class="fa fa-trash-o"></i>
+                                                </button>
+                                            </td>
+                                        </tr>
+                                        <?php
+                                    endforeach;
+                                    $diff = 0;
+                                    if ($rows < 5) {
+                                        $diff = 7 - $rows;
+                                        echo Functions::createCell(array('row' => ($diff), 'cols' => 8));
+                                    }
+                                    ?>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="form-group" style="margin-top:5px">
+                            <div class="col-md-2 pull-right">
+                                <div class="input">
+                                    <input class="form-control right" type="text" id="<?php echo GENRE; ?>txt_total" name="<?php echo GENRE; ?>txt_total" readonly="">
+                                </div>
+                            </div>
+                            <label class="control-label col-md-2 pull-right" for="prepend"><?php echo LABEL_T; ?></label>
+                        </div>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+                <!--FIN TAB2-->
+                
+                <!--INICIO TAB3-->
+                <div class="tab-pane form-horizontal" id="<?php echo GENRE; ?>tab3">
+                    <br>
+                    <h3><strong><?php echo LABEL_GNC23; ?></strong><?php echo LABEL_GNC24; ?></h3>
+                    
+                    <div class="form-group">
+                        <label class="control-label col-md-2" for="prepend"><?php echo LABEL_GNC26; ?></label>
+                        <div class="col-md-9">
+                            <div class="textarea">
+                                <input class="form-control" type="text" id="<?php echo GENRE; ?>txt_campania" name="<?php echo GENRE; ?>txt_campania" value="<?php echo $data['nombre_campania']; ?>">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-2" for="prepend"><?php echo LABEL_GNC25; ?></label>
+                        <div class="col-md-9">
+                            <div class="textarea">
+                                <textarea class="form-control" id="<?php echo GENRE; ?>txt_obs" name="<?php echo GENRE; ?>txt_obs"><?php echo $data['observaciones']; ?></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <h4 class="text-center">
+                        <button id="<?php echo GENRE; ?>btnGcoti" type="button" class="btn btn-success btn-large" title="<?php echo GENRE_1; ?>" onclick="renovacion.postRenovacion();">    
+                            <i class="fa fa-plus-circle fa-lg"></i>
+                            <?php echo LABEL_GNC27; ?>
+                        </button>
+                    </h4>
+                    <br>
+                    <br>
+                </div>
+                <!--FIN TAB3-->
+                
+                <div class="form-actions">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <ul class="pager wizard no-margin no-border">
+                                <!--<li class="previous first disabled">
+                                <a href="javascript:void(0);" class="btn btn-lg btn-default"> First </a>
+                                </li>-->
+                                <li class="previous disabled">
+                                    <a href="javascript:void(0);" class="btn btn-lg btn-default"> <?php echo LABEL_ANT?> </a>
+                                </li>
+                                <!--<li class="next last">
+                                <a href="javascript:void(0);" class="btn btn-lg btn-primary"> Last </a>
+                                </li>-->
+                                <li class="next">
+                                    <a href="javascript:void(0);" class="btn btn-lg txt-color-darken"> <?php echo LABEL_SIG?> </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
+            <!--FIN CONTENT DE TABS-->
+        </div>
+<?php echo Functions::widgetClose(); ?>
+        <script>
+            renovacionScript.calculaPrecio();
+            
+            var $validator = $("#<?php echo GENRE; ?>formRenovacion").validate({
+                rules: {
+<?php echo GENRE; ?>txt_idpersona: {
+                                    required: true
+                                },
+<?php echo GENRE; ?>txt_cliente: {
+                                    required: true
+                                },
+<?php echo GENRE; ?>txt_meses: {
+                                    required: true,
+                                    maxlength: 4
+                                }, 
+<?php echo GENRE; ?>txt_oferta: {
+                        number: true,
+                        integer: true
+                    },
+<?php echo GENRE; ?>txt_diasvalidez: {
+                        required: true,
+                        number: true,
+                        integer: true,
+                        maxlength: 3,
+                        max: 3
+                    },
+<?php echo GENRE; ?>txt_produccion: {
+                                    required: true,
+                                    number: true
+                                }
+                },
+                highlight: function(element) {
+                    $(element).closest('.form-group').removeClass('has-success').addClass('has-error');
+                },
+                unhighlight: function(element) {
+                    $(element).closest('.form-group').removeClass('has-error').addClass('has-success');
+                },
+                errorElement: 'span',
+                errorClass: 'help-block',
+                errorPlacement: function(error, element) {
+                    if (element.parent('.input-group').length) {
+                        error.insertAfter(element.parent());
+                    } else {
+                        error.insertAfter(element);
+                    }
+                }
+            });
+            
+            var baseItemSelector = 'li:has([data-toggle="tab"])';
+            $('#<?php echo GENRE; ?>bootstrap-wizard-1').bootstrapWizard({
+                tabClass: 'form-wizard',
+                onTabClick: function(tab, navigation, index) {
+                    //desactivar tabs
+                    return false;
+                },
+                onTabChange: function(tab, navigation, index) {
+
+                },
+                onNext: function(tab, navigation, index) {
+                    var $valid = $("#<?php echo GENRE; ?>formRenovacion").valid();
+                    if (index === 1) {
+                        if (!$valid) {
+                            $validator.focusInvalid();
+                            return false;
+                        }
+                        /*marca el paso como completado*/
+                        $('#<?php echo GENRE; ?>bootstrap-wizard-1').find('.form-wizard').children('li').eq(index - 1).addClass(
+                                'complete');
+                        $('#<?php echo GENRE; ?>bootstrap-wizard-1').find('.form-wizard').children('li').eq(index - 1).find('.step')
+                                .html('<i class="fa fa-check"></i>');
+                    }
+                    if (index === 2) {
+                        var r = simpleScript.validaTable({
+                            id: '#' + diccionario.tabs.GENRE + 'gridProductos',
+                            msn: mensajes.MSG_10
+                        });
+                        if (r === false) {
+                            return false;
+                        } else {
+                            /*marca el paso como completado*/
+                            $('#<?php echo GENRE; ?>bootstrap-wizard-1').find('.form-wizard').children('li').eq(index - 1).addClass(
+                                    'complete');
+                            $('#<?php echo GENRE; ?>bootstrap-wizard-1').find('.form-wizard').children('li').eq(index - 1).find('.step')
+                                    .html('<i class="fa fa-check"></i>');
+                        }
+                    }
+
+                }
+            });
+            
+            var wizard = $('.wizard').wizard();
+
+            wizard.on('finished', function(e, data) {
+                //$("#fuelux-wizard").submit();
+                //console.log("submitted!");
+                $.smallBox({
+                    title: "Congratulations! Your form was submitted",
+                    content: "<i class='fa fa-clock-o'></i> <i>1 seconds ago...</i>",
+                    color: "#5F895F",
+                    iconSmall: "fa fa-check bounce animated",
+                    timeout: 4000
+                });
+            });
+            /*para hacer evento invisible*/
+            simpleScript.removeAttr.click({
+                container: '#<?php echo GENRE; ?>formRenovacion',
+                typeElement: 'button'
+            });
+            simpleScript.removeAttr.keyup({
+                container: '#<?php echo GENRE; ?>formRenovacion',
+                typeElement: 'input'
+            });
+            renovacionScript.calculoTotal();
+        </script>
+    </form>
+</div>

@@ -63,7 +63,7 @@ class renovacionController extends Controller{
                 $sOutput .= '"<div class=\"btn-group\">';
                  
                 if($editar['permiso']){
-                    $sOutput .= '<button type=\"button\" class=\"'.$editar['theme'].'\" title=\"'.GENRE_1.'\" onclick=\"renovacion.getFormRenovacion(\''.$encryptReg.'\')\">';
+                    $sOutput .= '<button type=\"button\" class=\"'.$editar['theme'].'\" title=\"'.GENRE_1.'\" onclick=\"renovacion.getFormRenovacion(\''.$encryptReg.'\',\''.$aRow['orden_numero'].'\')\">';
                     $sOutput .= '    <i class=\"'.$editar['icono'].'\"></i>';
                     $sOutput .= '</button>';
                 }
@@ -84,6 +84,23 @@ class renovacionController extends Controller{
     
     public function getContRenovar(){
         Obj::run()->View->render("formRenovacion");
+    }
+    
+    public function getOrdenServicio(){
+        $data = Obj::run()->renovacionModel->getOrdenServicio();
+        return $data;
+    }
+    
+    public static function getProductosCotizados(){
+        $data = Obj::run()->renovacionModel->getProductosCotizados();
+        
+        return $data;
+    }
+    
+    public function postRenovacion(){ 
+        $data = Obj::run()->renovacionModel->postRenovacion();
+        
+        echo json_encode($data);
     }
     
 }
