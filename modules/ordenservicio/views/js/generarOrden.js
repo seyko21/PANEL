@@ -112,7 +112,7 @@ var generarOrden_ = function(){
                 });
             },
             fnInfoCallback: function( oSettings, iStart, iEnd, iMax, iTotal, sPre ) {
-                var m=0;
+                var m=0, t=0;
                 $("#"+diccionario.tabs.GNOSE+"gridCuotas").find('tbody').find('tr').each(function(){
                     m += parseFloat(simpleScript.deleteComa($(this).find('td:eq(1)').html()));
                 });
@@ -124,10 +124,14 @@ var generarOrden_ = function(){
                 }
                 if(isNaN(saldo)){
                     saldo = 0;
-                }
-                return 'Monto programado: <b>'+m.toFixed(2)+'</b><br> Saldo: <b>'+parseFloat(saldo).toFixed(2)+'</b><br>Monto total: <b>'+parseFloat(_private.montoTotal).toFixed(2)+'</br>';
+                }                
+                m = globalScript.number_format(m,2,'.', ',');
+                saldo = globalScript.number_format(saldo,2,'.', ',');
+                t =  globalScript.number_format(_private.montoTotal ,2,'.', ',');
+                return 'Monto programado: <b>'+m+'</b><br> Saldo: <b>'+saldo+'</b><br>Monto total: <b>'+t+'</br>';
             }                  
-        });
+        });                       
+       
         setup_widgets_desktop();
     };
     

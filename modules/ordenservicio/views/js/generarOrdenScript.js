@@ -50,7 +50,8 @@ var generarOrdenScript_ = function(){
             retorna = 1;
         }
         return retorna;
-    };
+    };    
+    
     
     return this.publico;
     
