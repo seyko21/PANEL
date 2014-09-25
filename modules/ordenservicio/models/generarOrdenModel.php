@@ -37,7 +37,7 @@ class generarOrdenModel extends Model{
         $this->_idOrden   = Aes::de(Formulario::getParam("_idOrden"));    /*se decifra*/
         $this->_idCuota   = Aes::de(Formulario::getParam("_idCuota"));    /*se decifra*/
         $this->_usuario     = Session::get("sys_idUsuario");
-        $this->_monto  = Formulario::getParam(GNOSE."txt_monto"); 
+        $this->_monto  = str_replace(',','',Formulario::getParam(GNOSE."txt_monto")); 
         $this->_descuento  = str_replace(',','',Formulario::getParam(GNOSE."txt_descuento"));
         $this->_fechaPago  = Functions::cambiaf_a_mysql(Formulario::getParam(GNOSE."txt_fechapago")); 
         $this->_fechaContrato  = Functions::cambiaf_a_mysql(Formulario::getParam(GNOSE."txt_fechacontrato"));

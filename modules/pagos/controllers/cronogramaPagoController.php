@@ -11,6 +11,7 @@ class cronogramaPagoController extends Controller{
     
     public function getGridOrdenes(){
         $pagar   = Session::getPermiso('CROPAPG');
+        $generar  = Session::getPermiso('CROPAGN');
         
         $sEcho          =   $this->post('sEcho');
         
@@ -62,7 +63,11 @@ class cronogramaPagoController extends Controller{
                  * se verifica si tiene permisos para editar
                  */
                 $sOutput .= '"<div class=\"btn-group\">';
-                 
+                if($generar['permiso']){
+                    $sOutput .= '<button type=\"button\" class=\"'.$generar['theme'].'\" title=\"'.$generar['accion'].' '.GNOSE_2.'\" onclick=\"generarOrden.getFormCronograma(this,\''.$encryptReg.'\',\''.$aRow['monto_total_descuento'].'\',\''.$aRow['orden_numero'].'\')\">';
+                    $sOutput .= '    <i class=\"'.$generar['icono'].'\"></i>';
+                    $sOutput .= '</button>';
+                } 
                 if($pagar['permiso']){
                     $sOutput .= '<button type=\"button\" class=\"'.$pagar['theme'].'\" title=\"'.$pagar['accion'].'\" onclick=\"cronogramaPago.getFormPagarOrden(this,\''.$encryptReg.'\',\''.$aRow['orden_numero'].'\')\">';
                     $sOutput .= '    <i class=\"'.$pagar['icono'].'\"></i>';

@@ -183,6 +183,11 @@ var generarOrden_ = function(){
                                 setTimeout(function(){generarOrden.getGridGenerarOrden();},2000);
                             }
                         });
+                        if($('#'+diccionario.tabs.CROPA+'getGridOrdenes').length > 0){
+                            setTimeout(function(){                              
+                               simpleScript.reloadGrid('#'+diccionario.tabs.CROPA+'getGridOrdenes');
+                            },1000);
+                        }
                     }else if(!isNaN(data.result) && parseInt(data.result) === 2){
                         simpleScript.notify.error({
                             content: mensajes.MSG_4
