@@ -76,9 +76,11 @@ class comisionVendedorModel extends Model{
         INNER JOIN `lgk_ordenservicio` os ON os.`id_ordenservicio`=od.`id_ordenservicio`
         INNER JOIN mae_usuario u ON u.`id_usuario`=os.`usuario_creacion`
         INNER JOIN mae_persona p ON p.`persona`=u.`persona`
-        WHERE od.`imagen` <> '' AND os.`comision_venta` = 0
+        WHERE od.`imagen` <> '' AND os.`comision_venta` = 0 and os.usuario_creacion = :idVendedor
         GROUP BY os.`id_ordenservicio`; ";
-        $parms = array();
+        $parms = array(
+            ':idVendedor'=>$this->_idVendedor
+        );
         $data = $this->queryAll($query,$parms);
         return $data;
     }

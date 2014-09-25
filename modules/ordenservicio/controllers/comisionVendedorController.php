@@ -36,7 +36,7 @@ class comisionVendedorController extends Controller{
             foreach ( $rResult as $aRow ){
                 
                 /*antes de enviar id se encrypta*/
-                $encryptReg = Aes::en($aRow['id_ordenserviciod']);
+                $encryptReg = Aes::en($aRow['usuario_creacion']);
                 
                 
                 
