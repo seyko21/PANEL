@@ -18,8 +18,8 @@ class movimientosOSController extends Controller{
     }
     
     public function getGridMovimientosOS(){
-        $editar   = Session::getPermiso('MOVOSED');
-        $eliminar = Session::getPermiso('MOVOSDE');
+        
+        $consultar   = Session::getPermiso('MOVOSCC');
         
         $sEcho          =   $this->post('sEcho');
         
@@ -42,16 +42,9 @@ class movimientosOSController extends Controller{
             $sOutput .= '"aaData": [ ';     
             
             foreach ( $rResult as $aRow ){
-                
-                /*campo que maneja los estados, para el ejemplo aqui es ACTIVO, coloca tu campo*/
-                if($aRow['activo'] == 1){
-                    $estado = '<span class=\"label label-success\">'.LABEL_ACT.'</span>';
-                }else{
-                    $estado = '<span class=\"label label-danger\">'.LABEL_DES.'</span>';
-                }
-                
+                                              
                 /*antes de enviar id se encrypta*/
-                $encryptReg = Aes::en($aRow['ID_REGISTRO']);
+                $encryptReg = Aes::en($aRow['id_ordenservicio']);
                 
                 /*
                  * configurando botones (add/edit/delete etc)
@@ -59,21 +52,25 @@ class movimientosOSController extends Controller{
                  */
                 $axion = '"<div class=\"btn-group\">';
                  
-                if($editar['permiso']){
-                    $axion .= '<button type=\"button\" class=\"'.$editar['theme'].'\" title=\"'.$editar['accion'].'\" onclick=\"movimientosOS.getFormEditMovimientosOS(this,\''.$encryptReg.'\')\">';
-                    $axion .= '    <i class=\"'.$editar['icono'].'\"></i>';
+                if($consultar['permiso']){
+                    $axion .= '<button type=\"button\" class=\"'.$consultar['theme'].'\" title=\"'.$consultar['accion'].'\" onclick=\"cotizacionVendedor.getConsulta(\''.$encryptReg.'\',\''.$numCotizacion.'\')\">';
+                    $axion .= '    <i class=\"'.$consultar['icono'].'\"></i>';
                     $axion .= '</button>';
-                }
-                if($eliminar['permiso']){
-                    $axion .= '<button type=\"button\" class=\"'.$eliminar['theme'].'\" title=\"'.$eliminar['accion'].'\" onclick=\"movimientosOS.postDeleteMovimientosOS(this,\''.$encryptReg.'\')\">';
-                    $axion .= '    <i class=\"'.$eliminar['icono'].'\"></i>';
-                    $axion .= '</button>';
-                }
+                }                
+
+                $axion .= ' </div>" ';                                
                 
-                $axion .= ' </div>" ';
-                
+                $m = number_format($aRow['monto_total_descuento'],2);
+                $i = number_format($aRow['monto_impuesto'],2);
+                $ig = number_format($aRow['ingresos'],2);
+                $eg = number_format($aRow['egresos'],2);                
+                $cv = number_format($aRow['comision_vendedor'],2);
+                $ut1 = number_format($aRow['utilidad_principal'],2);
+                $oi = number_format($aRow['otros_ingresos'],2);                
+                $oe = number_format($aRow['otros_egresos'],2);
+                $ut2 = number_format($aRow['utilidad_secundaria'],2);
                 /*registros a mostrar*/
-                $sOutput .= '["'.($num++).'",'.$axion.',"'.$aRow['CAMPO 1'].'","'.$aRow['CAMPO 2'].'","'.$estado.'" ';
+                $sOutput .= '["'.$aRow['orden_numero'].'","'.$aRow['fecha_contrato'].'","'.$m.'","'.$i.'","'.$ig.'","'.$eg.'","'.$cv.'","<b>'.$ut1.'</b>","'.$oi.'","'.$oe.'","<b>'.$ut2.'</b>",'.$axion.' ';
 
                 $sOutput .= '],';
 

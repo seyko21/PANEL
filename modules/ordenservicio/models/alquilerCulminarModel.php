@@ -39,7 +39,7 @@ class alquilerCulminarModel extends Model{
     
     /*data para el grid: AlquilerCulminar*/
     public function getAlquilerCulminar(){
-        $aColumns       =   array("codigo","ordenin_numero","cliente" ,"fecha_inicio","fecha_termino","meses_contrato","importe_incigv"); //para la ordenacion y pintado en html
+        $aColumns       =   array("codigo","ordenin_numero","cliente" ,"fecha_inicio","fecha_termino","meses_contrato","dias_oferta","importe_incigv"); //para la ordenacion y pintado en html
         /*
 	 * Ordenando, se verifica por que columna se ordenara
 	 */

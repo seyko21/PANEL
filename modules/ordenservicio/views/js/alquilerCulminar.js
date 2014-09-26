@@ -58,9 +58,10 @@ var alquilerCulminar_ = function(){
                 {sTitle: "F. Inicio", sWidth: "10%"},
                 {sTitle: "F. Final", sWidth: "10%" },
                 {sTitle: "Tiempo", sWidth: "15%" },
+                {sTitle: "Oferta", sWidth: "5%" },
                 {sTitle: "Importe", sWidth: "15%", sClass: "right" }                
             ],
-            aaSorting: [[2, "desc"]],
+            aaSorting: [[3, "asc"]],
             sScrollY: "300px",
             sAjaxSource: _private.config.modulo+"getGridAlquilerCulminar",
             fnServerParams: function(aoData) {

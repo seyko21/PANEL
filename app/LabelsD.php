@@ -191,6 +191,7 @@ define('SEGPA_L23','Forma de Pago');
 define('CALCU_1','Listado de Alquiler ');
 define('CALCU_2','Culminan en 30 días');
 define('CALCU_3','Filtro');
-
+/*----------------------Consulta Movimientos ----------------------*/
+define('MOVOS_1','Movimientos de Orden de Servicio');
 
 ?>

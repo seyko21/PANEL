@@ -10,8 +10,9 @@
 class movimientosOSModel extends Model{
 
     private $_flag;
-    private $_idMovimientosOS;
-    private $_activo;
+    private $_idOS;
+    private $_f1;
+    private $_f2;
     private $_usuario;
     
     /*para el grid*/
@@ -27,18 +28,19 @@ class movimientosOSModel extends Model{
     
     private function _set(){
         $this->_flag        = Formulario::getParam("_flag");
-        $this->_idMovimientosOS   = Aes::de(Formulario::getParam("_idMovimientosOS"));    /*se decifra*/
+        $this->_idOS   = Aes::de(Formulario::getParam("_idOS"));    /*se decifra*/
         $this->_usuario     = Session::get("sys_idUsuario");
+        $this->_f1    = Functions::cambiaf_a_mysql(Formulario::getParam("_f1"));
+        $this->_f2    = Functions::cambiaf_a_mysql(Formulario::getParam("_f2"));
         
         $this->_iDisplayStart  = Formulario::getParam("iDisplayStart"); 
         $this->_iDisplayLength = Formulario::getParam("iDisplayLength"); 
         $this->_iSortingCols   = Formulario::getParam("iSortingCols");
-        $this->_sSearch        = Formulario::getParam("sSearch");
     }
     
     /*data para el grid: MovimientosOS*/
     public function getMovimientosOS(){
-        $aColumns       =   array("","","REGISTRO_A_ORDENAR" ); //para la ordenacion y pintado en html
+        $aColumns       =   array("orden_numero","fecha_contrato","monto_total_descuento","monto_impuesto","ingresos","egresos","comision_vendedor","utilidad_principal","otros_ingresos","otros_egresos","utilidad_secundaria"); //para la ordenacion y pintado en html
         /*
 	 * Ordenando, se verifica por que columna se ordenara
 	 */
@@ -50,37 +52,19 @@ class movimientosOSModel extends Model{
                 }
         }
         
-        $query = "call sp [NOMBRE_PROCEDIMIENTO_GRID] Grid(:iDisplayStart,:iDisplayLength,:sOrder,:sSearch);";
+        $query = "call sp_ordSeConsultaMovimientoOSGrid(:f1,:f2,:iDisplayStart,:iDisplayLength,:sOrder);";
         
         $parms = array(
+            ":f1" => $this->_f1,
+            ":f2" => $this->_f2,
             ":iDisplayStart" => $this->_iDisplayStart,
             ":iDisplayLength" => $this->_iDisplayLength,
-            ":sOrder" => $sOrder,
-            ":sSearch" => $this->_sSearch,
+            ":sOrder" => $sOrder
         );
         $data = $this->queryAll($query,$parms);
         return $data;
     }
     
-    /*grabar nuevo registro: MovimientosOS*/
-    public function newMovimientosOS(){
-        /*-------------------------LOGICA PARA EL INSERT------------------------*/
-    }
-    
-    /*seleccionar registro a editar: MovimientosOS*/
-    public function findMovimientosOS(){
-        /*-----------------LOGICA PARA SELECT REGISTRO A EDITAR-----------------*/
-    }
-    
-    /*editar registro: MovimientosOS*/
-    public function editMovimientosOS(){
-        /*-------------------------LOGICA PARA EL UPDATE------------------------*/
-    }
-    
-    /*eliminar varios registros: MovimientosOS*/
-    public function deleteMovimientosOSAll(){
-        /*--------------------------LOGICA PARA DELETE--------------------------*/
-    }
     
 }
 

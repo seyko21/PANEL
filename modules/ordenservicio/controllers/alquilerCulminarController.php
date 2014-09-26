@@ -40,10 +40,11 @@ class alquilerCulminarController extends Controller{
             $sOutput .= '"aaData": [ ';     
             
             foreach ( $rResult as $aRow ){
-                
-                $ff = '<span class=\"label label-danger\">'.$aRow['fecha_termino'].'</span>'; 
+                $fi = Functions::cambiaf_a_normal($aRow['fecha_inicio']);
+                $ff = '<span class=\"label label-danger\">'.Functions::cambiaf_a_normal($aRow['fecha_termino']).'</span>'; 
+                $oferta = $aRow['dias_oferta'].'d';
                 /*registros a mostrar*/
-                $sOutput .= '["'.$aRow['codigo'].'","'.$aRow['ordenin_numero'].'","'.$aRow['cliente'].'","'.$aRow['fecha_inicio'].'","'.$ff.'","'.Functions::convertirDiaMes($aRow['meses_contrato']).'","'.number_format($aRow['importe_incigv'],2).'" ';
+                $sOutput .= '["'.$aRow['codigo'].'","'.$aRow['ordenin_numero'].'","'.$aRow['cliente'].'","'.$fi.'","'.$ff.'","'.Functions::convertirDiaMes($aRow['meses_contrato']).'","'.$oferta.'","'.number_format($aRow['importe_incigv'],2).'" ';
 
                 $sOutput .= '],';
 

@@ -43,7 +43,21 @@ var movimientosOS_ = function(){
     };
     
     this.publico.getGridMovimientosOS = function (){
+        
+        var _f1 = $("#"+diccionario.tabs.MOVOS+"txt_f1").val();
+        var _f2 = $("#"+diccionario.tabs.MOVOS+"txt_f2").val();        
+        var f1, f2;
+        f1 = $.datepicker.parseDate('dd/mm/yy', _f1);
+        f2 = $.datepicker.parseDate('dd/mm/yy', _f2);        
+        if( f1 > f2 ){
+           simpleScript.notify.warning({
+                  content: 'La fecha inicio no puede ser mayor que la fecha final.'      
+            });           
+       }
+       
         var oTable = $("#"+diccionario.tabs.MOVOS+"gridMovimientosOS").dataTable({
+            bFilter: false,
+            sSearch: false,
             bProcessing: true,
             bServerSide: true,
             bDestroy: true,
@@ -52,18 +66,27 @@ var movimientosOS_ = function(){
             bPaginate: true,
             iDisplayLength: 10,            
             aoColumns: [
-                {sTitle: "N°", sWidth: "1%",bSortable: false},
-                {sTitle: "Acciones", sWidth: "8%", sClass: "center", bSortable: false},
-                {sTitle: "CAMPO 1", sWidth: "25%"},
-                {sTitle: "CAMPO 2", sWidth: "25%", bSortable: false},
-                {sTitle: "Estado", sWidth: "10%", sClass: "center", bSortable: false}                
+                {sTitle: "N° OS", sWidth: "10%",},                
+                {sTitle: "Fecha ", sWidth: "10%",  sClass: "center"},
+                {sTitle: "Total OS", sWidth: "10%",sClass: "right"},
+                {sTitle: "Impuesto", sWidth: "10%", sClass: "right"}, 
+                {sTitle: "Ingresos", sWidth: "10%",sClass: "right"},
+                {sTitle: "Egresos", sWidth: "10%", sClass: "right"},                
+                {sTitle: "Comision", sWidth: "10%", sClass: "right"}, 
+                {sTitle: "Utilidad 1", sWidth: "10%", sClass: "right"},    
+                {sTitle: "Otros Ing.", sWidth: "10%",sClass: "right"},
+                {sTitle: "Otros Egr.", sWidth: "10%", sClass: "right"}, 
+                {sTitle: "Utilidad 2", sWidth: "10%", sClass: "right"}, 
+                {sTitle: "Acciones", sWidth: "8%", sClass: "center", bSortable: false}
             ],
-            aaSorting: [[2, "asc"]],
+            aaSorting: [[0, "desc"]],
             sScrollY: "300px",
             sAjaxSource: _private.config.modulo+"getGridMovimientosOS",
+             fnServerParams: function(aoData) {
+                aoData.push({"name": "_f1", "value": _f1});                
+                aoData.push({"name": "_f2", "value": _f2}); 
+            },            
             fnDrawCallback: function() {
-                $("#"+diccionario.tabs.MOVOS+"gridMovimientosOS_filter").find("input").attr("placeholder","Buscar por MovimientosOS").css("width","250px");
-                simpleScript.enterSearch("#"+diccionario.tabs.MOVOS+"gridMovimientosOS",oTable);
                 /*para hacer evento invisible*/
                 simpleScript.removeAttr.click({
                     container: "#widget_"+diccionario.tabs.MOVOS,
