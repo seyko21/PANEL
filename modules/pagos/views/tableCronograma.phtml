@@ -1,6 +1,7 @@
 <?php
 $grabar = Session::getPermiso("CROPAPG");
 $reprogramar = Session::getPermiso("CROPARPG");
+$anular = Session::getPermiso("CROPAAN");
 ?>
 
 <table class="table table-striped table-hover dataTable">
@@ -90,9 +91,32 @@ $reprogramar = Session::getPermiso("CROPARPG");
                             </button>
                         <?php endif; ?>
                     <?php else: ?>
-                        <button type="button" class="<?php echo $reprogramar["theme"]; ?> disabled="disabled" style="padding: 5px">
+                        <button type="button" class="<?php echo $reprogramar["theme"]; ?> disabled" style="padding: 5px">
                             <i class="<?php echo $reprogramar["icono"]; ?>"></i> <?php echo $reprogramar["accion"]; ?>
                         </button>
+                    <?php endif; ?>
+                    
+                    
+                    <!--BOTON ANULAR PAGO-->
+                    <!--solo se anulan los q estan en estado = P-->
+                    <?php if ($value['estado'] == 'P'): ?>
+                    
+                        <?php if ($anular['permiso']): ?>
+                            <button type="button" class="<?php echo $anular["theme"]; ?>" style="padding: 5px" onclick="cronogramaPago.postAnularPago(this, '<?php echo AesCtr::en($value['id_compromisopago']) ?>', '<?php echo $value['numero_cuota'] ?>','<?php echo $key?>','<?php echo $fechaProgramada; ?>');">
+                                <i class="<?php echo $anular["icono"]; ?>"></i> <?php echo $anular["accion"]; ?>
+                            </button>
+                        <?php endif; ?>
+                    
+                    <!--de lo contrario se muestra ANULAR desactivado-->
+                    <?php else: ?> 
+                    
+                        <?php if ($anular['permiso']): ?>
+                            <button type="button" class="<?php echo $anular["theme"]; ?> disabled" style="padding: 5px" >
+                                <i class="<?php echo $anular["icono"]; ?>"></i> <?php echo $anular["accion"]; ?>
+                            </button>
+                        <?php endif; ?>
+                    
+                    
                     <?php endif; ?>
                 </td>
             </tr>
