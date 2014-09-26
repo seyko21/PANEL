@@ -6,6 +6,18 @@ class renovacionModel extends Model{
     private $_idVendedor;
     private $_idOrden;
     private $_usuario;
+    private $_keyPersona;
+    private $_meses;
+    private $_oferta;
+    private $_idProducto;
+    private $_precio;
+    private $_produccion;
+    private $_costoProduccion;
+    private $_total;
+    private $_igv;
+    private $_validez;
+    private $_observacion;
+    private $_campania;
     
     /*para el grid*/
     public  $_iDisplayStart;
@@ -23,6 +35,19 @@ class renovacionModel extends Model{
         $this->_idVendedor   = Aes::de(Formulario::getParam("_idVendedor"));    /*se decifra*/
         $this->_idOrden   = Aes::de(Formulario::getParam("_idOrden"));    /*se decifra*/
         $this->_usuario     = Session::get("sys_idUsuario");
+        
+        $this->_keyPersona  = Aes::de($this->post(GENRE.'txt_idpersona'));     /*el cliente, representante*/
+        $this->_meses       = $this->post(GENRE.'txt_meses');                  /*meses de contrato*/
+        $this->_oferta      = $this->post(GENRE.'txt_oferta');                 /*meses de oferta*/
+        $this->_idProducto  = $this->post(GENRE.'hhddIdProducto');
+        $this->_precio      = $this->post(GENRE.'hhddPrecio');
+        $this->_produccion  = $this->post(GENRE.'hhddProduccion');
+        $this->_costoProduccion  = $this->post(GENRE.'txt_produccion');
+        $this->_total       = $this->post(GENRE.'txt_total');
+        $this->_igv         = $this->post(GENRE.'lst_igv');
+        $this->_validez     = $this->post(GENRE.'txt_diasvalidez');
+        $this->_observacion  = $this->post(GENRE.'txt_obs');
+        $this->_campania  = $this->post(GENRE.'txt_campania');
         
         $this->_iDisplayStart  = Formulario::getParam("iDisplayStart"); 
         $this->_iDisplayLength = Formulario::getParam("iDisplayLength"); 
