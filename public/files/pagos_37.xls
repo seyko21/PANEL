@@ -1,0 +1,36 @@
+
+        <style>           
+           table,h3,h4{font-family:Arial;} 
+           table, table td, table th, p {font-size:12px;}
+           table{width:100%;}
+           #td2 th, .totales{background:#901D78; color:#FFF; height:25px;}
+           #td2 td{font-size:11px;height:25px;}
+        </style><table width="100%" border="0" cellpadding="5" cellspacing="3">
+          <tr bgcolor="#901D78">
+            <th colspan="6"><div align="center"><h2 style="color:#FFF;">Pago de Cliente</h2></div></th>
+          </tr>
+          <tr>
+            <td><strong>Cliente:</strong></td>
+            <td colspan="3">Partido Politico Peru Posible</td>
+            <td align="right"><strong>Estado:</strong></td>
+            <td colspan="2">Pagado</td>
+          </tr>
+          <tr>
+            <td><strong>Representante:</strong></td>
+            <td colspan="5">32443321 - Alejandro Toledo Manrique</td>
+          </tr>
+          <tr>
+            <td width="13%"><strong>N° Documento:</strong></td>
+            <td width="26%">2333</td>
+            <td width="15%"><strong>N° Serie:</strong></td>
+            <td width="15%">333</td>
+            <td width="20%"><strong>Fecha Pago:</strong></td>
+            <td width="15%;text-align:left" >24/09/2014</td>
+          </tr>          
+          <tr>
+            <td><strong>Campaña:</strong></td>
+            <td colspan="2"></td> 
+            <td align="right" ><strong>Tiempo :</strong></td>
+            <td colspan="2">0 dias</td>   
+          </tr>
+        </table> 

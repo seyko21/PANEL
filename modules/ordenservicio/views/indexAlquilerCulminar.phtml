@@ -1,0 +1,40 @@
+<?php 
+/*
+* ---------------------------------------
+* --------- CREATED BY CREATOR ----------
+* fecha: 25-09-2014 23:09:26 
+* Descripcion : indexAlquilerCulminar.phtml
+* ---------------------------------------
+*/
+$nuevo    = Session::getPermiso("CALCUNEW");
+$eliminar = Session::getPermiso("CALCUDE");
+echo Functions::widgetOpen(array(
+        "id"=>CALCU,
+        "title"=>CALCU_1
+    )); 
+?>
+
+    <div class="widget-body-toolbar">
+      <div class="smart-form" style="position: absolute;left: 400px;top:5px">
+          <label class="label col col-7"><?php echo CALCU_3; ?></label>
+          <label class="select pull-left">
+              <select id="<?php echo CALCU; ?>lst_tiposearch" name="<?php echo CALCU; ?>lst_tiposearch" onchange="alquilerCulminar.getGridAlquilerCulminar();">
+                  <option value="T"><?php echo SEGCO_4; ?></option>
+                  <option value="M"><?php echo CALCU_2; ?></option>                  
+              </select>
+          </label>
+
+      </div>
+    </div>
+    <div class="dataTables_wrapper form-inline" role="grid">
+        <div class="dt-top-row">
+            <div class="DTTT btn-group">
+               
+            </div>
+        </div>
+
+    </div>
+    <form id="<?php echo CALCU; ?>formGridAlquilerCulminar" name="<?php echo CALCU; ?>formGridAlquilerCulminar">
+        <table id="<?php echo CALCU; ?>gridAlquilerCulminar" class="table table-striped table-hover table-condensed" style="width:100%"></table>
+    </form>
+<?php echo Functions::widgetClose(); ?>

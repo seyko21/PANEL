@@ -23,5 +23,8 @@ define("MISCO","MISCO");             /*tab modulo MISCOTIZACIONES*/
 define("COXVE","COXVE");             /*tab modulo COTIZACIONVENDEDOR*/
 define("COGEN","COGEN");             /*tab modulo CONTRATOSGENERADOS*/
 define("COPAG","COPAG");             /*tab modulo COMPROMISOPAGAR*/
+define("CALCU","CALCU");             /*tab modulo ALQUILERCULMINAR*/
+define("MOVOS","MOVOS");             /*tab modulo MOVIMIENTOSOS*/
+
 
 ?>

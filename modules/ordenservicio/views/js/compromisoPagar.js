@@ -65,13 +65,13 @@ var compromisoPagar_ = function(){
             bPaginate: true,
             iDisplayLength: 10,            
             aoColumns: [
-                {sTitle: "N° OS", sWidth: "10%",},                
-                {sTitle: "Cuota", sWidth: "5%",  sClass: "center"},
+                {sTitle: "N° OS", sWidth: "8%",},                
+                {sTitle: "Cuota", sWidth: "4%",  sClass: "center"},
                 {sTitle: "Fecha", sWidth: "10%",  sClass: "center"},
-                {sTitle: "Cliente", sWidth: "30%"},
-                {sTitle: "Mora", sWidth: "15%",sClass: "right"},
+                {sTitle: "Cliente", sWidth: "40%"},
+                {sTitle: "Mora", sWidth: "10%",sClass: "right"},
                 {sTitle: "Total", sWidth: "15%",sClass: "right"},
-                {sTitle: "Estado", sWidth: "10%", sClass: "center"},                
+                {sTitle: "Estado", sWidth: "8%", sClass: "center"},                
                 {sTitle: "Acciones", sWidth: "8%", sClass: "center", bSortable: false}
             ],
             aaSorting: [[0, "desc"]],
@@ -91,6 +91,48 @@ var compromisoPagar_ = function(){
             }
         });
         setup_widgets_desktop();
+    };
+    this.publico.postPDF = function(btn,idCot){
+        simpleAjax.send({
+            element: btn,
+            root: _private.config.modulo + 'postPDF',
+            data: '&_idCompromiso='+idCot,
+            fnCallback: function(data) {
+                if(parseInt(data.result) === 1){
+                    $('#'+diccionario.tabs.COPAG+'btnDowPDF').attr("onclick","window.open('public/files/"+data.archivo+"','_blank');compromisoPagar.deleteArchivo('"+data.archivo+"');");
+                    $('#'+diccionario.tabs.COPAG+'btnDowPDF').click();
+                }
+            }
+        });
+    };
+    
+    this.publico.postExcel = function(btn,idCot){
+        simpleAjax.send({
+            element: btn,
+            root: _private.config.modulo + 'postExcel',
+            data: '&_idCompromiso='+idCot,
+            fnCallback: function(data) {
+                if(parseInt(data.result) === 1){
+                    $('#'+diccionario.tabs.COPAG+'btnDowExcel').attr("onclick","window.open('public/files/"+data.archivo+"','_self');compromisoPagar.deleteArchivo('"+data.archivo+"');");
+                    $('#'+diccionario.tabs.COPAG+'btnDowExcel').click();
+                }
+                if(!isNaN(data.result) && parseInt(data.result) === 2){
+                    simpleScript.notify.error({
+                        content: 'Ocurrió un error al exportar.'
+                    });
+                }
+            }
+        });
+    };
+    
+  
+    this.publico.deleteArchivo = function(archivo){
+        setTimeout(function(){
+            simpleAjax.send({
+                root: _private.config.modulo + 'deleteArchivo',
+                data: '&_archivo='+archivo
+            });
+        },7000);
     };
     
   

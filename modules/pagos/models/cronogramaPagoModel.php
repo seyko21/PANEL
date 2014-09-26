@@ -11,6 +11,7 @@ class cronogramaPagoModel extends Model{
     private $_fecha;
     private $_mora;
     private $_observacion;
+    private $_formaPago;
     private $_usuario;
     
     /*para el grid*/
@@ -36,6 +37,7 @@ class cronogramaPagoModel extends Model{
         $this->_fecha  = Functions::cambiaf_a_mysql(Formulario::getParam(CROPA."txt_fechapago"));
         $this->_mora  = Formulario::getParam(CROPA."txt_mora");
         $this->_observacion = Formulario::getParam(CROPA."txt_observacion");
+        $this->_formaPago  = Formulario::getParam(CROPA."lst_formaPago");
         
         $this->_iDisplayStart  = Formulario::getParam("iDisplayStart"); 
         $this->_iDisplayLength = Formulario::getParam("iDisplayLength"); 
@@ -90,7 +92,7 @@ class cronogramaPagoModel extends Model{
             ":serieDdoc" => $this->_serieDoc,
             ":usuario" => $this->_usuario,
             ":fecha" => $this->_fecha,
-            ":obs" => ''            
+            ":obs" => $this->_formaPago
         );
         $data = $this->queryOne($query,$parms);
         return $data;

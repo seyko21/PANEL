@@ -14,7 +14,9 @@
         MISCO: '<?php echo MISCO; ?>',
         COXVE: '<?php echo COXVE; ?>',
         COGEN: '<?php echo COGEN; ?>',
-		COPAG: '<?php echo COPAG; ?>'   
+        COPAG: '<?php echo COPAG; ?>',
+        CALCU: '<?php echo CALCU; ?>',
+        MOVOS: '<?php echo MOVOS; ?>'   
     }
 };
 </script>

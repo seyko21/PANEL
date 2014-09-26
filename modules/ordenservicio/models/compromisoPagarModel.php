@@ -10,7 +10,7 @@
 class compromisoPagarModel extends Model{
 
     private $_flag;
-    private $_idCompromisoPagar;
+    public $_idCompromiso;
     private $_f1;
     private $_f2;
     private $_estado;
@@ -29,7 +29,7 @@ class compromisoPagarModel extends Model{
     
     private function _set(){
         $this->_flag        = Formulario::getParam("_flag");
-        $this->_idCompromisoPagar   = Aes::de(Formulario::getParam("_idCompromisoPagar"));    /*se decifra*/
+        $this->_idCompromiso   = Aes::de(Formulario::getParam("_idCompromiso"));    /*se decifra*/
         $this->_usuario     = Session::get("sys_idUsuario");
         $this->_estado        = Formulario::getParam("_estadocb");
         $this->_f1    = Functions::cambiaf_a_mysql(Formulario::getParam("_f1"));
@@ -70,7 +70,43 @@ class compromisoPagarModel extends Model{
         return $data;
     }
    
-    
+     public function getPagos(){
+        $query = "
+        SELECT
+            p.`id_pago`, 
+            p.`numero_documento`,
+            p.`serie_documento`,
+            p.`tipo_documento`,
+            p.`forma_pago`,
+            p.`monto_pago`,
+            p.`monto_subtotal`,
+            p.`monto_impuesto`,
+            p.`porcentaje_igv`,
+            p.`fecha_pago`,
+            p.`estado`,
+            cp.`numero_cuota`,
+            cp.`fecha_programada`,
+            cp.`costo_mora`,
+            os.`id_persona`,
+            pe.`nombrecompleto`,
+            pe.numerodocumento,
+            (SELECT pp.nombrecompleto FROM mae_persona pp WHERE pp.`id_persona` = pe.`id_personapadre` ) AS razonsocial,
+            (SELECT pp.numerodocumento FROM mae_persona pp WHERE pp.`id_persona` = pe.`id_personapadre` ) AS ruccliente,
+            os.`orden_numero`
+          FROM `lgk_pago` p
+                  INNER JOIN `lgk_compromisopago` cp ON p.`id_compromisopago` = cp.`id_compromisopago`
+                  INNER JOIN `lgk_ordenservicio` os ON os.`id_ordenservicio` = cp.`id_ordenservicio`
+                  INNER JOIN `mae_persona` pe ON pe.`id_persona` = os.`id_persona`
+          WHERE p.id_compromisopago = :idCompromiso AND
+                p.estado = :estado;";
+        
+        $parms = array(
+            ':idCompromiso' => $this->_idCompromiso,
+            ':estado'=>'P'
+        );
+        $data = $this->queryAll($query,$parms);            
+        return $data;
+    }
 }
 
 ?>

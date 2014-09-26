@@ -187,5 +187,10 @@ define('LABEL_GNCOT_6','Producción');
 define('LABEL_GNCOT_7','Total');
 /*----------------------Pagos----------------------*/
 define('SEGPA_L23','Forma de Pago');
+/*----------------------Consulta Alquiler ----------------------*/
+define('CALCU_1','Listado de Alquiler ');
+define('CALCU_2','Culminan en 30 días');
+define('CALCU_3','Filtro');
+
 
 ?>
