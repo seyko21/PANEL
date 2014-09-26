@@ -82,7 +82,7 @@ class cronogramaPagoModel extends Model{
     }
     
     public function postPagarOrden(){
-        $query = "CALL sp_ordseSeguimientoPagoPagarCuota(:flag,:idCompromiso,:tipoDoc,:numDoc,:serieDdoc,:usuario,:fecha,:obs);";
+        $query = "CALL sp_ordseSeguimientoPagoPagarCuota(:flag,:idCompromiso,:tipoDoc,:numDoc,:serieDdoc,:usuario,:fecha,:obs,:perfilVendedor);";
         
         $parms = array(
             ":flag" => 1,
@@ -92,14 +92,15 @@ class cronogramaPagoModel extends Model{
             ":serieDdoc" => $this->_serieDoc,
             ":usuario" => $this->_usuario,
             ":fecha" => $this->_fecha,
-            ":obs" => $this->_formaPago
+            ":obs" => $this->_formaPago,
+            ":perfilVendedor" => APP_COD_VEND
         );
         $data = $this->queryOne($query,$parms);
         return $data;
     }
     
     public function postReprogramar(){
-        $query = "CALL sp_ordseSeguimientoPagoPagarCuota(:flag,:idCompromiso,:tipoDoc,:numDoc,:serieDdoc,:usuario,:fecha,:obs);";
+        $query = "CALL sp_ordseSeguimientoPagoPagarCuota(:flag,:idCompromiso,:tipoDoc,:numDoc,:serieDdoc,:usuario,:fecha,:obs,:perfilVendedor);";
         
         $parms = array(
             ":flag" => 2,
@@ -109,7 +110,8 @@ class cronogramaPagoModel extends Model{
             ":serieDdoc" => $this->_mora,
             ":usuario" => $this->_usuario,
             ":fecha" => '',
-            ":obs" => $this->_observacion
+            ":obs" => $this->_observacion,
+            ":perfilVendedor" => APP_COD_VEND
         );
         $data = $this->queryOne($query,$parms);
         return $data;
