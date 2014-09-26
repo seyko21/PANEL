@@ -19,20 +19,13 @@ class saldoClienteController extends Controller{
     }
     
     public function getGridSaldoCliente(){
-        $exportarpdf   = Session::getPermiso('COPAGEP');
-        $exportarexcel= Session::getPermiso('COPAGEX');
+        $exportarpdf   = Session::getPermiso('SACLIEP');
+        $exportarexcel= Session::getPermiso('SACLIEX');
         
         $sEcho          =   $this->post('sEcho');
         
         $rResult = Obj::run()->saldoClienteModel->getSaldoCliente();
-        
-        $num = Obj::run()->saldoClienteModel->_iDisplayStart;
-        if($num >= 10){
-            $num++;
-        }else{
-            $num = 1;
-        }
-        
+                
         if(!isset($rResult['error'])){  
             $iTotal         = isset($rResult[0]['total'])?$rResult[0]['total']:0;
             

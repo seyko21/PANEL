@@ -56,8 +56,8 @@ var contratosGenerados_ = function(){
        }
         
         var oTable = $("#"+diccionario.tabs.COGEN+"gridContratosGenerados").dataTable({
-            bFilter: false,
-            sSearch: false,
+            bFilter: true,
+            sSearch: true,
             bProcessing: true,
             bServerSide: true,
             bDestroy: true,
@@ -80,7 +80,8 @@ var contratosGenerados_ = function(){
                 aoData.push({"name": "_f1", "value": _f1});                
                 aoData.push({"name": "_f2", "value": _f2}); 
             },
-            fnDrawCallback: function() {                
+            fnDrawCallback: function() {    
+                $("#"+diccionario.tabs.COGEN+"gridContratosGenerados_filter").find("input").attr("placeholder","Buscar por N° OS").css("width","200px");
                 /*para hacer evento invisible*/
                 simpleScript.removeAttr.click({
                     container: "#widget_"+diccionario.tabs.COGEN,

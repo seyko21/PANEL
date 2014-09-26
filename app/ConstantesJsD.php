@@ -17,7 +17,8 @@
         COPAG: '<?php echo COPAG; ?>',
         CALCU: '<?php echo CALCU; ?>',
         MOVOS: '<?php echo MOVOS; ?>',
-        SACLI: '<?php echo SACLI; ?>'   
+        SACLI: '<?php echo SACLI; ?>',
+        SAVEN: '<?php echo SAVEN; ?>'   
     }
 };
 </script>

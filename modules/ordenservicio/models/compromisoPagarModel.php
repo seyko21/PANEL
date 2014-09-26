@@ -56,7 +56,7 @@ class compromisoPagarModel extends Model{
         }
         $sOrder = substr_replace( $sOrder, "", -1 );
         
-        $query = "call sp_ordSeConsultaCronogramaGrid(:f1,:f2,:estado,:iDisplayStart,:iDisplayLength,:sOrder);";
+        $query = "call sp_ordSeConsultaCronogramaGrid(:f1,:f2,:estado,:iDisplayStart,:iDisplayLength,:sOrder,:sSearch);";
         
         $parms = array(
             ":f1" => $this->_f1,
@@ -64,7 +64,8 @@ class compromisoPagarModel extends Model{
             ":estado" => $this->_estado,
             ":iDisplayStart" => $this->_iDisplayStart,
             ":iDisplayLength" => $this->_iDisplayLength,
-            ":sOrder" => $sOrder
+            ":sOrder" => $sOrder,
+            ":sSearch" => $this->_sSearch
         );
         $data = $this->queryAll($query,$parms);
         return $data;

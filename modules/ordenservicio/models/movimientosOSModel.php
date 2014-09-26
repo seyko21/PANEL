@@ -36,6 +36,7 @@ class movimientosOSModel extends Model{
         $this->_iDisplayStart  = Formulario::getParam("iDisplayStart"); 
         $this->_iDisplayLength = Formulario::getParam("iDisplayLength"); 
         $this->_iSortingCols   = Formulario::getParam("iSortingCols");
+        $this->_sSearch        = Formulario::getParam("sSearch");
     }
     
     /*data para el grid: MovimientosOS*/
@@ -52,14 +53,15 @@ class movimientosOSModel extends Model{
                 }
         }
         
-        $query = "call sp_ordSeConsultaMovimientoOSGrid(:f1,:f2,:iDisplayStart,:iDisplayLength,:sOrder);";
+        $query = "call sp_ordSeConsultaMovimientoOSGrid(:f1,:f2,:iDisplayStart,:iDisplayLength,:sOrder,:sSearch);";
         
         $parms = array(
             ":f1" => $this->_f1,
             ":f2" => $this->_f2,
             ":iDisplayStart" => $this->_iDisplayStart,
             ":iDisplayLength" => $this->_iDisplayLength,
-            ":sOrder" => $sOrder
+            ":sOrder" => $sOrder,
+            ":sSearch" => $this->_sSearch
         );
         $data = $this->queryAll($query,$parms);
         return $data;

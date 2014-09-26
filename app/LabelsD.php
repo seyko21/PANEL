@@ -185,5 +185,8 @@ define('CALCU_2','Culminan en 30 días');
 define('CALCU_3','Filtro');
 define('MOVOS_1','Movimientos de Orden de Servicio');
 define('SACLI_1','Saldo de Clientes');
+define('SAVEN_1','Saldo de Vendedor');
+define('SAVEN_2','Saldo');
+define('SAVEN_3','Pagado');
 
 ?>

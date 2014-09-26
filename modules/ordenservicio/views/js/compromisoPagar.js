@@ -55,8 +55,8 @@ var compromisoPagar_ = function(){
        }
         
         var oTable = $("#"+diccionario.tabs.COPAG+"gridCompromisoPagar").dataTable({
-            bFilter: false,
-            sSearch: false,
+            bFilter: true,
+            sSearch: true,
             bProcessing: true,
             bServerSide: true,
             bDestroy: true,
@@ -77,12 +77,13 @@ var compromisoPagar_ = function(){
             aaSorting: [[0, "desc"]],
             sScrollY: "300px",
             sAjaxSource: _private.config.modulo+"getGridCompromisoPagar",
-             fnServerParams: function(aoData) {
+             fnServerParams: function(aoData){
                 aoData.push({"name": "_f1", "value": _f1});                
                 aoData.push({"name": "_f2", "value": _f2}); 
                 aoData.push({"name": "_estadocb", "value": $("#"+diccionario.tabs.COPAG+"lst_estadosearch").val()}); 
             },            
-            fnDrawCallback: function() {
+            fnDrawCallback: function(){
+                $("#"+diccionario.tabs.COPAG+"gridCompromisoPagar_filter").find("input").attr("placeholder","Buscar por N° OS").css("width","200px");
                 /*para hacer evento invisible*/
                 simpleScript.removeAttr.click({
                     container: "#widget_"+diccionario.tabs.COPAG,

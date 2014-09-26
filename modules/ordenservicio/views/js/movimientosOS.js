@@ -56,8 +56,8 @@ var movimientosOS_ = function(){
        }
        
         var oTable = $("#"+diccionario.tabs.MOVOS+"gridMovimientosOS").dataTable({
-            bFilter: false,
-            sSearch: false,
+            bFilter: true,
+            sSearch: true,
             bProcessing: true,
             bServerSide: true,
             bDestroy: true,
@@ -87,6 +87,7 @@ var movimientosOS_ = function(){
                 aoData.push({"name": "_f2", "value": _f2}); 
             },            
             fnDrawCallback: function() {
+                $("#"+diccionario.tabs.MOVOS+"gridMovimientosOS_filter").find("input").attr("placeholder","Buscar por N° OS").css("width","200px");
                 /*para hacer evento invisible*/
                 simpleScript.removeAttr.click({
                     container: "#widget_"+diccionario.tabs.MOVOS,
