@@ -88,6 +88,10 @@ var compromisoPagar_ = function(){
                     container: "#widget_"+diccionario.tabs.COPAG,
                     typeElement: "button"
                 });
+                simpleScript.removeAttr.change({
+                    container: "#widget_"+diccionario.tabs.COPAG,
+                    typeElement: "select"
+                });
             }
         });
         setup_widgets_desktop();

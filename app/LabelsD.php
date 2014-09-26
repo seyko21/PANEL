@@ -5,19 +5,17 @@
  * Autor       : ..... .....
  * Descripcion : todas las etiquetas del sistema
  */
-
 define('BTN_AAGREGAR','Agregar');
 define('BTN_AANULAR','Anular');
 define('LABEL_AC100','Todas las caratulas han sido asignadas.');
 define('LABEL_BSVEN','Buscar vendedor');
 define('LABEL_BSPER','Buscar Persona');
 define('LABEL_ENVIADO','Enviado');
-
 define('LABEL_REDSOCIAL','- Redes Sociales -');
 define('URL_FACEBOOK','http://fb.com/sevendcorp');
 define('URL_TWITTER','https://twitter.com/sevendcorp');
 define('URL_WEBSITE','http://www.sevend.pe');
-define('LABEL_URL','Nuestro sitio Web');
+define('LABEL_URL','Visite nuestro sitio Web');
 define('RC_TITLE','¿Olvido su contraseña?');
 define('RC_SOLCLAVE','Solicitar Clave');
 define('RC_RECLAVE','Si recuerdo mi contraseña');
@@ -25,7 +23,6 @@ define('LOGIN_TITULO','Bienvenidos: ');
 define('LOGIN_BIENVENIDA','Gracias por confiar en SEVEND, para ingresar al sistema debe de indicar su correo electrónico (e-mail) y luego su contraseña. Para mayor información en informes@sevend.pe');
 define('RC_TITULO','Advertencia: ');
 define('RC_BIENVENIDA','Para poder recuperar su contraseña debe de indicarnos su correo electrónico (E-mail) para enviarle sus accesos y reinicio de clave. Si usa Hotmail, revise en su bandeja de correo no deseado.');
-
 /*----------------------PARAMETROS----------------------*/
 define('LABEL_A1','Parámetro');
 define('LABEL_A2','Nuevo Parámetro');
@@ -122,7 +119,6 @@ define('LABEL_A94','Nro. de Documento');
 define('LABEL_A95','DNI');
 define('LABEL_A95M','Ingresar nro. de DNI');
 define('LABEL_A96','Tipo de Socio');
-
 /*----------------------REGISTRAR Inversion----------------------*/
 define('LABEL_A100','Inversión del Socio');
 define('LABEL_A101','Socio: ');
@@ -132,7 +128,6 @@ define('LABEL_A104','Fecha Inversión ');
 define('LABEL_A104M','Debe de ingresar fecha en el formato: dd/mm/aaaa ');
 define('LABEL_A105','Monto a Invertir ');
 define('LABEL_A105M','Debe de ingresar el monto de inversión');
-
 /*----------------------Editar Asignar Cuenta - Comision----------------------*/
 define('LABEL_A110','Editar Comisión');
 define('LABEL_A111','Comisión');
@@ -146,7 +141,6 @@ define('LABEL_A121','Paneles Alquilados');
 define('LABEL_A122','Listado de Ordenes de Servicio');
 /*----------------------Registrar Produccion----------------------*/
 define('LABEL_A130','Registro de Producción del Producto');
-
 /*----------------------Registrar Contrato----------------------*/
 define('LABEL_A150','Contratos');
 define('LABEL_A151','Nuevo Contrato');
@@ -165,18 +159,9 @@ define('MISCO_1','Listado de Cotizaciones');
 /*----------------------Cotizacion por vendedor----------------------*/
 define('COXVE_1','Cotizaciones por Vendedor');
 define('COXVE_2','Historial de Cotización');
-/*----------------------Contratos Generados----------------------*/
-define('COGEN_1','Contratos Generado');
-define('COGEN_2','Desde ');
-define('COGEN_3','hasta ');
 /*----------------------Reeprogramacion----------------------*/
 define('CROPA_D1','Observacion ');
 define('CROPA_D1M','Ingrese el motivo del porque esta reprogramando esta cuota.');
-/*----------------------Consulta Compromisos----------------------*/
-define('COPAG_1','Consulta de Cronogramas de Pago ');
-define('COPAG_2','Todos');
-define('COPAG_3','Emitido');
-define('COPAG_4','Pagado');
 /*----------------------Tabla Cotizacion----------------------*/
 define('LABEL_GNCOT_1','Producto');
 define('LABEL_GNCOT_2','Area');
@@ -187,11 +172,18 @@ define('LABEL_GNCOT_6','Producción');
 define('LABEL_GNCOT_7','Total');
 /*----------------------Pagos----------------------*/
 define('SEGPA_L23','Forma de Pago');
-/*----------------------Consulta Alquiler ----------------------*/
+/*----------------------Consultas ----------------------*/
+define('COGEN_1','Contratos Generado');
+define('COGEN_2','Desde ');
+define('COGEN_3','hasta ');
+define('COPAG_1','Consulta de Cronogramas de Pago ');
+define('COPAG_2','Todos');
+define('COPAG_3','Emitido');
+define('COPAG_4','Pagado');
 define('CALCU_1','Listado de Alquiler ');
 define('CALCU_2','Culminan en 30 días');
 define('CALCU_3','Filtro');
-/*----------------------Consulta Movimientos ----------------------*/
 define('MOVOS_1','Movimientos de Orden de Servicio');
+define('SACLI_1','Saldo de Clientes');
 
 ?>

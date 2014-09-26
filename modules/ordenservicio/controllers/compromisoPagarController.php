@@ -10,7 +10,7 @@
 class compromisoPagarController extends Controller{
 
     public function __construct() {
-        $this->loadModel("compromisoPagar");
+        $this->loadModel(array('modulo'=>'ordenservicio','modelo'=>'compromisoPagar'));
     }
     
     public function index(){ 

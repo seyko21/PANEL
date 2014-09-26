@@ -16,8 +16,9 @@ define('APP_COMPANY','www.sevend.pe');
 define('APP_KEY','adABKCDLZEFXGHIJ');
 define('APP_PASS_KEY','99}dF7EZbnbXOkojf&dzvxd5q#guPbPK1spU75Jm|N79Ii7PK');
 define('APP_EXPORT_FILES',ROOT . 'public' . DS . 'files' . DS);
-define('APP_COD_SADM','001');
-define('APP_COD_ADM','002');
+define('APP_COD_SADM','0001');
+define('APP_COD_ADM','0002');
+define('APP_COD_VEND','0003');
 
 define('DB_ENTORNO','D');  /*D=DESARROLLO, P=PRODUCCION*/
 define('DB_MOTOR','mysql');

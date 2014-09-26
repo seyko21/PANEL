@@ -53,7 +53,7 @@ class movimientosOSController extends Controller{
                 $axion = '"<div class=\"btn-group\">';
                  
                 if($consultar['permiso']){
-                    $axion .= '<button type=\"button\" class=\"'.$consultar['theme'].'\" title=\"'.$consultar['accion'].'\" onclick=\"cotizacionVendedor.getConsulta(\''.$encryptReg.'\',\''.$numCotizacion.'\')\">';
+                    $axion .= '<button type=\"button\" class=\"'.$consultar['theme'].'\" title=\"'.$consultar['accion'].'\" onclick=\"cotizacionVendedor.getConsulta(\''.$encryptReg.'\')\">';
                     $axion .= '    <i class=\"'.$consultar['icono'].'\"></i>';
                     $axion .= '</button>';
                 }                

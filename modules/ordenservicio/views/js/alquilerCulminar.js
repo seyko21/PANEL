@@ -74,6 +74,10 @@ var alquilerCulminar_ = function(){
                     container: "#widget_"+diccionario.tabs.CALCU,
                     typeElement: "button"
                 });
+                simpleScript.removeAttr.change({
+                    container: "#widget_"+diccionario.tabs.CALCU,
+                    typeElement: "select"
+                });
             }
         });
         setup_widgets_desktop();

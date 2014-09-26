@@ -25,6 +25,6 @@ define("COGEN","COGEN");             /*tab modulo CONTRATOSGENERADOS*/
 define("COPAG","COPAG");             /*tab modulo COMPROMISOPAGAR*/
 define("CALCU","CALCU");             /*tab modulo ALQUILERCULMINAR*/
 define("MOVOS","MOVOS");             /*tab modulo MOVIMIENTOSOS*/
-
+define("SACLI","SACLI");             /*tab modulo SALDOCLIENTE*/
 
 ?>
