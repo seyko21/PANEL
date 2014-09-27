@@ -54,12 +54,11 @@ var alquilerCulminar_ = function(){
             aoColumns: [
                 {sTitle: "Caratula", sWidth: "5%", sClass: "center"},
                 {sTitle: "N° OS", sWidth: "8%", sClass: "center"},
-                {sTitle: "Cliente", sWidth: "35%"},
+                {sTitle: "Cliente", sWidth: "40%"},
                 {sTitle: "F. Inicio", sWidth: "10%"},
                 {sTitle: "F. Final", sWidth: "10%" },
                 {sTitle: "Tiempo", sWidth: "15%" },
-                {sTitle: "Oferta", sWidth: "5%" },
-                {sTitle: "Importe", sWidth: "15%", sClass: "right" }                
+                {sTitle: "Oferta", sWidth: "5%" }               
             ],
             aaSorting: [[3, "asc"]],
             sScrollY: "300px",

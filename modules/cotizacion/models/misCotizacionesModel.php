@@ -9,7 +9,6 @@
 
 class misCotizacionesModel extends Model{
 
-    private $_flag;
     private $_idCotizacion;
     private $_estado;
     private $_idPersona;

@@ -13,6 +13,7 @@ class alquilerCulminarModel extends Model{
     private $_idAlquilerCulminar;
     private $_tipo;
     private $_usuario;
+    private $_idPersona;
     
     /*para el grid*/
     public  $_iDisplayStart;
@@ -30,6 +31,7 @@ class alquilerCulminarModel extends Model{
         $this->_idAlquilerCulminar   = Aes::de(Formulario::getParam("_idAlquilerCulminar"));    /*se decifra*/
         $this->_usuario     = Session::get("sys_idUsuario");
         $this->_tipo        = Formulario::getParam("_tipo");
+        $this->_idPersona = Session::get("sys_idPersona");
         
         $this->_iDisplayStart  = Formulario::getParam("iDisplayStart"); 
         $this->_iDisplayLength = Formulario::getParam("iDisplayLength"); 
@@ -52,9 +54,11 @@ class alquilerCulminarModel extends Model{
         }
         $sOrder = substr_replace( $sOrder, "", -1 );
         
-        $query = "call sp_ordSeConsultaAlquilerGrid(:tipo,:iDisplayStart,:iDisplayLength,:sOrder,:sSearch);";
+        $query = "call sp_ordSeConsultaAlquilerGrid(:acceso,:idPersona,:tipo,:iDisplayStart,:iDisplayLength,:sOrder,:sSearch);";
         
         $parms = array(
+            ':acceso' => Session::get('sys_all'),
+            ':idPersona' => $this->_idPersona, 
             ":tipo" => $this->_tipo,
             ":iDisplayStart" => $this->_iDisplayStart,
             ":iDisplayLength" => $this->_iDisplayLength,
