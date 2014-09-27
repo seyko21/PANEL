@@ -52,7 +52,7 @@ var saldoSocio_ = function(){
             bPaginate: true,
             iDisplayLength: 10,            
             aoColumns: [
-                {sTitle: "N°", sWidth: "5%"},
+                {sTitle: "N°", sWidth: "5%", bSortable: false},
                 {sTitle: "N° OS", sWidth: "10%"},
                 {sTitle: "Socio", sWidth: "30%"},
                 {sTitle: "Fecha", sWidth: "15%",sClass: "center" },
@@ -69,7 +69,7 @@ var saldoSocio_ = function(){
                 aoData.push({"name": "_estadocb", "value": $("#"+diccionario.tabs.SASOC+"lst_estadosearch").val()});
             },
             fnDrawCallback: function(){
-                $("#"+diccionario.tabs.SASOC+"gridSaldoSocio_filter").find("input").attr("placeholder","Buscar por N° OS o Cliente o Representante").css("width","350px");
+                $("#"+diccionario.tabs.SASOC+"gridSaldoSocio_filter").find("input").attr("placeholder","Buscar por Socio").css("width","350px");
                 simpleScript.enterSearch("#"+diccionario.tabs.SASOC+"gridSaldoSocio",oTable);
                 /*para hacer evento invisible*/
                 simpleScript.removeAttr.click({

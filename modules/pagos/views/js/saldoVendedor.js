@@ -52,7 +52,7 @@ var saldoVendedor_ = function(){
             bPaginate: true,
             iDisplayLength: 10,            
             aoColumns: [
-                {sTitle: "N°", sWidth: "5%"},
+                {sTitle: "N°", sWidth: "5%", bSortable: false},
                 {sTitle: "N° OS", sWidth: "10%"},
                 {sTitle: "Vendedor", sWidth: "30%"},
                 {sTitle: "Fecha", sWidth: "15%",sClass: "center" },
@@ -69,7 +69,7 @@ var saldoVendedor_ = function(){
                 aoData.push({"name": "_estadocb", "value": $("#"+diccionario.tabs.SAVEN+"lst_estadosearch").val()});
             },
             fnDrawCallback: function() {
-                $("#"+diccionario.tabs.SAVEN+"gridSaldoVendedor_filter").find("input").attr("placeholder","Buscar por vendedor").css("width","250px");
+                $("#"+diccionario.tabs.SAVEN+"gridSaldoVendedor_filter").find("input").attr("placeholder","Buscar por vendedor").css("width","350px");
                 simpleScript.enterSearch("#"+diccionario.tabs.SAVEN+"gridSaldoVendedor",oTable);
                 /*para hacer evento invisible*/
                 simpleScript.removeAttr.click({

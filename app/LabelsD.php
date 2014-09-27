@@ -189,6 +189,11 @@ define('SAVEN_1','Saldo de Vendedor');
 define('SAVEN_2','Saldo');
 define('SAVEN_3','Pagado');
 define('SASOC_1','Saldo de Socio');
+define('MOVIM_1','Movimientos Ingresos y Salidas');
+define('MOVIM_2','Tipo');
+define('MOVIM_3','Ingresos');
+define('MOVIM_4','Salidas');
+define('LICL_1','Liquidacion de Cliente');
 
 
 ?>

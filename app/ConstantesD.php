@@ -28,4 +28,7 @@ define("MOVOS","MOVOS");             /*tab modulo MOVIMIENTOSOS*/
 define("SACLI","SACLI");             /*tab modulo SALDOCLIENTE*/
 define("SAVEN","SAVEN");             /*tab modulo SALDOVENDEDOR*/
 define("SASOC","SASOC");             /*tab modulo SALDOSOCIO*/
+define("MOVIM","MOVIM");             /*tab modulo MOVIMIENTOS*/
+define("LICL","LICL");             /*tab modulo LIQUIDACIONCLIENTE*/
+
 ?>

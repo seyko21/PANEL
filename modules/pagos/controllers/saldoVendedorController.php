@@ -23,7 +23,14 @@ class saldoVendedorController extends Controller{
         $sEcho          =   $this->post('sEcho');
         
         $rResult = Obj::run()->saldoVendedorModel->getSaldoVendedor();
-                
+        
+        $num = Obj::run()->saldoVendedorModel->_iDisplayStart;
+        if($num >= 10){
+            $num++;
+        }else{
+            $num = 1;
+        } 
+        
         if(!isset($rResult['error'])){  
             $iTotal         = isset($rResult[0]['total'])?$rResult[0]['total']:0;
             
@@ -38,12 +45,7 @@ class saldoVendedorController extends Controller{
                 /*antes de enviar id se encrypta*/
                 $encryptReg = Aes::en($aRow['id_comision']);
                 
-                $num = Obj::run()->saldoVendedorModel->_iDisplayStart;
-                if($num >= 10){
-                    $num++;
-                }else{
-                    $num = 1;
-                }
+    
                 /*
                  * configurando botones (add/edit/delete etc)
                  * se verifica si tiene permisos para editar

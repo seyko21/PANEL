@@ -2,16 +2,17 @@
 /*
 * ---------------------------------------
 * --------- CREATED BY CREATOR ----------
-* fecha: 26-09-2014 21:09:55 
-* Descripcion : saldoVendedorModel.php
+* fecha: 27-09-2014 05:09:34 
+* Descripcion : movimientosModel.php
 * ---------------------------------------
 */ 
 
-class saldoVendedorModel extends Model{
+class movimientosModel extends Model{
 
     private $_flag;
-    private $_idComision;
-    private $_estadocb;
+    private $_f1;
+    private $_f2;
+    private $_tipo;
     private $_usuario;
     
     /*para el grid*/
@@ -27,9 +28,10 @@ class saldoVendedorModel extends Model{
     
     private function _set(){
         $this->_flag        = Formulario::getParam("_flag");
-        $this->_idComision   = Aes::de(Formulario::getParam("_idComision"));    /*se decifra*/
         $this->_usuario     = Session::get("sys_idUsuario");
-        $this->_estadocb  = Formulario::getParam("_estadocb");  
+        $this->_f1    = Functions::cambiaf_a_mysql(Formulario::getParam("_f1"));
+        $this->_f2    = Functions::cambiaf_a_mysql(Formulario::getParam("_f2")); 
+        $this->_tipo        = Formulario::getParam("_tipocb");
         
         $this->_iDisplayStart  = Formulario::getParam("iDisplayStart"); 
         $this->_iDisplayLength = Formulario::getParam("iDisplayLength"); 
@@ -37,9 +39,9 @@ class saldoVendedorModel extends Model{
         $this->_sSearch        = Formulario::getParam("sSearch");
     }
     
-    /*data para el grid: SaldoVendedor*/
-    public function getSaldoVendedor(){
-        $aColumns       =   array("","orden_numero","nombrecompleto","fecha","porcentaje_comision","comision_venta","comision_asignado","comision_saldo" ); //para la ordenacion y pintado en html
+    /*data para el grid: Movimientos*/
+    public function getMovimientos(){
+        $aColumns       =   array("id_movimiento","usuario_creador","orden_numero","codigo","fecha","tipo","moneda","monto","estado" ); //para la ordenacion y pintado en html
         /*
 	 * Ordenando, se verifica por que columna se ordenara
 	 */
@@ -50,13 +52,13 @@ class saldoVendedorModel extends Model{
                                 ($this->post("sSortDir_".$i)==="asc" ? "asc" : "desc") .",";
                 }
         }
-        $sOrder = substr_replace( $sOrder, "", -1 );
-  
-        $query = "call sp_pagoConsultaSaldoVendedorGrid(:rol,:estado,:iDisplayStart,:iDisplayLength,:sOrder,:sSearch);";
+        $sOrder = substr_replace( $sOrder, "", -1 ); 
+        $query = "call sp_pagoConsultaMovimientoGrid(:f1,:f2,:tipo,:iDisplayStart,:iDisplayLength,:sOrder,:sSearch);";
         
         $parms = array(
-            ":rol"=>'V',
-            ":estado"=>$this->_estadocb,
+            ":f1" => $this->_f1,
+            ":f2" => $this->_f2,
+            ":tipo" => $this->_tipo,
             ":iDisplayStart" => $this->_iDisplayStart,
             ":iDisplayLength" => $this->_iDisplayLength,
             ":sOrder" => $sOrder,

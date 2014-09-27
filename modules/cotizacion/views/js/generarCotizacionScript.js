@@ -62,7 +62,7 @@ var generarCotizacionScript_ = function(){
                                 </td>\n\
                                 <td class="right">'+meses+'</td>\n\
                                 <td class="center">\n\
-                                    <input type="checkbox" id="'+diccionario.tabs.T8+index+'chk_disenio" name="chk_disenio[]" onclick="generarCotizacionScript.setDisenio(this,'+index+',\''+idProducto+'\');" checked="checked">\n\
+                                     <label class="checkbox">\n\<input type="checkbox" id="'+diccionario.tabs.T8+index+'chk_disenio" name="chk_disenio[]" onclick="generarCotizacionScript.setDisenio(this,'+index+',\''+idProducto+'\');" checked="checked"><i></i>Incl.</label>\n\
                                 </td>\n\
                                 <td class="right">'+produccion.toFixed(2)+'</td>\n\
                                 <td class="right">'+total.toFixed(2)+'</td>\n\

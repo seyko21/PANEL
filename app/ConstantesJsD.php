@@ -19,7 +19,9 @@
         MOVOS: '<?php echo MOVOS; ?>',
         SACLI: '<?php echo SACLI; ?>',
         SAVEN: '<?php echo SAVEN; ?>',
-        SASOC: '<?php echo SASOC; ?>'   
+        SASOC: '<?php echo SASOC; ?>',
+        MOVIM: '<?php echo MOVIM; ?>',
+        LICL: '<?php echo LICL; ?>'
     }
 };
 </script>

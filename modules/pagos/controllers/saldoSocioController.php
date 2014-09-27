@@ -23,7 +23,14 @@ class saldoSocioController extends Controller{
         $sEcho          =   $this->post('sEcho');
         
         $rResult = Obj::run()->saldoSocioModel->getSaldoSocio();
-                
+        
+        $num = Obj::run()->saldoSocioModel->_iDisplayStart;
+        if($num >= 10){
+            $num++;
+        }else{
+            $num = 1;
+        }         
+        
         if(!isset($rResult['error'])){  
             $iTotal         = isset($rResult[0]['total'])?$rResult[0]['total']:0;
             
