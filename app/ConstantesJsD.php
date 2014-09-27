@@ -18,7 +18,8 @@
         CALCU: '<?php echo CALCU; ?>',
         MOVOS: '<?php echo MOVOS; ?>',
         SACLI: '<?php echo SACLI; ?>',
-        SAVEN: '<?php echo SAVEN; ?>'   
+        SAVEN: '<?php echo SAVEN; ?>',
+        SASOC: '<?php echo SASOC; ?>'   
     }
 };
 </script>

@@ -2,27 +2,27 @@
 /*
 * ---------------------------------------
 * --------- CREATED BY CREATOR ----------
-* fecha: 26-09-2014 21:09:55 
-* Descripcion : saldoVendedorController.php
+* fecha: 26-09-2014 23:09:38 
+* Descripcion : saldoSocioController.php
 * ---------------------------------------
 */    
 
-class saldoVendedorController extends Controller{
+class saldoSocioController extends Controller{
 
     public function __construct() {
-        $this->loadModel("saldoVendedor");
+        $this->loadModel("saldoSocio");
     }
     
     public function index(){ 
-        Obj::run()->View->render("indexSaldoVendedor");
+        Obj::run()->View->render("indexSaldoSocio");
     }
     
-    public function getGridSaldoVendedor(){
-        $consultar   = Session::getPermiso('SAVENCC');
+    public function getGridSaldoSocio(){
+        $consultar   = Session::getPermiso('SASOCCC');
         
         $sEcho          =   $this->post('sEcho');
         
-        $rResult = Obj::run()->saldoVendedorModel->getSaldoVendedor();
+        $rResult = Obj::run()->saldoSocioModel->getSaldoSocio();
                 
         if(!isset($rResult['error'])){  
             $iTotal         = isset($rResult[0]['total'])?$rResult[0]['total']:0;
@@ -38,7 +38,7 @@ class saldoVendedorController extends Controller{
                 /*antes de enviar id se encrypta*/
                 $encryptReg = Aes::en($aRow['id_comision']);
                 
-                $num = Obj::run()->saldoVendedorModel->_iDisplayStart;
+                $num = Obj::run()->saldoSocioModel->_iDisplayStart;
                 if($num >= 10){
                     $num++;
                 }else{
@@ -88,14 +88,7 @@ class saldoVendedorController extends Controller{
 
     }
     
-
-    /*carga formulario (editSaldoVendedor.phtml) para editar registro: SaldoVendedor*/
-    public function getFormEditSaldoVendedor(){
-        Obj::run()->View->render("formEditSaldoVendedor");
-    }
-    
-   
-    
+  
 }
 
 ?>
