@@ -70,7 +70,7 @@ var saldoSocio_ = function(){
             },
             fnDrawCallback: function(){
                 $("#"+diccionario.tabs.SASOC+"gridSaldoSocio_filter").find("input").attr("placeholder","Buscar por N° OS o Cliente o Representante").css("width","350px");
-                //simpleScript.enterSearch("#"+diccionario.tabs.SASOC+"gridSaldoCliente",oTable);
+                simpleScript.enterSearch("#"+diccionario.tabs.SASOC+"gridSaldoSocio",oTable);
                 /*para hacer evento invisible*/
                 simpleScript.removeAttr.click({
                     container: "#widget_"+diccionario.tabs.SASOC,

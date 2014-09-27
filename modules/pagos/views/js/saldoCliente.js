@@ -70,7 +70,7 @@ var saldoCliente_ = function(){
             },
             fnDrawCallback: function() {
                 $("#"+diccionario.tabs.SACLI+"gridSaldoCliente_filter").find("input").attr("placeholder","Buscar por N° OS o Cliente o Representante").css("width","350px");
-                //simpleScript.enterSearch("#"+diccionario.tabs.SACLI+"gridSaldoCliente",oTable);
+                simpleScript.enterSearch("#"+diccionario.tabs.SACLI+"gridSaldoCliente",oTable);
                 /*para hacer evento invisible*/
                 simpleScript.removeAttr.click({
                     container: "#widget_"+diccionario.tabs.SACLI,

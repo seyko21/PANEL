@@ -70,7 +70,7 @@ var saldoVendedor_ = function(){
             },
             fnDrawCallback: function() {
                 $("#"+diccionario.tabs.SAVEN+"gridSaldoVendedor_filter").find("input").attr("placeholder","Buscar por vendedor").css("width","250px");
-                // simpleScript.enterSearch("#"+diccionario.tabs.SAVEN+"gridSaldoVendedor",oTable);
+                simpleScript.enterSearch("#"+diccionario.tabs.SAVEN+"gridSaldoVendedor",oTable);
                 /*para hacer evento invisible*/
                 simpleScript.removeAttr.click({
                     container: "#widget_"+diccionario.tabs.SAVEN,
