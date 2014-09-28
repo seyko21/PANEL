@@ -2,19 +2,18 @@
 /*
 * ---------------------------------------
 * --------- CREATED BY CREATOR ----------
-* fecha: 23-09-2014 16:09:05 
-* Descripcion : contratosGeneradosModel.php
+* fecha: 27-09-2014 23:09:28 
+* Descripcion : saldoCobrarModel.php
 * ---------------------------------------
 */ 
 
-class contratosGeneradosModel extends Model{
+class saldoCobrarModel extends Model{
 
     private $_flag;
-    private $_idOrden;
     private $_usuario;
+    private $_idPersona;
     private $_f1;
-    private $_f2;
-    private $_idPersona;     
+    private $_f2;       
     
     /*para el grid*/
     public  $_iDisplayStart;
@@ -29,22 +28,20 @@ class contratosGeneradosModel extends Model{
     
     private function _set(){
         $this->_flag        = Formulario::getParam("_flag");
-        $this->_idOrden  = Aes::de(Formulario::getParam("_idOrden"));    /*se decifra*/
         $this->_usuario     = Session::get("sys_idUsuario");
         $this->_idPersona   = Session::get('sys_idPersona');
-        
         $this->_f1    = Functions::cambiaf_a_mysql(Formulario::getParam("_f1"));
-        $this->_f2    = Functions::cambiaf_a_mysql(Formulario::getParam("_f2"));
-        
+        $this->_f2    = Functions::cambiaf_a_mysql(Formulario::getParam("_f2"));        
+                
         $this->_iDisplayStart  = Formulario::getParam("iDisplayStart"); 
         $this->_iDisplayLength = Formulario::getParam("iDisplayLength"); 
         $this->_iSortingCols   = Formulario::getParam("iSortingCols");
         $this->_sSearch        = Formulario::getParam("sSearch");
     }
     
-    /*data para el grid: ContratosGenerados*/
-    public function getContratosGenerados(){
-        $aColumns       =   array('orden_numero','fecha_contrato','6','9','monto_total','estado' ); //para la ordenacion y pintado en html
+    /*data para el grid: SaldoCobrar*/
+    public function getSaldoCobrar(){
+        $aColumns       =   array("","orden_numero","fecha","nombrecompleto","porcentaje_comision","comision_venta","comision_asignado","comision_saldo" ); //para la ordenacion y pintado en html
         /*
 	 * Ordenando, se verifica por que columna se ordenara
 	 */
@@ -56,23 +53,24 @@ class contratosGeneradosModel extends Model{
                 }
         }
         $sOrder = substr_replace( $sOrder, "", -1 );
-        
-        $query = "call sp_ordSeConsultaContratosGrid(:acceso,:idpersona,:f1, :f2, :iDisplayStart,:iDisplayLength,:sOrder,:sSearch);";
+  
+        $query = "call sp_pagoConsultaSaldoCobrarGrid(:rol,:estado,:idpersona,:f1,:f2,:iDisplayStart,:iDisplayLength,:sOrder,:sSearch);";
         
         $parms = array(
-            ":acceso" => Session::get('sys_all'),
+            ":rol"=>'V',
+            ":estado"=>'S',
             ":idpersona"=>$this->_idPersona,
             ":f1" => $this->_f1,
-            ":f2" => $this->_f2,
+            ":f2" => $this->_f2,            
             ":iDisplayStart" => $this->_iDisplayStart,
             ":iDisplayLength" => $this->_iDisplayLength,
             ":sOrder" => $sOrder,
-            ":sSearch" => $this->_sSearch
+            ":sSearch" => $this->_sSearch,
         );
         $data = $this->queryAll($query,$parms);
         return $data;
     }
-   
+    
     
 }
 

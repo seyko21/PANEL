@@ -125,7 +125,7 @@ class generarCotizacionModel extends Model{
             $this->_flag = 1; //retorna a 1 para ael SP
         }
         
-        $query = "CALL sp_cotiGenerarCotizacion(:flag,:idCotizacion,:idRepresentante,:mesesContrato,:diasOferta,:total,:idCaratula,:precio,:produccion,:usuario,:igv,:validez,:obs,:campania);";
+        $query = "CALL sp_cotiGenerarCotizacion(:flag,:idCotizacion,:idRepresentante,:mesesContrato,:diasOferta,:total,:idCaratula,:precio,:produccion,:usuario,:igv,:validez,:obs,:campania,:porcentaje_acceso,:idPersona);";
         $parms = array(
             ':flag' => $this->_flag,
             ':idCotizacion' => '',
@@ -140,9 +140,12 @@ class generarCotizacionModel extends Model{
             ':igv' => ($this->_igv == '1')?'1':'0',
             ':validez' => $this->_validez,
             ':obs' => $this->_observacion,
-            ':campania' => $this->_campania
+            ':campania' => $this->_campania,
+            ':porcentaje_acceso' => '',
+            ':idPersona'=> $this->_idPersona
         );
-        $data = $this->queryOne($query,$parms);  
+        $data = $this->queryOne($query,$parms);         
+        
         if($data['result'] == 1){
             $item = 0;
             foreach ($this->_idProducto as $key => $prod) {
@@ -161,7 +164,9 @@ class generarCotizacionModel extends Model{
                     ':igv' => ($this->_igv == '1')?'1':'0',
                     ':validez' => '',
                     ':obs' => '',
-                    ':campania' => ''
+                    ':campania' => '',
+                    ':porcentaje_acceso' => Session::get('sys_all'),
+                    ':idPersona'=> $this->_idPersona
                 );
                 $this->execute($query,$parms);                      
             }

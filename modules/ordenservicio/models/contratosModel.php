@@ -2,19 +2,19 @@
 /*
 * ---------------------------------------
 * --------- CREATED BY CREATOR ----------
-* fecha: 23-09-2014 16:09:05 
-* Descripcion : contratosGeneradosModel.php
+* fecha: 28-09-2014 00:09:01 
+* Descripcion : contratosModel.php
 * ---------------------------------------
 */ 
 
-class contratosGeneradosModel extends Model{
+class contratosModel extends Model{
 
     private $_flag;
     private $_idOrden;
     private $_usuario;
     private $_f1;
     private $_f2;
-    private $_idPersona;     
+    private $_idPersona;      
     
     /*para el grid*/
     public  $_iDisplayStart;
@@ -34,17 +34,16 @@ class contratosGeneradosModel extends Model{
         $this->_idPersona   = Session::get('sys_idPersona');
         
         $this->_f1    = Functions::cambiaf_a_mysql(Formulario::getParam("_f1"));
-        $this->_f2    = Functions::cambiaf_a_mysql(Formulario::getParam("_f2"));
-        
+        $this->_f2    = Functions::cambiaf_a_mysql(Formulario::getParam("_f2"));        
         $this->_iDisplayStart  = Formulario::getParam("iDisplayStart"); 
         $this->_iDisplayLength = Formulario::getParam("iDisplayLength"); 
         $this->_iSortingCols   = Formulario::getParam("iSortingCols");
         $this->_sSearch        = Formulario::getParam("sSearch");
     }
     
-    /*data para el grid: ContratosGenerados*/
-    public function getContratosGenerados(){
-        $aColumns       =   array('orden_numero','fecha_contrato','6','9','monto_total','estado' ); //para la ordenacion y pintado en html
+    /*data para el grid: Contratos*/
+    public function getContratos(){
+         $aColumns       =   array('orden_numero','fecha_contrato','6','9','monto_total','estado' ); //para la ordenacion y pintado en html
         /*
 	 * Ordenando, se verifica por que columna se ordenara
 	 */
@@ -72,8 +71,8 @@ class contratosGeneradosModel extends Model{
         $data = $this->queryAll($query,$parms);
         return $data;
     }
-   
     
+  
 }
 
 ?>

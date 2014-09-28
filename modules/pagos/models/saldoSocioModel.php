@@ -13,6 +13,8 @@ class saldoSocioModel extends Model{
     private $_idComision;
     private $_estadocb;
     private $_usuario;
+    private $_f1;
+    private $_f2;      
     
     /*para el grid*/
     public  $_iDisplayStart;
@@ -30,6 +32,8 @@ class saldoSocioModel extends Model{
         $this->_idComision   = Aes::de(Formulario::getParam("_idComision"));    /*se decifra*/
         $this->_usuario     = Session::get("sys_idUsuario");
         $this->_estadocb  = Formulario::getParam("_estadocb");  
+        $this->_f1    = Functions::cambiaf_a_mysql(Formulario::getParam("_f1"));
+        $this->_f2    = Functions::cambiaf_a_mysql(Formulario::getParam("_f2")); 
         
         $this->_iDisplayStart  = Formulario::getParam("iDisplayStart"); 
         $this->_iDisplayLength = Formulario::getParam("iDisplayLength"); 
@@ -52,11 +56,13 @@ class saldoSocioModel extends Model{
         }
         $sOrder = substr_replace( $sOrder, "", -1 );
         
-         $query = "call sp_pagoConsultaSaldoVendedorGrid(:rol,:estado,:iDisplayStart,:iDisplayLength,:sOrder,:sSearch);";
+         $query = "call sp_pagoConsultaSaldoVendedorGrid(:rol,:estado,:f1,:f2,:iDisplayStart,:iDisplayLength,:sOrder,:sSearch);";
         
         $parms = array(
             ":rol"=>'S',
             ":estado"=>$this->_estadocb,
+            ":f1" => $this->_f1,
+            ":f2" => $this->_f2,              
             ":iDisplayStart" => $this->_iDisplayStart,
             ":iDisplayLength" => $this->_iDisplayLength,
             ":sOrder" => $sOrder,

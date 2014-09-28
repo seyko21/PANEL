@@ -1,51 +1,50 @@
 /*
 * ---------------------------------------
 * --------- CREATED BY CREATOR ----------
-* fecha: 23-09-2014 16:09:05 
-* Descripcion : contratosGenerados.js
+* fecha: 28-09-2014 00:09:01 
+* Descripcion : contratos.js
 * ---------------------------------------
 */
-var contratosGenerados_ = function(){
+var contratos_ = function(){
     
     /*metodos privados*/
     var _private = {};
     
-    _private.idContratosGenerados = 0;
+    _private.idContratos = 0;
     
     _private.config = {
-        modulo: "ordenservicio/contratosGenerados/"
+        modulo: "ordenservicio/contratos/"
     };
 
     /*metodos publicos*/
     this.publico = {};
     
-    /*crea tab : ContratosGenerados*/
+    /*crea tab : Contratos*/
     this.publico.main = function(element){
         simpleScript.addTab({
-            id : diccionario.tabs.COGEN,
+            id : diccionario.tabs.MCON,
             label: $(element).attr("title"),
             fnCallback: function(){
-                contratosGenerados.getContenido();
+                contratos.getContenido();
             }
         });
     };
     
-    /*contenido de tab: ContratosGenerados*/
+    /*contenido de tab: Contratos*/
     this.publico.getContenido = function(){
         simpleAjax.send({
             dataType: "html",
             root: _private.config.modulo,
             fnCallback: function(data){
-                $("#"+diccionario.tabs.COGEN+"_CONTAINER").html(data);
-                contratosGenerados.getGridContratosGenerados();
+                $("#"+diccionario.tabs.MCON+"_CONTAINER").html(data);
+                contratos.getGridContratos();
             }
         });
     };
     
-    this.publico.getGridContratosGenerados = function (){
-        
-        var _f1 = $("#"+diccionario.tabs.COGEN+"txt_f1").val();
-        var _f2 = $("#"+diccionario.tabs.COGEN+"txt_f2").val();        
+    this.publico.getGridContratos = function (){
+        var _f1 = $("#"+diccionario.tabs.MCON+"txt_f1").val();
+        var _f2 = $("#"+diccionario.tabs.MCON+"txt_f2").val();        
         var f1, f2;
         f1 = $.datepicker.parseDate('dd/mm/yy', _f1);
         f2 = $.datepicker.parseDate('dd/mm/yy', _f2);        
@@ -54,10 +53,7 @@ var contratosGenerados_ = function(){
                   content: 'La fecha inicio no puede ser mayor que la fecha final.'      
             });           
        }
-        
-        var oTable = $("#"+diccionario.tabs.COGEN+"gridContratosGenerados").dataTable({
-            bFilter: true,
-            sSearch: true,
+        var oTable = $("#"+diccionario.tabs.MCON+"gridContratos").dataTable({
             bProcessing: true,
             bServerSide: true,
             bDestroy: true,
@@ -74,24 +70,24 @@ var contratosGenerados_ = function(){
                 {sTitle: "Estado", sWidth: "10%", sClass: "center"},                
                 {sTitle: "Acciones", sWidth: "8%", sClass: "center", bSortable: false}
             ],
-            aaSorting: [[0, "desc"]],
+            aaSorting: [[2, "asc"]],
             sScrollY: "300px",
-            sAjaxSource: _private.config.modulo+"getGridContratosGenerados",
-             fnServerParams: function(aoData) {
+            sAjaxSource: _private.config.modulo+"getGridContratos",
+            fnServerParams: function(aoData) {
                 aoData.push({"name": "_f1", "value": _f1});                
                 aoData.push({"name": "_f2", "value": _f2}); 
-            },
-            fnDrawCallback: function() {    
-                $("#"+diccionario.tabs.COGEN+"gridContratosGenerados_filter").find("input").attr("placeholder","Buscar por N° OS").css("width","200px");
+            },            
+            fnDrawCallback: function() {
+                $("#"+diccionario.tabs.MCON+"gridContratos_filter").find("input").attr("placeholder","Buscar por N° OS").css("width","200px");
                 /*para hacer evento invisible*/
                 simpleScript.removeAttr.click({
-                    container: "#widget_"+diccionario.tabs.COGEN,
+                    container: "#widget_"+diccionario.tabs.MCON,
                     typeElement: "button"
                 });
             }
         });
         setup_widgets_desktop();
-    };
+    };      
     
     this.publico.postExportarContratoPDF = function(btn,id){
         simpleAjax.send({
@@ -100,17 +96,16 @@ var contratosGenerados_ = function(){
             data: '&_idOrden='+id,
             fnCallback: function(data) {
                 if(parseInt(data.result) === 1){
-                    $('#'+diccionario.tabs.COGEN+'btnDowPDF').off('onclick');
-                    $('#'+diccionario.tabs.COGEN+'btnDowPDF').off('click');
-                    $('#'+diccionario.tabs.COGEN+'btnDowPDF').attr("onclick","window.open('public/files/"+data.archivo+"','_blank');generarCotizacion.deleteArchivo('"+data.archivo+"');");
-                    $('#'+diccionario.tabs.COGEN+'btnDowPDF').click();
+                    $('#'+diccionario.tabs.MCON+'btnDowPDF').off('onclick');
+                    $('#'+diccionario.tabs.MCON+'btnDowPDF').off('click');
+                    $('#'+diccionario.tabs.MCON+'btnDowPDF').attr("onclick","window.open('public/files/"+data.archivo+"','_blank');generarCotizacion.deleteArchivo('"+data.archivo+"');");
+                    $('#'+diccionario.tabs.MCON+'btnDowPDF').click();
                 }
             }
         });
-    }; 
-   
+    };     
     
     return this.publico;
     
 };
-var contratosGenerados = new contratosGenerados_();
+var contratos = new contratos_();

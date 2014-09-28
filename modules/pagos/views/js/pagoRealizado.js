@@ -1,69 +1,60 @@
 /*
 * ---------------------------------------
 * --------- CREATED BY CREATOR ----------
-* fecha: 26-09-2014 15:09:21 
-* Descripcion : saldoCliente.js
+* fecha: 28-09-2014 00:09:14 
+* Descripcion : pagoRealizado.js
 * ---------------------------------------
 */
-var saldoCliente_ = function(){
+var pagoRealizado_ = function(){
     
     /*metodos privados*/
     var _private = {};
     
-    _private.idCompromiso = 0;
+    _private.idPagoRealizado = 0;
     
     _private.config = {
-        modulo: "pagos/saldoCliente/"
+        modulo: "pagos/pagoRealizado/"
     };
 
     /*metodos publicos*/
     this.publico = {};
     
-    /*crea tab : SaldoCliente*/
+    /*crea tab : PagoRealizado*/
     this.publico.main = function(element){
         simpleScript.addTab({
-            id : diccionario.tabs.SACLI,
+            id : diccionario.tabs.MIPR,
             label: $(element).attr("title"),
             fnCallback: function(){
-                saldoCliente.getContenido();
+                pagoRealizado.getContenido();
             }
         });
     };
     
-    /*contenido de tab: SaldoCliente*/
+    /*contenido de tab: PagoRealizado*/
     this.publico.getContenido = function(){
         simpleAjax.send({
             dataType: "html",
             root: _private.config.modulo,
             fnCallback: function(data){
-                $("#"+diccionario.tabs.SACLI+"_CONTAINER").html(data);
-                saldoCliente.getGridSaldoCliente();
+                $("#"+diccionario.tabs.MIPR+"_CONTAINER").html(data);
+                pagoRealizado.getGridPagoRealizado();
             }
         });
     };
     
-    this.publico.getGridSaldoCliente = function (){
-        
-        var _cb = $("#"+diccionario.tabs.SACLI+"lst_estadosearch").val();
-        if (_cb == 'T'){
-            $("#"+diccionario.tabs.SACLI+"txt_f1").prop('disabled',true);
-            $("#"+diccionario.tabs.SACLI+"txt_f2").prop('disabled',true);
-        }else{        
-            $("#"+diccionario.tabs.SACLI+"txt_f1").prop('disabled',false);
-            $("#"+diccionario.tabs.SACLI+"txt_f2").prop('disabled',false);
-             
-            var _f1 = $("#"+diccionario.tabs.SACLI+"txt_f1").val();
-            var _f2 = $("#"+diccionario.tabs.SACLI+"txt_f2").val();        
-            var f1, f2;
-            f1 = $.datepicker.parseDate('dd/mm/yy', _f1);
-            f2 = $.datepicker.parseDate('dd/mm/yy', _f2);        
-            if( f1 > f2 ){
-               simpleScript.notify.warning({
-                      content: 'La fecha inicio no puede ser mayor que la fecha final.'      
-                });           
-           }  
-       }
-        var oTable = $("#"+diccionario.tabs.SACLI+"gridSaldoCliente").dataTable({
+    this.publico.getGridPagoRealizado = function (){
+            
+        var _f1 = $("#"+diccionario.tabs.MIPR+"txt_f1").val();
+        var _f2 = $("#"+diccionario.tabs.MIPR+"txt_f2").val();        
+        var f1, f2;
+        f1 = $.datepicker.parseDate('dd/mm/yy', _f1);
+        f2 = $.datepicker.parseDate('dd/mm/yy', _f2);        
+        if( f1 > f2 ){
+           simpleScript.notify.warning({
+                  content: 'La fecha inicio no puede ser mayor que la fecha final.'      
+            });           
+       }  
+        var oTable = $("#"+diccionario.tabs.MIPR+"gridPagoRealizado").dataTable({
             bProcessing: true,
             bServerSide: true,
             bDestroy: true,
@@ -80,41 +71,37 @@ var saldoCliente_ = function(){
                 {sTitle: "Monto", sWidth: "10%", sClass: "right"},
                 {sTitle: "Fecha Pago", sWidth: "9%", sClass: "center"},
                 {sTitle: "Estado", sWidth: "8%", sClass: "center"},
-                {sTitle: "Acciones", sWidth: "8%", sClass: "center", bSortable: false}
+                {sTitle: "Acciones", sWidth: "8%", sClass: "center", bSortable: false}     
             ],
             aaSorting: [[2, "asc"]],
             sScrollY: "300px",
-            sAjaxSource: _private.config.modulo+"getGridSaldoCliente",
+            sAjaxSource: _private.config.modulo+"getGridPagoRealizado",
             fnServerParams: function(aoData) {
                 aoData.push({"name": "_f1", "value": _f1});                
-                aoData.push({"name": "_f2", "value": _f2}); 
-                aoData.push({"name": "_estadocb", "value": _cb});
+                aoData.push({"name": "_f2", "value": _f2});             
             },
             fnDrawCallback: function() {
-                $("#"+diccionario.tabs.SACLI+"gridSaldoCliente_filter").find("input").attr("placeholder","Buscar por N° OS o Cliente").css("width","200px");
-                simpleScript.enterSearch("#"+diccionario.tabs.SACLI+"gridSaldoCliente",oTable);
+                $("#"+diccionario.tabs.MIPR+"gridPagoRealizado_filter").find("input").attr("placeholder","Buscar por N° OS").css("width","250px");
+                simpleScript.enterSearch("#"+diccionario.tabs.MIPR+"gridPagoRealizado",oTable);
                 /*para hacer evento invisible*/
                 simpleScript.removeAttr.click({
-                    container: "#widget_"+diccionario.tabs.SACLI,
+                    container: "#widget_"+diccionario.tabs.MIPR,
                     typeElement: "button"
-                });
-                simpleScript.removeAttr.change({
-                    container: "#widget_"+diccionario.tabs.SACLI,
-                    typeElement: "select"
                 });
             }
         });
         setup_widgets_desktop();
     };
-    this.publico.postPDF = function(btn,idd){
+    
+     this.publico.postPDF = function(btn,idd){
         simpleAjax.send({
             element: btn,
             root: _private.config.modulo + 'postPDF',
             data: '&_idCompromiso='+idd,
             fnCallback: function(data) {
                 if(parseInt(data.result) === 1){
-                    $('#'+diccionario.tabs.SACLI+'btnDowPDF').attr("onclick","window.open('public/files/"+data.archivo+"','_blank');compromisoPagar.deleteArchivo('"+data.archivo+"');");
-                    $('#'+diccionario.tabs.SACLI+'btnDowPDF').click();
+                    $('#'+diccionario.tabs.MIPR+'btnDowPDF').attr("onclick","window.open('public/files/"+data.archivo+"','_blank');compromisoPagar.deleteArchivo('"+data.archivo+"');");
+                    $('#'+diccionario.tabs.MIPR+'btnDowPDF').click();
                 }
             }
         });
@@ -127,8 +114,8 @@ var saldoCliente_ = function(){
             data: '&_idCompromiso='+idd,
             fnCallback: function(data) {
                 if(parseInt(data.result) === 1){
-                    $('#'+diccionario.tabs.SACLI+'btnDowExcel').attr("onclick","window.open('public/files/"+data.archivo+"','_self');compromisoPagar.deleteArchivo('"+data.archivo+"');");
-                    $('#'+diccionario.tabs.SACLI+'btnDowExcel').click();
+                    $('#'+diccionario.tabs.MIPR+'btnDowExcel').attr("onclick","window.open('public/files/"+data.archivo+"','_self');compromisoPagar.deleteArchivo('"+data.archivo+"');");
+                    $('#'+diccionario.tabs.MIPR+'btnDowExcel').click();
                 }
                 if(!isNaN(data.result) && parseInt(data.result) === 2){
                     simpleScript.notify.error({
@@ -138,9 +125,9 @@ var saldoCliente_ = function(){
             }
         });
     };
-    
+
     
     return this.publico;
     
 };
-var saldoCliente = new saldoCliente_();
+var pagoRealizado = new pagoRealizado_();

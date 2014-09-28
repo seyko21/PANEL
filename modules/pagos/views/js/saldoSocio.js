@@ -43,6 +43,25 @@ var saldoSocio_ = function(){
     };
     
     this.publico.getGridSaldoSocio = function (){
+        
+        var _cb = $("#"+diccionario.tabs.SASOC+"lst_estadosearch").val();
+        if (_cb == 'T'){
+            $("#"+diccionario.tabs.SASOC+"txt_f1").prop('disabled',true);
+            $("#"+diccionario.tabs.SASOC+"txt_f2").prop('disabled',true);
+        }else{                
+            $("#"+diccionario.tabs.SASOC+"txt_f1").prop('disabled',false);
+            $("#"+diccionario.tabs.SASOC+"txt_f2").prop('disabled',false);
+            var _f1 = $("#"+diccionario.tabs.SASOC+"txt_f1").val();
+            var _f2 = $("#"+diccionario.tabs.SASOC+"txt_f2").val();        
+            var f1, f2;
+            f1 = $.datepicker.parseDate('dd/mm/yy', _f1);
+            f2 = $.datepicker.parseDate('dd/mm/yy', _f2);        
+            if( f1 > f2 ){
+               simpleScript.notify.warning({
+                      content: 'La fecha inicio no puede ser mayor que la fecha final.'      
+                });           
+           }        
+        }
         var oTable = $("#"+diccionario.tabs.SASOC+"gridSaldoSocio").dataTable({
             bProcessing: true,
             bServerSide: true,
@@ -66,10 +85,12 @@ var saldoSocio_ = function(){
             sScrollY: "300px",
             sAjaxSource: _private.config.modulo+"getGridSaldoSocio",
             fnServerParams: function(aoData){
-                aoData.push({"name": "_estadocb", "value": $("#"+diccionario.tabs.SASOC+"lst_estadosearch").val()});
+                aoData.push({"name": "_f1", "value": _f1});                
+                aoData.push({"name": "_f2", "value": _f2}); 
+                aoData.push({"name": "_estadocb", "value": _cb});
             },
             fnDrawCallback: function(){
-                $("#"+diccionario.tabs.SASOC+"gridSaldoSocio_filter").find("input").attr("placeholder","Buscar por Socio").css("width","350px");
+                $("#"+diccionario.tabs.SASOC+"gridSaldoSocio_filter").find("input").attr("placeholder","Buscar por N° OS o Socio").css("width","200px");
                 simpleScript.enterSearch("#"+diccionario.tabs.SASOC+"gridSaldoSocio",oTable);
                 /*para hacer evento invisible*/
                 simpleScript.removeAttr.click({

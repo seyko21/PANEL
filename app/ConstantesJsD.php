@@ -21,7 +21,12 @@
         SAVEN: '<?php echo SAVEN; ?>',
         SASOC: '<?php echo SASOC; ?>',
         MOVIM: '<?php echo MOVIM; ?>',
-        LICL: '<?php echo LICL; ?>'
+        LICL: '<?php echo LICL; ?>',
+        PANCO: '<?php echo PANCO; ?>',
+        SACOB: '<?php echo SACOB; ?>',
+        PAGRE: '<?php echo PAGRE; ?>',
+        MCON: '<?php echo MCON; ?>',
+        MIPR: '<?php echo MIPR; ?>'  
     }
 };
 </script>

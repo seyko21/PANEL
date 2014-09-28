@@ -30,5 +30,10 @@ define("SAVEN","SAVEN");             /*tab modulo SALDOVENDEDOR*/
 define("SASOC","SASOC");             /*tab modulo SALDOSOCIO*/
 define("MOVIM","MOVIM");             /*tab modulo MOVIMIENTOS*/
 define("LICL","LICL");             /*tab modulo LIQUIDACIONCLIENTE*/
+define("PANCO","PANCO");             /*tab modulo PANELESCONFIRMADO*/
+define("SACOB","SACOB");             /*tab modulo SALDOCOBRAR*/
+define("PAGRE","PAGRE");             /*tab modulo PAGOSRECIBIDOS*/
+define("MCON","MCON");             /*tab modulo CONTRATOS*/
+define("MIPR","MIPR");             /*tab modulo PAGOREALIZADO*/
 
 ?>

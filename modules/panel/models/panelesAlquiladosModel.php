@@ -81,7 +81,7 @@ class panelesAlquiladosModel extends Model{
     }
     
     public function getGridOrdenServicio(){
-        $aColumns       =   array('orden_numero','fecha_orden','precio','cliente','responsable','creador' ); //para la ordenacion y pintado en html
+        $aColumns       =   array('orden_numero','cliente','precio','fecha_inicio','fecha_termino'); //para la ordenacion y pintado en html
         /*
 	 * Ordenando, se verifica por que columna se ordenara
 	 */

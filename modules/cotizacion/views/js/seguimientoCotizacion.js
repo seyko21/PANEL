@@ -60,6 +60,7 @@ var seguimientoCotizacion_ = function(){
             aoColumns: [
                 {sTitle: "Código", sClass: "center",sWidth: "15%"},
                 {sTitle: "Prospecto", sWidth: "25%"},
+                {sTitle: "Creado por", sWidth: "25%"},
                 {sTitle: "Fecha", sWidth: "10%",sClass: "center"},
                 {sTitle: "Meses", sWidth: "10%",sClass: "center"},
                 {sTitle: "Fec. Venc.", sWidth: "10%", sClass: "center"},

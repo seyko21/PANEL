@@ -90,11 +90,12 @@ var panelesAlquilados_ = function(){
             sSearch: false,
             bFilter: false,
             aoColumns: [                
-                {sTitle: "Código", sWidth: "8%"},
-                {sTitle: "Fecha", sWidth: "10%", sClass: "center"},
+                {sTitle: "N° OS", sWidth: "8%"},
+                {sTitle: "Cliente", sWidth: "40%"},
                 {sTitle: "Precio", sWidth: "10%", sClass: "right"},
-                {sTitle: "Cliente", sWidth: "25%"},
-                {sTitle: "Usuario", sWidth: "25%"}                
+                {sTitle: "Inicio", sWidth: "10%", sClass: "center"},
+                {sTitle: "Termino", sWidth: "10%", sClass: "center"},
+                {sTitle: "Vista", sWidth: "10%", sClass: "center", bSortable: false}
             ],
             aaSorting: [[1, 'asc']],
             sScrollY: "350px",

@@ -43,6 +43,26 @@ var saldoVendedor_ = function(){
     };
     
     this.publico.getGridSaldoVendedor = function (){
+        
+        var _cb = $("#"+diccionario.tabs.SAVEN+"lst_estadosearch").val();
+        if (_cb == 'T'){
+            $("#"+diccionario.tabs.SAVEN+"txt_f1").prop('disabled',true);
+            $("#"+diccionario.tabs.SAVEN+"txt_f2").prop('disabled',true);
+        }else{                
+            $("#"+diccionario.tabs.SAVEN+"txt_f1").prop('disabled',false);
+            $("#"+diccionario.tabs.SAVEN+"txt_f2").prop('disabled',false);
+            var _f1 = $("#"+diccionario.tabs.SAVEN+"txt_f1").val();
+            var _f2 = $("#"+diccionario.tabs.SAVEN+"txt_f2").val();        
+            var f1, f2;
+            f1 = $.datepicker.parseDate('dd/mm/yy', _f1);
+            f2 = $.datepicker.parseDate('dd/mm/yy', _f2);        
+            if( f1 > f2 ){
+               simpleScript.notify.warning({
+                      content: 'La fecha inicio no puede ser mayor que la fecha final.'      
+                });           
+           }        
+        }
+
         var oTable = $("#"+diccionario.tabs.SAVEN+"gridSaldoVendedor").dataTable({
             bProcessing: true,
             bServerSide: true,
@@ -66,10 +86,12 @@ var saldoVendedor_ = function(){
             sScrollY: "300px",
             sAjaxSource: _private.config.modulo+"getGridSaldoVendedor",
             fnServerParams: function(aoData) {
-                aoData.push({"name": "_estadocb", "value": $("#"+diccionario.tabs.SAVEN+"lst_estadosearch").val()});
+                aoData.push({"name": "_f1", "value": _f1});                
+                aoData.push({"name": "_f2", "value": _f2}); 
+                aoData.push({"name": "_estadocb", "value": _cb});
             },
             fnDrawCallback: function() {
-                $("#"+diccionario.tabs.SAVEN+"gridSaldoVendedor_filter").find("input").attr("placeholder","Buscar por vendedor").css("width","350px");
+                $("#"+diccionario.tabs.SAVEN+"gridSaldoVendedor_filter").find("input").attr("placeholder","Buscar por N° OS o vendedor").css("width","200px");
                 simpleScript.enterSearch("#"+diccionario.tabs.SAVEN+"gridSaldoVendedor",oTable);
                 /*para hacer evento invisible*/
                 simpleScript.removeAttr.click({

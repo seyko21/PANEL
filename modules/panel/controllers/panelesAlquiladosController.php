@@ -100,7 +100,19 @@ class panelesAlquiladosController extends Controller{
             $sOutput .= '"aaData": [ ';
             foreach ( $rResult as $key=>$aRow ){
                 /*datos de manera manual*/
-                $sOutput .= '["'.$aRow['orden_numero'].'","'.Functions::cambiaf_a_normal($aRow['fecha_orden']).'","'.number_format($aRow['precio'],2).'","'.$aRow['cliente'].' - '.$aRow['responsable'].'","'.$aRow['creador'].'" ';
+                                
+                $c1 = $aRow['orden_numero'];
+                $c2 = $aRow['cliente'].' - '.$aRow['responsable'];
+                $c3 = $aRow['creador'];
+                $c4 = number_format($aRow['precio'],2);
+                $c5 = Functions::cambiaf_a_normal($aRow['fecha_inicio']);
+                $c6 = Functions::cambiaf_a_normal($aRow['fecha_termino']);
+                if($aRow['imagen'] != '' or $aRow['imagen'] != null){
+                    $imagen = '<a href=\"'.BASE_URL.'public/img/confirmacion/'.$aRow['imagen'].'\" target=\"_blank\" ><img border=\"0\" src=\"'.BASE_URL.'public/img/confirmacion/'.$aRow['imagen'].'\" style=\"width:70px; height:40px;\" /></a>';
+                }else{
+                    $imagen = '<img src=\"'.BASE_URL.'public/img/sin_foto.jpg\" style=\"width:70px; height:40px;\" />';
+                }
+                $sOutput .= '["'.$c1.'","'.$c2.'","'.$c4.'","'.$c5.'","'.$c6.'","'.$imagen.'" ';
                                
                 $sOutput = substr_replace( $sOutput, "", -1 );
                 $sOutput .= '],';

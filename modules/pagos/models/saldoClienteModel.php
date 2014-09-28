@@ -13,6 +13,8 @@ class saldoClienteModel extends Model{
     private $_idCompromiso;
     private $_estadocb;
     private $_usuario;
+    private $_f1;
+    private $_f2;
     
     /*para el grid*/
     public  $_iDisplayStart;
@@ -30,6 +32,8 @@ class saldoClienteModel extends Model{
         $this->_idCompromiso  = Aes::de(Formulario::getParam("_idCompromiso"));    /*se decifra*/
         $this->_usuario     = Session::get("sys_idUsuario");
         $this->_estadocb  = Formulario::getParam("_estadocb"); 
+        $this->_f1    = Functions::cambiaf_a_mysql(Formulario::getParam("_f1"));
+        $this->_f2    = Functions::cambiaf_a_mysql(Formulario::getParam("_f2")); 
         
         $this->_iDisplayStart  = Formulario::getParam("iDisplayStart"); 
         $this->_iDisplayLength = Formulario::getParam("iDisplayLength"); 
@@ -53,9 +57,11 @@ class saldoClienteModel extends Model{
         
         $sOrder = substr_replace( $sOrder, "", -1 );
         
-        $query = "call sp_pagoConsultaSaldoClienteGrid(:estado,:iDisplayStart,:iDisplayLength,:sOrder,:sSearch);";
+        $query = "call sp_pagoConsultaSaldoClienteGrid(:f1,:f2,:estado,:iDisplayStart,:iDisplayLength,:sOrder,:sSearch);";
         
         $parms = array(
+            ":f1" => $this->_f1,
+            ":f2" => $this->_f2,  
             ":estado"=>$this->_estadocb,
             ":iDisplayStart" => $this->_iDisplayStart,
             ":iDisplayLength" => $this->_iDisplayLength,

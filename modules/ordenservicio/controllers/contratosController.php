@@ -2,29 +2,29 @@
 /*
 * ---------------------------------------
 * --------- CREATED BY CREATOR ----------
-* fecha: 23-09-2014 16:09:05 
-* Descripcion : contratosGeneradosController.php
+* fecha: 28-09-2014 00:09:01 
+* Descripcion : contratosController.php
 * ---------------------------------------
 */    
 
-class contratosGeneradosController extends Controller{
+class contratosController extends Controller{
 
     public function __construct() {
-        $this->loadModel("contratosGenerados");
+        $this->loadModel("contratos");
     }
     
     public function index(){ 
-        Obj::run()->View->render("indexContratosGenerados");
+        Obj::run()->View->render("indexContratos");
     }
     
-    public function getGridContratosGenerados(){
-        $exportarpdf   = Session::getPermiso('COGENEP');
+    public function getGridContratos(){
+        $exportarpdf   = Session::getPermiso('MCONEP');
         
         $sEcho          =   $this->post('sEcho');
         
-        $rResult = Obj::run()->contratosGeneradosModel->getContratosGenerados();
+        $rResult = Obj::run()->contratosModel->getContratos();
         
-        $num = Obj::run()->contratosGeneradosModel->_iDisplayStart;
+        $num = Obj::run()->contratosModel->_iDisplayStart;
         if($num >= 10){
             $num++;
         }else{
@@ -41,6 +41,7 @@ class contratosGeneradosController extends Controller{
             $sOutput .= '"aaData": [ ';     
             
             foreach ( $rResult as $aRow ){
+                
                 
                 /*campo que maneja los estados, para el ejemplo aqui es ACTIVO, coloca tu campo*/
                 switch($aRow['estado']){
@@ -71,7 +72,7 @@ class contratosGeneradosController extends Controller{
                 $axion = '"<div class=\"btn-group\">';
                  
                 if($exportarpdf['permiso']){
-                    $axion .= '<button type=\"button\" class=\"'.$exportarpdf['theme'].'\" title=\"'.$exportarpdf['accion'].'\" onclick=\"contratosGenerados.postExportarContratoPDF(this,\'' . $encryptReg . '\')\"> ';
+                    $axion .= '<button type=\"button\" class=\"'.$exportarpdf['theme'].'\" title=\"'.$exportarpdf['accion'].'\" onclick=\"contratos.postExportarContratoPDF(this,\'' . $encryptReg . '\')\"> ';
                     $axion .= '    <i class=\"'.$exportarpdf['icono'].'\"></i>';
                     $axion .= '</button>';
                 }
@@ -97,7 +98,50 @@ class contratosGeneradosController extends Controller{
 
     }
     
-   
+    /*carga formulario (newContratos.phtml) para nuevo registro: Contratos*/
+    public function getFormNewContratos(){
+        Obj::run()->View->render("formNewContratos");
+    }
+    
+    /*carga formulario (editContratos.phtml) para editar registro: Contratos*/
+    public function getFormEditContratos(){
+        Obj::run()->View->render("formEditContratos");
+    }
+    
+    /*busca data para editar registro: Contratos*/
+    public static function findContratos(){
+        $data = Obj::run()->contratosModel->findContratos();
+            
+        return $data;
+    }
+    
+    /*envia datos para grabar registro: Contratos*/
+    public function postNewContratos(){
+        $data = Obj::run()->contratosModel->newContratos();
+        
+        echo json_encode($data);
+    }
+    
+    /*envia datos para editar registro: Contratos*/
+    public function postEditContratos(){
+        $data = Obj::run()->contratosModel->editContratos();
+        
+        echo json_encode($data);
+    }
+    
+    /*envia datos para eliminar registro: Contratos*/
+    public function postDeleteContratos(){
+        $data = Obj::run()->contratosModel->deleteContratos();
+        
+        echo json_encode($data);
+    }
+    
+    /*envia datos para eliminar registros: Contratos*/
+    public function postDeleteContratosAll(){
+        $data = Obj::run()->contratosModel->deleteContratosAll();
+        
+        echo json_encode($data);
+    }
     
 }
 
