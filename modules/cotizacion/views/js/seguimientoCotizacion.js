@@ -58,12 +58,12 @@ var seguimientoCotizacion_ = function(){
             bPaginate: true,
             iDisplayLength: 10,            
             aoColumns: [
-                {sTitle: "Código", sClass: "center",sWidth: "15%"},
-                {sTitle: "Prospecto", sWidth: "25%"},
-                {sTitle: "Creado por", sWidth: "25%"},
-                {sTitle: "Fecha", sWidth: "10%",sClass: "center"},
-                {sTitle: "Meses", sWidth: "10%",sClass: "center"},
-                {sTitle: "Fec. Venc.", sWidth: "10%", sClass: "center"},
+                {sTitle: "Código", sClass: "center",sWidth: "10%"},
+                {sTitle: "Prospecto", sWidth: "20%"},
+                {sTitle: "Creado por", sWidth: "20%"},
+                {sTitle: "Fecha", sWidth: "5%",sClass: "center"},
+                {sTitle: "Meses", sWidth: "5%",sClass: "center"},
+                {sTitle: "Fec. Venc.", sWidth: "8%", sClass: "center"},
                 {sTitle: "Total", sWidth: "10%", sClass: "right"},
                 {sTitle: "Estado", sWidth: "15%", sClass: "center", bSortable: false},
                 {sTitle: "Acciones", sWidth: "10%", sClass: "center", bSortable: false}
