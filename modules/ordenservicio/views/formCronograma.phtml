@@ -91,5 +91,7 @@ $("#<?php echo GNOSE; ?>formCronograma").validate({
         generarOrden.postCuota();
     }   
 });
-generarOrden.getGridCuotas();
+
+setTimeout(function(){generarOrden.getGridCuotas();},500 );
+
 </script>

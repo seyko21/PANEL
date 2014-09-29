@@ -92,9 +92,10 @@ var generarOrden_ = function(){
             iDisplayLength: 50,            
             aoColumns: [
                 {sTitle: "N°", sWidth: "1%"},
-                {sTitle: "Monto", sWidth: "10%",sClass: "right",bSortable: false},
-                {sTitle: "Fecha Pago", sWidth: "20%",sClass: "center",bSortable: false},
-                {sTitle: "Estado", sWidth: "10%",sClass: "center",bSortable: false},
+                {sTitle: "Monto", sWidth: "10%",sClass: "right",bSortable: false},                
+                {sTitle: "Programado", sWidth: "10%",sClass: "center",bSortable: false},                
+                {sTitle: "Mora", sWidth: "5%",sClass: "right",bSortable: false},
+                {sTitle: "Estado", sWidth: "10%",sClass: "center",bSortable: false},                
                 {sTitle: "Acciones", sWidth: "8%", sClass: "center", bSortable: false}
             ],
             aaSorting: [[0, "asc"]],
@@ -112,12 +113,16 @@ var generarOrden_ = function(){
                 });
             },
             fnInfoCallback: function( oSettings, iStart, iEnd, iMax, iTotal, sPre ) {
-                var m=0, t=0;
+                var m=0, t=0, mora=0;
                 $("#"+diccionario.tabs.GNOSE+"gridCuotas").find('tbody').find('tr').each(function(){
-                    m += parseFloat(simpleScript.deleteComa($(this).find('td:eq(1)').html()));
+                    if ($(this).find('td:eq(4) span').html() != 'Reprogramado'){
+                        m += parseFloat(simpleScript.deleteComa($(this).find('td:eq(1)').html()));
+                        mora += parseFloat(simpleScript.deleteComa($(this).find('td:eq(3)').html()));
+                    }
                 });
+                m = m - mora;
                 
-                var saldo = _private.montoTotal - m;
+                var saldo = _private.montoTotal - m ;
                 
                 if(isNaN(m)){
                     m = 0;

@@ -65,7 +65,7 @@ var movimientos_ = function(){
             iDisplayLength: 10,            
             aoColumns: [
                 {sTitle: "ID", sWidth: "2%",bSortable: false},
-                {sTitle: "Usuario Creador", sWidth: "30%"},
+                {sTitle: "Creador por", sWidth: "30%"},
                 {sTitle: "N° OS", sWidth: "5%", sClass: "center"},
                 {sTitle: "Codigo", sWidth: "10%"},
                 {sTitle: "Fecha", sWidth: "10%", sClass: "center"},

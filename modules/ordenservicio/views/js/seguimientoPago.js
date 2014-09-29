@@ -60,10 +60,10 @@ var seguimientoPago_ = function(){
             bPaginate: true,
             iDisplayLength: 10,            
             aoColumns: [
-                {sTitle: "N°", sWidth: "1%",bSortable: false},
+                {sTitle: "N°", sWidth: "2%",bSortable: false},
                 {sTitle: "Código", sWidth: "10%",sClass: "center"},
-                {sTitle: "Representante", sWidth: "25%"},
-                {sTitle: "Cliente", sWidth: "25%"},
+                {sTitle: "Cliente", sWidth: "30%"},
+                {sTitle: "Creado por", sWidth: "20%"},
                 {sTitle: "Estado", sWidth: "10%"},
                 {sTitle: "Fecha", sWidth: "10%"},
                 {sTitle: "Monto", sWidth: "10%", sClass: "right", bSortable: false},

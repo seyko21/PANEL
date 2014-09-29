@@ -46,7 +46,7 @@ class cronogramaPagoModel extends Model{
     }
     
     public function getOrdenes(){
-        $aColumns       =   array("","orden_numero","7","13","estado","fecha_orden","16","monto_total"); //para la ordenacion y pintado en html
+        $aColumns       =   array("","orden_numero","13","18","estado","fecha_orden","16","monto_total"); //para la ordenacion y pintado en html
         /*
 	 * Ordenando, se verifica por que columna se ordenara
 	 */

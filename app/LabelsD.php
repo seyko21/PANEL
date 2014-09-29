@@ -200,6 +200,8 @@ define('PAGRE_1','Mis pagos recibidos');
 define('MCON_1','Mis contratos generados');
 define('MIPR_1','Mis Pagos realizados');
 define('CONC_L1','Destino');
+define('CRPG_1','Cronograma de Pago programada');
+
 
 
 ?>

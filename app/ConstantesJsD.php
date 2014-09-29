@@ -26,7 +26,8 @@
         SACOB: '<?php echo SACOB; ?>',
         PAGRE: '<?php echo PAGRE; ?>',
         MCON: '<?php echo MCON; ?>',
-        MIPR: '<?php echo MIPR; ?>'  
+        MIPR: '<?php echo MIPR; ?>',
+        CRPG: '<?php echo CRPG; ?>'
     }
 };
 </script>

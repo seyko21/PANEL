@@ -2,12 +2,12 @@
 /*
 * ---------------------------------------
 * --------- CREATED BY CREATOR ----------
-* fecha: 28-09-2014 00:09:14 
-* Descripcion : pagoRealizadoModel.php
+* fecha: 29-09-2014 17:09:58 
+* Descripcion : cronogramaClienteModel.php
 * ---------------------------------------
 */ 
 
-class pagoRealizadoModel extends Model{
+class cronogramaClienteModel extends Model{
 
     private $_flag;
     private $_idPersona;
@@ -29,18 +29,19 @@ class pagoRealizadoModel extends Model{
     private function _set(){
         $this->_flag        = Formulario::getParam("_flag");
         $this->_usuario     = Session::get("sys_idUsuario");
-        $this->_idPersona   = Session::get('sys_idPersona');
         $this->_f1    = Functions::cambiaf_a_mysql(Formulario::getParam("_f1"));
         $this->_f2    = Functions::cambiaf_a_mysql(Formulario::getParam("_f2"));   
+        $this->_idPersona   = Session::get('sys_idPersona');
+        
         $this->_iDisplayStart  = Formulario::getParam("iDisplayStart"); 
         $this->_iDisplayLength = Formulario::getParam("iDisplayLength"); 
         $this->_iSortingCols   = Formulario::getParam("iSortingCols");
         $this->_sSearch        = Formulario::getParam("sSearch");
     }
     
-    /*data para el grid: PagoRealizado*/
-    public function getPagoRealizado(){
-        $aColumns       =   array("orden_numero","numero_cuota","fecha_programada","cliente","costo_mora","monto_pago","fecha_pagoreal","estado" ); //para la ordenacion y pintado en html
+    /*data para el grid: CronogramaCliente*/
+    public function getCronogramaCliente(){
+       $aColumns       =   array("orden_numero","numero_cuota","fecha_programada","cliente","costo_mora","monto_pago","fecha_reprogramada","estado" ); //para la ordenacion y pintado en html
         /*
 	 * Ordenando, se verifica por que columna se ordenara
 	 */
@@ -59,7 +60,7 @@ class pagoRealizadoModel extends Model{
             ":f1" => $this->_f1,
             ":f2" => $this->_f2,  
             ":idPersona" => $this->_idPersona,  
-            ":estado" => 'P',  
+            ":estado" => 'E',  
             ":iDisplayStart" => $this->_iDisplayStart,
             ":iDisplayLength" => $this->_iDisplayLength,
             ":sOrder" => $sOrder,
@@ -68,8 +69,8 @@ class pagoRealizadoModel extends Model{
         $data = $this->queryAll($query,$parms);
         return $data;
     }
-  
     
+  
 }
 
 ?>

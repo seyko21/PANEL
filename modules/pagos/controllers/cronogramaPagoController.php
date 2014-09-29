@@ -56,7 +56,7 @@ class cronogramaPagoController extends Controller{
                         break;
                 }
                 /*registros a mostrar*/
-                $sOutput .= '["'.($num++).'","'.$aRow['orden_numero'].'","'.$aRow['nombrecompleto'].'","'.$aRow['cliente'].'","'.$estado.'","'.$aRow['fecha'].'","'.number_format($aRow['mora'],2).'","'.number_format($aRow['monto_total'],2).'",';
+                $sOutput .= '["'.($num++).'","'.$aRow['orden_numero'].'","'.$aRow['cliente'].' - '.$aRow['nombrecompleto'].'","'.$aRow['creador'].'","'.$estado.'","'.$aRow['fecha'].'","'.number_format($aRow['mora'],2).'","'.number_format($aRow['monto_total'],2).'",';
                 
                 /*
                  * configurando botones (add/edit/delete etc)
