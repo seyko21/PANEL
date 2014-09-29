@@ -277,4 +277,10 @@ define('COMVE_6','OS: ');
 define('GENRE_1','Renovar orden');
 define('GENRE_2','Generar Renovación');
 define('GENRE_3','Costo de banner');
+
+/*----------------------------CAMBIAR CONTRASEÑA--------------------*/
+define('CLAV_1','Cambiar contraseña');
+define('CLAV_2','Contraseña');
+define('CLAV_3','Ingrese su nueva contraseña');
+
 ?>
