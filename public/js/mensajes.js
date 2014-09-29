@@ -15,4 +15,6 @@ var mensajes = {
     MSG_14: 'Registros se anularon correctamente.',
     MSG_15: 'La inversión ya fue asignada a una cuenta de Producción. No se puede Editar.',
     MSG_16: '¿Está seguro de anular registros seleccionados?',
+    MSG_17: 'Registro se anuló correctamente.',
+    MSG_18: '¿Está seguro de anular registro?'
 };

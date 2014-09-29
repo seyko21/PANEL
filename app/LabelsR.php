@@ -275,4 +275,6 @@ define('COMVE_6','OS: ');
 
 /*----------------------------GENERAR RENOVACION--------------------*/
 define('GENRE_1','Renovar orden');
+define('GENRE_2','Generar Renovación');
+define('GENRE_3','Costo de banner');
 ?>

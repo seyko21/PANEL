@@ -63,9 +63,15 @@ class renovacionController extends Controller{
                 $sOutput .= '"<div class=\"btn-group\">';
                  
                 if($editar['permiso']){
-                    $sOutput .= '<button type=\"button\" class=\"'.$editar['theme'].'\" title=\"'.GENRE_1.'\" onclick=\"renovacion.getFormRenovacion(\''.$encryptReg.'\',\''.$aRow['orden_numero'].'\')\">';
-                    $sOutput .= '    <i class=\"'.$editar['icono'].'\"></i>';
-                    $sOutput .= '</button>';
+                    if($aRow['estado'] == 'F'){
+                        $sOutput .= '<button type=\"button\" class=\"'.$editar['theme'].' disabled\" title=\"'.GENRE_1.'\" disabled>';
+                        $sOutput .= '    <i class=\"'.$editar['icono'].'\"></i>';
+                        $sOutput .= '</button>';
+                    }else{
+                        $sOutput .= '<button type=\"button\" class=\"'.$editar['theme'].'\" title=\"'.GENRE_1.'\" onclick=\"renovacion.getFormRenovacion(\''.$encryptReg.'\',\''.$aRow['orden_numero'].'\')\">';
+                        $sOutput .= '    <i class=\"'.$editar['icono'].'\"></i>';
+                        $sOutput .= '</button>';
+                    }
                 }
                 $sOutput .= '</div>"';
                 

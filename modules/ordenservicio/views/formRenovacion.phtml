@@ -1,7 +1,7 @@
 <?php
 echo Functions::widgetOpen(array(
     'id' => GENRE.'reno',
-    'title' => LABEL_GNC2,
+    'title' => GENRE_2,
     'padding' => true,
     'wizard' => true
 ));
@@ -64,22 +64,24 @@ $data = Obj::run()->renovacionController->getOrdenServicio();
                     </div>
                     
                     <div class="form-group">
-                        <label class="control-label col-md-2" for="prepend"><?php echo LABEL_GNC13; ?></label>
-                        <div class="col-md-2">
+                        <label class="control-label col-md-2 hide" for="prepend"><?php echo LABEL_GNC13; ?></label>
+                        <div class="col-md-2 hide">
                             <div class="input">
                                 <input class="form-control" type="text" id="<?php echo GENRE; ?>txt_diasvalidez" name="<?php echo GENRE; ?>txt_diasvalidez" value="<?php echo $data['validez']; ?>">
                             </div>
                         </div>
-                        <label class="control-label col-md-3" for="prepend"><?php echo LABEL_GNC14; ?></label>
+                        
+                        
+                        
+                        <label class="control-label col-md-2" for="prepend"><?php echo GENRE_3; ?></label>
                         <div class="col-md-2">
                             <div class="input">
                                 <input class="form-control" type="text" id="<?php echo GENRE; ?>txt_produccion" name="<?php echo GENRE; ?>txt_produccion" value="<?php echo number_format($data['valor_produccion'], 2); ?>" onkeyup="renovacionScript.changeProduccion(this);">
                             </div>
                         </div>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label class="control-label col-md-2" for="prepend"><?php echo LABEL_GNC16; ?></label>
+                        
+                        
+                        <label class="control-label col-md-3" for="prepend"><?php echo LABEL_GNC16; ?></label>
                         <div class="col-md-2">
                             <div class="select">
                                 <select id="<?php echo GENRE; ?>lst_igv" name="<?php echo GENRE; ?>lst_igv" class="form-control">

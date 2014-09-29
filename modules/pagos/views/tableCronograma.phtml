@@ -102,7 +102,7 @@ $anular = Session::getPermiso("CROPAAN");
                     <?php if ($value['estado'] == 'P'): ?>
                     
                         <?php if ($anular['permiso']): ?>
-                            <button type="button" class="<?php echo $anular["theme"]; ?>" style="padding: 5px" onclick="cronogramaPago.postAnularPago(this, '<?php echo AesCtr::en($value['id_compromisopago']) ?>', '<?php echo $value['numero_cuota'] ?>','<?php echo $key?>','<?php echo $fechaProgramada; ?>');">
+                            <button type="button" class="<?php echo $anular["theme"]; ?>" style="padding: 5px" onclick="cronogramaPago.postAnularPago(this, '<?php echo AesCtr::en($value['id_compromisopago']) ?>');">
                                 <i class="<?php echo $anular["icono"]; ?>"></i> <?php echo $anular["accion"]; ?>
                             </button>
                         <?php endif; ?>

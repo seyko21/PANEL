@@ -118,4 +118,22 @@ class cronogramaPagoModel extends Model{
         return $data;
     }
     
+    public function postAnularPago(){
+        $query = "CALL sp_ordseSeguimientoPagoPagarCuota(:flag,:idCompromiso,:tipoDoc,:numDoc,:serieDdoc,:usuario,:fecha,:obs,:perfilVendedor);";
+        
+        $parms = array(
+            ":flag" => 3,
+            ":idCompromiso" => $this->_idCompromiso,
+            ":tipoDoc" => '',
+            ":numDoc" => '',
+            ":serieDdoc" => '',
+            ":usuario" => $this->_usuario,
+            ":fecha" => '',
+            ":obs" => '',
+            ":perfilVendedor" => ''
+        );
+        $data = $this->queryOne($query,$parms);
+        return $data;
+    }
+    
 }

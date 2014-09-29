@@ -211,6 +211,33 @@ var cronogramaPago_ = function(){
         });
     };
     
+    this.publico.postAnularPago = function(btn,id){
+        simpleScript.notify.confirm({
+            content: mensajes.MSG_18,
+            callbackSI: function(){
+                simpleAjax.send({
+                    element: btn,
+                    root: _private.config.modulo + "postAnularPago",
+                    data: "&_idCompromiso="+id,
+                    fnCallback: function(data) {
+                        if(!isNaN(data.result) && parseInt(data.result) === 1){
+                            simpleScript.notify.ok({
+                                content: mensajes.MSG_17,
+                                callback: function(){
+                                    cronogramaPago.getTableCronograma();
+                                }
+                            });
+                        }
+                    }
+                });
+            }
+        });
+                
+                
+                
+                
+        
+    };
     
     return this.publico;
     

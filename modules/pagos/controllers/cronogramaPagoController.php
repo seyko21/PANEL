@@ -122,4 +122,10 @@ class cronogramaPagoController extends Controller{
         echo json_encode($data);
     }
     
+    public function postAnularPago(){
+        $data = Obj::run()->cronogramaPagoModel->postAnularPago();
+        
+        echo json_encode($data);
+    }
+    
 }
