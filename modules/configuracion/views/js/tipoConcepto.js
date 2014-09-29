@@ -53,12 +53,13 @@ var tipoConcepto_ = function(){
             sScrollY: "300px",
             sAjaxSource: _private.config.modulo+'getTipoConceptos',
             fnDrawCallback: function() {
-                $('#'+diccionario.tabs.T5+'gridTipoConceptos_filter').find('input').attr('placeholder','Buscar');
+                $('#'+diccionario.tabs.T5+'gridTipoConceptos_filter').find('input').attr('placeholder','Buscar por descripción').css("width","300px");
+                simpleScript.enterSearch("#"+diccionario.tabs.T5+"gridTipoConceptos",oTable);
                 /*para hacer evento invisible*/
-//                simpleScript.removeAttr.click({
-//                    container: '#widget_'+diccionario.tabs.T5+'tipoconceptos',
-//                    typeElement: 'button, #'+diccionario.tabs.T5+'chk_all'
-//                });
+                simpleScript.removeAttr.click({
+                    container: '#widget_'+diccionario.tabs.T5+'tipoconceptos',
+                    typeElement: 'button, #'+diccionario.tabs.T5+'chk_all'
+                });
             }
         });
         setup_widgets_desktop();

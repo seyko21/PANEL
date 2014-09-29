@@ -66,7 +66,7 @@ var cotizacionVendedor_ = function(){
             sAjaxSource: _private.config.modulo+"getGridCotizacionVendedor",
             fnDrawCallback: function() {
                 $("#"+diccionario.tabs.COXVE+"gridCotizacionVendedor_filter").find("input").attr("placeholder","Buscar por Vendedor, DNI o Nro Cotizacion").css("width","350px");
-                //simpleScript.enterSearch("#"+diccionario.tabs.COXVE+"gridCotizacionVendedor",oTable);
+                simpleScript.enterSearch("#"+diccionario.tabs.COXVE+"gridCotizacionVendedor",oTable);
                 /*para hacer evento invisible*/
                 simpleScript.removeAttr.click({
                     container: "#widget_"+diccionario.tabs.COXVE,

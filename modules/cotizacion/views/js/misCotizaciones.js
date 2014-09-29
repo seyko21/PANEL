@@ -69,7 +69,7 @@ var misCotizaciones_ = function(){
             },
             fnDrawCallback: function() {
                 $("#"+diccionario.tabs.MISCO+"gridMisCotizaciones_filter").find("input").attr("placeholder","Buscar por código o prospecto").css("width","300px");                                        
-        
+                simpleScript.enterSearch("#"+diccionario.tabs.MISCO+"gridMisCotizaciones",oTable);
                 /*para hacer evento invisible*/
                 simpleScript.removeAttr.change({
                     container: "#widget_"+diccionario.tabs.MISCO,

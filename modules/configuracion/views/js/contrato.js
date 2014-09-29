@@ -63,8 +63,8 @@ var contrato_ = function(){
             sScrollY: "300px",
             sAjaxSource: _private.config.modulo+"getGridContrato",
             fnDrawCallback: function() {
-                $("#"+diccionario.tabs.CONTR+"gridContrato_filter").find("input").attr("placeholder","Buscar por nombre").css("width","250px");
-                //simpleScript.enterSearch("#"+diccionario.tabs.CONTR+"gridContrato",oTable);
+                $("#"+diccionario.tabs.CONTR+"gridContrato_filter").find("input").attr("placeholder","Buscar por nombre").css("width","300px");
+                simpleScript.enterSearch("#"+diccionario.tabs.CONTR+"gridContrato",oTable);
                 /*para hacer evento invisible*/
                 simpleScript.removeAttr.click({
                     container: "#widget_"+diccionario.tabs.CONTR,

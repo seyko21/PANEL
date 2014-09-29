@@ -32,7 +32,7 @@ var concepto_ = function(){
     };
     
     this.publico.getGridConceptos = function (){
-        $('#'+diccionario.tabs.T6+'gridConceptos').dataTable({
+      var oTable = $('#'+diccionario.tabs.T6+'gridConceptos').dataTable({
             bProcessing: true,
             bServerSide: true,
             bDestroy: true,
@@ -42,17 +42,19 @@ var concepto_ = function(){
             iDisplayLength: 10,            
             aoColumns: [
                 {sTitle: "<input type='checkbox' id='"+diccionario.tabs.T6+"chk_all' onclick='simpleScript.checkAll(this,\"#"+diccionario.tabs.T6+"gridConceptos\");'>", sWidth: "1%", sClass: "center", bSortable: false},
-                {sTitle: "Descripción", sWidth: "35%"},
-                {sTitle: "Tipo de Concepto", sWidth: "35%" },
-                {sTitle: "Precio", sWidth: "13%",sClass: "right"},
-                {sTitle: "Estado", sWidth: "8%",  sClass: "center", bSortable: false},
-                {sTitle: "Acciones", sWidth: "15%", sClass: "center", bSortable: false}
+                {sTitle: "Descripción", sWidth: "45%"},
+                {sTitle: "Tipo de Concepto", sWidth: "20%" },
+                {sTitle: "Destino", sWidth: "10%"},
+                {sTitle: "Precio", sWidth: "10%",sClass: "right"},
+                {sTitle: "Estado", sWidth: "10%",  sClass: "center", bSortable: false},
+                {sTitle: "Acciones", sWidth: "5%", sClass: "center", bSortable: false}
             ],
             aaSorting: [[1, 'asc']],
             sScrollY: "300px",
             sAjaxSource: _private.config.modulo+'getGridConceptos',
             fnDrawCallback: function() {
-                $('#'+diccionario.tabs.T6+'gridConceptos_filter').find('input').attr('placeholder','Buscar');
+                $('#'+diccionario.tabs.T6+'gridConceptos_filter').find('input').attr('placeholder','Buscar por Descripción').css("width","300px");
+                simpleScript.enterSearch("#"+diccionario.tabs.T6+"gridConceptos",oTable);
                 /*para hacer evento invisible*/
                 simpleScript.removeAttr.click({
                     container: '#widget_'+diccionario.tabs.T6,

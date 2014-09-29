@@ -55,7 +55,7 @@ class conceptoController extends Controller{
                 $chk = '<input id=\"c_'.(++$key).'\" type=\"checkbox\" name=\"'.T6.'chk_delete[]\" value=\"'.$encryptReg.'\">';
                 
                 /*datos de manera manual*/
-                $sOutput .= '["'.$chk.'","'.$aRow['concepto'].'","'.$aRow['tipoconcepto'].'","'.number_format($aRow['precio'],2).'","'.$estado.'", ';
+                $sOutput .= '["'.$chk.'","'.$aRow['concepto'].'","'.$aRow['tipoconcepto'].'","'.$aRow['destino'].'","'.number_format($aRow['precio'],2).'","'.$estado.'", ';
 
                 /*
                  * configurando botones (add/edit/delete etc)

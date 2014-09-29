@@ -84,6 +84,34 @@ $data = conceptoController::getConcepto();
                         </div>
                     </div>
                 </section>-->
+                 <section>
+                    <div class="row">
+                        <label class="label col col-3"><?php echo CONC_L1; ?></label>
+                        <div class="col col-8">
+                            <label class="select"> 
+                                <?php
+                                    $destino = Array (
+                                            Array ( 'id' => 'G', 'descripcion' => 'GENERICO' ),
+                                            Array ( 'id' => 'I', 'descripcion' => 'INGRESO' ),
+                                            Array ( 'id' => 'S', 'descripcion' => 'SALIDA' ),
+                                            Array ( 'id' => 'P', 'descripcion' => 'PRODUCCION' )
+                                    );                                   
+                                    echo Functions::selectHtml(array(
+                                        'data'=>$destino,
+                                        'atributes'=>array(
+                                            'id'=>T6.'lst_destino',
+                                            'name'=>T6.'lst_destino'
+                                        ),
+                                        'etiqueta'=>'descripcion',
+                                        'value'=>'id',
+                                        'defaultEtiqueta'=>$data['destino'],
+                                        'txtSelect'=>true
+                                    ));
+                                ?><i></i>
+                            </label>
+                        </div>
+                    </div>
+                </section>     
             </div>
             <div class="modal-footer">
                 <?php if($editar['permiso']):?>

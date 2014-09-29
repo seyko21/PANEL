@@ -14,6 +14,7 @@ class conceptoModel extends Model{
     private $_descripcion;
     private $_importe;
     private $_estado;
+    private $_destino;
     private $_chkdel;
     private $_usuario;
     
@@ -37,6 +38,7 @@ class conceptoModel extends Model{
         $this->_estado     = Formulario::getParam(T6.'chk_activo');
         $this->_chkdel  = Formulario::getParam(T6.'chk_delete');
         $this->_usuario = Session::get('sys_idUsuario');
+        $this->_destino     = Formulario::getParam(T6.'lst_destino');
         
         $this->_iDisplayStart  =   Formulario::getParam('iDisplayStart'); 
         $this->_iDisplayLength =   Formulario::getParam('iDisplayLength'); 
@@ -45,7 +47,7 @@ class conceptoModel extends Model{
     }
     
     public function getGridConceptos(){
-        $aColumns       =   array( 'chk','c.descripcion','t.descripcion','c.precio' ); //para la ordenacion y pintado en html
+        $aColumns       =   array( 'chk','c.descripcion','t.descripcion','6','c.precio' ); //para la ordenacion y pintado en html
         /*
 	 * Ordenando, se verifica por que columna se ordenara
 	 */
@@ -80,7 +82,7 @@ class conceptoModel extends Model{
     }
     
     public function getConcepto(){
-        $query = "SELECT id_tipo,descripcion,precio,estado FROM pub_concepto WHERE id_concepto = :idConcepto; ";
+        $query = "SELECT id_tipo,descripcion,precio,estado, destino FROM pub_concepto WHERE id_concepto = :idConcepto; ";
         
         $parms = array(
             ':idConcepto' => $this->_idConcepto
@@ -90,13 +92,14 @@ class conceptoModel extends Model{
     }
     
     public function mantenimientoConcepto(){
-        $query = "call sp_configConceptoMantenimiento(:flag,:key,:idTipoConcepto,:descripcion,:importe,:usuario);";
+        $query = "call sp_configConceptoMantenimiento(:flag,:key,:idTipoConcepto,:descripcion,:importe,:destino,:usuario);";
         $parms = array(
             ':flag' => $this->_flag,
             ':key' => $this->_idConcepto,
             ':idTipoConcepto' => $this->_idTipoConcepto,
             ':descripcion' => $this->_descripcion,
             ':importe' => $this->_importe,
+            ':destino' => $this->_destino,
             ':usuario' => $this->_usuario
         );
         $data = $this->queryOne($query,$parms);
@@ -106,13 +109,14 @@ class conceptoModel extends Model{
     public function mantenimientoConceptoAll(){
 //                print_r($this->_chkdel);
         foreach ($this->_chkdel as $value) {
-            $query = "call sp_configConceptoMantenimiento(:flag,:key,:idTipoConcepto,:descripcion,:importe,:usuario);";
+            $query = "call sp_configConceptoMantenimiento(:flag,:key,:idTipoConcepto,:descripcion,:importe,:destino,:usuario);";
             $parms = array(
                 ':flag' => $this->_flag,
                 ':key' => Aes::de($value),
                 ':idTipoConcepto' => '',
                 ':descripcion' => '',
                 ':importe' => '',
+                ':destino' => '',
                 ':usuario' => $this->_usuario
             );
             $this->execute($query,$parms);

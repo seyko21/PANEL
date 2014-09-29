@@ -76,13 +76,7 @@ var seguimientoCotizacion_ = function(){
             },
             fnDrawCallback: function() {
                 $("#"+diccionario.tabs.SEGCO+"gridSeguimientoCotizacion_filter").find("input").attr("placeholder","Buscar por código o prospecto").css("width","300px");
-                
-//                $('#'+diccionario.tabs.SEGCO+'gridSeguimientoCotizacion_filter').find('input').unbind();
-//                $('#'+diccionario.tabs.SEGCO+'gridSeguimientoCotizacion_filter').find('input').bind('keyup', function(e) {
-//                    $("#"+diccionario.tabs.SEGCO+"lst_estadosearch").val('A');
-//                    oTable.fnFilter(this.value);   
-//                });  
-//        
+                simpleScript.enterSearch("#"+diccionario.tabs.SEGCO+"gridSeguimientoCotizacion",oTable);
         
                 /*para hacer evento invisible*/
                 simpleScript.removeAttr.change({

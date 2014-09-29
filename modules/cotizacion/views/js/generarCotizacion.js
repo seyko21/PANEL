@@ -60,6 +60,7 @@ var generarCotizacion_ = function(){
             sAjaxSource: _private.config.modulo+'getGridCotizacion',
             fnDrawCallback: function() {
                 $('#'+diccionario.tabs.T8+'xgridGenerarCotizacion_filter').find('input').attr('placeholder','Buscar por código o prospecto').css('width','280px');
+                simpleScript.enterSearch("#"+diccionario.tabs.T8+"xgridGenerarCotizacion",oTable);
                 /*para hacer evento invisible*/
                 simpleScript.removeAttr.click({
                     container: '#widget_'+diccionario.tabs.T8,

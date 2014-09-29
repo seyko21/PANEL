@@ -32,7 +32,7 @@ var parametro_ = function(){
     };
     
     this.publico.getGridParametro = function (){
-        $('#'+diccionario.tabs.T100+'gridParametro').dataTable({           
+        var oTable = $('#'+diccionario.tabs.T100+'gridParametro').dataTable({           
             bProcessing: true,
             bServerSide: true,
             bDestroy: true,
@@ -52,7 +52,8 @@ var parametro_ = function(){
             sScrollY: "300px",
             sAjaxSource: _private.config.modulo+'getGridParametro',
             fnDrawCallback: function() {
-                $('#'+diccionario.tabs.T100+'gridParametro_filter').find('input:text').attr('placeholder','Buscar');
+                $('#'+diccionario.tabs.T100+'gridParametro_filter').find('input:text').attr('placeholder','Buscar por nombre').css("width","300px");
+                simpleScript.enterSearch("#"+diccionario.tabs.T100+"gridParametro",oTable);
                 /*para hacer evento invisible*/
                 simpleScript.removeAttr.click({
                     container: '#widget_'+diccionario.tabs.T100, //widget del datagrid
