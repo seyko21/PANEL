@@ -283,4 +283,6 @@ define('CLAV_1','Cambiar contraseña');
 define('CLAV_2','Contraseña');
 define('CLAV_3','Ingrese su nueva contraseña');
 
+/*----------------------------PERFIL--------------------*/
+define('PERF_1','Mi Perfil');
 ?>

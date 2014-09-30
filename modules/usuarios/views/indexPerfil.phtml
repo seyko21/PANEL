@@ -1,0 +1,70 @@
+<?php
+$editar = Session::getPermiso('PERFACT');
+
+$data = Obj::run()->perfilController->findMiPerfil();
+?>
+<form id="<?php echo PERF; ?>indexPerfil" name="<?php echo PERF; ?>indexPerfil" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog" >
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close"  aria-hidden="true">
+                    &times;
+                </button>
+                <h4 class="modal-title"><?php  echo PERF_1; ?></h4>
+            </div>
+            <div class="modal-body smart-form">
+                <section>
+                    <div class="row">
+                        <label class="label col col-3"><?php echo PERF_2; ?></label>
+                        <div class="col col-8">
+                            <label class="input"> 
+                                <i class="icon-append fa fa-keyboard-o"></i>
+                                <input type="password" id="<?php echo PERF; ?>txt_clave" name="<?php echo PERF; ?>txt_clave" >
+                                <b class="tooltip tooltip-top-right"><i class="fa fa-keyboard-o txt-color-teal"></i> <?php echo PERF_3; ?></b>
+                            </label>
+                        </div>
+                    </div>
+                </section>
+            </div>
+            <div class="modal-footer">
+                <?php if ($editar['permiso']): ?>
+                <button id="<?php echo PERF; ?>btnEClav" type="submit" class="btn txt-color-white bg-color-blueDark">
+                        <i class="fa fa-save"></i> <?php echo $editar['accion']; ?>
+                    </button>
+                <?php endif; ?>
+                <button type="button" class="btn btn-default xClose">
+                    <i class="fa fa-ban"></i> <?php echo BTN_CLOSE; ?>
+                </button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</form>
+<!-- si no riene permiso se anula submit desde cualquier input -->
+<?php if (!$editar['permiso']): ?>
+    <script>
+        simpleScript.noSubmit('#<?php echo PERF; ?>indexPerfil');
+    </script>
+<?php endif; ?>
+<script>
+    $('#<?php echo PERF; ?>indexPerfil').validate({
+        // Rules for form validation
+        rules: {
+            <?php echo PERF; ?>txt_clave: {
+                required: true,
+                minlength: 3
+            }      
+        },
+        // Do not change code below
+        errorPlacement: function(error, element) {
+            error.insertAfter(element.parent());
+        },
+        submitHandler: function() {
+            cambiarClave.postCambiarClave();
+        }
+    });
+    /*para hacer evento invisible*/
+simpleScript.removeAttr.click({
+    container: '#<?php echo PERF; ?>indexPerfil',
+    typeElement: 'button'
+});
+</script>

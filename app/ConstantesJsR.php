@@ -31,3 +31,4 @@ var diccionario = {
         COMVE: '<?php echo COMVE; ?>',
         GENRE: '<?php echo GENRE; ?>',
         CLAV: '<?php echo CLAV; ?>',
+        PERF: '<?php echo PERF; ?>',

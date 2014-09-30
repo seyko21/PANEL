@@ -26,4 +26,5 @@ define("COINS","COINS");             /*tab modulo CONFIRMARINSTALACION*/
 define("COMVE","COMVE");             /*tab modulo COMISIONVENDEDOR*/
 define("GENRE","GENRE");             /*tab modulo GENERAR RENOVACION*/
 define("CLAV","CLAV");             /*tab modulo CAMBIAR CLAVE*/
+define("PERF","PERF");             /*tab modulo PERFIL*/
 ?>
