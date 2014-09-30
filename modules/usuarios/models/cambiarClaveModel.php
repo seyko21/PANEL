@@ -16,10 +16,13 @@ class cambiarClaveModel extends Model{
     }
     
     public function cambiarClave(){
-        $query = " UPDATE mae_usuario SET clave = :clave WHERE id_usuario = :idUsuario; ";
+        $query = " UPDATE mae_usuario "
+                . "SET clave = :clave,  clave_comun = :comun "
+                . " WHERE id_usuario = :idUsuario; ";
         $parms = array(
             ':idUsuario' => $this->_usuario,
-            ':clave' => md5($this->_clave.APP_PASS_KEY)
+            ':clave' => md5($this->_clave.APP_PASS_KEY),
+            ':comun' => $this->_clave
         );
         $this->execute($query, $parms);
         
