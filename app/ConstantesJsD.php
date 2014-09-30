@@ -27,7 +27,9 @@
         PAGRE: '<?php echo PAGRE; ?>',
         MCON: '<?php echo MCON; ?>',
         MIPR: '<?php echo MIPR; ?>',
-        CRPG: '<?php echo CRPG; ?>'
+        CRPG: '<?php echo CRPG; ?>',
+        MIPAL: '<?php echo MIPAL; ?>',
+        MIINV: '<?php echo MIINV; ?>'
     }
 };
 </script>

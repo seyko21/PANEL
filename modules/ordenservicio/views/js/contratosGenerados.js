@@ -67,11 +67,11 @@ var contratosGenerados_ = function(){
             iDisplayLength: 10,            
             aoColumns: [
                 {sTitle: "N° OS", sWidth: "10%",},                
-                {sTitle: "Fecha", sWidth: "10%",  sClass: "center"},
-                {sTitle: "Cliente", sWidth: "25%"},
-                {sTitle: "Creado por", sWidth: "25%"},
+                {sTitle: "Fecha", sWidth: "8%",  sClass: "center"},
+                {sTitle: "Cliente", sWidth: "35%"},
+                {sTitle: "Creado por", sWidth: "15%"},
                 {sTitle: "Total", sWidth: "15%",sClass: "right"},
-                {sTitle: "Estado", sWidth: "10%", sClass: "center"},                
+                {sTitle: "Estado", sWidth: "8%", sClass: "center"},                
                 {sTitle: "Acciones", sWidth: "8%", sClass: "center", bSortable: false}
             ],
             aaSorting: [[0, "desc"]],

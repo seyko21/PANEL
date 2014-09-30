@@ -93,6 +93,10 @@ var movimientosOS_ = function(){
                     container: "#widget_"+diccionario.tabs.MOVOS,
                     typeElement: "button"
                 });
+                 simpleScript.removeAttr.change({
+                    container: "#widget_"+diccionario.tabs.MOVOS,
+                    typeElement: "select"
+                });
             }
         });
         setup_widgets_desktop();

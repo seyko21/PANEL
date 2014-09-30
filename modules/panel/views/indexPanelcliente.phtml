@@ -1,0 +1,28 @@
+<?php 
+/*
+* ---------------------------------------
+* --------- CREATED BY CREATOR ----------
+* fecha: 29-09-2014 22:09:59 
+* Descripcion : indexPanelcliente.phtml
+* ---------------------------------------
+*/
+
+echo Functions::widgetOpen(array(
+        "id"=>MIPAL,
+        "title"=>MIPAL_1
+    )); 
+?>
+
+    <div class="widget-body-toolbar"></div>
+    <div class="dataTables_wrapper form-inline" role="grid">
+        <div class="dt-top-row">
+            <div class="DTTT btn-group">
+               
+            </div>
+        </div>
+
+    </div>
+    <form id="<?php echo MIPAL; ?>formGridPanelcliente" name="<?php echo MIPAL; ?>formGridPanelcliente" onsubmit="return false">
+        <table id="<?php echo MIPAL; ?>gridPanelcliente" class="table table-striped table-hover table-condensed" style="width:100%"></table>
+    </form>
+<?php echo Functions::widgetClose(); ?>

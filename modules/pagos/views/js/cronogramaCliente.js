@@ -54,11 +54,11 @@ var cronogramaCliente_ = function(){
             aoColumns: [
                 {sTitle: "N° OS", sWidth: "8%"},
                 {sTitle: "Cuota", sWidth: "8%", sClass: "center"},
-                {sTitle: "Fecha Programada", sWidth: "9%", sClass: "center"},
+                {sTitle: "F. Pagar", sWidth: "9%", sClass: "center"},
                 {sTitle: "Cliente", sWidth: "25%"},
                 {sTitle: "Mora", sWidth: "7%", sClass: "right"},
                 {sTitle: "Monto", sWidth: "10%", sClass: "right"},
-                {sTitle: "Reprogramado", sWidth: "9%", sClass: "center"},
+                {sTitle: "F. Reprogramado", sWidth: "9%", sClass: "center"},
                 {sTitle: "Estado", sWidth: "8%", sClass: "center"}
             ],
             aaSorting: [[2, "asc"]],
