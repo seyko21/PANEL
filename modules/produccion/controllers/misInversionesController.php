@@ -53,9 +53,15 @@ class misInversionesController extends Controller{
                 $axion = '"<div class=\"btn-group\">';
                  
                 if($consultar['permiso']){
-                    $axion .= '<button type=\"button\" class=\"'.$consultar['theme'].'\" title=\"'.$consultar['accion'].'\" onclick=\"misInversiones.getFormEditMisInversiones(this,\''.$encryptReg.'\')\">';
-                    $axion .= '    <i class=\"'.$consultar['icono'].'\"></i>';
-                    $axion .= '</button>';
+                    if ($aRow['monto_asignado'] > 0){
+                        $axion .= '<button type=\"button\" class=\"'.$consultar['theme'].'\" title=\"'.$consultar['accion'].'\" onclick=\"misInversiones.getFormEditMisInversiones(this,\''.$encryptReg.'\')\">';
+                        $axion .= '    <i class=\"'.$consultar['icono'].'\"></i>';
+                        $axion .= '</button>';
+                    }else{
+                        $axion .= '<button type=\"button\" class=\"'.$consultar['theme'].'\" title=\"'.$consultar['accion'].'\" disabled>';
+                        $axion .= '    <i class=\"'.$consultar['icono'].'\"></i>';
+                        $axion .= '</button>';
+                    }
                 }               
                 
                 $axion .= ' </div>" ';

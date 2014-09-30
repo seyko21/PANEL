@@ -29,7 +29,8 @@
         MIPR: '<?php echo MIPR; ?>',
         CRPG: '<?php echo CRPG; ?>',
         MIPAL: '<?php echo MIPAL; ?>',
-        MIINV: '<?php echo MIINV; ?>'
+        MIINV: '<?php echo MIINV; ?>',
+        LISOC: '<?php echo LISOC; ?>'
     }
 };
 </script>

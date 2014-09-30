@@ -58,8 +58,15 @@ class pagosRecibidosModel extends Model{
   
         $query = "call sp_pagoConsultaSaldoCobrarGrid(:rol,:estado,:idpersona,:f1,:f2,:iDisplayStart,:iDisplayLength,:sOrder,:sSearch);";
         
+        //Validar por ROL:
+        if (Session::get('sys_defaultRol') == APP_COD_VEND){
+            $rol = 'V';
+        }else if( Session::get('sys_defaultRol') ==  APP_COD_SOCIO ){
+            $rol = 'S';
+        }
+        
         $parms = array(
-            ":rol"=>'V',
+            ":rol"=>$rol,
             ":estado"=>'P',
             ":idpersona"=>$this->_idPersona,
             ":f1" => $this->_f1,

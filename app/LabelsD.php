@@ -203,6 +203,7 @@ define('CONC_L1','Destino');
 define('CRPG_1','Cronograma de Pago programada');
 define('MIPAL_1','Mis paneles alquilados');
 define('MIINV_1','Mis Inversiones');
+define('LISOC_1','Liquidación de Socio');
 
 
 ?>

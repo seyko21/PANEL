@@ -2,29 +2,29 @@
 /*
 * ---------------------------------------
 * --------- CREATED BY CREATOR ----------
-* fecha: 27-09-2014 07:09:56 
-* Descripcion : liquidacionClienteController.php
+* fecha: 30-09-2014 03:09:35 
+* Descripcion : liquidacionSocioController.php
 * ---------------------------------------
 */    
 
-class liquidacionClienteController extends Controller{
+class liquidacionSocioController extends Controller{
 
     public function __construct() {
-        $this->loadModel("liquidacionCliente");
+        $this->loadModel("liquidacionSocio");
     }
     
     public function index(){ 
-        Obj::run()->View->render("indexLiquidacionCliente");
+        Obj::run()->View->render("indexLiquidacionSocio");
     }
     
-    public function getGridLiquidacionCliente(){
-        $exportarpdf   = Session::getPermiso('LICLEP');
+    public function getGridLiquidacionSocio(){
+        $exportarpdf   = Session::getPermiso('LISOCEP');     
         
         $sEcho          =   $this->post('sEcho');
         
-        $rResult = Obj::run()->liquidacionClienteModel->getLiquidacionCliente();
+        $rResult = Obj::run()->liquidacionSocioModel->getLiquidacionSocio();
         
-        $num = Obj::run()->liquidacionClienteModel->_iDisplayStart;
+        $num = Obj::run()->liquidacionSocioModel->_iDisplayStart;
         if($num >= 10){
             $num++;
         }else{
@@ -42,7 +42,7 @@ class liquidacionClienteController extends Controller{
             
             foreach ( $rResult as $aRow ){
                 
-                /*campo que maneja los estados, para el ejemplo aqui es ACTIVO, coloca tu campo*/
+               /*campo que maneja los estados, para el ejemplo aqui es ACTIVO, coloca tu campo*/
                 switch($aRow['estado']){
                     case 'E':
                         $estado = '<span class=\"label label-default\">'.SEGCO_5.'</span>';
@@ -63,7 +63,7 @@ class liquidacionClienteController extends Controller{
                 
                 /*antes de enviar id se encrypta*/
                 $encryptReg = Aes::en($aRow['id_ordenservicio']);
-                
+                $idSocio = Aes::en($aRow['id_persona']); 
                 /*
                  * configurando botones (add/edit/delete etc)
                  * se verifica si tiene permisos para editar
@@ -71,7 +71,7 @@ class liquidacionClienteController extends Controller{
                 $axion = '"<div class=\"btn-group\">';
                  
                 if($exportarpdf['permiso']){
-                    $axion .= '<button type=\"button\" class=\"'.$exportarpdf['theme'].'\" title=\"'.$exportarpdf['accion'].'\" onclick=\"liquidacionCliente.postPDF(this,\'' . $encryptReg . '\')\"> ';
+                    $axion .= '<button type=\"button\" class=\"'.$exportarpdf['theme'].'\" title=\"'.$exportarpdf['accion'].'\" onclick=\"liquidacionSocio.postPDF(this,\'' . $encryptReg . '\',\'' . $idSocio . '\')\"> ';
                     $axion .= '    <i class=\"'.$exportarpdf['icono'].'\"></i>';
                     $axion .= '</button>';
                 }
@@ -79,7 +79,7 @@ class liquidacionClienteController extends Controller{
                 $axion .= ' </div>" ';
                 
                 /*registros a mostrar*/
-                $sOutput .= '["'.$aRow['orden_numero'].'","'.  Functions::cambiaf_a_normal($aRow['fecha_contrato']).'","'.$aRow['cliente'].' - '.$aRow['representante'].'","S/.'.number_format($aRow['monto_total'],2).'","'.$estado.'",'.$axion.' ';
+                $sOutput .= '["'.$aRow['orden_numero'].'","'.  Functions::cambiaf_a_normal($aRow['fecha_contrato']).'","'.$aRow['cliente'].' - '.$aRow['representante'].'","'.$aRow['socio'].'","S/.'.number_format($aRow['monto_total'],2).'","'.$estado.'",'.$axion.' ';
 
                 $sOutput .= '],';
 
@@ -94,11 +94,10 @@ class liquidacionClienteController extends Controller{
 
     }
     
-    /*carga formulario (newLiquidacionCliente.phtml) para nuevo registro: LiquidacionCliente*/
-    public function getFormNewLiquidacionCliente(){
-        Obj::run()->View->render("formNewLiquidacionCliente");
-    }
-      
+    /*carga formulario (newLiquidacionSocio.phtml) para nuevo registro: LiquidacionSocio*/
+    public function getFormNewLiquidacionSocio(){
+        Obj::run()->View->render("formNewLiquidacionSocio");
+    }      
     
 }
 

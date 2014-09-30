@@ -2,18 +2,19 @@
 /*
 * ---------------------------------------
 * --------- CREATED BY CREATOR ----------
-* fecha: 27-09-2014 23:09:28 
-* Descripcion : saldoCobrarModel.php
+* fecha: 30-09-2014 03:09:35 
+* Descripcion : liquidacionSocioModel.php
 * ---------------------------------------
 */ 
 
-class saldoCobrarModel extends Model{
+class liquidacionSocioModel extends Model{
 
     private $_flag;
-    private $_usuario;
-    private $_idPersona;
+    private $_idOrden;
     private $_f1;
-    private $_f2;       
+    private $_f2;
+    private $_usuario;
+    private $_idPersona; 
     
     /*para el grid*/
     public  $_iDisplayStart;
@@ -28,20 +29,22 @@ class saldoCobrarModel extends Model{
     
     private function _set(){
         $this->_flag        = Formulario::getParam("_flag");
+        $this->_idOrden   = Aes::de(Formulario::getParam("_idOrden"));    /*se decifra*/
         $this->_usuario     = Session::get("sys_idUsuario");
-        $this->_idPersona   = Session::get('sys_idPersona');
+        
         $this->_f1    = Functions::cambiaf_a_mysql(Formulario::getParam("_f1"));
-        $this->_f2    = Functions::cambiaf_a_mysql(Formulario::getParam("_f2"));        
-                
+        $this->_f2    = Functions::cambiaf_a_mysql(Formulario::getParam("_f2"));
+        $this->_idPersona = Session::get("sys_idPersona");
+        
         $this->_iDisplayStart  = Formulario::getParam("iDisplayStart"); 
         $this->_iDisplayLength = Formulario::getParam("iDisplayLength"); 
         $this->_iSortingCols   = Formulario::getParam("iSortingCols");
         $this->_sSearch        = Formulario::getParam("sSearch");
     }
     
-    /*data para el grid: SaldoCobrar*/
-    public function getSaldoCobrar(){
-        $aColumns       =   array("","orden_numero","fecha","nombrecompleto","porcentaje_comision","comision_venta","comision_asignado","comision_saldo" ); //para la ordenacion y pintado en html
+    /*data para el grid: LiquidacionSocio*/
+    public function getLiquidacionSocio(){
+        $aColumns       =   array('orden_numero','fecha_contrato','cliente','socio','monto_total','estado' ); //para la ordenacion y pintado en html
         /*
 	 * Ordenando, se verifica por que columna se ordenara
 	 */
@@ -53,22 +56,13 @@ class saldoCobrarModel extends Model{
                 }
         }
         $sOrder = substr_replace( $sOrder, "", -1 );
-  
-        $query = "call sp_pagoConsultaSaldoCobrarGrid(:rol,:estado,:idpersona,:f1,:f2,:iDisplayStart,:iDisplayLength,:sOrder,:sSearch);";
-        
-        //Validar por ROL:
-        if (Session::get('sys_defaultRol') == APP_COD_VEND){
-            $rol = 'V';
-        }else if( Session::get('sys_defaultRol') ==  APP_COD_SOCIO ){
-            $rol = 'S';
-        }
+        $query = "call sp_pagoRptLiquidacionSocioGrid(:acceso,:idPersona,:f1, :f2,:iDisplayStart,:iDisplayLength,:sOrder,:sSearch);";
         
         $parms = array(
-            ":rol"=>$rol,
-            ":estado"=>'S',
-            ":idpersona"=>$this->_idPersona,
+            ":acceso" => Session::get('sys_all'),
+            ":idPersona" => $this->_idPersona,             
             ":f1" => $this->_f1,
-            ":f2" => $this->_f2,            
+            ":f2" => $this->_f2,
             ":iDisplayStart" => $this->_iDisplayStart,
             ":iDisplayLength" => $this->_iDisplayLength,
             ":sOrder" => $sOrder,
@@ -77,7 +71,7 @@ class saldoCobrarModel extends Model{
         $data = $this->queryAll($query,$parms);
         return $data;
     }
-    
+     
     
 }
 

@@ -55,12 +55,12 @@ var misInversiones_ = function(){
             iDisplayLength: 10,            
             aoColumns: [
                 {sTitle: "N°", sWidth: "2%",bSortable: false},
-                {sTitle: "Socio", sWidth: "30%"},
-                {sTitle: "Fecha Inversion", sWidth: "25%"},
+                {sTitle: "Socio", sWidth: "40%", bSortable: false},
+                {sTitle: "Fecha Inversion", sWidth: "5%", sClass: "center"},
                 {sTitle: "Monto", sWidth: "15%",  sClass: "right"},
                 {sTitle: "Invertido", sWidth: "15%", sClass: "right"},
                 {sTitle: "Saldo", sWidth: "15%", sClass: "right"},
-                {sTitle: "Acciones", sWidth: "6%", sClass: "center", bSortable: false}
+                {sTitle: "Acciones", sWidth: "5%", sClass: "center", bSortable: false}
             ],
             aaSorting: [[2, "asc"]],
             sScrollY: "300px",

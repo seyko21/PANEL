@@ -38,6 +38,7 @@ define("MIPR","MIPR");             /*tab modulo PAGOREALIZADO*/
 define("CRPG","CRPG");             /*tab modulo CRONOGRAMACLIENTE*/
 define("MIPAL","MIPAL");             /*tab modulo PANELCLIENTE*/
 define("MIINV","MIINV");             /*tab modulo MISINVERSIONES*/
+define("LISOC","LISOC");             /*tab modulo LIQUIDACIONSOCIO*/
 
 
 
