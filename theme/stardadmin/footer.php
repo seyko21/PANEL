@@ -117,6 +117,6 @@ Obj::run()->Autoload->js('modules/', true);
         });
     }
 //    test();
-
+$('#fotitoUser').click(function(){ index.changeFoto(); });
 </script>
 <?php endif; ?>

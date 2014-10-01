@@ -1,0 +1,59 @@
+<?php
+$doc = $data = Obj::run()->indexModel->getFoto();
+?>
+<div id="<?php echo T4; ?>formChangeFoto" name="<?php echo T4; ?>formChangeFoto" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close"  aria-hidden="true">
+                    &times;
+                </button>
+                <h4 class="modal-title">Subir Foto</h4>
+            </div>
+            <div class="modal-body smart-form">
+                <form class="dropzone" id="mydropzone">
+                </form>
+                <?php if(sizeof($doc) && isset($doc['foto'])):?>
+                <a id="<?php echo T4; ?>dow" href="javascript:;" onclick="window.open('<?php echo 'public/files/fotos/'.$doc['foto']; ?>','_blank');"><?php echo $doc['foto'];?></a>
+                <!--<button id="<?php echo T4; ?>btndow" type="button" class="btn btn-danger" style="padding: 5px" onclick="registrarVendedor.deleteAdjuntar(this,'<?php echo Obj::run()->indexModel->_usuario; ?>','<?php echo 'public/files/fotos/'.$doc['foto']; ?>');"><i class="fa fa-trash-o"></i> Eliminar</button>-->
+                <?php else: ?>
+                <a id="<?php echo T4; ?>dow" href="javascript:;"></a>
+                <!--<button id="<?php echo T4; ?>btndow" type="button" class="btn btn-danger" style="padding: 5px;display: none"><i class="fa fa-trash-o"></i> Eliminar</button>-->
+                <?php endif; ?>
+            </div>
+            <div class="modal-footer">
+               <button type="button" class="<?php echo THEME_CLOSE; ?>">
+                    <i class="<?php echo ICON_CLOSE; ?>"></i> <?php echo BTN_CLOSE; ?> 
+                </button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+
+   
+    <script>
+        Dropzone.autoDiscover = false;
+        $("#mydropzone").dropzone({
+            acceptedFiles: ".png, .jpg",
+            url: '<?php echo BASE_URL; ?>index/index/postFoto',
+            maxFiles: 1, // Number of files at a time
+            maxFilesize: 10, //in MB
+            addRemoveLinks: true,
+            dictResponseError: 'Error uploading file!',
+            dictDefaultMessage: 'Arrastre aquí una imagen',
+             maxfilesexceeded: function(f){
+                 simpleScript.notify.error({
+                        content: 'Usted ha subido más de 1 imagen. Sólo el primer archivo se cargará!'
+                 });
+            },
+            complete: function(data){
+                 if (data.xhr != undefined){
+                    var json = JSON.parse(data.xhr.responseText);   
+                    $('#<?php echo T4; ?>dow').attr('onclick',"window.open('public/files/fotos/"+json.archivo+"','_blank');");
+                    $('#<?php echo T4; ?>dow').html(json.archivo); 
+                    $('#<?php echo T4; ?>btndow').attr('onclick',"registrarVendedor.deleteAdjuntar(this,'<?php echo Obj::run()->indexModel->_usuario; ?>','public/files/fotos/"+json.archivo+"');");
+                    $('#<?php echo T4; ?>btndow').css('display','block');
+                }
+            }
+        });
+    </script>
+</div>

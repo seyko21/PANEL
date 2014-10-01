@@ -21,10 +21,9 @@ var perfil_ = function(){
     
     this.publico.postPerfil = function(){
         simpleAjax.send({
-            element: '#'+diccionario.tabs.PERF+'btnEperfil',
+            element: '#'+diccionario.tabs.PERF+'btnEper',
             root: _private.config.modulo + 'postPerfil',
             form: '#'+diccionario.tabs.PERF+'indexPerfil',
-            clear: true,
             fnCallback: function(data) {
                 if(!isNaN(data.result) && parseInt(data.result) === 1){
                     simpleScript.notify.ok({

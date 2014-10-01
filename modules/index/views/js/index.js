@@ -64,6 +64,18 @@ var index_ = function(){
         });
     };
     
+    this.public.changeFoto = function(){
+        simpleAjax.send({
+            dataType: 'html',
+            gifProcess: true,
+            root: _private.config.modulo + '/index/changeFoto',
+            fnCallback: function(data){
+                $('#cont-modal').append(data);  /*los formularios con append*/
+                $('#'+diccionario.tabs.T4+'formChangeFoto').modal('show');
+            }
+        });
+    };
+    
     return this.public;
     
 };

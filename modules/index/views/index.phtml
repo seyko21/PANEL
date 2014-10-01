@@ -145,7 +145,8 @@
                 <span> <!-- User image size is adjusted inside CSS, it should stay as it --> 
 
                         <a href="javascript:void(0);">
-                                <img src="<?php echo $rutaLayout['_img']; ?>avatars/sunny.png" alt="me" class="online" /> 
+                            <?php $data = Obj::run()->indexModel->getFoto()?>
+                            <img id="fotitoUser" src="<?php echo BASE_URL; ?>public/files/fotos/<?php echo $data['foto']?>" alt="me" class="online"/> 
                                 <span id="cont-nameuser" title="<?php echo Session::get('sys_nombreUsuario')?>">
                                         <?php echo Session::get('sys_nombreUsuario')?> 
                                 </span>

@@ -64,8 +64,29 @@ class indexController extends Controller{
         Obj::run()->View->render('errorPage',false);
     }
     
+    public function changeFoto(){
+        Obj::run()->View->render('formChangeFoto');
+    }
+    
     public function forgotpassword(){
         Obj::run()->View->render('forgotpassword',false);
+    }
+    
+    public function postFoto() {
+        $p = Obj::run()->indexModel->_usuario;
+        
+        if (!empty($_FILES)) {
+            $targetPath = ROOT . 'public' . DS .'files' .DS . 'fotos' . DS;
+            $tempFile = $_FILES['file']['tmp_name'];
+            $file = $p.'_'.$_FILES['file']['name'];
+            $targetFile = $targetPath.$file;
+            if (move_uploaded_file($tempFile, $targetFile)) {
+               $array = array("img" => $targetPath, "thumb" => $targetPath,'archivo'=>$file);
+               
+               Obj::run()->indexModel->postFoto($file);
+            }
+            echo json_encode($array);
+        }
     }
     
 }
