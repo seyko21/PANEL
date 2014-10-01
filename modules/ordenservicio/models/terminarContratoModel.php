@@ -66,12 +66,13 @@ class terminarContratoModel extends Model{
     }
     
     public function terminarContrato(){
-        $query = "call sp_ordseTerminarContratoMantenimiento(:flag,:idOrden,:obs);";
+        $query = "call sp_ordseTerminarContratoMantenimiento(:flag,:idOrden,:obs, :usuario);";
         
         $parms = array(
             ":flag" => 1,
             ":idOrden" => $this->_idOrden,
-            ":obs" => $this->_obs
+            ":obs" => $this->_obs,
+            ":usuario" =>  $this->_usuario
         );
         $data = $this->queryOne($query,$parms);
         return $data;
