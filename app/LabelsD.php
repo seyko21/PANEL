@@ -188,6 +188,7 @@ define('SACLI_1','Saldo de Clientes');
 define('SAVEN_1','Saldo de Vendedor');
 define('SAVEN_2','Saldo');
 define('SAVEN_3','Pagado');
+define('SAVEN_4','Boletas de Pago');
 define('SASOC_1','Saldo de Socio');
 define('MOVIM_1','Movimientos Ingresos y Salidas');
 define('MOVIM_2','Tipo');

@@ -91,22 +91,70 @@ var pagosRecibidos_ = function(){
         setup_widgets_desktop();
     };
 
+    this.publico.getGridBoleta = function (){
+         $('#'+diccionario.tabs.SAVEN+'gridPagoVendedor').dataTable({
+            bProcessing: true,
+            bServerSide: true,
+            bDestroy: true,
+            sPaginationType: "bootstrap_full", //two_button
+            sServerMethod: "POST",
+            bPaginate: true,
+            iDisplayLength: 10,   
+            sSearch: false,
+            bFilter: false,
+            aoColumns: [                
+                {sTitle: "N° Boleta", sWidth: "15%"},
+                {sTitle: "Fecha", sWidth: "20%"},
+                {sTitle: "Numero", sWidth: "10%"},
+                {sTitle: "Serie", sWidth: "10%"},
+                {sTitle: "Exonerado", sWidth: "5%", sClass: "center"},
+                {sTitle: "Total", sWidth: "10%", sClass: "right"},
+                {sTitle: "Retencion", sWidth: "10%", sClass: "right"},
+                {sTitle: "T. Neto", sWidth: "10%", sClass: "right"},
+                {sTitle: "Acciones", sWidth: "10%", sClass: "center", bSortable: false}
+            ],
+            aaSorting: [[0, 'asc']],
+            sScrollY: "150px",
+            sAjaxSource: _private.config.modulo+'gridPagoVendedor',
+            fnServerParams: function(aoData) {
+                aoData.push({"name": "_idComision", "value": _private.idComision});
+            }
+        });
+        setup_widgets_desktop();
+    };    
+        
+    this.publico.getConsulta = function(btn, id, nom){
+        _private.idComision = id;               
+        simpleAjax.send({
+            element : btn,
+            gifProcess: true,
+            dataType: 'html',
+            root: _private.config.modulo + 'getConsulta',
+            data: '&_idComision='+_private.idComision+'&_persona='+nom,
+            fnCallback: function(data){
+                $('#cont-modal').append(data);  /*los formularios con append*/
+                $('#'+diccionario.tabs.SAVEN+'formPagoVendedor').modal('show');
+                setTimeout(function(){                    
+                    pagosRecibidos.getGridBoleta()
+                }, 500);
+                
+            }
+        });
+    };   
     
-    this.publico.getFormEditPagosRecibidos = function(btn,id){
-        _private.idPagosRecibidos = id;
-            
+    this.publico.postPDF = function(btn,idd){
         simpleAjax.send({
             element: btn,
-            dataType: "html",
-            root: _private.config.modulo + "getFormEditPagosRecibidos",
-            data: "&_idPagosRecibidos="+_private.idPagosRecibidos,
-            fnCallback: function(data){
-                $("#cont-modal").append(data);  /*los formularios con append*/
-                $("#"+diccionario.tabs.PAGRE+"formEditPagosRecibidos").modal("show");
+            root: _private.config.modulo + 'postPDF',
+            data: '&_idBoleta='+idd,
+            fnCallback: function(data) {
+                if(parseInt(data.result) === 1){
+                    $('#'+diccionario.tabs.PAGRE+'btnDowPDF').attr("onclick","window.open('public/files/"+data.archivo+"','_blank');compromisoPagar.deleteArchivo('"+data.archivo+"');");
+                    $('#'+diccionario.tabs.PAGRE+'btnDowPDF').click();
+                }
             }
         });
     };
-    
  
     
     return this.publico;

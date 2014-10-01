@@ -49,7 +49,7 @@ class movimientosController extends Controller{
                 }
                               
                 $c1 = $aRow['id_movimiento'];
-                $c2 = $aRow['usuario_creador'];
+                $c2 = $aRow['observacion'];
                 $c3 = $aRow['orden_numero'];
                 $c4 = $aRow['codigo'];
                 $c5 = Functions::cambiaf_a_normal($aRow['fecha']);
@@ -58,7 +58,7 @@ class movimientosController extends Controller{
                 $c8 = number_format($aRow['monto'],2);
                 
                 /*registros a mostrar*/
-                $sOutput .= '["'.$c1.'","'.$c2.'","'.$c3.'","'.$c4.'","'.$c5.'","'.$c6.'","'.$c7.'","'.$c8.'","'.$estado.'" ';
+                $sOutput .= '["'.$c1.'","'.$c3.'","'.$c4.'","'.$c5.'","'.$c6.'","'.$c7.'","'.$c8.'","'.$estado.'","'.$c2.'" ';
 
                 $sOutput .= '],';
 

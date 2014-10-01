@@ -98,6 +98,18 @@ var generarCotizacion_ = function(){
         });
     };
     
+    this.publico.getNuevoCliente = function(element){
+
+        simpleScript.addTab({
+            id : diccionario.tabs.REGCL,
+            label: 'Registrar Cliente',
+            fnCallback: function(){
+                cliente.getContenido();
+            }
+        });
+        
+    };    
+    
     this.publico.getContNew = function(){
         simpleAjax.send({
             dataType: 'html',

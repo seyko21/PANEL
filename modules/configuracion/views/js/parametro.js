@@ -42,11 +42,11 @@ var parametro_ = function(){
             iDisplayLength: 10,            
             aoColumns: [
                 {sTitle: "<input type='checkbox' id='"+diccionario.tabs.T100+"chk_all' onclick='simpleScript.checkAll(this,\"#"+diccionario.tabs.T100+"gridParametro\");'>", sWidth: "1%", sClass: "center", bSortable: false},
-                {sTitle: "Nombre", sWidth: "40%"},
+                {sTitle: "Nombre", sWidth: "30%"},                
+                {sTitle: "Valor", sWidth: "30%"},
                 {sTitle: "Alias", sWidth: "10%",  sClass: "center", bSortable: false},
-                {sTitle: "Valor", sWidth: "20%",  sClass: "center", bSortable: false},
                 {sTitle: "Estado", sWidth: "8%",  sClass: "center", bSortable: false},
-                {sTitle: "Acciones", sWidth: "15%", sClass: "center", bSortable: false}
+                {sTitle: "Acciones", sWidth: "8%", sClass: "center", bSortable: false}
             ],
             aaSorting: [[1, 'asc']],
             sScrollY: "300px",

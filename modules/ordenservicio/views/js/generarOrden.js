@@ -57,12 +57,13 @@ var generarOrden_ = function(){
                 {sTitle: "<input type='checkbox' id='"+diccionario.tabs.ORINS+"chk_all' onclick='simpleScript.checkAll(this,\"#"+diccionario.tabs.GNOSE+"gridGenerarOrden\");'>", sWidth: "1%", sClass: "center", bSortable: false},
                 {sTitle: "Código", sWidth: "10%",sClass: "center"},
                 {sTitle: "Nro. Cotización", sWidth: "10%",sClass: "center"},
-                {sTitle: "Representante", sWidth: "20%"},
-                {sTitle: "Descuento", sWidth: "10%", sClass: "right"},
-                {sTitle: "Fecha", sWidth: "10%"},
+                {sTitle: "Representante", sWidth: "28%"},                
+                {sTitle: "Fecha", sWidth: "8%"},
+                {sTitle: "Tiempo", sWidth: "8%", sClass: "center", bSortable: false},
+                {sTitle: "Descuento", sWidth: "7%", sClass: "right"},
                 {sTitle: "Monto", sWidth: "8%", sClass: "right", bSortable: false},
                 {sTitle: "Estado", sWidth: "8%", sClass: "center", bSortable: false},
-                {sTitle: "Acciones", sWidth: "15%", sClass: "center", bSortable: false}
+                {sTitle: "Acciones", sWidth: "13%", sClass: "center", bSortable: false}
             ],
             aaSorting: [[1, "desc"]],
             sScrollY: "300px",

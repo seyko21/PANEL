@@ -78,6 +78,7 @@ var panelesAlquilados_ = function(){
         });
         setup_widgets_desktop();
     }; 
+    
     this.publico.getGridPAOS = function (){
          $('#'+diccionario.tabs.PAAL+'gridPAOS').dataTable({
             bProcessing: true,

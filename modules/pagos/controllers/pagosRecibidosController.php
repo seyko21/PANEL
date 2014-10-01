@@ -11,6 +11,7 @@ class pagosRecibidosController extends Controller{
 
     public function __construct() {
         $this->loadModel("pagosRecibidos");
+        $this->loadController(array("modulo"=>"pagos","controller"=>"saldoVendedor"));         
     }
     
     public function index(){ 
@@ -44,20 +45,6 @@ class pagosRecibidosController extends Controller{
                                
                 /*antes de enviar id se encrypta*/
                 $encryptReg = Aes::en($aRow['id_comision']);
-                
-                /*
-                 * configurando botones (add/edit/delete etc)
-                 * se verifica si tiene permisos para editar
-                 */
-                $axion = '"<div class=\"btn-group\">';
-                 
-                if($consultar['permiso']){
-                    $axion .= '<button type=\"button\" class=\"'.$consultar['theme'].'\" title=\"'.$consultar['accion'].'\" onclick=\"pagosRecibidos.getFormConsulta(this,\''.$encryptReg.'\')\">';
-                    $axion .= '    <i class=\"'.$consultar['icono'].'\"></i>';
-                    $axion .= '</button>';
-                }            
-                
-                $axion .= ' </div>" ';
                                 
                 $c2 = $aRow['orden_numero'];
                 $c3 = $aRow['nombrecompleto'];
@@ -66,7 +53,16 @@ class pagosRecibidosController extends Controller{
                 $c6 = number_format($aRow['comision_venta'],2);
                 $c7 = number_format($aRow['comision_asignado'],2);
                 $c8 = number_format($aRow['comision_saldo'],2);
- 
+                
+                $axion = '"<div class=\"btn-group\">';
+                 
+                if($consultar['permiso']){
+                    $axion .= '<button type=\"button\" class=\"'.$consultar['theme'].'\" title=\"'.$consultar['accion'].'\" onclick=\"pagosRecibidos.getConsulta(this,\''.$encryptReg.'\',\''.$c3.'\')\">';
+                    $axion .= '    <i class=\"'.$consultar['icono'].'\"></i>';
+                    $axion .= '</button>';
+                }            
+                
+                $axion .= ' </div>" ';
                 /*registros a mostrar*/
                 $sOutput .= '["'.($num++).'","'.$c2.'","'.$c3.'","'.$c4.'","'.$c5.'","'.$c6.'","'.$c7.'","'.$c8.'",'.$axion.' ';                
 
@@ -83,50 +79,64 @@ class pagosRecibidosController extends Controller{
 
     }
     
-    /*carga formulario (newPagosRecibidos.phtml) para nuevo registro: PagosRecibidos*/
-    public function getFormNewPagosRecibidos(){
-        Obj::run()->View->render("formNewPagosRecibidos");
-    }
-    
-    /*carga formulario (editPagosRecibidos.phtml) para editar registro: PagosRecibidos*/
-    public function getFormEditPagosRecibidos(){
-        Obj::run()->View->render("formEditPagosRecibidos");
-    }
-    
-    /*busca data para editar registro: PagosRecibidos*/
-    public static function findPagosRecibidos(){
-        $data = Obj::run()->pagosRecibidosModel->findPagosRecibidos();
+    public function gridPagoVendedor(){
+        $exportarpdf   = Session::getPermiso('PAGREEP');
+        
+        $sEcho  =   $this->post('sEcho');
+        
+        $rResult = Obj::run()->saldoVendedorController->getGridPagoVendedor();
+        
+        if(!isset($rResult['error'])){  
+            $iTotal         = isset($rResult[0]['total'])?$rResult[0]['total']:0;
             
-        return $data;
-    }
-    
-    /*envia datos para grabar registro: PagosRecibidos*/
-    public function postNewPagosRecibidos(){
-        $data = Obj::run()->pagosRecibidosModel->newPagosRecibidos();
+            $sOutput = '{';
+            $sOutput .= '"sEcho": '.intval($sEcho).', ';
+            $sOutput .= '"iTotalRecords": '.$iTotal.', ';
+            $sOutput .= '"iTotalDisplayRecords": '.$iTotal.', ';
+            $sOutput .= '"aaData": [ ';
+            foreach ( $rResult as $key=>$aRow ){
+                /*datos de manera manual*/
+                
+                $encryptReg = Aes::en($aRow['id_boleta']);
+                
+                $c1 = $aRow['boleta_numero'];
+                $c2 = $aRow['fecha'];
+                $c3 = $aRow['recibo_numero'];
+                $c4 = $aRow['recibo_serie'];
+                $c5 = $aRow['exonerado'];
+                $c6 = number_format($aRow['monto_total'],2);
+                $c7 = number_format($aRow['monto_retencion'],2);
+                $c8 = number_format($aRow['monto_neto'],2);
+                
+                $axion = '"<div class=\"btn-group\">';
+                if($exportarpdf['permiso']){
+                    $axion .= '<button type=\"button\" class=\"'.$exportarpdf['theme'].'\" title=\"'.$exportarpdf['accion'].' pagos \" onclick=\"pagosRecibidos.postPDF(this,\'' . $encryptReg . '\')\"> ';
+                    $axion .= '    <i class=\"'.$exportarpdf['icono'].'\"></i>';
+                    $axion .= '</button>';
+                }
+                $axion .= ' </div>" ';
+                
+                $sOutput .= '["'.$c1.'","'.$c2.'","'.$c3.'","'.$c4.'","'.$c5.'","'.$c6.'","'.$c7.'","'.$c8.'",'.$axion.' ';
+                               
+                $sOutput = substr_replace( $sOutput, "", -1 );
+                $sOutput .= '],';
+            }
+            $sOutput = substr_replace( $sOutput, "", -1 );
+            $sOutput .= '] }';
+        }else{
+            $sOutput = $rResult['error'];
+        }
         
-        echo json_encode($data);
-    }
+        echo $sOutput;
+    }               
     
-    /*envia datos para editar registro: PagosRecibidos*/
-    public function postEditPagosRecibidos(){
-        $data = Obj::run()->pagosRecibidosModel->editPagosRecibidos();
-        
-        echo json_encode($data);
-    }
+    public function getConsulta(){ 
+        Obj::run()->View->render('consultarPagoVendedor');
+    }  
     
-    /*envia datos para eliminar registro: PagosRecibidos*/
-    public function postDeletePagosRecibidos(){
-        $data = Obj::run()->pagosRecibidosModel->deletePagosRecibidos();
-        
-        echo json_encode($data);
-    }
-    
-    /*envia datos para eliminar registros: PagosRecibidos*/
-    public function postDeletePagosRecibidosAll(){
-        $data = Obj::run()->pagosRecibidosModel->deletePagosRecibidosAll();
-        
-        echo json_encode($data);
-    }
+    public function postPDF($n=''){         
+        return Obj::run()->saldoVendedorController->postPDF($n);
+    }       
     
 }
 

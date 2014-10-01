@@ -10,7 +10,7 @@ var saldoVendedor_ = function(){
     /*metodos privados*/
     var _private = {};
     
-    _private.idSaldoVendedor = 0;
+    _private.idComision = 0;
     
     _private.config = {
         modulo: "pagos/saldoVendedor/"
@@ -74,13 +74,13 @@ var saldoVendedor_ = function(){
             aoColumns: [
                 {sTitle: "N°", sWidth: "5%", bSortable: false},
                 {sTitle: "N° OS", sWidth: "10%"},
-                {sTitle: "Vendedor", sWidth: "30%"},
+                {sTitle: "Vendedor", sWidth: "28%"},
                 {sTitle: "Fecha", sWidth: "15%",sClass: "center" },
                 {sTitle: "Porcentaje", sWidth: "5%",sClass: "center" },
                 {sTitle: "Comision", sWidth: "10%", sClass: "right"},             
                 {sTitle: "Pagado", sWidth: "10%", sClass: "right"},             
                 {sTitle: "Saldo", sWidth: "10%", sClass: "right"},             
-                {sTitle: "Acciones", sWidth: "5%", sClass: "center", bSortable: false}
+                {sTitle: "Acciones", sWidth: "8%", sClass: "center", bSortable: false}
             ],
             aaSorting: [[0, "asc"]],
             sScrollY: "300px",
@@ -106,22 +106,71 @@ var saldoVendedor_ = function(){
         });
         setup_widgets_desktop();
     };
+
+    this.publico.getGridBoleta = function (){
+         $('#'+diccionario.tabs.SAVEN+'gridPagoVendedor').dataTable({
+            bProcessing: true,
+            bServerSide: true,
+            bDestroy: true,
+            sPaginationType: "bootstrap_full", //two_button
+            sServerMethod: "POST",
+            bPaginate: true,
+            iDisplayLength: 10,   
+            sSearch: false,
+            bFilter: false,
+            aoColumns: [                
+                {sTitle: "N° Boleta", sWidth: "15%"},
+                {sTitle: "Fecha", sWidth: "20%"},
+                {sTitle: "Numero", sWidth: "10%"},
+                {sTitle: "Serie", sWidth: "10%"},
+                {sTitle: "Exonerado", sWidth: "5%", sClass: "center"},
+                {sTitle: "Total", sWidth: "10%", sClass: "right"},
+                {sTitle: "Retencion", sWidth: "10%", sClass: "right"},
+                {sTitle: "T. Neto", sWidth: "10%", sClass: "right"},
+                {sTitle: "Acciones", sWidth: "10%", sClass: "center", bSortable: false}
+            ],
+            aaSorting: [[0, 'asc']],
+            sScrollY: "150px",
+            sAjaxSource: _private.config.modulo+'gridPagoVendedor',
+            fnServerParams: function(aoData) {
+                aoData.push({"name": "_idComision", "value": _private.idComision});
+            }
+        });
+        setup_widgets_desktop();
+    };    
         
-    this.publico.getFormEditSaldoVendedor = function(btn,id){
-        _private.idSaldoVendedor = id;
-            
+    this.publico.getConsulta = function(btn, id, nom){
+        _private.idComision = id;               
+        simpleAjax.send({
+            element : btn,
+            gifProcess: true,
+            dataType: 'html',
+            root: _private.config.modulo + 'getConsulta',
+            data: '&_idComision='+_private.idComision+'&_persona='+nom,
+            fnCallback: function(data){
+                $('#cont-modal').append(data);  /*los formularios con append*/
+                $('#'+diccionario.tabs.SAVEN+'formPagoVendedor').modal('show');
+                setTimeout(function(){                    
+                    saldoVendedor.getGridBoleta()
+                }, 500);
+                
+            }
+        });
+    };   
+    
+    this.publico.postPDF = function(btn,idd){
         simpleAjax.send({
             element: btn,
-            dataType: "html",
-            root: _private.config.modulo + "getFormEditSaldoVendedor",
-            data: "&_idSaldoVendedor="+_private.idSaldoVendedor,
-            fnCallback: function(data){
-                $("#cont-modal").append(data);  /*los formularios con append*/
-                $("#"+diccionario.tabs.SAVEN+"formEditSaldoVendedor").modal("show");
+            root: _private.config.modulo + 'postPDF',
+            data: '&_idBoleta='+idd,
+            fnCallback: function(data) {
+                if(parseInt(data.result) === 1){
+                    $('#'+diccionario.tabs.SAVEN+'btnDowPDF').attr("onclick","window.open('public/files/"+data.archivo+"','_blank');compromisoPagar.deleteArchivo('"+data.archivo+"');");
+                    $('#'+diccionario.tabs.SAVEN+'btnDowPDF').click();
+                }
             }
         });
     };
-    
    
     
     return this.publico;

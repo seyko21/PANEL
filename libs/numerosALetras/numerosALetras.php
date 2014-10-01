@@ -45,13 +45,13 @@ class numerosALetras {
 
         if (substr($s, -9, 9) == "Millones " || substr($s, -7, 7) == "Millón ")
             $s = $s . "de ";
-
-        $s = $s . $Moneda;
-
-        if ($Frc != $this->Void) {
+        
+         if ($Frc == '') $Frc = '00';              
+        //if ($Frc != $this->Void) {
             //$s = $s . " Con " . $this->SubValLetra(intval($Frc)) . "Centimos";
-            $s = $s . " con " . $Frc . "/100";
-        }
+            $s = $s . " con " . $Frc . "/100 ";            
+            $s = $s . $Moneda;
+        //}
         return ($Signo . $s );
     }
 

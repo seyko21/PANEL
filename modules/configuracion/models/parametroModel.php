@@ -49,7 +49,7 @@ class parametroModel extends Model{
     }
     
     public function getGridParametro(){
-        $aColumns       =   array( 'chk','nombre' ); //para la ordenacion y pintado en html
+        $aColumns       =   array( 'chk','nombre','valor'); //para la ordenacion y pintado en html
         /*
 	 * Ordenando, se verifica por que columna se ordenara
 	 */

@@ -5,6 +5,7 @@ echo Functions::widgetOpen(array(
     'padding' => true,
     'wizard' => true
 ));
+$nuevo = Session::getPermiso('GNCOTNEW');
 $grabar = Session::getPermiso('GNCOTGR');
 $agregar = Session::getPermiso('GNCOTAG');
 $buscar = Session::getPermiso('GNCOTBS');
@@ -33,7 +34,7 @@ $buscar = Session::getPermiso('GNCOTBS');
 
                     <div class="form-group">
                         <label class="control-label col-md-2" for="prepend"><?php echo LABEL_GNC3; ?></label>
-                        <div class="col-md-9">
+                        <div class="col-md-8">
                             <div class="input-group input-group-sm">
                                 <input type="hidden" id="<?php echo T8; ?>txt_idpersona" name="<?php echo T8; ?>txt_idpersona">
                                 <input class="form-control" type="text" id="<?php echo T8; ?>txt_cliente" name="<?php echo T8; ?>txt_cliente" readonly>
@@ -41,6 +42,11 @@ $buscar = Session::getPermiso('GNCOTBS');
                                     <?php if ($buscar['permiso']): ?>
                                         <button class="btn btn-default" type="button" onclick="generarCotizacion.getFormBuscarCliente(this, '<?php echo T8; ?>');"><i class="fa fa-search"></i> Buscar</button>
                                     <?php endif; ?>
+                                     <?php if($nuevo['permiso']): ?>
+                                        <button id="<?php echo T8; ?>newCliente" type="button" onclick="generarCotizacion.getNuevoCliente(this);" class="btn txt-color-white bg-color-blueDark" title="Nuevo Cliente">
+                                             <i class="<?php echo $nuevo['icono'];?>"></i> 
+                                        </button>
+                                        <?php endif; ?>    
                                 </span>
                             </div>
                         </div>

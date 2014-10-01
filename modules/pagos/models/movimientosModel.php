@@ -41,7 +41,7 @@ class movimientosModel extends Model{
     
     /*data para el grid: Movimientos*/
     public function getMovimientos(){
-        $aColumns       =   array("id_movimiento","usuario_creador","orden_numero","codigo","fecha","tipo","moneda","monto","estado" ); //para la ordenacion y pintado en html
+        $aColumns       =   array("id_movimiento","orden_numero","codigo","fecha","tipo","moneda","monto","estado","observacion" ); //para la ordenacion y pintado en html
         /*
 	 * Ordenando, se verifica por que columna se ordenara
 	 */

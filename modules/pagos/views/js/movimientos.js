@@ -65,14 +65,14 @@ var movimientos_ = function(){
             iDisplayLength: 10,            
             aoColumns: [
                 {sTitle: "ID", sWidth: "2%",bSortable: false},
-                {sTitle: "Creador por", sWidth: "30%"},
                 {sTitle: "N° OS", sWidth: "5%", sClass: "center"},
-                {sTitle: "Codigo", sWidth: "10%"},
+                {sTitle: "Código", sWidth: "10%"},
                 {sTitle: "Fecha", sWidth: "10%", sClass: "center"},
-                {sTitle: "Tipo", sWidth: "10%"},
+                {sTitle: "Tipo", sWidth: "10%"},                
                 {sTitle: "Moneda", sWidth: "5%"},
                 {sTitle: "Monto", sWidth: "10%",sClass: "right"},
-                {sTitle: "Estado", sWidth: "5%", sClass: "center"}                
+                {sTitle: "Estado", sWidth: "5%", sClass: "center"},
+                {sTitle: "Observación", sWidth: "35%"}
             ],
             aaSorting: [[0, "asc"]],
             sScrollY: "300px",

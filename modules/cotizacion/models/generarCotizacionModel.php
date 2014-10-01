@@ -110,11 +110,11 @@ class generarCotizacionModel extends Model{
     }
     
     private function anularUnaCotizacion(){
-        $query = "UPDATE `lgk_cotizacion` SET
-                    `estado` = 'A'
-                WHERE `id_cotizacion` = :idCotizacion;";
+        $query = "call sp_cotiAnulacion(:idCotizacion,:usuario, :msj);";
         $parms = array(
-            ':idCotizacion' => $this->_idCotizacion
+             ':idCotizacion' => $this->_idCotizacion,
+             ':usuario' => $this->_usuario,
+             ':msj' => 'Cotización anulada al ser clonada.'
         );
         $this->execute($query,$parms);
     }
