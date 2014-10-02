@@ -1,0 +1,47 @@
+<?php
+/*
+ * Documento   : Opciones-User
+ * Creado      : 02-Oct-2014 
+ * Descripcion : 
+ */
+?>
+<!-- SHORTCUT AREA : With large tiles (activated via clicking user name tag)
+Note: These tiles are completely responsive,
+you can add as many as you like
+-->
+<!--Opciones de Usuario-->
+<div id="shortcut">
+    <ul>      
+        <li>
+            <a class="jarvismetro-tile big-cubes bg-color-pinkDark" onclick="perfil.main();"> 
+                <span class="iconbox"> <i class="fa fa-user fa-4x"></i> 
+                    <span>Mi Perfil </span> </span> 
+            </a>           
+        </li>     
+        <li>
+            <a class="jarvismetro-tile big-cubes bg-color-blue" onclick="cambiarClave.main();"> 
+                <span class="iconbox"> <i class="fa fa-unlock fa-4x"></i> 
+                    <span>Cambiar Clave </span> 
+                </span> 
+            </a>
+        </li>
+        <li>
+            <a class="jarvismetro-tile big-cubes bg-color-greenLight" onclick="index.changeFoto();"> 
+                <span class="iconbox"> <i class="fa fa-picture-o fa-4x"></i> 
+                    <span>Cambiar Foto </span> 
+                </span> 
+            </a>
+        </li>
+    </ul>
+</div>
+<!-- END SHORTCUT AREA -->
+<script>
+    function noneEvt(){
+        /*para hacer evento invisible*/
+        simpleScript.removeAttr.click({
+            container: '#shortcut',
+            typeElement: 'li a'
+        });
+    }
+    setTimeout('noneEvt()',2000);
+</script>

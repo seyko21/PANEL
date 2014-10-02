@@ -48,6 +48,9 @@ class indexController extends Controller{
         Obj::run()->View->render('dominios');
     }
     
+    public static function getOpcionesUser(){
+        Obj::run()->View->render('opcionesUser');
+    }   
     public static function getModulos($dominio=''){
         Obj::run()->View->dominio = $dominio; 
         Obj::run()->View->render('menu');
