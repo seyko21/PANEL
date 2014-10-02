@@ -245,6 +245,7 @@ class generarCotizacionController extends Controller{
         $mpdf->defaultfooterfontsize = 12; /* in pts */
         $mpdf->defaultfooterfontstyle = B; /* blank, B, I, or BI */
         $mpdf->defaultfooterline = 1; /* 1 to include line below header/above footer */
+        
         if($data[0]['estado'] == 'A'){
            $mpdf->SetWatermarkText('A N U L A D O');
            $mpdf->showWatermarkText = true;         

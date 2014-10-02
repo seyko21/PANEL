@@ -10,7 +10,7 @@ var panelcliente_ = function(){
     /*metodos privados*/
     var _private = {};
     
-    _private.idPanelcliente = 0;
+    _private.idCaratula = 0;
     
     _private.config = {
         modulo: "Panel/panelcliente/"
@@ -54,12 +54,12 @@ var panelcliente_ = function(){
             aoColumns: [
                 {sTitle: "Código", sWidth: "8%"},                
                 {sTitle: "N° OS", sWidth: "8%"},
-                {sTitle: "Ubicación", sWidth: "27%"},
+                {sTitle: "Ubicación", sWidth: "32%"},
                 {sTitle: "Elemento", sWidth: "12%"},                
                 {sTitle: "Iluminado", sWidth: "4%",  sClass: "center"},                                
                 {sTitle: "Inicio", sWidth: "8%", sClass: "center"},
                 {sTitle: "Termino", sWidth: "8%", sClass: "center"},
-                {sTitle: "Vista", sWidth: "10%", sClass: "center", bSortable: false}
+                {sTitle: "Acciones", sWidth: "8%", sClass: "center", bSortable: false}
             ],
             aaSorting: [[0, "asc"]],
             sScrollY: "300px",
@@ -76,6 +76,24 @@ var panelcliente_ = function(){
         });
         setup_widgets_desktop();
     };
+    
+    
+    this.publico.getConsulta = function(btn, id, img){
+        _private.idCaratula = id;               
+        simpleAjax.send({
+            element : btn,
+            gifProcess: true,
+            dataType: 'html',
+            root: _private.config.modulo + 'getConsulta',
+            data: '&_idCaratula='+_private.idCaratula+'&_imagen='+img,
+            fnCallback: function(data){
+                $('#cont-modal').append(data);  /*los formularios con append*/
+                $('#'+diccionario.tabs.MIPAL+'formConsultaPanelCliente').modal('show');                
+                
+            }
+        });
+    };   
+    
     
   
     return this.publico;

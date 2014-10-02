@@ -10,7 +10,7 @@
 class liquidacionClienteModel extends Model{
 
     private $_flag;
-    private $_idOrden;
+    public $_idOrden;
     private $_f1;
     private $_f2;
     private $_usuario;
@@ -73,7 +73,17 @@ class liquidacionClienteModel extends Model{
         return $data;
     }
     
-    
+    public function getRptOS(){
+        $query = '  '
+                . '   ';
+        
+        $parms = array(
+          ":idOS" => $this->_idOrden
+        );
+        
+        $data = $this->queryAll($query, $parms);
+        return $data;
+    }
 }
 
 ?>

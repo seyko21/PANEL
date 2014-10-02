@@ -14,6 +14,7 @@ class misInversionesModel extends Model{
     private $_f2;
     private $_idPersona;
     private $_usuario;
+    private $_idInversion;
     
     /*para el grid*/
     public  $_iDisplayStart;
@@ -32,7 +33,7 @@ class misInversionesModel extends Model{
         $this->_f2    = Functions::cambiaf_a_mysql(Formulario::getParam("_f2")); 
         $this->_usuario     = Session::get("sys_idUsuario");
         $this->_idPersona   = Session::get('sys_idPersona');
-        
+        $this->_idInversion = Aes::de(Formulario::getParam("_idInversion"));
         $this->_iDisplayStart  = Formulario::getParam("iDisplayStart"); 
         $this->_iDisplayLength = Formulario::getParam("iDisplayLength"); 
         $this->_iSortingCols   = Formulario::getParam("iSortingCols");
@@ -49,10 +50,10 @@ class misInversionesModel extends Model{
         for ( $i=0 ; $i<intval( $this->_iSortingCols ) ; $i++ ){
                 if ( $this->post( "bSortable_".intval($this->post("iSortCol_".$i)) ) == "true" ){
                         $sOrder .= " ".$aColumns[ intval( $this->post("iSortCol_".$i) ) ]." ".
-                                ($this->post("sSortDir_".$i)==="asc" ? "asc" : "desc") ." ";
+                                ($this->post("sSortDir_".$i)==="asc" ? "asc" : "desc") .",";
                 }
         }
-        
+        $sOrder = substr_replace( $sOrder, "", -1 );
         $query = "call sp_prodConsultaInversionGrid(:f1,:f2,:idPersona,:iDisplayStart,:iDisplayLength,:sOrder);";
         
         $parms = array(
@@ -67,7 +68,31 @@ class misInversionesModel extends Model{
         return $data;
     }
     
-    
+   public function getMisInversioneDetalle(){
+        $aColumns       =   array("codigos","ubicacion","dimesion_area","fecha","monto_invertido","total_produccion" ); //para la ordenacion y pintado en html
+        /*
+	 * Ordenando, se verifica por que columna se ordenara
+	 */
+        $sOrder = "";
+        for ( $i=0 ; $i<intval( $this->_iSortingCols ) ; $i++ ){
+                if ( $this->post( "bSortable_".intval($this->post("iSortCol_".$i)) ) == "true" ){
+                        $sOrder .= " ".$aColumns[ intval( $this->post("iSortCol_".$i) ) ]." ".
+                                ($this->post("sSortDir_".$i)==="asc" ? "asc" : "desc") ." ";
+                }
+        }
+        $sOrder = substr_replace( $sOrder, "", -1 );
+        $query = "call sp_prodConsultaInversionDetGrid(:idInversion,:iDisplayStart,:iDisplayLength,:sOrder);";
+        
+        $parms = array(
+            ":idInversion" => $this->_idInversion,  
+            ":iDisplayStart" => $this->_iDisplayStart,
+            ":iDisplayLength" => $this->_iDisplayLength,
+            ":sOrder" => $sOrder
+        );
+        $data = $this->queryAll($query,$parms);
+        return $data;
+    }
+      
 }
 
 ?>

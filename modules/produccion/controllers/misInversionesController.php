@@ -17,6 +17,10 @@ class misInversionesController extends Controller{
         Obj::run()->View->render("indexMisInversiones");
     }
     
+    public function getConsulta(){ 
+        Obj::run()->View->render('consultarDetalleInversion');
+    }  
+    
     public function getGridMisInversiones(){
         $consultar   = Session::getPermiso('MIINVCC');        
         
@@ -54,7 +58,7 @@ class misInversionesController extends Controller{
                  
                 if($consultar['permiso']){
                     if ($aRow['monto_asignado'] > 0){
-                        $axion .= '<button type=\"button\" class=\"'.$consultar['theme'].'\" title=\"'.$consultar['accion'].'\" onclick=\"misInversiones.getFormEditMisInversiones(this,\''.$encryptReg.'\')\">';
+                        $axion .= '<button type=\"button\" class=\"'.$consultar['theme'].'\" title=\"'.$consultar['accion'].'\" onclick=\"misInversiones.getConsulta(this,\''.$encryptReg.'\')\">';
                         $axion .= '    <i class=\"'.$consultar['icono'].'\"></i>';
                         $axion .= '</button>';
                     }else{
@@ -87,14 +91,55 @@ class misInversionesController extends Controller{
         
         echo $sOutput;
 
-    }
-    
-    /*carga formulario (newMisInversiones.phtml) para nuevo registro: MisInversiones*/
-    public function getFormNewMisInversiones(){
-        Obj::run()->View->render("formNewMisInversiones");
-    }
+    }   
      
-    
+    public function getGridMisInversionesDet(){
+        
+        $sEcho          =   $this->post('sEcho');
+        
+        $rResult = Obj::run()->misInversionesModel->getMisInversioneDetalle();
+        
+        $num = Obj::run()->misInversionesModel->_iDisplayStart;
+        if($num >= 10){
+            $num++;
+        }else{
+            $num = 1;
+        }
+        
+        if(!isset($rResult['error'])){  
+            $iTotal         = isset($rResult[0]['total'])?$rResult[0]['total']:0;
+            
+            $sOutput = '{';
+            $sOutput .= '"sEcho": '.intval($sEcho).', ';
+            $sOutput .= '"iTotalRecords": '.$iTotal.', ';
+            $sOutput .= '"iTotalDisplayRecords": '.$iTotal.', ';
+            $sOutput .= '"aaData": [ ';     
+            
+            foreach ( $rResult as $aRow ){
+                                            
+                $c1 = $aRow['codigos'];
+                $c2 = $aRow['ubicacion'];
+                $c3 = $aRow['dimesion_area'].' m<sup>2</sup>';
+                $c4 = $aRow['fecha'];                
+                $c5 = '<b>'.number_format($aRow['monto_invertido'],2).'</b>';
+                $c6 = number_format($aRow['total_produccion'],2);
+                
+                                                
+                /*registros a mostrar*/
+                $sOutput .= '["'.$c1.'","'.$c2.'","'.$c3.'","'.$c4.'","'.$c5.'","'.$c6.'" ';
+
+                $sOutput .= '],';
+
+            }
+            $sOutput = substr_replace( $sOutput, "", -1 );
+            $sOutput .= '] }';
+        }else{
+            $sOutput = $rResult['error'];
+        }
+        
+        echo $sOutput;
+
+    }    
 }
 
 ?>

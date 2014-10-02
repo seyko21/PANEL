@@ -10,7 +10,7 @@ var misInversiones_ = function(){
     /*metodos privados*/
     var _private = {};
     
-    _private.idMisInversiones = 0;
+    _private.idInversion = 0;
     
     _private.config = {
         modulo: "Produccion/misInversiones/"
@@ -41,6 +41,25 @@ var misInversiones_ = function(){
             }
         });
     };
+    
+   this.publico.getConsulta = function(btn, id){
+        _private.idInversion = id;               
+        simpleAjax.send({
+            element : btn,
+            gifProcess: true,
+            dataType: 'html',
+            root: _private.config.modulo + 'getConsulta',
+            data: '&_idInversion='+_private.idInversion,
+            fnCallback: function(data){
+                $('#cont-modal').append(data);  /*los formularios con append*/
+                $('#'+diccionario.tabs.MIINV+'formDetalleInversion').modal('show');
+                setTimeout(function(){                    
+                    misInversiones.getGridDetalle();
+                }, 500);
+                
+            }
+        });
+    };       
     
     this.publico.getGridMisInversiones = function (){
         var oTable = $("#"+diccionario.tabs.MIINV+"gridMisInversiones").dataTable({
@@ -81,6 +100,34 @@ var misInversiones_ = function(){
         setup_widgets_desktop();
     };
     
+    this.publico.getGridDetalle = function (){
+         $('#'+diccionario.tabs.MIINV+'gridDetalleInversion').dataTable({
+            bProcessing: true,
+            bServerSide: true,
+            bDestroy: true,
+            sPaginationType: "bootstrap_full", //two_button
+            sServerMethod: "POST",
+            bPaginate: true,
+            iDisplayLength: 10,   
+            sSearch: false,
+            bFilter: false,
+            aoColumns: [                
+                {sTitle: "Caratulas", sWidth: "15%"},
+                {sTitle: "Ubicacion", sWidth: "25%"},
+                {sTitle: "Area", sWidth: "10%",sClass: "center"},
+                {sTitle: "Fecha", sWidth: "18%",sClass: "center"},
+                {sTitle: "Invertido", sWidth: "15%", sClass: "right"},
+                {sTitle: "T. produccion", sWidth: "15%", sClass: "right"}                                
+            ],
+            aaSorting: [[0, 'asc']],
+            sScrollY: "150px",
+            sAjaxSource: _private.config.modulo+'getGridMisInversionesDet',
+            fnServerParams: function(aoData) {
+                aoData.push({"name": "_idInversion", "value": _private.idInversion});
+            }
+        });
+        setup_widgets_desktop();
+    };    
     
     return this.publico;
     

@@ -12,6 +12,7 @@ class panelclienteModel extends Model{
     private $_flag;
     private $_idPersona;
     private $_usuario;
+    private $_idCaratula;
     
     /*para el grid*/
     public  $_iDisplayStart;
@@ -28,6 +29,7 @@ class panelclienteModel extends Model{
         $this->_flag        = Formulario::getParam("_flag");
         $this->_usuario     = Session::get("sys_idUsuario");
         $this->_idPersona               = Session::get("sys_idPersona");
+        $this->_idCaratula    = Aes::de(Formulario::getParam("_idCaratula"));
         
         $this->_iDisplayStart  = Formulario::getParam("iDisplayStart"); 
         $this->_iDisplayLength = Formulario::getParam("iDisplayLength"); 
@@ -63,6 +65,26 @@ class panelclienteModel extends Model{
         return $data;
     }
    
+    public function getGeografico(){
+        
+        $query = 'SELECT
+                c.`id_producto`,
+                c.`ubicacion`,
+                c.`google_latitud`,
+                c.`google_longitud`
+              FROM `lgk_catalogo` c 
+              INNER JOIN lgk_caratula ct ON ct.`id_producto` = c.`id_producto`
+              WHERE ct.`id_caratula` = :idCaratula ';
+       
+        $parms = array(
+            ":idCaratula" => $this->_idCaratula
+         );
+        $data = $this->queryOne($query, $parms);
+        return $data;
+        
+    }
+    
+    
 }
 
 ?>

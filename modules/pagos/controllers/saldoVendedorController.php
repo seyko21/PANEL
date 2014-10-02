@@ -17,6 +17,10 @@ class saldoVendedorController extends Controller{
         Obj::run()->View->render("indexSaldoVendedor");
     }
     
+    public function getConsulta(){ 
+        Obj::run()->View->render('consultarPagoVendedor');
+    }      
+    
     public function getGridSaldoVendedor(){
                 
         $consultar   = Session::getPermiso('SAVENCC'); 
@@ -141,11 +145,7 @@ class saldoVendedorController extends Controller{
         }
         
         echo $sOutput;
-    }               
-    
-    public function getConsulta(){ 
-        Obj::run()->View->render('consultarPagoVendedor');
-    }  
+    }                  
     
     public function postPDF($n=''){
          

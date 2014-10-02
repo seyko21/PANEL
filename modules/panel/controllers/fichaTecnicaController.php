@@ -287,14 +287,6 @@ class fichaTecnicaController extends Controller{
         $c = 'fichatecnica_'.Obj::run()->fichaTecnicaModel->_idProducto.'.pdf';
         $ar = ROOT.'public'.DS.'files'.DS.$c;
         $mpdf = new mPDF('c');
-
-        $mpdf->mirrorMargins = 1;
-        $mpdf->defaultheaderfontsize = 11; /* in pts */
-        $mpdf->defaultheaderfontstyle = B; /* blank, B, I, or BI */
-        $mpdf->defaultheaderline = 1; /* 1 to include line below header/above footer */
-        $mpdf->defaultfooterfontsize = 11; /* in pts */
-        $mpdf->defaultfooterfontstyle = B; /* blank, B, I, or BI */
-        $mpdf->defaultfooterline = 1; /* 1 to include line below header/above footer */
                         
         $mpdf->SetHTMLHeader('<img src="'.ROOT.'public'.DS.'img'.DS.'logotipo.png" width="137" height="68" />','',TRUE);
         $mpdf->SetHTMLFooter('<table width="100%" style="vertical-align: bottom; font-family: serif; font-size: 8pt; color: #000000; font-weight: bold;"><tr>

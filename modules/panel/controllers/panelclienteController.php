@@ -17,9 +17,13 @@ class panelclienteController extends Controller{
         Obj::run()->View->render("indexPanelcliente");
     }
     
+    public function getConsulta(){ 
+        Obj::run()->View->render('consultarPaneCliente');
+    }      
+    
     public function getGridPanelcliente(){
-        $editar   = Session::getPermiso('MIPALED');
-        $eliminar = Session::getPermiso('MIPALDE');
+        
+        $consultar = Session::getPermiso('MIPALCC');
         
         $sEcho          =   $this->post('sEcho');
         
@@ -43,6 +47,9 @@ class panelclienteController extends Controller{
             
             foreach ( $rResult as $aRow ){
                 
+                /*antes de enviar id se encrypta*/
+                $encryptReg = Aes::en($aRow['id_caratula']); 
+                
                $c1 = $aRow['codigo'];
                $c2 = $aRow['orden_numero'];
                $c3 = $aRow['ubicacion'];
@@ -55,15 +62,28 @@ class panelclienteController extends Controller{
                 }
                                
                $c6 = Functions::cambiaf_a_normal($aRow['fecha_inicio']);
-               $c7 = Functions::cambiaf_a_normal($aRow['fecha_termino']);
+               $c7 = "<b>".Functions::cambiaf_a_normal($aRow['fecha_termino'])."</b>";
             
+
                if($aRow['imagen'] != '' or $aRow['imagen'] != null){
                    $imagen = '<a href=\"'.BASE_URL.'public/img/confirmacion/'.$aRow['imagen'].'\" target=\"_blank\" ><img border=\"0\" src=\"'.BASE_URL.'public/img/confirmacion/'.$aRow['imagen'].'\" style=\"width:70px; height:40px;\" /></a>';
                }else{
                    $imagen = '<img src=\"'.BASE_URL.'public/img/sin_foto.jpg\" style=\"width:70px; height:40px;\" />';
                }
+               
+                          
+               $axion = '"<div class=\"btn-group\">';
+                 
+                if($consultar['permiso']){
+                    $axion .= '<button type=\"button\" class=\"'.$consultar['theme'].'\" title=\"'.$consultar['accion'].'\" onclick=\"panelcliente.getConsulta(this,\''.$encryptReg.'\',\''.$aRow['imagen'].'\')\">';
+                    $axion .= '    <i class=\"'.$consultar['icono'].'\"></i>';
+                    $axion .= '</button>';                
+                }               
+                
+                $axion .= ' </div>" ';
+               
                 /*registros a mostrar*/
-                $sOutput .= '["'.$c1.'","'.$c2.'","'.$c3.'","'.$c4.'","'.$c5.'","'.$c6.'","'.$c7.'","'.$imagen.'" ';
+                $sOutput .= '["'.$c1.'","'.$c2.'","'.$c3.'","'.$c4.'","'.$c5.'","'.$c6.'","'.$c7.'",'.$axion.' ';
 
                 $sOutput .= '],';
 
@@ -77,6 +97,14 @@ class panelclienteController extends Controller{
         echo $sOutput;
 
     }      
+    
+    public static function getGeografico(){ 
+        $data = Obj::run()->panelclienteModel->getGeografico();
+        
+        return $data;
+        
+    }
+            
     
 }
 
