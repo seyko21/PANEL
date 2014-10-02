@@ -70,7 +70,7 @@ class movimientosOSController extends Controller{
                 $oe = number_format($aRow['otros_egresos'],2);
                 $ut2 = number_format($aRow['utilidad_secundaria'],2);
                 /*registros a mostrar*/
-                $sOutput .= '["'.$aRow['orden_numero'].'","'.$aRow['fecha_contrato'].'","'.$m.'","'.$i.'","'.$ig.'","'.$eg.'","'.$cv.'","<b>'.$ut1.'</b>","'.$oi.'","'.$oe.'","<b>'.$ut2.'</b>",'.$axion.' ';
+                $sOutput .= '["'.$aRow['orden_numero'].'","'.$aRow['fecha_contrato'].'","'.$m.'","'.$i.'","'.$ig.'","'.$eg.'","'.$cv.'","<b>'.$ut1.'</b>",'.$axion.' ';
 
                 $sOutput .= '],';
 

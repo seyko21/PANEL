@@ -6,11 +6,10 @@
  * Autor       : ..... .....
  * Descripcion : 
  */
-$dataImagen = Formulario::getParam('_imagen');
-$data = panelclienteController::getGeografico();
+$data = panelesInvertidoController::getGeografico();
 
-if($dataImagen != '' or $dataImagen != null){
-    $imagen = '<a href=\"'.BASE_URL.'public/img/confirmacion/'.$dataImagen.'\" target=\"_blank\" ><img border=\"0\" src=\"'.BASE_URL.'public/img/confirmacion/'.$dataImagen.'\" style=\"width:300px; height:200px;\" class=\"img-circle\" /></a>';
+if($data['imagen'] != '' or $data['imagen'] != null){
+    $imagen = '<a href=\"'.BASE_URL.'public/img/uploads/'.$data['imagen'].'\" target=\"_blank\" ><img border=\"0\" src=\"'.BASE_URL.'public/img/upload/'.$data['imagen'].'\" style=\"width:300px; height:200px;\" class=\"img-circle\" /></a>';
 }else{
     $imagen = '<img src=\"'.BASE_URL.'public/img/sin_foto.jpg\" style=\"width:250px; height:auto;\" class=\"img-circle\" />';
  }
@@ -19,7 +18,7 @@ $html = "<h4>Vista previa:</h4>"
         . "<center>".$imagen."</center>";
 
 ?>
-<form id="<?php echo MIPAL; ?>formConsultaPanelCliente" name="<?php echo MIPAL; ?>formConsultaPanelCliente" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<form id="<?php echo PAINV; ?>formConsultaPanelSocio" name="<?php echo PAINV; ?>formConsultaPanelSocio" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog" style="width:50%">
         <div class="modal-content" >
             <div class="modal-header">
@@ -36,7 +35,7 @@ $html = "<h4>Vista previa:</h4>"
                     </div>                
              </section>
              <section>                      
-                 <div id="<?php echo MIPAL; ?>map_canvas" style="width:100%;height:350px;"></div>   
+                 <div id="<?php echo PAINV; ?>map_canvas" style="width:100%;height:350px;"></div>   
              </section>     
              </div>                        
             <div class="modal-footer">              
@@ -57,7 +56,7 @@ $html = "<h4>Vista previa:</h4>"
                 mapTypeId: 'roadmap'
         };	
         // Display a map on the page
-        map = new google.maps.Map(document.getElementById(diccionario.tabs.MIPAL+"map_canvas"), mapOptions);
+        map = new google.maps.Map(document.getElementById(diccionario.tabs.PAINV+"map_canvas"), mapOptions);
         map.setTilt(45);
         // Multiple Markers
          var markers = [["<?php echo $data['ubicacion']; ?>","<?php echo $data['google_latitud']; ?>","<?php echo $data['google_longitud']; ?>"]];	

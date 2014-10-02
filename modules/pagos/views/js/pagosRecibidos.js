@@ -66,7 +66,6 @@ var pagosRecibidos_ = function(){
                 {sTitle: "N° OS", sWidth: "10%"},
                 {sTitle: "Vendedor", sWidth: "25%"},
                 {sTitle: "Fecha", sWidth: "15%",sClass: "center" },
-                {sTitle: "Porcentaje", sWidth: "5%",sClass: "center" },
                 {sTitle: "Comision", sWidth: "10%", sClass: "right"},             
                 {sTitle: "Pagado", sWidth: "10%", sClass: "right"},             
                 {sTitle: "Saldo", sWidth: "10%", sClass: "right"},

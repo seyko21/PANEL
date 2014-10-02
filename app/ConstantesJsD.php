@@ -30,7 +30,8 @@
         CRPG: '<?php echo CRPG; ?>',
         MIPAL: '<?php echo MIPAL; ?>',
         MIINV: '<?php echo MIINV; ?>',
-        LISOC: '<?php echo LISOC; ?>'
+        LISOC: '<?php echo LISOC; ?>',
+        PAINV: '<?php echo PAINV; ?>'
     }
 };
 </script>

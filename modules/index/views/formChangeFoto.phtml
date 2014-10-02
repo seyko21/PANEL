@@ -48,10 +48,15 @@ $doc = $data = Obj::run()->indexModel->getFoto();
             complete: function(data){
                  if (data.xhr != undefined){
                     var json = JSON.parse(data.xhr.responseText);   
+                    var file = "public/files/fotos/"+json.archivo;
                     $('#<?php echo T4; ?>dow').attr('onclick',"window.open('public/files/fotos/"+json.archivo+"','_blank');");
                     $('#<?php echo T4; ?>dow').html(json.archivo); 
                     $('#<?php echo T4; ?>btndow').attr('onclick',"registrarVendedor.deleteAdjuntar(this,'<?php echo Obj::run()->indexModel->_usuario; ?>','public/files/fotos/"+json.archivo+"');");
                     $('#<?php echo T4; ?>btndow').css('display','block');
+                    
+                    //Actualizo Imagen de index:
+                    $('#fotitoUser').attr("src",file);
+                    
                 }
             }
         });

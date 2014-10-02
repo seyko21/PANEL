@@ -12,7 +12,8 @@
         <!--<h1 class="semi-bold"><img src="<?php echo $rutaLayout['_img']; ?>logo.png" alt=""/> Simple ERP</h1>-->
     </div>
     <div>
-        <img src="<?php echo $rutaLayout['_img']; ?>avatars/sunny-big.png" alt="" width="120" height="120" />
+        <?php $data = Obj::run()->indexModel->getFoto()?>
+        <img src="<?php echo BASE_URL; ?>public/files/fotos/<?php echo $data['foto']?>" alt="" width="120" height="120"/>
         <div>
             <h1><i class="fa fa-user fa-3x text-muted air air-top-right hidden-mobile" style="z-index: 0"></i>
                 <?php echo $this->nameUsuario; ?> <small><i class="fa fa-lock text-muted"></i> &nbsp;Bloqueado</small></h1>

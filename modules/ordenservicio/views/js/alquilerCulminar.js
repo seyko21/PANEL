@@ -54,13 +54,14 @@ var alquilerCulminar_ = function(){
             aoColumns: [
                 {sTitle: "Caratula", sWidth: "5%", sClass: "center"},
                 {sTitle: "N° OS", sWidth: "8%", sClass: "center"},
-                {sTitle: "Cliente", sWidth: "40%"},
+                {sTitle: "N° Instalacion", sWidth: "8%", sClass: "center"},
+                {sTitle: "Cliente", sWidth: "35%"},
                 {sTitle: "F. Inicio", sWidth: "10%"},
                 {sTitle: "F. Final", sWidth: "10%" },
                 {sTitle: "Tiempo", sWidth: "15%" },
                 {sTitle: "Oferta", sWidth: "5%" }               
             ],
-            aaSorting: [[3, "asc"]],
+            aaSorting: [[4, "asc"]],
             sScrollY: "300px",
             sAjaxSource: _private.config.modulo+"getGridAlquilerCulminar",
             fnServerParams: function(aoData) {

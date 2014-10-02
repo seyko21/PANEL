@@ -51,7 +51,7 @@ class saldoCobrarController extends Controller{
                 $c8 = number_format($aRow['comision_saldo'],2);
  
                 /*registros a mostrar*/
-                $sOutput .= '["'.($num++).'","'.$c2.'","'.$c3.'","'.$c4.'","'.$c5.'","'.$c6.'","'.$c7.'","'.$c8.'" ';
+                $sOutput .= '["'.($num++).'","'.$c2.'","'.$c3.'","'.$c4.'","'.$c6.'","'.$c7.'","'.$c8.'" ';
 
                 $sOutput .= '],';
 

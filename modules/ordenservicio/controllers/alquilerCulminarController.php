@@ -44,7 +44,8 @@ class alquilerCulminarController extends Controller{
                 $ff = '<span class=\"label label-danger\">'.Functions::cambiaf_a_normal($aRow['fecha_termino']).'</span>'; 
                 $oferta = $aRow['dias_oferta'].'d';
                 /*registros a mostrar*/
-                $sOutput .= '["'.$aRow['codigo'].'","'.$aRow['ordenin_numero'].'","'.$aRow['cliente'].'","'.$fi.'","'.$ff.'","'.Functions::convertirDiaMes($aRow['meses_contrato']).'","'.$oferta.'" ';
+                
+                $sOutput .= '["'.$aRow['codigo'].'","'.$aRow['orden_numero'].'","'.$aRow['ordenin_numero'].'","'.$aRow['cliente'].'","'.$fi.'","'.$ff.'","'.Functions::convertirDiaMes($aRow['meses_contrato']).'","'.$oferta.'" ';
 
                 $sOutput .= '],';
 

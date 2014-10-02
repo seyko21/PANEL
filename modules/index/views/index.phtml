@@ -145,8 +145,14 @@
                 <span id="show-shortcut"> <!-- User image size is adjusted inside CSS, it should stay as it --> 
 
                         <a href="javascript:void(0);">
-                            <?php $data = Obj::run()->indexModel->getFoto()?>
-                            <img id="fotitoUser" src="<?php echo BASE_URL; ?>public/files/fotos/<?php echo $data['foto']?>" alt="me" class="online"/> 
+                            <?php $data = Obj::run()->indexModel->getFoto();                                  
+                                    if( $data['foto'] == '' or $data['foto'] == null){
+                                        $imagen = $rutaLayout["_img"].'avatars/sunny-big.png';
+                                    }else{
+                                        $imagen = BASE_URL.'public/files/fotos/'.$data['foto'];
+                                    }                                    
+                            ?>
+                            <img id="fotitoUser" src="<?php echo $imagen; ?>" alt="me" class="online"/> 
                                 <span id="cont-nameuser" title="<?php echo Session::get('sys_nombreUsuario')?>">
                                         <?php echo Session::get('sys_nombreUsuario')?> 
                                 </span>

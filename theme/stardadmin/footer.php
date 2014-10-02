@@ -116,6 +116,6 @@ Obj::run()->Autoload->js('modules/', true);
             }, 3000);
         });
     }
-//    test();
+   // test();
 </script>
 <?php endif; ?>

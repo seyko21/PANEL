@@ -207,6 +207,6 @@ define('MIPAL_2','Ubicacion geográfica del Panel');
 define('MIINV_1','Mis Inversiones');
 define('MIINV_2','Detalle de Inversion');
 define('LISOC_1','Liquidación de Socio');
-
+define('PAINV_1','Mis Paneles Invertidos');
 
 ?>
