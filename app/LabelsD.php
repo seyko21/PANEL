@@ -208,8 +208,8 @@ define('MIINV_1','Mis Inversiones');
 define('MIINV_2','Detalle de Inversion');
 define('LISOC_1','Liquidación de Socio');
 define('PAINV_1','Mis Paneles Invertidos');
-define('CREINV_1','Retorno de Inversión');
-define('CREINV_2','Listado de Orden de Servicio');
+define('CREIN_1','Retorno de Inversión');
+define('CREIN_2','Listado de Orden de Servicio');
 
 
 ?>
