@@ -54,14 +54,14 @@ var misCuentas_ = function(){
             iDisplayLength: 10,            
             aoColumns: [                
                 {sTitle: "Código", sWidth: "8%"},
-                {sTitle: "Ciudad", sWidth: "13%"},
                 {sTitle: "Ubicación", sWidth: "30%"},
                 {sTitle: "Elemento", sWidth: "12%"},
                 {sTitle: "Area m2", sWidth: "4%",  sClass: "center"},
                 {sTitle: "Precio", sWidth: "8%",  sClass: "right"},                
                 {sTitle: "Iluminado", sWidth: "5%",  sClass: "center"},
                 {sTitle: "Estado", sWidth: "5%",  sClass: "center"},
-                {sTitle: "Imagen", sWidth: "8%",  sClass: "center", bSortable: false}
+                {sTitle: "Imagen", sWidth: "8%",  sClass: "center", bSortable: false},
+                {sTitle: "Acciones", sWidth: "8%", sClass: "center", bSortable: false}
             ],
             aaSorting: [[2, 'asc']],
             sScrollY: "350px",

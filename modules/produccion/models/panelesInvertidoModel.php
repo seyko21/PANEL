@@ -72,8 +72,10 @@ class panelesInvertidoModel extends Model{
                 c.`ubicacion`,
                 c.`google_latitud`,
                 c.`google_longitud`,
-                (select ct.imagen from lgk_caratula ct where ct.id_producto = c.id_producto order by rand() limit 1 ) as imagen
-              FROM `lgk_catalogo` c               
+                (select ct.imagen from lgk_caratula ct where ct.id_producto = c.id_producto order by rand() limit 1 ) as imagen,
+                 ub.distrito as ciudad
+              FROM `lgk_catalogo` c         
+                    inner join ub_ubigeo ub on ub.id_ubigeo = c.id_ubigeo
               WHERE c.`id_producto` = :idProducto ';
        
         $parms = array(

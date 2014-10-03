@@ -18,9 +18,9 @@ class misCuentasController extends Controller{
     }
     
 public function getGridProducto(){
-//       $editar = Session::getPermiso('CATPRED');       
-//       $exportarpdf   = Session::getPermiso('CATPREP');
-//       $exportarexcel = Session::getPermiso('CATPREX'); 
+
+       $consultar   = Session::getPermiso('MISPACC');
+       
        $sEcho          =   $this->post('sEcho');
         
         $rResult = Obj::run()->misCuentasModel->getGridProducto();
@@ -34,6 +34,9 @@ public function getGridProducto(){
             $sOutput .= '"iTotalDisplayRecords": '.$iTotal.', ';
             $sOutput .= '"aaData": [ ';
             foreach ( $rResult as $key=>$aRow ){
+                
+                /*antes de enviar id se encrypta*/
+                $encryptReg = Aes::en($aRow['id_producto']);
                 
                 if($aRow['estado'] == 'D'){
                     $estado = '<span class=\"label label-success\">Disponible</span>';
@@ -52,12 +55,18 @@ public function getGridProducto(){
                 }else{
                     $imagen = '<img src=\"'.BASE_URL.'public/img/sin_foto.jpg\" style=\"width:70px; height:40px;\" />';
                 }
-                /*antes de enviar id se encrypta*/
-                //$encryptReg = Aes::en($aRow['id_caratula']);
-                //$idProd = Aes::en($aRow['id_producto']);
-                                                
+                
+                $axion = '"<div class=\"btn-group\">';
+                 
+                if($consultar['permiso']){
+                    $axion .= '<button type=\"button\" class=\"'.$consultar['theme'].'\" title=\"'.$consultar['accion'].'\" onclick=\"panelesInvertido.getConsulta(this,\''.$encryptReg.'\')\">';
+                    $axion .= '    <i class=\"'.$consultar['icono'].'\"></i>';
+                    $axion .= '</button>';
+                }              
+                $axion .= ' </div>" ';
+                
                 /*datos de manera manual*/
-                $sOutput .= '["'.$aRow['codigo'].'","'.$aRow['distrito'].'","'.$aRow['ubicacion'].'","'.$aRow['elemento'].'","'.$aRow['dimesion_area'].'","'.number_format($aRow['precio'],2).'","'.$iluminado.'","'.$estado.'","'.$imagen.'" ';
+                $sOutput .= '["'.$aRow['codigo'].'","'.$aRow['ubicacion'].'","'.$aRow['elemento'].'","'.$aRow['dimesion_area'].'","'.number_format($aRow['precio'],2).'","'.$iluminado.'","'.$estado.'","'.$imagen.'",'.$axion.' ';
                                                                                           
                 $sOutput = substr_replace( $sOutput, "", -1 );
                 $sOutput .= '],';

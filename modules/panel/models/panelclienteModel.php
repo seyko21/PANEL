@@ -71,9 +71,11 @@ class panelclienteModel extends Model{
                 c.`id_producto`,
                 c.`ubicacion`,
                 c.`google_latitud`,
-                c.`google_longitud`
+                c.`google_longitud`,
+                ub.distrito as ciudad
               FROM `lgk_catalogo` c 
               INNER JOIN lgk_caratula ct ON ct.`id_producto` = c.`id_producto`
+              inner join ub_ubigeo ub on ub.id_ubigeo = c.id_ubigeo
               WHERE ct.`id_caratula` = :idCaratula ';
        
         $parms = array(
