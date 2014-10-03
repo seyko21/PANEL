@@ -64,7 +64,7 @@ var saldoCobrar_ = function(){
             aoColumns: [
                 {sTitle: "N°", sWidth: "5%", bSortable: false},
                 {sTitle: "N° OS", sWidth: "10%"},
-                {sTitle: "Vendedor", sWidth: "30%"},
+                {sTitle: "Beneficiario", sWidth: "30%"},
                 {sTitle: "Fecha", sWidth: "15%",sClass: "center" },
                 {sTitle: "Comision", sWidth: "10%", sClass: "right"},             
                 {sTitle: "Pagado", sWidth: "10%", sClass: "right"},             

@@ -64,7 +64,7 @@ var pagosRecibidos_ = function(){
             aoColumns: [
                 {sTitle: "N°", sWidth: "5%", bSortable: false},
                 {sTitle: "N° OS", sWidth: "10%"},
-                {sTitle: "Vendedor", sWidth: "25%"},
+                {sTitle: "Beneficiario", sWidth: "25%"},
                 {sTitle: "Fecha", sWidth: "15%",sClass: "center" },
                 {sTitle: "Comision", sWidth: "10%", sClass: "right"},             
                 {sTitle: "Pagado", sWidth: "10%", sClass: "right"},             
