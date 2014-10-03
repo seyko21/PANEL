@@ -456,11 +456,15 @@ var configurarMenu_ = function(){
                     });
                 }else if(!isNaN(data.result) && parseInt(data.result) === 2){
                     simpleScript.notify.error({
-                        content: 'Menú ya existe'
+                        content: 'Menu ya existe'
                     });
                 }else if(!isNaN(data.result) && parseInt(data.result) === 3){
                     simpleScript.notify.error({
-                        content: mensajes.MSG_6
+                        content: 'Alias ya existe'
+                    });
+                }else if(!isNaN(data.result) && parseInt(data.result) === 4){
+                    simpleScript.notify.error({
+                        content: 'URL ya existe'
                     });
                 }
             }
@@ -487,11 +491,15 @@ var configurarMenu_ = function(){
                     });
                 }else if(!isNaN(data.result) && parseInt(data.result) === 2){
                     simpleScript.notify.error({
-                        content: 'Menú ya existe'
+                        content: 'Menu ya existe'
                     });
                 }else if(!isNaN(data.result) && parseInt(data.result) === 3){
                     simpleScript.notify.error({
-                        content: mensajes.MSG_6
+                        content: 'Alias ya existe'
+                    });
+                }else if(!isNaN(data.result) && parseInt(data.result) === 4){
+                    simpleScript.notify.error({
+                        content: 'URL ya existe'
                     });
                 }
             }
