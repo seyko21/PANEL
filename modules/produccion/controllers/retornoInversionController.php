@@ -116,7 +116,7 @@ class retornoInversionController extends Controller{
                 $c1 =$aRow['orden_numero'];
                 $c2 =$aRow['codigo'];
                 $c3 =$aRow['fecha'];
-                $c4 =$aRow['cantidad_mes'];
+                $c4 = Functions::convertirDiaMes($aRow['cantidad_mes']);
                 $c5 = number_format($aRow['importe'],2);
                 $c6 = number_format($aRow['impuesto'],2);
                 $c7 = number_format($aRow['monto_total'],2);
