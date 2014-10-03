@@ -32,7 +32,7 @@
         MIINV: '<?php echo MIINV; ?>',
         LISOC: '<?php echo LISOC; ?>',
         PAINV: '<?php echo PAINV; ?>',
-        REINV: '<?php echo REINV; ?>'
+        CREIN: '<?php echo CREIN; ?>'
     }
 };
 </script>

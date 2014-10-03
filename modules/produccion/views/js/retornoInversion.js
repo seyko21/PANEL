@@ -23,7 +23,7 @@ var retornoInversion_ = function(){
     /*crea tab : RetornoInversion*/
     this.publico.main = function(element){
         simpleScript.addTab({
-            id : diccionario.tabs.REINV,
+            id : diccionario.tabs.CREIN,
             label: $(element).attr("title"),
             fnCallback: function(){
                 retornoInversion.getContenido();
@@ -37,7 +37,7 @@ var retornoInversion_ = function(){
             dataType: "html",
             root: _private.config.modulo,
             fnCallback: function(data){
-                $("#"+diccionario.tabs.REINV+"_CONTAINER").html(data);
+                $("#"+diccionario.tabs.CREIN+"_CONTAINER").html(data);
                 retornoInversion.getGridRetornoInversion();
             }
         });
@@ -54,7 +54,7 @@ var retornoInversion_ = function(){
             data: '&_idProducto='+_private.idProducto+'&id_Socio='+_private.idSocio,
             fnCallback: function(data){
                 $('#cont-modal').append(data);  /*los formularios con append*/
-                $('#'+diccionario.tabs.REINV+'formRoiOs').modal('show');
+                $('#'+diccionario.tabs.CREIN+'formRoiOs').modal('show');
                 setTimeout(function(){                    
                     retornoInversion.getGridRoiOS();
                 }, 500);
@@ -65,7 +65,7 @@ var retornoInversion_ = function(){
         
     
     this.publico.getGridRetornoInversion = function (){
-        var oTable = $("#"+diccionario.tabs.REINV+"gridRetornoInversion").dataTable({
+        var oTable = $("#"+diccionario.tabs.CREIN+"gridRetornoInversion").dataTable({
             bProcessing: true,
             bServerSide: true,
             bDestroy: true,
@@ -88,11 +88,11 @@ var retornoInversion_ = function(){
             sScrollY: "300px",
             sAjaxSource: _private.config.modulo+"getGridRetornoInversion",
             fnDrawCallback: function() {
-                $("#"+diccionario.tabs.REINV+"gridRetornoInversion_filter").find("input").attr("placeholder","Buscar por Socio o Codigos o Ubicacion").css("width","300px");
-                simpleScript.enterSearch("#"+diccionario.tabs.REINV+"gridRetornoInversion",oTable);
+                $("#"+diccionario.tabs.CREIN+"gridRetornoInversion_filter").find("input").attr("placeholder","Buscar por Socio o Codigos o Ubicacion").css("width","300px");
+                simpleScript.enterSearch("#"+diccionario.tabs.CREIN+"gridRetornoInversion",oTable);
                 /*para hacer evento invisible*/
                 simpleScript.removeAttr.click({
-                    container: "#widget_"+diccionario.tabs.REINV,
+                    container: "#widget_"+diccionario.tabs.CREIN,
                     typeElement: "button"
                 });
             }
@@ -101,7 +101,7 @@ var retornoInversion_ = function(){
     };     
     
      this.publico.getGridRoiOS = function (){
-         $('#'+diccionario.tabs.REINV+'gridRoiOs').dataTable({
+         $('#'+diccionario.tabs.CREIN+'gridRoiOs').dataTable({
             bProcessing: true,
             bServerSide: true,
             bDestroy: true,

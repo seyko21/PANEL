@@ -40,6 +40,6 @@ define("MIPAL","MIPAL");             /*tab modulo PANELCLIENTE*/
 define("MIINV","MIINV");             /*tab modulo MISINVERSIONES*/
 define("LISOC","LISOC");             /*tab modulo LIQUIDACIONSOCIO*/
 define("PAINV","PAINV");             /*tab modulo PANELESINVERTIDO*/
-define("REINV","REINV");             /*tab modulo RETORNODEINVERSION*/
+define("CREIN","CREIN");             /*tab modulo RETORNODEINVERSION*/
 
 ?>

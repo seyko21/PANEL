@@ -23,7 +23,7 @@ class retornoInversionController extends Controller{
         
     
     public function getGridRetornoInversion(){
-        $consultar   = Session::getPermiso('REINVCC');
+        $consultar   = Session::getPermiso('CREINVCC');
         
         $sEcho          =   $this->post('sEcho');
         
