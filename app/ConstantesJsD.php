@@ -31,7 +31,8 @@
         MIPAL: '<?php echo MIPAL; ?>',
         MIINV: '<?php echo MIINV; ?>',
         LISOC: '<?php echo LISOC; ?>',
-        PAINV: '<?php echo PAINV; ?>'
+        PAINV: '<?php echo PAINV; ?>',
+        REINV: '<?php echo REINV; ?>'
     }
 };
 </script>
