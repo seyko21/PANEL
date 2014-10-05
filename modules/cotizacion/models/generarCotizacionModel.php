@@ -239,13 +239,19 @@ class generarCotizacionModel extends Model{
             $all = "p.usuarioregistro = '".$this->_usuario."'  AND";
         }
         $query = "
+         select t.id_persona, t.nombrecompleto, t.razon_social
+         from (
          SELECT 
                 p.id_persona,
                 p.nombrecompleto,
-                (SELECT pp.nombrecompleto FROM mae_persona pp WHERE pp.id_persona=p.id_personapadre) AS razon_social
+                (SELECT pp.nombrecompleto 
+                FROM mae_persona pp WHERE pp.id_persona=p.id_personapadre) AS razon_social
          FROM mae_persona p
-         WHERE  ".$all." p.id_personapadre <> ''
-         AND p.nombrecompleto LIKE CONCAT('%',:cliente,'%'); ";
+         WHERE  ".$all." p.id_personapadre <> '' ) as t
+         where (
+                   t.nombrecompleto LIKE CONCAT('%',:cliente,'%') or
+                   t.razon_social LIKE CONCAT('%',:cliente,'%') 
+                ); ";
         
         $parms = array(
             ':cliente' => $this->_xSearch,

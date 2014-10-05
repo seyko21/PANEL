@@ -53,7 +53,7 @@ class generarOrdenModel extends Model{
     
     /*data para el grid: GenerarOrden*/
     public function getGenerarOrden(){
-        $aColumns       =   array("","2","4","7","18","5" ); //para la ordenacion y pintado en html
+        $aColumns       =   array("","orden_numero","cotizacion_numero","cliente","fecha","meses_contrato","descuentos","monto_total_descuento","estado" ); //para la ordenacion y pintado en html
         /*
 	 * Ordenando, se verifica por que columna se ordenara
 	 */
@@ -61,10 +61,10 @@ class generarOrdenModel extends Model{
         for ( $i=0 ; $i<intval( $this->_iSortingCols ) ; $i++ ){
                 if ( $this->post( "bSortable_".intval($this->post("iSortCol_".$i)) ) == "true" ){
                         $sOrder .= " ".$aColumns[ intval( $this->post("iSortCol_".$i) ) ]." ".
-                                ($this->post("sSortDir_".$i)==="asc" ? "asc" : "desc") ." ";
+                                ($this->post("sSortDir_".$i)==="asc" ? "asc" : "desc") .",";
                 }
         }
-        
+         $sOrder = substr_replace( $sOrder, "", -1 );
         $query = "call sp_ordseOrdenServicioGrid(:acceso,:usuario,:iDisplayStart,:iDisplayLength,:sOrder,:sSearch);";
         
         $parms = array(

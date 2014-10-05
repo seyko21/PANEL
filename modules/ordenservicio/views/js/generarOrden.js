@@ -54,22 +54,22 @@ var generarOrden_ = function(){
             bPaginate: true,
             iDisplayLength: 10,            
             aoColumns: [
-                {sTitle: "<input type='checkbox' id='"+diccionario.tabs.ORINS+"chk_all' onclick='simpleScript.checkAll(this,\"#"+diccionario.tabs.GNOSE+"gridGenerarOrden\");'>", sWidth: "1%", sClass: "center", bSortable: false},
+                {sTitle: "<input type='checkbox' id='"+diccionario.tabs.GNOSE+"chk_all' onclick='simpleScript.checkAll(this,\"#"+diccionario.tabs.GNOSE+"gridGenerarOrden\");'>", sWidth: "1%", sClass: "center", bSortable: false},
                 {sTitle: "Código", sWidth: "10%",sClass: "center"},
                 {sTitle: "Nro. Cotización", sWidth: "10%",sClass: "center"},
-                {sTitle: "Representante", sWidth: "28%"},                
+                {sTitle: "Cliente", sWidth: "28%"},                
                 {sTitle: "Fecha", sWidth: "8%"},
-                {sTitle: "Tiempo", sWidth: "8%", sClass: "center", bSortable: false},
-                {sTitle: "Descuento", sWidth: "7%", sClass: "right"},
-                {sTitle: "Monto", sWidth: "8%", sClass: "right", bSortable: false},
-                {sTitle: "Estado", sWidth: "8%", sClass: "center", bSortable: false},
+                {sTitle: "Tiempo", sWidth: "8%", sClass: "center"},
+                {sTitle: "Total", sWidth: "8%", sClass: "right"},
+                {sTitle: "Estado", sWidth: "8%", sClass: "center"},
                 {sTitle: "Acciones", sWidth: "13%", sClass: "center", bSortable: false}
             ],
             aaSorting: [[1, "desc"]],
             sScrollY: "300px",
             sAjaxSource: _private.config.modulo+"getGridGenerarOrden",
             fnDrawCallback: function() {
-                $("#"+diccionario.tabs.GNOSE+"gridGenerarOrden_filter").find("input").attr("placeholder","Buscar por código, cotización o representante").css("width","340px");
+                $("#"+diccionario.tabs.GNOSE+"gridGenerarOrden_filter").find("input").attr("placeholder","Buscar por código, cotización o Cliente").css("width","340px");
+                simpleScript.enterSearch("#"+diccionario.tabs.GNOSE+"gridGenerarOrden",oTable);
                 /*para hacer evento invisible*/
                 simpleScript.removeAttr.click({
                     container: "#widget_"+diccionario.tabs.GNOSE,

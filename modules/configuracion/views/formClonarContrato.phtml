@@ -25,7 +25,7 @@ $data = contratoController::findContrato();
                     <div class="col col-10">
                         <label class="input"> 
                             <i class="icon-append fa fa-keyboard-o"></i>
-                            <input type="text" id="<?php echo CONTR; ?>txt_nombre" name="<?php echo CONTR; ?>txt_nombre" value="<?php echo $data['nombre']; ?> " >
+                            <input type="text" id="<?php echo CONTR; ?>txt_nombre" name="<?php echo CONTR; ?>txt_nombre"  >
                             <b class="tooltip tooltip-top-right"><i class="fa fa-keyboard-o txt-color-teal"></i> <?php echo LABEL_A153M; ?></b>
                         </label>
                     </div>
@@ -95,19 +95,29 @@ $data = contratoController::findContrato();
             $('.summernote').summernote({
                     height : 300,
                     focus : true,
-                    tabsize : 2
-            });				
+                    tabsize : 2,
+                    toolbar: [
+                    //[groupname, [button list]]
+                    ['style', ['style','bold', 'italic', 'underline', 'clear']],                    
+                    ['fontsize', ['fontsize']],
+                    ['color', ['color']],
+                    ['para', ['ul', 'ol', 'paragraph']],
+                    ['table', ['table']],
+                    ['height', ['height']],
+                    ['insert', ['picture']],
+                    ['Misc',['codeview']],
+                  ]
+            });					
     };	
         
     var save = function() {
         var aHTML = $( '#'+diccionario.tabs.CONTR+'formClonContrato .summernote').code(); //save HTML If you need(aHTML: array).
-        alert(aHTML);
        //
     }
         
     // end pagefunction	
     // load summernote, and all markdown related plugins
-    loadScript("theme/<?php echo DEFAULT_LAYOUT ?>/js/plugin/summernote/summernote.js", function(){
+    loadScript("theme/<?php echo DEFAULT_LAYOUT ?>/js/plugin/summernote/summernote.min.js", function(){
             loadScript("theme/<?php echo DEFAULT_LAYOUT ?>/js/plugin/markdown/markdown.min.js", function(){
                     //loadScript("theme/<?php echo DEFAULT_LAYOUT ?>js/plugin/markdown/to-markdown.js", function(){
                             loadScript("theme/<?php echo DEFAULT_LAYOUT ?>/js/plugin/markdown/bootstrap-markdown.min.js", pagefunction);
@@ -138,6 +148,5 @@ $data = contratoController::findContrato();
         }   
  });
   
-    $('#<?php echo CONTR; ?>formClonContrato .note-toolbar .note-help').css('display','none');  
         
 </script>

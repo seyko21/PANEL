@@ -55,12 +55,12 @@ var instalacion_ = function(){
             iDisplayLength: 10,            
             aoColumns: [
                 {sTitle: "<input type='checkbox' id='"+diccionario.tabs.ORINS+"chk_all' onclick='simpleScript.checkAll(this,\"#"+diccionario.tabs.ORINS+"gridInstalacion\");'>", sWidth: "1%", sClass: "center", bSortable: false},
-                {sTitle: "Código OI", sWidth: "10%", sClass: "center"},
-                {sTitle: "Código OS", sWidth: "10%", sClass: "center"},
-                {sTitle: "Código Prod.", sWidth: "10%", sClass: "center"},
-                {sTitle: "Producto", sWidth: "25%"},
+                {sTitle: "N° OI", sWidth: "10%", sClass: "center"},
+                {sTitle: "N° OS", sWidth: "10%", sClass: "center"},
+                {sTitle: "Código", sWidth: "10%", sClass: "center"},
+                {sTitle: "Ubicación", sWidth: "25%"},
                 {sTitle: "Fecha", sWidth: "10%", sClass: "center"},
-                {sTitle: "Monto", sWidth: "10%", sClass: "right"},
+                {sTitle: "Total", sWidth: "10%", sClass: "right"},
                 {sTitle: "Estado", sWidth: "8%", sClass: "center", bSortable: false},    
                 {sTitle: "Acciones", sWidth: "10%", sClass: "center", bSortable: false}                
             ],
@@ -68,7 +68,8 @@ var instalacion_ = function(){
             sScrollY: "300px",
             sAjaxSource: _private.config.modulo+"getGridInstalacion",
             fnDrawCallback: function() {
-                $("#"+diccionario.tabs.ORINS+"gridInstalacion_filter").find("input").attr("placeholder","Buscar por OI o OS").css("width","250px");
+                $("#"+diccionario.tabs.ORINS+"gridInstalacion_filter").find("input").attr("placeholder","Buscar por N° OI o N° OS o Codigo o Ubicacion").css("width","400px");
+                 simpleScript.enterSearch("#"+diccionario.tabs.ORINS+"gridInstalacion",oTable);
                 /*para hacer evento invisible*/
                 simpleScript.removeAttr.click({
                     container: "#widget_"+diccionario.tabs.ORINS,

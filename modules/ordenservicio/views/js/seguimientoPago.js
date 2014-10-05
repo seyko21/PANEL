@@ -61,19 +61,19 @@ var seguimientoPago_ = function(){
             iDisplayLength: 10,            
             aoColumns: [
                 {sTitle: "N°", sWidth: "2%",bSortable: false},
-                {sTitle: "Código", sWidth: "10%",sClass: "center"},
+                {sTitle: "N° OS", sWidth: "10%",sClass: "center"},
                 {sTitle: "Cliente", sWidth: "30%"},
                 {sTitle: "Creado por", sWidth: "20%"},
                 {sTitle: "Estado", sWidth: "10%"},
                 {sTitle: "Fecha", sWidth: "10%"},
-                {sTitle: "Monto", sWidth: "10%", sClass: "right", bSortable: false},
+                {sTitle: "Total", sWidth: "10%", sClass: "right", bSortable: false},
                 {sTitle: "Acciones", sWidth: "8%", sClass: "center", bSortable: false}            
             ],
             aaSorting: [[1, "desc"]],
             sScrollY: "300px",
             sAjaxSource: _private.config.modulo+"getGridSeguimientoPago",
             fnDrawCallback: function() {
-                $("#"+diccionario.tabs.SEGPA+"gridSeguimientoPago_filter").find("input").attr("placeholder","Buscar por código o representante").css("width","250px");
+                $("#"+diccionario.tabs.SEGPA+"gridSeguimientoPago_filter").find("input").attr("placeholder","Buscar por N° OS o Cliente").css("width","350px");
                 /*para hacer evento invisible*/
                 simpleScript.removeAttr.click({
                     container: "#widget_"+diccionario.tabs.SEGPA,

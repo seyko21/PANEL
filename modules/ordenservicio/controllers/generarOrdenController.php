@@ -71,7 +71,7 @@ class generarOrdenController extends Controller{
                 }
                 
                 /*registros a mostrar*/
-                $sOutput .= '["'.$chk.'","'.$aRow['orden_numero'].'","'.$aRow['cotizacion_numero'].'","'.$aRow['nombrecompleto'].'","'.$aRow['fecha'].'","'.Functions::convertirDiaMes($aRow['meses_contrato']).'","'.  number_format($aRow['descuentos'],2).'","'.number_format($aRow['monto_total_descuento'],2).'","'.$estado.'",';
+                $sOutput .= '["'.$chk.'","'.$aRow['orden_numero'].'","'.$aRow['cotizacion_numero'].'","'.$aRow['cliente'].' - '.$aRow['nombrecompleto'].'","'.$aRow['fecha'].'","'.Functions::convertirDiaMes($aRow['meses_contrato']).'","'.number_format($aRow['monto_total_descuento'],2).'","'.$estado.'",';
                 
                 /*
                  * configurando botones (add/edit/delete etc)
