@@ -231,12 +231,7 @@ var cronogramaPago_ = function(){
                     }
                 });
             }
-        });
-                
-                
-                
-                
-        
+        }); 
     };
     
     return this.publico;

@@ -31,6 +31,8 @@ define('LABEL_ANT','Anterior');
 define('LABEL_SIG','Siguiente');
 define('LABEL_NRO','Nro.');
 define('LABEL_NOREG','No se encontraron registros');
+define('LABEL_S','Si');
+define('LABEL_N','No');
 
 /*FORMULARIO LOGIN*/
 define('L_TITLE','Ingresar');
@@ -285,4 +287,16 @@ define('CLAV_3','Ingrese su nueva contraseña');
 
 /*----------------------------PERFIL--------------------*/
 define('PERF_1','Mi Perfil');
+
+/*----------------------------PAGOS A VENDEDOR--------------------*/
+define('GPAVE_1','Pagos a Vendedor');
+define('GPAVE_2','Pagar a: ');
+define('GPAVE_3','Serie');
+define('GPAVE_4','Ingrese serie de documento');
+define('GPAVE_5','Número');
+define('GPAVE_6','Ingrese número de documento');
+define('GPAVE_7','Retención?');
+define('GPAVE_8','Monto');
+define('GPAVE_9','Ingrese monto a pagar');
+
 ?>
