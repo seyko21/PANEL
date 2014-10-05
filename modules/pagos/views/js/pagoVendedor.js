@@ -39,7 +39,7 @@ var pagoVendedor_ = function(){
             bProcessing: true,
             bServerSide: true,
             bDestroy: true,
-            sPaginationType: "bootstrap_full", //two_button
+            sPaginationType: "bootstrap_full", //two_button  
             sServerMethod: "POST",
             bPaginate: true,
             iDisplayLength: 10,            
