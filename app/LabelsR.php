@@ -299,4 +299,7 @@ define('GPAVE_7','Retención?');
 define('GPAVE_8','Monto');
 define('GPAVE_9','Ingrese monto a pagar');
 
+/*----------------------------PRODUCCION--------------------*/
+define('REPRO_1','Nueva Producción');
+
 ?>

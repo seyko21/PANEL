@@ -24,12 +24,6 @@ echo Functions::widgetOpen(array(
                     <i class="<?php echo $nuevo['icono'];?>"></i> <?php echo $nuevo['accion'];?>
                 </button>
                 <?php endif; ?>
-                <!-- verificar permisos -->
-                <?php if($eliminar["permiso"]): ?>
-                <button id="<?php echo REPRO; ?>btnDeleteRegProduccion" type="button" onclick="regProduccion.postDeleteRegProduccionAll(this);" class="<?php echo $eliminar['theme'];?>">
-                    <i class="<?php echo $eliminar['icono'];?>"></i> <?php echo $eliminar['accion'];?>
-                </button>
-                <?php endif; ?>
             </div>
         </div>
 

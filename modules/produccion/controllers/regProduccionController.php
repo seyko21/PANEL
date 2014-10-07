@@ -81,14 +81,52 @@ class regProduccionController extends Controller{
         echo $sOutput;
     }
     
+    public function getProductos(){
+        $tab = $this->post('_tab');
+        $sEcho          =   $this->post('sEcho');
+        
+        $rResult = Obj::run()->regProduccionModel->getProductos();
+        
+        if(!isset($rResult['error'])){  
+            $iTotal         = isset($rResult[0]['total'])?$rResult[0]['total']:0;
+            
+            $sOutput = '{';
+            $sOutput .= '"sEcho": '.intval($sEcho).', ';
+            $sOutput .= '"iTotalRecords": '.$iTotal.', ';
+            $sOutput .= '"iTotalDisplayRecords": '.$iTotal.', ';
+            $sOutput .= '"aaData": [ ';
+            foreach ( $rResult as $key=>$aRow ){
+                /*antes de enviar id se encrypta*/
+                $encryptReg = Aes::en($aRow['id_producto']);
+                
+                $nom = '<a href=\"javascript:;\" onclick=\"simpleScript.setInput({'.$tab.'txt_idproducto:\''.$encryptReg.'\', '.$tab.'txt_producto:\''.$aRow['ubicacion'].'\'},\'#'.REPRO.'formBuscarProducto\');\" >'.$aRow['ubicacion'].'</a>';
+                
+                /*datos de manera manual*/
+                $sOutput .= '["'.(++$key).'","'.$nom.'" ';
+
+                $sOutput .= '],';
+            }
+            $sOutput = substr_replace( $sOutput, "", -1 );
+            $sOutput .= '] }';
+        }else{
+            $sOutput = $rResult['error'];
+        }
+        
+        echo $sOutput;
+    }
+    
     /*carga formulario (newRegProduccion.phtml) para nuevo registro: RegProduccion*/
-    public function getFormNewRegProduccion(){
+    public function getFormNewProduccion(){
         Obj::run()->View->render("formNewRegProduccion");
     }
     
     /*carga formulario (editRegProduccion.phtml) para editar registro: RegProduccion*/
     public function getFormEditRegProduccion(){
         Obj::run()->View->render("formEditRegProduccion");
+    }
+    
+    public function getFormBuscarProducto(){
+        Obj::run()->View->render("formBuscarProducto");
     }
     
     /*envia datos para grabar registro: RegProduccion*/

@@ -12,7 +12,9 @@ class regProduccionModel extends Model{
     private $_flag;
     private $_idRegProduccion;
     private $_usuario;
-    
+    private $_term;
+
+
     /*para el grid*/
     private $_iDisplayStart;
     private $_iDisplayLength;
@@ -28,7 +30,7 @@ class regProduccionModel extends Model{
         $this->_flag                    = Formulario::getParam("_flag");
         $this->_idRegProduccion   = Aes::de(Formulario::getParam("_idRegProduccion"));    /*se decifra*/
         $this->_usuario                 = Session::get("sys_idUsuario");
-        
+        $this->_term  =   Formulario::getParam("_term"); 
         $this->_iDisplayStart  =   Formulario::getParam("iDisplayStart"); 
         $this->_iDisplayLength =   Formulario::getParam("iDisplayLength"); 
         $this->_iSortingCols   =   Formulario::getParam("iSortingCols");
@@ -60,6 +62,20 @@ class regProduccionModel extends Model{
         
         return $data; 
        
+    }
+    
+    public function getProductos(){
+        $query = "
+        SELECT 
+                c.`id_producto`,
+                c.`ubicacion`
+        FROM lgk_catalogo c
+        WHERE c.`ubicacion` LIKE CONCAT('%".$this->_term."%')
+        AND c.`id_producto` NOT IN(SELECT id_producto FROM `prod_produccionpanel`); ";
+        
+        $parms = array();
+        $data = $this->queryAll($query,$parms);
+        return $data;
     }
     
 }

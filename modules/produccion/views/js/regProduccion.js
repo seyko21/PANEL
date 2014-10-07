@@ -12,6 +12,8 @@ var regProduccion_ = function(){
     
     _private.idRegProduccion = 0;
     
+    _private.tab = '';
+    
     _private.config = {
         modulo: "produccion/regProduccion/"
     };
@@ -78,14 +80,66 @@ var regProduccion_ = function(){
         
     };
     
+    this.publico.getProductos = function(){
+        $('#'+diccionario.tabs.REPRO+'gridProductosFound').dataTable({
+            bProcessing: true,
+            bServerSide: true,
+            bDestroy: true,
+            bFilter: false, 
+            bInfo: false,
+            sServerMethod: "POST",
+            bPaginate: false,
+            aoColumns: [
+                {sTitle: "Nro.", sClass: "center",sWidth: "2%",  bSortable: false},
+                {sTitle: "Descripción", sWidth: "40%",  bSortable: false}
+            ],
+            aaSorting: [[1, 'asc']],
+            sScrollY: "250px",
+            sAjaxSource: _private.config.modulo+'getProductos',
+            fnServerParams: function(aoData) {
+                aoData.push({"name": diccionario.tabs.REPRO+"_term", "value": $('#'+diccionario.tabs.REPRO+'txt_search').val()});
+                aoData.push({"name": "_tab", "value": _private.tab});
+            },
+            fnDrawCallback: function() {
+                $('#'+diccionario.tabs.REPRO+'gridProductosFound_wrapper').find('.dataTables_scrollBody').css('overflow-x','hidden');
+                /*para hacer evento invisible*/
+                simpleScript.removeAttr.click({
+                    container: '#'+diccionario.tabs.REPRO+'gridProductosFound',
+                    typeElement: 'a'
+                });
+            }
+        });
+    };
+    
     this.publico.getFormNewRegProduccion = function(btn){
+        simpleScript.addTab({
+            id : diccionario.tabs.REPRO+'new',
+            label: 'Nueva Producción',
+            fnCallback: function(){
+                regProduccion.getContProd();
+            }
+        });
+    };
+    
+    this.publico.getContProd = function(){
+        simpleAjax.send({
+            dataType: 'html',
+            root: _private.config.modulo+'getFormNewProduccion',
+            fnCallback: function(data){
+                $('#'+diccionario.tabs.REPRO+'new_CONTAINER').html(data);
+            }
+        });
+    };
+    
+    this.publico.getFormBuscarProducto = function(btn,tab){
+        _private.tab = tab;
         simpleAjax.send({
             element: btn,
-            dataType: "html",
-            root: _private.config.modulo + "getFormNewRegProduccion",
+            dataType: 'html',
+            root: _private.config.modulo + 'getFormBuscarProducto',
             fnCallback: function(data){
-                $("#cont-modal").append(data);  /*los formularios con append*/
-                $("#"+diccionario.tabs.REPRO+"formNewRegProduccion").modal("show");
+                $('#cont-modal').append(data);  /*los formularios con append*/
+                $('#'+diccionario.tabs.REPRO+'formBuscarProducto').modal('show');
             }
         });
     };
