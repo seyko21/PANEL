@@ -81,7 +81,7 @@ echo Functions::widgetOpen(array(
                     <br><br>
                     <div style="padding: 10px">
                         <div class="si-access" style="min-height: 200px; max-height: auto;">
-                            <table id="<?php echo REPRO; ?>gridConceptos" class="table table-bordered table-striped table-condensed table-hover smart-form has-tickbox">
+                            <table id="<?php echo ORINS; ?>gridConceptos" class="table table-bordered table-striped table-condensed table-hover smart-form has-tickbox">
                                 <thead>
                                     <th style="width:59%"><?php echo ORINS_13?></th>
                                     <th style="width:10%"><?php echo ORINS_17?></th>
@@ -96,7 +96,7 @@ echo Functions::widgetOpen(array(
                         <div class="form-group" style="margin-top:5px">
                             <div class="col-md-2 pull-right">
                                 <div class="input">
-                                    <input class="form-control right" type="text" id="<?php echo REPRO; ?>txt_total" name="<?php echo REPRO; ?>txt_total" readonly>
+                                    <input class="form-control right" type="text" id="<?php echo ORINS; ?>txt_total" name="<?php echo ORINS; ?>txt_total" readonly>
                                 </div>
                             </div>
                             <label class="control-label col-md-2 pull-right" for="prepend"><?php echo LABEL_T; ?></label>
@@ -121,7 +121,7 @@ echo Functions::widgetOpen(array(
                     </div>
                     
                     <h4 class="text-center">
-                        <button id="<?php echo REPRO; ?>btnGinst" type="button" class="btn btn-success btn-large" onclick="instalacion.postNewInstalacion();">    
+                        <button id="<?php echo REPRO; ?>btnGrprod" type="button" class="btn btn-success btn-large" onclick="regProduccion.postNewRegProduccion();">    
                             <i class="fa fa-plus-circle fa-lg"></i>
                             <?php echo ORINS_19; ?>
                         </button>
@@ -215,7 +215,7 @@ echo Functions::widgetOpen(array(
                     }
                     if(index === 2){
                         var r = simpleScript.validaTable({
-                            id: '#'+diccionario.tabs.REPRO+'gridConceptos',
+                            id: '#'+diccionario.tabs.ORINS+'gridConceptos',
                             msn: mensajes.MSG_10
                         });
                         if(r === false){

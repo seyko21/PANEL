@@ -40,6 +40,10 @@ class regProduccionController extends Controller{
                 $encryptReg = Aes::en($aRow['id_produccion']);
                 
                 $chk = '<input id=\"c_'.(++$key).'\" type=\"checkbox\" name=\"'.REPRO.'chk_delete[]\" value=\"'.$encryptReg.'\">';
+                if($aRow['total_saldo'] > 0){
+                    $chk = '<input id=\"c_'.(++$key).'\" type=\"checkbox\" name=\"'.REPRO.'chk_delete[]\" disabled>';
+                }
+                
                 
                 /*datos de manera manual*/
                 $sOutput .= '["'.$chk.'","'.$aRow['distrito'].'","'.  Functions::cambiaf_a_normal($aRow['fecha']).'","'.$aRow['ubicacion'].'","'.$aRow['elemento'].'","'.number_format($aRow['total_produccion'],2).'","'.number_format($aRow['total_asignado'],2).'","'.number_format($aRow['total_saldo'],2).'", ';
@@ -56,12 +60,12 @@ class regProduccionController extends Controller{
                     $sOutput .= '</button>';
                 }   
                 if($exportarpdf['permiso'] == 1){
-                    $sOutput .= '<button type=\"button\" class=\"'.$exportarpdf['theme'].'\" title=\"'.$exportarpdf['accion'].'\" onclick=\"fichaTecnica.postPDF(this,\''.$encryptReg.'\')\">';
+                    $sOutput .= '<button type=\"button\" class=\"'.$exportarpdf['theme'].'\" title=\"'.$exportarpdf['accion'].'\" onclick=\"regProduccion.postPDF(this,\''.$encryptReg.'\')\">';
                     $sOutput .= '    <i class=\"'.$exportarpdf['icono'].'\"></i>';
                     $sOutput .= '</button>';
                 }
                 if($exportarexcel['permiso'] == 1){
-                    $sOutput .= '<button type=\"button\" class=\"'.$exportarexcel['theme'].'\" title=\"'.$exportarexcel['accion'].'\" onclick=\"fichaTecnica.postExcel(this,\''.$encryptReg.'\')\">';
+                    $sOutput .= '<button type=\"button\" class=\"'.$exportarexcel['theme'].'\" title=\"'.$exportarexcel['accion'].'\" onclick=\"regProduccion.postExcel(this,\''.$encryptReg.'\')\">';
                     $sOutput .= '    <i class=\"'.$exportarexcel['icono'].'\"></i>';
                     $sOutput .= '</button>';
                 }
@@ -129,6 +133,102 @@ class regProduccionController extends Controller{
         Obj::run()->View->render("formBuscarProducto");
     }
     
+    public function postPDF(){
+        $c = 'produccion_'.Obj::run()->regProduccionModel->_idProduccion.'.pdf';
+        
+        $ar = ROOT.'public'.DS.'files'.DS.$c;
+               
+        $mpdf = new mPDF('c');
+
+        $mpdf->SetHTMLHeader('<img src="'.ROOT.'public'.DS.'img'.DS.'logotipo.png" width="137" height="68" />','',TRUE);
+        $mpdf->SetHTMLFooter('<table width="100%" style="vertical-align: bottom; font-family: serif; font-size: 8pt; color: #000000; font-weight: bold;"><tr>
+                                <td width="33%"><span style="font-weight: bold;">{DATE j-m-Y}</span></td>
+                                <td width="33%" align="center" style="font-weight: bold;">{PAGENO}/{nbpg}</td>
+                                <td width="33%" style="text-align: right; ">SEVEND.pe</td>
+                             </tr></table>');
+                
+        $html = $this->getHtmlProduccion();         
+
+        $mpdf->WriteHTML($html);
+        $mpdf->Output($ar,'F');
+        
+        $data = array('result'=>1,'archivo'=>$c);
+        echo json_encode($data);
+        
+    }
+    
+    public function postExcel(){
+        $c = 'producction_'.Obj::run()->regProduccionModel->_idProduccion.'.xls';
+        
+        $ar = ROOT.'public'.DS.'files'.DS.$c;
+        
+        $html = $this->getHtmlProduccion();
+        
+        $f=fopen($ar,'wb');
+        if(!$f){$data = array('result'=>2);}
+        fwrite($f,  utf8_decode($html));
+        fclose($f);
+                        
+        $data = array('result'=>1,'archivo'=>$c);
+        echo json_encode($data);
+    }
+    
+    private function getHtmlProduccion(){
+        $data = Obj::run()->regProduccionModel->getProduccion();
+        $html ='
+        <style>           
+           table,h3,h4{font-family:Arial;} 
+           table, table td, table th, p {font-size:12px;}
+           table{width:100%;}
+           #td2 th, .totales{background:#901D78; color:#FFF; height:25px;}
+           #td2 td{font-size:11px;height:25px;}
+           #anulado{            
+            font-size:30px; font-family:verdana; color:#F00;  }
+        </style>';
+        
+        $html .='<table width="100%" border="0" cellpadding="5" cellspacing="3">
+          <tr bgcolor="#901D78">
+            <th colspan="6"><div align="center"><h2 style="color:#FFF;">PRODUCCIÓN</h2></div></th>
+          </tr>
+          <tr>
+            <td width="16%"><strong>N° Producción:</strong></td>
+            <td width="26%"><h3>'.$data[0]['numero_produccion'].'</h3></td>
+            <td width="15%"></td>
+            <td width="15%"></td>
+            <td width="20%"><strong>Fecha:</strong></td>
+            <td width="15%">'.$data[0]['fecha'].'</td>
+          </tr>
+          <tr>
+            <td><strong>Producto:</strong></td>
+            <td colspan="5">'.$data[0]['ubicacion'].'</td>
+          </tr>
+        </table> 
+        <br />
+        <table id="td2" border="1" style="border-collapse:collapse">
+            <tr>
+                <th style="width:40%">Concepto</th>
+                <th style="width:8%">Cantidad</th>
+                <th style="width:7%">Precio</th>
+                <th style="width:12%">Total</th>
+            </tr>';
+        foreach ($data as $value) {
+            $html .= '<tr>
+                <td>'.$value['concepto'].'</td>
+                <td style="text-align:center">'.number_format($value['cantidad']).'</td>
+                <td style="text-align:center">'.number_format($value['precio'],2).'</td>
+                <td style="text-align:right">S/.'.number_format($value['costo_importe'],2).'</td>
+            </tr>';
+        }    
+        $html .= '<tr><td colspan="3"></td><td class="totales" style="text-align:right; font-weight:bold;">S/.'.number_format($data[0]['total_produccion'],2).'</td></tr>';
+        
+        $html .='</table>';
+        
+        if ($data[0]['observacion']!= '' ):
+            $html .= '<p>- '.$data[0]['observacion'].'</p>';
+        endif;        
+        return $html;
+    }
+    
     /*envia datos para grabar registro: RegProduccion*/
     public function postNewRegProduccion(){
         $data = Obj::run()->regProduccionModel->newRegProduccion();
@@ -144,8 +244,8 @@ class regProduccionController extends Controller{
     }
     
     /*envia datos para eliminar registro: RegProduccion*/
-    public function postDeleteRegProduccionAll(){
-        $data = Obj::run()->regProduccionModel->deleteRegProduccionAll();
+    public function postAnularRegProduccionAll(){
+        $data = Obj::run()->regProduccionModel->anularRegProduccionAll();
         
         echo json_encode($data);
     }

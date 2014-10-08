@@ -54,7 +54,7 @@ var regProduccion_ = function(){
             bPaginate: true,
             iDisplayLength: 10,            
             aoColumns: [
-                {sTitle: "<input type='checkbox' id='"+diccionario.tabs.REPRO+"chk_all' onclick='simpleScript.checkAll(this,\"#"+diccionario.tabs.REPRO+"gridFichaTecnica\");'>", sWidth: "1%", sClass: "center", bSortable: false},                
+                {sTitle: "<input type='checkbox' id='"+diccionario.tabs.REPRO+"chk_all' onclick='simpleScript.checkAll(this,\"#"+diccionario.tabs.REPRO+"gridRegProduccion\");'>", sWidth: "1%", sClass: "center", bSortable: false},                
                 {sTitle: "Ciudad", sWidth: "15%"},
                 {sTitle: "Fecha", sWidth: "10%",  sClass: "center"},
                 {sTitle: "Ubicación", sWidth: "25%"},
@@ -112,6 +112,7 @@ var regProduccion_ = function(){
     };
     
     this.publico.getFormNewRegProduccion = function(btn){
+        instalacionScript.resetArrayConcepto();
         simpleScript.addTab({
             id : diccionario.tabs.REPRO+'new',
             label: 'Nueva Producción',
@@ -145,10 +146,61 @@ var regProduccion_ = function(){
     };
     
     this.publico.postNewRegProduccion = function(){
-        /*-----LOGICA PARA ENVIO DE FORMULARIO-----*/
+        simpleAjax.send({
+            element: "#"+diccionario.tabs.REPRO+"btnGrprod",
+            root: _private.config.modulo + "postNewRegProduccion",
+            form: "#"+diccionario.tabs.REPRO+"formNewRegProduccion",
+            clear: true,
+            fnCallback: function(data) {
+                if(!isNaN(data.result) && parseInt(data.result) === 1){
+                    simpleScript.notify.ok({
+                        content: mensajes.MSG_3,
+                        callback: function(){
+                            simpleScript.closeTab(diccionario.tabs.REPRO+'new');
+                            regProduccion.getGridRegProduccion();
+                        }
+                    });
+                }
+            }
+        });
     };
     
-    this.publico.postDeleteRegProduccionAll = function(btn){
+    this.publico.postPDF = function(btn,id){
+        simpleAjax.send({
+            element: btn,
+            root: _private.config.modulo + 'postPDF',
+            data: '&_idProduccion='+id,
+            fnCallback: function(data) {
+                if(parseInt(data.result) === 1){
+                    $('#'+diccionario.tabs.REPRO+'btnDowPDF').off('click');
+                    $('#'+diccionario.tabs.REPRO+'btnDowPDF').attr("onclick","window.open('public/files/"+data.archivo+"','_blank');generarCotizacion.deleteArchivo('"+data.archivo+"');");
+                    $('#'+diccionario.tabs.REPRO+'btnDowPDF').click();
+                }
+            }
+        });
+    };
+    
+    this.publico.postExcel = function(btn,id){
+        simpleAjax.send({
+            element: btn,
+            root: _private.config.modulo + 'postExcel',
+            data: '&_idProduccion='+id,
+            fnCallback: function(data) {
+                if(parseInt(data.result) === 1){
+                    $('#'+diccionario.tabs.REPRO+'btnDowExcel').off('click');
+                    $('#'+diccionario.tabs.REPRO+'btnDowExcel').attr("onclick","window.open('public/files/"+data.archivo+"','_self');generarCotizacion.deleteArchivo('"+data.archivo+"');");
+                    $('#'+diccionario.tabs.REPRO+'btnDowExcel').click();
+                }
+                if(!isNaN(data.result) && parseInt(data.result) === 2){
+                    simpleScript.notify.error({
+                        content: 'Ocurrió un error al exportar cotización.'
+                    });
+                }
+            }
+        });
+    };
+    
+    this.publico.postAnularRegProduccionAll = function(btn){
         simpleScript.validaCheckBox({
             id: "#"+diccionario.tabs.REPRO+"gridRegProduccion",
             msn: mensajes.MSG_9,
@@ -157,10 +209,9 @@ var regProduccion_ = function(){
                     content: mensajes.MSG_7,
                     callbackSI: function(){
                         simpleAjax.send({
-                            flag: 3, //si se usa SP usar flag, sino se puede eliminar esta linea
                             element: btn,
                             form: "#"+diccionario.tabs.REPRO+"formGridRegProduccion",
-                            root: _private.config.modulo + "postDeleteRegProduccionAll",
+                            root: _private.config.modulo + "postAnularRegProduccionAll",
                             fnCallback: function(data) {
                                 if(!isNaN(data.result) && parseInt(data.result) === 1){
                                     simpleScript.notify.ok({

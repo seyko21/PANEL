@@ -10,9 +10,17 @@
 class regProduccionModel extends Model{
 
     private $_flag;
-    private $_idRegProduccion;
+    public  $_idProduccion;
     private $_usuario;
     private $_term;
+    private $_fecha;
+    private $_idProducto;
+    private $_montoTotal;
+    private $_observacion;
+    private $_idConcepto;
+    private $_cantidad;
+    private $_precio ;
+    private $_chkdel;
 
 
     /*para el grid*/
@@ -28,9 +36,18 @@ class regProduccionModel extends Model{
     
     private function _set(){
         $this->_flag                    = Formulario::getParam("_flag");
-        $this->_idRegProduccion   = Aes::de(Formulario::getParam("_idRegProduccion"));    /*se decifra*/
+        $this->_idProduccion   = Aes::de(Formulario::getParam("_idProduccion"));    /*se decifra*/
         $this->_usuario                 = Session::get("sys_idUsuario");
         $this->_term  =   Formulario::getParam("_term"); 
+        $this->_chkdel  = $this->post(REPRO.'chk_delete');
+        $this->_fecha     = Functions::cambiaf_a_mysql(Formulario::getParam(REPRO."txt_fechains"));
+        $this->_idProducto     = AesCtr::de(Formulario::getParam(REPRO."txt_idproducto"));
+        $this->_montoTotal     = Functions::deleteComa(Formulario::getParam(ORINS."txt_total"));
+        $this->_observacion     = Formulario::getParam(REPRO."txt_obs");
+        $this->_idConcepto     = Formulario::getParam(ORINS."hhddIdConcepto"); #array
+        $this->_cantidad     = Formulario::getParam(ORINS."txt_cantidad");#array
+        $this->_precio     = Formulario::getParam(ORINS."txt_precio");#array
+        
         $this->_iDisplayStart  =   Formulario::getParam("iDisplayStart"); 
         $this->_iDisplayLength =   Formulario::getParam("iDisplayLength"); 
         $this->_iSortingCols   =   Formulario::getParam("iSortingCols");
@@ -75,6 +92,95 @@ class regProduccionModel extends Model{
         
         $parms = array();
         $data = $this->queryAll($query,$parms);
+        return $data;
+    }
+    
+    public function newRegProduccion(){
+        $query = "CALL sp_prodProduccionMantenimiento("
+                . ":flag,"
+                . ":idProduccion,"
+                . ":fecha,"
+                . ":idProducto,"
+                . ":montoTotal,"
+                . ":obs,"
+                . ":idConcepto,"
+                . ":cantidad,"
+                . ":precio,"
+                . ":usuario"
+            . "); ";
+        
+        $parms = array(
+            ':flag'=> 1,
+            ':idProduccion'=>'',
+            ':fecha'=> $this->_fecha,
+            ':idProducto'=> $this->_idProducto,
+            ':montoTotal'=> $this->_montoTotal,
+            ':obs'=> $this->_observacion,
+            ':idConcepto'=> '',
+            ':cantidad'=> '',
+            ':precio'=> '',
+            ':usuario'=> $this->_usuario
+        );
+        $data = $this->queryOne($query,$parms);
+        
+        $idProduccion = $data['idProduccion'];
+        
+        if($data['result'] == '1'){
+            /*detalle de produccion*/
+            foreach ($this->_idConcepto as $key=>$idConcepto) {
+                $parmsx = array(
+                    ':flag'=> 2,
+                    ':idProduccion'=>$idProduccion,
+                    ':fecha'=> $this->_fecha,
+                    ':idProducto'=> '',
+                    ':montoTotal'=> '',
+                    ':obs'=> '',
+                    ':idConcepto'=> AesCtr::de($idConcepto),
+                    ':cantidad'=> Functions::deleteComa($this->_cantidad[$key]),
+                    ':precio'=> Functions::deleteComa($this->_precio[$key]),
+                    ':usuario'=> $this->_usuario
+                );
+                $this->execute($query,$parmsx);
+            }
+        }
+        $datax = array('result'=>1);
+        return $datax;
+    }
+    
+    public function getProduccion(){
+        $query = "
+        SELECT 
+                p.`numero_produccion`,
+                DATE_FORMAT(p.`fecha`,'%d-%m-%Y')AS fecha,
+                p.`observacion`,
+                pd.`precio`,
+                pd.`cantidad`,
+                pd.`costo_importe`,
+                c.`descripcion` AS concepto,
+                ct.`ubicacion`,
+                p.`total_produccion`
+        FROM `prod_produccionpaneld` pd
+        INNER JOIN `prod_produccionpanel` p ON p.`id_produccion`=pd.`id_producion`
+        INNER JOIN pub_concepto c ON c.`id_concepto`=pd.`id_concepto`
+        INNER JOIN lgk_catalogo ct ON ct.`id_producto`=p.`id_producto`
+        WHERE pd.`id_producion`=:idProduccion; ";
+        
+        $parms = array(
+            ':idProduccion'=>  $this->_idProduccion
+        );
+        $data = $this->queryAll($query,$parms);
+        return $data;
+    }
+    
+    public function anularRegProduccionAll(){
+        foreach ($this->_chkdel as $value) {
+            $query = "UPDATE prod_produccionpanel SET estado = '0' WHERE id_produccion = :idProduccion; ";
+            $parms = array(
+                ':idProduccion' => AesCtr::de($value)
+            );
+            $this->execute($query,$parms);
+        }
+        $data = array('result'=>1);
         return $data;
     }
     
