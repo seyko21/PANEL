@@ -1,0 +1,60 @@
+<?php
+$grabar = Session::getPermiso('REPROGR');
+$doc = $data = Obj::run()->regProduccionModel->getImagen();
+
+$produccion = Formulario::getParam('_idProduccion');
+?>
+<div id="<?php echo REPRO; ?>formImagen" name="<?php echo REPRO; ?>formImagen" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close"  aria-hidden="true">
+                    &times;
+                </button>
+                <h4 class="modal-title"><?php echo LABEL_RV25; ?></h4>
+            </div>
+            <div class="modal-body smart-form">
+                <form class="dropzone" id="<?php echo REPRO; ?>mydropzone" name="<?php echo REPRO; ?>mydropzone">
+                    <input type="hidden" id="_idProduccion" name="_idProduccion" value="<?php echo $produccion; ?>">
+                </form>
+                <a id="<?php echo REPRO; ?>dow" href="javascript:;" onclick="window.open('<?php echo 'public/img/produccion/'.$doc['imagen']; ?>','_blank');"><?php echo $doc['imagen'];?></a>
+            </div>
+            <div class="modal-footer">
+               <button type="button" class="<?php echo THEME_CLOSE; ?>">
+                    <i class="<?php echo ICON_CLOSE; ?>"></i> <?php echo BTN_CLOSE; ?> 
+                </button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+
+    <!-- si no tiene permiso se anula submit desde cualquier input -->
+    <?php if (!$grabar['permiso']): ?>
+        <script>
+            simpleScript.noSubmit('#<?php echo REPRO; ?>formImagen');
+        </script>
+    <?php endif; ?>
+    <script>
+        Dropzone.autoDiscover = false;
+        $("#<?php echo REPRO; ?>mydropzone").dropzone({
+            acceptedFiles: ".png, .jpg",
+            url: '<?php echo BASE_URL; ?>produccion/regProduccion/subirImagen',
+            maxFiles: 1, // Number of files at a time
+            maxFilesize: 10, //in MB
+            addRemoveLinks: true,
+            dictResponseError: 'Error uploading file!',
+            dictDefaultMessage: 'Arrastre aquí una imagen',
+             maxfilesexceeded: function(f){
+                 simpleScript.notify.error({
+                        content: 'Usted ha subido más de 1 imagen. Sólo el primer archivo se cargará!'
+                 });
+            },
+            complete: function(data){
+                 if (data.xhr != undefined){
+                    var json = JSON.parse(data.xhr.responseText);   
+                    $('#<?php echo REPRO; ?>dow').attr('onclick',"window.open('public/img/produccion/"+json.archivo+"','_blank');");
+                    $('#<?php echo REPRO; ?>dow').html(json.archivo); 
+                }
+            }
+        });
+    </script>
+</div>

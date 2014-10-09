@@ -109,9 +109,26 @@ class regProduccionModel extends Model{
                 . ":usuario"
             . "); ";
         
+        /*si flag == 2, se elimina detalle para editar*/
+        if($this->_flag == 3){
+            $parms = array(
+                ':flag'=> 3,
+                ':idProduccion'=> $this->_idProduccion,
+                ':fecha'=> '',
+                ':idProducto'=> '',
+                ':montoTotal'=> '',
+                ':obs'=> '',
+                ':idConcepto'=> '',
+                ':cantidad'=> '',
+                ':precio'=> '',
+                ':usuario'=> $this->_usuario
+            );
+            $data = $this->execute($query,$parms);
+        }
+        
         $parms = array(
             ':flag'=> 1,
-            ':idProduccion'=>'',
+            ':idProduccion'=> $this->_idProduccion,
             ':fecha'=> $this->_fecha,
             ':idProducto'=> $this->_idProducto,
             ':montoTotal'=> $this->_montoTotal,
@@ -180,6 +197,73 @@ class regProduccionModel extends Model{
             );
             $this->execute($query,$parms);
         }
+        $data = array('result'=>1);
+        return $data;
+    }
+    
+    public function findProduccion(){
+        $query = "
+        SELECT
+                p.`id_produccion`,
+                p.`id_producto`,
+                c.`ubicacion`,
+                DATE_FORMAT(p.`fecha`,'%d-%m-%Y')AS fecha,
+                p.`observacion`
+        FROM `prod_produccionpanel` p
+        INNER JOIN lgk_catalogo c ON c.`id_producto`=p.`id_producto`
+        WHERE p.`id_produccion`=:idProduccion; ";
+        
+        $parms = array(
+            ':idProduccion'=>  $this->_idProduccion
+        );
+        $data = $this->queryOne($query,$parms);
+        return $data;
+    }
+    
+    public function getConceptos(){
+        $query = "
+        SELECT
+                pd.`id_concepto`,
+                c.`descripcion` AS concepto,
+                pd.`precio`,
+                pd.`cantidad`,
+                pd.`costo_importe`
+        FROM `prod_produccionpaneld` pd
+        INNER JOIN pub_concepto c ON c.`id_concepto`=pd.`id_concepto`
+        WHERE pd.`id_producion` = :idProduccion; ";
+        
+        $parms = array(
+            ':idProduccion'=>  $this->_idProduccion
+        );
+        $data = $this->queryAll($query,$parms);
+        return $data;
+    }
+    
+    public function getImagen(){
+        $query = "
+        SELECT
+                imagen
+        FROM `prod_produccionpanel` 
+        WHERE `id_produccion` = :idProduccion; ";
+        
+        $parms = array(
+            ':idProduccion'=>  $this->_idProduccion
+        );
+        $data = $this->queryOne($query,$parms);
+        return $data;
+    }
+    
+    public function subirImagen($img){
+        $query = "
+        UPDATE prod_produccionpanel SET
+                imagen = :img
+        WHERE `id_produccion` = :idProduccion; ";
+        
+        $parms = array(
+            ':idProduccion'=>  $this->_idProduccion,
+            ':img'=>  $img
+        );
+        $this->execute($query,$parms);
         $data = array('result'=>1);
         return $data;
     }

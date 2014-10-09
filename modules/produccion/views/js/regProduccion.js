@@ -10,7 +10,7 @@ var regProduccion_ = function(){
     /*metodos privados*/
     var _private = {};
     
-    _private.idRegProduccion = 0;
+    _private.idProduccion = 0;
     
     _private.tab = '';
     
@@ -57,12 +57,12 @@ var regProduccion_ = function(){
                 {sTitle: "<input type='checkbox' id='"+diccionario.tabs.REPRO+"chk_all' onclick='simpleScript.checkAll(this,\"#"+diccionario.tabs.REPRO+"gridRegProduccion\");'>", sWidth: "1%", sClass: "center", bSortable: false},                
                 {sTitle: "Ciudad", sWidth: "15%"},
                 {sTitle: "Fecha", sWidth: "10%",  sClass: "center"},
-                {sTitle: "Ubicación", sWidth: "25%"},
+                {sTitle: "Ubicación", sWidth: "20%"},
                 {sTitle: "Elemento", sWidth: "10%"},                                
                 {sTitle: "Total", sWidth: "10%",  sClass: "right"},
                 {sTitle: "Asignado", sWidth: "10%",  sClass: "right"},
                 {sTitle: "Saldo", sWidth: "10%",  sClass: "right"},
-                {sTitle: "Acciones", sWidth: "15%", sClass: "center", bSortable: false}
+                {sTitle: "Acciones", sWidth: "20%", sClass: "center", bSortable: false}
             ],
             aaSorting: [[2, 'asc']],
             sScrollY: "350px",
@@ -132,6 +132,44 @@ var regProduccion_ = function(){
         });
     };
     
+    this.publico.getFormEditarProduccion = function(btn,id){
+        _private.idProduccion = id;
+        
+        instalacionScript.resetArrayConcepto();
+        simpleScript.addTab({
+            id : diccionario.tabs.REPRO+'edit',
+            label: 'Editar Producción',
+            fnCallback: function(){
+                regProduccion.getContEditProd();
+            }
+        });
+    };
+    
+    this.publico.getContEditProd = function(){
+        simpleAjax.send({
+            dataType: 'html',
+            root: _private.config.modulo+'getFormEditProduccion',
+            data: '&_idProduccion='+_private.idProduccion,
+            fnCallback: function(data){
+                $('#'+diccionario.tabs.REPRO+'edit_CONTAINER').html(data);
+            }
+        });
+    };
+    
+    this.publico.getFormImagen = function(btn,id){
+        simpleAjax.send({
+            element: btn,
+            dataType: 'html',
+            gifProcess: true,
+            data: '&_idProduccion='+id,
+            root: _private.config.modulo + 'getFormImagen',
+            fnCallback: function(data){
+                $('#cont-modal').append(data);
+                $('#'+diccionario.tabs.REPRO+'formImagen').modal('show');
+            }
+        });
+    };
+    
     this.publico.getFormBuscarProducto = function(btn,tab){
         _private.tab = tab;
         simpleAjax.send({
@@ -145,11 +183,12 @@ var regProduccion_ = function(){
         });
     };
     
-    this.publico.postNewRegProduccion = function(){
+    this.publico.postNewRegProduccion = function(f){
         simpleAjax.send({
             element: "#"+diccionario.tabs.REPRO+"btnGrprod",
             root: _private.config.modulo + "postNewRegProduccion",
             form: "#"+diccionario.tabs.REPRO+"formNewRegProduccion",
+            data: '&_flag='+f+'&_idProduccion='+_private.idProduccion,
             clear: true,
             fnCallback: function(data) {
                 if(!isNaN(data.result) && parseInt(data.result) === 1){
@@ -157,7 +196,9 @@ var regProduccion_ = function(){
                         content: mensajes.MSG_3,
                         callback: function(){
                             simpleScript.closeTab(diccionario.tabs.REPRO+'new');
+                            simpleScript.closeTab(diccionario.tabs.REPRO+'edit');
                             regProduccion.getGridRegProduccion();
+                            _private.idProduccion = 0;
                         }
                     });
                 }
