@@ -90,11 +90,11 @@ var liquidacionCliente_ = function(){
         setup_widgets_desktop();
     };
     
-    this.publico.postPDF = function(btn,idd){
+    this.publico.postPDF = function(btn,idd,os){
         simpleAjax.send({
             element: btn,
             root: _private.config.modulo + 'postPDF',
-            data: '&_idOrden='+idd,
+            data: '&_idOrden='+idd+'&_numOrden='+os,
             fnCallback: function(data) {
                 if(parseInt(data.result) === 1){
                     $('#'+diccionario.tabs.LICL+'btnDowPDF').attr("onclick","window.open('public/files/"+data.archivo+"','_blank');compromisoPagar.deleteArchivo('"+data.archivo+"');");

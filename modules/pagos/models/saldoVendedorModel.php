@@ -131,8 +131,8 @@ class saldoVendedorModel extends Model{
             (SELECT valor FROM `pub_parametro`  WHERE alias = 'IR' ) as impuesto_ir
         FROM `tes_boleta` tb
            INNER JOIN `lgk_comisionvendedor` cv ON cv.`id_comision` = tb.`id_comision`
-           INNER JOIN mae_persona pp ON pp.`id_persona` = tb.`id_persona` 
-        WHERE tb.`id_comision` = :idd";
+           INNER JOIN mae_persona pp ON pp.`id_persona` = cv.`id_persona` 
+        WHERE tb.`id_boleta` = :idd";
         
         $parms = array(
             ':idd' => $this->_idBoleta

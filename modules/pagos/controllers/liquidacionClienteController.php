@@ -63,7 +63,7 @@ class liquidacionClienteController extends Controller{
                 
                 /*antes de enviar id se encrypta*/
                 $encryptReg = Aes::en($aRow['id_ordenservicio']);
-                
+                $numOrden = Aes::en($aRow['orden_numero']);
                 /*
                  * configurando botones (add/edit/delete etc)
                  * se verifica si tiene permisos para editar
@@ -71,7 +71,7 @@ class liquidacionClienteController extends Controller{
                 $axion = '"<div class=\"btn-group\">';
                  
                 if($exportarpdf['permiso']){
-                    $axion .= '<button type=\"button\" class=\"'.$exportarpdf['theme'].'\" title=\"'.$exportarpdf['accion'].'\" onclick=\"liquidacionCliente.postPDF(this,\'' . $encryptReg . '\')\"> ';
+                    $axion .= '<button type=\"button\" class=\"'.$exportarpdf['theme'].'\" title=\"'.$exportarpdf['accion'].'\" onclick=\"liquidacionCliente.postPDF(this,\'' . $encryptReg . '\',\'' . $numOrden . '\')\"> ';
                     $axion .= '    <i class=\"'.$exportarpdf['icono'].'\"></i>';
                     $axion .= '</button>';
                 }
@@ -96,11 +96,11 @@ class liquidacionClienteController extends Controller{
     
     public function postPDF($n=''){
          
-        $c = 'liquidacion_'.Obj::run()->liquidacionClienteModel->_idOrden.'.pdf';
+        $c = 'liquidacion_'.Obj::run()->liquidacionClienteModel->_numOrden.'.pdf';
         
         $ar = ROOT.'public'.DS.'files'.DS.$c;
                
-        $mpdf = new mPDF('c', 'A4-L');
+        $mpdf = new mPDF('c');
         
         $mpdf->SetHTMLHeader('<img src="'.ROOT.'public'.DS.'img'.DS.'logotipo.png" width="137" height="68" />','',TRUE);
         $mpdf->SetHTMLFooter('<table width="100%" style="vertical-align: bottom; font-family: serif; font-size: 8pt; color: #000000; font-weight: bold;"><tr>
@@ -109,7 +109,7 @@ class liquidacionClienteController extends Controller{
                                 <td width="33%" style="text-align: right; ">SEVEND.pe</td>
                              </tr></table>');
                 
-       // $html = $this->getHtmlLiquidacion();         
+        $html = $this->getHtmlLiquidacion();         
 
         $mpdf->WriteHTML($html);
         $mpdf->Output($ar,'F');
@@ -121,7 +121,8 @@ class liquidacionClienteController extends Controller{
     }       
         
     public function getHtmlLiquidacion(){
-        $data = Obj::run()->saldoVendedorModel->getBoleta();
+       $data = Obj::run()->liquidacionClienteModel->getDetalleOrden();
+       $dataC = Obj::run()->liquidacionClienteModel->getDetalleCronograma();
         
       $html ='
         <style>           
@@ -129,63 +130,130 @@ class liquidacionClienteController extends Controller{
            table, table td, table th, p {font-size:12px;}
            table{width:100%;}
            #td2 th, .totales{color:#FFF;background:#901D78; height:25px; font-size:12px;}
-           #td2 td{font-size:11px;height:25px;}           
+           #td2 td{font-size:10px;height:25px;}           
         </style>';
-        
-        switch($data['estado']){
-            case 'R': $estado = 'Pagado'; break;
+      
+       switch($data[0]['estado']){
+            case 'E': $estado = 'Emitido'; break;
+            case 'P': $estado = 'Pago parcial'; break;
+            case 'T': $estado = 'Pago total'; break;
+            case 'F': $estado = 'Finalizado'; break;
             case 'A': $estado = 'Anulado'; break;
         }
-         $nl = new numerosALetras();
-         $td = $nl->convertir($data['monto_neto']);
-                
+                        
         $html .='<table width="100%" border="0" cellpadding="5" cellspacing="3">
           <tr bgcolor="#901D78">
-            <th colspan="6"><div align="center"><h2 style="color:#FFF;">Boleta de pago</h2></div></th>
+            <th colspan="6"><div align="center"><h2 style="color:#FFF;">Liquidacion de Venta </h2></div></th>
           </tr>
            <tr>
-           <td width="13%"><h3><strong>N°:</strong></h3></td>
-            <td width="26%">'.$data['boleta_numero'].'</td>
-            <td width="8%"><strong>Estado :</strong></td>
-            <td width="15%">'.$estado.'</td>
-            <td width="15%"><strong>Fecha :</strong></td>
-            <td width="15%;text-align:left" >'.$data['fecha'].'</td>
+           <td width="13%"><h3><strong>N° OS:</strong></h3></td>
+            <td width="26%">'.$data[0]['orden_numero'].'</td>            
+            <td style ="width: 8%;text-align:right" ><strong>Fecha :</strong></td>
+            <td style ="width:15%;text-align:left" >'.$data[0]['fecha'].'</td>
+            <td style ="width:15%;text-align:right" ><strong>Estado :</strong></td>
+            <td style ="width:15%;text-align:left">'.$estado.'</td>                
           </tr>
           <tr>
-            <td><strong>Beneficiario:</strong></td>
-            <td colspan="5">'.($data['ruc']==''?'':$data['ruc'].' - ').$data['benefactor'].'</td>            
-          </tr>   
+            <td><strong>Cliente:</strong></td>
+            <td colspan="5">'.($data[0]['ruc']==''?'':$data[0]['ruc'].' - ').$data[0]['cliente'].'</td>            
+          </tr>
+          <tr>      
+            <td><strong>Representante:</strong></td>
+            <td colspan="5">'.($data[0]['dni']==''?'':$data[0]['dni'].' - ').$data[0]['representante'].'</td>
+          </tr>
           <tr>
             <td><strong>Dirección:</strong></td>
-            <td colspan="5">'.$data['direccion'].'</td>            
-          </tr>   
-          <tr>
-            <td><strong>N° Documento:</strong></td>
-            <td>'.$data['recibo_numero'].'</td>
-            <td><strong>N° Serie:</strong></td>
-            <td>'.$data['recibo_serie'].'</td>
-            <td><strong>Exonerado:</strong></td>
-            <td>'.$data['exonerado'].'</td>
-          </tr>        
-          <tr>
-            <td><strong>Pago recibido:</strong></td>
-            <td colspan="5">'.$td.'</td>            
-          </tr>   
+            <td colspan="5">'.$data[0]['direccion'].'</td>            
+          </tr> 
+           <tr>
+           <td width="13%"><strong>Tiempo :</strong></td>
+            <td width="26%">'.Functions::convertirDiaMes($data[0]['cantidad_mes']).'</td>
+            <td width="8%"><strong>Oferta :</strong></td>
+            <td width="15%">'.$data[0]['dias_oferta'].' días</td>
+         
+          </tr>
+        
         </table> ';
         
-         $html .= '<h2>Detalle de Pago</h2><table id="td2" border="1" style="border-collapse:collapse">            
+         $html .= '<h3>Detalle del Servicio</h3> 
+        <table id="td2" border="1" style="border-collapse:collapse">
             <tr>
-                <th style="width:25%;" >Total Honorario</th>
-                <th style="width:25%;" >Retencion ('.number_format($data['impuesto_ir']*100).'%) IR</th>
-                <th style="width:25%;" >Total Neto</th>
-            </tr>
+                <th style="width:5%" >Item</th>                
+                <th style="width:9%" >Código</th>
+                <th style="width:10%">Elemento</th>
+                <th style="width:40%">Ubicación</th>
+                <th style="width:10%">Instalado</th>
+                <th style="width:10%">Retiro</th>
+                <th style="width:12%">Alquiler</th>
+                <th style="width:12%">Producción</th>
+                <th style="width:12%">Total</th>
+                
+            </tr>';
+        // Listado del servicio 
+        foreach ($data as $value) {
+            
+            if($value['incluyeigv'] == '1'){
+                $icl = 'Si';
+                $precio = number_format($value['precio_incigv'] * $value['cantidad_mes'] ,3);
+                $produccion = number_format($value['produccion_incigv'],3);
+                $importe = number_format($value['importe_incigv'],3);
+            }else{
+                $icl = 'No';
+                $precio = number_format($value['precio'] * $value['cantidad_mes'],2);
+                $produccion = number_format($value['costo_produccion'],2);
+                $importe = number_format($value['importe'],2);
+            }  
+
+            $html .= '<tr>
+                <td style="text-align:center">'.$value['item'].'</td>
+                <td style="text-align:center">'.$value['codigo'].'</td>
+                <td>'.$value['elemento'].'</td>
+                <td>'.$value['producto'].' - '.number_format($value['dimension_ancho'],1).' x '.number_format($value['dimension_alto'],1).' mts'.'</td>
+                <td style="text-align:center">'.$value['fecha_inicio'].'</td>
+                <td style="text-align:center">'.$value['fecha_termino'].'</td>
+                <td style="text-align:right">S/.'.$precio.'</td>
+                <td style="text-align:right">S/.'.$produccion.'</td>
+                <td style="text-align:right">S/.'.$importe.'</td>                
+            </tr>';
+        }    
+        $html .= '<tr><td colspan="7"></td><td>Importe:</td><td style="text-align:right">S/.'.number_format($data[0]['monto_venta'],2).'</td></tr>';
+        $html .= '<tr><td colspan="7"></td><td>IGV '.(number_format($data[0]['porcentaje_impuesto']*100)).'%:</td><td style="text-align:right">S/.'.number_format($data[0]['monto_impuesto'],2).'</td></tr>';
+        $html .= '<tr><td colspan="8"></td><td class="totales" style="text-align:right; font-weight:bold;">S/.'.number_format($data[0]['total'],2).'</td></tr>';
+        
+        $html .='</table>';
+        
+        // Listado de Cronograma de Pagos
+        $html .= '<h3>Cronograma de Pago</h3> 
+        <table id="td2" border="1" style="border-collapse:collapse">
             <tr>
-                <td align="right">S/.'.number_format($data['monto_total'],2).'</td>
-                <td align="right">S/.'.number_format($data['monto_retencion'],2).'</td>
-                <td align="right">S/.'.number_format($data['monto_neto'],2).'</td>
-            </tr>
-            </table>';
-                    
+                <th style="width:10%">N° Cuota</th>                
+                <th style="width:12%">F. Programada</th>
+                <th style="width:12%">F. Pagado</th>
+                <th style="width:10%">Mora</th>
+                <th style="width:15%">Monto</th>
+                <th style="width:10%">Estado</th>
+                <th style="width:20%">Observación</th>                                
+            </tr>';
+        // Listado del servicio 
+        foreach ($dataC as $value) {
+             switch($value['estado']){
+                case 'E': $est = 'Emitido'; break;
+                case 'P': $est = 'Pagado'; break;
+              
+             }
+            $html .= '<tr>
+                <td style="text-align:center">'.$value['numero_cuota'].'</td>
+                <td style="text-align:center">'.$value['fecha_programada'].'</td>            
+                <td style="text-align:center">'.$value['fecha_pagoreal'].'</td>
+                <td style="text-align:right">S/.'.number_format($value['costo_mora'],2).'</td>
+                <td style="text-align:right">S/.'.number_format($value['monto_pago'],2).'</td> 
+                <td style="text-align:center">'.$est.'</td>
+                <td style="text-align:center">'.$value['observacion'].'</td>
+            </tr>';
+        }    
+        
+        
+        $html .='</table>';
         return $html;
     }    
     

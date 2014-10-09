@@ -10,7 +10,8 @@
 class liquidacionClienteModel extends Model{
 
     private $_flag;
-    public $_idOrden;
+    private $_idOrden;
+    public  $_numOrden;
     private $_f1;
     private $_f2;
     private $_usuario;
@@ -30,6 +31,8 @@ class liquidacionClienteModel extends Model{
     private function _set(){
         $this->_flag        = Formulario::getParam("_flag");
         $this->_idOrden   = Aes::de(Formulario::getParam("_idOrden"));    /*se decifra*/
+        $this->_numOrden   = Aes::de(Formulario::getParam("_numOrden"));    /*se decifra*/        
+        
         $this->_usuario     = Session::get("sys_idUsuario");
         
         $this->_f1    = Functions::cambiaf_a_mysql(Formulario::getParam("_f1"));
@@ -73,9 +76,56 @@ class liquidacionClienteModel extends Model{
         return $data;
     }
     
-    public function getRptOS(){
-        $query = '  '
-                . '   ';
+    public function getDetalleOrden(){
+        $query = 'SELECT
+                os.`orden_numero`,os.`estado`, DATE_FORMAT(os.`fecha_contrato`, "%d/%m/%Y") AS fecha,
+                os.`incluyeigv`, tp.`descripcion` AS elemento,ct.`dimension_alto`, ct.`dimension_ancho`, ct.`dimesion_area`,
+                osd.`item`, ca.`codigo`,CONCAT(ct.`ubicacion`," - ", ca.`descripcion` ) AS producto,
+                p.`nombrecompleto` AS representante, p.`numerodocumento` AS dni,
+                (SELECT pp.`direccion` FROM `mae_persona` pp WHERE pp.id_persona = p.`id_personapadre` ) AS direccion,
+                (SELECT pp.`nombrecompleto` FROM `mae_persona` pp WHERE pp.id_persona = p.`id_personapadre` ) AS cliente,
+                (SELECT pp.`numerodocumento` FROM `mae_persona` pp WHERE pp.id_persona = p.`id_personapadre` ) AS ruc,
+                osd.`cantidad_mes`, os.`dias_oferta`,
+                osd.`precio`,osd.`costo_produccion`,osd.`importe`,
+                DATE_FORMAT(osd.`fecha_inicio`, "%d/%m/%Y") AS fecha_inicio,
+                DATE_FORMAT(osd.`fecha_termino`, "%d/%m/%Y") AS fecha_termino,                
+                osd.`precio_incigv`,osd.`produccion_incigv`, osd.`importe_incigv`,osd.`porcentaje_igv`,
+                osd.`impuesto`, osd.`monto_total`,  os.`porcentaje_impuesto`,
+                os.`monto_venta`,os.`monto_impuesto`,os.`monto_total` as total,os.`descuentos`,os.`monto_total_descuento`,
+                (SELECT SUM(`monto_pago`) FROM `lgk_compromisopago` cp 
+                WHERE cp.`id_ordenservicio` = os.`id_ordenservicio` AND cp.`estado` = "E" ) AS deuda,
+                (SELECT SUM(`monto_pago`) FROM `lgk_compromisopago` cp 
+                WHERE cp.`id_ordenservicio` = os.`id_ordenservicio` AND cp.`estado` = "P" ) AS pagado
+              FROM `lgk_ordenserviciod` osd
+                INNER JOIN `lgk_ordenservicio` os ON osd.`id_ordenservicio` = os.`id_ordenservicio`
+                INNER JOIN `lgk_caratula` ca ON ca.`id_caratula` = osd.`id_caratula`
+                INNER JOIN `lgk_catalogo` ct ON ct.`id_producto` = ca.`id_producto`
+                INNER JOIN `lgk_tipopanel` tp ON tp.`id_tipopanel` = ct.`id_tipopanel`
+                INNER JOIN `mae_persona` p ON p.`id_persona` = os.`id_persona`
+              WHERE osd.`id_ordenservicio` = :idOS  ';
+        
+        $parms = array(
+          ":idOS" => $this->_idOrden
+        );
+        
+        $data = $this->queryAll($query, $parms);
+        return $data;
+    }
+    
+    
+     public function getDetalleCronograma(){
+        $query = 'SELECT
+                cp.`numero_cuota`,
+                cp.`monto_pago`,
+                cp.`costo_mora`,                
+                DATE_FORMAT(cp.`fecha_programada`, "%d/%m/%Y") as fecha_programada,
+                DATE_FORMAT(cp.`fecha_pagoreal`, "%d/%m/%Y") as fecha_pagoreal,                
+                cp.`estado`,
+                cp.`observacion`,
+                cp.`id_ordenservicio` 
+              FROM `lgk_compromisopago` cp
+              WHERE cp.`estado`NOT IN("R") AND cp.id_ordenservicio = :idOS 
+              order by 1 ';
         
         $parms = array(
           ":idOS" => $this->_idOrden
