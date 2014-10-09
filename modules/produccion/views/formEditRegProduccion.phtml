@@ -1,0 +1,291 @@
+<?php 
+/*prefijo: ORINS debe ser alias en tabla men_menuprincipal*/
+$grabar = Session::getPermiso('REPROGR');
+$agregar = Session::getPermiso('REPROAG');
+$buscar = Session::getPermiso('REPROBS');
+
+echo Functions::widgetOpen(array(
+    'id' => REPRO.'_EDIT',
+    'title' => REPRO_1,
+    'padding' => true,
+    'wizard' => true
+));
+
+$datap = Obj::run()->regProduccionController->findProduccion();
+
+$datac = Obj::run()->regProduccionController->getConceptos();
+
+?>
+<div class="row">
+    <form id="<?php echo REPRO; ?>formNewRegProduccion" name="<?php echo REPRO; ?>formNewRegProduccion" novalidate="novalidate">
+        <div id="<?php echo REPRO; ?>bootstrap-wizard-1" class="col-sm-12">
+            <div class="form-bootstrapWizard">
+                <ul class="bootstrapWizard form-wizard">
+                    <li class="active" data-target="#step1">
+                        <a href="#<?php echo REPRO; ?>tab1" data-toggle="tab"> <span class="step">1</span> <span class="title"><?php echo ORINS_4?></span> </a>
+                    </li>
+                    <li data-target="#step2">
+                        <a href="#<?php echo REPRO; ?>tab2" data-toggle="tab"> <span class="step">2</span> <span class="title"><?php echo ORINS_5?></span> </a>
+                    </li>
+                    <li data-target="#step3">
+                        <a href="#<?php echo REPRO; ?>tab3" data-toggle="tab"> <span class="step">3</span> <span class="title"><?php echo ORINS_6?></span> </a>
+                    </li>
+                </ul>
+                <div class="clearfix"></div>
+            </div>
+            
+            <!--INI TAB-CONTENT-->
+            <div class="tab-content">
+                
+                
+                <!--INICIO TAB1-->
+                <div class="tab-pane active form-horizontal" id="<?php echo REPRO; ?>tab1">
+                    <br><br>
+                    <h3><strong><?php echo LABEL_GNC19; ?></strong> - <?php echo ORINS_4; ?></h3>
+
+                    <div class="form-group">
+                        <label class="control-label col-md-2" for="prepend"><?php echo ORINS_7; ?></label>
+                        <div class="col-md-9">
+                            <div class="input-group input-group-sm">
+                                <input type="hidden" id="<?php echo REPRO; ?>txt_idproducto" name="<?php echo REPRO; ?>txt_idproducto" value="<?php echo AesCtr::en($datap['id_producto'])?>">
+                                <input class="form-control" type="text" id="<?php echo REPRO; ?>txt_producto" name="<?php echo REPRO; ?>txt_producto" readonly placeholder="<?php echo ORINS_8?>" value="<?php echo $datap['ubicacion']?>">
+                                <span class="input-group-btn">
+                                    <?php if ($buscar['permiso']): ?>
+                                        <button class="btn btn-default disabled" type="button"><i class="fa fa-search"></i> <?php echo BTN_SEARCH?></button>
+                                    <?php endif; ?>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-2" for="prepend"><?php echo ORINS_11; ?></label>
+                        <div class="col-md-2">
+                            <div class="input-group">
+                                <input class="form-control"  type="text" id="<?php echo REPRO; ?>txt_fechains" name="<?php echo REPRO; ?>txt_fechains" value="<?php echo $datap['fecha']?>">
+                            </div>
+                        </div>
+                                               
+                    </div>
+                </div>
+                <!--FIN TAB1-->
+                
+                <!--INICIO TAB2-->
+                <div class="tab-pane" id="<?php echo REPRO; ?>tab2">
+                    <br>
+                    <h3><strong><?php echo LABEL_GNC21; ?></strong> - <?php echo ORINS_5; ?></h3>
+
+                    <div class="form-group">
+                        <label class="control-label col-md-2" for="prepend">
+                            <?php if($agregar['permiso']):?>
+                            <button id="<?php echo REPRO; ?>btnGadd" type="button" class="btn txt-color-white bg-color-blueDark" onclick="instalacion.getFormBuscarConceptos(this,'<?php echo REPRO; ?>');">
+                                <i class="fa fa-plus-circle"></i> <?php echo BTN_ADD; ?>
+                            </button>
+                            <?php endif; ?>
+                        </label>
+                    </div>
+                    <br><br>
+                    <div style="padding: 10px">
+                        <div class="si-access" style="min-height: 200px; max-height: auto;">
+                            <table id="<?php echo ORINS; ?>gridConceptos" class="table table-bordered table-striped table-condensed table-hover smart-form has-tickbox">
+                                <thead>
+                                    <th style="width:59%"><?php echo ORINS_13?></th>
+                                    <th style="width:10%"><?php echo ORINS_17?></th>
+                                    <th style="width:10%"><?php echo ORINS_15?></th>
+                                    <th style="width:10%"><?php echo ORINS_18?></th>
+                                    <th style="width:1%">...</th>
+                                </thead>
+                                <tbody>
+                                    <?php 
+                                        $key = 0;
+                                        foreach ($datac as $value):
+                                            $key++;
+                                    ?>
+                                    <tr id="<?php echo ORINS?>tr_<?php echo $value['id_concepto']?>">
+                                        <td>
+                                            <input type="hidden" id="<?php echo ORINS.$key?>hhddIdConcepto" name="<?php echo ORINS?>hhddIdConcepto[]" value="<?php echo AesCtr::en($value['id_concepto'])?>">
+                                            <?php echo $value['concepto']?>
+                                        </td>
+                                        <td>
+                                            <label class="input"><input type="text" id="<?php echo ORINS.$key?>txt_cantidad" name="<?php echo ORINS?>txt_cantidad[]" value="<?php echo number_format($value['cantidad'])?>" style="text-align:right" data-index="<?php echo $key?>"></label>
+                                        </td>
+                                        <td class="right">
+                                            <label class="input"><input type="text" id="<?php echo ORINS.$key?>txt_precio" name="<?php echo ORINS?>txt_precio[]" value="<?php echo number_format($value['precio'],2)?>" data-value="<?php echo $value['precio']?>" data-index="<?php echo $key?>" style="text-align:right"></label>
+                                        </td>
+                                        <td class="right">
+                                            <?php echo number_format($value['costo_importe'],2)?>
+                                        </td>
+                                        <td>
+                                            <button type="button" class="btn btn-danger btn-xs" onclick="instalacionScript.removeCaratula('<?php echo AesCtr::en($value['id_concepto'])?>');"><i class="fa fa-trash-o"></i></a>
+                                        </td>
+                                    </tr>
+                                    <?php endforeach; ?>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="form-group" style="margin-top:5px">
+                            <div class="col-md-2 pull-right">
+                                <div class="input">
+                                    <input class="form-control right" type="text" id="<?php echo ORINS; ?>txt_total" name="<?php echo ORINS; ?>txt_total" readonly>
+                                </div>
+                            </div>
+                            <label class="control-label col-md-2 pull-right" for="prepend"><?php echo LABEL_T; ?></label>
+                        </div>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+                <!--FIN TAB2-->
+                
+                <!--INICIO TAB3-->
+                <div class="tab-pane form-horizontal" id="<?php echo REPRO; ?>tab3">
+                    <br>
+                    <h3><strong><?php echo LABEL_GNC23; ?></strong><?php echo LABEL_GNC24; ?></h3>
+                    
+                    <div class="form-group">
+                        <label class="control-label col-md-2" for="prepend"><?php echo LABEL_GNC25; ?></label>
+                        <div class="col-md-9">
+                            <div class="textarea">
+                                <textarea class="form-control" id="<?php echo REPRO; ?>txt_obs" name="<?php echo REPRO; ?>txt_obs"><?php echo $datap['observacion']?></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <h4 class="text-center">
+                        <button id="<?php echo REPRO; ?>btnGrprod" type="button" class="btn btn-success btn-large" onclick="regProduccion.postNewRegProduccion(3);">    
+                            <i class="fa fa-plus-circle fa-lg"></i>
+                            <?php echo ORINS_19; ?>
+                        </button>
+                    </h4>
+                    <br>
+                    <br>
+                </div>
+                <!--FIN TAB3-->
+                
+                <div class="form-actions">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <ul class="pager wizard no-margin no-border">
+                                <!--<li class="previous first disabled">
+                                <a href="javascript:void(0);" class="btn btn-lg btn-default"> First </a>
+                                </li>-->
+                                <li class="previous disabled">
+                                    <a href="javascript:void(0);" class="btn btn-lg btn-default"> <?php echo LABEL_ANT?> </a>
+                                </li>
+                                <!--<li class="next last">
+                                <a href="javascript:void(0);" class="btn btn-lg btn-primary"> Last </a>
+                                </li>-->
+                                <li class="next">
+                                    <a href="javascript:void(0);" class="btn btn-lg txt-color-darken"> <?php echo LABEL_SIG?> </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
+                
+            </div>
+            <!--FIN TAB-CONTENT-->
+            
+        </div>
+<script>
+        simpleScript.setEvent.date({
+            element: '#<?php echo REPRO; ?>txt_fechains' 
+        });
+        
+            var $validator = $("#<?php echo REPRO; ?>formNewRegProduccion").validate({
+                rules: {
+                    <?php echo REPRO; ?>txt_caratula: {
+                        required: true
+                    },        
+                    <?php echo REPRO; ?>txt_fechains: {
+                        required: true,
+                        date: true
+                    }      
+                },
+                highlight: function(element) {
+                    $(element).closest('.form-group').removeClass('has-success').addClass('has-error');
+                },
+                unhighlight: function(element) {
+                    $(element).closest('.form-group').removeClass('has-error').addClass('has-success');
+                },
+                errorElement: 'span',
+                errorClass: 'help-block',
+                errorPlacement: function(error, element) {
+                    if (element.parent('.input-group').length) {
+                        error.insertAfter(element.parent());
+                    } else {
+                        error.insertAfter(element);
+                    }
+                }
+            });
+            
+            var baseItemSelector = 'li:has([data-toggle="tab"])';
+            
+            $('#<?php echo REPRO; ?>bootstrap-wizard-1').bootstrapWizard({
+                tabClass: 'form-wizard',
+                onTabClick: function(tab, navigation, index) {
+                    //desactivar tabs
+                    return false;
+                },
+                onTabChange: function(tab, navigation, index) {
+                    
+                },
+                onNext: function(tab, navigation, index) {
+                    var $valid = $("#<?php echo REPRO; ?>formNewRegProduccion").valid();
+                    if(index === 1){
+                        if (!$valid) {
+                            $validator.focusInvalid();
+                            return false;
+                        }
+                        /*marca el paso como completado*/
+                        $('#<?php echo REPRO; ?>bootstrap-wizard-1').find('.form-wizard').children('li').eq(index - 1).addClass(
+                                'complete');
+                        $('#<?php echo REPRO; ?>bootstrap-wizard-1').find('.form-wizard').children('li').eq(index - 1).find('.step')
+                                .html('<i class="fa fa-check"></i>');
+                    }
+                    if(index === 2){
+                        var r = simpleScript.validaTable({
+                            id: '#'+diccionario.tabs.ORINS+'gridConceptos',
+                            msn: mensajes.MSG_10
+                        });
+                        if(r === false){
+                            return false;
+                        }else{
+                            /*marca el paso como completado*/
+                            $('#<?php echo REPRO; ?>bootstrap-wizard-1').find('.form-wizard').children('li').eq(index - 1).addClass(
+                                    'complete');
+                            $('#<?php echo REPRO; ?>bootstrap-wizard-1').find('.form-wizard').children('li').eq(index - 1).find('.step')
+                                    .html('<i class="fa fa-check"></i>');
+                        }
+                    }
+                    
+                }
+            });
+            
+            var wizard = $('.wizard').wizard();
+
+            wizard.on('finished', function(e, data) {
+                //$("#fuelux-wizard").submit();
+                //console.log("submitted!");
+                $.smallBox({
+                    title: "Congratulations! Your form was submitted",
+                    content: "<i class='fa fa-clock-o'></i> <i>1 seconds ago...</i>",
+                    color: "#5F895F",
+                    iconSmall: "fa fa-check bounce animated",
+                    timeout: 4000
+                });
+            });
+            /*para hacer evento invisible*/
+            simpleScript.removeAttr.click({
+                container: '#<?php echo REPRO; ?>formNewRegProduccion',
+                typeElement: 'button'
+            });
+            simpleScript.removeAttr.keyup({
+                container: '#<?php echo REPRO; ?>formNewRegProduccion',
+                typeElement: 'input'
+            });
+            
+            instalacionScript.calculoTotal();
+            instalacionScript.calculoTotalFilaUp();
+</script>
+    </form>
+</div>

@@ -22,6 +22,8 @@ class regProduccionController extends Controller{
        $eliminar = Session::getPermiso('REPRODE');
        $exportarpdf   = Session::getPermiso('REPROEP');
        $exportarexcel = Session::getPermiso('REPROEX');
+       $adjuntar = Session::getPermiso('REPROAJ');
+       
        $sEcho          =   $this->post('sEcho');
         
        $rResult = Obj::run()->regProduccionModel->getGridProduccion();
@@ -55,8 +57,13 @@ class regProduccionController extends Controller{
                 $sOutput .= '"<div class=\"btn-group\">';                      
                        
                 if($editar['permiso'] == 1){
-                    $sOutput .= '<button type=\"button\" class=\"'.$editar['theme'].'\" title=\"'.$editar['accion'].' Ficha Técnica\" onclick=\"fichaTecnica.getEditarFichaTecnica(\''.$encryptReg.'\')\">';
+                    $sOutput .= '<button type=\"button\" class=\"'.$editar['theme'].'\" title=\"'.$editar['accion'].'\" onclick=\"regProduccion.getFormEditarProduccion(this,\''.$encryptReg.'\')\">';
                     $sOutput .= '    <i class=\"'.$editar['icono'].'\"></i>';
+                    $sOutput .= '</button>';
+                }   
+                if($adjuntar['permiso'] == 1){
+                    $sOutput .= '<button type=\"button\" class=\"'.$adjuntar['theme'].'\" title=\"'.$adjuntar['accion'].'\" onclick=\"regProduccion.getFormImagen(this,\''.$encryptReg.'\')\">';
+                    $sOutput .= '    <i class=\"'.$adjuntar['icono'].'\"></i>';
                     $sOutput .= '</button>';
                 }   
                 if($exportarpdf['permiso'] == 1){
@@ -125,12 +132,22 @@ class regProduccionController extends Controller{
     }
     
     /*carga formulario (editRegProduccion.phtml) para editar registro: RegProduccion*/
-    public function getFormEditRegProduccion(){
+    public function getFormEditProduccion(){
         Obj::run()->View->render("formEditRegProduccion");
     }
     
     public function getFormBuscarProducto(){
         Obj::run()->View->render("formBuscarProducto");
+    }
+    
+    public function getFormImagen(){
+        Obj::run()->View->render("formImagen");
+    }
+    
+    public function getConceptos(){
+        $data = Obj::run()->regProduccionModel->getConceptos();
+        
+        return $data;
     }
     
     public function postPDF(){
@@ -248,6 +265,29 @@ class regProduccionController extends Controller{
         $data = Obj::run()->regProduccionModel->anularRegProduccionAll();
         
         echo json_encode($data);
+    }
+    
+    public function findProduccion(){
+        $data = Obj::run()->regProduccionModel->findProduccion();
+        
+        return $data;
+    }
+    
+    public function subirImagen() {
+        $p = Obj::run()->regProduccionModel->_idProduccion;
+        
+        if (!empty($_FILES)) {
+            $targetPath = ROOT . 'public' . DS .'img' .DS . 'produccion' . DS;
+            $tempFile = $_FILES['file']['tmp_name'];
+            $file = $p.'_'.$_FILES['file']['name'];
+            $targetFile = $targetPath.$file;
+            if (move_uploaded_file($tempFile, $targetFile)) {
+               $array = array("img" => $targetPath, "thumb" => $targetPath,'archivo'=>$file);
+               
+               Obj::run()->regProduccionModel->subirImagen($file);
+            }
+            echo json_encode($array);
+        }
     }
     
 }
