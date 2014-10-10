@@ -129,8 +129,8 @@ class liquidacionClienteController extends Controller{
            table,h2,h3,h4{font-family:Arial;} 
            table, table td, table th, p {font-size:12px;}
            table{width:100%;}
-           #td2 th, .totales{color:#FFF;background:#901D78; height:25px; font-size:12px;}
-           #td2 td{font-size:10px;height:25px;}           
+           #td2 th, .totales{color:#FFF;background:#901D78; height:25px; font-size:11px;}
+           #td2 td{font-size:9px;height:25px;}           
         </style>';
       
        switch($data[0]['estado']){
@@ -181,12 +181,12 @@ class liquidacionClienteController extends Controller{
                 <th style="width:5%" >Item</th>                
                 <th style="width:9%" >Código</th>
                 <th style="width:10%">Elemento</th>
-                <th style="width:40%">Ubicación</th>
-                <th style="width:10%">Instalado</th>
-                <th style="width:10%">Retiro</th>
-                <th style="width:12%">Alquiler</th>
-                <th style="width:12%">Producción</th>
-                <th style="width:12%">Total</th>
+                <th style="width:30%">Ubicación</th>
+                <th style="width:5%">Instalado</th>
+                <th style="width:5%">Retiro</th>
+                <th style="width:10%">Alquiler</th>
+                <th style="width:10%">Producción</th>
+                <th style="width:10%">Total</th>
                 
             </tr>';
         // Listado del servicio 
@@ -250,10 +250,28 @@ class liquidacionClienteController extends Controller{
                 <td style="text-align:center">'.$est.'</td>
                 <td style="text-align:center">'.$value['observacion'].'</td>
             </tr>';
-        }    
-        
-        
+        }                    
         $html .='</table>';
+        
+        $html .= '<br /><h3>Resumen</h3><table id="td2" border="1" style="border-collapse:collapse">               
+          <tr>
+                <th style="width:20%;" >Valor Contrato</th>
+                <th style="width:20%;" >Descuento</th>
+                <th style="width:20%;" >Total Neto</th>
+                <th style="width:20%;" >A cuenta</th>
+                <th style="width:20%;" >Saldo por pagar</th>
+            </tr>
+            <tr>
+                <td align="right">S/.'.number_format($data[0]['total'],2).'</td>
+                <td align="right">S/.'.number_format($data[0]['descuento'],2).'</td>
+                <td align="right">S/.'.number_format($data[0]['monto_total_descuento'],2).'</td>
+                <td align="right">S/.'.number_format($data[0]['pagado'],2).'</td>
+                <td align="right"><b>S/.'.number_format($data[0]['deuda'],2).'</b></td>
+            </tr>
+            </table>';
+        
+        
+        
         return $html;
     }    
     

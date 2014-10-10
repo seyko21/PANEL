@@ -77,52 +77,7 @@ class cronogramaClienteController extends Controller{
         
         echo $sOutput;
 
-    }
-    
-    /*carga formulario (newCronogramaCliente.phtml) para nuevo registro: CronogramaCliente*/
-    public function getFormNewCronogramaCliente(){
-        Obj::run()->View->render("formNewCronogramaCliente");
-    }
-    
-    /*carga formulario (editCronogramaCliente.phtml) para editar registro: CronogramaCliente*/
-    public function getFormEditCronogramaCliente(){
-        Obj::run()->View->render("formEditCronogramaCliente");
-    }
-    
-    /*busca data para editar registro: CronogramaCliente*/
-    public static function findCronogramaCliente(){
-        $data = Obj::run()->cronogramaClienteModel->findCronogramaCliente();
-            
-        return $data;
-    }
-    
-    /*envia datos para grabar registro: CronogramaCliente*/
-    public function postNewCronogramaCliente(){
-        $data = Obj::run()->cronogramaClienteModel->newCronogramaCliente();
-        
-        echo json_encode($data);
-    }
-    
-    /*envia datos para editar registro: CronogramaCliente*/
-    public function postEditCronogramaCliente(){
-        $data = Obj::run()->cronogramaClienteModel->editCronogramaCliente();
-        
-        echo json_encode($data);
-    }
-    
-    /*envia datos para eliminar registro: CronogramaCliente*/
-    public function postDeleteCronogramaCliente(){
-        $data = Obj::run()->cronogramaClienteModel->deleteCronogramaCliente();
-        
-        echo json_encode($data);
-    }
-    
-    /*envia datos para eliminar registros: CronogramaCliente*/
-    public function postDeleteCronogramaClienteAll(){
-        $data = Obj::run()->cronogramaClienteModel->deleteCronogramaClienteAll();
-        
-        echo json_encode($data);
-    }
+    }   
     
 }
 
