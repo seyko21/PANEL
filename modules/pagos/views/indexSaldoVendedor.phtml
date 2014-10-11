@@ -61,9 +61,17 @@ echo Functions::widgetOpen(array(
     </form>
 <?php echo Functions::widgetClose(); ?>
 
-<script>
-    
-    simpleScript.setEvent.date({
-      element: '#<?php echo SAVEN; ?>txt_f1, #<?php echo SAVEN; ?>txt_f2' 
+<script>    
+    simpleScript.setEvent.dateRange({
+        ini: '#<?php echo SAVEN; ?>txt_f1',
+        fin: '#<?php echo SAVEN; ?>txt_f2',
+        opt: 'minDate'
     });
+    
+    simpleScript.setEvent.dateRange({
+        ini: '#<?php echo SAVEN; ?>txt_f2',
+        fin: '#<?php echo SAVEN; ?>txt_f1',
+        opt: 'maxDate'
+    });    
+        
 </script>

@@ -58,7 +58,17 @@ echo Functions::widgetOpen(array(
 
 <script>
     
-    simpleScript.setEvent.date({
-      element: '#<?php echo MIPR; ?>txt_f1, #<?php echo MIPR; ?>txt_f2' 
+   simpleScript.setEvent.dateRange({
+        ini: '#<?php echo MIPR; ?>txt_f1',
+        fin: '#<?php echo MIPR; ?>txt_f2',
+        opt: 'minDate'
     });
+    
+    simpleScript.setEvent.dateRange({
+        ini: '#<?php echo MIPR; ?>txt_f2',
+        fin: '#<?php echo MIPR; ?>txt_f1',
+        opt: 'maxDate'
+    });        
+    
+    
 </script>

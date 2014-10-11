@@ -62,7 +62,16 @@ echo Functions::widgetOpen(array(
 
 <script>
     
-    simpleScript.setEvent.date({
-      element: '#<?php echo SASOC; ?>txt_f1, #<?php echo SASOC; ?>txt_f2' 
+    simpleScript.setEvent.dateRange({
+        ini: '#<?php echo SASOC; ?>txt_f1',
+        fin: '#<?php echo SASOC; ?>txt_f2',
+        opt: 'minDate'
     });
+    
+    simpleScript.setEvent.dateRange({
+        ini: '#<?php echo SASOC; ?>txt_f2',
+        fin: '#<?php echo SASOC; ?>txt_f1',
+        opt: 'maxDate'
+    });    
+
 </script>

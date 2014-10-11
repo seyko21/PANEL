@@ -32,7 +32,8 @@
         MIINV: '<?php echo MIINV; ?>',
         LISOC: '<?php echo LISOC; ?>',
         PAINV: '<?php echo PAINV; ?>',
-        CREIN: '<?php echo CREIN; ?>'
+        CREIN: '<?php echo CREIN; ?>',
+        GPASO: '<?php echo GPASO; ?>'
     }
 };
 </script>

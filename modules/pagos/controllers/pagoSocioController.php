@@ -1,24 +1,30 @@
 <?php
+/*
+* ---------------------------------------
+* --------- CREATED BY CREATOR ----------
+* fecha: 11-10-2014 05:10:22 
+* Descripcion : pagoSocioController.php
+* ---------------------------------------
+*/    
 
-class pagoVendedorController extends Controller{
+class pagoSocioController extends Controller{
 
     public function __construct() {
-        $this->loadModel("pagoVendedor");
+        $this->loadModel("pagoSocio");
     }
     
     public function index(){ 
-        Obj::run()->View->render("indexPagoVendedor");
+        Obj::run()->View->render("indexPagoSocio");
     }
     
-    public function getGridPagosVendedor(){
-            
-        $pagar  = Session::getPermiso('GPAVEPG'); 
+    public function getGridPagoSocio(){
+       $pagar  = Session::getPermiso('GPASOPG'); 
 
-        $sEcho          =   $this->post('sEcho');
+       $sEcho          =   $this->post('sEcho');
         
-        $rResult = Obj::run()->pagoVendedorModel->getPagosVendedor();
+        $rResult = Obj::run()->pagoSocioModel->getPagoSocio();
         
-        $num = Obj::run()->pagoVendedorModel->_iDisplayStart;
+        $num = Obj::run()->pagoSocioModel->_iDisplayStart;
         if($num >= 10){
             $num++;
         }else{
@@ -51,7 +57,7 @@ class pagoVendedorController extends Controller{
                 $axion = '"<div class=\"btn-group\">';
                 if($pagar['permiso']){
                     if ($aRow['comision_saldo'] > 0 ){
-                        $axion .= '<button type=\"button\" class=\"'.$pagar['theme'].'\" title=\"'.$pagar['accion'].'\" onclick=\"pagoVendedor.getFormPagar(this,\''.$encryptReg.'\',\''.$c3.'\',\''.$c8.'\',\''.$aRow['id_persona'].'\')\">';
+                        $axion .= '<button type=\"button\" class=\"'.$pagar['theme'].'\" title=\"'.$pagar['accion'].'\" onclick=\"pagoSocio.getFormPagar(this,\''.$encryptReg.'\',\''.$c3.'\',\''.$c8.'\',\''.$aRow['id_persona'].'\')\">';
                         $axion .= '    <i class=\"'.$pagar['icono'].'\"></i>';
                         $axion .= '</button>';
                     }else{
@@ -62,9 +68,9 @@ class pagoVendedorController extends Controller{
                 }
                 $axion .= ' </div>" ';                
                 if ($aRow['comision_asignado'] > 0 ){
-                    $chk = '<input id=\"c_'.(++$key).'\" type=\"checkbox\" name=\"'.GPAVE.'chk_delete[]\" value=\"'.$encryptReg.'\"  >'; 
+                    $chk = '<input id=\"c_'.(++$key).'\" type=\"checkbox\" name=\"'.GPASO.'chk_delete[]\" value=\"'.$encryptReg.'\"  >'; 
                 }else{
-                    $chk = '<input id=\"c_'.(++$key).'\" type=\"checkbox\" name=\"'.GPAVE.'chk_delete[]\" disabled >'; 
+                    $chk = '<input id=\"c_'.(++$key).'\" type=\"checkbox\" name=\"'.GPASO.'chk_delete[]\" disabled >'; 
                 }
                 /*registros a mostrar*/
                 $sOutput .= '["'.$chk.'","'.($num++).'","'.$c2.'","'.$c3.'","'.$c4.'","'.$c5.'","'.$c6.'","'.$c7.'","'.$c8.'",'.$axion.' ';
@@ -84,19 +90,20 @@ class pagoVendedorController extends Controller{
     }
     
     public function getFormPagar(){ 
-        Obj::run()->View->render("formPagarVendedor");
+        Obj::run()->View->render("formPagarSocio");
     }
     
     public function postPagoVendedor(){ 
-        $data = Obj::run()->pagoVendedorModel->pagarComision();
+        $data = Obj::run()->pagoSocioModel->pagarComision();
         
         echo json_encode($data);
     }
     
     public function postAnularPagoAll(){ 
-        $data = Obj::run()->pagoVendedorModel->anularPagoAll();
+        $data = Obj::run()->pagoSocioModel->anularPagoAll();
         
         echo json_encode($data);
     }
-    
 }
+
+?>

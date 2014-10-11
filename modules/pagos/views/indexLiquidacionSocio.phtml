@@ -14,7 +14,7 @@ echo Functions::widgetOpen(array(
     )); 
 ?>
 
- <button id="<?php echo LICL; ?>btnDowPDF" type="button" class="hide">Descargar</button>
+<button id="<?php echo LISOC; ?>btnDowPDF" type="button" class="hide">Descargar</button>
 <div class="widget-body-toolbar">
     <div class="smart-form" style="position: absolute;left: 250px;top:5px; width: 50% ">
         <label class="label col col-1"><?php echo COGEN_2; ?></label>        
@@ -55,3 +55,19 @@ echo Functions::widgetOpen(array(
         <table id="<?php echo LISOC; ?>gridLiquidacionSocio" class="table table-striped table-hover table-condensed" style="width:100%"></table>
     </form>
 <?php echo Functions::widgetClose(); ?>
+
+ 
+<script>
+
+    simpleScript.setEvent.dateRange({
+        ini: '#<?php echo LISOC; ?>txt_f1',
+        fin: '#<?php echo LISOC; ?>txt_f2',
+        opt: 'minDate'
+    });
+    simpleScript.setEvent.dateRange({
+        ini: '#<?php echo LISOC; ?>txt_f2',
+        fin: '#<?php echo LISOC; ?>txt_f1',
+        opt: 'maxDate'
+    });
+    
+</script>

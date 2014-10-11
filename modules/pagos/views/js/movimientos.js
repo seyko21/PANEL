@@ -46,15 +46,7 @@ var movimientos_ = function(){
         
         var _f1 = $("#"+diccionario.tabs.MOVIM+"txt_f1").val();
         var _f2 = $("#"+diccionario.tabs.MOVIM+"txt_f2").val();        
-        var f1, f2;
-        f1 = $.datepicker.parseDate('dd/mm/yy', _f1);
-        f2 = $.datepicker.parseDate('dd/mm/yy', _f2);        
-        if( f1 > f2 ){
-           simpleScript.notify.warning({
-                  content: 'La fecha inicio no puede ser mayor que la fecha final.'      
-            });           
-       }
-        
+    
         var oTable = $("#"+diccionario.tabs.MOVIM+"gridMovimientos").dataTable({
             bProcessing: true,
             bServerSide: true,

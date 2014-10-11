@@ -210,6 +210,7 @@ define('LISOC_1','Liquidación de Socio');
 define('PAINV_1','Mis Paneles Invertidos');
 define('CREIN_1','Retorno de Inversión');
 define('CREIN_2','Listado de Orden de Servicio');
+define('GPASO_1','Pago a Socio');
 
 
 ?>

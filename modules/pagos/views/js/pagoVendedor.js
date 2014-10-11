@@ -10,6 +10,8 @@ var pagoVendedor_ = function(){
     
     _private.saldo = 0;
     
+    _private.idPersona = 0;
+    
     this.publico = {};
     
     this.publico.main = function(element){
@@ -34,8 +36,18 @@ var pagoVendedor_ = function(){
     };
     
     this.publico.getGridPagosVendedor = function(){
-        var _f1 = $("#"+diccionario.tabs.GPAVE+"txt_f1").val();
-        var _f2 = $("#"+diccionario.tabs.GPAVE+"txt_f2").val();        
+        
+        var _cb = $("#"+diccionario.tabs.GPAVE+"lst_estadosearch").val();
+        if (_cb == 'T'){
+            $("#"+diccionario.tabs.GPAVE+"txt_f1").prop('disabled',true);
+            $("#"+diccionario.tabs.GPAVE+"txt_f2").prop('disabled',true);
+        }else{                
+            $("#"+diccionario.tabs.GPAVE+"txt_f1").prop('disabled',false);
+            $("#"+diccionario.tabs.GPAVE+"txt_f2").prop('disabled',false);
+            var _f1 = $("#"+diccionario.tabs.GPAVE+"txt_f1").val();
+            var _f2 = $("#"+diccionario.tabs.GPAVE+"txt_f2").val();                  
+        }
+
 
         var oTable = $("#"+diccionario.tabs.GPAVE+"gridPagosVendedor").dataTable({
             bProcessing: true,
@@ -63,6 +75,7 @@ var pagoVendedor_ = function(){
             fnServerParams: function(aoData) {
                 aoData.push({"name": "_f1", "value": _f1});                
                 aoData.push({"name": "_f2", "value": _f2}); 
+                aoData.push({"name": "_estadocb", "value": _cb});
             },
             fnDrawCallback: function() {
                 $("#"+diccionario.tabs.GPAVE+"gridPagosVendedor_filter").find("input").attr("placeholder","Buscar por N° OS o vendedor").css("width","200px");
@@ -72,6 +85,10 @@ var pagoVendedor_ = function(){
                     container: "#widget_"+diccionario.tabs.GPAVE,
                     typeElement: "button, select"
                 });
+                simpleScript.removeAttr.change({
+                    container: "#widget_"+diccionario.tabs.GPAVE,
+                    typeElement: "select"
+                });
             }
         });
         setup_widgets_desktop();
@@ -80,13 +97,13 @@ var pagoVendedor_ = function(){
     this.publico.getFormPagar = function(btn,id,vendedor,saldo,persona){
         _private.idComision = id;  
         _private.saldo = saldo;
-        
+        _private.idPersona = persona;
         simpleAjax.send({
             element : btn,
             gifProcess: true,
             dataType: 'html',
             root: _private.config.modulo + 'getFormPagar',
-            data: '&_idComision='+_private.idComision+'&_vendedor='+vendedor+'&_saldo='+saldo+'&_idPersona='+persona,
+            data: '&_idComision='+_private.idComision+'&_vendedor='+vendedor+'&_saldo='+saldo+'&_idPersona='+_private.idPersona,
             fnCallback: function(data){
                 $('#cont-modal').append(data);  /*los formularios con append*/
                 $('#'+diccionario.tabs.GPAVE+'formPagarVendedor').modal('show');
@@ -105,7 +122,7 @@ var pagoVendedor_ = function(){
             element: "#"+diccionario.tabs.GPAVE+"btnGrPag",
             root: _private.config.modulo + "postPagoVendedor",
             form: "#"+diccionario.tabs.GPAVE+"formPagarVendedor",
-            data: "&_idComision="+_private.idComision,
+            data: "&_idComision="+_private.idComision+'&_idPersona='+_private.idPersona,
             fnCallback: function(data) {
                 if(!isNaN(data.result) && parseInt(data.result) === 1){
                     simpleScript.notify.ok({
@@ -132,7 +149,7 @@ var pagoVendedor_ = function(){
                         simpleAjax.send({
                             element: btn,
                             form: '#'+diccionario.tabs.GPAVE+'formGridSaldoVendedor',
-                            root: _private.config.modulo + 'postAnularCotizacionAll',
+                            root: _private.config.modulo + 'postAnularPagoAll',
                             fnCallback: function(data) {
                                 if(!isNaN(data.result) && parseInt(data.result) === 1){
                                     simpleScript.notify.ok({

@@ -1,7 +1,14 @@
 <?php
+/*
+* ---------------------------------------
+* --------- CREATED BY CREATOR ----------
+* fecha: 11-10-2014 05:10:22 
+* Descripcion : pagoSocioModel.php
+* ---------------------------------------
+*/ 
 
-class pagoVendedorModel extends Model{
-    
+class pagoSocioModel extends Model{
+
     private $_flag;
     private $_idComision;
     private $_idPersona;
@@ -14,6 +21,12 @@ class pagoVendedorModel extends Model{
     private $_f1;
     private $_f2;
     private $_chkdel;
+    
+    /*para el grid*/
+    public  $_iDisplayStart;
+    private $_iDisplayLength;
+    private $_iSortingCols;
+    private $_sSearch;
     
     public function __construct() {
         parent::__construct();
@@ -28,20 +41,22 @@ class pagoVendedorModel extends Model{
         $this->_f2    = Functions::cambiaf_a_mysql(Formulario::getParam("_f2")); 
         $this->_estadocb  = Formulario::getParam("_estadocb");   
         
-        $this->_serie        = Formulario::getParam(GPAVE."txt_serie");
-        $this->_numero       = Formulario::getParam(GPAVE."txt_numero");
-        $this->_monto        = Formulario::getParam(GPAVE."txt_monto");
-        $this->_exonerar     = Formulario::getParam(GPAVE."rd_exonerar");
+        $this->_serie        = Formulario::getParam(GPASO."txt_serie");
+        $this->_numero       = Formulario::getParam(GPASO."txt_numero");
+        $this->_monto        = Formulario::getParam(GPASO."txt_monto");
+        $this->_exonerar     = Formulario::getParam(GPASO."rd_exonerar");
         $this->_idPersona    = Formulario::getParam("_idPersona");
-        $this->_chkdel       = Formulario::getParam(GPAVE.'chk_delete');
+        $this->_chkdel       = Formulario::getParam(GPASO.'chk_delete');
+        
         $this->_iDisplayStart  = Formulario::getParam("iDisplayStart"); 
         $this->_iDisplayLength = Formulario::getParam("iDisplayLength"); 
         $this->_iSortingCols   = Formulario::getParam("iSortingCols");
         $this->_sSearch        = Formulario::getParam("sSearch");
     }
     
-    public function getPagosVendedor(){
-        $aColumns       =   array("","orden_numero","nombrecompleto","fecha","porcentaje_comision","comision_venta","comision_asignado","comision_saldo" ); //para la ordenacion y pintado en html
+    /*data para el grid: PagoSocio*/
+    public function getPagoSocio(){
+         $aColumns       =   array("","orden_numero","nombrecompleto","fecha","porcentaje_comision","comision_venta","comision_asignado","comision_saldo" ); //para la ordenacion y pintado en html
         /*
 	 * Ordenando, se verifica por que columna se ordenara
 	 */
@@ -57,7 +72,7 @@ class pagoVendedorModel extends Model{
         $query = "call sp_pagoConsultaSaldoVendedorGrid(:rol,:estado,:f1,:f2,:iDisplayStart,:iDisplayLength,:sOrder,:sSearch);";
         
         $parms = array(
-            ":rol"=>'V',
+            ":rol"=>'S',
             ":estado"=>$this->_estadocb,
             ":f1" => $this->_f1,
             ":f2" => $this->_f2,              
@@ -70,7 +85,7 @@ class pagoVendedorModel extends Model{
         return $data;
     }
     
-    public function pagarComision(){
+      public function pagarComision(){
         $query = "call sp_pagoPagosVendedorMantenimiento(:flag,:idComision,:idPersona,:serie,:numero,:monto,:exonerar,:usuario);";
         
         $parms = array(
@@ -80,7 +95,7 @@ class pagoVendedorModel extends Model{
             ":serie" => $this->_serie,
             ":numero" => $this->_numero,
             ":monto" => $this->_monto,
-            ":exonerar" => $this->_exonerar,
+            ":exonerar" => 'S',
             ":usuario" => $this->_usuario
         );
         $data = $this->queryOne($query,$parms);
@@ -102,9 +117,11 @@ class pagoVendedorModel extends Model{
                 ":usuario" => $this->_usuario
             );
             $this->execute($query,$parms);
+           // print_r($parms);
         }
         $data = array('result'=>1);
         return $data;
     }
-    
 }
+
+?>

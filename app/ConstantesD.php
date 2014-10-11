@@ -41,5 +41,6 @@ define("MIINV","MIINV");             /*tab modulo MISINVERSIONES*/
 define("LISOC","LISOC");             /*tab modulo LIQUIDACIONSOCIO*/
 define("PAINV","PAINV");             /*tab modulo PANELESINVERTIDO*/
 define("CREIN","CREIN");             /*tab modulo RETORNODEINVERSION*/
+define("GPASO","GPASO");             /*tab modulo PAGOSOCIO*/
 
 ?>

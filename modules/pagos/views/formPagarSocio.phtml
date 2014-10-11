@@ -1,27 +1,27 @@
 <?php /*
 * ---------------------------------------
 * --------- CREATED BY CREATOR ----------
-* fecha: 16-09-2014 22:09:43 
-* Descripcion : formPagarVendedor.phtml
+* fecha: 11-10-2014 22:09:43 
+* Descripcion : formPagarSocio.phtml
 * ---------------------------------------
 */
 
-/*prefijo: GPAVE debe ser alias en tabla men_menuprincipal*/
-$grabar = Session::getPermiso("GPAVEGR");
-$reprogramar = Session::getPermiso("GPAVERPG");
+/*prefijo: GPASO debe ser alias en tabla men_menuprincipal*/
+$grabar = Session::getPermiso("GPASOGR");
+$reprogramar = Session::getPermiso("GPASORPG");
 
-$vendedor = Formulario::getParam('_vendedor');
+$socio = Formulario::getParam('_socio');
 $saldo = Formulario::getParam('_saldo');
 
 ?>
-<form id="<?php echo GPAVE; ?>formPagarVendedor" name="<?php echo GPAVE; ?>formPagarVendedor" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<form id="<?php echo GPASO; ?>formPagarSocio" name="<?php echo GPASO; ?>formPagarSocio" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close"  aria-hidden="true">
                     &times;
                 </button>
-                <h4 class="modal-title"><?php echo GPAVE_2.$vendedor?></h4>
+                <h4 class="modal-title"><?php echo GPAVE_2.$socio?></h4>
             </div>
             <div class="modal-body smart-form"> 
                 <section>
@@ -30,7 +30,7 @@ $saldo = Formulario::getParam('_saldo');
                         <div class="col col-4">
                             <label class="input"> 
                                 <i class="icon-append fa fa-keyboard-o"></i>
-                                <input type="text" id="<?php echo GPAVE; ?>txt_serie" name="<?php echo GPAVE; ?>txt_serie">
+                                <input type="text" id="<?php echo GPASO; ?>txt_serie" name="<?php echo GPASO; ?>txt_serie">
                                 <b class="tooltip tooltip-top-right"><i class="fa fa-keyboard-o txt-color-teal"></i> <?php echo GPAVE_4; ?></b>
                             </label>
                         </div>
@@ -39,7 +39,7 @@ $saldo = Formulario::getParam('_saldo');
                         <div class="col col-4">
                             <label class="input"> 
                                 <i class="icon-append fa fa-keyboard-o"></i>
-                                <input type="text" id="<?php echo GPAVE; ?>txt_numero" name="<?php echo GPAVE; ?>txt_numero">
+                                <input type="text" id="<?php echo GPASO; ?>txt_numero" name="<?php echo GPASO; ?>txt_numero">
                                 <b class="tooltip tooltip-top-right"><i class="fa fa-keyboard-o txt-color-teal"></i> <?php echo GPAVE_6; ?></b>
                             </label>
                         </div>
@@ -51,28 +51,29 @@ $saldo = Formulario::getParam('_saldo');
                         <div class="col col-4">
                             <label class="input"> 
                                 <i class="icon-append fa fa-keyboard-o"></i>
-                                <input class="right" type="text" id="<?php echo GPAVE; ?>txt_monto" name="<?php echo GPAVE; ?>txt_monto" value="<?php echo str_replace(',','',$saldo)?>">
+                                <input class="right" type="text" id="<?php echo GPASO; ?>txt_monto" name="<?php echo GPASO; ?>txt_monto" value="<?php echo str_replace(',','',$saldo)?>">
                                 <b class="tooltip tooltip-top-right"><i class="fa fa-keyboard-o txt-color-teal"></i> <?php echo GPAVE_9; ?></b>
                             </label>
                         </div>
-                        
+                        <!--
                         <label class="label col col-2"><?php echo GPAVE_7; ?></label>
                         <div class="inline-group col col-4">
                             <label class="radio"> 
-                                <input name="<?php echo GPAVE; ?>rd_exonerar" id="<?php echo GPAVE; ?>rd_exonerarS" type="radio" value="S">
+                                <input name="<?php echo GPASO; ?>rd_exonerar" id="<?php echo GPASO; ?>rd_exonerarS" type="radio" value="S">
                                 <i></i> <?php echo LABEL_S?>
                             </label>
                             <label class="radio"> 
-                                <input name="<?php echo GPAVE; ?>rd_exonerar" id="<?php echo GPAVE; ?>rd_exonerarN" checked type="radio" value="N">
+                                <input name="<?php echo GPASO; ?>rd_exonerar" id="<?php echo GPASO; ?>rd_exonerarN" checked type="radio" value="N">
                                 <i></i> <?php echo LABEL_N?>
                             </label>
                         </div>
+                        -->
                     </div>
                 </section>
             </div>
             <div class="modal-footer">  
                 <?php if($grabar["permiso"]):?>
-                <button id="<?php echo GPAVE; ?>btnGrPag" type="submit" class="<?php echo $grabar["theme"]; ?>">
+                <button id="<?php echo GPASO; ?>btnGrPag" type="submit" class="<?php echo $grabar["theme"]; ?>">
                     <i class="<?php echo $grabar["icono"]; ?>"></i> <?php echo $grabar["accion"]; ?>
                 </button>
                 <?php endif; ?>
@@ -86,25 +87,25 @@ $saldo = Formulario::getParam('_saldo');
 <!-- si no tiene permiso se anula submit desde cualquier input -->
 <?php if(!$grabar["permiso"]): ?>
 <script>
-    simpleScript.noSubmit("#<?php echo GPAVE; ?>formPagarVendedor");
+    simpleScript.noSubmit("#<?php echo GPASO; ?>formPagarSocio");
 </script>
 <?php endif; ?>
 <script>
     simpleScript.removeAttr.click({
-        container: "#<?php echo GPAVE; ?>formPagarVendedor",
+        container: "#<?php echo GPASO; ?>formPagarSocio",
         typeElement: "button"
     });
     
-    $("#<?php echo GPAVE; ?>formPagarVendedor").validate({
+    $("#<?php echo GPASO; ?>formPagarSocio").validate({
         // Rules for form validation
         rules: {
-                <?php echo GPAVE; ?>txt_serie: {
+                <?php echo GPASO; ?>txt_serie: {
                         required: true
                     },
-                <?php echo GPAVE; ?>txt_numero: {
+                <?php echo GPASO; ?>txt_numero: {
                         required: true
                     },
-                <?php echo GPAVE; ?>txt_monto: {
+                <?php echo GPASO; ?>txt_monto: {
                         required: true,
                         number: true
                     }
@@ -114,9 +115,9 @@ $saldo = Formulario::getParam('_saldo');
                     error.insertAfter(element.parent());
                 },
                 submitHandler: function() {
-                    pagoVendedor.postPagoVendedor();
+                    pagoSocio.postPagoSocio();
                 }
             });
 
-  
+      
 </script>

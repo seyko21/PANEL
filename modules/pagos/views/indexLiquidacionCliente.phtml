@@ -56,8 +56,16 @@ echo Functions::widgetOpen(array(
 <?php echo Functions::widgetClose(); ?>
 
 <script>
-    
-    simpleScript.setEvent.date({
-      element: '#<?php echo LICL; ?>txt_f1, #<?php echo LICL; ?>txt_f2' 
+
+    simpleScript.setEvent.dateRange({
+        ini: '#<?php echo LICL; ?>txt_f1',
+        fin: '#<?php echo LICL; ?>txt_f2',
+        opt: 'minDate'
     });
+    simpleScript.setEvent.dateRange({
+        ini: '#<?php echo LICL; ?>txt_f2',
+        fin: '#<?php echo LICL; ?>txt_f1',
+        opt: 'maxDate'
+    });
+    
 </script>
