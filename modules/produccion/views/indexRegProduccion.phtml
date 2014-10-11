@@ -7,7 +7,7 @@
 * ---------------------------------------
 */
 $nuevo   = Session::getPermiso("REPRONEW");
-$anular = Session::getPermiso("REPRODE");
+$anular = Session::getPermiso("REPRODEL");
 echo Functions::widgetOpen(array(
         "id"=>REPRO,
         "title"=>LABEL_A130
@@ -27,8 +27,8 @@ echo Functions::widgetOpen(array(
                 </button>
                 <?php endif; ?>
                 <?php if($anular["permiso"]): ?>
-                <button id="<?php echo REPRO; ?>btnNewRegProduccion" type="button" onclick="regProduccion.postAnularRegProduccionAll(this);" class="btn btn-danger">
-                    <i class="<?php echo $anular['icono'];?>"></i> Eliminar
+                <button id="<?php echo REPRO; ?>btnNewRegProduccion" type="button" onclick="regProduccion.postAnularRegProduccionAll(this);" class="<?php echo $anular['theme'];?>">
+                    <i class="<?php echo $anular['icono'];?>"></i> <?php echo $anular['accion'];?>
                 </button>
                 <?php endif; ?>
             </div>
