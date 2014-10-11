@@ -44,6 +44,10 @@ class indexController extends Controller{
         return Obj::run()->loginModel->getAccionesOpcion($opcion);
     }
     
+    public function getPanel(){
+        Obj::run()->View->render('panel');
+    }
+    
     public static function getDominios(){
         Obj::run()->View->render('dominios');
     }

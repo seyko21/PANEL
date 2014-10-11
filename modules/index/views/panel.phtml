@@ -1,0 +1,88 @@
+<div aria-hidden="false" aria-expanded="true" role="tabpanel" class="ui-tabs-panel ui-widget-content ui-corner-bottom sortable-grid ui-sortable" aria-labelledby="ui-id-1" id="<?php echo PANP ?>_CONTAINER">
+    <article class="col-lg-6">
+        <?php
+        $obj = array(
+            'id' => PANP . '1',
+            'title' => 'PAN 1',
+            'height' => '200px',
+            'padding' => true,
+            'actions' => array(
+                array(
+                    'id' => T5 . 'btnNew',
+                    'label' => BTN_NUEVO,
+                    'click' => 'configurarMenu.getNuevoDominio()'
+                )
+            )
+        );
+        echo Functions::widgetOpen($obj);
+        ?>
+        AQUI CONTENIDO
+        <?php echo Functions::widgetClose(); ?>
+
+        <?php
+        $obj = array(
+            'id' => PANP . '3',
+            'title' => 'PAN 3',
+            'height' => '200px',
+            'padding' => true,
+            'actions' => array(
+                array(
+                    'id' => T5 . 'btnNew',
+                    'label' => BTN_NUEVO,
+                    'click' => 'configurarMenu.getNuevoDominio()'
+                )
+            )
+        );
+        echo Functions::widgetOpen($obj);
+        ?>
+        AQUI CONTENIDO
+        <?php echo Functions::widgetClose(); ?>
+    </article>
+
+    <article class="col-lg-6">
+        <?php
+        $obj = array(
+            'id' => PANP . '2',
+            'title' => 'PAN 2',
+            'height' => '200px',
+            'padding' => true,
+            'actions' => array(
+                array(
+                    'id' => T5 . 'btnNew',
+                    'label' => BTN_NUEVO,
+                    'click' => 'configurarMenu.getNuevoDominio()'
+                )
+            )
+        );
+        echo Functions::widgetOpen($obj);
+        ?>
+        AQUI CONTENIDO
+        <?php echo Functions::widgetClose(); ?>
+
+        <?php
+        $obj = array(
+            'id' => PANP . '4',
+            'title' => 'PAN 4',
+            'height' => '200px',
+            'padding' => true,
+            'actions' => array(
+                array(
+                    'id' => T5 . 'btnNew',
+                    'label' => BTN_NUEVO,
+                    'click' => 'configurarMenu.getNuevoDominio()'
+                )
+            )
+        );
+        echo Functions::widgetOpen($obj);
+        ?>
+        AQUI CONTENIDO
+        <?php echo Functions::widgetClose(); ?>
+    </article>
+    
+    <div class="clearfix">
+    </div>
+
+</div>
+<script>
+    setup_widgets_desktop(); 
+</script>

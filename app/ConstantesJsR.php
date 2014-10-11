@@ -33,3 +33,4 @@ var diccionario = {
         CLAV: '<?php echo CLAV; ?>',
         PERF: '<?php echo PERF; ?>',
         GPAVE: '<?php echo GPAVE; ?>',
+        PANP: '<?php echo PANP; ?>',

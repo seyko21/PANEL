@@ -1,165 +1,166 @@
 <div id="cont-allheader">
-<!-- HEADER -->
-<header id="header">
-    <div id="logo-group">
+    <!-- HEADER -->
+    <header id="header">
+        <div id="logo-group">
 
-        <!-- PLACE YOUR LOGO HERE -->
-        <span id="logo"> <img src="<?php echo $rutaLayout['_img']; ?>logo.png" alt="<?php echo APP_NAME; ?>"> </span>
-        <!-- END LOGO PLACEHOLDER -->
+            <!-- PLACE YOUR LOGO HERE -->
+            <span id="logo"> <img src="<?php echo $rutaLayout['_img']; ?>logo.png" alt="<?php echo APP_NAME; ?>"> </span>
+            <!-- END LOGO PLACEHOLDER -->
 
-        <!-- Note: The activity badge color changes when clicked and resets the number to 0
-        Suggestion: You may want to set a flag when this happens to tick off all checked messages / notifications -->
-<!--        <span id="activity" class="activity-dropdown"> <i class="fa fa-user"></i> <b class="badge"> 21 </b> </span>-->
+            <!-- Note: The activity badge color changes when clicked and resets the number to 0
+            Suggestion: You may want to set a flag when this happens to tick off all checked messages / notifications -->
+    <!--        <span id="activity" class="activity-dropdown"> <i class="fa fa-user"></i> <b class="badge"> 21 </b> </span>-->
 
-        <!-- AJAX-DROPDOWN : control this dropdown height, look and feel from the LESS variable file -->
-<!--        <div class="ajax-dropdown">
+            <!-- AJAX-DROPDOWN : control this dropdown height, look and feel from the LESS variable file -->
+            <!--        <div class="ajax-dropdown">
+            
+                         the ID links are fetched via AJAX to the ajax container "ajax-notifications" 
+                        <div class="btn-group btn-group-justified" data-toggle="buttons">
+                            <label class="btn btn-default">
+                                <input type="radio" name="activity" id="ajax/notify/mail.html">
+                                Msgs (14) </label>
+                            <label class="btn btn-default">
+                                <input type="radio" name="activity" id="ajax/notify/notifications.html">
+                                notify (3) </label>
+                            <label class="btn btn-default">
+                                <input type="radio" name="activity" id="ajax/notify/tasks.html">
+                                Tasks (4) </label>
+                        </div>
+            
+                         notification content 
+                        <div class="ajax-notifications custom-scroll">
+            
+                            <div class="alert alert-transparent">
+                                <h4>Click a button to show messages here</h4>
+                                This blank page message helps protect your privacy, or you can show the first message here automatically.
+                            </div>
+            
+                            <i class="fa fa-lock fa-4x fa-border"></i>
+            
+                        </div>
+                         end notification content 
+            
+                         footer: refresh area 
+                        <span> Last updated on: 12/12/2013 9:43AM
+                            <button type="button" data-loading-text="<i class='fa fa-refresh fa-spin'></i> Loading..." class="btn btn-xs btn-default pull-right">
+                                <i class="fa fa-refresh"></i>
+                            </button> </span>
+                         end footer 
+            
+                    </div>-->
+            <!-- END AJAX-DROPDOWN -->
+        </div>
 
-             the ID links are fetched via AJAX to the ajax container "ajax-notifications" 
-            <div class="btn-group btn-group-justified" data-toggle="buttons">
-                <label class="btn btn-default">
-                    <input type="radio" name="activity" id="ajax/notify/mail.html">
-                    Msgs (14) </label>
-                <label class="btn btn-default">
-                    <input type="radio" name="activity" id="ajax/notify/notifications.html">
-                    notify (3) </label>
-                <label class="btn btn-default">
-                    <input type="radio" name="activity" id="ajax/notify/tasks.html">
-                    Tasks (4) </label>
+        <!-- projects dropdown -->
+        <!--    <div id="project-context">
+        
+                <span class="label"><?php echo H_PANEL; ?></span>
+                <span id="show-shortcut" class="pointer"><?php echo H_DOMI; ?><i class="fa fa-angle-down"></i></span>
+        
+            </div>-->
+        <!-- end projects dropdown -->
+
+        <!-- pulled right: nav area -->
+        <div class="pull-right">
+
+            <!-- collapse menu button -->
+            <div id="hide-menu" class="btn-header pull-right">
+                <span> <a href="javascript:void(0);" title="Collapse Menu"><i class="fa fa-reorder"></i></a> </span>
             </div>
+            <!-- end collapse menu -->
 
-             notification content 
-            <div class="ajax-notifications custom-scroll">
-
-                <div class="alert alert-transparent">
-                    <h4>Click a button to show messages here</h4>
-                    This blank page message helps protect your privacy, or you can show the first message here automatically.
-                </div>
-
-                <i class="fa fa-lock fa-4x fa-border"></i>
-
+            <!-- logout button -->
+            <div id="logout" class="btn-header transparent pull-right">
+                <span> <a href="javascript:;" title="Cerrar sesión" data-logout-msg="Usted puede mejorar su seguridad aún más después de cerrar la sesión al cerrar este navegador abierto"><i class="fa fa-sign-out"></i></a> </span>
             </div>
-             end notification content 
+            <!-- end logout button -->
 
-             footer: refresh area 
-            <span> Last updated on: 12/12/2013 9:43AM
-                <button type="button" data-loading-text="<i class='fa fa-refresh fa-spin'></i> Loading..." class="btn btn-xs btn-default pull-right">
-                    <i class="fa fa-refresh"></i>
-                </button> </span>
-             end footer 
+            <!-- search mobile button (this is hidden till mobile view port) -->
+            <div id="search-mobile" class="btn-header transparent pull-right">
+                <span> <a href="javascript:void(0)" title="Search"><i class="fa fa-search"></i></a> </span>
+            </div>
+            <!-- end search mobile button -->
 
-        </div>-->
-        <!-- END AJAX-DROPDOWN -->
-    </div>
+            <!-- input: search field -->
+            <!--        <form action="#ajax/search.html" class="header-search pull-right">
+                        <input type="text" name="param" placeholder="Find reports and more" id="search-fld">
+                        <button type="submit">
+                            <i class="fa fa-search"></i>
+                        </button>
+                        <a href="javascript:void(0);" id="cancel-search-js" title="Cancel Search"><i class="fa fa-times"></i></a>
+                    </form>-->
+            <!-- end input: search field -->
 
-    <!-- projects dropdown -->
-<!--    <div id="project-context">
+            <!-- fullscreen button -->
+            <div id="fullscreen" class="btn-header transparent pull-right">
+                <span> <a href="javascript:void(0);" onclick="launchFullscreen(document.documentElement);" title="Full Screen"><i class="fa fa-fullscreen"></i></a> </span>
+            </div>
+            <!-- end fullscreen button -->
 
-        <span class="label"><?php echo H_PANEL; ?></span>
-        <span id="show-shortcut" class="pointer"><?php echo H_DOMI; ?><i class="fa fa-angle-down"></i></span>
-
-    </div>-->
-    <!-- end projects dropdown -->
-
-    <!-- pulled right: nav area -->
-    <div class="pull-right">
-
-        <!-- collapse menu button -->
-        <div id="hide-menu" class="btn-header pull-right">
-            <span> <a href="javascript:void(0);" title="Collapse Menu"><i class="fa fa-reorder"></i></a> </span>
-        </div>
-        <!-- end collapse menu -->
-
-        <!-- logout button -->
-        <div id="logout" class="btn-header transparent pull-right">
-            <span> <a href="javascript:;" title="Cerrar sesión" data-logout-msg="Usted puede mejorar su seguridad aún más después de cerrar la sesión al cerrar este navegador abierto"><i class="fa fa-sign-out"></i></a> </span>
-        </div>
-        <!-- end logout button -->
-
-        <!-- search mobile button (this is hidden till mobile view port) -->
-        <div id="search-mobile" class="btn-header transparent pull-right">
-            <span> <a href="javascript:void(0)" title="Search"><i class="fa fa-search"></i></a> </span>
-        </div>
-        <!-- end search mobile button -->
-
-        <!-- input: search field -->
-<!--        <form action="#ajax/search.html" class="header-search pull-right">
-            <input type="text" name="param" placeholder="Find reports and more" id="search-fld">
-            <button type="submit">
-                <i class="fa fa-search"></i>
-            </button>
-            <a href="javascript:void(0);" id="cancel-search-js" title="Cancel Search"><i class="fa fa-times"></i></a>
-        </form>-->
-        <!-- end input: search field -->
-
-        <!-- fullscreen button -->
-        <div id="fullscreen" class="btn-header transparent pull-right">
-            <span> <a href="javascript:void(0);" onclick="launchFullscreen(document.documentElement);" title="Full Screen"><i class="fa fa-fullscreen"></i></a> </span>
-        </div>
-        <!-- end fullscreen button -->
-
-        <!-- multiple lang dropdown : find all flags in the image folder -->
-        <ul class="header-dropdown-list hidden-xs">
-            <li>
-                <!--rol por defecto-->
-                <?php foreach (Session::get('sys_roles') as $value) : ?>
-                    <?php if($value['id_rol'] == Session::get('sys_defaultRol')): ?>
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"> <span> <?php echo $value['rol']; ?> </span> <i class="fa fa-angle-down"></i> </a>
-                    <?php endif; ?>
-                <?php endforeach; ?>
-                <!--fin rol por defecto-->
-                <!--cargar roles-->
-                <ul class="dropdown-menu pull-right">
+            <!-- multiple lang dropdown : find all flags in the image folder -->
+            <ul class="header-dropdown-list hidden-xs">
+                <li>
+                    <!--rol por defecto-->
                     <?php foreach (Session::get('sys_roles') as $value) : ?>
-                        <?php   
-                            if($value['id_rol'] == Session::get('sys_defaultRol')){
+                        <?php if ($value['id_rol'] == Session::get('sys_defaultRol')): ?>
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown"> <span> <?php echo $value['rol']; ?> </span> <i class="fa fa-angle-down"></i> </a>
+                        <?php endif; ?>
+                    <?php endforeach; ?>
+                    <!--fin rol por defecto-->
+                    <!--cargar roles-->
+                    <ul class="dropdown-menu pull-right">
+                        <?php foreach (Session::get('sys_roles') as $value) : ?>
+                            <?php
+                            if ($value['id_rol'] == Session::get('sys_defaultRol')) {
                                 $classactive = 'active';
                                 $click = "";
-                            }else{
+                            } else {
                                 $classactive = '';
-                                $click = "index.getChangeRol('".$value['id_rol']."');";
+                                $click = "index.getChangeRol('" . $value['id_rol'] . "');";
                             }
-                        ?>
-                        <li class="<?php echo $classactive; ?>">
-                            <a href="javascript:void(0);" onclick="<?php echo $click; ?>"><?php echo $value['rol']; ?></a>
-                        </li>
-                    <?php endforeach; ?>
-                </ul>
-                <!--fin cargar roles-->
-            </li>
-        </ul>
-        <!-- end multiple lang -->
+                            ?>
+                            <li class="<?php echo $classactive; ?>">
+                                <a href="javascript:void(0);" onclick="<?php echo $click; ?>"><?php echo $value['rol']; ?></a>
+                            </li>
+                        <?php endforeach; ?>
+                    </ul>
+                    <!--fin cargar roles-->
+                </li>
+            </ul>
+            <!-- end multiple lang -->
 
-    </div>
-    <!-- end pulled right: nav area -->
+        </div>
+        <!-- end pulled right: nav area -->
 
-</header>
-<!-- END HEADER -->
+    </header>
+    <!-- END HEADER -->
 
 
-<!-- Left panel : Navigation area -->
-<!-- Note: This width of the aside area can be adjusted through LESS variables -->
-<aside id="left-panel">
+    <!-- Left panel : Navigation area -->
+    <!-- Note: This width of the aside area can be adjusted through LESS variables -->
+    <aside id="left-panel">
 
         <!-- User info -->
         <div class="login-info">
-                <span id="show-shortcut"> <!-- User image size is adjusted inside CSS, it should stay as it --> 
+            <span id="show-shortcut"> <!-- User image size is adjusted inside CSS, it should stay as it --> 
 
-                        <a href="javascript:void(0);">
-                            <?php $data = Obj::run()->indexModel->getFoto();                                  
-                                    if( $data['foto'] == '' or $data['foto'] == null){
-                                        $imagen = $rutaLayout["_img"].'avatars/sunny-big.png';
-                                    }else{
-                                        $imagen = BASE_URL.'public/files/fotos/'.$data['foto'];
-                                    }                                    
-                            ?>
-                            <img id="fotitoUser" src="<?php echo $imagen; ?>" alt="me" class="online"/> 
-                                <span id="cont-nameuser" title="<?php echo Session::get('sys_nombreUsuario')?>">
-                                        <?php echo Session::get('sys_nombreUsuario')?> 
-                                </span>
-                                <i class="fa fa-angle-down"></i>
-                        </a> 
+                <a href="javascript:void(0);">
+                    <?php
+                    $data = Obj::run()->indexModel->getFoto();
+                    if ($data['foto'] == '' or $data['foto'] == null) {
+                        $imagen = $rutaLayout["_img"] . 'avatars/sunny-big.png';
+                    } else {
+                        $imagen = BASE_URL . 'public/files/fotos/' . $data['foto'];
+                    }
+                    ?>
+                    <img id="fotitoUser" src="<?php echo $imagen; ?>" alt="me" class="online"/> 
+                    <span id="cont-nameuser" title="<?php echo Session::get('sys_nombreUsuario') ?>">
+<?php echo Session::get('sys_nombreUsuario') ?> 
+                    </span>
+                    <i class="fa fa-angle-down"></i>
+                </a> 
 
-                </span>
+            </span>
         </div>
         <!-- end user info -->
 
@@ -175,63 +176,74 @@
             traditional href="" links. See documentation for details.
             -->
             <ul id="nav_modulos">
-                <?php indexController::getModulos(); ?>
+<?php indexController::getModulos(); ?>
             </ul>
         </nav>
         <span class="minifyme"> <i class="fa fa-arrow-circle-left hit"></i> </span>
 
-</aside>
-<!-- END NAVIGATION -->
+    </aside>
+    <!-- END NAVIGATION -->
 </div>
 
 <!-- MAIN PANEL -->
 <div id="main" role="main">
 
-        <!-- RIBBON -->
-        <div id="ribbon" >
-            
-                <span class="ribbon-button-alignment pull-right"> <span id="refresh" class="btn btn-ribbon" data-title="refresh"  rel="tooltip" data-placement="bottom" data-original-title="<i class='text-warning fa fa-warning'></i> ¡Advertencia! Esto actualizara toda la página." data-html="true" data-reset-msg="¿Desea actualizar la página Principal?"><i class="fa fa-refresh"></i></span> </span>
+    <!-- RIBBON -->
+    <div id="ribbon" >
 
-                <!-- breadcrumb -->
-                <ol class="breadcrumb">
-                        <!-- This is auto generated -->
-                </ol>
-                <!-- end breadcrumb -->
+        <span class="ribbon-button-alignment pull-right"> <span id="refresh" class="btn btn-ribbon" data-title="refresh"  rel="tooltip" data-placement="bottom" data-original-title="<i class='text-warning fa fa-warning'></i> ¡Advertencia! Esto actualizara toda la página." data-html="true" data-reset-msg="¿Desea actualizar la página Principal?"><i class="fa fa-refresh"></i></span> </span>
 
-                <!-- You can also add more buttons to the
-                ribbon for further usability
+        <!-- breadcrumb -->
+        <ol class="breadcrumb">
+            <!-- This is auto generated -->
+        </ol>
+        <!-- end breadcrumb -->
 
-                Example below:
+        <!-- You can also add more buttons to the
+        ribbon for further usability
 
-                <span class="ribbon-button-alignment pull-right">
-                <span id="search" class="btn btn-ribbon hidden-xs" data-title="search"><i class="fa-grid"></i> Change Grid</span>
-                <span id="add" class="btn btn-ribbon hidden-xs" data-title="add"><i class="fa-plus"></i> Add</span>
-                <span id="search" class="btn btn-ribbon" data-title="search"><i class="fa-search"></i> <span class="hidden-mobile">Search</span></span>
-                </span> -->
+        Example below:
 
+        <span class="ribbon-button-alignment pull-right">
+        <span id="search" class="btn btn-ribbon hidden-xs" data-title="search"><i class="fa-grid"></i> Change Grid</span>
+        <span id="add" class="btn btn-ribbon hidden-xs" data-title="add"><i class="fa-plus"></i> Add</span>
+        <span id="search" class="btn btn-ribbon" data-title="search"><i class="fa-search"></i> <span class="hidden-mobile">Search</span></span>
+        </span> -->
+
+    </div>
+    <!-- END RIBBON -->
+
+    <!-- MAIN CONTENT -->
+    <div id="content">
+        <!-- CONTENEDOR DE LOS TABS GENERALES DE MODULOS -->
+        <div id="cont-general-tabs" style="background: #efefef;">
+            <ul id="cont-tabs-sys">
+
+
+                <!--TAB POR DEFECTO PARA USUARIO-->
+                <li aria-selected="true" aria-labelledby="ui-id-1" aria-controls="GNCOT_CONTAINER" tabindex="0" role="tab" class="ui-state-default ui-corner-top ui-tabs-active ui-state-active" style="position:relative;" id="li-<?php echo PANP?>"> 
+                    <a id="ui-id-1" tabindex="-1" role="presentation" class="ui-tabs-anchor" href="#<?php echo PANP?>_CONTAINER">Panel</a>
+                </li>
+
+
+            </ul>
+            <div id="cont-main" style="background: #ffffff">
+                
+                <!--CONTENIDO DE TAB POR DEFECTO-->
+                <?php Obj::run()->indexController->getPanel();?>
         </div>
-        <!-- END RIBBON -->
+        <!-- FIN CONTENEDOR DE LOS TABS GENERALES DE MODULOS -->
+        <!--CONTENEDOR DE LOS MODALS-->
+        <div id="cont-modal"></div>
+        <!--FIN CONTENEDOR DE LOS MODALS-->
+    </div>
+    <!-- END MAIN CONTENT -->
 
-        <!-- MAIN CONTENT -->
-        <div id="content">
-            <!-- CONTENEDOR DE LOS TABS GENERALES DE MODULOS -->
-            <div id="cont-general-tabs" style="background: #efefef;">
-                <ul id="cont-tabs-sys">
-                </ul>
-                <div id="cont-main" style="background: #ffffff"></div>
-            </div>
-            <!-- FIN CONTENEDOR DE LOS TABS GENERALES DE MODULOS -->
-            <!--CONTENEDOR DE LOS MODALS-->
-            <div id="cont-modal"></div>
-            <!--FIN CONTENEDOR DE LOS MODALS-->
-        </div>
-        <!-- END MAIN CONTENT -->
-        
-        
+
 </div>
 <!-- END MAIN PANEL -->
 
 <div id="process-general" onclick="$(this).fadeOut()"><div class="img-process"><img src="<?php echo BASE_URL ?>public/img/loading.gif" /></div></div> 
 
 <!--los dominios-->
-<?php  indexController::getOpcionesUser(); ?>
+<?php indexController::getOpcionesUser(); ?>
