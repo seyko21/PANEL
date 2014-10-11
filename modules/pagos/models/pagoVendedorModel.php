@@ -12,6 +12,7 @@ class pagoVendedorModel extends Model{
     private $_exonerar;
     private $_f1;
     private $_f2;
+    private $_chkdel;
     
     public function __construct() {
         parent::__construct();
@@ -30,7 +31,7 @@ class pagoVendedorModel extends Model{
         $this->_monto        = Formulario::getParam(GPAVE."txt_monto");
         $this->_exonerar     = Formulario::getParam(GPAVE."rd_exonerar");
         $this->_idPersona    = Formulario::getParam("_idPersona");
-        
+        $this->_chkdel       = Formulario::getParam(GPAVE.'chk_delete');
         $this->_iDisplayStart  = Formulario::getParam("iDisplayStart"); 
         $this->_iDisplayLength = Formulario::getParam("iDisplayLength"); 
         $this->_iSortingCols   = Formulario::getParam("iSortingCols");
@@ -80,6 +81,27 @@ class pagoVendedorModel extends Model{
             ":usuario" => $this->_usuario
         );
         $data = $this->queryOne($query,$parms);
+        return $data;
+    }
+    
+    public function anularCotizacionAll(){
+        $query = "call sp_pagoPagosVendedorMantenimiento(:flag,:idBoleta,:idPersona,:serie,:numero,:monto,:exonerar,:usuario);";
+        
+        foreach ($this->_chkdel as $value) {
+            $parms = array(
+                ":flag"=>2,
+                ":idBoleta" => AesCtr::de($value),
+                ":idPersona" => '',              
+                ":serie" => '',
+                ":numero" => '',
+                ":monto" => '',
+                ":exonerar" => '',
+                ":usuario" => $this->_usuario
+            );
+            $this->execute($query,$parms);
+           // print_r($parms);
+        }
+        $data = array('result'=>1);
         return $data;
     }
     

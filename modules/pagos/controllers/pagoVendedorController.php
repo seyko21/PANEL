@@ -34,7 +34,7 @@ class pagoVendedorController extends Controller{
             $sOutput .= '"iTotalDisplayRecords": '.$iTotal.', ';
             $sOutput .= '"aaData": [ ';     
             
-            foreach ( $rResult as $aRow ){
+            foreach ( $rResult as $key=>$aRow ){
                                 
                 /*antes de enviar id se encrypta*/
                 $encryptReg = Aes::en($aRow['id_comision']);
@@ -56,8 +56,10 @@ class pagoVendedorController extends Controller{
                 }
                 $axion .= ' </div>" ';                
                 
+                $chk = '<input id=\"c_'.(++$key).'\" type=\"checkbox\" name=\"'.GPAVE.'chk_delete[]\" value=\"'.$encryptReg.'\"  >'; 
+                
                 /*registros a mostrar*/
-                $sOutput .= '["'.($num++).'","'.$c2.'","'.$c3.'","'.$c4.'","'.$c5.'","'.$c6.'","'.$c7.'","'.$c8.'",'.$axion.' ';
+                $sOutput .= '["'.$chk.'","'.($num++).'","'.$c2.'","'.$c3.'","'.$c4.'","'.$c5.'","'.$c6.'","'.$c7.'","'.$c8.'",'.$axion.' ';
 
                 $sOutput .= '],';
 
@@ -79,6 +81,12 @@ class pagoVendedorController extends Controller{
     
     public function postPagoVendedor(){ 
         $data = Obj::run()->pagoVendedorModel->pagarComision();
+        
+        echo json_encode($data);
+    }
+    
+    public function postAnularCotizacionAll(){ 
+        $data = Obj::run()->pagoVendedorModel->anularCotizacionAll();
         
         echo json_encode($data);
     }

@@ -1,5 +1,7 @@
 <?php 
 $buscar    = Session::getPermiso("GPAVEBS");
+$anular = Session::getPermiso('GPAVEAN');
+
 echo Functions::widgetOpen(array(
         "id"=>GPAVE,
         "title"=>GPAVE_1
@@ -37,7 +39,11 @@ echo Functions::widgetOpen(array(
     <div class="dataTables_wrapper form-inline" role="grid">
         <div class="dt-top-row">
             <div class="DTTT btn-group">
-               
+               <?php if($anular['permiso']): ?>
+                <button id="<?php echo GPAVE; ?>btnAnular" type="button" onclick="pagoVendedor.postAnularPagoAll(this);" class="btn txt-color-white bg-color-blueDark">
+                  <i class="<?php echo $anular['icono'];?>"></i> <?php echo $anular["accion"]; ?>
+                </button>
+                <?php endif; ?>
             </div>
         </div>
 

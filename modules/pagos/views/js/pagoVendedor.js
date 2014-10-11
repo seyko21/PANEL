@@ -8,6 +8,8 @@ var pagoVendedor_ = function(){
     
     _private.idComision = 0;
     
+    _private.saldo = 0;
+    
     this.publico = {};
     
     this.publico.main = function(element){
@@ -44,6 +46,7 @@ var pagoVendedor_ = function(){
             bPaginate: true,
             iDisplayLength: 10,            
             aoColumns: [
+                {sTitle: "<input type='checkbox' id='"+diccionario.tabs.GPAVE+"chk_all' onclick='simpleScript.checkAll(this,\"#"+diccionario.tabs.GPAVE+"gridPagosVendedor\");'>", sWidth: "1%", sClass: "center", bSortable: false},
                 {sTitle: "N°", sWidth: "5%", bSortable: false},
                 {sTitle: "N° OS", sWidth: "10%"},
                 {sTitle: "Vendedor", sWidth: "28%"},
@@ -75,7 +78,9 @@ var pagoVendedor_ = function(){
     };
     
     this.publico.getFormPagar = function(btn,id,vendedor,saldo,persona){
-        _private.idComision = id;               
+        _private.idComision = id;  
+        _private.saldo = saldo;
+        
         simpleAjax.send({
             element : btn,
             gifProcess: true,
@@ -90,6 +95,12 @@ var pagoVendedor_ = function(){
     };
     
     this.publico.postPagoVendedor = function(){
+        if(parseFloat($('#'+diccionario.tabs.GPAVE+'txt_monto').val()) > parseFloat(_private.saldo)){
+            simpleScript.notify.warning({
+                content: 'Monto es mayor que saldo.'
+            });
+            return false;
+        }
         simpleAjax.send({
             element: "#"+diccionario.tabs.GPAVE+"btnGrPag",
             root: _private.config.modulo + "postPagoVendedor",
@@ -106,6 +117,35 @@ var pagoVendedor_ = function(){
                         }
                     });
                 }
+            }
+        });
+    };
+    
+    this.publico.postAnularPagoAll = function(btn){
+        simpleScript.validaCheckBox({
+            id: '#'+diccionario.tabs.GPAVE+'gridPagosVendedor',
+            msn: mensajes.MSG_9,
+            fnCallback: function(){
+                simpleScript.notify.confirm({
+                    content: mensajes.MSG_13,
+                    callbackSI: function(){
+                        simpleAjax.send({
+                            element: btn,
+                            form: '#'+diccionario.tabs.GPAVE+'formGridSaldoVendedor',
+                            root: _private.config.modulo + 'postAnularCotizacionAll',
+                            fnCallback: function(data) {
+                                if(!isNaN(data.result) && parseInt(data.result) === 1){
+                                    simpleScript.notify.ok({
+                                        content: mensajes.MSG_14,
+                                        callback: function(){
+                                            simpleScript.reloadGrid('#'+diccionario.tabs.GPAVE+'gridPagosVendedor');
+                                        }
+                                    });
+                                }
+                            }
+                        });
+                    }
+                });
             }
         });
     };

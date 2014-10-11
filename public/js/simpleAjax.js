@@ -84,7 +84,7 @@ var simpleAjax_ = function(){
             },
             success: function(data){
                 /*validar error del SP*/
-                if(typeData === 'json'){
+                if(typeData === 'json' && data.length>0 || data.error !== undefined){
                     /*no es un array, servidor devuelve cadena, y el unico q devuelve cadena es el ERROR del SP*/
                     if(data instanceof Object === false || data.error !== undefined){
                         var msn = data;
