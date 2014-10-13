@@ -99,7 +99,7 @@ var saldoSocio_ = function(){
     };
     
     this.publico.getGridBoleta = function (){
-         $('#'+diccionario.tabs.SASOC+'gridPagoVendedor').dataTable({
+         $('#'+diccionario.tabs.SASOC+'gridPagoSocio').dataTable({
             bProcessing: true,
             bServerSide: true,
             bDestroy: true,
@@ -110,18 +110,16 @@ var saldoSocio_ = function(){
             sSearch: false,
             bFilter: false,
             aoColumns: [                
-                {sTitle: "N° Boleta", sWidth: "15%"},
+                {sTitle: "N° Recibo", sWidth: "15%"},
                 {sTitle: "Fecha", sWidth: "20%"},
                 {sTitle: "Numero", sWidth: "15%"},
-                {sTitle: "Serie", sWidth: "15%"},
-                {sTitle: "Exonerado", sWidth: "5%", sClass: "center"},
+                {sTitle: "Serie", sWidth: "15%" },                
                 {sTitle: "Total", sWidth: "15%", sClass: "right"},
-                {sTitle: "Retencion", sWidth: "15%", sClass: "right"},
                 {sTitle: "Acciones", sWidth: "10%", sClass: "center", bSortable: false}
             ],
             aaSorting: [[0, 'asc']],
-            sScrollY: "350px",
-            sAjaxSource: _private.config.modulo+'gridPagoVendedor',
+            sScrollY: "150px",
+            sAjaxSource: _private.config.modulo+'gridPagoSocio',
             fnServerParams: function(aoData){
                 aoData.push({"name": "_idComision", "value": _private.idComision});
             }
@@ -139,7 +137,7 @@ var saldoSocio_ = function(){
             data: '&_idComision='+_private.idComision+'&_persona='+nom,
             fnCallback: function(data){
                 $('#cont-modal').append(data);  /*los formularios con append*/
-                $('#'+diccionario.tabs.SASOC+'formPagoVendedor').modal('show');
+                $('#'+diccionario.tabs.SASOC+'formPagoSocio').modal('show');
                 setTimeout(function(){                    
                     saldoSocio.getGridBoleta()
                 }, 500);
@@ -148,11 +146,11 @@ var saldoSocio_ = function(){
         });
     };   
     
-    this.publico.postPDF = function(btn,idd){
+    this.publico.postPDF = function(btn,idd,nb){
         simpleAjax.send({
             element: btn,
             root: _private.config.modulo + 'postPDF',
-            data: '&_idBoleta='+idd,
+            data: '&_idBoleta='+idd+'&_numBoleta='+nb,
             fnCallback: function(data) {
                 if(parseInt(data.result) === 1){
                     $('#'+diccionario.tabs.SASOC+'btnDowPDF').attr("onclick","window.open('public/files/"+data.archivo+"','_blank');compromisoPagar.deleteArchivo('"+data.archivo+"');");

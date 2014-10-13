@@ -127,7 +127,7 @@ class saldoVendedorController extends Controller{
                 
                 $axion = '"<div class=\"btn-group\">';
                 if($exportarpdf['permiso']){
-                    $axion .= '<button type=\"button\" class=\"'.$exportarpdf['theme'].'\" title=\"'.$exportarpdf['accion'].' pagos \" onclick=\"saldoVendedor.postPDF(this,\'' . $encryptReg . '\')\"> ';
+                    $axion .= '<button type=\"button\" class=\"'.$exportarpdf['theme'].'\" title=\"'.$exportarpdf['accion'].' pagos \" onclick=\"saldoVendedor.postPDF(this,\'' . $encryptReg . '\',\'' . $c1 . '\')\"> ';
                     $axion .= '    <i class=\"'.$exportarpdf['icono'].'\"></i>';
                     $axion .= '</button>';
                 }
@@ -149,7 +149,7 @@ class saldoVendedorController extends Controller{
     
     public function postPDF($n=''){
          
-        $c = 'boleta_'.Obj::run()->saldoVendedorModel->_idBoleta.'.pdf';
+        $c = 'boleta_'.Obj::run()->saldoVendedorModel->_numBoleta.'.pdf';
         
         $ar = ROOT.'public'.DS.'files'.DS.$c;
                
@@ -172,9 +172,12 @@ class saldoVendedorController extends Controller{
             echo json_encode($data);
         }
     }       
-        
-    public function getHtmlBoleta(){
+    public function getBoleta(){
         $data = Obj::run()->saldoVendedorModel->getBoleta();
+        return $data;
+    }        
+    public function getHtmlBoleta(){
+        $data = $this->getBoleta();
         
       $html ='
         <style>           
@@ -198,7 +201,7 @@ class saldoVendedorController extends Controller{
           </tr>
            <tr>
            <td width="13%"><h3><strong>N°:</strong></h3></td>
-            <td width="26%">'.$data['boleta_numero'].'</td>
+            <td width="26%">'.$data['boleta_periodo'].'-'.$data['boleta_numero'].'</td>
             <td width="8%"><strong>Estado :</strong></td>
             <td width="15%">'.$estado.'</td>
             <td width="15%"><strong>Fecha :</strong></td>
@@ -223,6 +226,10 @@ class saldoVendedorController extends Controller{
           <tr>
             <td><strong>Pago recibido:</strong></td>
             <td colspan="5">'.$td.'</td>            
+          </tr>   
+          <tr>
+            <td><strong>Orden Servicio:</strong></td>
+            <td colspan="5">'.$data['orden_numero'].'</td>            
           </tr>   
         </table> ';
         

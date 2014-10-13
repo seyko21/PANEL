@@ -113,7 +113,7 @@ var pagoSocio_ = function(){
             gifProcess: true,
             dataType: 'html',
             root: _private.config.modulo + 'getFormPagar',
-            data: '&_idComision='+_private.idComision+'&_socio='+socio+'&_saldo='+saldo+'&_idPersona='+_private.idPersona,
+            data: '&_idComision='+id+'&_socio='+socio+'&_saldo='+saldo+'&_idPersona='+persona,
             fnCallback: function(data){
                 $('#cont-modal').append(data);  /*los formularios con append*/
                 $('#'+diccionario.tabs.GPASO+'formPagarSocio').modal('show');

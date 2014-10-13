@@ -150,11 +150,11 @@ var saldoVendedor_ = function(){
         });
     };   
     
-    this.publico.postPDF = function(btn,idd){
+    this.publico.postPDF = function(btn,idd,nb){
         simpleAjax.send({
             element: btn,
             root: _private.config.modulo + 'postPDF',
-            data: '&_idBoleta='+idd,
+            data: '&_idBoleta='+idd+'&_numBoleta='+nb,
             fnCallback: function(data) {
                 if(parseInt(data.result) === 1){
                     $('#'+diccionario.tabs.SAVEN+'btnDowPDF').attr("onclick","window.open('public/files/"+data.archivo+"','_blank');compromisoPagar.deleteArchivo('"+data.archivo+"');");

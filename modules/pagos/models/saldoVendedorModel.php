@@ -11,7 +11,8 @@ class saldoVendedorModel extends Model{
 
     private $_flag;
     private $_idComision;
-    public  $_idBoleta;
+    private $_idBoleta;
+    public  $_numBoleta;
     private $_estadocb;
     private $_usuario;
     private $_f1;
@@ -37,6 +38,7 @@ class saldoVendedorModel extends Model{
         $this->_f2    = Functions::cambiaf_a_mysql(Formulario::getParam("_f2")); 
         
         $this->_idBoleta  = Aes::de(Formulario::getParam("_idBoleta"));
+        $this->_numBoleta = Formulario::getParam("_numBoleta");
         
         $this->_iDisplayStart  = Formulario::getParam("iDisplayStart"); 
         $this->_iDisplayLength = Formulario::getParam("iDisplayLength"); 
@@ -128,10 +130,12 @@ class saldoVendedorModel extends Model{
             pp.`direccion`,
             pp.`numerodocumento` AS ruc,
             pp.`dni`,
-            (SELECT valor FROM `pub_parametro`  WHERE alias = 'IR' ) as impuesto_ir
+            (SELECT valor FROM `pub_parametro`  WHERE alias = 'IR' ) as impuesto_ir,
+            os.`orden_numero`
         FROM `tes_boleta` tb
            INNER JOIN `lgk_comisionvendedor` cv ON cv.`id_comision` = tb.`id_comision`
            INNER JOIN mae_persona pp ON pp.`id_persona` = cv.`id_persona` 
+           INNER JOIN `lgk_ordenservicio` os ON os.`id_ordenservicio` = cv.`id_ordenservicio`
         WHERE tb.`id_boleta` = :idd";
         
         $parms = array(

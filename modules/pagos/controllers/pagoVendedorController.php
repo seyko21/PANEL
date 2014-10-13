@@ -51,7 +51,7 @@ class pagoVendedorController extends Controller{
                 $axion = '"<div class=\"btn-group\">';
                 if($pagar['permiso']){
                     if ($aRow['comision_saldo'] > 0 ){
-                        $axion .= '<button type=\"button\" class=\"'.$pagar['theme'].'\" title=\"'.$pagar['accion'].'\" onclick=\"pagoVendedor.getFormPagar(this,\''.$encryptReg.'\',\''.$c3.'\',\''.$c8.'\',\''.$aRow['id_persona'].'\')\">';
+                        $axion .= '<button type=\"button\" class=\"'.$pagar['theme'].'\" title=\"'.$pagar['accion'].'\" onclick=\"pagoVendedor.getFormPagar(this,\''.$encryptReg.'\',\''.$c3.'\',\''.$aRow['comision_saldo'].'\',\''.$aRow['id_persona'].'\')\">';
                         $axion .= '    <i class=\"'.$pagar['icono'].'\"></i>';
                         $axion .= '</button>';
                     }else{

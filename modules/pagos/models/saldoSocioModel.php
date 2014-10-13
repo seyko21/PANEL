@@ -11,6 +11,7 @@ class saldoSocioModel extends Model{
 
     private $_flag;
     private $_idComision;
+    public $_numBoleta;
     private $_estadocb;
     private $_usuario;
     private $_f1;
@@ -34,6 +35,8 @@ class saldoSocioModel extends Model{
         $this->_estadocb  = Formulario::getParam("_estadocb");  
         $this->_f1    = Functions::cambiaf_a_mysql(Formulario::getParam("_f1"));
         $this->_f2    = Functions::cambiaf_a_mysql(Formulario::getParam("_f2")); 
+        
+        $this->_numBoleta = Formulario::getParam("_numBoleta");
         
         $this->_iDisplayStart  = Formulario::getParam("iDisplayStart"); 
         $this->_iDisplayLength = Formulario::getParam("iDisplayLength"); 
@@ -71,6 +74,36 @@ class saldoSocioModel extends Model{
         $data = $this->queryAll($query,$parms);
         return $data;
     }      
+
+    public function gridPagoSocio(){
+        $aColumns       =   array('boleta_numero','fecha','recibo_numero','recibo_serie','monto_neto'); //para la ordenacion y pintado en html
+        /*
+	 * Ordenando, se verifica por que columna se ordenara
+	 */
+        $sOrder = "";
+        for ( $i=0 ; $i<intval( $this->_iSortingCols ) ; $i++ ){
+                if ( Formulario::getParam( "bSortable_".intval(Formulario::getParam("iSortCol_".$i)) ) == "true" ){
+                        $sOrder .= " ".$aColumns[ intval( Formulario::getParam("iSortCol_".$i) ) ]." ".
+                                (Formulario::getParam("sSortDir_".$i)==="asc" ? "asc" : 'desc') .",";
+                }
+        }        
+        $sOrder = substr_replace( $sOrder, "", -1 );
+        
+        $query = "call sp_pagoBoletaGrid(:idComision,:iDisplayStart,:iDisplayLength,:sOrder);";
+        
+        $parms = array(
+            ':idComision' => $this->_idComision,
+            ':iDisplayStart' => $this->_iDisplayStart,
+            ':iDisplayLength' => $this->_iDisplayLength,
+            ':sOrder' => $sOrder
+        );
+        
+        $data = $this->queryAll($query,$parms);
+     
+        return $data; 
+       
+    }    
+           
     
 }
 
