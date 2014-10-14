@@ -42,7 +42,7 @@ var panelesAlquilados_ = function(){
         });
     };
     this.publico.getGridPanelesAlquilados = function (){
-         $('#'+diccionario.tabs.PAAL+'gridPanelesAlquilados').dataTable({
+        var oTable = $('#'+diccionario.tabs.PAAL+'gridPanelesAlquilados').dataTable({
             bProcessing: true,
             bServerSide: true,
             bDestroy: true,
@@ -68,7 +68,8 @@ var panelesAlquilados_ = function(){
                 aoData.push({"name": "_tipoPanel", "value": $("#"+diccionario.tabs.PAAL+"lst_tipopanelsearch").val()});
             },
             fnDrawCallback: function() {
-                $('#'+diccionario.tabs.PAAL+'gridPanelesAlquilados_filter').find('input').attr('placeholder','Buscar por Código o Ciudad o Ubicación').css('width','350px');;                
+                $('#'+diccionario.tabs.PAAL+'gridPanelesAlquilados_filter').find('input').attr('placeholder','Buscar por Código o Ciudad o Ubicación').css('width','350px');
+                simpleScript.enterSearch("#"+diccionario.tabs.PAAL+'gridPanelesAlquilados',oTable);
                 /*para hacer evento invisible*/
                 simpleScript.removeAttr.click({
                     container: '#widget_'+diccionario.tabs.PAAL, //widget del datagrid

@@ -33,7 +33,7 @@ var tipoPanel_ = function(){
     };
     
     this.publico.getGridTipoPanel = function (){
-        $('#'+diccionario.tabs.T101+'gridTipoPanel').dataTable({
+        var oTable = $('#'+diccionario.tabs.T101+'gridTipoPanel').dataTable({
             bProcessing: true,
             bServerSide: true,
             bDestroy: true,
@@ -52,6 +52,7 @@ var tipoPanel_ = function(){
             sAjaxSource: _private.config.modulo+'getGridTipoPanel',            
             fnDrawCallback: function() {
                 $('#'+diccionario.tabs.T101+'gridTipoPanel_filter').find('input').attr('placeholder','Buscar');
+                simpleScript.enterSearch("#"+diccionario.tabs.T101+'gridTipoPanel',oTable);
                 /*para hacer evento invisible*/
                 simpleScript.removeAttr.click({
                     container: '#widget_'+diccionario.tabs.T101, //widget del datagrid

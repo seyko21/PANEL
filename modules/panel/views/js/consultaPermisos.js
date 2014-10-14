@@ -43,7 +43,7 @@ var consultaPermisos_ = function(){
     };
     
     this.publico.getGridConsultaPermisos = function (){
-     $('#'+diccionario.tabs.TAB_CONPER+'gridConsultaPermisos').dataTable({
+     var oTable  = $('#'+diccionario.tabs.TAB_CONPER+'gridConsultaPermisos').dataTable({
             bProcessing: true,
             bServerSide: true,
             bDestroy: true,
@@ -63,6 +63,7 @@ var consultaPermisos_ = function(){
             sAjaxSource: _private.config.modulo+'getGridConsultaPermiso',
             fnDrawCallback: function() {
                 $('#'+diccionario.tabs.TAB_CONPER+'gridConsultaPermisos_filter').find('input').attr('placeholder','Buscar por Ciudad o Ubicación').css('width','350px');
+                simpleScript.enterSearch("#"+diccionario.tabs.TAB_CONPER+'gridConsultaPermisos',oTable);
                 /*para hacer evento invisible*/
                 simpleScript.removeAttr.click({
                     container: '#widget_'+diccionario.tabs.TAB_CONPER, //widget del datagrid
@@ -81,7 +82,8 @@ var consultaPermisos_ = function(){
             data: '&_idProducto='+id,
             fnCallback: function(data) {
                 if(parseInt(data.result) === 1){
-                    $('#'+diccionario.tabs.TAB_CONPER+'btnDowPDF').click();
+                     $('#'+diccionario.tabs.TAB_CONPER+'btnDowPDF').attr("onclick","window.open('public/files/"+data.archivo+"','_blank');fichaTecnica.deleteArchivo('"+data.archivo+"');");
+                     $('#'+diccionario.tabs.TAB_CONPER+'btnDowPDF').click();                    
                 }                
             }
         });
@@ -94,7 +96,8 @@ var consultaPermisos_ = function(){
             data: '&_idProducto='+id,
             fnCallback: function(data) {
                 if(parseInt(data.result) === 1){
-                   $('#'+diccionario.tabs.TAB_CONPER+'btnDowExcel').click();
+                   $('#'+diccionario.tabs.TAB_CONPER+'btnDowExcel').attr("onclick","window.open('public/files/"+data.archivo+"','_self');fichaTecnica.deleteArchivo('"+data.archivo+"');");
+                   $('#'+diccionario.tabs.TAB_CONPER+'btnDowExcel').click();                                       
                 }
                 if(!isNaN(data.result) && parseInt(data.result) === 2){
                     simpleScript.notify.error({

@@ -83,7 +83,7 @@ class cotizacionVendedorController extends Controller{
                     $axion .= '</button>';
                 }                
                 if($exportarpdf['permiso']){
-                    $axion .= '<button type=\"button\" class=\"'.$exportarpdf['theme'].'\" title=\"'.$exportarpdf['accion'].'\" onclick=\"cotizacionVendedor.postPDF(this,\''.$encryptReg.'\')\">';
+                    $axion .= '<button type=\"button\" class=\"'.$exportarpdf['theme'].'\" title=\"'.$exportarpdf['accion'].'\" onclick=\"cotizacionVendedor.postPDF(this,\''.$encryptReg.'\', \''.$aRow['cotizacion_numero'].'\')\">';
                     $axion .= '    <i class=\"'.$exportarpdf['icono'].'\"></i>';
                     $axion .= '</button>';
                 }

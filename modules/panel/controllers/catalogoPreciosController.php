@@ -62,6 +62,7 @@ class catalogoPreciosController extends Controller{
                 /*datos de manera manual*/
                 $sOutput .= '["'.$aRow['codigo'].'","'.$aRow['distrito'].'","'.$aRow['ubicacion'].'","'.$aRow['elemento'].'","'.$aRow['dimesion_area'].'","'.number_format($aRow['precio'],2).'","'.$iluminado.'","'.$estado.'","'.$imagen.'", ';
                 
+                $codigo = $aRow['codigo'];
                 /*
                  * configurando botones (add/edit/delete etc)
                  * se verifica si tiene permisos para editar
@@ -80,12 +81,12 @@ class catalogoPreciosController extends Controller{
                     $sOutput .= '</button>';
                 }
                 if($exportarpdf['permiso'] == 1){
-                    $sOutput .= '<button type=\"button\" class=\"'.$exportarpdf['theme'].'\" title=\"'.$exportarpdf['accion'].'\" onclick=\"catalogoPrecios.postPDF(this,\''.$encryptReg.'\')\">';
+                    $sOutput .= '<button type=\"button\" class=\"'.$exportarpdf['theme'].'\" title=\"'.$exportarpdf['accion'].'\" onclick=\"catalogoPrecios.postPDF(this,\''.$encryptReg.'\',\''.$codigo.'\')\">';
                     $sOutput .= '    <i class=\"'.$exportarpdf['icono'].'\"></i>';
                     $sOutput .= '</button>';
                 }
                 if($exportarexcel['permiso'] == 1){
-                    $sOutput .= '<button type=\"button\" class=\"'.$exportarexcel['theme'].'\" title=\"'.$exportarexcel['accion'].'\" onclick=\"catalogoPrecios.postExcel(this,\''.$encryptReg.'\')\">';
+                    $sOutput .= '<button type=\"button\" class=\"'.$exportarexcel['theme'].'\" title=\"'.$exportarexcel['accion'].'\" onclick=\"catalogoPrecios.postExcel(this,\''.$encryptReg.'\',\''.$codigo.'\')\">';
                     $sOutput .= '    <i class=\"'.$exportarexcel['icono'].'\"></i>';
                     $sOutput .= '</button>';
                 }
@@ -113,16 +114,10 @@ class catalogoPreciosController extends Controller{
        return $data;
     }
     public function postPDF(){ 
-        $c = 'fichatecnicacaratula_'.Obj::run()->catalogoPreciosModel->_idCaratula.'.pdf';
+        $c = 'fichatecnica_'.Obj::run()->catalogoPreciosModel->_codigo.'.pdf';
         $ar = ROOT.'public'.DS.'files'.DS.$c;
         $mpdf = new mPDF('c');
-        $mpdf->mirrorMargins = 1;
-        $mpdf->defaultheaderfontsize = 11; /* in pts */
-        $mpdf->defaultheaderfontstyle = B; /* blank, B, I, or BI */
-        $mpdf->defaultheaderline = 1; /* 1 to include line below header/above footer */
-        $mpdf->defaultfooterfontsize = 11; /* in pts */
-        $mpdf->defaultfooterfontstyle = B; /* blank, B, I, or BI */
-        $mpdf->defaultfooterline = 1; /* 1 to include line below header/above footer */
+      
                         
         $mpdf->SetHTMLHeader('<img src="'.ROOT.'public'.DS.'img'.DS.'logotipo.png" width="137" height="68" />','',TRUE);
         $mpdf->SetHTMLFooter('<table width="100%" style="vertical-align: bottom; font-family: serif; font-size: 8pt; color: #000000; font-weight: bold;"><tr>
@@ -140,7 +135,7 @@ class catalogoPreciosController extends Controller{
     }
     
     public function postExcel(){
-        $c = 'fichatecnicacaratula_'.Obj::run()->catalogoPreciosModel->_idCaratula.'.xls';
+        $c = 'fichatecnica_'.Obj::run()->catalogoPreciosModel->_codigo.'.xls';
         $ar = ROOT.'public'.DS.'files'.DS.$c;
         $html = $this->getHtmlReporte();
                 
@@ -157,6 +152,7 @@ class catalogoPreciosController extends Controller{
     
     public function getHtmlReporte(){
         $data = Obj::run()->catalogoPreciosModel->getRptFichaTecnicaCatalogo();
+        $dataOS = Obj::run()->catalogoPreciosModel->getRptOrdenServicio();
         $html = '';
         $iluminado = ($data[0]['iluminado']=='1')?'SI':'NO';
         $estado = ($data[0]['estado']=='D')?'DISPONIBLE':'ALQUILADO';
@@ -170,18 +166,20 @@ class catalogoPreciosController extends Controller{
             table{width:100%;}
             table td {padding:4px 3px 4px 0px}
             h3{font-size:25px;}
-        </style>
-        <h2>FICHA TECNICA </h2>  
-            <table width="100%" border="0" >
+        </style>        
+            <table width="100%" border="0" cellpadding="5" cellspacing="3">
+                <tr bgcolor="#901D78">
+                    <th colspan="6"><div align="center"><h2 style="color:#FFF;">FICHA TECNICA </h2></div></th>
+                 </tr>
                 <tr>
                     <td colspan="4">
                         <table width="100%" border="0">
                             <tr>
                               <td width="5%"><strong>CÓDIGO:</strong></td>
-                              <td width="25%"><h3>'.$data[0]['codigo'].'</h3></td>                            
+                              <td width="25%"><h3 style="color:#901D78">'.$data[0]['codigo'].'</h3></td>                            
                             </tr>                           
-                          </table>
-                      </td>
+                        </table>
+                    </td>
                 </tr>
                 <tr>
                   <td width="16%"><b>DEPARTAMENTO:</b></td><td width="21%">'.$data[0]['departamento'].'</td>
@@ -232,13 +230,13 @@ class catalogoPreciosController extends Controller{
                 </tr>
           </table>';
         
-        $html .='<h4>PERMISO MUNICIPAL</h4>';
+        $html .='<h4 style="color:#901D78">PERMISO MUNICIPAL</h4>';
         
         if($data[0]['fecha_inicio'] == ''){
            $html .='<h4><i>No tiene registrado Permiso Municipal.</i></h4>'; 
         }else{        
             $html .= '
-                <table width="100%" border="0">
+                <table width="100%" border="0" cellpadding="5" cellspacing="3">
                     <tr>
                       <td width="18%"><strong>FECHA INICIO:</strong></td>
                       <td width="22%">'.Functions::cambiaf_a_normal($data[0]['fecha_inicio']).'</td>
@@ -255,6 +253,56 @@ class catalogoPreciosController extends Controller{
                     </tr>
                   </table>';
         }
+        $html .='<h4 style="color:#901D78">ULTIMO CONTRATO</h4>';
+        if($estado == 'ALQUILADO'){
+            $ruc ='';  
+            if($dataOS['ruc'] != '') $ruc = $dataOS['ruc'].' - ';
+            switch ($dataOS['estado']){
+                case 'E': $estado = 'EMITIDO'; break;
+                case 'P': $estado = 'PAGO PARCIAL'; break;
+                case 'T': $estado = 'PAGO TOTAL'; break;
+                case 'F': $estado = 'FINALIZADO'; break;
+                case 'A': $estado = 'ANULADO'; break;
+            }
+            $html .= '
+                <table width="100%" border="0" >
+                   <tr>
+                        <td width="16%"><strong>CLIENTE:</strong></td>
+                        <td width="84%">'.$ruc.strtoupper($dataOS['cliente']).'</td>                       
+                    </tr>
+                    <tr>
+                        <td width="16%"><strong>REPRESENTANTE:</strong></td>
+                        <td width="84%">'.strtoupper($dataOS['representante']).'</td>                       
+                    </tr>
+                    <tr>
+                        <td colspan="2" >
+                            <table width="100%" border="0" >
+                                <tr>
+                                    <td width="5%" style="text-align:right"><strong>F. CONTRATADO:</strong></td>
+                                    <td width="10%">'.($dataOS['fecha_contrato']).'</td>
+                                    <td width="5%" style="text-align:right"><strong>F. INSTALADO:</strong></td>
+                                    <td width="10%">'.($dataOS['fecha_inicio']).'</td>
+                                    <td width="5%" style="text-align:right"><strong>F. RETIRO:</strong></td>
+                                    <td width="10%">'.($dataOS['fecha_termino']).'</td>
+                                </tr>
+                                <tr>
+                                    <td width="5%" align="right"><strong>N° ORDEN SERV:</strong></td>
+                                    <td width="10%" align="left">'.($dataOS['orden_numero']).'</td>
+                                    <td width="5%" align="right"><strong>ALQUILER:</strong></td>
+                                    <td width="10%" align="left">'.Functions::convertirDiaMes($dataOS['cantidad_mes']).'</td>
+                                    <td width="5%" align="right" ><strong>ESTADO:</strong></td>
+                                    <td width="10%" align="left">'.$estado.'</td>                                    
+                                </tr>
+                            </table>
+                        </td>                       
+                    </tr>                 
+
+                  </table>';
+             
+        }else{
+            $html .='<h4><i>No tiene registrado Contratos.</i></h4>'; 
+        }
+        
        
         return $html;
         
@@ -263,10 +311,9 @@ class catalogoPreciosController extends Controller{
         Obj::run()->View->idCaratula = Formulario::getParam('_idCaratula');
         Obj::run()->View->render('formAdjuntarImgCP');
     }       
-   public function adjuntarImagen() {
+    public function adjuntarImagen() {
        echo Obj::run()->fichaTecnicaController->adjuntarImagen();
     }
-    
     public function deleteAdjuntar() {
         echo Obj::run()->fichaTecnicaController->deleteAdjuntar();     
     }           

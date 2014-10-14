@@ -60,12 +60,12 @@ class generarCotizacionController extends Controller{
                 $sOutput .= '"<div class=\"btn-group\">';
                 
                 if($exportarpdf['permiso']){
-                    $sOutput .= '<button type=\"button\" class=\"'.$exportarpdf['theme'].'\" title=\"'.$exportarpdf['accion'].'\" onclick=\"generarCotizacion.postPDF(this,\''.$encryptReg.'\')\">';
+                    $sOutput .= '<button type=\"button\" class=\"'.$exportarpdf['theme'].'\" title=\"'.$exportarpdf['accion'].'\" onclick=\"generarCotizacion.postPDF(this,\''.$encryptReg.'\', \''.$aRow['cotizacion_numero'].'\')\">';
                     $sOutput .= '    <i class=\"'.$exportarpdf['icono'].'\"></i>';
                     $sOutput .= '</button>';
                 }
                 if($exportarexcel['permiso']){
-                    $sOutput .= '<button type=\"button\" class=\"'.$exportarexcel['theme'].'\" title=\"'.$exportarexcel['accion'].'\" onclick=\"generarCotizacion.postExcel(this,\''.$encryptReg.'\')\">';
+                    $sOutput .= '<button type=\"button\" class=\"'.$exportarexcel['theme'].'\" title=\"'.$exportarexcel['accion'].'\" onclick=\"generarCotizacion.postExcel(this,\''.$encryptReg.'\', \''.$aRow['cotizacion_numero'].'\')\">';
                     $sOutput .= '    <i class=\"'.$exportarexcel['icono'].'\"></i>';
                     $sOutput .= '</button>';
                 }
@@ -75,7 +75,7 @@ class generarCotizacionController extends Controller{
                     $sOutput .= '</button>';
                 }
                 if($enviaremail['permiso'] && $aRow['estado'] != 'A'){
-                    $sOutput .= '<button type=\"button\" class=\"'.$enviaremail['theme'].'\" title=\"'.$enviaremail['accion'].'\" onclick=\"generarCotizacion.postEmail(this,\''.$encryptReg.'\')\">';
+                    $sOutput .= '<button type=\"button\" class=\"'.$enviaremail['theme'].'\" title=\"'.$enviaremail['accion'].'\" onclick=\"generarCotizacion.postEmail(this,\''.$encryptReg.'\', \''.$aRow['cotizacion_numero'].'\')\">';
                     $sOutput .= '    <i class=\"'.$enviaremail['icono'].'\"></i>';
                     $sOutput .= '</button>';
                 }
@@ -189,11 +189,10 @@ class generarCotizacionController extends Controller{
         $emailCliente = $data[0]['email'];
         $cliente = $data[0]['nombrecompleto'];
         $emailUser = $data[0]['mail_user'];
-        $idCotizacion = $data[0]['id_cotizacion'];
         $vendedor = $data[0]['vendedor'];
         $numCotizacion = $data[0]['cotizacion_numero'];
         $numVendedor = $data[0]['telefono_vendedor'];
-        $archivo = 'cotizacion_'.$idCotizacion.'.pdf';
+        $archivo = 'cotizacion_'.$numCotizacion.'.pdf';
         //Html de Cotizacion:
          $body = '
             <h3>Estimado: ' . $cliente . '</h3>
@@ -232,7 +231,7 @@ class generarCotizacionController extends Controller{
     public function postPDF($n=''){
         $data = Obj::run()->generarCotizacionModel->getCotizacion();
          
-        $c = 'cotizacion_'.Obj::run()->generarCotizacionModel->_idCotizacion.'.pdf';
+        $c = 'cotizacion_'.Obj::run()->generarCotizacionModel->_numCoti.'.pdf';
         
         $ar = ROOT.'public'.DS.'files'.DS.$c;
                
@@ -269,7 +268,7 @@ class generarCotizacionController extends Controller{
     }
     
     public function postExcel(){
-        $c = 'cotizacion_'.Obj::run()->generarCotizacionModel->_idCotizacion.'.xls';
+        $c = 'cotizacion_'.Obj::run()->generarCotizacionModel->_numCoti.'.xls';
         
         $ar = ROOT.'public'.DS.'files'.DS.$c;
         

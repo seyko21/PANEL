@@ -87,7 +87,7 @@ class regProduccionModel extends Model{
                 c.`id_producto`,
                 c.`ubicacion`
         FROM lgk_catalogo c
-        WHERE c.`ubicacion` LIKE CONCAT('%".$this->_term."%')
+        WHERE c.estado = 'A' and c.`ubicacion` LIKE CONCAT('%".$this->_term."%')
         AND c.`id_producto` NOT IN(SELECT id_producto FROM `prod_produccionpanel` WHERE estado = 'A'); ";
         
         $parms = array();

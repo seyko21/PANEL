@@ -12,7 +12,8 @@ class generarCotizacionModel extends Model{
     private $_keyPersona;
     private $_idPersona;
     private $_idProducto;
-    public  $_idCotizacion;
+    private  $_idCotizacion;
+    public  $_numCoti;
     private $_ubicacion;
     private $_precio;
     private $_produccion;
@@ -41,30 +42,32 @@ class generarCotizacionModel extends Model{
     }
     
     private function _set(){
-        $this->_flag        = $this->post('_flag');
-        $this->_keyPersona  = Aes::de($this->post(T8.'txt_idpersona'));     /*el cliente, representante*/
-        $this->_ubicacion   = $this->post(T8.'txt_search');
-        $this->_meses       = $this->post(T8.'txt_meses');                  /*meses de contrato*/
-        $this->_oferta      = $this->post(T8.'txt_oferta');                 /*meses de oferta*/
-        $this->_idCotizacion= AesCtr::de($this->post('_idCotizacion'));
-        $this->_idProducto  = $this->post(T8.'hhddIdProducto');
-        $this->_precio      = $this->post(T8.'hhddPrecio');
-        $this->_produccion  = $this->post(T8.'hhddProduccion');
-        $this->_costoProduccion  = $this->post(T8.'txt_produccion');
-        $this->_total       = $this->post(T8.'txt_total');
-        $this->_igv         = $this->post(T8.'lst_igv');
+        $this->_flag        = Formulario::getParam('_flag');
+        $this->_keyPersona  = Aes::de(Formulario::getParam(T8.'txt_idpersona'));     /*el cliente, representante*/
+        $this->_ubicacion   = Formulario::getParam(T8.'txt_search');
+        $this->_meses       = Formulario::getParam(T8.'txt_meses');                  /*meses de contrato*/
+        $this->_oferta      = Formulario::getParam(T8.'txt_oferta');                 /*meses de oferta*/
+        $this->_idCotizacion= AesCtr::de(Formulario::getParam('_idCotizacion'));
+        $this->_idProducto  = Formulario::getParam(T8.'hhddIdProducto');
+        $this->_precio      = Formulario::getParam(T8.'hhddPrecio');
+        $this->_produccion  = Formulario::getParam(T8.'hhddProduccion');
+        $this->_costoProduccion  = Formulario::getParam(T8.'txt_produccion');
+        $this->_total       = Formulario::getParam(T8.'txt_total');
+        $this->_igv         = Formulario::getParam(T8.'lst_igv');
         $this->_idPersona   = Session::get('sys_idPersona');
-        $this->_validez     = $this->post(T8.'txt_diasvalidez');
+        $this->_validez     = Formulario::getParam(T8.'txt_diasvalidez');
         $this->_usuario     = Session::get('sys_idUsuario');
-        $this->_xSearch     = $this->post(T8.'_term');
-        $this->_chkdel  = $this->post(T8.'chk_delete');
-        $this->_observacion  = $this->post(T8.'txt_obs');
-        $this->_campania  = $this->post(T8.'txt_campania');
+        $this->_xSearch     = Formulario::getParam(T8.'_term');
+        $this->_chkdel  = Formulario::getParam(T8.'chk_delete');
+        $this->_observacion  = Formulario::getParam(T8.'txt_obs');
+        $this->_campania  = Formulario::getParam(T8.'txt_campania');
         
-        $this->_iDisplayStart  =   $this->post('iDisplayStart'); 
-        $this->_iDisplayLength =   $this->post('iDisplayLength'); 
-        $this->_iSortingCols   =   $this->post('iSortingCols');
-        $this->_sSearch        =   $this->post('sSearch');
+        $this->_numCoti = Formulario::getParam('_num');
+        
+        $this->_iDisplayStart  =   Formulario::getParam('iDisplayStart'); 
+        $this->_iDisplayLength =   Formulario::getParam('iDisplayLength'); 
+        $this->_iSortingCols   =   Formulario::getParam('iSortingCols');
+        $this->_sSearch        =   Formulario::getParam('sSearch');
     }
     
     public function getGridCotizacion() {
@@ -74,9 +77,9 @@ class generarCotizacionModel extends Model{
 	 */
         $sOrder = "";
         for ( $i=0 ; $i<intval( $this->_iSortingCols ) ; $i++ ){
-                if ( $this->post( 'bSortable_'.intval($this->post('iSortCol_'.$i)) ) == "true" ){
-                        $sOrder .= " ".$aColumns[ intval( $this->post('iSortCol_'.$i) ) ]." ".
-                                ($this->post('sSortDir_'.$i)==='asc' ? 'asc' : 'desc') .",";
+                if ( Formulario::getParam( 'bSortable_'.intval(Formulario::getParam('iSortCol_'.$i)) ) == "true" ){
+                        $sOrder .= " ".$aColumns[ intval( Formulario::getParam('iSortCol_'.$i) ) ]." ".
+                                (Formulario::getParam('sSortDir_'.$i)==='asc' ? 'asc' : 'desc') .",";
                 }
         }
         $sOrder = substr_replace( $sOrder, "", -1 );

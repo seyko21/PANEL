@@ -303,11 +303,11 @@ var generarCotizacion_ = function(){
         });
     };
     
-    this.publico.postEmail = function(btn,idCot){
+    this.publico.postEmail = function(btn,idCot,num){
         simpleAjax.send({
             element: btn,
             root: _private.config.modulo + 'postEmail',
-            data: '&_idCotizacion='+idCot,
+            data: '&_idCotizacion='+idCot+'&_num='+num,
             fnCallback: function(data) {
                 if(!isNaN(data.result) && parseInt(data.result) === 1){
                     simpleScript.notify.ok({
@@ -324,11 +324,11 @@ var generarCotizacion_ = function(){
         });
     };
     
-    this.publico.postPDF = function(btn,idCot){
+    this.publico.postPDF = function(btn,idCot, num){
         simpleAjax.send({
             element: btn,
             root: _private.config.modulo + 'postPDF',
-            data: '&_idCotizacion='+idCot,
+            data: '&_idCotizacion='+idCot+'&_num='+num,
             fnCallback: function(data) {
                 if(parseInt(data.result) === 1){
                     $('#'+diccionario.tabs.T8+'btnDowPDF').attr("onclick","window.open('public/files/"+data.archivo+"','_blank');generarCotizacion.deleteArchivo('"+data.archivo+"');");
@@ -338,11 +338,11 @@ var generarCotizacion_ = function(){
         });
     };
     
-    this.publico.postExcel = function(btn,idCot){
+    this.publico.postExcel = function(btn,idCot, num){
         simpleAjax.send({
             element: btn,
             root: _private.config.modulo + 'postExcel',
-            data: '&_idCotizacion='+idCot,
+            data: '&_idCotizacion='+idCot+'&_num='+num,
             fnCallback: function(data) {
                 if(parseInt(data.result) === 1){
                     $('#'+diccionario.tabs.T8+'btnDowExcel').attr("onclick","window.open('public/files/"+data.archivo+"','_self');generarCotizacion.deleteArchivo('"+data.archivo+"');");

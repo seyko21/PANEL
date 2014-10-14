@@ -71,7 +71,7 @@ class contratosGeneradosController extends Controller{
                 $axion = '"<div class=\"btn-group\">';
                  
                 if($exportarpdf['permiso']){
-                    $axion .= '<button type=\"button\" class=\"'.$exportarpdf['theme'].'\" title=\"'.$exportarpdf['accion'].'\" onclick=\"contratosGenerados.postExportarContratoPDF(this,\'' . $encryptReg . '\')\"> ';
+                    $axion .= '<button type=\"button\" class=\"'.$exportarpdf['theme'].'\" title=\"'.$exportarpdf['accion'].'\" onclick=\"contratosGenerados.postExportarContratoPDF(this,\'' . $encryptReg . '\',\'' . $aRow['orden_numero'] . '\')\"> ';
                     $axion .= '    <i class=\"'.$exportarpdf['icono'].'\"></i>';
                     $axion .= '</button>';
                 }

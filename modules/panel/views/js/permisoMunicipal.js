@@ -48,7 +48,7 @@ var permisoMunicipal_ = function(){
     };
     
     this.publico.getGridFichaTecnica = function (){
-        $('#'+diccionario.tabs.PERMU+'gridFichaTecnica').dataTable({                         
+        var oTable = $('#'+diccionario.tabs.PERMU+'gridFichaTecnica').dataTable({                         
             bProcessing: true,
             bServerSide: true,
             bDestroy: true,
@@ -70,6 +70,7 @@ var permisoMunicipal_ = function(){
             sAjaxSource: _private.config.modulo+'getGridFichaTecnica',
             fnDrawCallback: function() {
                 $('#'+diccionario.tabs.PERMU+'gridFichaTecnica_filter').find('input').attr('placeholder','Buscar por Ciudad o Ubicación').css('width','350px');                          
+                simpleScript.enterSearch("#"+diccionario.tabs.PERMU+'gridFichaTecnica',oTable);
                 /*para hacer evento invisible*/
                 simpleScript.removeAttr.click({
                     container: '#widget_'+diccionario.tabs.PERMU, //widget del datagrid

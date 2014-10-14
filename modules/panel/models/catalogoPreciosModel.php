@@ -11,7 +11,8 @@ class catalogoPreciosModel extends Model{
 
     private $_flag;
     private $_usuario;    
-    public $_idCaratula;
+    private $_idCaratula;
+    public $_codigo;
     private $_tipoPanel;
     
     /*para el grid*/
@@ -34,6 +35,9 @@ class catalogoPreciosModel extends Model{
         $this->_iDisplayLength =   Formulario::getParam("iDisplayLength"); 
         $this->_iSortingCols   =   Formulario::getParam("iSortingCols");
         $this->_sSearch        =   Formulario::getParam("sSearch");
+        
+        $this->_codigo = Formulario::getParam("_codigo");        
+        
     }
     
     public function getGridProducto(){
@@ -100,8 +104,8 @@ class catalogoPreciosModel extends Model{
                           ( SELECT pm.fecha_final FROM lgk_permisomuni pm WHERE pm.id_producto = c.id_producto AND pm.estado = 'A' ORDER BY pm.id_permisomuni DESC LIMIT 1 ) AS fecha_final,
                           ( SELECT pm.observacion FROM lgk_permisomuni pm WHERE pm.id_producto = c.id_producto AND pm.estado = 'A' ORDER BY pm.id_permisomuni DESC LIMIT 1 ) AS pm_obs,
                           ( SELECT pm.monto_pago FROM lgk_permisomuni pm WHERE pm.id_producto = c.id_producto AND pm.estado = 'A' ORDER BY pm.id_permisomuni DESC LIMIT 1 ) AS pm_precio,
-                          ( SELECT `porcentaje_comision` FROM `lgk_asignacioncuenta` ac WHERE ac.`id_caratula` = a.`id_caratula` AND ac.`estado` = 'A' LIMIT 1 ) AS comision_vendedor,
-                          ( SELECT (SELECT p.`nombrecompleto` FROM `mae_persona` p WHERE p.`id_persona` = ac.`id_persona` ) FROM `lgk_asignacioncuenta` ac WHERE ac.`id_caratula` = a.`id_caratula` AND ac.`estado` = 'A' LIMIT 1 ) AS vendedor                          
+                          ( SELECT `porcentaje_comision` FROM `lgk_asignacioncuenta` ac WHERE ac.`id_caratula` = a.`id_caratula` AND ac.`estado` = 'R' LIMIT 1 ) AS comision_vendedor,
+                          ( SELECT (SELECT p.`nombrecompleto` FROM `mae_persona` p WHERE p.`id_persona` = ac.`id_persona` ) FROM `lgk_asignacioncuenta` ac WHERE ac.`id_caratula` = a.`id_caratula` AND ac.`estado` = 'R' LIMIT 1 ) AS vendedor                          
 	FROM `lgk_caratula` a
 		INNER JOIN `lgk_catalogo` c ON c.`id_producto` = a.`id_producto`
 		INNER JOIN `lgk_tipopanel` t ON t.`id_tipopanel` = c.`id_tipopanel`
@@ -111,10 +115,31 @@ class catalogoPreciosModel extends Model{
             ':idCaratula' => $this->_idCaratula
         );
         $data = $this->queryAll($query,$parms);    
-        //print_r($data);
         return $data;
     }        
-    
+
+    public function getRptOrdenServicio(){
+        $query = "
+        SELECT osd.`id_caratula`,ca.`codigo`, DATE_FORMAT(os.`fecha_contrato`,'%d/%m/%Y') AS fecha_contrato,	        
+            p.`nombrecompleto` AS representante, 
+            p.`numerodocumento` AS dni,
+	(SELECT pp.nombrecompleto FROM mae_persona pp WHERE pp.id_persona = p.`id_personapadre` ) AS cliente,
+	(SELECT pp.numerodocumento FROM mae_persona pp WHERE pp.id_persona = p.`id_personapadre` ) AS ruc,
+        DATE_FORMAT(osd.`fecha_inicio`,'%d/%m/%Y') AS fecha_inicio,	
+        DATE_FORMAT(osd.`fecha_termino`,'%d/%m/%Y') AS fecha_termino,
+        os.estado, os.`orden_numero`, osd.`cantidad_mes`        
+        FROM `lgk_ordenserviciod` osd 
+                INNER JOIN `lgk_caratula` ca ON ca.`id_caratula` = osd.`id_caratula`
+                INNER JOIN `lgk_ordenservicio` os ON os.`id_ordenservicio` = osd.`id_ordenservicio`
+                INNER JOIN `mae_persona` p ON p.`id_persona` = os.`id_persona`
+        WHERE os.estado <> 'A' and osd.`id_caratula` = :idCaratula 
+        ORDER BY os.`fecha_contrato` DESC	LIMIT 1; ";
+        $parms = array(
+            ':idCaratula' => $this->_idCaratula
+        );
+        $data = $this->queryOne($query,$parms);    
+        return $data;
+    }            
     
 }
 

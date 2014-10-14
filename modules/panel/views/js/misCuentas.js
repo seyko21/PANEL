@@ -44,7 +44,7 @@ var misCuentas_ = function(){
     
     this.publico.getGridMisCuentas = function (){
         
-         $('#'+diccionario.tabs.MISPA+'gridMisCuentas').dataTable({
+        var oTable = $('#'+diccionario.tabs.MISPA+'gridMisCuentas').dataTable({
             bProcessing: true,
             bServerSide: true,
             bDestroy: true,
@@ -71,6 +71,7 @@ var misCuentas_ = function(){
             },
             fnDrawCallback: function() {
                 $('#'+diccionario.tabs.MISPA+'gridMisCuentas_filter').find('input').attr('placeholder','Buscar por Código o Ciudad o Ubicación').css('width','350px');;                
+                simpleScript.enterSearch("#"+diccionario.tabs.MISPA+'gridMisCuentas',oTable);
                 /*para hacer evento invisible*/
                 simpleScript.removeAttr.click({
                     container: '#widget_'+diccionario.tabs.MISPA, //widget del datagrid

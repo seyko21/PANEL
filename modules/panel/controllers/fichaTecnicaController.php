@@ -329,8 +329,10 @@ class fichaTecnicaController extends Controller{
             #td2 th, .totales{background:#901D78; color:#FFF; height:25px;}
             #td2 td{font-size:11px;height:25px;}
         </style>
-        <h2>FICHA TECNICA </h2>  
-        <table width="100%" border="0">
+        <table width="100%" border="0" cellpadding="5" cellspacing="3">
+            <tr bgcolor="#901D78">
+                    <th colspan="6"><div align="center"><h2 style="color:#FFF;">FICHA TECNICA </h2></div></th>
+            </tr>
             <tr>
               <td width="16%"><b>DEPARTAMENTO:</b></td><td width="21%">'.$data[0]['departamento'].'</td>
               <td width="10%"><b>PROVINCIA:</b></td><td width="20%">'.$data[0]['provincia'].'</td>

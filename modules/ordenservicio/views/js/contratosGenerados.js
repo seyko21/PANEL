@@ -93,11 +93,11 @@ var contratosGenerados_ = function(){
         setup_widgets_desktop();
     };
     
-    this.publico.postExportarContratoPDF = function(btn,id){
+    this.publico.postExportarContratoPDF = function(btn,id,num){
         simpleAjax.send({
             element: btn,
             root: 'ordenservicio/generarOrden/postExportarContratoPDF',
-            data: '&_idOrden='+id,
+            data: '&_idOrden='+id+'&_numOrden='+num,
             fnCallback: function(data) {
                 if(parseInt(data.result) === 1){
                     $('#'+diccionario.tabs.COGEN+'btnDowPDF').off('onclick');

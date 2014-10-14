@@ -97,7 +97,7 @@ class generarOrdenController extends Controller{
                         $sOutput .= '</button>';
                     }
                     if($pdf['permiso']){
-                        $sOutput .= '<button type=\"button\" class=\"'.$pdf['theme'].'\" title=\"'.GNOSE_17.'\" onclick=\"generarOrden.postExportarContratoPDF(this,\'' . $encryptReg . '\')\">';
+                        $sOutput .= '<button type=\"button\" class=\"'.$pdf['theme'].'\" title=\"'.GNOSE_17.'\" onclick=\"generarOrden.postExportarContratoPDF(this,\'' . $encryptReg . '\',\'' . $aRow['orden_numero'] . '\')\">';
                         $sOutput .= '    <i class=\"'.$pdf['icono'].'\"></i>';
                         $sOutput .= '</button>';
                     }
@@ -230,7 +230,7 @@ class generarOrdenController extends Controller{
     }
     
     public function postExportarContratoPDF(){
-        $c = 'contrato_'.Obj::run()->generarOrdenModel->_idOrden.'.pdf';
+        $c = 'contrato_'.Obj::run()->generarOrdenModel->_numOrden.'.pdf';
         
         $ar = ROOT.'public'.DS.'files'.DS.$c;
                

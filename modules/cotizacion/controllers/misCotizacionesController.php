@@ -95,7 +95,7 @@ class misCotizacionesController extends Controller{
                     $sOutput .= '</button>';
                 }  
                 if($exportarpdf['permiso']){
-                    $sOutput .= '<button type=\"button\" class=\"'.$exportarpdf['theme'].'\" title=\"'.$exportarpdf['accion'].'\" onclick=\"misCotizaciones.postPDF(this,\''.$encryptReg.'\')\">';
+                    $sOutput .= '<button type=\"button\" class=\"'.$exportarpdf['theme'].'\" title=\"'.$exportarpdf['accion'].'\" onclick=\"misCotizaciones.postPDF(this,\''.$encryptReg.'\', \''.$numCotizacion.'\')\">';
                     $sOutput .= '    <i class=\"'.$exportarpdf['icono'].'\"></i>';
                     $sOutput .= '</button>';
                 }

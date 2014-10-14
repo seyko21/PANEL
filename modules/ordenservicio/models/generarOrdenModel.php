@@ -10,7 +10,8 @@
 class generarOrdenModel extends Model{
 
     private $_flag;
-    public  $_idOrden;
+    private $_idOrden;
+    public $_numOrden;
     private $_idCuota;
     private $_monto;
     private $_fechaPago;
@@ -44,6 +45,8 @@ class generarOrdenModel extends Model{
         $this->_idContrato  = Formulario::getParam(GNOSE."lst_contrato"); 
         $this->_oferta  = Formulario::getParam(GNOSE."txt_oferta"); 
         $this->_chkdel  = $this->post(GNOSE.'chk_delete');
+        
+        $this->_numOrden = Formulario::getParam("_numOrden");
         
         $this->_iDisplayStart  = Formulario::getParam("iDisplayStart"); 
         $this->_iDisplayLength = Formulario::getParam("iDisplayLength"); 

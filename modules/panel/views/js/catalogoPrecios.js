@@ -44,7 +44,7 @@ var catalogoPrecios_ = function(){
     };
     
     this.publico.getGridCatalogoPrecios = function (){
-         $('#'+diccionario.tabs.TAB_CATPRE+'gridCatalogoPrecio').dataTable({
+         var oTable = $('#'+diccionario.tabs.TAB_CATPRE+'gridCatalogoPrecio').dataTable({
             bProcessing: true,
             bServerSide: true,
             bDestroy: true,
@@ -71,7 +71,8 @@ var catalogoPrecios_ = function(){
                 aoData.push({"name": "_tipoPanel", "value": $("#"+diccionario.tabs.TAB_CATPRE+"lst_tipopanelsearch").val()});
             },
             fnDrawCallback: function() {
-                $('#'+diccionario.tabs.TAB_CATPRE+'gridCatalogoPrecio_filter').find('input').attr('placeholder','Buscar por Código o Ciudad o Ubicación').css('width','350px');;                
+                $('#'+diccionario.tabs.TAB_CATPRE+'gridCatalogoPrecio_filter').find('input').attr('placeholder','Buscar por Código o Ciudad o Ubicación').css('width','350px');                
+                simpleScript.enterSearch("#"+diccionario.tabs.TAB_CATPRE+'gridCatalogoPrecio',oTable);
                 /*para hacer evento invisible*/
                 simpleScript.removeAttr.click({
                     container: '#widget_'+diccionario.tabs.TAB_CATPRE, //widget del datagrid
@@ -138,11 +139,11 @@ var catalogoPrecios_ = function(){
             }
         });
     };     
-    this.publico.postPDF = function(btn,id){
+    this.publico.postPDF = function(btn,id, num){
           simpleAjax.send({
               element: btn,
               root: _private.config.modulo + 'postPDF',
-              data: '&_idCaratula='+id,
+              data: '&_idCaratula='+id+'&_codigo='+num,
               fnCallback: function(data) {
                   if(parseInt(data.result) === 1){
                       $('#'+diccionario.tabs.TAB_CATPRE+'btnDowPDF').attr("onclick","window.open('public/files/"+data.archivo+"','_blank');fichaTecnica.deleteArchivo('"+data.archivo+"');");
@@ -152,11 +153,11 @@ var catalogoPrecios_ = function(){
           });
       };
 
-      this.publico.postExcel = function(btn,id){
+      this.publico.postExcel = function(btn,id, num){
           simpleAjax.send({
               element: btn,
               root: _private.config.modulo + 'postExcel',
-              data: '&_idCaratula='+id,
+              data: '&_idCaratula='+id+'&_codigo='+num,
               fnCallback: function(data) {
                   if(parseInt(data.result) === 1){
                      $('#'+diccionario.tabs.TAB_CATPRE+'btnDowExcel').attr("onclick","window.open('public/files/"+data.archivo+"','_self');fichaTecnica.deleteArchivo('"+data.archivo+"');");

@@ -108,11 +108,11 @@ var misCotizaciones_ = function(){
         });
     };
     
-    this.publico.postPDF = function(btn,idCot){
+    this.publico.postPDF = function(btn,idCot,num){
         simpleAjax.send({
             element: btn,
             root: _private.config.modulo + 'postPDF',
-            data: '&_idCotizacion='+idCot,
+            data: '&_idCotizacion='+idCot+'&_num='+num,
             fnCallback: function(data) {
                 if(parseInt(data.result) === 1){
                     $('#'+diccionario.tabs.MISCO+'btnDowPDF').attr("onclick","window.open('public/files/"+data.archivo+"','_blank');generarCotizacion.deleteArchivo('"+data.archivo+"');");

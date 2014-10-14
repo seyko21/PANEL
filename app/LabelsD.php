@@ -212,6 +212,8 @@ define('CREIN_1','Retorno de Inversión');
 define('CREIN_2','Listado de Orden de Servicio');
 define('GPASO_1','Pago a Socio');
 define('SASOC_2','Recibo de Pago');
+define('REPRO_PROD1','Buscar Panel');
+define('REPRO_PROD2','Panel');
 
 
 ?>
