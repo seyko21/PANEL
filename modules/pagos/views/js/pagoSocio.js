@@ -13,6 +13,7 @@ var pagoSocio_ = function(){
     _private.idComision = 0;    
     _private.saldo = 0;
     _private.idPersona = 0;
+    _private.idBoleta = 0;
     
     _private.config = {
         modulo: "pagos/pagoSocio/"
@@ -176,6 +177,38 @@ var pagoSocio_ = function(){
             }
         });
     };
+    
+    this.publico.postDeletePago = function(){
+        _private.idBoleta = simpleScript.getParam(arguments[0]);
+        
+        simpleScript.notify.confirm({
+            content: mensajes.MSG_5,
+            callbackSI: function(){
+                simpleAjax.send({
+                    flag: 3,
+                    gifProcess: true,
+                    data: '&_idBoleta='+_private.idBoleta,
+                    root: _private.config.modulo + 'postDeletePago',
+                    fnCallback: function(data) {
+                        if(!isNaN(data.result) && parseInt(data.result) === 1){
+                            simpleScript.notify.ok({
+                                content: mensajes.MSG_6,
+                                callback: function(){
+                                    saldoSocio.getGridBoleta();
+                                    if($('#'+diccionario.tabs.SASOC+'_CONTAINER').length > 0){
+                                        setTimeout(function(){simpleScript.reloadGrid('#'+diccionario.tabs.SASOC+'gridSaldoSocio');},500);                                        
+                                    }
+                                    if($('#'+diccionario.tabs.GPASO+'_CONTAINER').length > 0){
+                                       setTimeout(function(){simpleScript.reloadGrid('#'+diccionario.tabs.GPASO+'gridPagoSocio');},500);                                        
+                                    }
+                                }
+                            });
+                        }
+                    }
+                });
+            }
+        });
+    };    
     
     return this.publico;
     

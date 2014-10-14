@@ -13,6 +13,7 @@ class pagoVendedorModel extends Model{
     private $_exonerar;
     private $_f1;
     private $_f2;
+    private $_idBoleta;
     private $_chkdel;
     
     public function __construct() {
@@ -27,6 +28,7 @@ class pagoVendedorModel extends Model{
         $this->_f1    = Functions::cambiaf_a_mysql(Formulario::getParam("_f1"));
         $this->_f2    = Functions::cambiaf_a_mysql(Formulario::getParam("_f2")); 
         $this->_estadocb  = Formulario::getParam("_estadocb");   
+        $this->_idBoleta  = Aes::de(Formulario::getParam("_idBoleta"));  
         
         $this->_serie        = Formulario::getParam(GPAVE."txt_serie");
         $this->_numero       = Formulario::getParam(GPAVE."txt_numero");
@@ -104,6 +106,24 @@ class pagoVendedorModel extends Model{
             $this->execute($query,$parms);
         }
         $data = array('result'=>1);
+        return $data;
+    }
+    public function anularPago(){
+        $query = "call sp_pagoPagosVendedorMantenimiento(:flag,:idComision,:idPersona,:serie,:numero,:monto,:exonerar,:usuario);";
+        
+        $parms = array(
+            ":flag"=>3,
+            ":idComision" => $this->_idBoleta,
+            ":idPersona" => '',              
+            ":serie" => '',
+            ":numero" => '',
+            ":monto" => '',
+            ":exonerar" => '',
+            ":usuario" => $this->_usuario
+        );
+        $this->execute($query,$parms);
+        
+        $data = array('result'=>1);        
         return $data;
     }
     

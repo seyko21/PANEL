@@ -134,19 +134,6 @@ var pagosRecibidos_ = function(){
         });
     };   
     
-    this.publico.postPDF = function(btn,idd){
-        simpleAjax.send({
-            element: btn,
-            root: _private.config.modulo + 'postPDF',
-            data: '&_idBoleta='+idd,
-            fnCallback: function(data) {
-                if(parseInt(data.result) === 1){
-                    $('#'+diccionario.tabs.PAGRE+'btnDowPDF').attr("onclick","window.open('public/files/"+data.archivo+"','_blank');compromisoPagar.deleteArchivo('"+data.archivo+"');");
-                    $('#'+diccionario.tabs.PAGRE+'btnDowPDF').click();
-                }
-            }
-        });
-    };
  
     
     return this.publico;

@@ -98,6 +98,7 @@ class saldoVendedorController extends Controller{
     
     public function gridPagoVendedor(){
         $exportarpdf   = Session::getPermiso('SAVENEP');
+        $eliminar  = Session::getPermiso('GPAVEDE');
         
         $sEcho  =   $this->post('sEcho');
         
@@ -129,6 +130,11 @@ class saldoVendedorController extends Controller{
                 if($exportarpdf['permiso']){
                     $axion .= '<button type=\"button\" class=\"'.$exportarpdf['theme'].'\" title=\"'.$exportarpdf['accion'].' pagos \" onclick=\"saldoVendedor.postPDF(this,\'' . $encryptReg . '\',\'' . $c1 . '\')\"> ';
                     $axion .= '    <i class=\"'.$exportarpdf['icono'].'\"></i>';
+                    $axion .= '</button>';
+                }
+                if($eliminar['permiso']){
+                    $axion .= '<button type=\"button\" class=\"'.$eliminar['theme'].'\" title=\"'.$eliminar['accion'].'\" onclick=\"pagoVendedor.postDeletePago(\''.$encryptReg.'\')\">';
+                    $axion .= '    <i class=\"'.$eliminar['icono'].'\"></i>';
                     $axion .= '</button>';
                 }
                 $axion .= ' </div>" ';
@@ -171,7 +177,8 @@ class saldoVendedorController extends Controller{
             $data = array('result'=>1,'archivo'=>$c);
             echo json_encode($data);
         }
-    }       
+    }   
+     
     public function getBoleta(){
         $data = Obj::run()->saldoVendedorModel->getBoleta();
         return $data;

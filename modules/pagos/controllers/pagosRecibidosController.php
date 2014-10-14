@@ -110,7 +110,7 @@ class pagosRecibidosController extends Controller{
                 
                 $axion = '"<div class=\"btn-group\">';
                 if($exportarpdf['permiso']){
-                    $axion .= '<button type=\"button\" class=\"'.$exportarpdf['theme'].'\" title=\"'.$exportarpdf['accion'].' pagos \" onclick=\"pagosRecibidos.postPDF(this,\'' . $encryptReg . '\')\"> ';
+                    $axion .= '<button type=\"button\" class=\"'.$exportarpdf['theme'].'\" title=\"'.$exportarpdf['accion'].' pagos \" onclick=\"saldoVendedor.postPDF(this,\'' . $encryptReg . '\',\'' . $c1 . '\')\"> ';
                     $axion .= '    <i class=\"'.$exportarpdf['icono'].'\"></i>';
                     $axion .= '</button>';
                 }

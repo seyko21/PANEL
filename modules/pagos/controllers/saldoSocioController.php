@@ -107,6 +107,7 @@ class saldoSocioController extends Controller{
     
     public function gridPagoSocio(){
         $exportarpdf   = Session::getPermiso('SASOCEP');
+        $eliminar  = Session::getPermiso('GPASODE');
         
         $sEcho  =   $this->post('sEcho');
         
@@ -135,6 +136,11 @@ class saldoSocioController extends Controller{
                 if($exportarpdf['permiso']){
                     $axion .= '<button type=\"button\" class=\"'.$exportarpdf['theme'].'\" title=\"'.$exportarpdf['accion'].' pagos \" onclick=\"saldoSocio.postPDF(this,\'' . $encryptReg . '\',\'' . $c1 . '\')\"> ';
                     $axion .= '    <i class=\"'.$exportarpdf['icono'].'\"></i>';
+                    $axion .= '</button>';
+                }
+                if($eliminar['permiso']){
+                    $axion .= '<button type=\"button\" class=\"'.$eliminar['theme'].'\" title=\"'.$eliminar['accion'].'\" onclick=\"pagoSocio.postDeletePago(\''.$encryptReg.'\')\">';
+                    $axion .= '    <i class=\"'.$eliminar['icono'].'\"></i>';
                     $axion .= '</button>';
                 }
                 $axion .= ' </div>" ';

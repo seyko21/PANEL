@@ -12,6 +12,8 @@ var pagoVendedor_ = function(){
     
     _private.idPersona = 0;
     
+    _private.idBoleta = 0;
+    
     this.publico = {};
     
     this.publico.main = function(element){
@@ -166,6 +168,39 @@ var pagoVendedor_ = function(){
             }
         });
     };
+    
+   this.publico.postDeletePago = function(){
+        _private.idBoleta = simpleScript.getParam(arguments[0]);
+        
+        simpleScript.notify.confirm({
+            content: mensajes.MSG_5,
+            callbackSI: function(){
+                simpleAjax.send({
+                    flag: 3,
+                    gifProcess: true,
+                    data: '&_idBoleta='+_private.idBoleta,
+                    root: _private.config.modulo + 'postDeletePago',
+                    fnCallback: function(data) {
+                        if(!isNaN(data.result) && parseInt(data.result) === 1){
+                            simpleScript.notify.ok({
+                                content: mensajes.MSG_6,
+                                callback: function(){
+                                    saldoVendedor.getGridBoleta();
+                                    if($('#'+diccionario.tabs.SAVEN+'_CONTAINER').length > 0){
+                                        setTimeout(function(){simpleScript.reloadGrid('#'+diccionario.tabs.SAVEN+'gridSaldoVendedor');},500);                                        
+                                    }
+                                    if($('#'+diccionario.tabs.GPAVE+'_CONTAINER').length > 0){
+                                       setTimeout(function(){simpleScript.reloadGrid('#'+diccionario.tabs.GPAVE+'gridPagosVendedor');},500);                                        
+                                    }
+                                }
+                            });
+                        }
+                    }
+                });
+            }
+        });
+    };    
+    
     
     return this.publico;
     

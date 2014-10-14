@@ -13,6 +13,7 @@ class pagoVendedorController extends Controller{
     public function getGridPagosVendedor(){
             
         $pagar  = Session::getPermiso('GPAVEPG'); 
+        $consultar  = Session::getPermiso('GPAVECC'); 
 
         $sEcho          =   $this->post('sEcho');
         
@@ -58,6 +59,17 @@ class pagoVendedorController extends Controller{
                         $axion .= '<button type=\"button\" class=\"'.$pagar['theme'].'\" title=\"'.$pagar['accion'].'\" disabled >';
                         $axion .= '    <i class=\"'.$pagar['icono'].'\"></i>';
                         $axion .= '</button>';                        
+                    }                   
+                }
+                if($consultar['permiso']){
+                 if ($aRow['comision_asignado'] > 0 ){
+                        $axion .= '<button type=\"button\" class=\"'.$consultar['theme'].'\" title=\"'.$consultar['accion'].'\" onclick=\"saldoVendedor.getConsulta(this,\''.$encryptReg.'\',\''.$c3.'\')\">';
+                        $axion .= '    <i class=\"'.$consultar['icono'].'\"></i>';
+                        $axion .= '</button>';
+                    }else{
+                        $axion .= '<button type=\"button\" class=\"'.$consultar['theme'].'\" title=\"'.$consultar['accion'].'\" disabled >';
+                        $axion .= '    <i class=\"'.$consultar['icono'].'\"></i>';
+                        $axion .= '</button>';
                     }
                 }
                 $axion .= ' </div>" ';                
@@ -95,6 +107,12 @@ class pagoVendedorController extends Controller{
     
     public function postAnularPagoAll(){ 
         $data = Obj::run()->pagoVendedorModel->anularPagoAll();
+        
+        echo json_encode($data);
+    }
+    
+    public function postDeletePago(){ 
+        $data = Obj::run()->pagoVendedorModel->anularPago();
         
         echo json_encode($data);
     }

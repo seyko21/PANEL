@@ -11,6 +11,7 @@ class pagoSocioController extends Controller{
 
     public function __construct() {
         $this->loadModel("pagoSocio");
+        $this->loadController(array('modulo'=>'pagos','controller'=>'pagoVendedor'));                   
     }
     
     public function index(){ 
@@ -19,7 +20,8 @@ class pagoSocioController extends Controller{
     
     public function getGridPagoSocio(){
        $pagar  = Session::getPermiso('GPASOPG'); 
-
+       $consultar  = Session::getPermiso('GPASOCC'); 
+       
        $sEcho          =   $this->post('sEcho');
         
         $rResult = Obj::run()->pagoSocioModel->getPagoSocio();
@@ -66,6 +68,17 @@ class pagoSocioController extends Controller{
                         $axion .= '</button>';                        
                     }
                 }
+                if($consultar['permiso']){
+                    if ($aRow['comision_asignado'] > 0 ){
+                        $axion .= '<button type=\"button\" class=\"'.$consultar['theme'].'\" title=\"'.$consultar['accion'].'\" onclick=\"saldoSocio.getConsulta(this,\''.$encryptReg.'\',\''.$c3.'\')\">';
+                        $axion .= '    <i class=\"'.$consultar['icono'].'\"></i>';
+                        $axion .= '</button>';
+                    }else{
+                        $axion .= '<button type=\"button\" class=\"'.$consultar['theme'].'\" title=\"'.$consultar['accion'].'\" disabled >';
+                        $axion .= '    <i class=\"'.$consultar['icono'].'\"></i>';
+                        $axion .= '</button>';
+                    }
+                }
                 $axion .= ' </div>" ';                
                 if ($aRow['comision_asignado'] > 0 ){
                     $chk = '<input id=\"c_'.(++$key).'\" type=\"checkbox\" name=\"'.GPASO.'chk_delete[]\" value=\"'.$encryptReg.'\"  >'; 
@@ -104,6 +117,11 @@ class pagoSocioController extends Controller{
         
         echo json_encode($data);
     }
+    public function postDeletePago(){ 
+        return Obj::run()->pagoVendedorController->postDeletePago();
+                
+    }
+    
 }
 
 ?>
