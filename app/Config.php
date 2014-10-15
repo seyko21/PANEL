@@ -19,6 +19,7 @@ define('APP_EXPORT_FILES',ROOT . 'public' . DS . 'files' . DS);
 define('APP_COD_SADM','0001');
 define('APP_COD_ADM','0002');
 define('APP_COD_VEND','0003');
+define('APP_COD_CLIE','0004');
 define('APP_COD_SOCIO','0005');
 
 define('DB_ENTORNO','D');  /*D=DESARROLLO, P=PRODUCCION*/

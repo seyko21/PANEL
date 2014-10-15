@@ -340,7 +340,7 @@ class generarCotizacionController extends Controller{
             <td><strong>Campaña:</strong></td>
             <td colspan="2">'.$data[0]['nombre_campania'].'</td> 
             <td align="right" ><strong>Tiempo :</strong></td>
-            <td colspan="2">'.  Functions::convertirDiaMes($data[0]['cantidad_mes']).'</td>   
+            <td colspan="2">'.  Functions::convertirDiaMes($data[0]['cantidad_mes']).' ('. number_format($data[0]['cantidad_mes'],1).')</td>   
           </tr>
         </table> 
         <br />

@@ -46,7 +46,7 @@ var index_ = function(){
 			speed : $.menu_speed,
 			closedSign : '<em class="fa fa-expand-o"></em>',
 			openedSign : '<em class="fa fa-collapse-o"></em>'
-		});
+		});                                               
             }
         });
     };

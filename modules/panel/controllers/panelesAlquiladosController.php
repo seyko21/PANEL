@@ -20,7 +20,7 @@ class panelesAlquiladosController extends Controller{
         Obj::run()->View->render('consultarPanelAlquilado');
     }  
    public function getGridProducto(){
-//      $consultar = Session::getPermiso('CATPRED');       
+      $consultar = Session::getPermiso('PAALCC');       
        $sEcho          =   $this->post('sEcho');
         
         $rResult = Obj::run()->panelesAlquiladosModel->getGridProducto();
@@ -60,11 +60,11 @@ class panelesAlquiladosController extends Controller{
                  
                  //Visualizar Detalle
                 $sOutput .= '"<div class=\"btn-group\">';   
-                //if($consultar['permiso'] == 1){
-                    $sOutput .= '<button type=\"button\" class=\"btn bg-color-blue txt-color-white btn-xs\" title=\"Consultar\" onclick=\"panelesAlquilados.getConsulta(\''.$encryptReg.'\',\''.$aRow['codigo'].'\')\">';
-                    $sOutput .= '    <i class=\"fa fa-search-plus fa-lg\"></i>';
+                if($consultar['permiso'] == 1){
+                    $sOutput .= '<button type=\"button\" class=\"'.$consultar['theme'].'\" title=\"'.$consultar['accion'].'\" onclick=\"panelesAlquilados.getConsulta(\''.$encryptReg.'\',\''.$aRow['codigo'].'\')\">';
+                    $sOutput .= '    <i class=\"'.$consultar['icono'].'\"></i>';                    
                     $sOutput .= '</button>';    
-                //}
+                }
                 $sOutput .= ' </div>" ';
                 
                 
@@ -125,6 +125,48 @@ class panelesAlquiladosController extends Controller{
         
         echo $sOutput;
     }           
+    
+    public function getGridIndexPanelAlquilado(){
+      
+       $sEcho  =   $this->post('sEcho');
+        
+        $rResult = Obj::run()->panelesAlquiladosModel->getIndexPanelAlquilado();
+        
+        if(!isset($rResult['error'])){  
+            $iTotal         = isset($rResult[0]['total'])?$rResult[0]['total']:0;
+            
+            $sOutput = '{';
+            $sOutput .= '"sEcho": '.intval($sEcho).', ';
+            $sOutput .= '"iTotalRecords": '.$iTotal.', ';
+            $sOutput .= '"iTotalDisplayRecords": '.$iTotal.', ';
+            $sOutput .= '"aaData": [ ';
+            foreach ( $rResult as $key=>$aRow ){
+                /*datos de manera manual*/
+                                
+                $c1 = $aRow['codigo'];
+                $c2 = $aRow['orden_numero'];
+                $c3 = $aRow['fecha_inicio'];
+                $c4 = $aRow['fecha_termino'];
+                
+                $deuda = $aRow['cuotas_deuda'];
+                $oi = $aRow['ordeninstal'];
+                if($c3 == '') $c3 = '-';
+                if($c4 == '') $c4 = '-';
+                
+                $sOutput .= '["'.$c1.'","'.$c2.'","'.$c3.'","'.$c4.'" ';
+                               
+                $sOutput = substr_replace( $sOutput, "", -1 );
+                $sOutput .= '],';
+            }
+            $sOutput = substr_replace( $sOutput, "", -1 );
+            $sOutput .= '] }';
+        }else{
+            $sOutput = $rResult['error'];
+        }
+        
+        echo $sOutput;
+    }               
+    
     
 }
 

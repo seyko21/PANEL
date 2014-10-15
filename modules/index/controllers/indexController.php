@@ -47,6 +47,18 @@ class indexController extends Controller{
     public function getPanel(){
         Obj::run()->View->render('panel');
     }
+
+    public function getPanelCliente(){
+        Obj::run()->View->render('panelCliente');
+    }
+    
+    public function getPanelVendedor(){
+        Obj::run()->View->render('panelVendedor');
+    }
+    
+    public function getPanelSocio(){
+        Obj::run()->View->render('panelSocio');
+    }    
     
     public static function getDominios(){
         Obj::run()->View->render('dominios');

@@ -113,7 +113,27 @@ endforeach;
                     closedSign : '<em class="fa fa-expand-o"></em>',
                     openedSign : '<em class="fa fa-collapse-o"></em>'
             });
+            
+            <?php
+              switch (Session::get('sys_defaultRol')){
+                        case APP_COD_SADM:
+                        case APP_COD_ADM:
+                           ?>
+                        panelesAlquilados.getGridIndexPA();                        
+             <?php      break;
+                        case APP_COD_VEND: ?>                           
+                            
+             <?php      break;
+                        case APP_COD_CLIE: ?>
+                            
+             <?php      break;
+                        case APP_COD_SOCIO: ?>
+                            
+             <?php     break;
+                    }
+            ?>
+                                     
         }
     }
-//    setTimeout('noneEvtMenu()',9000);
+
 </script>

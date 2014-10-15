@@ -222,7 +222,7 @@
 
                 <!--TAB POR DEFECTO PARA USUARIO-->
                 <li aria-selected="true" aria-labelledby="ui-id-1" aria-controls="GNCOT_CONTAINER" tabindex="0" role="tab" class="ui-state-default ui-corner-top ui-tabs-active ui-state-active" style="position:relative;" id="li-<?php echo PANP?>"> 
-                    <a id="ui-id-1" tabindex="-1" role="presentation" class="ui-tabs-anchor" href="#<?php echo PANP?>_CONTAINER">Panel</a>
+                    <a id="ui-id-1" tabindex="-1" role="presentation" class="ui-tabs-anchor" href="#<?php echo PANP?>_CONTAINER">Información</a>
                 </li>
 
 
@@ -230,7 +230,24 @@
             <div id="cont-main" style="background: #ffffff">
                 
                 <!--CONTENIDO DE TAB POR DEFECTO-->
-                <?php Obj::run()->indexController->getPanel();?>
+                <?php 
+                    switch (Session::get('sys_defaultRol')){
+                        case APP_COD_SADM:
+                        case APP_COD_ADM:
+                            Obj::run()->indexController->getPanel();
+                            break;
+                        case APP_COD_VEND:                            
+                            Obj::run()->indexController->getPanelVendedor();
+                            break;
+                        case APP_COD_CLIE: 
+                            Obj::run()->indexController->getPanelCliente();
+                            break;
+                        case APP_COD_SOCIO:
+                            Obj::run()->indexController->getPanelSocio();
+                            break;
+                    }
+                                
+                ?>
             </div>
         </div>
         <!-- FIN CONTENEDOR DE LOS TABS GENERALES DE MODULOS -->

@@ -39,9 +39,11 @@ class Functions{
                     </button>
                     <ul class="dropdown-menu pull-right">';
             foreach ($actions as $btn) {
+                $t='';
+                if(isset($btn['title'])) $t= $btn['title'];
                 $toolButton .= '
                 <li>
-                    <a href="javascript:void(0);" onclick="'.$btn['click'].'">'.$btn['label'].'</a>
+                    <a href="javascript:void(0);" onclick="'.$btn['click'].'" title="'.$t.'" >'.$btn['label'].'</a>
                 </li>';
             }
             $toolButton .='  

@@ -101,6 +101,7 @@ Obj::run()->Autoload->js('modules/', true);
 //    $.each($('script'),function(){
 //        alert($(this).attr('src'))
 //    });
+
 </script>
 <?php if(Session::get('sys_usuario')):?>
 <script>
