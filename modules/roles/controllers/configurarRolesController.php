@@ -71,6 +71,10 @@ class configurarRolesController extends Controller{
                     $sOutput .= '</button>';
                 }
                 
+                $sOutput .= '<button type=\"button\" class=\"btn bg-color-blue txt-color-white btn-xs\" title=\"Duplicar\" onclick=\"configurarRoles.postDuplicarRol(this,\''.$encryptReg.'\')\">';
+                $sOutput .= '    <i class=\"fa fa-copy\"></i>';
+                $sOutput .= '</button>';
+                
                 $sOutput .= ' </div>" ';
 
                 $sOutput = substr_replace( $sOutput, "", -1 );
@@ -160,6 +164,12 @@ class configurarRolesController extends Controller{
     
     public function postAccionOpcionRol(){ 
         $data = Obj::run()->configurarRolesModel->mantenimientoRolOpcionAccion();
+        
+        echo json_encode($data); 
+    }
+    
+    public function postDuplicarRol(){ 
+        $data = Obj::run()->configurarRolesModel->postDuplicarRol();
         
         echo json_encode($data); 
     }

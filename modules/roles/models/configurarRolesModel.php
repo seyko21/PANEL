@@ -141,5 +141,18 @@ class configurarRolesModel extends Model{
         return $data;
     }
     
+    public function postDuplicarRol(){
+        $query = "call sp_rolesConfigurarRolesMantenimiento(:flag,:key,:rolOpcion,:activo,:usuario);";
+        $parms = array(
+            ':flag' => 8,
+            ':key' => $this->_key,
+            ':rolOpcion' => '',
+            ':activo' => '',
+            ':usuario' => $this->_usuario
+        );
+        $data = $this->queryOne($query,$parms);
+        return $data;
+    }
+    
 }
 ?>

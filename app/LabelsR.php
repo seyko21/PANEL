@@ -314,5 +314,5 @@ define('APASO_8','Monto');
 define('APASO_9','Monto a Invertir');
 define('APASO_10','Ganancia %');
 define('APASO_11','Click aquí para grabar');
-
+define('APASO_12','Paneles Asignados');
 ?>

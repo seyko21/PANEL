@@ -295,6 +295,24 @@ var configurarRoles_ = function(){
         
     };
     
+    this.public.postDuplicarRol = function(btn,id){
+        simpleAjax.send({
+            element: btn,
+            root: _private.config.modulo + 'postDuplicarRol',
+            data: '&_key='+id,
+            fnCallback: function(data) {
+                if(!isNaN(data.result) && parseInt(data.result) === 1){
+                    simpleScript.notify.ok({
+                        content: 'Rol se duplicó correctamente',
+                        callback: function(){
+                            configurarRoles.getGridRoles();
+                        }
+                    });
+                }
+            }
+        });
+    };
+    
     return this.public;
     
 };
