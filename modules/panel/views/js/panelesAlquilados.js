@@ -109,10 +109,10 @@ var panelesAlquilados_ = function(){
         setup_widgets_desktop();
     };
     
-    this.publico.getConsulta = function(id, cod){
+    this.publico.getConsulta = function(btn,id, cod){
         _private.idCaratula = id;               
         simpleAjax.send({
-            gifProcess: true,
+            element: btn,
             dataType: 'html',
             root: _private.config.modulo + 'getConsulta',
             data: '&_idCaratula='+_private.idCaratula+'&_codCaratula='+cod,
