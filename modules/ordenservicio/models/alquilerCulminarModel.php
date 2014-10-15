@@ -69,6 +69,33 @@ class alquilerCulminarModel extends Model{
         return $data;
     }
    
+     public function getIndexAlquilerCulminar(){
+        $aColumns       =   array("codigo","orden_numero","cliente" ,"fecha_termino","meses_contrato"); //para la ordenacion y pintado en html
+        /*
+	 * Ordenando, se verifica por que columna se ordenara
+	 */
+        $sOrder = "";
+        for ( $i=0 ; $i<intval( $this->_iSortingCols ) ; $i++ ){
+                if ( $this->post( "bSortable_".intval($this->post("iSortCol_".$i)) ) == "true" ){
+                        $sOrder .= " ".$aColumns[ intval( $this->post("iSortCol_".$i) ) ]." ".
+                                ($this->post("sSortDir_".$i)==="asc" ? "asc" : "desc") .",";
+                }
+        }
+        $sOrder = substr_replace( $sOrder, "", -1 );
+        
+        $query = "call sp_ordSeIndexCulminaAlquilerGrid(:acceso,:idPersona,:iDisplayStart,:iDisplayLength,:sOrder);";
+        
+        $parms = array(
+            ':acceso' => Session::get('sys_all'),
+            ':idPersona' => $this->_idPersona, 
+            ":iDisplayStart" => $this->_iDisplayStart,
+            ":iDisplayLength" => $this->_iDisplayLength,
+            ":sOrder" => $sOrder
+        );
+        $data = $this->queryAll($query,$parms);
+        return $data;
+    }
+    
 }
 
 ?>

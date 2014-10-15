@@ -100,6 +100,44 @@ class saldoClienteController extends Controller{
 
     }
     
+    public function getGridIndexSaldoCliente(){
+      
+       $sEcho  =   $this->post('sEcho');
+        
+        $rResult = Obj::run()->saldoClienteModel->getIndexSaldoCliente();
+        
+        if(!isset($rResult['error'])){  
+            $iTotal         = isset($rResult[0]['total'])?$rResult[0]['total']:0;
+            
+            $sOutput = '{';
+            $sOutput .= '"sEcho": '.intval($sEcho).', ';
+            $sOutput .= '"iTotalRecords": '.$iTotal.', ';
+            $sOutput .= '"iTotalDisplayRecords": '.$iTotal.', ';
+            $sOutput .= '"aaData": [ ';
+            foreach ( $rResult as $key=>$aRow ){
+                /*datos de manera manual*/
+                                
+                $c1 = $aRow['numero_cuota'];
+                $c2 = $aRow['orden_numero'];
+                $c3 = $aRow['cliente'];
+                $c4 = Functions::cambiaf_a_normal($aRow['fecha_programada']);
+                $c5 = number_format($aRow['monto_pago'],2);
+                
+                              
+                $sOutput .= '["'.$c1.'","'.$c2.'","'.$c3.'","'.$c4.'","'.$c5.'" ';
+                               
+                $sOutput = substr_replace( $sOutput, "", -1 );
+                $sOutput .= '],';
+            }
+            $sOutput = substr_replace( $sOutput, "", -1 );
+            $sOutput .= '] }';
+        }else{
+            $sOutput = $rResult['error'];
+        }
+        
+        echo $sOutput;
+    }                   
+    
     public function postPDF($n=''){
          return Obj::run()->compromisoPagarController->postPDF($n);
      }

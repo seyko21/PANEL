@@ -97,6 +97,33 @@ var saldoCliente_ = function(){
         });
         setup_widgets_desktop();
     };
+    
+    this.publico.getGridIndexSaldoCliente = function (){
+         $('#'+diccionario.tabs.PANP+'gridSaldoCliente').dataTable({
+            bProcessing: true,
+            bServerSide: true,
+            bDestroy: true,
+            sPaginationType: "bootstrap_full", //two_button
+            sServerMethod: "POST",
+            bPaginate: true,
+            iDisplayLength: 10,   
+            sSearch: false,
+            bFilter: false,
+            aoColumns: [                                
+                {sTitle: "Cuota", sWidth: "6%"},
+                {sTitle: "N° OS", sWidth: "6%"},                
+                {sTitle: "Cliente", sWidth: "15%"},                
+                {sTitle: "F. Programado", sWidth: "8%", sClass: "center"},
+                {sTitle: "Monto", sWidth: "8%", sClass: "right"}                
+            ],
+            aaSorting: [[0, 'asc']],
+            sScrollY: "125px",
+            sAjaxSource: _private.config.modulo+'getGridIndexSaldoCliente'            
+        });
+
+    };     
+    
+    
     this.publico.postPDF = function(btn,idd){
         simpleAjax.send({
             element: btn,

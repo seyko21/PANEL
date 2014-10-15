@@ -60,51 +60,43 @@ class alquilerCulminarController extends Controller{
 
     }
     
-    /*carga formulario (newAlquilerCulminar.phtml) para nuevo registro: AlquilerCulminar*/
-    public function getFormNewAlquilerCulminar(){
-        Obj::run()->View->render("formNewAlquilerCulminar");
-    }
-    
-    /*carga formulario (editAlquilerCulminar.phtml) para editar registro: AlquilerCulminar*/
-    public function getFormEditAlquilerCulminar(){
-        Obj::run()->View->render("formEditAlquilerCulminar");
-    }
-    
-    /*busca data para editar registro: AlquilerCulminar*/
-    public static function findAlquilerCulminar(){
-        $data = Obj::run()->alquilerCulminarModel->findAlquilerCulminar();
+    public function getGridIndexAlquilerCulminar(){
+      
+       $sEcho  =   $this->post('sEcho');
+        
+        $rResult = Obj::run()->alquilerCulminarModel->getIndexAlquilerCulminar();
+        
+        if(!isset($rResult['error'])){  
+            $iTotal         = isset($rResult[0]['total'])?$rResult[0]['total']:0;
             
-        return $data;
-    }
-    
-    /*envia datos para grabar registro: AlquilerCulminar*/
-    public function postNewAlquilerCulminar(){
-        $data = Obj::run()->alquilerCulminarModel->newAlquilerCulminar();
+            $sOutput = '{';
+            $sOutput .= '"sEcho": '.intval($sEcho).', ';
+            $sOutput .= '"iTotalRecords": '.$iTotal.', ';
+            $sOutput .= '"iTotalDisplayRecords": '.$iTotal.', ';
+            $sOutput .= '"aaData": [ ';
+            foreach ( $rResult as $key=>$aRow ){
+                /*datos de manera manual*/
+                $c1 = $aRow['codigo'];
+                $c2 = $aRow['orden_numero'];
+                $c3 = $aRow['cliente'];
+                $c4 = Functions::cambiaf_a_normal($aRow['fecha_inicio']);
+                $c5 = Functions::cambiaf_a_normal($aRow['fecha_termino']);
+                $c6 = $aRow['meses_contrato'];
+                              
+                $sOutput .= '["'.$c1.'","'.$c2.'","'.$c3.'","'.$c5.'","'.$c6.'" ';
+                               
+                $sOutput = substr_replace( $sOutput, "", -1 );
+                $sOutput .= '],';
+            }
+            $sOutput = substr_replace( $sOutput, "", -1 );
+            $sOutput .= '] }';
+        }else{
+            $sOutput = $rResult['error'];
+        }
         
-        echo json_encode($data);
-    }
-    
-    /*envia datos para editar registro: AlquilerCulminar*/
-    public function postEditAlquilerCulminar(){
-        $data = Obj::run()->alquilerCulminarModel->editAlquilerCulminar();
-        
-        echo json_encode($data);
-    }
-    
-    /*envia datos para eliminar registro: AlquilerCulminar*/
-    public function postDeleteAlquilerCulminar(){
-        $data = Obj::run()->alquilerCulminarModel->deleteAlquilerCulminar();
-        
-        echo json_encode($data);
-    }
-    
-    /*envia datos para eliminar registros: AlquilerCulminar*/
-    public function postDeleteAlquilerCulminarAll(){
-        $data = Obj::run()->alquilerCulminarModel->deleteAlquilerCulminarAll();
-        
-        echo json_encode($data);
-    }
-    
+        echo $sOutput;
+    }            
+  
 }
 
 ?>

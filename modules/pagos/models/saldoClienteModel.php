@@ -72,7 +72,31 @@ class saldoClienteModel extends Model{
         return $data;
     }
     
-  
+    public function getIndexSaldoCliente(){
+        $aColumns       =   array("numero_cuota","orden_numero","cliente","fecha_programada","monto_pago" ); //para la ordenacion y pintado en html
+        /*
+	 * Ordenando, se verifica por que columna se ordenara
+	 */
+        $sOrder = "";
+        for ( $i=0 ; $i<intval( $this->_iSortingCols ) ; $i++ ){
+                if ( $this->post( "bSortable_".intval($this->post("iSortCol_".$i)) ) == "true" ){
+                        $sOrder .= " ".$aColumns[ intval( $this->post("iSortCol_".$i) ) ]." ".
+                                ($this->post("sSortDir_".$i)==="asc" ? "asc" : "desc") .",";
+                }
+        }
+        
+        $sOrder = substr_replace( $sOrder, "", -1 );
+        
+        $query = "call sp_pagoIndexSaldoClienteGrid(:iDisplayStart,:iDisplayLength,:sOrder);";
+        
+        $parms = array(
+            ":iDisplayStart" => $this->_iDisplayStart,
+            ":iDisplayLength" => $this->_iDisplayLength,
+            ":sOrder" => $sOrder
+        );
+        $data = $this->queryAll($query,$parms);
+        return $data;
+    } 
 }
 
 ?>

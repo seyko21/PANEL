@@ -74,6 +74,29 @@ var consultaPermisos_ = function(){
         setup_widgets_desktop();                
         
     };
+
+    this.publico.getGridIndexPermisos = function (){
+         $('#'+diccionario.tabs.PANP+'gridPermisoMunicipal').dataTable({
+            bProcessing: true,
+            bServerSide: true,
+            bDestroy: true,
+            sPaginationType: "bootstrap_full", //two_button
+            sServerMethod: "POST",
+            bPaginate: true,
+            iDisplayLength: 10,   
+            sSearch: false,
+            bFilter: false,
+            aoColumns: [                                
+                {sTitle: "Ciudad", sWidth: "10%"},
+                {sTitle: "Ubicación", sWidth: "25%"},                
+                {sTitle: "F. termino", sWidth: "8%",  sClass: "center"}                                
+            ],
+            aaSorting: [[0, 'asc']],
+            sScrollY: "125px",
+            sAjaxSource: _private.config.modulo+'getGridIndexConsultaPermiso'            
+        });
+
+    };          
    
     this.publico.postPDF = function(btn,id){
         simpleAjax.send({

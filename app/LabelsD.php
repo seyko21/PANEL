@@ -90,7 +90,8 @@ define('LABEL_A57','Observacion');
 define('LABEL_A57M','Puede especificar algun codigo de documento, carta, etc.');
 define('LABEL_A58','Listado de Catálogo');
 /*----------------------Consulta de Permisos por vencer----------------------*/
-define('LABEL_A60','Consulta de Permisos por vencer en 5 meses');
+define('LABEL_A60','Consulta de Permisos por vencer en 3 meses');
+define('LABEL_A61','Permisos por vencer');
 /*----------------------Catalogo de Precios----------------------*/
 define('LABEL_A70','Listado de Catalogo');
 define('LABEL_A71','Elemento');
@@ -215,6 +216,6 @@ define('GPASO_1','Pago a Socio');
 define('SASOC_2','Recibo de Pago');
 define('REPRO_PROD1','Buscar Panel');
 define('REPRO_PROD2','Panel');
-
-
+define('INDEX_P1','Paneles que culminan en 30 días');
+define('INDEX_P2','Permisos Municipales por vencer en 3 meses');
 ?>

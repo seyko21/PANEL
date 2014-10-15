@@ -83,7 +83,30 @@ var alquilerCulminar_ = function(){
         setup_widgets_desktop();
     };
       
-    
+    this.publico.getGridIndexAlquilerCulminar = function (){
+         $('#'+diccionario.tabs.PANP+'gridAlquilerCulmina').dataTable({
+            bProcessing: true,
+            bServerSide: true,
+            bDestroy: true,
+            sPaginationType: "bootstrap_full", //two_button
+            sServerMethod: "POST",
+            bPaginate: true,
+            iDisplayLength: 10,   
+            sSearch: false,
+            bFilter: false,
+            aoColumns: [                                
+                {sTitle: "Código", sWidth: "6%"},
+                {sTitle: "N° OS", sWidth: "6%"},    
+                {sTitle: "Cliente", sWidth: "15%"},     
+                {sTitle: "F. Retiro", sWidth: "8%", sClass: "center"},
+                {sTitle: "Alquiler", sWidth: "8%", sClass: "center"}             
+            ],
+            aaSorting: [[0, 'asc']],
+            sScrollY: "125px",
+            sAjaxSource: _private.config.modulo+'getGridIndexAlquilerCulminar'            
+        });
+
+    };      
     return this.publico;
     
 };

@@ -87,6 +87,43 @@ class consultaPermisosController extends Controller{
         echo $sOutput;
     }
     
+    public function getGridIndexConsultaPermiso(){                    
+       $sEcho          =   $this->post('sEcho');
+        
+        $rResult = Obj::run()->consultaPermisosModel->getGridIndexConsultaPermiso();
+        
+        if(!isset($rResult['error'])){  
+            $iTotal         = isset($rResult[0]['total'])?$rResult[0]['total']:0;
+
+            $sOutput = '{';
+            $sOutput .= '"sEcho": '.intval($sEcho).', ';
+            $sOutput .= '"iTotalRecords": '.$iTotal.', ';
+            $sOutput .= '"iTotalDisplayRecords": '.$iTotal.', ';
+            $sOutput .= '"aaData": [ ';
+            foreach ( $rResult as $key=>$aRow ){
+                            
+                ($aRow['fecha_inicio'] != '')?$fi = Functions::cambiaf_a_normal($aRow['fecha_inicio']):$fi='-';
+                ($aRow['fecha_final'] != '')?$ff = Functions::cambiaf_a_normal($aRow['fecha_final']):$ff='-';                                         
+                
+                $ffd = '<span class=\"label label-danger\">'.$ff.'</span>';                
+                
+                /*datos de manera manual*/
+                $sOutput .= '["'.$aRow['distrito'].'","'.$aRow['ubicacion'].'","'.$ffd.'" ';
+                
+
+                $sOutput = substr_replace( $sOutput, "", -1 );
+                $sOutput .= '],';
+                
+            }
+            $sOutput = substr_replace( $sOutput, "", -1 );
+            $sOutput .= '] }';
+        }else{
+            $sOutput = $rResult['error'];
+        }
+        
+        echo $sOutput;
+    }    
+    
    public function postPDF(){ 
       $data = Obj::run()->fichaTecnicaController->postPDF();        
       echo $data;

@@ -118,8 +118,11 @@ endforeach;
               switch (Session::get('sys_defaultRol')){
                         case APP_COD_SADM:
                         case APP_COD_ADM:
-                           ?>
-                        panelesAlquilados.getGridIndexPA();                        
+             ?>                           
+                        setTimeout(function(){ panelesAlquilados.getGridIndexPA();},100);
+                        setTimeout(function(){ saldoCliente.getGridIndexSaldoCliente();},600);
+                        setTimeout(function(){ alquilerCulminar.getGridIndexAlquilerCulminar();},1000);
+                        setTimeout(function(){ consultaPermisos.getGridIndexPermisos();},1600);                                                
              <?php      break;
                         case APP_COD_VEND: ?>                           
                             
