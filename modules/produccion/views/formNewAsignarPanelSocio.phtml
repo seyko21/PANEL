@@ -1,0 +1,284 @@
+<?php
+/*
+ * ---------------------------------------
+ * --------- CREATED BY CREATOR ----------
+ * fecha: 19-08-2014 06:08:51 
+ * Descripcion : formNewAsignarPanelSocio.phtml
+ * ---------------------------------------
+ */
+
+echo Functions::widgetOpen(array(
+    'id' => APASO,
+    'title' => LABEL_GNC2,
+    'padding' => true,
+    'wizard' => true
+));
+$nuevo = Session::getPermiso('APASONEW');
+$grabar = Session::getPermiso('APASOGR');
+$agregar = Session::getPermiso('APASOAG');
+$buscar = Session::getPermiso('APASOBS');
+?>
+<div class="row">
+    <form id="<?php echo APASO; ?>formNewAsignarPanelSocio" name="<?php echo APASO; ?>formNewAsignarPanelSocio" novalidate="novalidate">
+        <div id="<?php echo APASO; ?>bootstrap-wizard-1" class="col-sm-12">
+            <div class="form-bootstrapWizard">
+                <ul class="bootstrapWizard form-wizard">
+                    <li class="active" data-target="#step1">
+                        <a href="#<?php echo APASO; ?>tab1" data-toggle="tab"> <span class="step">1</span> <span class="title">Productos</span> </a>
+                    </li>
+                    <li data-target="#step2">
+                        <a href="#<?php echo APASO; ?>tab2" data-toggle="tab"> <span class="step">2</span> <span class="title">Inversiones</span> </a>
+                    </li>
+                    <li data-target="#step3">
+                        <a href="#<?php echo APASO; ?>tab3" data-toggle="tab"> <span class="step">3</span> <span class="title">Finalizar</span> </a>
+                    </li>
+                </ul>
+                <div class="clearfix"></div>
+            </div>
+            <div class="tab-content">
+                
+                <!-- INICIO TAB 1-->
+                <div class="tab-pane active form-horizontal" id="<?php echo APASO; ?>tab1">
+                    <br><br>
+                    <h3><strong><?php echo LABEL_GNC19; ?></strong><?php echo LABEL_GNC22; ?></h3>
+
+                    <div class="form-group">
+                        <label class="control-label col-md-2" for="prepend"><?php echo APASO_1; ?></label>
+                        <div class="col-md-9">
+                            <div class="input-group input-group-sm">
+                                <input type="hidden" id="<?php echo APASO; ?>txt_idpersona" name="<?php echo APASO; ?>txt_idpersona">
+                                <input class="form-control" type="text" id="<?php echo APASO; ?>txt_socio" name="<?php echo APASO; ?>txt_socio" readonly placeholder="<?php echo APASO_6?>">
+                                <span class="input-group-btn">
+                                    <?php if ($buscar['permiso']): ?>
+                                        <button class="btn btn-default" type="button" onclick="asignarPanelSocio.getFormBuscarSocio(this, '<?php echo APASO; ?>');"><i class="fa fa-search"></i> Buscar</button>
+                                    <?php endif; ?>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="control-label col-md-2" for="prepend"><?php echo APASO_4; ?></label>
+                        <div class="col-md-9">
+                            <div class="input-group input-group-sm">
+                                <input type="hidden" id="<?php echo APASO; ?>txt_idproducto" name="<?php echo APASO; ?>txt_idproducto">
+                                <input class="form-control" type="text" id="<?php echo APASO; ?>txt_producto" name="<?php echo APASO; ?>txt_producto" readonly placeholder="<?php echo APASO_5?>">
+                                <span class="input-group-btn">
+                                    <?php if ($buscar['permiso']): ?>
+                                        <button class="btn btn-default" type="button" onclick="regProduccion.getFormBuscarProducto(this, '<?php echo APASO; ?>','A');"><i class="fa fa-search"></i> <?php echo BTN_SEARCH?></button>
+                                    <?php endif; ?>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="control-label col-md-2" for="prepend"><?php echo APASO_10; ?></label>
+                        <div class="col-md-2">
+                            <div class="input">
+                                <input class="form-control" type="text" id="<?php echo APASO; ?>txt_ganancia" name="<?php echo APASO; ?>txt_ganancia">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!--FIN TAB 1-->
+
+
+
+
+                <!--INICIO TAB 2-->
+                <div class="tab-pane" id="<?php echo APASO; ?>tab2">
+                    <br>
+                    <h3><strong><?php echo LABEL_GNC21; ?></strong><?php echo APASO_2; ?></h3>
+                    <div style="padding: 10px">
+                        <div class="si-access" style="min-height: 200px; max-height: auto;width: 60%">
+                            <table id="<?php echo APASO; ?>gridInversiones" class="table table-bordered table-striped table-condensed table-hover smart-form has-tickbox">
+                                <thead>
+                                    <tr>
+                                        <th class="center" style="width:8%"><?php echo APASO_7; ?></th>
+                                        <th class="center" style="width:8%"><?php echo APASO_8; ?></th>
+                                        <th class="center" style="width:30%"><?php echo APASO_9; ?></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <th colspan="2" class="right"><?php echo LABEL_T; ?></th>
+                                        <th>
+                                            <label class="input">
+                                                <input type="text" id="<?php echo APASO; ?>txt_montototal" name="<?php echo APASO; ?>txt_montototal" readonly="readonly" class="right">
+                                            </label>
+                                        </th>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+
+                <!--FIN TAB 2-->
+
+                <!--INICIO TAB 3--> 
+                <div class="tab-pane form-horizontal" id="<?php echo APASO; ?>tab3">
+                    <br>
+                    <h3><strong><?php echo LABEL_GNC23; ?></strong><?php echo LABEL_GNC24; ?></h3>
+                    
+                    <h4 class="text-center">
+                        <button id="<?php echo APASO; ?>btnGpan" type="button" class="btn btn-success btn-large" title="<?php echo APASO_11; ?>" onclick="asignarPanelSocio.postNewAsignarPanelSocio();">    
+                            <i class="fa fa-plus-circle fa-lg"></i>
+                            <?php echo APASO_11; ?>
+                        </button>
+                    </h4>
+                    <br>
+                    <br>
+                </div>
+                <!--FIN TAB 3-->
+                
+                <div class="form-actions">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <ul class="pager wizard no-margin no-border">
+                                <!--<li class="previous first disabled">
+                                <a href="javascript:void(0);" class="btn btn-lg btn-default"> First </a>
+                                </li>-->
+                                <li class="previous disabled">
+                                    <a href="javascript:void(0);" class="btn btn-lg btn-default"> <?php echo LABEL_ANT?> </a>
+                                </li>
+                                <!--<li class="next last">
+                                <a href="javascript:void(0);" class="btn btn-lg btn-primary"> Last </a>
+                                </li>-->
+                                <li class="next">
+                                    <a href="javascript:void(0);" class="btn btn-lg txt-color-darken"> <?php echo LABEL_SIG?> </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        
+        <script>
+            var $validator = $("#<?php echo APASO; ?>formNewAsignarPanelSocio").validate({
+                rules: {
+                    <?php echo APASO; ?>txt_socio: {
+                        required: true
+                    },
+                    <?php echo APASO; ?>txt_producto: {
+                        required: true
+                    },
+                    <?php echo APASO; ?>txt_ganancia: {
+                        required: true,
+                        number: true
+                    }        
+                },
+                highlight: function(element) {
+                    $(element).closest('.form-group').removeClass('has-success').addClass('has-error');
+                },
+                unhighlight: function(element) {
+                    $(element).closest('.form-group').removeClass('has-error').addClass('has-success');
+                },
+                errorElement: 'span',
+                errorClass: 'help-block',
+                errorPlacement: function(error, element) {
+                    if (element.parent('.input-group').length) {
+                        error.insertAfter(element.parent());
+                    } else {
+                        error.insertAfter(element);
+                    }
+                }
+            });
+
+            var baseItemSelector = 'li:has([data-toggle="tab"])';
+            $('#<?php echo APASO; ?>bootstrap-wizard-1').bootstrapWizard({
+                tabClass: 'form-wizard',
+                onTabClick: function(tab, navigation, index) {
+                    //desactivar tabs
+                    return false;
+                },
+                onTabChange: function(tab, navigation, index) {
+                    
+                },
+                onNext: function(tab, navigation, index) {
+                    var $valid = $("#<?php echo APASO; ?>formNewAsignarPanelSocio").valid();
+                    if(index === 1){
+                        if (!$valid) {
+                            $validator.focusInvalid();
+                            return false;
+                        }
+                        
+                        if($('#<?php echo APASO; ?>txt_ganancia').val() >= 1){
+                            simpleScript.notify.warning({
+                                content: 'Ganancia debe ser en formato de porcentaje. Ejm: 0.50'
+                            });
+                            return false;
+                        }
+                            
+                        //trae las inversiones
+                        asignarPanelSocio.getInversiones();
+                        /*marca el paso como completado*/
+                        $('#<?php echo APASO; ?>bootstrap-wizard-1').find('.form-wizard').children('li').eq(index - 1).addClass(
+                                'complete');
+                        $('#<?php echo APASO; ?>bootstrap-wizard-1').find('.form-wizard').children('li').eq(index - 1).find('.step')
+                                .html('<i class="fa fa-check"></i>');
+                    }
+                    if(index === 2){
+                        /*validar que ingrese monto a invertir*/
+                        var collection = $('#<?php echo APASO; ?>gridInversiones').find('tbody').find('tr');
+                        var r = false;
+                        
+                        $.each(collection,function(){
+                            var input = $(this).find('td:eq(2)').find(':text');
+                            if(input.val().length > 0 && !isNaN(input.val())){
+                                r = true;                          
+                            }
+                        });
+                        
+                        if(r === false){
+                            simpleScript.notify.warning({
+                                content: 'Tiene que ingresar inversión'
+                            });
+                            return false;
+                        }else{
+                            /*marca el paso como completado*/
+                            $('#<?php echo APASO; ?>bootstrap-wizard-1').find('.form-wizard').children('li').eq(index - 1).addClass(
+                                    'complete');
+                            $('#<?php echo APASO; ?>bootstrap-wizard-1').find('.form-wizard').children('li').eq(index - 1).find('.step')
+                                    .html('<i class="fa fa-check"></i>');
+                        }
+                    }
+                    
+                }
+            });
+
+            var wizard = $('.wizard').wizard();
+
+            wizard.on('finished', function(e, data) {
+                //$("#fuelux-wizard").submit();
+                //console.log("submitted!");
+                $.smallBox({
+                    title: "Congratulations! Your form was submitted",
+                    content: "<i class='fa fa-clock-o'></i> <i>1 seconds ago...</i>",
+                    color: "#5F895F",
+                    iconSmall: "fa fa-check bounce animated",
+                    timeout: 4000
+                });
+            });
+            /*para hacer evento invisible*/
+            simpleScript.removeAttr.click({
+                container: '#<?php echo APASO; ?>formNewAsignarPanelSocio',
+                typeElement: 'button'
+            });
+            simpleScript.removeAttr.keyup({
+                container: '#<?php echo APASO; ?>formNewAsignarPanelSocio',
+                typeElement: 'input'
+            });      
+        </script>
+    </form>
+</div>
+
+<?php echo Functions::widgetClose(); ?>

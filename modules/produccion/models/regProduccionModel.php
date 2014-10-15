@@ -21,6 +21,7 @@ class regProduccionModel extends Model{
     private $_cantidad;
     private $_precio ;
     private $_chkdel;
+    private $_tipo;
 
 
     /*para el grid*/
@@ -47,6 +48,7 @@ class regProduccionModel extends Model{
         $this->_idConcepto     = Formulario::getParam(ORINS."hhddIdConcepto"); #array
         $this->_cantidad     = Formulario::getParam(ORINS."txt_cantidad");#array
         $this->_precio     = Formulario::getParam(ORINS."txt_precio");#array
+        $this->_tipo     = Formulario::getParam("_tipo");
         
         $this->_iDisplayStart  =   Formulario::getParam("iDisplayStart"); 
         $this->_iDisplayLength =   Formulario::getParam("iDisplayLength"); 
@@ -82,13 +84,24 @@ class regProduccionModel extends Model{
     }
     
     public function getProductos(){
-        $query = "
-        SELECT 
-                c.`id_producto`,
-                c.`ubicacion`
-        FROM lgk_catalogo c
-        WHERE c.estado = 'A' and c.`ubicacion` LIKE CONCAT('%".$this->_term."%')
-        AND c.`id_producto` NOT IN(SELECT id_producto FROM `prod_produccionpanel` WHERE estado = 'A'); ";
+        if($this->_tipo == 'A'){/*query para nusqueda desde asociar panel a socio*/
+            $query = "
+            SELECT 
+                    pp.`id_produccion` as id_producto,
+                    c.`ubicacion`
+            FROM prod_produccionpanel pp 
+            INNER JOIN lgk_catalogo c ON c.`id_producto`=pp.`id_producto`
+            WHERE pp.total_saldo > 0 AND c.`ubicacion` LIKE CONCAT('%".$this->_term."%'); ";
+        }else{/*query normal*/
+            $query = "
+            SELECT 
+                    c.`id_producto`,
+                    c.`ubicacion`
+            FROM lgk_catalogo c
+            WHERE c.`ubicacion` LIKE CONCAT('%".$this->_term."%')
+            AND c.`id_producto` NOT IN(SELECT id_producto FROM `prod_produccionpanel` WHERE estado = 'A'); ";
+        }
+        
         
         $parms = array();
         $data = $this->queryAll($query,$parms);

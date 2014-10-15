@@ -1,0 +1,32 @@
+<?php 
+/*
+* ---------------------------------------
+* --------- CREATED BY CREATOR ----------
+* fecha: 11-10-2014 16:10:11 
+* Descripcion : indexAsignarPanelSocio.phtml
+* ---------------------------------------
+*/
+$nuevo    = Session::getPermiso("APASONEW");
+$eliminar = Session::getPermiso("APASODE");
+echo Functions::widgetOpen(array(
+        "id"=>APASO,
+        "title"=>"AsignarPanelSocio"
+    )); 
+?>
+
+    <div class="widget-body-toolbar"></div>
+    <div class="dataTables_wrapper form-inline" role="grid">
+        <div class="dt-top-row">
+            <div class="DTTT btn-group">
+                <!-- verificar permisos -->
+                <?php if($nuevo["permiso"]): ?>
+                <button id="<?php echo APASO; ?>btnNewAsignarPanelSocio" type="button" onclick="asignarPanelSocio.getFormNewAsignarPanelSocio(this);" class="<?php echo $nuevo["theme"]; ?>">
+                    <i class="<?php echo $nuevo["icono"]; ?>"></i> <?php echo $nuevo["accion"]; ?>
+                </button>
+                <?php endif; ?>
+            </div>
+        </div>
+
+    </div>
+        <table id="<?php echo APASO; ?>gridAsignarPanelSocio" class="table table-striped table-hover table-condensed" style="width:100%"></table>
+<?php echo Functions::widgetClose(); ?>

@@ -12,7 +12,7 @@ define("T4","XCUDUSU");     /*tab modulo CONFIGURAR USUARIOS*/
 define("T5","XTIPCON");     /*tab modulo TIPO DE CONCEPTOS*/
 define("T6","TAB_CONC");        /*tab modulo CONCEPTOS*/
 define("T7","TAB_REGVE");        /*tab modulo REGISTRAR VENDEDOR*/
-define("T8","GNCOT");        /*tab modulo GENERAR COTIZACION*/
+define("T8","XGNCOT");        /*tab modulo GENERAR COTIZACION*/
 define("ASCU","XASCU_TAB");        /*tab modulo ASIGNAR CUENTA*/
 define("CLIT","CLIT");             /*tab modulo CLIENTE*/
 define("REGCL","REGCL");             /*tab modulo CLIENTE*/
@@ -29,4 +29,5 @@ define("CLAV","CLAV");             /*tab modulo CAMBIAR CLAVE*/
 define("PERF","PERF");             /*tab modulo PERFIL*/
 define("GPAVE","GPAVE");             /*tab modulo GENERAR PAGO VENDEDOR*/
 define("PANP","PANP");             /*tab modulo PANEL PRINCIPAL*/
+define("APASO","APASO");             /*tab modulo ASIGNARPANELSOCIO*/
 ?>

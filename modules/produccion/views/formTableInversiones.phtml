@@ -1,0 +1,58 @@
+<?php
+$datain = Obj::run()->asignarPanelSocioController->getInversiones();
+$total = 0;
+foreach ($datain as $key => $value):
+    ++$key;
+    $total += $value['monto_saldo'];
+    ?>
+    <tr>
+        <td class="center">
+            <input type="hidden" name="<?php echo APASO ?>hhidInversion[]" value="<?php echo AesCtr::en($value['id_inversion']) ?>">
+            <?php echo $value['fecha'] ?>
+        </td>
+        <td class="right"><?php echo number_format($value['monto_saldo'], 2) ?></td>
+        <td>
+            <label class="input">
+                <input type="text" id="<?php echo APASO . $key ?>txt_montoinvertir" name="<?php echo APASO ?>txt_montoinvertir[]" class="right">
+            </label>
+        </td>
+    </tr>
+<?php endforeach; ?>
+<script>
+    var collection = $('#<?php echo APASO; ?>gridInversiones').find('tbody').find('tr');
+
+    $.each(collection, function() {
+        var input = $(this).find('td:eq(2)').find(':text');
+        var msaldo = parseFloat(simpleScript.deleteComa($.trim($(this).find('td:eq(1)').html())));
+        
+        /*evento a input*/
+        input.keyup(function() {
+            var valor = $(this).val();
+
+            if (valor.length === 0 || isNaN(valor)) {
+                $(this).val('');
+                return false;
+            }
+            
+            if (valor.length > 0){
+                /*validar q inversion sea <= que monto saldo*/
+                if(valor > msaldo){
+                    simpleScript.notify.warning({
+                        content: 'Inversión no debe ser mayor a monto'
+                    });
+                    $(this).val('');
+                    return false;
+                }
+            }
+            
+            var tot = 0;
+            $.each(collection, function() {
+                var inputt = parseFloat($(this).find('td:eq(2)').find(':text').val());
+                if(inputt > 0){
+                    tot += inputt;
+                }
+            });
+            $('#<?php echo APASO; ?>txt_montototal').val(tot);
+        });
+    });
+</script>

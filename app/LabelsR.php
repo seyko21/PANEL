@@ -302,4 +302,17 @@ define('GPAVE_9','Ingrese monto a pagar');
 /*----------------------------PRODUCCION--------------------*/
 define('REPRO_1','Nueva Producción');
 
+/*----------------------------ASIGNAR PANEL A SOCIO--------------------*/
+define('APASO_1','Socio');
+define('APASO_2',' - Inversiones');
+define('APASO_3','Buscar Socio');
+define('APASO_4','Producto');
+define('APASO_5','Buscar Producto');
+define('APASO_6','Buscar Socio');
+define('APASO_7','Fecha');
+define('APASO_8','Monto');
+define('APASO_9','Monto a Invertir');
+define('APASO_10','Ganancia %');
+define('APASO_11','Click aquí para grabar');
+
 ?>

@@ -14,6 +14,8 @@ var regProduccion_ = function(){
     
     _private.tab = '';
     
+    _private.tipo = '';
+    
     _private.config = {
         modulo: "produccion/regProduccion/"
     };
@@ -99,6 +101,7 @@ var regProduccion_ = function(){
             fnServerParams: function(aoData) {
                 aoData.push({"name": diccionario.tabs.REPRO+"_term", "value": $('#'+diccionario.tabs.REPRO+'txt_search').val()});
                 aoData.push({"name": "_tab", "value": _private.tab});
+                aoData.push({"name": "_tipo", "value": _private.tipo});
             },
             fnDrawCallback: function() {
                 $('#'+diccionario.tabs.REPRO+'gridProductosFound_wrapper').find('.dataTables_scrollBody').css('overflow-x','hidden');
@@ -170,8 +173,10 @@ var regProduccion_ = function(){
         });
     };
     
-    this.publico.getFormBuscarProducto = function(btn,tab){
+    this.publico.getFormBuscarProducto = function(btn,tab,pr){
         _private.tab = tab;
+        _private.tipo = pr;
+         
         simpleAjax.send({
             element: btn,
             dataType: 'html',
