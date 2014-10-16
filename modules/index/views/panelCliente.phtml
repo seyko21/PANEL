@@ -2,70 +2,88 @@
     <article class="col-lg-6">
         <?php
         $obj = array(
-            'id' => PANP . '1',
-            'title' => 'PAN 1',
-            'height' => '200px',
+            'id' => PANP . 'x1',
+            'title' => LABEL_A121,
+            'height' => '220px',
             'padding' => true,
-            'actions' => array(
+             'actions' => array(
                 array(
-                    'id' => T5 . 'btnNew',
-                    'label' => BTN_NUEVO,
-                    'click' => 'configurarMenu.getNuevoDominio()'
+                    'id' => PANP . 'btnPA',
+                    'label' => LABEL_MAS,
+                    'title' => LABEL_A121,
+                    'click' => 'panelesAlquilados.main(this)'
                 )
             )
         );
         echo Functions::widgetOpen($obj);
         ?>
-        AQUI CONTENIDO
+        <table id="<?php echo PANP; ?>gridPanelAlquilado" class="table table-striped table-hover table-condensed" style="width:100%;"></table>
         <?php echo Functions::widgetClose(); ?>
 
         <?php
         $obj = array(
-            'id' => PANP . '3',
-            'title' => 'PAN 3',
-            'height' => '200px',
+            'id' => PANP . 'x3',
+            'title' => INDEX_P1,
+            'height' => '220px',
             'padding' => true,
             'actions' => array(
                 array(
-                    'id' => T5 . 'btnNew',
-                    'label' => BTN_NUEVO,
-                    'click' => 'configurarMenu.getNuevoDominio()'
+                    'id' => PANP . 'btnAC',
+                    'label' => LABEL_MAS,
+                    'title' => CALCU_1,
+                    'click' => 'alquilerCulminar.main(this)'
                 )
             )
         );
         echo Functions::widgetOpen($obj);
         ?>
-        AQUI CONTENIDO
+        <table id="<?php echo PANP; ?>gridAlquilerCulmina" class="table table-striped table-hover table-condensed" style="width:100%;"></table>
         <?php echo Functions::widgetClose(); ?>
     </article>
 
     <article class="col-lg-6">
         <?php
         $obj = array(
-            'id' => PANP . '2',
-            'title' => 'PAN 2',
-            'height' => '200px',
+            'id' => PANP . 'x2',
+            'title' => SACOB_1.' - '.ucwords(Functions::nombremes(date("m"))),
+            'height' => '220px',
             'padding' => true,
             'actions' => array(
                 array(
-                    'id' => T5 . 'btnNew',
-                    'label' => BTN_NUEVO,
-                    'click' => 'configurarMenu.getNuevoDominio()'
+                    'id' => PANP . 'btnSC',
+                    'label' => LABEL_MAS,
+                    'title' => SACLI_1,
+                    'click' => 'saldoCliente.main(this)'
                 )
             )
         );
         echo Functions::widgetOpen($obj);
         ?>
-        AQUI CONTENIDO
+        <table id="<?php echo PANP; ?>gridSaldoCliente" class="table table-striped table-hover table-condensed" style="width:100%;"></table>
         <?php echo Functions::widgetClose(); ?>
 
-
+        <?php
+        $obj = array(
+            'id' => PANP . 'x4',
+            'title' => INDEX_P2,
+            'height' => '220px',
+            'padding' => true,
+            'actions' => array(
+                array(
+                    'id' => PANP . 'btnPM',
+                    'label' => LABEL_MAS,
+                    'title' => LABEL_A61,
+                    'click' => 'consultaPermisos.main(this)'
+                )
+            )
+        );
+        echo Functions::widgetOpen($obj);
+        ?>
+        <table id="<?php echo PANP; ?>gridPermisoMunicipal" class="table table-striped table-hover table-condensed" style="width:100%;"></table>
+        <?php echo Functions::widgetClose(); ?>
     </article>
     
     <div class="clearfix">
     </div>
 
 </div>
-<script>
-    //setup_widgets_desktop(); 
-</script>

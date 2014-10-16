@@ -82,8 +82,10 @@ class alquilerCulminarController extends Controller{
                 $c4 = Functions::cambiaf_a_normal($aRow['fecha_inicio']);
                 $c5 = Functions::cambiaf_a_normal($aRow['fecha_termino']);
                 $c6 = $aRow['meses_contrato'];
-                              
-                $sOutput .= '["'.$c1.'","'.$c2.'","'.$c3.'","'.$c5.'","'.$c6.'" ';
+                
+                $ffd = '<span class=\"label label-danger\">'.$c5.'</span>';  
+                
+                $sOutput .= '["'.$c1.'","'.$c2.'","'.$c3.'","'.$ffd.'","'.$c6.'" ';
                                
                 $sOutput = substr_replace( $sOutput, "", -1 );
                 $sOutput .= '],';

@@ -42,27 +42,33 @@ class saldoClienteController extends Controller{
                 
                 $axion = '"<div class=\"btn-group\">';
                  
-                if($exportarpdf['permiso']){
-                    if ($aRow['estado'] == 'P'){
-                        $axion .= '<button type=\"button\" class=\"'.$exportarpdf['theme'].'\" title=\"'.$exportarpdf['accion'].' pagos \" onclick=\"saldoCliente.postPDF(this,\'' . $encryptReg . '\')\"> ';
-                        $axion .= '    <i class=\"'.$exportarpdf['icono'].'\"></i>';
-                        $axion .= '</button>';
-                    }else{
-                        $axion .= '<button type=\"button\" class=\"'.$exportarpdf['theme'].'\" title=\"'.$exportarpdf['accion'].'\" disabled=\"disabled\" > ';
-                        $axion .= '    <i class=\"'.$exportarpdf['icono'].'\"></i>';
-                        $axion .= '</button>';
+                if (Session::get('sys_all') == 'S'){
+                    if($exportarpdf['permiso']){
+                        if ($aRow['estado'] == 'P'){
+                            $axion .= '<button type=\"button\" class=\"'.$exportarpdf['theme'].'\" title=\"'.$exportarpdf['accion'].' pagos \" onclick=\"saldoCliente.postPDF(this,\'' . $encryptReg . '\')\"> ';
+                            $axion .= '    <i class=\"'.$exportarpdf['icono'].'\"></i>';
+                            $axion .= '</button>';
+                        }else{
+                            $axion .= '<button type=\"button\" class=\"'.$exportarpdf['theme'].'\" title=\"'.$exportarpdf['accion'].'\" disabled=\"disabled\" > ';
+                            $axion .= '    <i class=\"'.$exportarpdf['icono'].'\"></i>';
+                            $axion .= '</button>';
+                        }
                     }
-                }
-                if($exportarexcel['permiso']){
-                    if ($aRow['estado'] == 'P'){
-                        $axion .= '<button type=\"button\" class=\"'.$exportarexcel['theme'].'\" title=\"'.$exportarexcel['accion'].' pagos \" onclick=\"saldoCliente.postExcel(this,\'' . $encryptReg . '\')\"> ';
-                        $axion .= '    <i class=\"'.$exportarexcel['icono'].'\"></i>';
-                        $axion .= '</button>';
-                    }else{
-                        $axion .= '<button type=\"button\" class=\"'.$exportarexcel['theme'].'\" title=\"'.$exportarexcel['accion'].'\" disabled=\"disabled\" > ';
-                        $axion .= '    <i class=\"'.$exportarexcel['icono'].'\"></i>';
-                        $axion .= '</button>';
+                    if($exportarexcel['permiso']){
+                            if ($aRow['estado'] == 'P'){
+                                $axion .= '<button type=\"button\" class=\"'.$exportarexcel['theme'].'\" title=\"'.$exportarexcel['accion'].' pagos \" onclick=\"saldoCliente.postExcel(this,\'' . $encryptReg . '\')\"> ';
+                                $axion .= '    <i class=\"'.$exportarexcel['icono'].'\"></i>';
+                                $axion .= '</button>';
+                            }else{
+                                $axion .= '<button type=\"button\" class=\"'.$exportarexcel['theme'].'\" title=\"'.$exportarexcel['accion'].'\" disabled=\"disabled\" > ';
+                                $axion .= '    <i class=\"'.$exportarexcel['icono'].'\"></i>';
+                                $axion .= '</button>';
+                            }
                     }
+                }else{
+                    $axion .= '<button type=\"button\" class=\"'.$exportarpdf['theme'].'\" title=\"'.$exportarpdf['accion'].'\" disabled=\"disabled\" > ';
+                    $axion .= '    <i class=\"'.$exportarpdf['icono'].'\"></i>';
+                    $axion .= '</button>';
                 }
                 $axion .= ' </div>" ';
                 

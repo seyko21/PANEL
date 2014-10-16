@@ -216,6 +216,6 @@ define('GPASO_1','Pago a Socio');
 define('SASOC_2','Recibo de Pago');
 define('REPRO_PROD1','Buscar Panel');
 define('REPRO_PROD2','Panel');
-define('INDEX_P1','Paneles que culminan en 30 días');
+define('INDEX_P1','Caratulas que culminan en 30 días');
 define('INDEX_P2','Permisos Municipales por vencer en 3 meses');
 ?>

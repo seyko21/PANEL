@@ -144,7 +144,7 @@ var panelesAlquilados_ = function(){
                 {sTitle: "F. Instalado", sWidth: "12%", sClass: "center"},
                 {sTitle: "F. Retiro", sWidth: "12%", sClass: "center"}                
             ],
-            aaSorting: [[0, 'asc']],
+            aaSorting: [[2, 'desc']],
             sScrollY: "125px",
             sAjaxSource: _private.config.modulo+'getGridIndexPanelAlquilado'            
         });

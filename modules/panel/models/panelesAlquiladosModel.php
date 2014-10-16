@@ -27,7 +27,7 @@ class panelesAlquiladosModel extends Model{
     
     private function _set(){
         $this->_flag                    = Formulario::getParam("_flag");        
-        $this->_usuario                 = Session::get("sys_usuario");
+        $this->_usuario                 = Session::get("sys_idUsuario");
         $this->_idPersona               = Session::get("sys_idPersona");
         $this->_tipoPanel =   Formulario::getParam("_tipoPanel"); 
         $this->_idCaratula = Aes::de(Formulario::getParam('_idCaratula'));  /*se decifra*/ 

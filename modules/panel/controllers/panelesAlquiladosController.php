@@ -60,10 +60,10 @@ class panelesAlquiladosController extends Controller{
                  
                  //Visualizar Detalle
                 $sOutput .= '"<div class=\"btn-group\">';   
-                if($consultar['permiso'] == 1){
+                if($consultar['permiso'] == 1){                   
                     $sOutput .= '<button type=\"button\" class=\"'.$consultar['theme'].'\" title=\"'.$consultar['accion'].'\" onclick=\"panelesAlquilados.getConsulta(this,\''.$encryptReg.'\',\''.$aRow['codigo'].'\')\">';
                     $sOutput .= '    <i class=\"'.$consultar['icono'].'\"></i>';                    
-                    $sOutput .= '</button>';    
+                    $sOutput .= '</button>';                        
                 }
                 $sOutput .= ' </div>" ';
                 
