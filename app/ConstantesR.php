@@ -5,7 +5,7 @@
  * Autor       : ..... .....
  * Descripcion : 
  */
-define("T1","XCRDCR");       /*tab modulo CONFIGURACION DE ROLES*/
+define("T1","T1XT1CRDCR");       /*tab modulo CONFIGURACION DE ROLES*/
 define("T2","7CRDAC");       /*tab modulo CONFIGURAR ACCIONES*/
 define("T3","Z_CMDMCMN");     /*tab modulo CONFIGURAR MENU*/
 define("T4","XCUDUSU");     /*tab modulo CONFIGURAR USUARIOS*/

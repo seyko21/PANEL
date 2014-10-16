@@ -125,7 +125,9 @@ endforeach;
                         setTimeout(function(){ consultaPermisos.getGridIndexPermisos();},2200);                                                
              <?php      break;
                         case APP_COD_VEND: ?>                           
-                            
+                        setTimeout(function(){ panelesAlquilados.getGridIndexPA();},100);
+                        setTimeout(function(){ saldoCliente.getGridIndexSaldoCliente();},800);
+                        setTimeout(function(){ alquilerCulminar.getGridIndexAlquilerCulminar();},1500);
              <?php      break;
                         case APP_COD_CLIE: ?>
                             

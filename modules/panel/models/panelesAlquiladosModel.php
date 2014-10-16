@@ -124,9 +124,11 @@ class panelesAlquiladosModel extends Model{
         }        
         $sOrder = substr_replace( $sOrder, "", -1 );
         
-        $query = "call sp_catalogoIndexPanelAlquiladoGrid(:iDisplayStart,:iDisplayLength,:sOrder);";
+        $query = "call sp_catalogoIndexPanelAlquiladoGrid(:acceso,:idPersona,:iDisplayStart,:iDisplayLength,:sOrder);";
         
-        $parms = array(            
+        $parms = array(   
+            ':acceso' => Session::get('sys_all'),
+            ':idPersona' => $this->_idPersona,
             ':iDisplayStart' => $this->_iDisplayStart,
             ':iDisplayLength' => $this->_iDisplayLength,
             ':sOrder' => $sOrder
