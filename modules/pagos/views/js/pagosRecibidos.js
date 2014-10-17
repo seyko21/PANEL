@@ -55,16 +55,18 @@ var pagosRecibidos_ = function(){
             bPaginate: true,
             iDisplayLength: 10,            
             aoColumns: [
-                {sTitle: "N°", sWidth: "5%", bSortable: false},
+                {sTitle: "Cuota", sWidth: "5%"},
                 {sTitle: "N° OS", sWidth: "10%"},
                 {sTitle: "Beneficiario", sWidth: "25%"},
+                {sTitle: "% Comisión", sWidth: "5%"},
+                {sTitle: "Alquiler", sWidth: "10%"},                
                 {sTitle: "Fecha", sWidth: "15%",sClass: "center" },
-                {sTitle: "Comision", sWidth: "10%", sClass: "right"},             
+                {sTitle: "Comisión", sWidth: "10%", sClass: "right"},             
                 {sTitle: "Pagado", sWidth: "10%", sClass: "right"},             
                 {sTitle: "Saldo", sWidth: "10%", sClass: "right"},
                 {sTitle: "Acciones", sWidth: "8%", sClass: "center", bSortable: false}
             ],
-            aaSorting: [[1, "asc"]],
+            aaSorting: [[1, "asc"],[0, "asc"]],
             sScrollY: "300px",
             sAjaxSource: _private.config.modulo+"getGridPagosRecibidos",
              fnServerParams: function(aoData) {

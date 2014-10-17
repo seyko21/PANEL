@@ -41,7 +41,7 @@ class saldoCobrarModel extends Model{
     
     /*data para el grid: SaldoCobrar*/
     public function getSaldoCobrar(){
-        $aColumns       =   array("","orden_numero","fecha","nombrecompleto","porcentaje_comision","comision_venta","comision_asignado","comision_saldo" ); //para la ordenacion y pintado en html
+        $aColumns       =   array("numero_cuota","orden_numero","nombrecompleto","porcentaje_comision","meses_contrato","fecha","comision_venta","comision_asignado","comision_saldo" ); //para la ordenacion y pintado en html
         /*
 	 * Ordenando, se verifica por que columna se ordenara
 	 */
@@ -77,7 +77,40 @@ class saldoCobrarModel extends Model{
         $data = $this->queryAll($query,$parms);
         return $data;
     }
-    
+
+    public function getIndexSaldoCobrar(){
+        $aColumns       =   array("orden_numero","porcentaje_comision","comision_venta","comision_asignado","comision_saldo" ); //para la ordenacion y pintado en html
+        /*
+	 * Ordenando, se verifica por que columna se ordenara
+	 */
+        $sOrder = "";
+        for ( $i=0 ; $i<intval( $this->_iSortingCols ) ; $i++ ){
+                if ( $this->post( "bSortable_".intval($this->post("iSortCol_".$i)) ) == "true" ){
+                        $sOrder .= " ".$aColumns[ intval( $this->post("iSortCol_".$i) ) ]." ".
+                                ($this->post("sSortDir_".$i)==="asc" ? "asc" : "desc") .",";
+                }
+        }
+        $sOrder = substr_replace( $sOrder, "", -1 );
+  
+        $query = "call sp_pagoIndexSaldoCobrarGrid(:rol,:idpersona,:iDisplayStart,:iDisplayLength,:sOrder);";
+        
+        //Validar por ROL:
+        if (Session::get('sys_defaultRol') == APP_COD_VEND){
+            $rol = 'V';
+        }else if( Session::get('sys_defaultRol') ==  APP_COD_SOCIO ){
+            $rol = 'S';
+        }
+        
+        $parms = array(
+            ":rol"=>$rol,
+            ":idpersona"=>$this->_idPersona,
+            ":iDisplayStart" => $this->_iDisplayStart,
+            ":iDisplayLength" => $this->_iDisplayLength,
+            ":sOrder" => $sOrder
+        );
+        $data = $this->queryAll($query,$parms);
+        return $data;
+    }    
     
 }
 

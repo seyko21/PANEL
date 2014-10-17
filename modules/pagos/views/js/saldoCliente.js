@@ -63,8 +63,8 @@ var saldoCliente_ = function(){
             bPaginate: true,
             iDisplayLength: 10,            
             aoColumns: [
-                {sTitle: "N° OS", sWidth: "8%"},
                 {sTitle: "Cuota", sWidth: "8%", sClass: "center"},
+                {sTitle: "N° OS", sWidth: "8%"},                
                 {sTitle: "Fecha Programada", sWidth: "9%", sClass: "center"},
                 {sTitle: "Cliente", sWidth: "25%"},
                 {sTitle: "Mora", sWidth: "7%", sClass: "right"},
@@ -73,7 +73,7 @@ var saldoCliente_ = function(){
                 {sTitle: "Estado", sWidth: "8%", sClass: "center"},
                 {sTitle: "Acciones", sWidth: "8%", sClass: "center", bSortable: false}
             ],
-            aaSorting: [[2, "asc"]],
+            aaSorting: [[1, "asc"],[0, "asc"]],
             sScrollY: "300px",
             sAjaxSource: _private.config.modulo+"getGridSaldoCliente",
             fnServerParams: function(aoData) {

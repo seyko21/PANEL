@@ -45,7 +45,7 @@ class saldoClienteModel extends Model{
     
     /*data para el grid: SaldoCliente*/
     public function getSaldoCliente(){
-        $aColumns       =   array("orden_numero","numero_cuota","fecha_programada","cliente","costo_mora","monto_pago" ); //para la ordenacion y pintado en html
+        $aColumns       =   array("numero_cuota","orden_numero","fecha_programada","cliente","costo_mora","monto_pago" ); //para la ordenacion y pintado en html
         /*
 	 * Ordenando, se verifica por que columna se ordenara
 	 */

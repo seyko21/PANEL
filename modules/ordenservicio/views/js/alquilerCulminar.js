@@ -95,8 +95,8 @@ var alquilerCulminar_ = function(){
             sSearch: false,
             bFilter: false,
             aoColumns: [                                
-                {sTitle: "Código", sWidth: "6%"},
-                {sTitle: "N° OS", sWidth: "6%"},    
+                {sTitle: "Código", sWidth: "6%", sClass: "center"},
+                {sTitle: "N° OS", sWidth: "6%", sClass: "center"},    
                 {sTitle: "Cliente", sWidth: "15%"},     
                 {sTitle: "F. Retiro", sWidth: "8%", sClass: "center"},
                 {sTitle: "Alquiler", sWidth: "8%", sClass: "center"}             

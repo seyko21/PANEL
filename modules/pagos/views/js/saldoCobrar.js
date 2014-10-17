@@ -55,15 +55,17 @@ var saldoCobrar_ = function(){
             bPaginate: true,
             iDisplayLength: 10,            
             aoColumns: [
-                {sTitle: "N°", sWidth: "5%", bSortable: false},
+                {sTitle: "Cuota", sWidth: "5%"},
                 {sTitle: "N° OS", sWidth: "10%"},
-                {sTitle: "Beneficiario", sWidth: "30%"},
+                {sTitle: "Beneficiario", sWidth: "25%"},
+                {sTitle: "% Comisión", sWidth: "5%"},
+                {sTitle: "Alquiler", sWidth: "10%"},                
                 {sTitle: "Fecha", sWidth: "15%",sClass: "center" },
-                {sTitle: "Comision", sWidth: "10%", sClass: "right"},             
+                {sTitle: "Comisión", sWidth: "10%", sClass: "right"},             
                 {sTitle: "Pagado", sWidth: "10%", sClass: "right"},             
                 {sTitle: "Saldo", sWidth: "10%", sClass: "right"}
             ],
-            aaSorting: [[1, "asc"]],
+            aaSorting: [[1, "asc"],[0, "asc"]],
             sScrollY: "300px",
             sAjaxSource: _private.config.modulo+"getGridSaldoCobrar",
              fnServerParams: function(aoData) {
@@ -83,7 +85,30 @@ var saldoCobrar_ = function(){
         setup_widgets_desktop();
     };
     
-    
+    this.publico.getGridIndexSaldoCobrar = function (){
+
+        $("#"+diccionario.tabs.PANP+"gridSaldoCobrar").dataTable({
+            bProcessing: true,
+            bServerSide: true,
+            bDestroy: true,
+            sPaginationType: "bootstrap_full", //two_button
+            sServerMethod: "POST",
+            bPaginate: true,
+            iDisplayLength: 10,   
+            sSearch: false,
+            bFilter: false,         
+            aoColumns: [
+                {sTitle: "N° OS", sWidth: "8%",sClass: "center"},
+                {sTitle: "% Comision", sWidth: "8%",sClass: "center" },
+                {sTitle: "Total", sWidth: "15%", sClass: "right"},             
+                {sTitle: "Pagado", sWidth: "15%", sClass: "right"},             
+                {sTitle: "Saldo", sWidth: "15%", sClass: "right"}
+            ],
+            aaSorting: [[0, "asc"]],
+            sScrollY: "125px",
+            sAjaxSource: _private.config.modulo+"getGridIndexSaldoCobrar"           
+        });
+    };    
     
     return this.publico;
     

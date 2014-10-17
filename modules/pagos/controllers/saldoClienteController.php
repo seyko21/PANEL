@@ -41,39 +41,34 @@ class saldoClienteController extends Controller{
                 $encryptReg = Aes::en($aRow['id_compromisopago']);
                 
                 $axion = '"<div class=\"btn-group\">';
-                 
-                if (Session::get('sys_all') == 'S'){
-                    if($exportarpdf['permiso']){
+                                 
+                if($exportarpdf['permiso']){
+                    if ($aRow['estado'] == 'P'){
+                        $axion .= '<button type=\"button\" class=\"'.$exportarpdf['theme'].'\" title=\"'.$exportarpdf['accion'].' pagos \" onclick=\"saldoCliente.postPDF(this,\'' . $encryptReg . '\')\"> ';
+                        $axion .= '    <i class=\"'.$exportarpdf['icono'].'\"></i>';
+                        $axion .= '</button>';
+                    }else{
+                        $axion .= '<button type=\"button\" class=\"'.$exportarpdf['theme'].'\" title=\"'.$exportarpdf['accion'].'\" disabled=\"disabled\" > ';
+                        $axion .= '    <i class=\"'.$exportarpdf['icono'].'\"></i>';
+                        $axion .= '</button>';
+                    }
+                }
+                if($exportarexcel['permiso']){
                         if ($aRow['estado'] == 'P'){
-                            $axion .= '<button type=\"button\" class=\"'.$exportarpdf['theme'].'\" title=\"'.$exportarpdf['accion'].' pagos \" onclick=\"saldoCliente.postPDF(this,\'' . $encryptReg . '\')\"> ';
-                            $axion .= '    <i class=\"'.$exportarpdf['icono'].'\"></i>';
+                            $axion .= '<button type=\"button\" class=\"'.$exportarexcel['theme'].'\" title=\"'.$exportarexcel['accion'].' pagos \" onclick=\"saldoCliente.postExcel(this,\'' . $encryptReg . '\')\"> ';
+                            $axion .= '    <i class=\"'.$exportarexcel['icono'].'\"></i>';
                             $axion .= '</button>';
                         }else{
-                            $axion .= '<button type=\"button\" class=\"'.$exportarpdf['theme'].'\" title=\"'.$exportarpdf['accion'].'\" disabled=\"disabled\" > ';
-                            $axion .= '    <i class=\"'.$exportarpdf['icono'].'\"></i>';
+                            $axion .= '<button type=\"button\" class=\"'.$exportarexcel['theme'].'\" title=\"'.$exportarexcel['accion'].'\" disabled=\"disabled\" > ';
+                            $axion .= '    <i class=\"'.$exportarexcel['icono'].'\"></i>';
                             $axion .= '</button>';
                         }
-                    }
-                    if($exportarexcel['permiso']){
-                            if ($aRow['estado'] == 'P'){
-                                $axion .= '<button type=\"button\" class=\"'.$exportarexcel['theme'].'\" title=\"'.$exportarexcel['accion'].' pagos \" onclick=\"saldoCliente.postExcel(this,\'' . $encryptReg . '\')\"> ';
-                                $axion .= '    <i class=\"'.$exportarexcel['icono'].'\"></i>';
-                                $axion .= '</button>';
-                            }else{
-                                $axion .= '<button type=\"button\" class=\"'.$exportarexcel['theme'].'\" title=\"'.$exportarexcel['accion'].'\" disabled=\"disabled\" > ';
-                                $axion .= '    <i class=\"'.$exportarexcel['icono'].'\"></i>';
-                                $axion .= '</button>';
-                            }
-                    }
-                }else{
-                    $axion .= '<button type=\"button\" class=\"'.$exportarpdf['theme'].'\" title=\"'.$exportarpdf['accion'].'\" disabled=\"disabled\" > ';
-                    $axion .= '    <i class=\"'.$exportarpdf['icono'].'\"></i>';
-                    $axion .= '</button>';
                 }
+               
                 $axion .= ' </div>" ';
                 
-                $c1 = $aRow['orden_numero'];
-                $c2 = $aRow['numero_cuota'];
+                $c1 = $aRow['numero_cuota'];
+                $c2 = $aRow['orden_numero'];
                 $c3 = Functions::cambiaf_a_normal($aRow['fecha_programada']);
                 $c4 = $aRow['descripcion_cliente'];
                 $c5 = number_format($aRow['costo_mora'],2);

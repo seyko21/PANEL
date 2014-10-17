@@ -218,4 +218,8 @@ define('REPRO_PROD1','Buscar Panel');
 define('REPRO_PROD2','Panel');
 define('INDEX_P1','Caratulas que culminan en 30 días');
 define('INDEX_P2','Permisos Municipales por vencer en 3 meses');
+define('INDEX_P3','Alquileres por culminar');
+define('INDEX_P4','Comisión de Venta');
+
+
 ?>

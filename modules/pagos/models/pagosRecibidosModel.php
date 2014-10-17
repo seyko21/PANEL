@@ -43,7 +43,7 @@ class pagosRecibidosModel extends Model{
     
     /*data para el grid: PagosRecibidos*/
     public function getPagosRecibidos(){
-        $aColumns       =   array("","orden_numero","fecha","nombrecompleto","porcentaje_comision","comision_venta","comision_asignado","comision_saldo" ); //para la ordenacion y pintado en html
+        $aColumns       =   array("numero_cuota","orden_numero","nombrecompleto","porcentaje_comision","meses_contrato","fecha","comision_venta","comision_asignado","comision_saldo" ); //para la ordenacion y pintado en html
         /*
 	 * Ordenando, se verifica por que columna se ordenara
 	 */

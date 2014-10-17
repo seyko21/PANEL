@@ -48,7 +48,7 @@ class saldoVendedorModel extends Model{
     
     /*data para el grid: SaldoVendedor*/
     public function getSaldoVendedor(){
-        $aColumns       =   array("","orden_numero","nombrecompleto","fecha","porcentaje_comision","comision_venta","comision_asignado","comision_saldo" ); //para la ordenacion y pintado en html
+        $aColumns       =   array("numero_cuota","orden_numero","nombrecompleto","fecha","porcentaje_comision","meses_contrato","comision_venta","comision_asignado","comision_saldo" ); //para la ordenacion y pintado en html
         /*
 	 * Ordenando, se verifica por que columna se ordenara
 	 */

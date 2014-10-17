@@ -46,6 +46,7 @@ class pagosRecibidosController extends Controller{
                 /*antes de enviar id se encrypta*/
                 $encryptReg = Aes::en($aRow['id_comision']);
                                 
+                $c1 = $aRow['id_comision'];
                 $c2 = $aRow['orden_numero'];
                 $c3 = $aRow['nombrecompleto'];
                 $c4 = $aRow['fecha'];
@@ -53,6 +54,8 @@ class pagosRecibidosController extends Controller{
                 $c6 = number_format($aRow['comision_venta'],2);
                 $c7 = number_format($aRow['comision_asignado'],2);
                 $c8 = number_format($aRow['comision_saldo'],2);
+                $c9 = Functions::convertirDiaMes($aRow['meses_contrato']);
+                $c10 =$aRow['numero_cuota'];                                               
                 
                 $axion = '"<div class=\"btn-group\">';
                  
@@ -64,7 +67,7 @@ class pagosRecibidosController extends Controller{
                 
                 $axion .= ' </div>" ';
                 /*registros a mostrar*/
-                $sOutput .= '["'.($num++).'","'.$c2.'","'.$c3.'","'.$c4.'","'.$c6.'","'.$c7.'","'.$c8.'",'.$axion.' ';                
+                $sOutput .= '["'.$c10.'","'.$c2.'","'.$c3.'","'.$c5.'","'.$c9.'","'.$c4.'","'.$c6.'","'.$c7.'","'.$c8.'",'.$axion.' ';
 
                 $sOutput .= '],';
 

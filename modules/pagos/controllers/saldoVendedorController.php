@@ -58,7 +58,9 @@ class saldoVendedorController extends Controller{
                 $c6 = number_format($aRow['comision_venta'],2);
                 $c7 = number_format($aRow['comision_asignado'],2);
                 $c8 = number_format($aRow['comision_saldo'],2);
-
+                $c9 = Functions::convertirDiaMes($aRow['meses_contrato']);
+                $c10 =$aRow['numero_cuota'];
+                
                 $axion = '"<div class=\"btn-group\">';
                 if($consultar['permiso']){
                     if ($aRow['comision_asignado'] > 0 ){
@@ -74,7 +76,7 @@ class saldoVendedorController extends Controller{
                 $axion .= ' </div>" ';                
                 
                 /*registros a mostrar*/
-                $sOutput .= '["'.($num++).'","'.$c2.'","'.$c3.'","'.$c4.'","'.$c5.'","'.$c6.'","'.$c7.'","'.$c8.'",'.$axion.' ';
+                $sOutput .= '["'.$c10.'","'.$c2.'","'.$c3.'","'.$c4.'","'.$c5.'","'.$c9.'","'.$c6.'","'.$c7.'","'.$c8.'",'.$axion.' ';
 
                 $sOutput .= '],';
 
