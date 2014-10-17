@@ -51,7 +51,7 @@ var tipoPanel_ = function(){
             sScrollY: "300px",
             sAjaxSource: _private.config.modulo+'getGridTipoPanel',            
             fnDrawCallback: function() {
-                $('#'+diccionario.tabs.T101+'gridTipoPanel_filter').find('input').attr('placeholder','Buscar');
+                $('#'+diccionario.tabs.T101+'gridTipoPanel_filter').find('input').attr('placeholder','Buscar descripción');
                 simpleScript.enterSearch("#"+diccionario.tabs.T101+'gridTipoPanel',oTable);
                 /*para hacer evento invisible*/
                 simpleScript.removeAttr.click({
