@@ -54,6 +54,7 @@ var saldoSocio_ = function(){
             var _f1 = $("#"+diccionario.tabs.SASOC+"txt_f1").val();
             var _f2 = $("#"+diccionario.tabs.SASOC+"txt_f2").val();               
         }
+        
         var oTable = $("#"+diccionario.tabs.SASOC+"gridSaldoSocio").dataTable({
             bProcessing: true,
             bServerSide: true,

@@ -8,8 +8,7 @@ class pagoVendedorController extends Controller{
     
     public function index(){ 
         Obj::run()->View->render("indexPagoVendedor");
-    }
-    
+    }    
     public function getGridPagosVendedor(){
             
         $pagar  = Session::getPermiso('GPAVEPG'); 

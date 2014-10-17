@@ -45,7 +45,6 @@ var saldoCobrar_ = function(){
     this.publico.getGridSaldoCobrar = function (){
         var _f1 = $("#"+diccionario.tabs.SACOB+"txt_f1").val();
         var _f2 = $("#"+diccionario.tabs.SACOB+"txt_f2").val();        
-
         var oTable = $("#"+diccionario.tabs.SACOB+"gridSaldoCobrar").dataTable({
             bProcessing: true,
             bServerSide: true,

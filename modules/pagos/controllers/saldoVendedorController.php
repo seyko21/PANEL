@@ -15,8 +15,7 @@ class saldoVendedorController extends Controller{
     
     public function index(){ 
         Obj::run()->View->render("indexSaldoVendedor");
-    }
-    
+    }    
     public function getConsulta(){ 
         Obj::run()->View->render('consultarPagoVendedor');
     }      

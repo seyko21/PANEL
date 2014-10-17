@@ -16,8 +16,7 @@ class saldoSocioController extends Controller{
     
     public function index(){ 
         Obj::run()->View->render("indexSaldoSocio");
-    }
-    
+    }    
     public function getConsulta(){ 
         Obj::run()->View->render('consultarPagoSaldo');
     }       

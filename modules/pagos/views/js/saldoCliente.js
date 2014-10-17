@@ -54,6 +54,7 @@ var saldoCliente_ = function(){
             var _f1 = $("#"+diccionario.tabs.SACLI+"txt_f1").val();
             var _f2 = $("#"+diccionario.tabs.SACLI+"txt_f2").val();                
        }
+       
         var oTable = $("#"+diccionario.tabs.SACLI+"gridSaldoCliente").dataTable({
             bProcessing: true,
             bServerSide: true,

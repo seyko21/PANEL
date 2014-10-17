@@ -15,8 +15,7 @@ class saldoCobrarController extends Controller{
     
     public function index(){ 
         Obj::run()->View->render("indexSaldoCobrar");
-    }
-    
+    }    
     public function getGridSaldoCobrar(){
         
         $sEcho          =   $this->post('sEcho');

@@ -16,7 +16,7 @@ class saldoSocioModel extends Model{
     private $_usuario;
     private $_f1;
     private $_f2;      
-    
+        
     /*para el grid*/
     public  $_iDisplayStart;
     private $_iDisplayLength;

@@ -12,8 +12,7 @@ class pagoRealizadoController extends Controller{
     public function __construct() {
         $this->loadModel(array('modulo'=>'pagos','modelo'=>'pagoRealizado'));
         $this->loadController(array('modulo'=>'ordenservicio','controller'=>'compromisoPagar'));    
-    }
-    
+    }    
     public function index(){ 
         Obj::run()->View->render("indexPagoRealizado");
     }

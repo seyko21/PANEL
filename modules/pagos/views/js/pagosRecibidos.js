@@ -81,6 +81,7 @@ var pagosRecibidos_ = function(){
                     container: "#widget_"+diccionario.tabs.PAGRE,
                     typeElement: "button"
                 });
+                
             }
         });
         setup_widgets_desktop();

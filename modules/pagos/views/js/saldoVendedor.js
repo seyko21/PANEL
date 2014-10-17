@@ -54,7 +54,6 @@ var saldoVendedor_ = function(){
             var _f1 = $("#"+diccionario.tabs.SAVEN+"txt_f1").val();
             var _f2 = $("#"+diccionario.tabs.SAVEN+"txt_f2").val();                  
         }
-
         var oTable = $("#"+diccionario.tabs.SAVEN+"gridSaldoVendedor").dataTable({
             bProcessing: true,
             bServerSide: true,

@@ -16,6 +16,7 @@ class pagoVendedorModel extends Model{
     private $_idBoleta;
     private $_chkdel;
     
+    
     public function __construct() {
         parent::__construct();
         $this->_set();

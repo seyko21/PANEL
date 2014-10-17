@@ -62,7 +62,7 @@ class saldoVendedorModel extends Model{
         $sOrder = substr_replace( $sOrder, "", -1 );
   
         $query = "call sp_pagoConsultaSaldoVendedorGrid(:rol,:estado,:f1,:f2,:iDisplayStart,:iDisplayLength,:sOrder,:sSearch);";
-        
+               
         $parms = array(
             ":rol"=>'V',
             ":estado"=>$this->_estadocb,

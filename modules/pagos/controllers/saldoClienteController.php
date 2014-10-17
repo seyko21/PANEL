@@ -16,8 +16,7 @@ class saldoClienteController extends Controller{
     
     public function index(){ 
         Obj::run()->View->render("indexSaldoCliente");
-    }
-    
+    }    
     public function getGridSaldoCliente(){
         $exportarpdf   = Session::getPermiso('SACLIEP');
         $exportarexcel= Session::getPermiso('SACLIEX');

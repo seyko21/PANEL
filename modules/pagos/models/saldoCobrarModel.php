@@ -21,6 +21,7 @@ class saldoCobrarModel extends Model{
     private $_iSortingCols;
     private $_sSearch;
     
+    
     public function __construct() {
         parent::__construct();
         $this->_set();
@@ -45,6 +46,7 @@ class saldoCobrarModel extends Model{
         /*
 	 * Ordenando, se verifica por que columna se ordenara
 	 */
+        
         $sOrder = "";
         for ( $i=0 ; $i<intval( $this->_iSortingCols ) ; $i++ ){
                 if ( $this->post( "bSortable_".intval($this->post("iSortCol_".$i)) ) == "true" ){

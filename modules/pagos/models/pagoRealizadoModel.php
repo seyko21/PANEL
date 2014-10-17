@@ -24,8 +24,7 @@ class pagoRealizadoModel extends Model{
     public function __construct() {
         parent::__construct();
         $this->_set();
-    }
-    
+    }    
     private function _set(){
         $this->_flag        = Formulario::getParam("_flag");
         $this->_usuario     = Session::get("sys_idUsuario");

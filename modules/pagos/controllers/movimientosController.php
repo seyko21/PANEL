@@ -15,8 +15,7 @@ class movimientosController extends Controller{
     
     public function index(){ 
         Obj::run()->View->render("indexMovimientos");
-    }
-    
+    }    
     public function getGridMovimientos(){
         
         $sEcho          =   $this->post('sEcho');

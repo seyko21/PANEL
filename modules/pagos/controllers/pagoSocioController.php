@@ -12,8 +12,7 @@ class pagoSocioController extends Controller{
     public function __construct() {
         $this->loadModel("pagoSocio");
         $this->loadController(array('modulo'=>'pagos','controller'=>'pagoVendedor'));                   
-    }
-    
+    }    
     public function index(){ 
         Obj::run()->View->render("indexPagoSocio");
     }

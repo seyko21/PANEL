@@ -80,7 +80,6 @@ class pagosRecibidosModel extends Model{
         return $data;
     }
     
-  
 }
 
 ?>

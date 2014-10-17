@@ -16,12 +16,13 @@ class saldoClienteModel extends Model{
     private $_f1;
     private $_f2;
     private $_idPersona;
-    
+        
     /*para el grid*/
     public  $_iDisplayStart;
     private $_iDisplayLength;
     private $_iSortingCols;
     private $_sSearch;
+    
     
     public function __construct() {
         parent::__construct();

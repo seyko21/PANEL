@@ -22,8 +22,7 @@ class cronogramaPagoController extends Controller{
             $num++;
         }else{
             $num = 1;
-        }
-        
+        }        
         if(!isset($rResult['error'])){  
             $iTotal         = isset($rResult[0]['total'])?$rResult[0]['total']:0;
             

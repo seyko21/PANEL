@@ -123,5 +123,4 @@ class pagoSocioModel extends Model{
         return $data;
     }
 }
-
 ?>

@@ -16,8 +16,7 @@ class pagosRecibidosController extends Controller{
     
     public function index(){ 
         Obj::run()->View->render("indexPagosRecibidos");
-    }
-    
+    }    
     public function getGridPagosRecibidos(){
         $consultar   = Session::getPermiso('PAGRECC');
         
