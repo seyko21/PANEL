@@ -384,14 +384,37 @@ class fichaTecnicaController extends Controller{
                 <td style="text-align:right">'.number_format($value['precio'],2).'</td>               
                 <td style="text-align:center">'.$iluminado.'</td>                
                 <td style="text-align:center">'.$estado.'</td>                                    
-            </tr>
-            <tr>
-                <td style="text-align:right"><b>Vendedor:</b></td>
-                <td>'.strtoupper($vendedor).'</td>
-                <td style="text-align:right"><b>Comisión:</b></td>               
-                <td style="text-align:right">'.number_format($comision).'% </td>                
-                <td style="text-align:center">&nbsp;</td>                                    
             </tr>';
+            if($data['multiplecotizacion'] == 'N'):
+                $html .= '<tr>
+                    <td style="text-align:right"><b>VENDEDOR:</b></td>
+                    <td>'.strtoupper($vendedor).'</td>
+                    <td style="text-align:right"><b>% COMISION:</b></td>               
+                    <td style="text-align:right">'.number_format($comision).'% </td>                
+                    <td style="text-align:center">&nbsp;</td>                                    
+                </tr>';
+            else:
+                $dataV = Obj::run()->fichaTecnicaModel->getRptVendedorCuenta($value['id_caratula']);
+                  $html .= '<tr>
+                    <td>&nbsp;</td>
+                    <td><b>VENDEDOR</b></td>
+                    <td><b>% COMISION:</b></td>               
+                    <td>&nbsp;</td>                
+                    <td style="text-align:center">&nbsp;</td>                                    
+                </tr>';
+                foreach ($dataV as $v):
+                    $comision = 100*$v['porcentaje_comision'];
+                    $html .= '<tr>
+                    <td style="text-align:right"></td>
+                    <td>'.strtoupper($v['vendedor']).'</td>
+                    <td style="text-align:right">'.number_format($comision).'% </td>                                    
+                    <td style="text-align:right">&nbsp;</td>                                  
+                    <td style="text-align:center">&nbsp;</td>                                    
+                </tr>';
+                    
+                endforeach;
+                                    
+            endif;                            
         }
               
         $html .='</table>';                        

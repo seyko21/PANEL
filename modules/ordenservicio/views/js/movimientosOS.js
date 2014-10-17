@@ -45,15 +45,7 @@ var movimientosOS_ = function(){
     this.publico.getGridMovimientosOS = function (){
         
         var _f1 = $("#"+diccionario.tabs.MOVOS+"txt_f1").val();
-        var _f2 = $("#"+diccionario.tabs.MOVOS+"txt_f2").val();        
-        var f1, f2;
-        f1 = $.datepicker.parseDate('dd/mm/yy', _f1);
-        f2 = $.datepicker.parseDate('dd/mm/yy', _f2);        
-        if( f1 > f2 ){
-           simpleScript.notify.warning({
-                  content: 'La fecha inicio no puede ser mayor que la fecha final.'      
-            });           
-       }
+        var _f2 = $("#"+diccionario.tabs.MOVOS+"txt_f2").val();                
        
         var oTable = $("#"+diccionario.tabs.MOVOS+"gridMovimientosOS").dataTable({
             bFilter: true,

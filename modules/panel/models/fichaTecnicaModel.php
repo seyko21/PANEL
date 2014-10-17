@@ -190,7 +190,8 @@ class fichaTecnicaModel extends Model{
                           ( SELECT pm.observacion FROM lgk_permisomuni pm WHERE pm.id_producto = c.id_producto AND pm.estado = 'A' ORDER BY pm.id_permisomuni DESC LIMIT 1 ) AS pm_obs,
                           ( SELECT pm.monto_pago FROM lgk_permisomuni pm WHERE pm.id_producto = c.id_producto AND pm.estado = 'A' ORDER BY pm.id_permisomuni DESC LIMIT 1 ) AS pm_precio,
                           ( SELECT `porcentaje_comision` FROM `lgk_asignacioncuenta` ac WHERE ac.`id_caratula` = a.`id_caratula` AND ac.`estado` = 'R' LIMIT 1 ) AS comision_vendedor,
-                          ( SELECT (SELECT p.`nombrecompleto` FROM `mae_persona` p WHERE p.`id_persona` = ac.`id_persona` ) FROM `lgk_asignacioncuenta` ac WHERE ac.`id_caratula` = a.`id_caratula` AND ac.`estado` = 'R' LIMIT 1 ) AS vendedor                          
+                          ( SELECT (SELECT p.`nombrecompleto` FROM `mae_persona` p WHERE p.`id_persona` = ac.`id_persona` ) FROM `lgk_asignacioncuenta` ac WHERE ac.`id_caratula` = a.`id_caratula` AND ac.`estado` = 'R' LIMIT 1 ) AS vendedor,
+                          a.multiplecotizacion
 	FROM `lgk_caratula` a
 		INNER JOIN `lgk_catalogo` c ON c.`id_producto` = a.`id_producto`
 		INNER JOIN `lgk_tipopanel` t ON t.`id_tipopanel` = c.`id_tipopanel`
@@ -203,6 +204,21 @@ class fichaTecnicaModel extends Model{
         //print_r($data);
         return $data;
     }    
+
+     public function getRptVendedorCuenta($idd){
+        $query = " SELECT ac.`porcentaje_comision`,            
+                         (SELECT p.`nombrecompleto` FROM `mae_persona` p WHERE p.`id_persona` = ac.`id_persona` ) as vendedor ,
+                         (SELECT p.`dni` FROM `mae_persona` p WHERE p.`id_persona` = ac.`id_persona` ) as dni
+	FROM `lgk_caratula` a
+            inner join `lgk_asignacioncuenta` ac on ac.id_caratula = a.id_caratula		
+	WHERE a.`id_caratula` = :idCaratula  AND ac.estado <> 'A'; ";
+        $parms = array(
+            ':idCaratula' => $idd
+        );
+        $data = $this->queryAll($query,$parms);    
+        return $data;
+    }           
+    
     public function getUbicacion(){
         $query = " SELECT ubicacion,  FORMAT(dimension_alto,1) as dimension_alto, FORMAT(dimension_ancho,1) as dimension_ancho"
                 . "  FROM lgk_catalogo WHERE id_producto = :id ";

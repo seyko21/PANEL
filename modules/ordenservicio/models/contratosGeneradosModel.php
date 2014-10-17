@@ -44,7 +44,7 @@ class contratosGeneradosModel extends Model{
     
     /*data para el grid: ContratosGenerados*/
     public function getContratosGenerados(){
-        $aColumns       =   array('orden_numero','fecha_contrato','6','9','monto_total','estado' ); //para la ordenacion y pintado en html
+        $aColumns       =   array('orden_numero','fecha_contrato','6','9','monto_total_descuento','estado' ); //para la ordenacion y pintado en html
         /*
 	 * Ordenando, se verifica por que columna se ordenara
 	 */

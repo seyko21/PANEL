@@ -45,8 +45,8 @@ class cronogramaClienteController extends Controller{
                 $encryptReg = Aes::en($aRow['id_compromisopago']);
                
                 
-                $c1 = $aRow['orden_numero'];
-                $c2 = $aRow['numero_cuota'];
+                $c1 = $aRow['numero_cuota'];
+                $c2 = $aRow['orden_numero'];
                 $c3 = Functions::cambiaf_a_normal($aRow['fecha_programada']);
                 $c4 = $aRow['descripcion_cliente'];
                 $c5 = number_format($aRow['costo_mora'],2);

@@ -153,11 +153,10 @@ class catalogoPreciosController extends Controller{
     public function getHtmlReporte(){
         $data = Obj::run()->catalogoPreciosModel->getRptFichaTecnicaCatalogo();
         $dataOS = Obj::run()->catalogoPreciosModel->getRptOrdenServicio();
+        $dataV  = Obj::run()->catalogoPreciosModel->getRptVendedorCuenta();
         $html = '';
         $iluminado = ($data[0]['iluminado']=='1')?'SI':'NO';
-        $estado = ($data[0]['estado']=='D')?'DISPONIBLE':'ALQUILADO';
-        $comision = number_format(100*$data[0]['comision_vendedor']);
-        $vendedor = ($data[0]['vendedor'] == ''?'No se asigno vendedor':$data[0]['vendedor']);
+        $estado = ($data[0]['estado']=='D')?'DISPONIBLE':'ALQUILADO';        
         
         $html .='
         <style>
@@ -166,6 +165,8 @@ class catalogoPreciosController extends Controller{
             table{width:100%;}
             table td {padding:4px 3px 4px 0px}
             h3{font-size:25px;}
+            #td2 th, .totales{background:#901D78; color:#FFF; height:25px;}
+            #td2 td{font-size:11px;height:25px;}
         </style>        
             <table width="100%" border="0" cellpadding="5" cellspacing="3">
                 <tr bgcolor="#901D78">
@@ -215,20 +216,56 @@ class catalogoPreciosController extends Controller{
                     <td>'.number_format($data[0]['precio'],2).'</td>
                     <td><strong>ILUMINADO:</strong></td>
                     <td>'.$iluminado.'</td>
-                  </tr>
-                  <tr>
-                    <td><strong>VENDEDOR:</strong></td>
-                    <td colspan="3">'.strtoupper($vendedor).'</td>
-                  </tr>
-                  <tr>
-                    <td><strong>COMISION:</strong></td>
-                    <td colspan="3">'.$comision.' %</td>
-                 </tr>
+                  </tr>                 
                  <tr>
                     <td><strong>ESTADO:</strong></td>
                     <td colspan="3">'.$estado.'</td>                 
                 </tr>
           </table>';
+        $html .='<h4 style="color:#901D78">RESPONSABLE DE CUENTA</h4>';
+                    
+            $multiple = $data[0]['multiplecotizacion'];
+            if ($multiple == 'S'):
+                $html .= '<table id="td2" style="border-collapse:collapse;" border="1">        
+                    <tr >
+                        <th  style="width:60%">Vendedor</th>
+                        <th style="width:20%">Comision</th>                
+                    </tr>';
+                    $i=0;
+                    foreach ($dataV as $value) {            
+                        $comision = 100*$value['porcentaje_comision'];
+                        $vendedor = $value['vendedor'];
+                        $dni = ($value['dni']== ''?'':$value['dni'].' - ');
+                        $html .= '            
+                        <tr>                
+                            <td>'.$dni.strtoupper($vendedor).'</td>
+                            <td style="text-align:right">'.$comision.' %</td>                               
+                        </tr>';   
+                        $i++;
+                    }     
+                    if($i == 0){
+                        $html .= '            
+                        <tr>                
+                            <td><h4><i>No se asigno vendedor</i></h4></td>
+                            <td style="text-align:right"> - </td>                               
+                        </tr>';   
+                    }
+                    $html .='</table>';          
+            else:
+                $comision = number_format(100*$data[0]['comision_vendedor']);
+                $vendedor = ($data[0]['vendedor'] == ''?'No se asigno vendedor':$data[0]['vendedor']);
+                $html .='<table width="70%" border="0" cellpadding="5" cellspacing="3">
+                            <tr>
+                                <td width="10%"><strong>VENDEDOR:</strong></td>
+                                <td width="50%">'.strtoupper($vendedor).'</td>
+                          </tr>
+                          <tr>
+                                <td><strong>COMISION:</strong></td>
+                                <td >'.$comision.' %</td>
+                          </tr>
+                        </table>';                
+            endif;
+                        
         
         $html .='<h4 style="color:#901D78">PERMISO MUNICIPAL</h4>';
         

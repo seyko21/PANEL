@@ -143,7 +143,7 @@ class generarCotizacionController extends Controller{
                 /*antes de enviar id se encrypta*/
                 $encryptReg = Aes::en($aRow['id_persona']);
                 
-                $nom = '<a href=\"javascript:;\" onclick=\"simpleScript.setInput({'.$tab.'txt_idpersona:\''.$encryptReg.'\', '.$tab.'txt_cliente:\''.$aRow['nombrecompleto'].'\'},\'#'.T8.'formBuscarCliente\');\" >'.$aRow['nombrecompleto'].'</a>';
+                $nom = '<a href=\"javascript:;\" onclick=\"simpleScript.setInput({'.$tab.'txt_idpersona:\''.$encryptReg.'\', '.$tab.'txt_cliente:\''.$aRow['razon_social'].' - '.$aRow['nombrecompleto'].'\'},\'#'.T8.'formBuscarCliente\');\" >'.$aRow['nombrecompleto'].'</a>';
                 
                 /*datos de manera manual*/
                 $sOutput .= '["'.(++$key).'","'.$nom.'", "'.$aRow['razon_social'].'" ';

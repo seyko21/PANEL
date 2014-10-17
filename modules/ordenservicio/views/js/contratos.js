@@ -45,14 +45,7 @@ var contratos_ = function(){
     this.publico.getGridContratos = function (){
         var _f1 = $("#"+diccionario.tabs.MCON+"txt_f1").val();
         var _f2 = $("#"+diccionario.tabs.MCON+"txt_f2").val();        
-        var f1, f2;
-        f1 = $.datepicker.parseDate('dd/mm/yy', _f1);
-        f2 = $.datepicker.parseDate('dd/mm/yy', _f2);        
-        if( f1 > f2 ){
-           simpleScript.notify.warning({
-                  content: 'La fecha inicio no puede ser mayor que la fecha final.'      
-            });           
-       }
+       
         var oTable = $("#"+diccionario.tabs.MCON+"gridContratos").dataTable({
             bProcessing: true,
             bServerSide: true,
@@ -87,13 +80,39 @@ var contratos_ = function(){
             }
         });
         setup_widgets_desktop();
-    };      
+    };
     
-    this.publico.postExportarContratoPDF = function(btn,id){
+    this.publico.getGridIndexContratos = function (){
+        
+       $("#"+diccionario.tabs.PANP+"gridContratos").dataTable({
+            bProcessing: true,
+            bServerSide: true,
+            bDestroy: true,
+            sPaginationType: "bootstrap_full", //two_button
+            sServerMethod: "POST",
+            bPaginate: true,
+            iDisplayLength: 10,   
+            sSearch: false,
+            bFilter: false,     
+            aoColumns: [
+                {sTitle: "N° OS", sWidth: "10%",},                
+                {sTitle: "Fecha", sWidth: "8%",  sClass: "center"},               
+                {sTitle: "Total", sWidth: "15%",sClass: "right"},
+                {sTitle: "Estado", sWidth: "8%", sClass: "center"},                
+                {sTitle: "Acciones", sWidth: "8%", sClass: "center", bSortable: false}
+            ],
+            aaSorting: [[1, "desc"]],
+            sScrollY: "125px",
+            sAjaxSource: _private.config.modulo+"getGridIndexContratos"         
+        });
+    };        
+    
+    
+    this.publico.postExportarContratoPDF = function(btn,id,num){
         simpleAjax.send({
             element: btn,
             root: 'ordenservicio/generarOrden/postExportarContratoPDF',
-            data: '&_idOrden='+id,
+            data: '&_idOrden='+id+'&_numOrden='+num,
             fnCallback: function(data) {
                 if(parseInt(data.result) === 1){
                     $('#'+diccionario.tabs.MCON+'btnDowPDF').off('onclick');
@@ -104,6 +123,22 @@ var contratos_ = function(){
             }
         });
     };     
+    
+     this.publico.postPDF = function(btn,id,num){
+        simpleAjax.send({
+            element: btn,
+            root: 'ordenservicio/generarOrden/postExportarContratoPDF',
+            data: '&_idOrden='+id+'&_numOrden='+num,
+            fnCallback: function(data) {
+                if(parseInt(data.result) === 1){
+                    $('#'+diccionario.tabs.PANP+'btnDowPDF').off('onclick');
+                    $('#'+diccionario.tabs.PANP+'btnDowPDF').off('click');
+                    $('#'+diccionario.tabs.PANP+'btnDowPDF').attr("onclick","window.open('public/files/"+data.archivo+"','_blank');generarCotizacion.deleteArchivo('"+data.archivo+"');");
+                    $('#'+diccionario.tabs.PANP+'btnDowPDF').click();
+                }
+            }
+        });
+    };    
     
     return this.publico;
     

@@ -52,8 +52,8 @@ var cronogramaCliente_ = function(){
             bPaginate: true,
             iDisplayLength: 10,            
             aoColumns: [
-                {sTitle: "N° OS", sWidth: "8%"},
                 {sTitle: "Cuota", sWidth: "8%", sClass: "center"},
+                {sTitle: "N° OS", sWidth: "8%"},                
                 {sTitle: "F. Pagar", sWidth: "9%", sClass: "center"},
                 {sTitle: "Cliente", sWidth: "25%"},
                 {sTitle: "Mora", sWidth: "7%", sClass: "right"},
@@ -61,7 +61,7 @@ var cronogramaCliente_ = function(){
                 {sTitle: "F. Reprogramado", sWidth: "9%", sClass: "center"},
                 {sTitle: "Estado", sWidth: "8%", sClass: "center"}
             ],
-            aaSorting: [[2, "asc"]],
+            aaSorting: [[1, "asc"],[0, "asc"]],
             sScrollY: "300px",
             sAjaxSource: _private.config.modulo+"getGridCronogramaCliente",
             fnDrawCallback: function() {

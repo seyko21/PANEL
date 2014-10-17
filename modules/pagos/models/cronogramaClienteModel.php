@@ -41,7 +41,7 @@ class cronogramaClienteModel extends Model{
     
     /*data para el grid: CronogramaCliente*/
     public function getCronogramaCliente(){
-       $aColumns       =   array("orden_numero","numero_cuota","fecha_programada","cliente","costo_mora","monto_pago","fecha_reprogramada","estado" ); //para la ordenacion y pintado en html
+       $aColumns       =   array("numero_cuota","orden_numero","fecha_programada","cliente","costo_mora","monto_pago","fecha_reprogramada","estado" ); //para la ordenacion y pintado en html
         /*
 	 * Ordenando, se verifica por que columna se ordenara
 	 */

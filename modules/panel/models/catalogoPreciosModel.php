@@ -105,7 +105,8 @@ class catalogoPreciosModel extends Model{
                           ( SELECT pm.observacion FROM lgk_permisomuni pm WHERE pm.id_producto = c.id_producto AND pm.estado = 'A' ORDER BY pm.id_permisomuni DESC LIMIT 1 ) AS pm_obs,
                           ( SELECT pm.monto_pago FROM lgk_permisomuni pm WHERE pm.id_producto = c.id_producto AND pm.estado = 'A' ORDER BY pm.id_permisomuni DESC LIMIT 1 ) AS pm_precio,
                           ( SELECT `porcentaje_comision` FROM `lgk_asignacioncuenta` ac WHERE ac.`id_caratula` = a.`id_caratula` AND ac.`estado` = 'R' LIMIT 1 ) AS comision_vendedor,
-                          ( SELECT (SELECT p.`nombrecompleto` FROM `mae_persona` p WHERE p.`id_persona` = ac.`id_persona` ) FROM `lgk_asignacioncuenta` ac WHERE ac.`id_caratula` = a.`id_caratula` AND ac.`estado` = 'R' LIMIT 1 ) AS vendedor                          
+                          ( SELECT (SELECT p.`nombrecompleto` FROM `mae_persona` p WHERE p.`id_persona` = ac.`id_persona` ) FROM `lgk_asignacioncuenta` ac WHERE ac.`id_caratula` = a.`id_caratula` AND ac.`estado` = 'R' LIMIT 1 ) AS vendedor,
+                          a.multiplecotizacion
 	FROM `lgk_caratula` a
 		INNER JOIN `lgk_catalogo` c ON c.`id_producto` = a.`id_producto`
 		INNER JOIN `lgk_tipopanel` t ON t.`id_tipopanel` = c.`id_tipopanel`
@@ -139,7 +140,21 @@ class catalogoPreciosModel extends Model{
         );
         $data = $this->queryOne($query,$parms);    
         return $data;
-    }            
+    }         
+    
+    public function getRptVendedorCuenta(){
+        $query = " SELECT ac.`porcentaje_comision`,            
+                         (SELECT p.`nombrecompleto` FROM `mae_persona` p WHERE p.`id_persona` = ac.`id_persona` ) as vendedor ,
+                         (SELECT p.`dni` FROM `mae_persona` p WHERE p.`id_persona` = ac.`id_persona` ) as dni
+	FROM `lgk_caratula` a
+            inner join `lgk_asignacioncuenta` ac on ac.id_caratula = a.id_caratula		
+	WHERE a.`id_caratula` = :idCaratula  AND ac.estado <> 'A'; ";
+        $parms = array(
+            ':idCaratula' => $this->_idCaratula
+        );
+        $data = $this->queryAll($query,$parms);    
+        return $data;
+    }           
     
 }
 

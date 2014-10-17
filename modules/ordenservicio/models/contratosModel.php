@@ -5,6 +5,7 @@
 * fecha: 28-09-2014 00:09:01 
 * Descripcion : contratosModel.php
 * ---------------------------------------
+ * * PARA MODULO DE CLIENTE MIS CONTRATOS
 */ 
 
 class contratosModel extends Model{
@@ -43,7 +44,7 @@ class contratosModel extends Model{
     
     /*data para el grid: Contratos*/
     public function getContratos(){
-         $aColumns       =   array('orden_numero','fecha_contrato','6','9','monto_total','estado' ); //para la ordenacion y pintado en html
+         $aColumns       =   array('orden_numero','fecha_contrato','6','9','monto_total_descuento','estado' ); //para la ordenacion y pintado en html
         /*
 	 * Ordenando, se verifica por que columna se ordenara
 	 */
@@ -71,7 +72,32 @@ class contratosModel extends Model{
         $data = $this->queryAll($query,$parms);
         return $data;
     }
-    
+
+    public function getIndexContratos(){
+         $aColumns       =   array('orden_numero','fecha_contrato','monto_total_descuento' ); //para la ordenacion y pintado en html
+        /*
+	 * Ordenando, se verifica por que columna se ordenara
+	 */
+        $sOrder = "";
+        for ( $i=0 ; $i<intval( $this->_iSortingCols ) ; $i++ ){
+                if ( $this->post( "bSortable_".intval($this->post("iSortCol_".$i)) ) == "true" ){
+                        $sOrder .= " ".$aColumns[ intval( $this->post("iSortCol_".$i) ) ]." ".
+                                ($this->post("sSortDir_".$i)==="asc" ? "asc" : "desc") .",";
+                }
+        }
+        $sOrder = substr_replace( $sOrder, "", -1 );
+        
+        $query = "call sp_ordSeIndexContratosGrid(:idpersona,:iDisplayStart,:iDisplayLength,:sOrder);";
+        
+        $parms = array(           
+            ":idpersona"=>$this->_idPersona,       
+            ":iDisplayStart" => $this->_iDisplayStart,
+            ":iDisplayLength" => $this->_iDisplayLength,
+            ":sOrder" => $sOrder
+        );
+        $data = $this->queryAll($query,$parms);
+        return $data;
+    }    
   
 }
 

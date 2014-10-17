@@ -45,15 +45,7 @@ var contratosGenerados_ = function(){
     this.publico.getGridContratosGenerados = function (){
         
         var _f1 = $("#"+diccionario.tabs.COGEN+"txt_f1").val();
-        var _f2 = $("#"+diccionario.tabs.COGEN+"txt_f2").val();        
-        var f1, f2;
-        f1 = $.datepicker.parseDate('dd/mm/yy', _f1);
-        f2 = $.datepicker.parseDate('dd/mm/yy', _f2);        
-        if( f1 > f2 ){
-           simpleScript.notify.warning({
-                  content: 'La fecha inicio no puede ser mayor que la fecha final.'      
-            });           
-       }
+        var _f2 = $("#"+diccionario.tabs.COGEN+"txt_f2").val();               
         
         var oTable = $("#"+diccionario.tabs.COGEN+"gridContratosGenerados").dataTable({
             bFilter: true,
