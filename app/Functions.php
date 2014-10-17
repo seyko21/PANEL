@@ -179,7 +179,6 @@ class Functions{
         else{
             $html .= '<option value=""> - Sin datos - </option></select>';
         }
-        //echo $html; exit();
         return $html;
     }
 
