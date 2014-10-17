@@ -99,7 +99,41 @@ class asignarPanelSocioController extends Controller{
                 $nom = '<a href=\"javascript:;\" onclick=\"simpleScript.setInput({'.$tab.'txt_idpersona:\''.$encryptReg.'\', '.$tab.'txt_socio:\''.$aRow['nombrecompleto'].'\'},\'#'.APASO.'formBuscarSocio\');\" >'.$aRow['nombrecompleto'].'</a>';
                 
                 /*datos de manera manual*/
-                $sOutput .= '["'.(++$key).'","'.$nom.'" ';
+                $sOutput .= '["'.(++$key).'","'.$nom.'","'.  number_format($aRow['monto_invertido'],2).'","'.  number_format($aRow['monto_saldo'],2).'" ';
+
+                $sOutput .= '],';
+            }
+            $sOutput = substr_replace( $sOutput, "", -1 );
+            $sOutput .= '] }';
+        }else{
+            $sOutput = $rResult['error'];
+        }
+        
+        echo $sOutput;
+    }
+    
+    public function getProductos(){
+        $tab = $this->post('_tab');
+        $sEcho          =   $this->post('sEcho');
+        
+        $rResult = Obj::run()->asignarPanelSocioModel->getProductos();
+        
+        if(!isset($rResult['error'])){  
+            $iTotal         = isset($rResult[0]['total'])?$rResult[0]['total']:0;
+            
+            $sOutput = '{';
+            $sOutput .= '"sEcho": '.intval($sEcho).', ';
+            $sOutput .= '"iTotalRecords": '.$iTotal.', ';
+            $sOutput .= '"iTotalDisplayRecords": '.$iTotal.', ';
+            $sOutput .= '"aaData": [ ';
+            foreach ( $rResult as $key=>$aRow ){
+                /*antes de enviar id se encrypta*/
+                $encryptReg = Aes::en($aRow['id_producto']);
+                
+                $nom = '<a href=\"javascript:;\" onclick=\"simpleScript.setInput({'.$tab.'txt_idproducto:\''.$encryptReg.'\', '.$tab.'txt_producto:\''.$aRow['ubicacion'].'\','.$tab.'txt_saldo:\''.$aRow['total_saldo'].'\'},\'#'.$tab.'formBuscarProductoPanelSocio\');\" >'.$aRow['ubicacion'].'</a>';
+                
+                /*datos de manera manual*/
+                $sOutput .= '["'.(++$key).'","'.$nom.'","'.number_format($aRow['total_produccion'],2).'","'.number_format($aRow['total_asignado'],2).'","'.number_format($aRow['total_saldo'],2).'" ';
 
                 $sOutput .= '],';
             }
@@ -123,6 +157,10 @@ class asignarPanelSocioController extends Controller{
     
     public function getTableInversiones(){ 
         Obj::run()->View->render('formTableInversiones');
+    }
+    
+    public function formBuscarProductoPanelSocio(){
+        Obj::run()->View->render("formBuscarProductoPanelSocio");
     }
     
     public function getInversiones(){

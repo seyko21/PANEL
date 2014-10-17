@@ -42,6 +42,17 @@ class indexModel extends Model {
         return $data;
     }
     
+    public function anulaCotizacionesVencidas(){
+        $query = "CALL sp_cotiAnularCotizacion(:flag,:criterio);";
+        $parms = array(
+            ':flag' => 1,
+            ':criterio' => ''
+        );
+        $this->execute($query,$parms);
+        $data = array('result'=>1);
+        return $data;
+    }
+    
 }
 
 ?>

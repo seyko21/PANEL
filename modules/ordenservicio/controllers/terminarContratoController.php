@@ -73,7 +73,7 @@ class terminarContratoController extends Controller{
                 $sOutput .= '"<div class=\"btn-group\">';
                  
                 if($editar['permiso']){
-                    $sOutput .= '<button type=\"button\" class=\"'.$editar['theme'].'\" title=\"'.TERCO_2.'\" onclick=\"terminarContrato.getFormTerminarContrato(this,\''.$encryptReg.'\')\">';
+                    $sOutput .= '<button type=\"button\" class=\"'.$editar['theme'].'\" title=\"'.TERCO_2.'\" onclick=\"terminarContrato.getFormTerminarContrato(this,\''.$encryptReg.'\',\''.$aRow['orden_numero'].'\')\">';
                     $sOutput .= '    <i class=\"'.$editar['icono'].'\"></i>';
                     $sOutput .= '</button>';
                 }

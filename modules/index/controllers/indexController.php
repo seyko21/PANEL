@@ -108,6 +108,11 @@ class indexController extends Controller{
         }
     }
     
+    public function postAnulaCotizacionesVencidas(){
+        $data = Obj::run()->indexModel->anulaCotizacionesVencidas();
+        echo json_encode($data);
+    }
+    
 }
 
 ?>

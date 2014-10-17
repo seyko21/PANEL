@@ -62,10 +62,11 @@ $buscar = Session::getPermiso('APASOBS');
                         <div class="col-md-9">
                             <div class="input-group input-group-sm">
                                 <input type="hidden" id="<?php echo APASO; ?>txt_idproducto" name="<?php echo APASO; ?>txt_idproducto">
+                                <input type="hidden" id="<?php echo APASO; ?>txt_saldo" name="<?php echo APASO; ?>txt_saldo">
                                 <input class="form-control" type="text" id="<?php echo APASO; ?>txt_producto" name="<?php echo APASO; ?>txt_producto" readonly placeholder="<?php echo APASO_5?>">
                                 <span class="input-group-btn">
                                     <?php if ($buscar['permiso']): ?>
-                                        <button class="btn btn-default" type="button" onclick="regProduccion.getFormBuscarProducto(this, '<?php echo APASO; ?>','A');"><i class="fa fa-search"></i> <?php echo BTN_SEARCH?></button>
+                                        <button class="btn btn-default" type="button" onclick="asignarPanelSocio.formBuscarProductoPanelSocio(this, '<?php echo APASO; ?>');"><i class="fa fa-search"></i> <?php echo BTN_SEARCH?></button>
                                     <?php endif; ?>
                                 </span>
                             </div>
@@ -88,9 +89,18 @@ $buscar = Session::getPermiso('APASOBS');
 
 
                 <!--INICIO TAB 2-->
-                <div class="tab-pane" id="<?php echo APASO; ?>tab2">
+                <div class="tab-pane form-horizontal" id="<?php echo APASO; ?>tab2">
                     <br>
                     <h3><strong><?php echo LABEL_GNC21; ?></strong><?php echo APASO_2; ?></h3>
+                    
+                    <div class="form-group">
+                        <label class="control-label col-md-2" for="prepend"><?php echo APASO_13; ?></label>
+                        <div class="col-md-2">
+                            <div class="input disabled">
+                                <input class="form-control" type="text" id="<?php echo APASO; ?>txt_saldotmp" name="<?php echo APASO; ?>txt_saldotmp" readonly="readonly">
+                            </div>
+                        </div>
+                    </div>
                     <div style="padding: 10px">
                         <div class="si-access" style="min-height: 200px; max-height: auto;width: 60%">
                             <table id="<?php echo APASO; ?>gridInversiones" class="table table-bordered table-striped table-condensed table-hover smart-form has-tickbox">
@@ -217,7 +227,8 @@ $buscar = Session::getPermiso('APASOBS');
                             });
                             return false;
                         }
-                            
+                        var saldotm = parseFloat($('#<?php echo APASO; ?>txt_saldo').val());
+                        $('#<?php echo APASO; ?>txt_saldotmp').val(saldotm.toFixed(2));
                         //trae las inversiones
                         asignarPanelSocio.getInversiones();
                         /*marca el paso como completado*/
@@ -238,12 +249,21 @@ $buscar = Session::getPermiso('APASOBS');
                             }
                         });
                         
+                        /*validar que monto sea menor igual que saldo*/
+                        var monto   = parseFloat($('#<?php echo APASO; ?>txt_montototal').val());
+                        var saldotm = parseFloat($('#<?php echo APASO; ?>txt_saldotmp').val());
+                        if(monto > saldotm){
+                            simpleScript.notify.warning({
+                                content: 'Monto a invertir es mayor que saldo'
+                            });
+                            return false;
+                        }
                         if(r === false){
                             simpleScript.notify.warning({
                                 content: 'Tiene que ingresar inversión'
                             });
                             return false;
-                        }else{
+                        }else{                            
                             /*marca el paso como completado*/
                             $('#<?php echo APASO; ?>bootstrap-wizard-1').find('.form-wizard').children('li').eq(index - 1).addClass(
                                     'complete');

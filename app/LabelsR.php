@@ -258,7 +258,7 @@ define('ORINS_19','Click para finalizar Orden de Instalación');
 
 /*---------------------- TERMINAR CONTRATO ----------------*/
 define('TERCO_1','Ordenes de Servicio');
-define('TERCO_2','Finalizar contrato');
+define('TERCO_2','Finalizar contrato: ');
 define('TERCO_3','Motivo');
 define('TERCO_4','Ingrese un motivo por el cual se finaliza el contrato');
 
@@ -315,4 +315,6 @@ define('APASO_9','Monto a Invertir');
 define('APASO_10','Ganancia %');
 define('APASO_11','Click aquí para grabar');
 define('APASO_12','Paneles Asignados');
+define('APASO_13','Saldo');
+
 ?>
