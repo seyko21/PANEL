@@ -56,26 +56,20 @@ $norden = Formulario::getParam('_norden');
                             <td>
                                 <?php
                                 /*debe ser diferente de anulado y pagado para mostrar boton pagar*/
-                                if($value['estado'] == 'E'):
-                                ?>
-                                
-                                <?php if($grabar["permiso"]):?>
-                                <button type="button" class="<?php echo $grabar["theme"]; ?>" style="padding: 5px" onclick="seguimientoPago.getFormPagarOrdenParametros(this,'<?php echo $key?>','<?php echo AesCtr::en($value['id_compromisopago']) ?>','<?php echo $value['numero_cuota'] ?>');">
-                                    <i class="<?php echo $grabar["icono"]; ?>"></i> <?php echo $grabar["accion"]; ?>
-                                </button>
-                                <?php endif; ?>
-                                
-                                
-                                <?php else: ?>
-                                
-                                <!--se muestra el boton desactivado y sin onclick-->
-                                <?php if($grabar["permiso"]):?>
-                                <button type="button" class="<?php echo $grabar["theme"]; ?>" style="padding: 5px" disabled="disabled">
-                                    <i class="<?php echo $grabar["icono"]; ?>"></i> <?php echo $grabar["accion"]; ?>
-                                </button>
-                                <?php endif; ?>
-                                
-                                
+                                if($value['estado'] == 'E' && $value['estado_os'] != 'F' ):
+                                ?>                                
+                                    <?php if($grabar["permiso"]):?>
+                                    <button type="button" class="<?php echo $grabar["theme"]; ?>" style="padding: 5px" onclick="seguimientoPago.getFormPagarOrdenParametros(this,'<?php echo $key?>','<?php echo AesCtr::en($value['id_compromisopago']) ?>','<?php echo $value['numero_cuota'] ?>');">
+                                        <i class="<?php echo $grabar["icono"]; ?>"></i> <?php echo $grabar["accion"]; ?>
+                                    </button>
+                                    <?php endif; ?>                                                                
+                                <?php else: ?>                                
+                                    <!--se muestra el boton desactivado y sin onclick-->
+                                    <?php if($grabar["permiso"]):?>
+                                    <button type="button" class="<?php echo $grabar["theme"]; ?>" style="padding: 5px" disabled="disabled">
+                                        <i class="<?php echo $grabar["icono"]; ?>"></i> <?php echo $grabar["accion"]; ?>
+                                    </button>
+                                    <?php endif; ?>                                                                
                                 <?php endif; ?>
                             </td>
                         </tr>
@@ -98,9 +92,7 @@ $norden = Formulario::getParam('_norden');
 </script>
 <?php endif; ?>
 <script>
-//    simpleScript.setEvent.date({
-//      element: '.fechapago' 
-//    });
+
     simpleScript.removeAttr.click({
         container: "#<?php echo SEGPA; ?>formPagarOrden",
         typeElement: "button"

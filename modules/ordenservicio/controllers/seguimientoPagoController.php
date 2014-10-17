@@ -47,7 +47,7 @@ class seguimientoPagoController extends Controller{
                 
                 switch($aRow['estado']){
                     case 'E':
-                        $estado = '<span class=\"label label-default\">'.SEGPA_6.'</span>';
+                        $estado = '<span class=\"label label-default\">'.SEGCO_5.'</span>';
                         break;
                     case 'T':
                         $estado = '<span class=\"label label-success\">'.SEGPA_8.'</span>';
@@ -58,8 +58,8 @@ class seguimientoPagoController extends Controller{
                     case 'A':
                         $estado = '<span class=\"label label-danger\">'.SEGPA_9.'</span>';
                         break;
-                    default:
-                        $estado = '';
+                    case 'F':
+                        $estado = '<span class=\"label label-info\">'.SEGPA_29.'</span>';
                         break;
                 }
                 /*registros a mostrar*/

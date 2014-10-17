@@ -68,8 +68,12 @@ var cronogramaPago_ = function(){
             aaSorting: [[1, "desc"]],
             sScrollY: "300px",
             sAjaxSource: _private.config.modulo+"getGridOrdenes",
+            fnServerParams: function(aoData) {
+                aoData.push({"name": "_estadocb", "value": $("#"+diccionario.tabs.CROPA+"lst_estadosearch").val()});
+            },
             fnDrawCallback: function() {
-                $("#"+diccionario.tabs.CROPA+"getGridOrdenes_filter").find("input").attr("placeholder","Buscar por código o representante").css("width","250px");
+                $("#"+diccionario.tabs.CROPA+"getGridOrdenes_filter").find("input").attr("placeholder","Buscar por N° OS o Cliente").css("width","350px");
+                simpleScript.enterSearch("#"+diccionario.tabs.CROPA+'getGridOrdenes',oTable);
                 /*para hacer evento invisible*/
                 simpleScript.removeAttr.click({
                     container: "#widget_"+diccionario.tabs.CROPA,

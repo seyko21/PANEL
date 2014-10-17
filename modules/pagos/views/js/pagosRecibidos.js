@@ -73,6 +73,7 @@ var pagosRecibidos_ = function(){
             },            
             fnDrawCallback: function() {
                 $("#"+diccionario.tabs.PAGRE+"gridPagosRecibidos_filter").find("input").attr("placeholder","Buscar por N° OS").css("width","350px");
+                simpleScript.enterSearch("#"+diccionario.tabs.PAGRE+"gridPagosRecibidos",oTable);
                 /*para hacer evento invisible*/
                 simpleScript.removeAttr.click({
                     container: "#widget_"+diccionario.tabs.PAGRE,

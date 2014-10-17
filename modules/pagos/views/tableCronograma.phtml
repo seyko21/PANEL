@@ -61,7 +61,7 @@ $anular = Session::getPermiso("CROPAAN");
                 <td class="center">
                     <?php
                     /* debe ser emitido para mostrar boton pagar */
-                    if ($value['estado'] == 'E'):
+                    if ($value['estado'] == 'E' && $value['estado_os'] != 'F'):
                         ?>
 
                         <?php if ($grabar["permiso"]): ?>
@@ -84,7 +84,7 @@ $anular = Session::getPermiso("CROPAAN");
                     <?php endif; ?>
                     <!--boton reprogramar-->
                     <!--solo se reprograma los que estan en estado E y activaReprogramacion = S-->
-                    <?php if ($value['estado'] == 'E' && $value['activaReprogramacion'] == 'S'): ?>
+                    <?php if ($value['estado'] == 'E' && $value['activaReprogramacion'] == 'S' && $value['estado_os'] != 'F'): ?>
                         <?php if ($reprogramar['permiso']): ?>
                             <button type="button" class="<?php echo $reprogramar["theme"]; ?>" style="padding: 5px" onclick="cronogramaPago.getFormReprogramar(this, '<?php echo AesCtr::en($value['id_compromisopago']) ?>', '<?php echo $value['numero_cuota'] ?>','<?php echo $key?>','<?php echo $fechaProgramada; ?>');">
                                 <i class="<?php echo $reprogramar["icono"]; ?>"></i> <?php echo $reprogramar["accion"]; ?>
@@ -99,7 +99,7 @@ $anular = Session::getPermiso("CROPAAN");
                     
                     <!--BOTON ANULAR PAGO-->
                     <!--solo se anulan los q estan en estado = P-->
-                    <?php if ($value['estado'] == 'P'): ?>
+                    <?php if ($value['estado'] == 'P' && $value['estado_os'] != 'F'): ?>
                     
                         <?php if ($anular['permiso']): ?>
                             <button type="button" class="<?php echo $anular["theme"]; ?>" style="padding: 5px" onclick="cronogramaPago.postAnularPago(this, '<?php echo AesCtr::en($value['id_compromisopago']) ?>');">

@@ -12,6 +12,7 @@ class cronogramaPagoModel extends Model{
     private $_mora;
     private $_observacion;
     private $_formaPago;
+    private $_estadocb;
     private $_usuario;
     
     /*para el grid*/
@@ -38,6 +39,7 @@ class cronogramaPagoModel extends Model{
         $this->_mora  = Formulario::getParam(CROPA."txt_mora");
         $this->_observacion = Formulario::getParam(CROPA."txt_observacion");
         $this->_formaPago  = Formulario::getParam(CROPA."lst_formaPago");
+        $this->_estadocb  = Formulario::getParam("_estadocb"); 
         
         $this->_iDisplayStart  = Formulario::getParam("iDisplayStart"); 
         $this->_iDisplayLength = Formulario::getParam("iDisplayLength"); 
@@ -59,9 +61,10 @@ class cronogramaPagoModel extends Model{
         }
         $sOrder = substr_replace( $sOrder, "", -1 );
         
-        $query = "call sp_ordseSeguimientoPagoGrid(:iDisplayStart,:iDisplayLength,:sOrder,:sSearch);";
+        $query = "call sp_ordseSeguimientoPagoGrid(:estado,:iDisplayStart,:iDisplayLength,:sOrder,:sSearch);";
         
         $parms = array(
+            ":estado" => $this->_estadocb,
             ":iDisplayStart" => $this->_iDisplayStart,
             ":iDisplayLength" => $this->_iDisplayLength,
             ":sOrder" => $sOrder,

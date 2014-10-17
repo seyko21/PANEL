@@ -17,6 +17,7 @@ class seguimientoPagoModel extends Model{
     private $_serieDoc;
     private $_fecha;
     private $_formaPago;
+    private $_estadocb;
     private $_usuario;    
     
     /*para el grid*/
@@ -40,6 +41,7 @@ class seguimientoPagoModel extends Model{
         $this->_serieDoc  = Formulario::getParam(SEGPA."txt_numdoc");
         $this->_fecha  = Functions::cambiaf_a_mysql(Formulario::getParam(SEGPA."txt_fechapago"));
         $this->_formaPago  = Formulario::getParam(SEGPA."lst_formaPago");
+        $this->_estadocb  = Formulario::getParam("_estadocb"); 
         
         $this->_iDisplayStart  = Formulario::getParam("iDisplayStart"); 
         $this->_iDisplayLength = Formulario::getParam("iDisplayLength"); 
@@ -61,9 +63,10 @@ class seguimientoPagoModel extends Model{
                 }
         }
         
-        $query = "call sp_ordseSeguimientoPagoGrid(:iDisplayStart,:iDisplayLength,:sOrder,:sSearch);";
+        $query = "call sp_ordseSeguimientoPagoGrid(:estado,:iDisplayStart,:iDisplayLength,:sOrder,:sSearch);";
         
         $parms = array(
+            ":estado" => $this->_estadocb,
             ":iDisplayStart" => $this->_iDisplayStart,
             ":iDisplayLength" => $this->_iDisplayLength,
             ":sOrder" => $sOrder,

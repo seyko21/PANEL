@@ -76,6 +76,7 @@ var movimientos_ = function(){
             },
             fnDrawCallback: function() {
                 $("#"+diccionario.tabs.MOVIM+"gridMovimientos_filter").find("input").attr("placeholder","Buscar por N° OS").css("width","200px");
+                simpleScript.enterSearch("#"+diccionario.tabs.MOVIM+"gridMovimientos",oTable);
                 /*para hacer evento invisible*/
                 simpleScript.removeAttr.click({
                     container: "#widget_"+diccionario.tabs.MOVIM,

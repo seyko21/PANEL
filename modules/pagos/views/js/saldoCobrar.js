@@ -72,6 +72,7 @@ var saldoCobrar_ = function(){
             },            
             fnDrawCallback: function() {
                 $("#"+diccionario.tabs.SACOB+"gridSaldoCobrar_filter").find("input").attr("placeholder","Buscar por N° OS").css("width","350px");
+                simpleScript.enterSearch("#"+diccionario.tabs.SACOB+"gridSaldoCobrar",oTable);
                 /*para hacer evento invisible*/
                 simpleScript.removeAttr.click({
                     container: "#widget_"+diccionario.tabs.SACOB,

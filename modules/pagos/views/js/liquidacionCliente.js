@@ -73,6 +73,7 @@ var liquidacionCliente_ = function(){
             },
             fnDrawCallback: function() {
                 $("#"+diccionario.tabs.LICL+"gridLiquidacionCliente_filter").find("input").attr("placeholder","Buscar por Cliente").css("width","200px");
+                simpleScript.enterSearch("#"+diccionario.tabs.LICL+"gridLiquidacionCliente",oTable);
                 /*para hacer evento invisible*/
                 simpleScript.removeAttr.click({
                     container: "#widget_"+diccionario.tabs.LICL,

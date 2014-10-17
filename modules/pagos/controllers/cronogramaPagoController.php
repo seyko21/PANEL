@@ -40,7 +40,7 @@ class cronogramaPagoController extends Controller{
                 
                 switch($aRow['estado']){
                     case 'E':
-                        $estado = '<span class=\"label label-default\">'.SEGPA_6.'</span>';
+                        $estado = '<span class=\"label label-default\">'.SEGCO_5.'</span>';
                         break;
                     case 'T':
                         $estado = '<span class=\"label label-success\">'.SEGPA_8.'</span>';
@@ -51,8 +51,8 @@ class cronogramaPagoController extends Controller{
                     case 'A':
                         $estado = '<span class=\"label label-danger\">'.SEGPA_9.'</span>';
                         break;
-                    default:
-                        $estado = '';
+                    case 'F':
+                        $estado = '<span class=\"label label-info\">'.SEGPA_29.'</span>';
                         break;
                 }
                 /*registros a mostrar*/
@@ -64,9 +64,15 @@ class cronogramaPagoController extends Controller{
                  */
                 $sOutput .= '"<div class=\"btn-group\">';
                 if($generar['permiso']){
-                    $sOutput .= '<button type=\"button\" class=\"'.$generar['theme'].'\" title=\"'.$generar['accion'].' '.GNOSE_2.'\" onclick=\"generarOrden.getFormCronograma(this,\''.$encryptReg.'\',\''.$aRow['monto_total_descuento'].'\',\''.$aRow['orden_numero'].'\')\">';
-                    $sOutput .= '    <i class=\"'.$generar['icono'].'\"></i>';
-                    $sOutput .= '</button>';
+                    if ($aRow['estado'] != 'F'):
+                        $sOutput .= '<button type=\"button\" class=\"'.$generar['theme'].'\" title=\"'.$generar['accion'].' '.GNOSE_2.'\" onclick=\"generarOrden.getFormCronograma(this,\''.$encryptReg.'\',\''.$aRow['monto_total_descuento'].'\',\''.$aRow['orden_numero'].'\')\">';
+                        $sOutput .= '    <i class=\"'.$generar['icono'].'\"></i>';
+                        $sOutput .= '</button>';
+                    else:
+                        $sOutput .= '<button type=\"button\" class=\"'.$generar['theme'].'\" title=\"'.$generar['accion'].' '.GNOSE_2.'\" disabled >';
+                        $sOutput .= '    <i class=\"'.$generar['icono'].'\"></i>';
+                        $sOutput .= '</button>';
+                    endif;
                 } 
                 if($pagar['permiso']){
                     $sOutput .= '<button type=\"button\" class=\"'.$pagar['theme'].'\" title=\"'.$pagar['accion'].'\" onclick=\"cronogramaPago.getFormPagarOrden(this,\''.$encryptReg.'\',\''.$aRow['orden_numero'].'\')\">';

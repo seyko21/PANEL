@@ -50,7 +50,7 @@ var seguimientoPago_ = function(){
         });
     };
     
-    this.publico.getGridSeguimientoPago = function (){
+    this.publico.getGridSeguimientoPago = function (){ 
         var oTable = $("#"+diccionario.tabs.SEGPA+"gridSeguimientoPago").dataTable({
             bProcessing: true,
             bServerSide: true,
@@ -72,8 +72,12 @@ var seguimientoPago_ = function(){
             aaSorting: [[1, "desc"]],
             sScrollY: "300px",
             sAjaxSource: _private.config.modulo+"getGridSeguimientoPago",
+            fnServerParams: function(aoData) {
+                aoData.push({"name": "_estadocb", "value": $("#"+diccionario.tabs.SEGPA+"lst_estadosearch").val()});
+            },
             fnDrawCallback: function() {
                 $("#"+diccionario.tabs.SEGPA+"gridSeguimientoPago_filter").find("input").attr("placeholder","Buscar por N° OS o Cliente").css("width","350px");
+                simpleScript.enterSearch("#"+diccionario.tabs.SEGPA+"gridSeguimientoPago",oTable);
                 /*para hacer evento invisible*/
                 simpleScript.removeAttr.click({
                     container: "#widget_"+diccionario.tabs.SEGPA,
