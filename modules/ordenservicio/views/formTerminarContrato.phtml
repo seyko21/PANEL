@@ -8,6 +8,8 @@
 
 /*prefijo: TERCO debe ser alias en tabla men_menuprincipal*/
 $grabar = Session::getPermiso("TERCOGR");
+
+$numOS = Formulario::getParam('_numOS');
 ?>
 <form id="<?php echo TERCO; ?>formTerminarContrato" name="<?php echo TERCO; ?>formTerminarContrato" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">
@@ -16,7 +18,7 @@ $grabar = Session::getPermiso("TERCOGR");
                 <button type="button" class="close"  aria-hidden="true">
                     &times;
                 </button>
-                <h4 class="modal-title"><?php echo TERCO_2?></h4>
+                <h4 class="modal-title"><?php echo TERCO_2.$numOS?></h4>
             </div>
             <div class="modal-body smart-form"> 
                 <section>

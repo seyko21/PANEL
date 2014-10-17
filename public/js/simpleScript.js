@@ -455,7 +455,7 @@ var simpleScript_ = function(){
        for(var i in obj){
            $('#'+i).val(obj[i]);
        }
-       this.closeModal(form);
+       simpleScript.closeModal(form);
     };
     
     this.public.createCell = function(obj){

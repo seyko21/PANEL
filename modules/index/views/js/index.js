@@ -76,7 +76,16 @@ var index_ = function(){
         });
     };
     
+    this.public.postAnulaCotizacionesVencidas = function(){
+        simpleAjax.send({
+            root: _private.config.modulo + '/index/postAnulaCotizacionesVencidas/',
+        });
+    };
+    
     return this.public;
     
 };
  var index = new index_();
+ 
+ /*anular cotizaciones vencidas*/
+ index.postAnulaCotizacionesVencidas();

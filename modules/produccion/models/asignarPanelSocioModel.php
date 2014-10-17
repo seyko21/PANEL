@@ -20,6 +20,7 @@ class asignarPanelSocioModel extends Model{
     private $_inversiones;
     private $_montoInvertir;
     private $_totalInvertido;
+    private $_term;
 
     /*para el grid*/
     public  $_iDisplayStart;
@@ -45,6 +46,7 @@ class asignarPanelSocioModel extends Model{
         $this->_inversiones        = Formulario::getParam(APASO."hhidInversion");   /*array*/
         $this->_montoInvertir        = Formulario::getParam(APASO."txt_montoinvertir");  /*array*/
         $this->_totalInvertido        = Formulario::getParam(APASO."txt_montototal");
+        $this->_term  =   Formulario::getParam("_term"); 
         
         $this->_iDisplayStart  = Formulario::getParam("iDisplayStart"); 
         $this->_iDisplayLength = Formulario::getParam("iDisplayLength"); 
@@ -81,8 +83,12 @@ class asignarPanelSocioModel extends Model{
     public function getSocios(){
        
         $query = "
-         SELECT id_persona,nombrecompleto 
-         FROM mae_persona WHERE monto_saldo > 0 AND nombrecompleto LIKE CONCAT('%".$this->_xSearch."%') ";
+        SELECT p.id_persona,p.nombrecompleto,p.monto_invertido,p.monto_saldo
+        FROM mae_persona p
+        INNER JOIN mae_usuario u ON u.`persona`=p.`persona`
+        WHERE p.monto_saldo > 0
+        AND (SELECT COUNT(*) FROM `men_usuariorol` WHERE `id_usuario` = u.`id_usuario` AND id_rol='".APP_COD_SOCIO."') > 0
+        AND p.nombrecompleto  LIKE CONCAT('%".$this->_xSearch."%')  ";
         
         $parms = array();
         $data = $this->queryAll($query,$parms);
@@ -180,6 +186,23 @@ class asignarPanelSocioModel extends Model{
         );
         
         $data = $this->queryOne($query,$parms);
+        return $data;
+    }
+    
+    public function getProductos(){
+        $query = "
+        SELECT 
+                pp.`id_produccion` as id_producto,
+                c.`ubicacion`,
+                pp.total_produccion,
+                pp.total_asignado,
+                pp.total_saldo
+        FROM prod_produccionpanel pp 
+        INNER JOIN lgk_catalogo c ON c.`id_producto`=pp.`id_producto`
+        WHERE pp.total_saldo > 0 AND c.`ubicacion` LIKE CONCAT('%".$this->_term."%'); ";
+        
+        $parms = array();
+        $data = $this->queryAll($query,$parms);
         return $data;
     }
     

@@ -76,13 +76,14 @@ var terminarContrato_ = function(){
         setup_widgets_desktop();
     };
     
-    this.publico.getFormTerminarContrato = function(btn,id){
+    this.publico.getFormTerminarContrato = function(btn,id,num){
         _private.idOrden = id;
         
         simpleAjax.send({
             element: btn,
             dataType: "html",
             root: _private.config.modulo + "getFormTerminarContrato",
+            data: '&_numOS='+num,
             fnCallback: function(data){
                 $("#cont-modal").append(data);  /*los formularios con append*/
                 $("#"+diccionario.tabs.TERCO+"formTerminarContrato").modal("show");
@@ -96,7 +97,6 @@ var terminarContrato_ = function(){
             root: _private.config.modulo + "postTerminarContrato",
             form: "#"+diccionario.tabs.TERCO+"formTerminarContrato",
             data: '&_idOrden='+_private.idOrden,
-            clear: true,
             fnCallback: function(data) {
                 if(!isNaN(data.result) && parseInt(data.result) === 1){
                     simpleScript.notify.ok({
@@ -106,6 +106,10 @@ var terminarContrato_ = function(){
                             simpleScript.closeModal('#'+diccionario.tabs.T100+'formTerminarContrato');
                             _private.idOrden = 0;
                         }
+                    });
+                }else if(!isNaN(data.result) && parseInt(data.result) === 2){
+                    simpleScript.notify.warning({
+                        content: 'OS no se puede finalizar porque no se ha instalado'
                     });
                 }
             }

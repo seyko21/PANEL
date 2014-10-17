@@ -86,7 +86,9 @@ var asignarPanelSocio_ = function(){
             bPaginate: false,
             aoColumns: [
                 {sTitle: "Nro.", sClass: "center",sWidth: "2%",  bSortable: false},
-                {sTitle: "Socio", sWidth: "50%"}
+                {sTitle: "Socio", sWidth: "50%"},
+                {sTitle: "Monto Inv.", sWidth: "10%",sClass: "right",  bSortable: false},
+                {sTitle: "Monto Saldo", sWidth: "10%", sClass: "right", bSortable: false}
             ],
             aaSorting: [[1, 'asc']],
             sScrollY: "250px",
@@ -106,6 +108,40 @@ var asignarPanelSocio_ = function(){
             }
         });
         $('#'+diccionario.tabs.T8+'gridEmpleadosFound_filter').remove();
+    };
+    
+    this.publico.getProductos = function(){
+        $('#'+diccionario.tabs.APASO+'gridProductosFound').dataTable({
+            bProcessing: true,
+            bServerSide: true,
+            bDestroy: true,
+            bFilter: false, 
+            bInfo: false,
+            sServerMethod: "POST",
+            bPaginate: false,
+            aoColumns: [
+                {sTitle: "Nro.", sClass: "center",sWidth: "2%",  bSortable: false},
+                {sTitle: "Descripción", sWidth: "40%",  bSortable: false},
+                {sTitle: "Invertido", sWidth: "10%",sClass: "right",  bSortable: false},
+                {sTitle: "Asignado", sWidth: "10%",sClass: "right",  bSortable: false},
+                {sTitle: "Saldo", sWidth: "10%", sClass: "right", bSortable: false}
+            ],
+            aaSorting: [[1, 'asc']],
+            sScrollY: "250px",
+            sAjaxSource: _private.config.modulo+'getProductos',
+            fnServerParams: function(aoData) {
+                aoData.push({"name": diccionario.tabs.APASO+"_term", "value": $('#'+diccionario.tabs.APASO+'txt_search').val()});
+                aoData.push({"name": "_tab", "value": _private.tab});
+            },
+            fnDrawCallback: function() {
+                $('#'+diccionario.tabs.APASO+'gridProductosFound_wrapper').find('.dataTables_scrollBody').css('overflow-x','hidden');
+                /*para hacer evento invisible*/
+//                simpleScript.removeAttr.click({
+//                    container: '#'+diccionario.tabs.APASO+'gridProductosFound',
+//                    typeElement: 'a'
+//                });
+            }
+        });
     };
     
     this.publico.getFormNewAsignarPanelSocio = function(btn){
@@ -137,6 +173,20 @@ var asignarPanelSocio_ = function(){
             fnCallback: function(data){
                 $('#cont-modal').append(data);  /*los formularios con append*/
                 $('#'+diccionario.tabs.APASO+'formBuscarSocio').modal('show');
+            }
+        });
+    };
+    
+    this.publico.formBuscarProductoPanelSocio = function(btn,tab){
+        _private.tab = tab;
+         
+        simpleAjax.send({
+            element: btn,
+            dataType: 'html',
+            root: _private.config.modulo + 'formBuscarProductoPanelSocio',
+            fnCallback: function(data){
+                $('#cont-modal').append(data);  /*los formularios con append*/
+                $('#'+diccionario.tabs.APASO+'formBuscarProductoPanelSocio').modal('show');
             }
         });
     };
