@@ -131,7 +131,9 @@ endforeach;
              <?php      break;
                         case APP_COD_CLIE: ?>
                         setTimeout(function(){ contratos.getGridIndexContratos();},100);    
-                        setTimeout(function(){ saldoCliente.getGridIndexSaldoCliente();},800);
+                        setTimeout(function(){ saldoCliente.getGridIndexSaldoClienteProximo();},800);
+                        setTimeout(function(){ alquilerCulminar.getGridIndexAlquilerCulminar();},1500);
+                        setTimeout(function(){ panelesAlquilados.getGridIndexPA();},2200);
              <?php      break;
                         case APP_COD_SOCIO: ?>
                             

@@ -70,8 +70,24 @@ class generarOrdenController extends Controller{
                         break;
                 }
                 
+                $cronograma = $aRow['cronogramaTotal'];
+                
+                $c1 = $aRow['orden_numero'];
+                $c2 = $aRow['cotizacion_numero'];
+                $c3 = $aRow['cliente'].' - '.$aRow['nombrecompleto'];
+                $c4 = $aRow['fecha'];
+                $c5 = Functions::convertirDiaMes($aRow['meses_contrato']);
+                
+                if ($aRow['monto_total_descuento'] > $cronograma ):
+                    $c6 = '<span class=\"badge bg-color-red\">S/.'.number_format($aRow['monto_total_descuento'],2).'</span>';    
+                else:
+                    $c6 = 'S/.'.number_format($aRow['monto_total_descuento'],2);
+                endif;
+                
+                
+                
                 /*registros a mostrar*/
-                $sOutput .= '["'.$chk.'","'.$aRow['orden_numero'].'","'.$aRow['cotizacion_numero'].'","'.$aRow['cliente'].' - '.$aRow['nombrecompleto'].'","'.$aRow['fecha'].'","'.Functions::convertirDiaMes($aRow['meses_contrato']).'","'.number_format($aRow['monto_total_descuento'],2).'","'.$estado.'",';
+                $sOutput .= '["'.$chk.'","'.$c1.'","'.$c2.'","'.$c3.'","'.$c4.'","'.$c5.'","'.$c6.'","'.$estado.'",';
                 
                 /*
                  * configurando botones (add/edit/delete etc)
@@ -170,7 +186,7 @@ class generarOrdenController extends Controller{
                 $encryptReg = Aes::en($aRow['id_compromisopago']);
                 
                 /*registros a mostrar*/
-                $sOutput .= '["'.$aRow['numero_cuota'].'","'.number_format($aRow['monto_pago'], 2).'","'.$aRow['fechapago'].'","'.number_format($aRow['costo_mora'],2).'","'.$estado.'",';
+                $sOutput .= '["'.$aRow['numero_cuota'].'","S/.'.number_format($aRow['monto_pago'], 2).'","'.$aRow['fechapago'].'","'.number_format($aRow['costo_mora'],2).'","'.$estado.'",';
                 
                 /*
                  * configurando botones (add/edit/delete etc)

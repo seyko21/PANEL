@@ -53,9 +53,9 @@ var misCotizaciones_ = function(){
             iDisplayLength: 10,            
             aoColumns: [
                 {sTitle: "Código", sClass: "center",sWidth: "12%"},
-                {sTitle: "Prospecto", sWidth: "35%"},                
+                {sTitle: "Prospecto", sWidth: "30%"},                
                 {sTitle: "Fecha", sWidth: "10%",sClass: "center"},
-                {sTitle: "Meses", sWidth: "10%",sClass: "center"},
+                {sTitle: "Alquiler", sWidth: "15%",sClass: "center"},
                 {sTitle: "Fec. Venc.", sWidth: "10%", sClass: "center"},
                 {sTitle: "Total", sWidth: "12%", sClass: "right"},
                 {sTitle: "Estado", sWidth: "15%", sClass: "center", bSortable: false},

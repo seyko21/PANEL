@@ -221,7 +221,7 @@ define('INDEX_P2','Permisos Municipales por vencer en 3 meses');
 define('INDEX_P3','Alquileres por culminar');
 define('INDEX_P4','Comisión de Venta');
 define('INDEX_P5','Mis Contratos');
-define('INDEX_P6','Saldo a Pagar');
+define('INDEX_P6','Deuda - Saldo a Pagar');
 define('INDEX_P7','Cronograma de Pago');
 
 

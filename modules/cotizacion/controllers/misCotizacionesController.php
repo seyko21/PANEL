@@ -48,7 +48,7 @@ class misCotizacionesController extends Controller{
                 $numCotizacion = $aRow['cotizacion_numero'];
                 
                 /*datos de manera manual*/
-                $sOutput .= '["'.$aRow['cotizacion_numero'].'","'.$aRow['nombrecompleto'].'","'.$aRow['fechacoti'].'","'.$aRow['meses_contrato'].'","'.Functions::cambiaf_a_normal($aRow['vencimiento']).'","'.  number_format($aRow['mtotal'],2).'", ';
+                $sOutput .= '["'.$aRow['cotizacion_numero'].'","'.$aRow['nombrecompleto'].'","'.$aRow['fechacoti'].'","'.  Functions::convertirDiaMes($aRow['meses_contrato']).'","'.Functions::cambiaf_a_normal($aRow['vencimiento']).'","'.  number_format($aRow['mtotal'],2).'", ';
 
                 /*
                  * configurando botones (add/edit/delete etc)

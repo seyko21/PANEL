@@ -71,7 +71,7 @@ class saldoClienteController extends Controller{
                 $c3 = Functions::cambiaf_a_normal($aRow['fecha_programada']);
                 $c4 = $aRow['descripcion_cliente'];
                 $c5 = number_format($aRow['costo_mora'],2);
-                $c6 = number_format($aRow['monto_pago'],2);
+                $c6 = 'S/.'.number_format($aRow['monto_pago'],2);
                 $fp = Functions::cambiaf_a_normal($aRow['fecha_pagoreal']);
                 switch($aRow['estado']){
                     case 'E':
@@ -121,7 +121,7 @@ class saldoClienteController extends Controller{
                 $c2 = $aRow['orden_numero'];
                 $c3 = $aRow['cliente'];
                 $c4 = Functions::cambiaf_a_normal($aRow['fecha_programada']);
-                $c5 = number_format($aRow['monto_pago'],2);
+                $c5 = 'S/.'.number_format($aRow['monto_pago'],2);
                 
                               
                 $sOutput .= '["'.$c1.'","'.$c2.'","'.$c3.'","'.$c4.'","'.$c5.'" ';
@@ -137,6 +137,44 @@ class saldoClienteController extends Controller{
         
         echo $sOutput;
     }                   
+    
+    public function getIndexSaldoClienteProximo(){
+      
+       $sEcho  =   $this->post('sEcho');
+        
+        $rResult = Obj::run()->saldoClienteModel->getIndexSaldoClienteProximo();
+        
+        if(!isset($rResult['error'])){  
+            $iTotal         = isset($rResult[0]['total'])?$rResult[0]['total']:0;
+            
+            $sOutput = '{';
+            $sOutput .= '"sEcho": '.intval($sEcho).', ';
+            $sOutput .= '"iTotalRecords": '.$iTotal.', ';
+            $sOutput .= '"iTotalDisplayRecords": '.$iTotal.', ';
+            $sOutput .= '"aaData": [ ';
+            foreach ( $rResult as $key=>$aRow ){
+                /*datos de manera manual*/
+                                
+                $c1 = $aRow['numero_cuota'];
+                $c2 = $aRow['orden_numero'];
+                $c3 = $aRow['cliente'];
+                $c4 = Functions::cambiaf_a_normal($aRow['fecha_programada']);
+                $c5 = 'S/.'.number_format($aRow['monto_pago'],2);
+                
+                $sOutput .= '["'.$c1.'","'.$c2.'","'.$c3.'","'.$c4.'","'.$c5.'" ';
+                               
+                $sOutput = substr_replace( $sOutput, "", -1 );
+                $sOutput .= '],';
+            }
+            $sOutput = substr_replace( $sOutput, "", -1 );
+            $sOutput .= '] }';
+        }else{
+            $sOutput = $rResult['error'];
+        }
+        
+        echo $sOutput;
+    }          
+    
     
     public function postPDF($n=''){
          return Obj::run()->compromisoPagarController->postPDF($n);
