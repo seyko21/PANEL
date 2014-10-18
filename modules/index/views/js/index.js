@@ -95,3 +95,8 @@ var index_ = function(){
  
  /*anular cotizaciones vencidas*/
  index.postAnulaCotizacionesVencidas();
+ 
+  /*generar utilidades*/
+setTimeout(function(){
+     index.postGenerarUtilidadSocio();
+},3000);
