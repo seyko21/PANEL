@@ -174,6 +174,7 @@ define('LABEL_GNCOT_6','Producción');
 define('LABEL_GNCOT_7','Total');
 /*----------------------Pagos----------------------*/
 define('SEGPA_L23','Forma de Pago');
+define('CROPC_1','Cronograma de Pago - N° Orden: ');
 /*----------------------Consultas ----------------------*/
 define('COGEN_1','Contratos Generado');
 define('COGEN_2','Desde ');

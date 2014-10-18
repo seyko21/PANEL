@@ -54,8 +54,15 @@ class cronogramaPagoController extends Controller{
                         $estado = '<span class=\"label label-info\">'.SEGPA_29.'</span>';
                         break;
                 }
+                $cronograma = $aRow['cronogramaTotal'];
+                if ($aRow['monto_total_descuento'] > $cronograma ):
+                    $c6 = '<span class=\"badge bg-color-red\">S/.'.number_format($aRow['monto_total_descuento'],2).'</span>';    
+                else:
+                    $c6 = 'S/.'.number_format($aRow['monto_total_descuento'],2);
+                endif;
+                
                 /*registros a mostrar*/
-                $sOutput .= '["'.($num++).'","'.$aRow['orden_numero'].'","'.$aRow['cliente'].' - '.$aRow['nombrecompleto'].'","'.$aRow['creador'].'","'.$estado.'","'.$aRow['fecha'].'","'.number_format($aRow['mora'],2).'","S/.'.number_format($aRow['monto_total'],2).'",';
+                $sOutput .= '["'.($num++).'","'.$aRow['orden_numero'].'","'.$aRow['cliente'].' - '.$aRow['nombrecompleto'].'","'.$aRow['creador'].'","'.$estado.'","'.$aRow['fecha'].'","'.number_format($aRow['mora'],2).'","'.$c6.'",';
                 
                 /*
                  * configurando botones (add/edit/delete etc)

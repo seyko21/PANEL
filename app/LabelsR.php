@@ -207,7 +207,7 @@ define('GNOSE_22','Ingrese días de Oferta despues de culminar el alquiler.');
 /*---------------------- SEGUIMIENTO DE PAGOS----------------*/
 define('SEGPA_1','Seguimiento de Pagos');
 define('SEGPA_2','Cuota');
-define('SEGPA_3','Monto');
+define('SEGPA_3','Monto S/.');
 define('SEGPA_4','Fecha Programada');
 define('SEGPA_5','Fecha de Pago');
 define('SEGPA_6','Emitido');

@@ -13,6 +13,7 @@ class cronogramaClienteModel extends Model{
     private $_idPersona;
     private $_f1;
     private $_f2;
+    private $_idOrden;
     private $_usuario;
     
     /*para el grid*/
@@ -28,6 +29,7 @@ class cronogramaClienteModel extends Model{
     
     private function _set(){
         $this->_flag        = Formulario::getParam("_flag");
+        $this->_idOrden   = Aes::de(Formulario::getParam("_idOrden"));    /*se decifra*/
         $this->_usuario     = Session::get("sys_idUsuario");
         $this->_f1    = Functions::cambiaf_a_mysql(Formulario::getParam("_f1"));
         $this->_f2    = Functions::cambiaf_a_mysql(Formulario::getParam("_f2"));   
@@ -41,7 +43,7 @@ class cronogramaClienteModel extends Model{
     
     /*data para el grid: CronogramaCliente*/
     public function getCronogramaCliente(){
-       $aColumns       =   array("numero_cuota","orden_numero","fecha_programada","cliente","costo_mora","monto_pago","fecha_reprogramada","estado" ); //para la ordenacion y pintado en html
+       $aColumns       =   array("","orden_numero","13","fecha","estado","16","monto_total"); //para la ordenacion y pintado en html
         /*
 	 * Ordenando, se verifica por que columna se ordenara
 	 */
@@ -54,13 +56,12 @@ class cronogramaClienteModel extends Model{
         }
         $sOrder = substr_replace( $sOrder, "", -1 ); 
         
-        $query = "call sp_pagoConsultaPagosClienteGrid(:f1,:f2,:idPersona,:estado,:iDisplayStart,:iDisplayLength,:sOrder,:sSearch);";
+        $query = "call sp_pagoCroPagoClienteGrid(:idPersona,:f1,:f2,:iDisplayStart,:iDisplayLength,:sOrder,:sSearch);";
         
-        $parms = array(
+        $parms = array(            
+            ":idPersona" => $this->_idPersona,             
             ":f1" => $this->_f1,
-            ":f2" => $this->_f2,  
-            ":idPersona" => $this->_idPersona,  
-            ":estado" => 'E',  
+            ":f2" => $this->_f2,
             ":iDisplayStart" => $this->_iDisplayStart,
             ":iDisplayLength" => $this->_iDisplayLength,
             ":sOrder" => $sOrder,
@@ -70,7 +71,31 @@ class cronogramaClienteModel extends Model{
         return $data;
     }
     
-  
+    public function getGridCuotas(){
+        $aColumns       =   array("numero_cuota","monto_pago","fechapago","costo_mora","estado"); //para la ordenacion y pintado en html
+        /*
+	 * Ordenando, se verifica por que columna se ordenara
+	 */
+        $sOrder = "";
+        for ( $i=0 ; $i<intval( $this->_iSortingCols ) ; $i++ ){
+                if ( $this->post( "bSortable_".intval($this->post("iSortCol_".$i)) ) == "true" ){
+                        $sOrder .= " ".$aColumns[ intval( $this->post("iSortCol_".$i) ) ]." ".
+                                ($this->post("sSortDir_".$i)==="asc" ? "asc" : "desc") ." ";
+                }
+        }
+        
+        $query = "call sp_ordseOrdenServicioCuotasGrid(:idOrden,:iDisplayStart,:iDisplayLength,:sOrder,:sSearch);";
+        
+        $parms = array(
+            ":idOrden" => $this->_idOrden,
+            ":iDisplayStart" => $this->_iDisplayStart,
+            ":iDisplayLength" => $this->_iDisplayLength,
+            ":sOrder" => $sOrder,
+            ":sSearch" => $this->_sSearch,
+        );
+        $data = $this->queryAll($query,$parms);
+        return $data;
+    }  
 }
 
 ?>

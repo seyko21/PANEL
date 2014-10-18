@@ -10,7 +10,7 @@ var cronogramaCliente_ = function(){
     /*metodos privados*/
     var _private = {};
     
-    _private.idCronogramaCliente = 0;
+    _private.idOS = 0;
     
     _private.config = {
         modulo: "pagos/cronogramaCliente/"
@@ -43,6 +43,9 @@ var cronogramaCliente_ = function(){
     };
     
     this.publico.getGridCronogramaCliente = function (){
+        var _f1 = $("#"+diccionario.tabs.CRPG+"txt_f1").val();
+        var _f2 = $("#"+diccionario.tabs.CRPG+"txt_f2").val();        
+        
         var oTable = $("#"+diccionario.tabs.CRPG+"gridCronogramaCliente").dataTable({
             bProcessing: true,
             bServerSide: true,
@@ -52,20 +55,24 @@ var cronogramaCliente_ = function(){
             bPaginate: true,
             iDisplayLength: 10,            
             aoColumns: [
-                {sTitle: "Cuota", sWidth: "8%", sClass: "center"},
-                {sTitle: "N° OS", sWidth: "8%"},                
-                {sTitle: "F. Pagar", sWidth: "9%", sClass: "center"},
-                {sTitle: "Cliente", sWidth: "25%"},
-                {sTitle: "Mora", sWidth: "7%", sClass: "right"},
+                {sTitle: "N°", sWidth: "1%",bSortable: false},
+                {sTitle: "Código", sWidth: "10%",sClass: "center"},
+                {sTitle: "Cliente", sWidth: "30%"},                
+                {sTitle: "Fecha", sWidth: "10%"},
+                {sTitle: "Mora", sWidth: "10%", sClass: "right"},
                 {sTitle: "Monto", sWidth: "10%", sClass: "right"},
-                {sTitle: "F. Reprogramado", sWidth: "9%", sClass: "center"},
-                {sTitle: "Estado", sWidth: "8%", sClass: "center"}
+                {sTitle: "Estado", sWidth: "10%"},
+                {sTitle: "Acciones", sWidth: "8%", sClass: "center", bSortable: false}            
             ],
-            aaSorting: [[1, "asc"],[0, "asc"]],
+            aaSorting: [[1, "desc"]],
             sScrollY: "300px",
             sAjaxSource: _private.config.modulo+"getGridCronogramaCliente",
+            fnServerParams: function(aoData) {
+                aoData.push({"name": "_f1", "value": _f1});                
+                aoData.push({"name": "_f2", "value": _f2}); 
+            },
             fnDrawCallback: function() {
-                $("#"+diccionario.tabs.CRPG+"gridCronogramaCliente_filter").find("input").attr("placeholder","Buscar por N° OS").css("width","350px");
+                $("#"+diccionario.tabs.CRPG+"gridCronogramaCliente_filter").find("input").attr("placeholder","Buscar por N° OS").css("width","200px");
                 simpleScript.enterSearch("#"+diccionario.tabs.CRPG+"gridCronogramaCliente",oTable);
                 /*para hacer evento invisible*/
                 simpleScript.removeAttr.click({
@@ -77,32 +84,53 @@ var cronogramaCliente_ = function(){
         setup_widgets_desktop();
     };
     
-    this.publico.getFormNewCronogramaCliente = function(btn){
-        simpleAjax.send({
-            element: btn,
-            dataType: "html",
-            root: _private.config.modulo + "getFormNewCronogramaCliente",
-            fnCallback: function(data){
-                $("#cont-modal").append(data);  /*los formularios con append*/
-                $("#"+diccionario.tabs.CRPG+"formNewCronogramaCliente").modal("show");
-            }
-        });
-    };
+    this.publico.getGridCuotas = function (){
+        var oTable = $("#"+diccionario.tabs.CRPG+"gridCROPC").dataTable({         
+            bFilter: false,
+            bProcessing: true,
+            bServerSide: true,
+            bDestroy: true,
+            sPaginationType: "bootstrap_full", //two_button
+            sServerMethod: "POST",
+            bPaginate: true,
+            iDisplayLength: 10,                      
+            aoColumns: [
+                {sTitle: "N° Cuota", sWidth: "6%"},
+                {sTitle: "Monto S/.", sWidth: "8%",sClass: "right"},                
+                {sTitle: "F. Pago", sWidth: "10%",sClass: "center"},                
+                {sTitle: "Mora", sWidth: "8%",sClass: "right"},
+                {sTitle: "Estado", sWidth: "10%",sClass: "center"}
+            ],
+            aaSorting: [[0, "asc"]],
+            sScrollY: "190px",
+            sAjaxSource:  _private.config.modulo+"getGridCuotas",
+            fnServerParams: function(aoData) {
+                aoData.push({"name": "_idOrden", "value": _private.idOS});
+            }        
+        });                       
+       
+        setup_widgets_desktop();
+    };   
     
-    this.publico.getFormEditCronogramaCliente = function(btn,id){
-        _private.idCronogramaCliente = id;
-            
+    
+    this.publico.getConsulta = function(id, cod){
+        _private.idOS = id;               
         simpleAjax.send({
-            element: btn,
-            dataType: "html",
-            root: _private.config.modulo + "getFormEditCronogramaCliente",
-            data: "&_idCronogramaCliente="+_private.idCronogramaCliente,
+            gifProcess: true,
+            dataType: 'html',
+            root: _private.config.modulo + 'getConsulta',
+            data: '&_idOrden='+_private.idOS+'&_numeroOrden='+cod,
             fnCallback: function(data){
-                $("#cont-modal").append(data);  /*los formularios con append*/
-                $("#"+diccionario.tabs.CRPG+"formEditCronogramaCliente").modal("show");
+                $('#cont-modal').append(data);  /*los formularios con append*/
+                $('#'+diccionario.tabs.CRPG+'formCROPC').modal('show');
+                setTimeout(function(){                    
+                    cronogramaCliente.getGridCuotas()
+                }, 500);
+                
             }
         });
-    };
+    };   
+        
     
  
     return this.publico;

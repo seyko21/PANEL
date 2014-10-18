@@ -63,7 +63,7 @@ var contratos_ = function(){
                 {sTitle: "Estado", sWidth: "8%", sClass: "center"},                
                 {sTitle: "Acciones", sWidth: "8%", sClass: "center", bSortable: false}
             ],
-            aaSorting: [[2, "asc"]],
+            aaSorting: [[0, "desc"]],
             sScrollY: "300px",
             sAjaxSource: _private.config.modulo+"getGridContratos",
             fnServerParams: function(aoData) {

@@ -186,7 +186,7 @@ class generarOrdenController extends Controller{
                 $encryptReg = Aes::en($aRow['id_compromisopago']);
                 
                 /*registros a mostrar*/
-                $sOutput .= '["'.$aRow['numero_cuota'].'","S/.'.number_format($aRow['monto_pago'], 2).'","'.$aRow['fechapago'].'","'.number_format($aRow['costo_mora'],2).'","'.$estado.'",';
+                $sOutput .= '["'.$aRow['numero_cuota'].'","'.number_format($aRow['monto_pago'], 2).'","'.$aRow['fechapago'].'","'.number_format($aRow['costo_mora'],2).'","'.$estado.'",';
                 
                 /*
                  * configurando botones (add/edit/delete etc)

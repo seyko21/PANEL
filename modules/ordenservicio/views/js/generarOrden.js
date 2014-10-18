@@ -93,7 +93,7 @@ var generarOrden_ = function(){
             iDisplayLength: 50,            
             aoColumns: [
                 {sTitle: "N°", sWidth: "1%"},
-                {sTitle: "Monto", sWidth: "10%",sClass: "right",bSortable: false},                
+                {sTitle: "Monto S/.", sWidth: "10%",sClass: "right",bSortable: false},                
                 {sTitle: "Programado", sWidth: "10%",sClass: "center",bSortable: false},                
                 {sTitle: "Mora", sWidth: "5%",sClass: "right",bSortable: false},
                 {sTitle: "Estado", sWidth: "10%",sClass: "center",bSortable: false},                
@@ -239,8 +239,14 @@ var generarOrden_ = function(){
                                 content: mensajes.MSG_8,
                                 callback: function(){
                                     generarOrden.getGridCuotas();
+                                    setTimeout(function(){generarOrden.getGridGenerarOrden();},2000);
                                 }
                             });
+                           if($('#'+diccionario.tabs.CROPA+'getGridOrdenes').length > 0){
+                                setTimeout(function(){                              
+                                    simpleScript.reloadGrid('#'+diccionario.tabs.CROPA+'getGridOrdenes');
+                                },1000);
+                            }
                         }
                     }
                 });

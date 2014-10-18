@@ -1,0 +1,29 @@
+<?php
+
+/*
+ * Documento   : consultar Panel Alquilado
+ * Creado      : 17-09-2014
+ * Autor       : ..... .....
+ * Descripcion : 
+ */
+$numOrden = Formulario::getParam('_numeroOrden');
+?>
+<form id="<?php echo CRPG; ?>formCROPC" name="<?php echo COXVE; ?>formTICO" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog" style="width:50%">
+        <div class="modal-content" >
+            <div class="modal-header">
+                <button type="button" class="close"  aria-hidden="true">
+                    &times;
+                </button>
+                <h4 class="modal-title"><?php echo CROPC_1.$numOrden;?></h4>
+            </div>
+            <div style="margin-top:40px"></div>
+            <table id="<?php echo CRPG; ?>gridCROPC" class="table table-striped table-hover table-condensed" style="width:98%"></table>          
+            <div class="modal-footer">              
+               <button type="button" class="<?php echo THEME_CLOSE; ?>">
+                    <i class="<?php echo ICON_CLOSE; ?>"></i> <?php echo BTN_CLOSE; ?> 
+                </button>
+            </div>            
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</form>

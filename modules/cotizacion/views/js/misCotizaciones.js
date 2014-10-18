@@ -79,34 +79,7 @@ var misCotizaciones_ = function(){
         });
 
         setup_widgets_desktop();
-    };
-    
-    this.publico.getFormNewMisCotizaciones = function(btn){
-        simpleAjax.send({
-            element: btn,
-            dataType: "html",
-            root: _private.config.modulo + "getFormNewMisCotizaciones",
-            fnCallback: function(data){
-                $("#cont-modal").append(data);  /*los formularios con append*/
-                $("#"+diccionario.tabs.MISCO+"formNewMisCotizaciones").modal("show");
-            }
-        });
-    };
-    
-    this.publico.getFormEditMisCotizaciones = function(btn,id){
-        _private.idMisCotizaciones = id;
-            
-        simpleAjax.send({
-            element: btn,
-            dataType: "html",
-            root: _private.config.modulo + "getFormEditMisCotizaciones",
-            data: "&_idMisCotizaciones="+_private.idMisCotizaciones,
-            fnCallback: function(data){
-                $("#cont-modal").append(data);  /*los formularios con append*/
-                $("#"+diccionario.tabs.MISCO+"formEditMisCotizaciones").modal("show");
-            }
-        });
-    };
+    };       
     
     this.publico.postPDF = function(btn,idCot,num){
         simpleAjax.send({
