@@ -106,7 +106,7 @@ class generarOrdenController extends Controller{
                     $sOutput .= '</button>';
                 }
                 /*solo si tiene compromisos se podra exportar contrato*/
-                if($aRow['compromisos'] && $aRow['id_contrato'] != '0'){
+                if($aRow['compromisos'] && $aRow['id_contrato'] != '0' && $cronograma >= $aRow['monto_total_descuento']){
                     if($email['permiso']){
                         $sOutput .= '<button type=\"button\" class=\"'.$email['theme'].'\" title=\"'.GNOSE_16.'\" onclick=\"registrarVendedor.postAccesoVendedor(this,\'' . $idUser . '\',\'' . $aRow['nombrecompleto'] . '\',\'' . $aRow['email'] . '\')\">';
                         $sOutput .= '    <i class=\"'.$email['icono'].'\"></i>';
