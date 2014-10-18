@@ -53,6 +53,17 @@ class indexModel extends Model {
         return $data;
     }
     
+    public function generarUtilidadSocio(){
+        $query = "CALL sp_ordseCalcularUtilidadSocio(:flag,:criterio);";
+        $parms = array(
+            ':flag' => 1,
+            ':criterio' => $this->_usuario
+        );
+        $this->execute($query,$parms);
+        $data = array('result'=>1);
+        return $data;
+    }
+    
 }
 
 ?>

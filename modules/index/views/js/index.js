@@ -82,6 +82,12 @@ var index_ = function(){
         });
     };
     
+    this.public.postGenerarUtilidadSocio = function(){
+        simpleAjax.send({
+            root: _private.config.modulo + '/index/postGenerarUtilidadSocio/',
+        });
+    };
+    
     return this.public;
     
 };

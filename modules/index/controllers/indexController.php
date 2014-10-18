@@ -109,8 +109,15 @@ class indexController extends Controller{
     }
     
     public function postAnulaCotizacionesVencidas(){
-        if(Session::get('sys_usuario')){
+        if(Session::get('sys_defaultRol') == APP_COD_ADM || Session::get('sys_defaultRol') == APP_COD_SADM || Session::get('sys_defaultRol') == APP_COD_VEND){
             $data = Obj::run()->indexModel->anulaCotizacionesVencidas();
+            echo json_encode($data);
+        }
+    }
+    
+    public function postGenerarUtilidadSocio(){
+        if(Session::get('sys_defaultRol') == APP_COD_ADM || Session::get('sys_defaultRol') == APP_COD_SADM){
+            $data = Obj::run()->indexModel->generarUtilidadSocio();
             echo json_encode($data);
         }
     }
