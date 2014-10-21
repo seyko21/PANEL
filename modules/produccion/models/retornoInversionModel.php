@@ -42,7 +42,7 @@ class retornoInversionModel extends Model{
     
     /*data para el grid: RetornoInversion*/
     public function getRetornoInversion(){
-       $aColumns       =   array("","socio","codigos","ubicacion","porcentaje_ganacia","inversion","ingresos","roi" ); //para la ordenacion y pintado en html
+       $aColumns       =   array("","t.socio","t.codigos","t.ubicacion","t.porcentaje_ganacia","t.inversion","t.ingresos","roi" ); //para la ordenacion y pintado en html
         /*
 	 * Ordenando, se verifica por que columna se ordenara
 	 */
@@ -50,10 +50,10 @@ class retornoInversionModel extends Model{
         for ( $i=0 ; $i<intval( $this->_iSortingCols ) ; $i++ ){
                 if ( $this->post( "bSortable_".intval($this->post("iSortCol_".$i)) ) == "true" ){
                         $sOrder .= " ".$aColumns[ intval( $this->post("iSortCol_".$i) ) ]." ".
-                                ($this->post("sSortDir_".$i)==="asc" ? "asc" : "desc") ." ";
+                                ($this->post("sSortDir_".$i)==="asc" ? "asc" : "desc") .",";
                 }
         }
-        
+        $sOrder = substr_replace( $sOrder, "", -1 );
         $query = "call sp_prodConsultaROIGrid(:acceso, :idPersona, :iDisplayStart,:iDisplayLength,:sOrder,:sSearch);";
         
         $parms = array(
@@ -70,7 +70,7 @@ class retornoInversionModel extends Model{
     
  /*data para el grid: RetornoInversion*/
     public function getGridRoiOs(){
-       $aColumns       =   array("orden_numero","codigo","fecha","cantidad_mes","importe","impuesto","monto_total","comision_venta","egresos","total_utilidad","monto_utilidad" ); //para la ordenacion y pintado en html
+       $aColumns       =   array("t.orden_numero","t.codigo","t.fecha","t.cantidad_mes","t.importe","t.impuesto","t.monto_total","t.comision_venta","t.egresos","total_utilidad","monto_utilidad" ); //para la ordenacion y pintado en html
         /*
 	 * Ordenando, se verifica por que columna se ordenara
 	 */

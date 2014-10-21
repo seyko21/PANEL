@@ -55,8 +55,8 @@ var generarOrden_ = function(){
             iDisplayLength: 10,            
             aoColumns: [
                 {sTitle: "<input type='checkbox' id='"+diccionario.tabs.GNOSE+"chk_all' onclick='simpleScript.checkAll(this,\"#"+diccionario.tabs.GNOSE+"gridGenerarOrden\");'>", sWidth: "1%", sClass: "center", bSortable: false},
-                {sTitle: "Código", sWidth: "10%",sClass: "center"},
-                {sTitle: "Nro. Cotización", sWidth: "10%",sClass: "center"},
+                {sTitle: "N° OS", sWidth: "10%",sClass: "center"},
+                {sTitle: "Cotización", sWidth: "10%",sClass: "center"},
                 {sTitle: "Cliente", sWidth: "28%"},                
                 {sTitle: "Fecha", sWidth: "8%"},
                 {sTitle: "Tiempo", sWidth: "8%", sClass: "center"},

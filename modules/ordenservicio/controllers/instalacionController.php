@@ -55,7 +55,7 @@ class instalacionController extends Controller{
                 }
                 
                 /*registros a mostrar*/
-                $sOutput .= '["'.$chk.'","'.$aRow['ordenin_numero'].'","'.$aRow['orden_numero'].'","'.$aRow['codigo'].'","'.$aRow['ubicacion'].' - '.$aRow['descripcion'].'","'.$aRow['fecha_instalacion'].'","'.number_format($aRow['monto_total'],2).'","'.$estado.'", ';
+                $sOutput .= '["'.$chk.'","'.$aRow['orden_numero'].'","'.$aRow['ordenin_numero'].'","'.$aRow['codigo'].'","'.$aRow['ubicacion'].' - '.$aRow['descripcion'].'","'.$aRow['fecha_instalacion'].'","'.number_format($aRow['monto_total'],2).'","'.$estado.'", ';
                 
                 /*
                  * configurando botones (add/edit/delete etc)
@@ -64,7 +64,7 @@ class instalacionController extends Controller{
                 $sOutput .= '"<div class=\"btn-group\">';
                  
                 if($pdf['permiso']){
-                    $sOutput .= '<button type=\"button\" class=\"'.$pdf['theme'].'\" title=\"'.$pdf['accion'].'\" onclick=\"instalacion.postPDF(this,\''.$encryptReg.'\')\">';
+                    $sOutput .= '<button type=\"button\" class=\"'.$pdf['theme'].'\" title=\"'.$pdf['accion'].'\" onclick=\"instalacion.postPDF(this,\''.$encryptReg.'\',\''.$aRow['ordenin_numero'].'\')\">';
                     $sOutput .= '    <i class=\"'.$pdf['icono'].'\"></i>';
                     $sOutput .= '</button>';
                 }
@@ -161,7 +161,7 @@ class instalacionController extends Controller{
     }
     
     public function postPDF(){
-        $c = 'ordenInstalacion_'.Obj::run()->instalacionModel->_idInstalacion.'.pdf';
+        $c = 'ordenInstalacion_'.Obj::run()->instalacionModel->_cod.'.pdf';
         
         $ar = ROOT.'public'.DS.'files'.DS.$c;
                
@@ -192,9 +192,7 @@ class instalacionController extends Controller{
            table, table td, table th, p {font-size:12px;}
            table{width:100%;}
            #td2 th, .totales{background:#901D78; color:#FFF; height:25px;}
-           #td2 td{font-size:11px;height:25px;}
-           #anulado{            
-            font-size:30px; font-family:verdana; color:#F00;  }
+           #td2 td{font-size:10px;height:25px;}           
         </style>';
         
         $html .='<table width="100%" border="0" cellpadding="5" cellspacing="3">
@@ -206,7 +204,7 @@ class instalacionController extends Controller{
             <td width="26%"><h3>'.$data[0]['ordenin_numero'].'</h3></td>
             <td width="15%"></td>
             <td width="15%"></td>
-            <td width="20%"><strong>Fecha Vencimiento:</strong></td>
+            <td width="20%"><strong>Fecha Instalación:</strong></td>
             <td width="15%">'.$data[0]['fechains'].'</td>
           </tr>
           <tr>
@@ -217,24 +215,40 @@ class instalacionController extends Controller{
             <td><strong>Representante:</strong></td>
             <td colspan="5">'.($data[0]['nrorepresentante']==''?'':$data[0]['nrorepresentante'].' - ').$data[0]['representante'].'</td>
           </tr>
+          <tr>
+            <td width="13%"><strong>Código:</strong></td>
+            <td width="26%">'.$data[0]['codigo'].'</b></td>
+            <td width="15%"><b>¿Iluminado?:</b></td>
+            <td width="15%">'.($data[0]['iluminado']==1?'SI':'NO').'</td>
+            <td width="20%"><strong>Ciudad:</strong></td>
+            <td width="15%">'.$data[0]['ciudad'].'</td>
+          </tr>
+          <tr>
+            <td><strong>Producto:</strong></td>
+            <td colspan="5">'.$data[0]['ubicacion'].' - '.$data[0]['descripcion'].' '.$data[0]['dimension_alto'].' x '.$data[0]['dimension_ancho'].' mts </td>
+          </tr>          
         </table> 
         <br />
         <table id="td2" border="1" style="border-collapse:collapse">
             <tr>
-                <th style="width:40%">Concepto</th>
-                <th style="width:8%">Cantidad</th>
-                <th style="width:7%">Precio</th>
+                <th style="width:5%">Item</th> 
+                <th style="width:40%">Descripción del Concepto</th>
+                <th style="width:12%">Cantidad</th>
+                <th style="width:12%">Precio</th>
                 <th style="width:12%">Total</th>
             </tr>';
+        $i =1;
         foreach ($data as $value) {
             $html .= '<tr>
+                <td style="text-align:center">'.($i++).'</td>
                 <td>'.$value['concepto'].'</td>
-                <td style="text-align:center">'.number_format($value['cantidad']).'</td>
-                <td style="text-align:center">'.number_format($value['precio'],2).'</td>
+                <td style="text-align:right">'.number_format($value['cantidad'],2).'</td>
+                <td style="text-align:right">S/.'.number_format($value['precio'],2).'</td>
                 <td style="text-align:right">S/.'.number_format($value['costo_total'],2).'</td>
             </tr>';
         }    
-        $html .= '<tr><td colspan="3"></td><td class="totales" style="text-align:right; font-weight:bold;">S/.'.number_format($data[0]['monto_total'],2).'</td></tr>';
+        $html .= '<tr><td colspan="4"></td>'
+                . '<td class="totales" style="text-align:right; font-weight:bold;">S/.'.number_format($data[0]['monto_total'],2).'</td></tr>';
         
         $html .='</table>';
         

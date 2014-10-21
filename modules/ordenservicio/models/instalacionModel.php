@@ -10,11 +10,11 @@
 class instalacionModel extends Model{
 
     private $_flag;
-    public $_idInstalacion;
+    private $_idInstalacion;
     private $_xSearch;
     private $_usuario;
     private $_chkdel;
-    
+    public  $_cod;
     private $_fecha;
     private $_idOrdenDetalle;
     private $_montoTotal;
@@ -49,6 +49,8 @@ class instalacionModel extends Model{
         $this->_cantidad     = Formulario::getParam(ORINS."txt_cantidad");#array
         $this->_precio     = Formulario::getParam(ORINS."txt_precio");#array
         
+        $this->_cod     = Formulario::getParam("_cod");
+        
         $this->_iDisplayStart  = Formulario::getParam("iDisplayStart"); 
         $this->_iDisplayLength = Formulario::getParam("iDisplayLength"); 
         $this->_iSortingCols   = Formulario::getParam("iSortingCols");
@@ -57,7 +59,7 @@ class instalacionModel extends Model{
     
     /*data para el grid: Instalacion*/
     public function getInstalaciones(){
-        $aColumns       =   array("","ordenin_numero","orden_numero","codigo","ubicacion","fecha_instalacion","monto_total" ); //para la ordenacion y pintado en html
+        $aColumns       =   array("","orden_numero","ordenin_numero","codigo","ubicacion","fecha_instalacion","monto_total" ); //para la ordenacion y pintado en html
         /*
 	 * Ordenando, se verifica por que columna se ordenara
 	 */

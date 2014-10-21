@@ -43,7 +43,7 @@ var retornoInversion_ = function(){
         });
     };
     
-   this.publico.getConsulta = function(btn, idP,idS ){
+   this.publico.getConsulta = function(btn, idP,idS, nom ){
         _private.idProducto = idP;               
         _private.idSocio = idS;
         simpleAjax.send({
@@ -51,7 +51,7 @@ var retornoInversion_ = function(){
             gifProcess: true,
             dataType: 'html',
             root: _private.config.modulo + 'getConsulta',
-            data: '&_idProducto='+_private.idProducto+'&id_Socio='+_private.idSocio,
+            data: '&_idProducto='+_private.idProducto+'&id_Socio='+_private.idSocio+'&_nom='+nom,
             fnCallback: function(data){
                 $('#cont-modal').append(data);  /*los formularios con append*/
                 $('#'+diccionario.tabs.CREIN+'formRoiOs').modal('show');
@@ -84,7 +84,7 @@ var retornoInversion_ = function(){
                 {sTitle: "% ROI", sWidth: "10%", sClass: "right"},  
                 {sTitle: "Acciones", sWidth: "8%", sClass: "center", bSortable: false}
             ],
-            aaSorting: [[1, "asc"]],
+            aaSorting: [[1, "asc"],[2, "asc"]],
             sScrollY: "300px",
             sAjaxSource: _private.config.modulo+"getGridRetornoInversion",
             fnDrawCallback: function() {
