@@ -60,12 +60,12 @@ var asignarPanelSocio_ = function(){
                 {sTitle: "Ganancia %", sWidth: "10%", sClass: "right", bSortable: false},
                 {sTitle: "Acciones", sWidth: "8%", sClass: "center", bSortable: false}
             ],
-            aaSorting: [[2, "asc"]],
+            aaSorting: [[1, "asc"],[0, "asc"]],
             sScrollY: "300px",
             sAjaxSource: _private.config.modulo+"getGridAsignarPanelSocio",
             fnDrawCallback: function() {
                 $("#"+diccionario.tabs.APASO+"gridAsignarPanelSocio_filter").find("input").attr("placeholder","Buscar por socio o producto").css("width","250px");
-                //simpleScript.enterSearch("#"+diccionario.tabs.APASO+"gridAsignarPanelSocio",oTable);
+                simpleScript.enterSearch("#"+diccionario.tabs.APASO+"gridAsignarPanelSocio",oTable);
                 /*para hacer evento invisible*/
                 simpleScript.removeAttr.click({
                     container: "#widget_"+diccionario.tabs.APASO,
@@ -136,10 +136,10 @@ var asignarPanelSocio_ = function(){
             fnDrawCallback: function() {
                 $('#'+diccionario.tabs.APASO+'gridProductosFound_wrapper').find('.dataTables_scrollBody').css('overflow-x','hidden');
                 /*para hacer evento invisible*/
-//                simpleScript.removeAttr.click({
-//                    container: '#'+diccionario.tabs.APASO+'gridProductosFound',
-//                    typeElement: 'a'
-//                });
+                simpleScript.removeAttr.click({
+                    container: '#'+diccionario.tabs.APASO+'gridProductosFound',
+                    typeElement: 'a'
+                });
             }
         });
     };
@@ -236,7 +236,8 @@ var asignarPanelSocio_ = function(){
                             simpleScript.notify.ok({
                                 content: mensajes.MSG_6,
                                 callback: function(){
-                                    simpleScript.reloadGridDelete("#"+diccionario.tabs.APASO+"gridAsignarPanelSocio");
+                                    //simpleScript.reloadGridDelete("#"+diccionario.tabs.APASO+"gridAsignarPanelSocio");
+                                    asignarPanelSocio.getGridAsignarPanelSocio();
                                 }
                             });
                         }else if(!isNaN(data.result) && parseInt(data.result) === 2){

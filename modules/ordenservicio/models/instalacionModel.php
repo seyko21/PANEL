@@ -87,7 +87,7 @@ class instalacionModel extends Model{
         /*bueca en las ordenes en estado T o P, pagado parcial o total y flag_instalacion = 0*/
         $u = '';
         if(!empty($this->_xSearch)){
-            $u = " AND o.`orden_numero`='".$this->_xSearch."' ";
+            $u = " AND o.`orden_numero` like '%".$this->_xSearch."%' ";
         }
         $query = "
          SELECT 

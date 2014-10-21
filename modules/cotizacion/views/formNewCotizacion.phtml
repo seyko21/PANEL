@@ -40,11 +40,11 @@ $buscar = Session::getPermiso('GNCOTBS');
                                 <input class="form-control" type="text" id="<?php echo T8; ?>txt_cliente" name="<?php echo T8; ?>txt_cliente" readonly>
                                 <span class="input-group-btn">
                                     <?php if ($buscar['permiso']): ?>
-                                        <button class="btn btn-default" type="button" onclick="generarCotizacion.getFormBuscarCliente(this, '<?php echo T8; ?>');"><i class="fa fa-search"></i> Buscar</button>
+                                        <button class="<?php echo $buscar['theme'];?>" type="button" onclick="generarCotizacion.getFormBuscarCliente(this, '<?php echo T8; ?>');"><i class="<?php echo $buscar['icono'];?>"></i> <?php echo $buscar['accion'];?></button>
                                     <?php endif; ?>
                                      <?php if($nuevo['permiso']): ?>
-                                        <button id="<?php echo T8; ?>newCliente" type="button" onclick="generarCotizacion.getNuevoCliente(this);" class="btn txt-color-white bg-color-blueDark" title="Nuevo Cliente">
-                                             <i class="<?php echo $nuevo['icono'];?>"></i> 
+                                        <button id="<?php echo T8; ?>newCliente" type="button" onclick="generarCotizacion.getNuevoCliente(this);" class="<?php echo $nuevo['theme'];?>" title="Nuevo Cliente">
+                                             <i class="<?php echo $nuevo['icono'];?>"></i> <?php echo $nuevo['accion'];?>
                                         </button>
                                         <?php endif; ?>    
                                 </span>

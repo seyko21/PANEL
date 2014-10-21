@@ -64,10 +64,10 @@ class asignarPanelSocioModel extends Model{
         for ( $i=0 ; $i<intval( $this->_iSortingCols ) ; $i++ ){
                 if ( $this->post( "bSortable_".intval($this->post("iSortCol_".$i)) ) == "true" ){
                         $sOrder .= " ".$aColumns[ intval( $this->post("iSortCol_".$i) ) ]." ".
-                                ($this->post("sSortDir_".$i)==="asc" ? "asc" : "desc") ." ";
+                                ($this->post("sSortDir_".$i)==="asc" ? "asc" : "desc") .",";
                 }
         }
-        
+        $sOrder = substr_replace( $sOrder, "", -1 );
         $query = "call sp_prodAsignarPanelSocioGrid(:iDisplayStart,:iDisplayLength,:sOrder,:sSearch);";
         
         $parms = array(
@@ -144,18 +144,20 @@ class asignarPanelSocioModel extends Model{
         if($data['result'] == 1){
             /*el detalle*/
             foreach ($this->_inversiones as $key=>$value) {
-                $parms = array(
-                    ':flag'=> 2,
-                    ':idAsignacionPanel'=> $idPanelSocio,
-                    ':idPersona'=> '',
-                    ':idProduccion'=> '',
-                    ':idInversion'=> AesCtr::de($value),
-                    ':montoInvertido'=> $this->_montoInvertir[$key],
-                    ':totalInvertido'=> '',
-                    ':ganancia'=> '',
-                    ':usuario'=> $this->_usuario
-                );
-                $this->execute($query,$parms);
+                if ($this->_montoInvertir[$key] > 0){
+                    $parms = array(
+                        ':flag'=> 2,
+                        ':idAsignacionPanel'=> $idPanelSocio,
+                        ':idPersona'=> '',
+                        ':idProduccion'=> '',
+                        ':idInversion'=> AesCtr::de($value),
+                        ':montoInvertido'=> $this->_montoInvertir[$key],
+                        ':totalInvertido'=> '',
+                        ':ganancia'=> '',
+                        ':usuario'=> $this->_usuario
+                    );
+                    $this->execute($query,$parms);
+                }
             }
         }
         return $data;
