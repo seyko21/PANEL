@@ -251,7 +251,7 @@ class instalacionController extends Controller{
                 . '<td class="totales" style="text-align:right; font-weight:bold;">S/.'.number_format($data[0]['monto_total'],2).'</td></tr>';
         
         $html .='</table>';
-        
+        $html .= '<h3>Observación </h3>';
         if ($data[0]['observacion']!= '' ):
             $html .= '<p>- '.$data[0]['observacion'].'</p>';
         endif;        

@@ -63,7 +63,7 @@ class panelesInvertidoController extends Controller{
                     $axion .= '</button>';
                 }              
                 if($exportarpdf['permiso'] == 1){
-                    $axion .= '<button type=\"button\" class=\"'.$exportarpdf['theme'].'\" title=\"'.$exportarpdf['accion'].'\" onclick=\"panelesInvertido.postPDF(this,\''.$idProduccion.'\')\">';
+                    $axion .= '<button type=\"button\" class=\"'.$exportarpdf['theme'].'\" title=\"'.$exportarpdf['accion'].'\" onclick=\"panelesInvertido.postPDF(this,\''.$idProduccion.'\',\''.$aRow['numero_produccion'].'\')\">';
                     $axion .= '    <i class=\"'.$exportarpdf['icono'].'\"></i>';
                     $axion .= '</button>';
                 }

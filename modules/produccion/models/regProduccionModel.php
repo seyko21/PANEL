@@ -10,7 +10,8 @@
 class regProduccionModel extends Model{
 
     private $_flag;
-    public  $_idProduccion;
+    private  $_idProduccion;
+    public $_cod;
     private $_usuario;
     private $_term;
     private $_fecha;
@@ -47,7 +48,7 @@ class regProduccionModel extends Model{
         $this->_idConcepto     = Formulario::getParam(ORINS."hhddIdConcepto"); #array
         $this->_cantidad     = Formulario::getParam(ORINS."txt_cantidad");#array
         $this->_precio     = Formulario::getParam(ORINS."txt_precio");#array
-        
+        $this->_cod =  Formulario::getParam("_cod"); 
         $this->_iDisplayStart  =   Formulario::getParam("iDisplayStart"); 
         $this->_iDisplayLength =   Formulario::getParam("iDisplayLength"); 
         $this->_iSortingCols   =   Formulario::getParam("iSortingCols");
@@ -169,18 +170,24 @@ class regProduccionModel extends Model{
         $query = "
         SELECT 
                 p.`numero_produccion`,
-                DATE_FORMAT(p.`fecha`,'%d-%m-%Y')AS fecha,
+                DATE_FORMAT(p.`fecha`,'%d/%m/%Y')AS fecha,
                 p.`observacion`,
                 pd.`precio`,
                 pd.`cantidad`,
                 pd.`costo_importe`,
                 c.`descripcion` AS concepto,
                 ct.`ubicacion`,
-                p.`total_produccion`
+                p.`total_produccion`,
+                ct.`dimension_alto`,
+                ct.`dimension_ancho`,
+                ct.`dimesion_area`,
+                ub.distrito as ciudad,
+                p.imagen
         FROM `prod_produccionpaneld` pd
         INNER JOIN `prod_produccionpanel` p ON p.`id_produccion`=pd.`id_producion`
         INNER JOIN pub_concepto c ON c.`id_concepto`=pd.`id_concepto`
-        INNER JOIN lgk_catalogo ct ON ct.`id_producto`=p.`id_producto`
+        INNER JOIN lgk_catalogo ct ON ct.`id_producto`=p.`id_producto`     
+        INNER JOIN ub_ubigeo ub on ub.id_ubigeo = ct.id_ubigeo
         WHERE pd.`id_producion`=:idProduccion; ";
         
         $parms = array(

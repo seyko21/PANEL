@@ -94,11 +94,11 @@ var panelesInvertido_ = function(){
         });
     };   
    
-    this.publico.postPDF = function(btn,idd){
+    this.publico.postPDF = function(btn,idd, cod){
         simpleAjax.send({
             element: btn,
             root: _private.config.modulo + 'postPDF',
-            data: '&_idProduccion='+idd,
+            data: '&_idProduccion='+idd+'&_cod='+cod,
             fnCallback: function(data){
                 if(parseInt(data.result) === 1){
                     $('#'+diccionario.tabs.PAINV+'btnDowPDF').attr("onclick","window.open('public/files/"+data.archivo+"','_blank');generarCotizacion.deleteArchivo('"+data.archivo+"');");

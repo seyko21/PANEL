@@ -158,12 +158,12 @@ var regProduccion_ = function(){
         });
     };
     
-    this.publico.getFormImagen = function(btn,id){
+    this.publico.getFormImagen = function(btn,id, cod){
         simpleAjax.send({
             element: btn,
             dataType: 'html',
             gifProcess: true,
-            data: '&_idProduccion='+id,
+            data: '&_idProduccion='+id+'&_cod='+cod,
             root: _private.config.modulo + 'getFormImagen',
             fnCallback: function(data){
                 $('#cont-modal').append(data);
@@ -209,11 +209,11 @@ var regProduccion_ = function(){
         });
     };
     
-    this.publico.postPDF = function(btn,id){
+    this.publico.postPDF = function(btn,id,cod){
         simpleAjax.send({
             element: btn,
             root: _private.config.modulo + 'postPDF',
-            data: '&_idProduccion='+id,
+            data: '&_idProduccion='+id+'&_cod='+cod,
             fnCallback: function(data) {
                 if(parseInt(data.result) === 1){
                     $('#'+diccionario.tabs.REPRO+'btnDowPDF').off('click');
@@ -224,11 +224,11 @@ var regProduccion_ = function(){
         });
     };
     
-    this.publico.postExcel = function(btn,id){
+    this.publico.postExcel = function(btn,id,cod){
         simpleAjax.send({
             element: btn,
             root: _private.config.modulo + 'postExcel',
-            data: '&_idProduccion='+id,
+            data: '&_idProduccion='+id+'&_cod='+cod,
             fnCallback: function(data) {
                 if(parseInt(data.result) === 1){
                     $('#'+diccionario.tabs.REPRO+'btnDowExcel').off('click');
