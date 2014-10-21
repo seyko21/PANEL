@@ -123,6 +123,32 @@ class liquidacionSocioModel extends Model{
         $data = $this->queryAll($query, $parms);
         return $data;
     }    
+ 
+    public function getRptGastosOrden(){
+        $query = 'SELECT c.`descripcion`, SUM(oid.`costo_importe`) AS costo_importe, 
+                   SUM(oid.`cantidad`) AS cantidad, SUM(oid.`costo_total`) AS costo_total
+        FROM `lgk_ordeninstalaciond` oid 
+            INNER JOIN `pub_concepto` c ON c.`id_concepto` = oid.`id_concepto`
+            INNER JOIN `lgk_ordeninstalacion` oi ON oi.`id_ordeninstalacion` = oid.`id_ordeninstalacion`
+            INNER JOIN `lgk_ordenserviciod` od ON od.`id_ordenserviciod` = oi.`id_ordenserviciod`
+            INNER JOIN `lgk_ordenservicio` os ON os.`id_ordenservicio` = od.`id_ordenservicio`
+            INNER JOIN `lgk_caratula` ca ON ca.`id_caratula` = od.`id_caratula`
+            INNER JOIN `lgk_catalogo` p ON p.`id_producto` = ca.`id_producto`
+            INNER JOIN `prod_produccionpanel` pr ON pr.`id_producto` = p.`id_producto`
+            INNER JOIN `prod_asignacionpanel` ap ON ap.`id_produccion` = pr.`id_produccion`
+        WHERE od.`id_ordenservicio` = :idOS AND ap.`id_persona`= :idPersona
+        GROUP BY 1
+        ORDER BY 1;';        
+        
+        $parms = array(
+          ":idOS" => $this->_idOrden,
+          ":idPersona" => $this->_idSocio
+        );
+        
+        $data = $this->queryAll($query, $parms);
+        return $data;
+    }        
+    
     
 }
 

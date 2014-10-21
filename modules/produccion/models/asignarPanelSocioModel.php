@@ -100,7 +100,7 @@ class asignarPanelSocioModel extends Model{
         $query = "
         SELECT 
                 id_inversion,
-                DATE_FORMAT(fecha_inversion,'%d-%m-%Y')AS fecha,
+                DATE_FORMAT(fecha_inversion,'%d/%m/%Y')AS fecha,
                 monto_saldo
         FROM prod_inversion WHERE monto_saldo > 0 AND id_persona = :idPersona;";
         

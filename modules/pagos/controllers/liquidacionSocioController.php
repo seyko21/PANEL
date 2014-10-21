@@ -110,10 +110,9 @@ class liquidacionSocioController extends Controller{
                                 <td width="33%" align="center" style="font-weight: bold;">{PAGENO}/{nbpg}</td>
                                 <td width="33%" style="text-align: right; ">SEVEND.pe</td>
                              </tr></table>');
-                
-        $html = $this->getHtmlLiquidacion();         
-
-        $mpdf->WriteHTML($html);
+    
+        $html = $this->getHtmlLiquidacion($mpdf);                 
+        
         $mpdf->Output($ar,'F');
         
         if($n != 'N'){
@@ -122,8 +121,9 @@ class liquidacionSocioController extends Controller{
         }
     }       
         
-    public function getHtmlLiquidacion(){
+    public function getHtmlLiquidacion($mpdf){
        $data = Obj::run()->liquidacionSocioModel->getRptDetalleOrden();
+       $dataG = Obj::run()->liquidacionSocioModel->getRptGastosOrden();
         
       $html ='
         <style>           
@@ -131,7 +131,8 @@ class liquidacionSocioController extends Controller{
            table, table td, table th, p {font-size:12px;}
            table{width:100%;}
            #td2 th, .totales{color:#FFF;background:#901D78; height:25px; font-size:11px;}
-           #td2 td{font-size:9px;height:25px;}           
+           #td2 td{font-size:10px;height:25px;}  
+           table.print-friendly tr td, table.print-friendly tr th { page-break-inside: avoid; page-break-after: always;}
         </style>';
       
        switch($data[0]['estado']){
@@ -142,7 +143,7 @@ class liquidacionSocioController extends Controller{
             case 'A': $estado = 'Anulado'; break;
         }
                         
-        $html .='<table width="100%" border="0" cellpadding="5" cellspacing="3">
+        $html .='<table width="100%" border="0" cellpadding="5" cellspacing="3" class="print-friendly">
           <tr bgcolor="#901D78">
             <th colspan="6"><div align="center"><h2 style="color:#FFF;">Liquidacion de Socio </h2></div></th>
           </tr>
@@ -165,17 +166,13 @@ class liquidacionSocioController extends Controller{
            <tr>
            <td width="13%"><strong>Tiempo :</strong></td>
             <td width="26%">'.Functions::convertirDiaMes($data[0]['cantidad_mes']).' ('. number_format($data[0]['cantidad_mes'],1).')</td>
-            <td width="8%"><strong>Oferta :</strong></td>
-            <td width="15%">'.$data[0]['dias_oferta'].' días</td>
-         
+            <td width="8%" style ="text-align:right"><strong>Oferta :</strong></td>
+            <td width="15%" style ="text-align:left">'.$data[0]['dias_oferta'].' días</td>
           </tr>
-        
         </table> ';
-        
          $html .= '<h3>Detalle de liquidación</h3> 
-        <table id="td2" border="1" style="border-collapse:collapse">
+        <table id="td2" border="1" style="border-collapse:collapse" class="print-friendly">
             <tr>
-                <th rowspan ="2" style="width:3%" >Item</th>                
                 <th rowspan ="2" style="width:5%" >Código</th>
                 <th rowspan ="2" style="width:8%">Elemento</th>
                 <th rowspan ="2" style="width:30%">Ubicación</th>                
@@ -185,19 +182,20 @@ class liquidacionSocioController extends Controller{
                 <th rowspan ="2" style="width:10%">Ganancia</th>
             </tr>
             <tr>              
-                <th style="width:10%">Instalación</th>               
+                <th style="width:10%">Gastos</th>               
                 <th style="width:10%">Impuesto</th>
                 <th style="width:10%">Comision</th>
             </tr>';
         // Listado del servicio 
         $sumaUtilidadSocio = 0;
         $sumaUtilidad = 0;
-        $sumaDescuento = 0;
         $egreso = 0;
         $nroCuota = $data[0]['nrocuotas'];
         $totalContrato = 0;        
+        $sumaOI =0;
+        $sumaImpuesto =0;
+        $sumaComision =0;
         if ($nroCuota == 0) $nroCuota = 1;
-        
         foreach ($data as $value) {
             $alquiler = number_format($value['importe'] ,2);
             $egresos = number_format($value['orden_instalacion'],2);
@@ -208,8 +206,11 @@ class liquidacionSocioController extends Controller{
             $porComi = number_format($value['porcentaje_comision']*100,1);                         
             
             $egreso = $egreso + ($value['egresos'] );            
-            $totalContrato = $totalContrato + ($value['total_final'] );         
-                       
+            $totalContrato = $totalContrato + ($value['total_final'] ); 
+            
+            $sumaOI = $sumaOI + $value['orden_instalacion'];
+            $sumaImpuesto = $sumaImpuesto + $value['impuesto'];
+            $sumaComision = $sumaComision + $value['comision_venta'];
             $utilidad = $value['utilidad'];
             $sumaUtilidad = $sumaUtilidad + $utilidad;
             
@@ -217,7 +218,6 @@ class liquidacionSocioController extends Controller{
             $sumaUtilidadSocio = $sumaUtilidadSocio + $utilidadSocio;
             
             $html .= '<tr>
-                <td style="text-align:center">'.$value['item'].'</td>
                 <td style="text-align:center">'.$value['codigo'].'</td>
                 <td>'.$value['elemento'].'</td>
                 <td>'.$value['producto'].' - '.number_format($value['dimension_ancho'],1).' x '.number_format($value['dimension_alto'],1).' mts'.'</td>                
@@ -230,12 +230,16 @@ class liquidacionSocioController extends Controller{
             </tr>';
         }            
         $html .= '<tr>';
-        $html .= '<td colspan="9" style="text-align:right;">S/.'.number_format($sumaUtilidad,2).'</td>';        
+        $html .= '<td colspan="4" style="text-align:right;">&nbsp;</td>';        
+        $html .= '<td  style="text-align:right; font-weight:bold;">S/.'.number_format($sumaOI,2).'</td>';        
+        $html .= '<td style="text-align:right;font-weight:bold;">S/.'.number_format($sumaImpuesto,2).'</td>';        
+        $html .= '<td style="text-align:right;font-weight:bold;">S/.'.number_format($sumaComision,2).'</td>';        
+        $html .= '<td  style="text-align:right;font-weight:bold;">S/.'.number_format($sumaUtilidad,2).'</td>';        
         $html .= '<td class="totales" style="text-align:right; font-weight:bold; font-size:14px;">S/.'.number_format($sumaUtilidadSocio,2).'</td></tr>';
         
         $html .='</table>';                
         
-        $html .= '<br /><h3>Resumen </h3><table id="td2" border="1" style="border-collapse:collapse">               
+        $html .= '<h3>Resumen </h3><table id="td2" border="1" style="border-collapse:collapse" class="print-friendly">               
           <tr>
                 <th style="width:15%;" >Total Alquiler</th>
                 <th style="width:15%;" >Total Egresos</th>
@@ -250,11 +254,38 @@ class liquidacionSocioController extends Controller{
                 <td align="right">S/.'.number_format($sumaUtilidadSocio,2).'</td>
                 <td align="right"><b>S/.'.number_format($sumaUtilidadSocio / $nroCuota,2).'</b></td>
          </tr>
-        </table>';
+        </table>';   
+        $mpdf->WriteHTML($html);
+        $mpdf->AddPage();
         
-        
-        
-        return $html;
+        $html = '<h3>Detalle de Gastos</h3> 
+        <table id="td2" border="1" style="border-collapse:collapse" class="print-friendly">
+            <tr>
+                <th style="width:5%" >N°</th>
+                <th style="width:30%">Descripción del Concepto</th>
+                <th style="width:10%">Cantidad</th>                
+                <th style="width:10%">Importe</th>                
+            </tr>
+           ';
+        $i = 1;
+        $sumaGasto = 0;
+        foreach ($dataG as $value) { 
+            $sumaGasto = $sumaGasto + $value['costo_total'];
+             $html .= '<tr>
+                <td style="text-align:center">'.$i.'</td>
+                <td>'.$value['descripcion'].'</td>                
+                <td style="text-align:right">'.number_format($value['cantidad'],2).'</td>
+                <td style="text-align:right">S/.'.number_format($value['costo_total'],2).'</td>                
+            </tr>';
+             $i++;
+        }
+        $html .= '<tr>';
+        $html .= '<td colspan="3" style="text-align:right;">&nbsp;</td>';        
+        $html .= '<td style="text-align:right;font-weight:bold;">S/.'.number_format($sumaGasto,2).'</td>';        
+        $html .= '</tr>';
+        $html .='</table>';  
+        $mpdf->WriteHTML($html);  
+        //return $html;
     }          
     
 }
