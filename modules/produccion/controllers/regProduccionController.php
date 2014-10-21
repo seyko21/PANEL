@@ -164,9 +164,9 @@ class regProduccionController extends Controller{
                                 <td width="33%" style="text-align: right; ">SEVEND.pe</td>
                              </tr></table>');
                 
-        $html = $this->getHtmlProduccion();         
+        $html = $this->getHtmlProduccion($mpdf);         
 
-        $mpdf->WriteHTML($html);
+        //$mpdf->WriteHTML($html);
         $mpdf->Output($ar,'F');
         
         $data = array('result'=>1,'archivo'=>$c);
@@ -175,11 +175,11 @@ class regProduccionController extends Controller{
     }
     
     public function postExcel(){
-        $c = 'producction_'.Obj::run()->regProduccionModel->_cod.'.xls';
+        $c = 'produccion_'.Obj::run()->regProduccionModel->_cod.'.xls';
         
         $ar = ROOT.'public'.DS.'files'.DS.$c;
         
-        $html = $this->getHtmlProduccion();
+        $html = $this->getHtmlProduccion("EXCEL");
         
         $f=fopen($ar,'wb');
         if(!$f){$data = array('result'=>2);}
@@ -190,11 +190,11 @@ class regProduccionController extends Controller{
         echo json_encode($data);
     }
     
-    private function getHtmlProduccion(){
+    private function getHtmlProduccion($mpdf){
         $data = Obj::run()->regProduccionModel->getProduccion();
         $html ='
         <style>           
-           table,h3,h4{font-family:Arial;} 
+           table,h3,h4,p{font-family:Arial;} 
            table, table td, table th, p {font-size:12px;}
            table{width:100%;}
            #td2 th, .totales{background:#901D78; color:#FFF; height:25px;}
@@ -210,14 +210,14 @@ class regProduccionController extends Controller{
             <td width="26%"><h3>'.$data[0]['numero_produccion'].'</h3></td>
             <td width="15%"></td>
             <td width="15%"></td>
-            <td width="20%"><strong>Fecha:</strong></td>
+            <td width="20%"><strong>Fecha Producción:</strong></td>
             <td width="15%">'.$data[0]['fecha'].'</td>
           </tr>
           <tr>
             <td><strong>Producto:</strong></td>
             <td colspan="5">'.$data[0]['ubicacion'].' - '.$data[0]['dimension_alto'].' x '.$data[0]['dimension_ancho'].' mts</td>
           </tr>
-           <tr>         
+          <tr>         
             <td width="20%"><strong>Ciudad:</strong></td>
             <td width="15%">'.$data[0]['ciudad'].'</td>
           </tr>
@@ -244,16 +244,28 @@ class regProduccionController extends Controller{
         $html .= '<tr><td colspan="4"></td><td class="totales" style="text-align:right; font-weight:bold;">S/.'.number_format($data[0]['total_produccion'],2).'</td></tr>';
         
         $html .='</table>';
-        $html .= '<h3>Observación </h3>';
+        $html .= '<h4>Observación </h4>';
         if ($data[0]['observacion']!= '' ):
             $html .= '<p>- '.$data[0]['observacion'].'</p>';
-        endif;        
+        else:
+            $html .= '<p>- NINGUNO.</p>';
+        endif;   
         
-        $html .= '<h3>Vista Previa </h3>';
+        if ($mpdf == 'EXCEL'){
+           return $html; 
+        }
         
+        $mpdf->WriteHTML($html);
         
+        $img = $data[0]['imagen'];
         
-        return $html;
+        if ($img != ''):
+            $mpdf->AddPage();
+            $html = '<h3>Vista Previa </h3>';                
+            $html .= '<img src="'.BASE_URL.'public/img/produccion/'.$img.'" />';
+            $mpdf->WriteHTML($html);   
+        endif;
+
     }
     
     /*envia datos para grabar registro: RegProduccion*/

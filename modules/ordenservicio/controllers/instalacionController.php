@@ -188,7 +188,7 @@ class instalacionController extends Controller{
         $data = Obj::run()->instalacionModel->getOrdenInstalacion();
         $html ='
         <style>           
-           table,h3,h4{font-family:Arial;} 
+           table,h3,h4, p{font-family:Arial;} 
            table, table td, table th, p {font-size:12px;}
            table{width:100%;}
            #td2 th, .totales{background:#901D78; color:#FFF; height:25px;}
@@ -251,10 +251,13 @@ class instalacionController extends Controller{
                 . '<td class="totales" style="text-align:right; font-weight:bold;">S/.'.number_format($data[0]['monto_total'],2).'</td></tr>';
         
         $html .='</table>';
-        $html .= '<h3>Observación </h3>';
+        $html .= '<h4>Observación </h4>';
         if ($data[0]['observacion']!= '' ):
             $html .= '<p>- '.$data[0]['observacion'].'</p>';
+        else:
+            $html .= '<p>- NINGUNA.</p>';
         endif;        
+        
         return $html;
     }
     
