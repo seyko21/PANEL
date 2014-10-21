@@ -56,8 +56,17 @@ class alquilerCulminarModel extends Model{
         
         $query = "call sp_ordSeConsultaAlquilerGrid(:acceso,:idPersona,:tipo,:iDisplayStart,:iDisplayLength,:sOrder,:sSearch);";
         
+        //Validar por ROL:
+        if (Session::get('sys_defaultRol') == APP_COD_VEND || Session::get('sys_defaultRol') == APP_COD_CLIE){
+            $acc = 'N';
+        }else if( Session::get('sys_defaultRol') ==  APP_COD_SOCIO ){
+            $acc = 'X';
+        }else{
+            $acc = 'S';
+        }
+        
         $parms = array(
-            ':acceso' => Session::get('sys_all'),
+            ':acceso' => $acc,
             ':idPersona' => $this->_idPersona, 
             ":tipo" => $this->_tipo,
             ":iDisplayStart" => $this->_iDisplayStart,

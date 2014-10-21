@@ -151,6 +151,30 @@ var panelesAlquilados_ = function(){
 
     }; 
     
+    this.publico.getGridIndexPAS = function (){
+         $('#'+diccionario.tabs.PANP+'gridPanelAlquilado').dataTable({
+            bProcessing: true,
+            bServerSide: true,
+            bDestroy: true,
+            sPaginationType: "bootstrap_full", //two_button
+            sServerMethod: "POST",
+            bPaginate: true,
+            iDisplayLength: 10,   
+            sSearch: false,
+            bFilter: false,
+            aoColumns: [                                
+                {sTitle: "Código", sWidth: "10%"},
+                {sTitle: "N° OS", sWidth: "10%"},                
+                {sTitle: "F. Instalado", sWidth: "12%", sClass: "center"},
+                {sTitle: "F. Retiro", sWidth: "12%", sClass: "center"}                
+            ],
+            aaSorting: [[2, 'desc']],
+            sScrollY: "125px",
+            sAjaxSource: _private.config.modulo+'getGridIndexPanelAlquiladoSocio'            
+        });
+
+    };     
+    
     return this.publico;
     
 };

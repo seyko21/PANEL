@@ -167,6 +167,46 @@ class panelesAlquiladosController extends Controller{
         echo $sOutput;
     }               
     
+    public function getGridIndexPanelAlquiladoSocio(){
+      
+       $sEcho  =   $this->post('sEcho');
+        
+        $rResult = Obj::run()->panelesAlquiladosModel->getIndexPanelAlquiladoSocio();
+        
+        if(!isset($rResult['error'])){  
+            $iTotal         = isset($rResult[0]['total'])?$rResult[0]['total']:0;
+            
+            $sOutput = '{';
+            $sOutput .= '"sEcho": '.intval($sEcho).', ';
+            $sOutput .= '"iTotalRecords": '.$iTotal.', ';
+            $sOutput .= '"iTotalDisplayRecords": '.$iTotal.', ';
+            $sOutput .= '"aaData": [ ';
+            foreach ( $rResult as $key=>$aRow ){
+                /*datos de manera manual*/
+                                
+                $c1 = $aRow['codigo'];
+                $c2 = $aRow['orden_numero'];
+                $c3 = $aRow['fecha_inicio'];
+                $c4 = $aRow['fecha_termino'];
+                
+                $deuda = $aRow['cuotas_deuda'];
+                if($c3 == '') $c3 = '-';
+                if($c4 == '') $c4 = '-';
+                
+                $sOutput .= '["'.$c1.'","'.$c2.'","'.$c3.'","'.$c4.'" ';
+                               
+                $sOutput = substr_replace( $sOutput, "", -1 );
+                $sOutput .= '],';
+            }
+            $sOutput = substr_replace( $sOutput, "", -1 );
+            $sOutput .= '] }';
+        }else{
+            $sOutput = $rResult['error'];
+        }
+        
+        echo $sOutput;
+    }         
+    
     
 }
 
