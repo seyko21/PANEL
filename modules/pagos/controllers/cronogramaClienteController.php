@@ -52,7 +52,7 @@ class cronogramaClienteController extends Controller{
                 $c2 = $aRow['cliente'];                
                 $c3 = $aRow['fecha'];
                 $c4 = number_format($aRow['mora'],2);
-                $c5 = number_format($aRow['monto_total_descuento'],2);
+                $c5 = number_format($aRow['monto_total'],2);
                 
                 switch($aRow['estado']){
                     case 'E':

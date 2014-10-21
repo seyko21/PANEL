@@ -41,28 +41,7 @@ $estado = Formulario::getParam('_estado');
                             </label>
                         </div>
                     </div>
-                </section>
-                <section>
-                    <div class="row">
-                        <label class="label col col-2"><?php echo GNOSE_10; ?></label>
-                        <div class="col col-3">
-                            <label class="input"> 
-                                <i class="icon-append fa fa-keyboard-o"></i>
-                                <input class="right" type="text" id="<?php echo GNOSE; ?>txt_descuento" name="<?php echo GNOSE; ?>txt_descuento" value="<?php echo number_format($data['descuentos'],2)?>">
-                                <b class="tooltip tooltip-top-right"><i class="fa fa-keyboard-o txt-color-teal"></i> <?php echo GNOSE_11; ?></b>
-                            </label>
-                        </div>
-                        
-                        <label class="label col col-3"><?php echo GNOSE_21; ?></label>
-                        <div class="col col-3">
-                            <label class="input"> 
-                                <i class="icon-append fa fa-clock-o"></i>
-                                <input class="right" type="text" id="<?php echo GNOSE; ?>txt_oferta" name="<?php echo GNOSE; ?>txt_oferta" value="<?php echo number_format($data['dias_oferta'])?>">
-                                <b class="tooltip tooltip-top-right"><i class="fa fa-keyboard-o txt-color-teal"></i> <?php echo GNOSE_22; ?></b>
-                            </label>
-                        </div>
-                    </div>
-                </section>
+                </section>              
                 <section>
                     <div class="row">
                         <label class="label col col-2"><?php echo GNOSE_15; ?></label>
@@ -87,7 +66,18 @@ $estado = Formulario::getParam('_estado');
                         </div>
                     </div>
                 </section>
-                
+                <section>
+                    <div class="row">
+                        <label class="label col col-2"><?php echo GNOSE_21; ?></label>
+                        <div class="col col-3">
+                            <label class="input"> 
+                                <i class="icon-append fa fa-clock-o"></i>
+                                <input class="right" type="text" id="<?php echo GNOSE; ?>txt_oferta" name="<?php echo GNOSE; ?>txt_oferta" value="<?php echo number_format($data['dias_oferta'])?>">
+                                <b class="tooltip tooltip-top-right"><i class="fa fa-keyboard-o txt-color-teal"></i> <?php echo GNOSE_22; ?></b>
+                            </label>
+                        </div>
+                    </div>
+                </section>   
                 
                 
                 

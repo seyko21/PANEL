@@ -235,15 +235,7 @@ class generarCotizacionController extends Controller{
         
         $ar = ROOT.'public'.DS.'files'.DS.$c;
                
-        $mpdf = new mPDF('c');
-
-        $mpdf->mirrorMargins = 1;
-        $mpdf->defaultheaderfontsize = 10; /* in pts */
-        $mpdf->defaultheaderfontstyle = B; /* blank, B, I, or BI */
-        $mpdf->defaultheaderline = 1; /* 1 to include line below header/above footer */
-        $mpdf->defaultfooterfontsize = 12; /* in pts */
-        $mpdf->defaultfooterfontstyle = B; /* blank, B, I, or BI */
-        $mpdf->defaultfooterline = 1; /* 1 to include line below header/above footer */
+        $mpdf = new mPDF('c');     
         
         if($data[0]['estado'] == 'A'){
            $mpdf->SetWatermarkText('A N U L A D O');

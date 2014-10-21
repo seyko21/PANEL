@@ -14,8 +14,7 @@ class generarOrdenModel extends Model{
     public $_numOrden;
     private $_idCuota;
     private $_monto;
-    private $_fechaPago;
-    private $_descuento;
+    private $_fechaPago;    
     private $_idContrato;
     private $_fechaContrato;
     private $_oferta;
@@ -39,7 +38,6 @@ class generarOrdenModel extends Model{
         $this->_idCuota   = Aes::de(Formulario::getParam("_idCuota"));    /*se decifra*/
         $this->_usuario     = Session::get("sys_idUsuario");
         $this->_monto  = str_replace(',','',Formulario::getParam(GNOSE."txt_monto")); 
-        $this->_descuento  = str_replace(',','',Formulario::getParam(GNOSE."txt_descuento"));
         $this->_fechaPago  = Functions::cambiaf_a_mysql(Formulario::getParam(GNOSE."txt_fechapago")); 
         $this->_fechaContrato  = Functions::cambiaf_a_mysql(Formulario::getParam(GNOSE."txt_fechacontrato"));
         $this->_idContrato  = Formulario::getParam(GNOSE."lst_contrato"); 
@@ -56,7 +54,7 @@ class generarOrdenModel extends Model{
     
     /*data para el grid: GenerarOrden*/
     public function getGenerarOrden(){
-        $aColumns       =   array("","orden_numero","cotizacion_numero","cliente","fecha","meses_contrato","descuentos","monto_total_descuento","estado" ); //para la ordenacion y pintado en html
+        $aColumns       =   array("","orden_numero","cotizacion_numero","cliente","fecha","meses_contrato","monto_total","estado" ); //para la ordenacion y pintado en html
         /*
 	 * Ordenando, se verifica por que columna se ordenara
 	 */
@@ -132,7 +130,7 @@ class generarOrdenModel extends Model{
         $parms = array(
             ':flag'=>2,
             ':idOrden'=>$this->_idOrden,
-            ':monto'=>$this->_descuento,
+            ':monto'=>'',
             ':fechaPago'=>$this->_fechaPago,
             ':fechaContrato'=>$this->_fechaContrato,
             ':idContrato'=>$this->_idContrato,
@@ -145,7 +143,7 @@ class generarOrdenModel extends Model{
     }
     
     public function findOrden(){
-        $query = " SELECT fecha_orden,descuentos,fecha_contrato,id_contrato, dias_oferta FROM lgk_ordenservicio WHERE id_ordenservicio = :idOrden; ";
+        $query = " SELECT fecha_orden,fecha_contrato,id_contrato, dias_oferta FROM lgk_ordenservicio WHERE id_ordenservicio = :idOrden; ";
         
         $parms = array(
             ':idOrden'=>$this->_idOrden

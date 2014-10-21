@@ -44,7 +44,7 @@ class contratosModel extends Model{
     
     /*data para el grid: Contratos*/
     public function getContratos(){
-         $aColumns       =   array('orden_numero','fecha_contrato','6','9','monto_total_descuento','estado' ); //para la ordenacion y pintado en html
+         $aColumns       =   array('orden_numero','fecha_contrato','6','9','monto_total','estado' ); //para la ordenacion y pintado en html
         /*
 	 * Ordenando, se verifica por que columna se ordenara
 	 */
@@ -74,7 +74,7 @@ class contratosModel extends Model{
     }
 
     public function getIndexContratos(){
-         $aColumns       =   array('orden_numero','fecha_contrato','monto_total_descuento' ); //para la ordenacion y pintado en html
+         $aColumns       =   array('orden_numero','fecha_contrato','monto_total' ); //para la ordenacion y pintado en html
         /*
 	 * Ordenando, se verifica por que columna se ordenara
 	 */

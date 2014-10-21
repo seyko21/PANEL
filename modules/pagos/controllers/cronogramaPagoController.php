@@ -55,10 +55,10 @@ class cronogramaPagoController extends Controller{
                         break;
                 }
                 $cronograma = $aRow['cronogramaTotal'];
-                if ($aRow['monto_total_descuento'] > $cronograma ):
-                    $c6 = '<span class=\"badge bg-color-red\">S/.'.number_format($aRow['monto_total_descuento'],2).'</span>';    
+                if ($aRow['monto_total'] > $cronograma ):
+                    $c6 = '<span class=\"badge bg-color-red\">S/.'.number_format($aRow['monto_total'],2).'</span>';    
                 else:
-                    $c6 = 'S/.'.number_format($aRow['monto_total_descuento'],2);
+                    $c6 = 'S/.'.number_format($aRow['monto_total'],2);
                 endif;
                 
                 /*registros a mostrar*/
@@ -71,7 +71,7 @@ class cronogramaPagoController extends Controller{
                 $sOutput .= '"<div class=\"btn-group\">';
                 if($generar['permiso']){
                     if ($aRow['estado'] != 'F'):
-                        $sOutput .= '<button type=\"button\" class=\"'.$generar['theme'].'\" title=\"'.$generar['accion'].' '.GNOSE_2.'\" onclick=\"generarOrden.getFormCronograma(this,\''.$encryptReg.'\',\''.$aRow['monto_total_descuento'].'\',\''.$aRow['orden_numero'].'\')\">';
+                        $sOutput .= '<button type=\"button\" class=\"'.$generar['theme'].'\" title=\"'.$generar['accion'].' '.GNOSE_2.'\" onclick=\"generarOrden.getFormCronograma(this,\''.$encryptReg.'\',\''.$aRow['monto_total'].'\',\''.$aRow['orden_numero'].'\')\">';
                         $sOutput .= '    <i class=\"'.$generar['icono'].'\"></i>';
                         $sOutput .= '</button>';
                     else:

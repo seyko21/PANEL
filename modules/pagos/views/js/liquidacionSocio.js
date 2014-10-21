@@ -57,14 +57,14 @@ var liquidacionSocio_ = function(){
             iDisplayLength: 10,            
             aoColumns: [
                 {sTitle: "N° OS", sWidth: "10%",},                
-                {sTitle: "Fecha", sWidth: "10%",  sClass: "center"},
-                {sTitle: "Cliente", sWidth: "25%"},
                 {sTitle: "Socio", sWidth: "15%"},
+                {sTitle: "Fecha", sWidth: "10%",  sClass: "center"},
+                {sTitle: "Cliente", sWidth: "25%"},                
                 {sTitle: "Total", sWidth: "15%",sClass: "right"},
                 {sTitle: "Estado", sWidth: "10%", sClass: "center"},                
                 {sTitle: "Acciones", sWidth: "8%", sClass: "center", bSortable: false}               
             ],
-            aaSorting: [[2, "asc"]],
+            aaSorting: [[0, "desc"],[1, "asc"]],
             sScrollY: "300px",
             sAjaxSource: _private.config.modulo+"getGridLiquidacionSocio",
               fnServerParams: function(aoData) {
@@ -83,6 +83,21 @@ var liquidacionSocio_ = function(){
         });
         setup_widgets_desktop();
     };       
+    
+    this.publico.postPDF = function(btn,idd,idP,os){
+        simpleAjax.send({
+            element: btn,
+            root: _private.config.modulo + 'postPDF',
+            data: '&_idOrden='+idd+'&_idSocio='+idP+'&_numOrden='+os,
+            fnCallback: function(data) {
+                if(parseInt(data.result) === 1){
+                    $('#'+diccionario.tabs.LISOC+'btnDowPDF').attr("onclick","window.open('public/files/"+data.archivo+"','_blank');compromisoPagar.deleteArchivo('"+data.archivo+"');");
+                    $('#'+diccionario.tabs.LISOC+'btnDowPDF').click();
+                }
+            }
+        });
+    };
+      
     
     return this.publico;
     

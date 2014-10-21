@@ -224,6 +224,7 @@ define('INDEX_P4','Comisión de Venta');
 define('INDEX_P5','Mis Contratos');
 define('INDEX_P6','Deuda - Saldo a Pagar');
 define('INDEX_P7','Cronograma de Pago');
+define('LABEL_APC1','Asignar Socio a Panel');
 
 
 ?>

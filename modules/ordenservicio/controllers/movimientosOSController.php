@@ -60,7 +60,7 @@ class movimientosOSController extends Controller{
 
                 $axion .= ' </div>" ';                                
                 
-                $m = number_format($aRow['monto_total_descuento'],2);
+                $m = number_format($aRow['monto_total'],2);
                 $i = number_format($aRow['monto_impuesto'],2);
                 $ig = number_format($aRow['ingresos'],2);
                 $eg = number_format($aRow['egresos'],2);                

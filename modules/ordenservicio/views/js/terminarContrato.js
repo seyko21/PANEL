@@ -54,14 +54,13 @@ var terminarContrato_ = function(){
             aoColumns: [
                 {sTitle: "Nro. OS", sWidth: "10%",sClass: "center"},
                 {sTitle: "Nro. Cotización", sWidth: "10%",sClass: "center"},
-                {sTitle: "Representante", sWidth: "20%"},
-                {sTitle: "Descuento", sWidth: "10%", sClass: "right"},
+                {sTitle: "Cliente", sWidth: "45%"},                
                 {sTitle: "Fecha", sWidth: "10%"},
-                {sTitle: "Monto", sWidth: "8%", sClass: "right", bSortable: false},
-                {sTitle: "Estado", sWidth: "8%", sClass: "center", bSortable: false},
+                {sTitle: "Monto", sWidth: "8%", sClass: "right"},
+                {sTitle: "Estado", sWidth: "8%", sClass: "center"},
                 {sTitle: "Acciones", sWidth: "15%", sClass: "center", bSortable: false}              
             ],
-            aaSorting: [[2, "asc"]],
+            aaSorting: [[0, "desc"]],
             sScrollY: "300px",
             sAjaxSource: _private.config.modulo+"getGridTerminarContrato",
             fnDrawCallback: function() {

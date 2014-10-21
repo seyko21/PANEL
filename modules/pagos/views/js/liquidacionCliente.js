@@ -47,7 +47,6 @@ var liquidacionCliente_ = function(){
         var _f1 = $("#"+diccionario.tabs.LICL+"txt_f1").val();
         var _f2 = $("#"+diccionario.tabs.LICL+"txt_f2").val();        
     
-        
         var oTable = $("#"+diccionario.tabs.LICL+"gridLiquidacionCliente").dataTable({
             bProcessing: true,
             bServerSide: true,

@@ -42,13 +42,13 @@ class regProduccionController extends Controller{
                 $encryptReg = Aes::en($aRow['id_produccion']);
                 
                 $chk = '<input id=\"c_'.(++$key).'\" type=\"checkbox\" name=\"'.REPRO.'chk_delete[]\" value=\"'.$encryptReg.'\">';
-                if($aRow['total_saldo'] > 0){
+                if($aRow['total_asignado'] > 0){
                     $chk = '<input id=\"c_'.(++$key).'\" type=\"checkbox\" name=\"'.REPRO.'chk_delete[]\" disabled>';
                 }
                 
                 
                 /*datos de manera manual*/
-                $sOutput .= '["'.$chk.'","'.$aRow['distrito'].'","'.  Functions::cambiaf_a_normal($aRow['fecha']).'","'.$aRow['ubicacion'].'","'.$aRow['elemento'].'","'.number_format($aRow['total_produccion'],2).'","'.number_format($aRow['total_asignado'],2).'","'.number_format($aRow['total_saldo'],2).'", ';
+                $sOutput .= '["'.$chk.'","'.$aRow['numero_produccion'].'","'.$aRow['distrito'].'","'.  Functions::cambiaf_a_normal($aRow['fecha']).'","'.$aRow['ubicacion'].'","'.$aRow['elemento'].'","'.number_format($aRow['total_produccion'],2).'","'.number_format($aRow['total_asignado'],2).'","'.number_format($aRow['total_saldo'],2).'", ';
                 
                 /*
                  * configurando botones (add/edit/delete etc)

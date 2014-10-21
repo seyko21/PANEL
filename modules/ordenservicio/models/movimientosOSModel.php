@@ -41,7 +41,7 @@ class movimientosOSModel extends Model{
     
     /*data para el grid: MovimientosOS*/
     public function getMovimientosOS(){
-        $aColumns       =   array("orden_numero","fecha_contrato","monto_total_descuento","monto_impuesto","ingresos","egresos","comision_vendedor","utilidad_principal","otros_ingresos","otros_egresos","utilidad_secundaria"); //para la ordenacion y pintado en html
+        $aColumns       =   array("orden_numero","fecha_contrato","monto_total","monto_impuesto","ingresos","egresos","comision_vendedor","utilidad_principal","otros_ingresos","otros_egresos","utilidad_secundaria"); //para la ordenacion y pintado en html
         /*
 	 * Ordenando, se verifica por que columna se ordenara
 	 */

@@ -71,7 +71,7 @@ var pagoVendedor_ = function(){
                 {sTitle: "Saldo", sWidth: "10%", sClass: "right"},             
                 {sTitle: "Acciones", sWidth: "8%", sClass: "center", bSortable: false}
             ],
-            aaSorting: [[0, "asc"]],
+            aaSorting: [[2, "desc"],[3, "asc"]],
             sScrollY: "300px",
             sAjaxSource: _private.config.modulo+"getGridPagosVendedor",
             fnServerParams: function(aoData) {

@@ -55,20 +55,21 @@ var regProduccion_ = function(){
             iDisplayLength: 10,            
             aoColumns: [
                 {sTitle: "<input type='checkbox' id='"+diccionario.tabs.REPRO+"chk_all' onclick='simpleScript.checkAll(this,\"#"+diccionario.tabs.REPRO+"gridRegProduccion\");'>", sWidth: "1%", sClass: "center", bSortable: false},                
-                {sTitle: "Ciudad", sWidth: "15%"},
-                {sTitle: "Fecha", sWidth: "10%",  sClass: "center"},
-                {sTitle: "Ubicación", sWidth: "20%"},
+                {sTitle: "Código", sWidth: "5%"},
+                {sTitle: "Ciudad", sWidth: "8%"},
+                {sTitle: "Fecha", sWidth: "7%",  sClass: "center"},
+                {sTitle: "Ubicación", sWidth: "25%"},
                 {sTitle: "Elemento", sWidth: "10%"},                                
                 {sTitle: "Total", sWidth: "10%",  sClass: "right"},
                 {sTitle: "Asignado", sWidth: "10%",  sClass: "right"},
                 {sTitle: "Saldo", sWidth: "10%",  sClass: "right"},
-                {sTitle: "Acciones", sWidth: "20%", sClass: "center", bSortable: false}
+                {sTitle: "Acciones", sWidth: "15%", sClass: "center", bSortable: false}
             ],
-            aaSorting: [[2, 'asc']],
+            aaSorting: [[1, 'desc']],
             sScrollY: "350px",
             sAjaxSource: _private.config.modulo+'getGridRegProduccion',
             fnDrawCallback: function() {
-                $('#'+diccionario.tabs.REPRO+'gridRegProduccion_filter').find('input').attr('placeholder','Buscar por Ciudad o Ubicación').css('width','350px');               
+                $('#'+diccionario.tabs.REPRO+'gridRegProduccion_filter').find('input').attr('placeholder','Buscar por Código o Ciudad o Ubicación').css('width','400px');               
                 /*para hacer evento invisible*/
                 simpleScript.removeAttr.click({
                     container: '#widget_'+diccionario.tabs.REPRO, //widget del datagrid

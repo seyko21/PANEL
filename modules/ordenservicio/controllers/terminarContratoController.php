@@ -64,7 +64,7 @@ class terminarContratoController extends Controller{
                 $encryptReg = Aes::en($aRow['id_ordenservicio']);
                 
                 /*registros a mostrar*/
-                $sOutput .= '["'.$aRow['orden_numero'].'","'.$aRow['cotizacion_numero'].'","'.$aRow['nombrecompleto'].'","'.  number_format($aRow['descuentos'],2).'","'.$aRow['fecha'].'","'.number_format($aRow['monto_total'],2).'","'.$estado.'",';
+                $sOutput .= '["'.$aRow['orden_numero'].'","'.$aRow['cotizacion_numero'].'","'.$aRow['cliente'].' - '.$aRow['nombrecompleto'].'","'.$aRow['fecha'].'","'.number_format($aRow['monto_total'],2).'","'.$estado.'",';
 
                 /*
                  * configurando botones (add/edit/delete etc)

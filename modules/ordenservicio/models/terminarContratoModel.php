@@ -39,7 +39,7 @@ class terminarContratoModel extends Model{
     
     /*data para el grid: TerminarContrato*/
     public function getTerminarContrato(){
-        $aColumns       =   array("2","4","7","18","5" ); //para la ordenacion y pintado en html
+        $aColumns       =   array("2","4","cliente","5","monto_total","estado" ); //para la ordenacion y pintado en html
         /*
 	 * Ordenando, se verifica por que columna se ordenara
 	 */

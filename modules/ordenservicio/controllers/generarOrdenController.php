@@ -78,10 +78,10 @@ class generarOrdenController extends Controller{
                 $c4 = $aRow['fecha'];
                 $c5 = Functions::convertirDiaMes($aRow['meses_contrato']);
                 
-                if ($aRow['monto_total_descuento'] > $cronograma ):
-                    $c6 = '<span class=\"badge bg-color-red\">S/.'.number_format($aRow['monto_total_descuento'],2).'</span>';    
+                if ($aRow['monto_total'] > $cronograma ):
+                    $c6 = '<span class=\"badge bg-color-red\">S/.'.number_format($aRow['monto_total'],2).'</span>';    
                 else:
-                    $c6 = 'S/.'.number_format($aRow['monto_total_descuento'],2);
+                    $c6 = 'S/.'.number_format($aRow['monto_total'],2);
                 endif;
                 
                 
@@ -101,12 +101,12 @@ class generarOrdenController extends Controller{
                     $sOutput .= '</button>';
                 }
                 if($generar['permiso']){
-                    $sOutput .= '<button type=\"button\" class=\"'.$generar['theme'].'\" title=\"'.$generar['accion'].' '.GNOSE_2.'\" onclick=\"generarOrden.getFormCronograma(this,\''.$encryptReg.'\',\''.$aRow['monto_total_descuento'].'\',\''.$aRow['orden_numero'].'\')\">';
+                    $sOutput .= '<button type=\"button\" class=\"'.$generar['theme'].'\" title=\"'.$generar['accion'].' '.GNOSE_2.'\" onclick=\"generarOrden.getFormCronograma(this,\''.$encryptReg.'\',\''.$aRow['monto_total'].'\',\''.$aRow['orden_numero'].'\')\">';
                     $sOutput .= '    <i class=\"'.$generar['icono'].'\"></i>';
                     $sOutput .= '</button>';
                 }
                 /*solo si tiene compromisos se podra exportar contrato*/
-                if($aRow['compromisos'] && $aRow['id_contrato'] != '0' && $cronograma >= $aRow['monto_total_descuento']){
+                if($aRow['compromisos'] && $aRow['id_contrato'] != '0' && $cronograma >= $aRow['monto_total']){
                     if($email['permiso']){
                         $sOutput .= '<button type=\"button\" class=\"'.$email['theme'].'\" title=\"'.GNOSE_16.'\" onclick=\"registrarVendedor.postAccesoVendedor(this,\'' . $idUser . '\',\'' . $aRow['nombrecompleto'] . '\',\'' . $aRow['email'] . '\')\">';
                         $sOutput .= '    <i class=\"'.$email['icono'].'\"></i>';
@@ -331,9 +331,7 @@ class generarOrdenController extends Controller{
                 . '<td style="text-align:right;width:10%"><b>IGV '.(number_format($caratula[0]['porcentaje_impuesto']*100)).'%:</b></td>'
                 . '<td style="text-align:right;width:15%">S/.'.number_format($caratula[0]['monto_impuesto'],2).'</td>'
                 . '<td style="text-align:right;width:10%"><b>Total:</b></td>'
-                . '<td style="text-align:right;width:15%">S/.'.number_format($caratula[0]['monto_total'],2).'</td>'
-                . '<td style="text-align:right;width:10%"><b>Desc:</b></td>'
-                . '<td style="text-align:right;width:15%">S/.'.number_format($caratula[0]['descuentos'],2).'</td>'
+                . '<td style="text-align:right;width:15%">S/.'.number_format($caratula[0]['monto_total'],2).'</td>'                
                 . '</tr>'
                 . '</table>';
         
@@ -375,7 +373,7 @@ class generarOrdenController extends Controller{
         $html = str_replace('{{REPRESENTANTE}}',$contrato['representante'], $html);
         $html = str_replace('{{REPRESENTANTE_DNI}}',$contrato['docrepresentante'], $html);
         $html = str_replace('{{CONTRATO_CANTIDADITEM}}',$contrato['npaneles'], $html);
-        $html = str_replace('{{CONTRATO_MONTO}}',  number_format($contrato['monto_total_descuento'],2), $html);
+        $html = str_replace('{{CONTRATO_MONTO}}',  number_format($contrato['monto_total'],2), $html);
         $html = str_replace('{{DIA_CONTRATO}}',$contrato['dia'], $html);
         $html = str_replace('{{MES_CONTRATO}}', ucwords(Functions::nombremes($contrato['mes'])), $html);
         $html = str_replace('{{ANIO_CONTRATO}}',$contrato['anio'], $html);
@@ -386,7 +384,7 @@ class generarOrdenController extends Controller{
         $html = str_replace('{{DIAS_OFERTA}}',$diaoferta, $html);
         
         $nl = new numerosALetras();
-        $html = str_replace('{{CONTRATO_DINERO_EN_LETRAS}}',  $nl->convertir($contrato['monto_total_descuento']), $html);
+        $html = str_replace('{{CONTRATO_DINERO_EN_LETRAS}}',  $nl->convertir($contrato['monto_total']), $html);
         
         
         return html_entity_decode($html);

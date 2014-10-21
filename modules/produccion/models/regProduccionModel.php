@@ -55,7 +55,7 @@ class regProduccionModel extends Model{
     }
     
     public function getGridProduccion(){
-        $aColumns       =   array( 'chk','u.distrito','fecha','ubicacion','elemento','total_produccion','total_asignado','total_saldo' ); //para la ordenacion y pintado en html
+        $aColumns       =   array( 'chk','numero_produccion','u.distrito','fecha','ubicacion','elemento','total_produccion','total_asignado','total_saldo' ); //para la ordenacion y pintado en html
         /*
 	 * Ordenando, se verifica por que columna se ordenara
 	 */
@@ -87,7 +87,7 @@ class regProduccionModel extends Model{
                 c.`id_producto`,
                 c.`ubicacion`
         FROM lgk_catalogo c
-        WHERE c.`ubicacion` LIKE CONCAT('%".$this->_term."%')
+        WHERE c.`ubicacion` LIKE CONCAT('%".$this->_term."%') AND c.estado <> '0'
         AND c.`id_producto` NOT IN(SELECT id_producto FROM `prod_produccionpanel` WHERE estado = 'A'); ";
         
         
@@ -231,7 +231,7 @@ class regProduccionModel extends Model{
                 pd.`costo_importe`
         FROM `prod_produccionpaneld` pd
         INNER JOIN pub_concepto c ON c.`id_concepto`=pd.`id_concepto`
-        WHERE pd.`id_producion` = :idProduccion; ";
+        WHERE c.destino = 'P' and pd.`id_producion` = :idProduccion; ";
         
         $parms = array(
             ':idProduccion'=>  $this->_idProduccion

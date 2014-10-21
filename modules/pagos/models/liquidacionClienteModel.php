@@ -76,7 +76,7 @@ class liquidacionClienteModel extends Model{
         return $data;
     }
     
-    public function getDetalleOrden(){
+    public function getRptDetalleOrden(){
         $query = 'SELECT
                 os.`orden_numero`,os.`estado`, DATE_FORMAT(os.`fecha_contrato`, "%d/%m/%Y") AS fecha,
                 os.`incluyeigv`, tp.`descripcion` AS elemento,ct.`dimension_alto`, ct.`dimension_ancho`, ct.`dimesion_area`,
@@ -91,7 +91,7 @@ class liquidacionClienteModel extends Model{
                 DATE_FORMAT(osd.`fecha_termino`, "%d/%m/%Y") AS fecha_termino,                
                 osd.`precio_incigv`,osd.`produccion_incigv`, osd.`importe_incigv`,osd.`porcentaje_igv`,
                 osd.`impuesto`, osd.`monto_total`,  os.`porcentaje_impuesto`,
-                os.`monto_venta`,os.`monto_impuesto`,os.`monto_total` as total,os.`descuentos`,os.`monto_total_descuento`,
+                os.`monto_venta`,os.`monto_impuesto`,os.`monto_total` as total,
                 (SELECT SUM(`monto_pago`) FROM `lgk_compromisopago` cp 
                 WHERE cp.`id_ordenservicio` = os.`id_ordenservicio` AND cp.`estado` = "E" ) AS deuda,
                 (SELECT SUM(`monto_pago`) FROM `lgk_compromisopago` cp 
@@ -113,7 +113,7 @@ class liquidacionClienteModel extends Model{
     }
     
     
-     public function getDetalleCronograma(){
+     public function getRptDetalleCronograma(){
         $query = 'SELECT
                 cp.`numero_cuota`,
                 cp.`monto_pago`,

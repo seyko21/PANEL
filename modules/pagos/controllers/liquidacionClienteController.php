@@ -121,8 +121,8 @@ class liquidacionClienteController extends Controller{
     }       
         
     public function getHtmlLiquidacion(){
-       $data = Obj::run()->liquidacionClienteModel->getDetalleOrden();
-       $dataC = Obj::run()->liquidacionClienteModel->getDetalleCronograma();
+       $data = Obj::run()->liquidacionClienteModel->getRptDetalleOrden();
+       $dataC = Obj::run()->liquidacionClienteModel->getRptDetalleCronograma();
         
       $html ='
         <style>           
@@ -167,7 +167,7 @@ class liquidacionClienteController extends Controller{
           </tr> 
            <tr>
            <td width="13%"><strong>Tiempo :</strong></td>
-            <td width="26%">'.Functions::convertirDiaMes($data[0]['cantidad_mes']).'</td>
+            <td width="26%">'.Functions::convertirDiaMes($data[0]['cantidad_mes']).' ('. number_format($data[0]['cantidad_mes'],1).')</td>
             <td width="8%"><strong>Oferta :</strong></td>
             <td width="15%">'.$data[0]['dias_oferta'].' días</td>
          
@@ -227,8 +227,8 @@ class liquidacionClienteController extends Controller{
         <table id="td2" border="1" style="border-collapse:collapse">
             <tr>
                 <th style="width:10%">N° Cuota</th>                
-                <th style="width:12%">F. Programada</th>
-                <th style="width:12%">F. Pagado</th>
+                <th style="width:12%">Fch. Programada</th>
+                <th style="width:12%">Fch. Pago</th>
                 <th style="width:10%">Mora</th>
                 <th style="width:15%">Monto</th>
                 <th style="width:10%">Estado</th>
@@ -255,16 +255,12 @@ class liquidacionClienteController extends Controller{
         
         $html .= '<br /><h3>Resumen</h3><table id="td2" border="1" style="border-collapse:collapse">               
           <tr>
-                <th style="width:20%;" >Valor Contrato</th>
-                <th style="width:20%;" >Descuento</th>
-                <th style="width:20%;" >Total Neto</th>
-                <th style="width:20%;" >A cuenta</th>
-                <th style="width:20%;" >Saldo por pagar</th>
+                <th style="width:30%;" >Valor Contrato</th>                                
+                <th style="width:30%;" >A cuenta</th>
+                <th style="width:30%;" >Saldo por pagar</th>
             </tr>
-            <tr>
+            <tr>                
                 <td align="right">S/.'.number_format($data[0]['total'],2).'</td>
-                <td align="right">S/.'.number_format($data[0]['descuento'],2).'</td>
-                <td align="right">S/.'.number_format($data[0]['monto_total_descuento'],2).'</td>
                 <td align="right">S/.'.number_format($data[0]['pagado'],2).'</td>
                 <td align="right"><b>S/.'.number_format($data[0]['deuda'],2).'</b></td>
             </tr>
