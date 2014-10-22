@@ -218,6 +218,10 @@ define('LISOC_1','Liquidación de Socio');
 define('PAINV_1','Mis Paneles Invertidos');
 define('CREIN_1','Retorno de Inversión');
 define('CREIN_2','Listado de Orden de Servicio');
+define('CREIN_3','Registrado');
+define('CREIN_4','Suspendido');
+define('CREIN_5','Finalizado');
+define('CREIN_6','-');
 define('GPASO_1','Pago a Socio');
 define('SASOC_2','Recibo de Pago');
 define('REPRO_PROD1','Buscar Panel');
@@ -232,6 +236,7 @@ define('INDEX_P7','Cronograma de Pago');
 define('INDEX_P8','Utilidad de Venta');
 
 define('LABEL_APC1','Asignar Socio a Panel');
+
 
 
 ?>

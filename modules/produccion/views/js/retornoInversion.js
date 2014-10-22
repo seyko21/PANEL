@@ -114,15 +114,16 @@ var retornoInversion_ = function(){
             aoColumns: [                
                 {sTitle: "N° OS", sWidth: "8%"},
                 {sTitle: "Codigo", sWidth: "8%"},
-                {sTitle: "Fecha", sWidth: "8%",sClass: "center"},
-                {sTitle: "Tiempo", sWidth: "8%",sClass: "center"},                
-                {sTitle: "Importe", sWidth: "10%", sClass: "right"},
-                {sTitle: "Impuesto", sWidth: "10%", sClass: "right"},
+                {sTitle: "Fecha", sWidth: "10%",sClass: "center"},
+                {sTitle: "Tiempo", sWidth: "12%",sClass: "center"},                
+                {sTitle: "Impuesto", sWidth: "8%", sClass: "right"},
                 {sTitle: "Total", sWidth: "10%", sClass: "right"},
                 {sTitle: "Comision", sWidth: "10%", sClass: "right"},
-                {sTitle: "Egresos", sWidth: "10%", sClass: "right"},
+                {sTitle: "Egresos", sWidth: "8%", sClass: "right"},
                 {sTitle: "T. Utilidad", sWidth: "10%", sClass: "right"},
-                {sTitle: "Ganancia", sWidth: "10%", sClass: "right"} 
+                {sTitle: "Ganancia", sWidth: "10%", sClass: "right"},
+                {sTitle: "Ganancia Mensual", sWidth: "10%", sClass: "right", bSortable: false},
+                {sTitle: "Estado", sWidth: "10%", sClass: "center", bSortable: false} 
             ],
             aaSorting: [[0, 'asc']],
             sScrollY: "350px",

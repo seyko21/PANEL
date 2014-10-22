@@ -70,7 +70,7 @@ class retornoInversionModel extends Model{
     
  /*data para el grid: RetornoInversion*/
     public function getGridRoiOs(){
-       $aColumns       =   array("t.orden_numero","t.codigo","t.fecha","t.cantidad_mes","t.importe","t.impuesto","t.monto_total","t.comision_venta","t.egresos","total_utilidad","monto_utilidad" ); //para la ordenacion y pintado en html
+       $aColumns       =   array("t.orden_numero","t.codigo","t.fecha","t.cantidad_mes","t.impuesto","t.monto_total","t.comision_venta","t.egresos","total_utilidad","monto_utilidad" ); //para la ordenacion y pintado en html
         /*
 	 * Ordenando, se verifica por que columna se ordenara
 	 */

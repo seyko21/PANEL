@@ -91,8 +91,7 @@ class retornoInversionController extends Controller{
         echo $sOutput;
 
     }
-    
-    
+        
     public function getGridRoiOs(){        
         
         $sEcho          =   $this->post('sEcho');
@@ -116,7 +115,27 @@ class retornoInversionController extends Controller{
             $sOutput .= '"aaData": [ ';     
             
             foreach ( $rResult as $aRow ){
-                                                                            
+                if($aRow['nro_cuotas'] < 0):
+                    $cuota =1;                     
+                else:
+                    $cuota =$aRow['nro_cuotas'];                     
+                endif;
+                
+                switch ($aRow['estado']){
+                    case 'R':
+                        $estado = '<span class=\"label label-success\">'.CREIN_3.'</span>';
+                        break;
+                    case 'S':
+                        $estado = '<span class=\"label label-danger\">'.CREIN_4.'</span>';
+                        break;
+                    case 'F':
+                        $estado = '<span class=\"label label-warning\">'.CREIN_5.'</span>';
+                        break;
+                    default:
+                        $estado = '<span class=\"label label-info\">'.CREIN_6.'</span>';
+                        break;                                  
+                }
+                
                 $c1 =$aRow['orden_numero'];
                 $c2 =$aRow['codigo'];
                 $c3 =$aRow['fecha'];
@@ -128,8 +147,9 @@ class retornoInversionController extends Controller{
                 $c9 = number_format($aRow['egresos'],2);
                 $c10 = number_format($aRow['total_utilidad'],2);                    
                 $c11 = number_format($aRow['monto_utilidad'],2);
+                $c12 = number_format($aRow['monto_utilidad']/$cuota,2);
                 /*registros a mostrar*/
-                $sOutput .= '["'.$c1.'","'.$c2.'","'.$c3.'","'.$c4.'","'.$c5.'","'.$c6.'","'.$c7.'","'.$c8.'","'.$c9.'","'.$c10.'","'.$c11.'"';
+                $sOutput .= '["'.$c1.'","'.$c2.'","'.$c3.'","'.$c4.'","'.$c6.'","'.$c7.'","'.$c8.'","'.$c9.'","'.$c10.'","'.$c11.'","'.$c12.'","'.$estado.'"  ';
 
                 $sOutput .= '],';
 
