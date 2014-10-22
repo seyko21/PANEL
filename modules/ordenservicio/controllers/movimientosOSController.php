@@ -17,6 +17,10 @@ class movimientosOSController extends Controller{
         Obj::run()->View->render("indexMovimientosOS");
     }
     
+    public function getFormConsulta(){ 
+        Obj::run()->View->render("consultarMovimiento");
+    }
+    
     public function getGridMovimientosOS(){
         
         $consultar   = Session::getPermiso('MOVOSCC');
@@ -53,7 +57,7 @@ class movimientosOSController extends Controller{
                 $axion = '"<div class=\"btn-group\">';
                  
                 if($consultar['permiso']){
-                    $axion .= '<button type=\"button\" class=\"'.$consultar['theme'].'\" title=\"'.$consultar['accion'].'\" onclick=\"cotizacionVendedor.getConsulta(\''.$encryptReg.'\')\">';
+                    $axion .= '<button type=\"button\" class=\"'.$consultar['theme'].'\" title=\"'.$consultar['accion'].'\" onclick=\"movimientosOS.getConsulta(this,\''.$encryptReg.'\' , \''.$aRow['orden_numero'].'\')\">';
                     $axion .= '    <i class=\"'.$consultar['icono'].'\"></i>';
                     $axion .= '</button>';
                 }                

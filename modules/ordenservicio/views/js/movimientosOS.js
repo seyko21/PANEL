@@ -91,14 +91,18 @@ var movimientosOS_ = function(){
         setup_widgets_desktop();
     };
     
-    this.publico.getFormNewMovimientosOS = function(btn){
+    this.publico.getConsulta = function(btn,idd,cod){
         simpleAjax.send({
             element: btn,
             dataType: "html",
-            root: _private.config.modulo + "getFormNewMovimientosOS",
+            root: _private.config.modulo + "getFormConsulta",
+            data: '&_idOS='+idd+'&_cod='+cod,
             fnCallback: function(data){
                 $("#cont-modal").append(data);  /*los formularios con append*/
-                $("#"+diccionario.tabs.MOVOS+"formNewMovimientosOS").modal("show");
+                $("#"+diccionario.tabs.MOVOS+"formMOV").modal("show");
+                //Iniciar Grillas:
+                
+                
             }
         });
     };
