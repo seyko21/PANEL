@@ -77,7 +77,7 @@ $datac = Obj::run()->regProduccionController->getConceptos();
                     <div class="form-group">
                         <label class="control-label col-md-2" for="prepend">
                             <?php if($agregar['permiso']):?>
-                            <button id="<?php echo REPRO; ?>btnGadd" type="button" class="btn txt-color-white bg-color-blueDark" onclick="instalacion.getFormBuscarConceptos(this,'<?php echo REPRO; ?>');">
+                            <button id="<?php echo REPRO; ?>btnGadd" type="button" class="btn txt-color-white bg-color-blueDark" onclick="instalacion.getFormBuscarConceptos(this,'<?php echo REPRO; ?>','P');">
                                 <i class="fa fa-plus-circle"></i> <?php echo BTN_ADD; ?>
                             </button>
                             <?php endif; ?>

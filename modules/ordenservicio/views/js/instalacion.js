@@ -151,12 +151,13 @@ var instalacion_ = function(){
         });
     };
     
-    this.publico.getFormBuscarConceptos = function(btn,tab){
+    this.publico.getFormBuscarConceptos = function(btn,tab,tipo){
         _private.tab = tab;
         simpleAjax.send({
             element: btn,
             dataType: 'html',
             root: _private.config.modulo + 'getFormBuscarConceptos',
+            data: '&_tipo='+tipo,
             fnCallback: function(data){
                 $('#cont-modal').append(data);  /*los formularios con append*/
                 $('#'+diccionario.tabs.ORINS+'formBuscarConceptos').modal('show');

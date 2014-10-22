@@ -22,7 +22,7 @@ class instalacionModel extends Model{
     private $_idConcepto;
     private $_cantidad;
     private $_precio;
-
+    private $_tipo;
 
     /*para el grid*/
     public  $_iDisplayStart;
@@ -48,7 +48,7 @@ class instalacionModel extends Model{
         $this->_idConcepto     = Formulario::getParam(ORINS."hhddIdConcepto"); #array
         $this->_cantidad     = Formulario::getParam(ORINS."txt_cantidad");#array
         $this->_precio     = Formulario::getParam(ORINS."txt_precio");#array
-        
+        $this->_tipo     = Formulario::getParam("_tipo");
         $this->_cod     = Formulario::getParam("_cod");
         
         $this->_iDisplayStart  = Formulario::getParam("iDisplayStart"); 
@@ -110,6 +110,12 @@ class instalacionModel extends Model{
     }
     
     public function getConceptos(){
+        if($this->_tipo == 'P'){ # produccion
+            $destino = 'P';
+        }
+        if($this->_tipo == 'I'){ # instalacion
+            $destino = 'I';
+        }
         $query = "
         SELECT 
                 c.`id_concepto`,
@@ -118,11 +124,12 @@ class instalacionModel extends Model{
                 tc.`descripcion` AS tconcepto
         FROM `pub_concepto` c 
         INNER JOIN `pub_tipoconcepto` tc ON tc.`id_tipo`=c.`id_tipo`
-        WHERE c.`estado` = :estado
+        WHERE c.`estado` = :estado AND c.`destino` = :destino
         ORDER BY 4,2; ";
         
         $parms = array(
-            ':estado'=>'A'
+            ':estado'=>'A',
+            ':destino'=> 'G' # por ahora generico preguntar a dani
         );
         $data = $this->queryAll($query,$parms);
         return $data;
