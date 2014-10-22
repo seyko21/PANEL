@@ -18,6 +18,10 @@ class registrarVendedorController extends Controller {
     public function index() {
         Obj::run()->View->render('indexVendedor');
     }
+    
+    public function getFormViewFoto(){ 
+        Obj::run()->View->render('formViewFoto');
+    } 
 
     public function getGridVendedor() {
         $editar = Session::getPermiso('REGVEED');
@@ -51,9 +55,14 @@ class registrarVendedorController extends Controller {
                 }
 
                 $chk = '<input id=\"c_' . ( ++$key) . '\" type=\"checkbox\" name=\"' . T7 . 'chk_delete[]\" value=\"' . $encryptReg . '\">';
-
+                
+                $ruta = BASE_URL.'public/files/fotos/'.$aRow['foto'];
+                $foto = '<img border=\"0\" src=\"'.BASE_URL.'public/img/sin_foto.jpg\" width=\"70px\" height=\"40px\">';
+                if($aRow['foto'] != ''){
+                    $foto = '<img border=\"0\" src=\"'.$ruta.'\" width=\"70px\" height=\"40px\" onclick=\"registrarVendedor.getFormViewFoto(\''.AesCtr::en($ruta).'\');\" style=\"cursor:pointer\">';
+                }
                 /* datos de manera manual */
-                $sOutput .= '["' . $chk . '","' . $aRow['numerodocumento'] . '","' . $aRow['dni'] . '","' . $aRow['nombrecompleto'] . '","' . $aRow['email'] . '","' . $aRow['telefono'] . '","' . $estado . '", ';
+                $sOutput .= '["' . $chk . '","'.$foto.'","' . $aRow['numerodocumento'] . '","' . $aRow['dni'] . '","' . $aRow['nombrecompleto'] . '","' . $aRow['email'] . '","' . $aRow['telefono'] . '","' . $estado . '", ';
 
 
                 /*

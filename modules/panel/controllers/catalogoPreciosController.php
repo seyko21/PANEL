@@ -51,7 +51,8 @@ class catalogoPreciosController extends Controller{
                     $iluminado = '<span class=\"label label-danger\">NO</span>';
                 }
                 if($aRow['imagen'] != '' or $aRow['imagen'] != null){
-                    $imagen = '<a href=\"'.BASE_URL.'public/img/uploads/'.$aRow['imagen'].'\" target=\"_blank\" ><img border=\"0\" src=\"'.BASE_URL.'public/img/uploads/'.$aRow['imagen'].'\" style=\"width:70px; height:40px;\" /></a>';
+                    $ruta = BASE_URL.'public/img/uploads/'.$aRow['imagen'];
+                    $imagen = '<img border=\"0\" src=\"'.$ruta.'\" style=\"width:70px; height:40px;cursor:pointer\" onclick=\"registrarVendedor.getFormViewFoto(\''.AesCtr::en($ruta).'\');\"/>';
                 }else{
                     $imagen = '<img src=\"'.BASE_URL.'public/img/sin_foto.jpg\" style=\"width:70px; height:40px;\" />';
                 }

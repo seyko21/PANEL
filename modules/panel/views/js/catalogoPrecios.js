@@ -76,7 +76,7 @@ var catalogoPrecios_ = function(){
                 /*para hacer evento invisible*/
                 simpleScript.removeAttr.click({
                     container: '#widget_'+diccionario.tabs.TAB_CATPRE, //widget del datagrid
-                    typeElement: 'button'
+                    typeElement: 'button, img'
                 });
             }
         });

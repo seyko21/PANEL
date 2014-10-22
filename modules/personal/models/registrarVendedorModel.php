@@ -66,7 +66,7 @@ class registrarVendedorModel extends Model{
     }
     
     public function getGridVendedor() {
-        $aColumns       =   array( 'chk','numerodocumento','dni','numerodocumento','dni','nombrecompleto','email','telefono' ); //para la ordenacion y pintado en html
+        $aColumns       =   array( 'chk','','numerodocumento','dni','numerodocumento','dni','nombrecompleto','email','telefono' ); //para la ordenacion y pintado en html
         /*
 	 * Ordenando, se verifica por que columna se ordenara
 	 */
@@ -78,9 +78,10 @@ class registrarVendedorModel extends Model{
                 }
         }
         
-        $query = "call sp_perVendedorGrid(:iDisplayStart,:iDisplayLength,:sOrder,:sSearch);";
+        $query = "call sp_perVendedorGrid(:rolV,:iDisplayStart,:iDisplayLength,:sOrder,:sSearch);";
         
         $parms = array(
+            ':rolV' => APP_COD_VEND,
             ':iDisplayStart' => $this->_iDisplayStart,
             ':iDisplayLength' => $this->_iDisplayLength,
             ':sOrder' => $sOrder,

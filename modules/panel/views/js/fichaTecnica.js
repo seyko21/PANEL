@@ -104,7 +104,7 @@ var fichaTecnica_ = function(){
                 /*para hacer evento invisible*/
                 simpleScript.removeAttr.click({
                     container: '#widget_'+diccionario.tabs.T102+'Caratula', //widget del datagrid
-                    typeElement: 'button, #'+diccionario.tabs.T102+'chk_all'
+                    typeElement: 'img, button, #'+diccionario.tabs.T102+'chk_all'
                 });
             }
         });

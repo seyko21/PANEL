@@ -150,6 +150,7 @@ define('LABEL_GNC24',' - Finalizar');
 define('LABEL_GNC25','Observaciones');
 define('LABEL_GNC26','Campaña');
 define('LABEL_GNC27','Click aquí para generar cotización');
+define('LABEL_GNC28','Foto');
 
 /*----------------------    ASIGNAR CUENTAS----------------------*/
 define('LABEL_ASC1','Cuentas');

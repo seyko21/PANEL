@@ -44,6 +44,7 @@ var registrarVendedor_ = function(){
             iDisplayLength: 10,            
             aoColumns: [
                 {sTitle: "<input type='checkbox' id='"+diccionario.tabs.T7+"chk_all' onclick='simpleScript.checkAll(this,\"#"+diccionario.tabs.T7+"getGridVendedor\");'>", sWidth: "1%", sClass: "center", bSortable: false},
+                {sTitle: "Foto", sClass: "center", sWidth: "10%", bSortable: false},
                 {sTitle: "RUC", sClass: "center", sWidth: "10%"},
                 {sTitle: "DNI", sClass: "center", sWidth: "10%"},
                 {sTitle: "Nombres y Apellidos", sWidth: "25%"},
@@ -60,7 +61,7 @@ var registrarVendedor_ = function(){
                 /*para hacer evento invisible*/
                 simpleScript.removeAttr.click({
                     container: '#widget_'+diccionario.tabs.T7, //widget del datagrid
-                    typeElement: 'button, #'+diccionario.tabs.T7+'chk_all'
+                    typeElement: 'img, button, #'+diccionario.tabs.T7+'chk_all'
                 });
             }
         });
@@ -325,6 +326,20 @@ var registrarVendedor_ = function(){
                         }
                     }
                 });
+            }
+        });
+    };
+    
+    this.publico.getFormViewFoto = function(ruta){
+        simpleAjax.send({
+            gifProcess: true,
+            dataType: 'html',
+            gifProcess: true,
+            data: '&_ruta='+ruta,
+            root: _private.config.modulo + 'getFormViewFoto',
+            fnCallback: function(data){
+                $('#cont-modal').append(data);
+                $('#'+diccionario.tabs.T7+'formViewFoto').modal('show');
             }
         });
     };
