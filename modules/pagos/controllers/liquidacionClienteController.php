@@ -130,7 +130,7 @@ class liquidacionClienteController extends Controller{
            table, table td, table th, p {font-size:12px;}
            table{width:100%;}
            #td2 th, .totales{color:#FFF;background:#901D78; height:25px; font-size:11px;}
-           #td2 td{font-size:9px;height:25px;}           
+           #td2 td{font-size:9px;height:25px;}                   
         </style>';
       
        switch($data[0]['estado']){
@@ -235,20 +235,39 @@ class liquidacionClienteController extends Controller{
                 <th style="width:20%">Observación</th>                                
             </tr>';
         // Listado del servicio 
+        $sumaPagoSuspendido = 0;
         foreach ($dataC as $value) {
              switch($value['estado']){
                 case 'E': $est = 'Emitido'; break;
                 case 'P': $est = 'Pagado'; break;
               
              }
+             $obs = '-';
+             $pago = 'S/.'.number_format($value['monto_pago'],2);
+             
+             if ($data[0]['estado'] == 'F'):
+                 if ($value['fecha_pagoreal'] == ''):
+                    $obs = 'DEUDA SUSPENDIDA';    
+                    $pago = '<del>S/.'.number_format($value['monto_pago'],2).'</del>';
+                    $sumaPagoSuspendido += $value['monto_pago'];
+                 endif;
+             else:
+                 $obs = $value['observacion'];
+             endif;
+             //------
+             if ($value['fecha_pagoreal']!= ''):
+                $fpago = $value['fecha_pagoreal'];
+             else:
+                $fpago = '-';
+             endif;
             $html .= '<tr>
                 <td style="text-align:center">'.$value['numero_cuota'].'</td>
                 <td style="text-align:center">'.$value['fecha_programada'].'</td>            
-                <td style="text-align:center">'.$value['fecha_pagoreal'].'</td>
+                <td style="text-align:center">'.$fpago.'</td>
                 <td style="text-align:right">S/.'.number_format($value['costo_mora'],2).'</td>
-                <td style="text-align:right">S/.'.number_format($value['monto_pago'],2).'</td> 
+                <td style="text-align:right">'.$pago.'</td> 
                 <td style="text-align:center">'.$est.'</td>
-                <td style="text-align:center">'.$value['observacion'].'</td>
+                <td style="text-align:center">'.$obs.'</td>
             </tr>';
         }                    
         $html .='</table>';
@@ -260,13 +279,16 @@ class liquidacionClienteController extends Controller{
                 <th style="width:30%;" >Saldo por pagar</th>
             </tr>
             <tr>                
-                <td align="right">S/.'.number_format($data[0]['total'],2).'</td>
-                <td align="right">S/.'.number_format($data[0]['pagado'],2).'</td>
-                <td align="right"><b>S/.'.number_format($data[0]['deuda'],2).'</b></td>
+                <td align="right" style="font-size:13px;" >S/.'.number_format($data[0]['total'],2).'</td>
+                <td align="right" style="font-size:13px;" >S/.'.number_format($data[0]['pagado'],2).'</td>
+                <td align="right" style="font-size:13px;" ><b>S/.'.number_format($data[0]['deuda'] - $sumaPagoSuspendido,2).'</b></td>
             </tr>
             </table>';
         
-        
+        if ($data[0]['observacion']!= '' ):
+            $html .= '<h3>Observación </h3>';
+            $html .= '<p>- '.$data[0]['observacion'].'</p>';        
+        endif;  
         
         return $html;
     }    

@@ -126,13 +126,13 @@ class retornoInversionController extends Controller{
                         $estado = '<span class=\"label label-success\">'.CREIN_3.'</span>';
                         break;
                     case 'S':
-                        $estado = '<span class=\"label label-danger\">'.CREIN_4.'</span>';
+                        $estado = '<span class=\"label label-warning\">'.CREIN_4.'</span>';
                         break;
                     case 'F':
-                        $estado = '<span class=\"label label-warning\">'.CREIN_5.'</span>';
+                        $estado = '<span class=\"label label-info\">'.CREIN_5.'</span>';
                         break;
                     default:
-                        $estado = '<span class=\"label label-info\">'.CREIN_6.'</span>';
+                        $estado = '<span class=\"label label-success\">'.CREIN_6.'</span>';
                         break;                                  
                 }
                 

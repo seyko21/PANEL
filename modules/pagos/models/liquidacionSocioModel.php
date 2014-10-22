@@ -103,7 +103,8 @@ class liquidacionSocioModel extends Model{
 		(osd.`comision_venta` + oi.`monto_total` + osd.`impuesto` )AS egresos,				
 		((osd.`monto_total`) - (osd.`comision_venta` + oi.`monto_total`  + osd.`impuesto`)) AS utilidad,				
 		app.`porcentaje_ganacia`,		
-		(SELECT COUNT(*) FROM `lgk_compromisopago` cp WHERE cp.`id_ordenservicio` = os.`id_ordenservicio` AND cp.`estado` IN("E","P") ) AS nrocuotas
+		(SELECT COUNT(*) FROM `lgk_compromisopago` cp WHERE cp.`id_ordenservicio` = os.`id_ordenservicio` AND cp.`estado` IN("E","P") ) AS nrocuotas,
+                os.`observacion` 
               FROM `lgk_ordenserviciod` osd
                 INNER JOIN `lgk_ordenservicio` os ON osd.`id_ordenservicio` = os.`id_ordenservicio`
                 INNER JOIN `lgk_ordeninstalacion` oi ON oi.`id_ordenserviciod` = osd.`id_ordenserviciod` AND oi.`estado` <> "A"

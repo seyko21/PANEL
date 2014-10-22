@@ -17,8 +17,13 @@ class seguimientoPagoController extends Controller{
         Obj::run()->View->render("indexSeguimientoPago");
     }
     
+    public function getConsulta(){ 
+        Obj::run()->View->render("consultarTiempoOrden");
+    }
+    
     public function getGridSeguimientoPago(){
         $pagar   = Session::getPermiso('SEGPAPG');
+        $consultar   = Session::getPermiso('SEGPACC');
         
         $sEcho          =   $this->post('sEcho');
         
@@ -76,6 +81,11 @@ class seguimientoPagoController extends Controller{
                     $sOutput .= '    <i class=\"'.$pagar['icono'].'\"></i>';
                     $sOutput .= '</button>';
                 }
+                if($consultar['permiso']){
+                    $sOutput .= '<button type=\"button\" class=\"'.$consultar['theme'].'\" title=\"'.$consultar['accion'].'\" onclick=\"seguimientoPago.getConsulta(\''.$encryptReg.'\',\''.$aRow['orden_numero'].'\')\">';
+                    $sOutput .= '    <i class=\"'.$consultar['icono'].'\"></i>';
+                    $sOutput .= '</button>';
+                } 
                 $sOutput .= '</div>"';
                 
                 $sOutput .= '],';
@@ -90,6 +100,75 @@ class seguimientoPagoController extends Controller{
         echo $sOutput;
 
     }
+    
+    public function getGridTiempoOrden(){
+       
+        $sEcho          =   $this->post('sEcho');
+        
+        $rResult = Obj::run()->seguimientoPagoModel->getGridTiempoOrden();
+        
+        $num = Obj::run()->seguimientoPagoModel->_iDisplayStart;
+        if($num >= 10){
+            $num++;
+        }else{
+            $num = 1;
+        }
+        
+        if(!isset($rResult['error'])){  
+            $iTotal         = isset($rResult[0]['total'])?$rResult[0]['total']:0;
+            
+            $sOutput = '{';
+            $sOutput .= '"sEcho": '.intval($sEcho).', ';
+            $sOutput .= '"iTotalRecords": '.$iTotal.', ';
+            $sOutput .= '"iTotalDisplayRecords": '.$iTotal.', ';
+            $sOutput .= '"aaData": [ ';     
+            
+            foreach ( $rResult as $aRow ){
+                                               
+                switch($aRow['estado']) {
+                    case "E":
+                        $et = 'label label-default';
+                        $estado = SEGCO_5;
+                        break;
+                    case "P":
+                        $et = 'label bg-color-blue txt-color-white';
+                        $estado = SEGPA_7;
+                        break;                    
+                    case "T":
+                        $et = 'label label-success';
+                        $estado = SEGPA_8;
+                        break;
+                    case "F":
+                        $et = 'label label-warning';
+                        $estado = SEGPA_29;
+                        break;
+                    case "A":
+                        $et = 'label label-danger';
+                        $estado = SEGPA_9;
+                        break;                       
+                }
+                $xestado = '"<div class=\"'.$et.'\">'.$estado.'</div>"';
+                /*
+                 * configurando botones (add/edit/delete etc)
+                 * se verifica si tiene permisos para editar
+                 */                                            
+                
+                /*registros a mostrar*/
+                $sOutput .= '["'.($num++).'","'.$aRow['fecha_estado'].'","'.$aRow['observacion'].'",'.$xestado.' ';
+                
+                
+                $sOutput .= '],';
+
+            }
+            $sOutput = substr_replace( $sOutput, "", -1 );
+            $sOutput .= '] }';
+        }else{
+            $sOutput = $rResult['error'];
+        }
+        
+        echo $sOutput;
+
+    }        
     
     public function getFormPagarOrden(){
         Obj::run()->View->render("formPagarOrden");

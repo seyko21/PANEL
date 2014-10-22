@@ -95,7 +95,8 @@ class liquidacionClienteModel extends Model{
                 (SELECT SUM(`monto_pago`) FROM `lgk_compromisopago` cp 
                 WHERE cp.`id_ordenservicio` = os.`id_ordenservicio` AND cp.`estado` = "E" ) AS deuda,
                 (SELECT SUM(`monto_pago`) FROM `lgk_compromisopago` cp 
-                WHERE cp.`id_ordenservicio` = os.`id_ordenservicio` AND cp.`estado` = "P" ) AS pagado
+                WHERE cp.`id_ordenservicio` = os.`id_ordenservicio` AND cp.`estado` = "P" ) AS pagado,
+                os.`observacion` 
               FROM `lgk_ordenserviciod` osd
                 INNER JOIN `lgk_ordenservicio` os ON osd.`id_ordenservicio` = os.`id_ordenservicio`
                 INNER JOIN `lgk_caratula` ca ON ca.`id_caratula` = osd.`id_caratula`

@@ -254,7 +254,12 @@ class liquidacionSocioController extends Controller{
                 <td align="right">S/.'.number_format($sumaUtilidadSocio,2).'</td>
                 <td align="right"><b>S/.'.number_format($sumaUtilidadSocio / $nroCuota,2).'</b></td>
          </tr>
-        </table>';   
+        </table>';           
+        if ($data[0]['observacion']!= '' ):
+            $html .= '<h3>Observación </h3>';
+            $html .= '<p>- '.$data[0]['observacion'].'</p>';        
+        endif;        
+        
         $mpdf->WriteHTML($html);
         $mpdf->AddPage();
         

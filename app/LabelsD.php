@@ -161,6 +161,7 @@ define('MISCO_1','Listado de Cotizaciones');
 /*----------------------Cotizacion por vendedor----------------------*/
 define('COXVE_1','Cotizaciones por Vendedor');
 define('COXVE_2','Historial de Cotización');
+define('COXVE_3','Historial de Orden');
 /*----------------------Reeprogramacion----------------------*/
 define('CROPA_D1','Observacion ');
 define('CROPA_D1M','Ingrese el motivo del porque esta reprogramando esta cuota.');
