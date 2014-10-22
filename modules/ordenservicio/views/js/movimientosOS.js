@@ -10,7 +10,7 @@ var movimientosOS_ = function(){
     /*metodos privados*/
     var _private = {};
     
-    _private.idMovimientosOS = 0;
+    _private.idOS = 0;
     
     _private.config = {
         modulo: "ordenservicio/movimientosOS/"
@@ -66,6 +66,7 @@ var movimientosOS_ = function(){
                 {sTitle: "Egresos", sWidth: "12%", sClass: "right"},                
                 {sTitle: "Comision", sWidth: "12%", sClass: "right"}, 
                 {sTitle: "Utilidad", sWidth: "12%", sClass: "right"},    
+                {sTitle: "Estado", sWidth: "8%", sClass: "center", bSortable: false},
                 {sTitle: "Acciones", sWidth: "7%", sClass: "center", bSortable: false}
             ],
             aaSorting: [[0, "desc"]],
@@ -90,19 +91,75 @@ var movimientosOS_ = function(){
         });
         setup_widgets_desktop();
     };
+
+    this.publico.getGridMOVInstalacion= function (){
+         $('#'+diccionario.tabs.MOVOS+'gridMOVOI').dataTable({
+            bProcessing: true,
+            bServerSide: true,
+            bDestroy: true,
+            sPaginationType: "bootstrap_full", //two_button
+            sServerMethod: "POST",
+            bPaginate: true,
+            iDisplayLength: 10,   
+            sSearch: false,
+            bFilter: false,
+            aoColumns: [                
+                {sTitle: "Código", sWidth: "10%", sClass: "center"},
+                {sTitle: "Instalación", sWidth: "10%", sClass: "center"},                                
+                {sTitle: "Ubicación", sWidth: "35%"},
+                {sTitle: "Fecha", sWidth: "10%", sClass: "center"},
+                {sTitle: "Total", sWidth: "10%", sClass: "right"}
+            ],
+            aaSorting: [[0, 'asc']],
+            sScrollY: "260px",
+            sAjaxSource: _private.config.modulo+'getGridMovInstalacion',
+            fnServerParams: function(aoData) {
+                aoData.push({"name": "_idOS", "value": _private.idOS });
+            }
+        });
+        setup_widgets_desktop();
+    };    
+    
+    this.publico.getGridMOVComision= function (){
+         $('#'+diccionario.tabs.MOVOS+'gridMOVCV').dataTable({
+            bProcessing: true,
+            bServerSide: true,
+            bDestroy: true,
+            sPaginationType: "bootstrap_full", //two_button
+            sServerMethod: "POST",
+            bPaginate: true,
+            iDisplayLength: 10,   
+            sSearch: false,
+            bFilter: false,
+            aoColumns: [                
+                {sTitle: "Código", sWidth: "8%", sClass: "center"},
+                {sTitle: "Ubicación", sWidth: "25%"},
+                {sTitle: "Alquiler", sWidth: "10%", sClass: "center"},
+                {sTitle: "Importe", sWidth: "8%", sClass: "right"},
+                {sTitle: "%Porcentaje", sWidth: "5%", sClass: "right"},
+                {sTitle: "Comisión", sWidth: "8%", sClass: "right"}
+            ],
+            aaSorting: [[0, 'asc']],
+            sScrollY: "260px",
+            sAjaxSource: _private.config.modulo+'getGridMovComision',
+            fnServerParams: function(aoData) {
+                aoData.push({"name": "_idOS", "value": _private.idOS });
+            }
+        });
+        setup_widgets_desktop();
+    };        
     
     this.publico.getConsulta = function(btn,idd,cod){
+        _private.idOS = idd;
         simpleAjax.send({
             element: btn,
             dataType: "html",
             root: _private.config.modulo + "getFormConsulta",
-            data: '&_idOS='+idd+'&_cod='+cod,
+            data: '&_idOS='+_private.idOS+'&_cod='+cod,
             fnCallback: function(data){
                 $("#cont-modal").append(data);  /*los formularios con append*/
-                $("#"+diccionario.tabs.MOVOS+"formMOV").modal("show");
-                //Iniciar Grillas:
-                
-                
+                $("#"+diccionario.tabs.MOVOS+"formMOV").modal("show");                
+                movimientosOS.getGridMOVInstalacion();                 
             }
         });
     };

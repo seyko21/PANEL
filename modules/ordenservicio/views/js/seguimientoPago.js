@@ -87,6 +87,32 @@ var seguimientoPago_ = function(){
         });
         setup_widgets_desktop();
     };
+    this.publico.getGridHIOR= function (){
+         $('#'+diccionario.tabs.SEGPA+'gridHIOR').dataTable({
+            bProcessing: true,
+            bServerSide: true,
+            bDestroy: true,
+            sPaginationType: "bootstrap_full", //two_button
+            sServerMethod: "POST",
+            bPaginate: true,
+            iDisplayLength: 10,   
+            sSearch: false,
+            bFilter: false,
+            aoColumns: [                
+                {sTitle: "N°", sWidth: "5%", sClass: "center",bSortable: false},
+                {sTitle: "Fecha", sWidth: "23%", sClass: "center"},
+                {sTitle: "Observacion", sWidth: "50%", sClass: "left"},
+                {sTitle: "Estado", sWidth: "10%", bSortable: false}
+            ],
+            aaSorting: [[1, 'asc']],
+            sScrollY: "350px",
+            sAjaxSource: _private.config.modulo+'getGridTiempoOrden',
+            fnServerParams: function(aoData) {
+                aoData.push({"name": "_idOrden", "value": _private.nOrden });
+            }
+        });
+        setup_widgets_desktop();
+    };
     
     this.publico.getFormPagarOrden = function(btn,id,norden){
         _private.nOrden = norden;
@@ -152,33 +178,7 @@ var seguimientoPago_ = function(){
                 }
             }
         });
-    };
-    this.publico.getGridHIOR= function (){
-         $('#'+diccionario.tabs.SEGPA+'gridHIOR').dataTable({
-            bProcessing: true,
-            bServerSide: true,
-            bDestroy: true,
-            sPaginationType: "bootstrap_full", //two_button
-            sServerMethod: "POST",
-            bPaginate: true,
-            iDisplayLength: 10,   
-            sSearch: false,
-            bFilter: false,
-            aoColumns: [                
-                {sTitle: "N°", sWidth: "5%", sClass: "center",bSortable: false},
-                {sTitle: "Fecha", sWidth: "23%", sClass: "center"},
-                {sTitle: "Observacion", sWidth: "50%", sClass: "left"},
-                {sTitle: "Estado", sWidth: "10%", bSortable: false}
-            ],
-            aaSorting: [[1, 'asc']],
-            sScrollY: "350px",
-            sAjaxSource: _private.config.modulo+'getGridTiempoOrden',
-            fnServerParams: function(aoData) {
-                aoData.push({"name": "_idOrden", "value": _private.nOrden });
-            }
-        });
-        setup_widgets_desktop();
-    };
+    };   
     
     this.publico.getConsulta = function(id, cod){
         _private.nOrden = id;               

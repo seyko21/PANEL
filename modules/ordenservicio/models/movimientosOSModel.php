@@ -41,7 +41,7 @@ class movimientosOSModel extends Model{
     
     /*data para el grid: MovimientosOS*/
     public function getMovimientosOS(){
-        $aColumns       =   array("orden_numero","fecha_contrato","monto_total","monto_impuesto","ingresos","egresos","comision_vendedor","utilidad_principal","otros_ingresos","otros_egresos","utilidad_secundaria"); //para la ordenacion y pintado en html
+        $aColumns       =   array("orden_numero","fecha_contrato","monto_total","monto_impuesto","ingresos","egresos","comision_vendedor","utilidad_principal"); //para la ordenacion y pintado en html
         /*
 	 * Ordenando, se verifica por que columna se ordenara
 	 */
@@ -67,7 +67,55 @@ class movimientosOSModel extends Model{
         return $data;
     }
     
-    
+    public function getMovInstalacion(){
+        $aColumns       =   array("codigo","ordenin_numero","ubicacion","fecha_instalacion","monto_total" ); //para la ordenacion y pintado en html
+        /*
+	 * Ordenando, se verifica por que columna se ordenara
+	 */
+        $sOrder = "";
+        for ( $i=0 ; $i<intval( $this->_iSortingCols ) ; $i++ ){
+                if ( $this->post( "bSortable_".intval($this->post("iSortCol_".$i)) ) == "true" ){
+                        $sOrder .= " ".$aColumns[ intval( $this->post("iSortCol_".$i) ) ]." ".
+                                ($this->post("sSortDir_".$i)==="asc" ? "asc" : "desc") .",";
+                }
+        }
+         $sOrder = substr_replace( $sOrder, "", -1 );
+        $query = "call sp_ordseMOVOSInstalacionGrid(:idOrden,:iDisplayStart,:iDisplayLength,:sOrder);";
+        
+        $parms = array(
+            ":idOrden" => $this->_idOS,
+            ":iDisplayStart" => $this->_iDisplayStart,
+            ":iDisplayLength" => $this->_iDisplayLength,
+            ":sOrder" => $sOrder
+        );
+        $data = $this->queryAll($query,$parms);
+        return $data;
+    }
+    public function getMovComision(){
+        $aColumns       =   array("codigo","ubicacion","cantidad_mes","importe","porcentaje_comision","comision_venta" ); //para la ordenacion y pintado en html
+        /*
+	 * Ordenando, se verifica por que columna se ordenara
+	 */
+        $sOrder = "";
+        for ( $i=0 ; $i<intval( $this->_iSortingCols ) ; $i++ ){
+                if ( $this->post( "bSortable_".intval($this->post("iSortCol_".$i)) ) == "true" ){
+                        $sOrder .= " ".$aColumns[ intval( $this->post("iSortCol_".$i) ) ]." ".
+                                ($this->post("sSortDir_".$i)==="asc" ? "asc" : "desc") .",";
+                }
+        }
+         $sOrder = substr_replace( $sOrder, "", -1 );
+        $query = "call sp_ordseMOVOSComisionGrid(:idOrden,:iDisplayStart,:iDisplayLength,:sOrder);";
+        
+        $parms = array(
+            ":idOrden" => $this->_idOS,
+            ":iDisplayStart" => $this->_iDisplayStart,
+            ":iDisplayLength" => $this->_iDisplayLength,
+            ":sOrder" => $sOrder
+        );
+        $data = $this->queryAll($query,$parms);
+        return $data;
+    }    
+        
 }
 
 ?>

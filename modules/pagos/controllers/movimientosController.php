@@ -47,11 +47,13 @@ class movimientosController extends Controller{
                     $estado = '<span class=\"label label-danger\">'.LABEL_AN.'</span>';
                 }
                               
+                
                 $c1 = $aRow['id_movimiento'];
                 $c2 = $aRow['observacion'];
-                $c3 = $aRow['orden_numero'];
-                $c4 = $aRow['codigo'];
-                $c5 = Functions::cambiaf_a_normal($aRow['fecha']);
+                $c3 = Functions::cambiaf_a_normal($aRow['fecha']);
+                $c4 = $aRow['orden_numero'];                
+                $c5 = $aRow['codigo'];
+                
                 $c6 = ($aRow['tipo']=='I'?'Ingreso':'Salida');
                 $c7 = ($aRow['moneda']=='SO')?'S/.':'$US';
                 $c8 = number_format($aRow['monto'],2);

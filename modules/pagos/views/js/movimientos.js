@@ -57,16 +57,16 @@ var movimientos_ = function(){
             iDisplayLength: 10,            
             aoColumns: [
                 {sTitle: "ID", sWidth: "2%",bSortable: false},
-                {sTitle: "N° OS", sWidth: "5%", sClass: "center"},
-                {sTitle: "Código", sWidth: "10%"},
                 {sTitle: "Fecha", sWidth: "10%", sClass: "center"},
+                {sTitle: "N° OS", sWidth: "10%", sClass: "center"},
+                {sTitle: "Código", sWidth: "10%"},                
                 {sTitle: "Tipo", sWidth: "10%"},                
                 {sTitle: "Moneda", sWidth: "5%"},
                 {sTitle: "Monto", sWidth: "10%",sClass: "right"},
                 {sTitle: "Estado", sWidth: "5%", sClass: "center"},
-                {sTitle: "Observación", sWidth: "35%"}
+                {sTitle: "Observación", sWidth: "30%"}
             ],
-            aaSorting: [[0, "asc"]],
+            aaSorting: [[1, "desc"]],
             sScrollY: "300px",
             sAjaxSource: _private.config.modulo+"getGridMovimientos",
             fnServerParams: function(aoData) {

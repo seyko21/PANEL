@@ -63,7 +63,24 @@ class movimientosOSController extends Controller{
                 }                
 
                 $axion .= ' </div>" ';                                
-                
+                 switch($aRow['estado']){
+                    case 'E':
+                        $chk = '<input id=\"c_'.(++$key).'\" type=\"checkbox\" name=\"'.GNOSE.'chk_delete[]\" value=\"'.$encryptReg.'\"  >'; 
+                        $estado = '<span class=\"label label-default\">'.SEGCO_5.'</span>';
+                        break;
+                    case 'T':
+                        $estado = '<span class=\"label label-success\">'.SEGPA_8.'</span>';
+                        break;
+                    case 'P':
+                        $estado = '<span class=\"label label-warning\">'.SEGPA_7.'</span>';
+                        break;
+                    case 'A':
+                        $estado = '<span class=\"label label-danger\">'.SEGPA_9.'</span>';
+                        break;
+                    case 'F':
+                        $estado = '<span class=\"label label-info\">'.SEGPA_29.'</span>';
+                        break;
+                }
                 $m = number_format($aRow['monto_total'],2);
                 $i = number_format($aRow['monto_impuesto'],2);
                 $ig = number_format($aRow['ingresos'],2);
@@ -74,7 +91,7 @@ class movimientosOSController extends Controller{
                 $oe = number_format($aRow['otros_egresos'],2);
                 $ut2 = number_format($aRow['utilidad_secundaria'],2);
                 /*registros a mostrar*/
-                $sOutput .= '["'.$aRow['orden_numero'].'","'.$aRow['fecha_contrato'].'","'.$m.'","'.$i.'","'.$ig.'","'.$eg.'","'.$cv.'","<b>'.$ut1.'</b>",'.$axion.' ';
+                $sOutput .= '["'.$aRow['orden_numero'].'","'.$aRow['fecha_contrato'].'","'.$m.'","'.$i.'","'.$ig.'","'.$eg.'","'.$cv.'","<b>'.$ut1.'</b>","'.$estado.'",'.$axion.' ';
 
                 $sOutput .= '],';
 
@@ -89,50 +106,92 @@ class movimientosOSController extends Controller{
 
     }
     
-    /*carga formulario (newMovimientosOS.phtml) para nuevo registro: MovimientosOS*/
-    public function getFormNewMovimientosOS(){
-        Obj::run()->View->render("formNewMovimientosOS");
-    }
-    
-    /*carga formulario (editMovimientosOS.phtml) para editar registro: MovimientosOS*/
-    public function getFormEditMovimientosOS(){
-        Obj::run()->View->render("formEditMovimientosOS");
-    }
-    
-    /*busca data para editar registro: MovimientosOS*/
-    public static function findMovimientosOS(){
-        $data = Obj::run()->movimientosOSModel->findMovimientosOS();
+    public function getGridMovInstalacion(){
+        
+        $sEcho          =   $this->post('sEcho');
+        
+        $rResult = Obj::run()->movimientosOSModel->getMovInstalacion();
+        
+        $num = Obj::run()->movimientosOSModel->_iDisplayStart;
+        if($num >= 10){
+            $num++;
+        }else{
+            $num = 1;
+        }
+        
+        if(!isset($rResult['error'])){  
+            $iTotal         = isset($rResult[0]['total'])?$rResult[0]['total']:0;
             
-        return $data;
+            $sOutput = '{';
+            $sOutput .= '"sEcho": '.intval($sEcho).', ';
+            $sOutput .= '"iTotalRecords": '.$iTotal.', ';
+            $sOutput .= '"iTotalDisplayRecords": '.$iTotal.', ';
+            $sOutput .= '"aaData": [ ';     
+            
+            foreach ( $rResult as $key=>$aRow ){
+                /*antes de enviar id se encrypta*/
+                $encryptReg = Aes::en($aRow['id_ordeninstalacion']);                
+                
+                /*registros a mostrar*/
+                $sOutput .= '["'.$aRow['codigo'].'","'.$aRow['ordenin_numero'].'","'.$aRow['ubicacion'].' - '.$aRow['descripcion'].'","'.$aRow['fecha_instalacion'].'","S/.'.number_format($aRow['monto_total'],2).'" ';
+                                
+                $sOutput .= '],';
+
+            }
+            $sOutput = substr_replace( $sOutput, "", -1 );
+            $sOutput .= '] }';
+        }else{
+            $sOutput = $rResult['error'];
+        }
+        
+        echo $sOutput;
+
     }
     
-    /*envia datos para grabar registro: MovimientosOS*/
-    public function postNewMovimientosOS(){
-        $data = Obj::run()->movimientosOSModel->newMovimientosOS();
+    public function getGridMovComision(){
         
-        echo json_encode($data);
-    }
+        $sEcho          =   $this->post('sEcho');
+        
+        $rResult = Obj::run()->movimientosOSModel->getMovComision();
+        
+        $num = Obj::run()->movimientosOSModel->_iDisplayStart;
+        if($num >= 10){
+            $num++;
+        }else{
+            $num = 1;
+        }
+        
+        if(!isset($rResult['error'])){  
+            $iTotal         = isset($rResult[0]['total'])?$rResult[0]['total']:0;
+            
+            $sOutput = '{';
+            $sOutput .= '"sEcho": '.intval($sEcho).', ';
+            $sOutput .= '"iTotalRecords": '.$iTotal.', ';
+            $sOutput .= '"iTotalDisplayRecords": '.$iTotal.', ';
+            $sOutput .= '"aaData": [ ';     
+            
+            foreach ( $rResult as $key=>$aRow ){
+
+                $c1 = 'S/'.number_format($aRow['importe'],2);
+                $c2 =  number_format($aRow['porcentaje_comision']*100,2).'%';
+                $c3 = 'S/'.number_format($aRow['comision_venta'],2);
+        
+                /*registros a mostrar*/
+                $sOutput .= '["'.$aRow['codigo'].'","'.$aRow['ubicacion'].' - '.$aRow['descripcion'].'","'.  Functions::convertirDiaMes($aRow['cantidad_mes']).'","'.$c1.'","'.$c2.'","'.$c3.'" ';
+                                
+                $sOutput .= '],';
+
+            }
+            $sOutput = substr_replace( $sOutput, "", -1 );
+            $sOutput .= '] }';
+        }else{
+            $sOutput = $rResult['error'];
+        }
+        
+        echo $sOutput;
+
+    }    
     
-    /*envia datos para editar registro: MovimientosOS*/
-    public function postEditMovimientosOS(){
-        $data = Obj::run()->movimientosOSModel->editMovimientosOS();
-        
-        echo json_encode($data);
-    }
-    
-    /*envia datos para eliminar registro: MovimientosOS*/
-    public function postDeleteMovimientosOS(){
-        $data = Obj::run()->movimientosOSModel->deleteMovimientosOS();
-        
-        echo json_encode($data);
-    }
-    
-    /*envia datos para eliminar registros: MovimientosOS*/
-    public function postDeleteMovimientosOSAll(){
-        $data = Obj::run()->movimientosOSModel->deleteMovimientosOSAll();
-        
-        echo json_encode($data);
-    }
     
 }
 
