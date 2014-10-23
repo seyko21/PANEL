@@ -118,10 +118,11 @@ endforeach;
                         case APP_COD_SADM:
                         case APP_COD_ADM:
              ?>                           
-                        setTimeout(function(){ panelesAlquilados.getGridIndexPA();},100);
-                        setTimeout(function(){ saldoCliente.getGridIndexSaldoCliente();},800);
-                        setTimeout(function(){ alquilerCulminar.getGridIndexAlquilerCulminar();},1500);
-                        setTimeout(function(){ consultaPermisos.getGridIndexPermisos();},2200);                                                
+                        setTimeout(function() {generatePageGraphs();}, 1000);
+                        setTimeout(function(){ panelesAlquilados.getGridIndexPA();},1500);
+                        setTimeout(function(){ saldoCliente.getGridIndexSaldoCliente();},2000);
+                        setTimeout(function(){ alquilerCulminar.getGridIndexAlquilerCulminar();},2500);
+                        setTimeout(function(){ consultaPermisos.getGridIndexPermisos();},3000);                                                
              <?php      break;
                         case APP_COD_VEND: ?>                           
                         setTimeout(function(){ panelesAlquilados.getGridIndexPA();},100);
