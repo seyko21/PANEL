@@ -17,5 +17,7 @@ var mensajes = {
     MSG_16: '¿Está seguro de anular registros seleccionados?',
     MSG_17: 'Registro se anuló correctamente.',
     MSG_18: '¿Está seguro de anular registro?',
-    MSG_19: 'Datos se actualizaron correctamente.'
+    MSG_19: 'Datos se actualizaron correctamente.',
+    MSG_20: 'Proceso realizado correctamente.',
+    MSG_21: '¿Está seguro de generar el proceso?'
 };

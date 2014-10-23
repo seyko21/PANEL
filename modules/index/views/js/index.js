@@ -88,6 +88,31 @@ var index_ = function(){
         });
     };
     
+    this.public.postGenerarUtilidadSocioBtn = function(){
+        simpleScript.notify.confirm({
+            content: mensajes.MSG_21,
+            callbackSI: function(){
+                simpleAjax.send({
+                    flag: 1,
+                    gifProcess: true,
+                    root: _private.config.modulo + '/index/postGenerarUtilidadSocio/',
+                    fnCallback: function(data) {
+                        if(!isNaN(data.result) && parseInt(data.result) === 1){
+                            simpleScript.notify.ok({
+                                content: mensajes.MSG_20,
+                                callback: function(){
+                                   if($('#'+diccionario.tabs.GPASO+'_CONTAINER').length > 0){
+                                        pagoSocio.getGridPagoSocio();
+                                    }
+                                }
+                            });
+                        }
+                    }
+                });
+            }
+        });
+    };
+    
     return this.public;
     
 };

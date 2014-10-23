@@ -4,7 +4,7 @@
 
     <?php
     $obj = array(
-        'id' => PANP . 'est1',
+        'id' => PANP . 'pest1',
         'title' => LABEL_GRAF1,
         'height' => 'auto',
         'padding' => true
@@ -13,31 +13,24 @@
     
     $dataG = Obj::run()->indexController->getIndexGraficoIngreso();
     ?>
-<!--    <div class="col-xs-12 col-sm-12 col-md-11 col-lg-11">
-        <span class="demo-liveupdate-1"> <span class="onoffswitch-title">Animación</span> <span class="onoffswitch">
-                </span> </span>-->
-        <div id="chartdiv" style="width: 100%; height: 400px;"></div>
-
-    <!--</div>-->    
-
-
+        <div id="chartdiv" style="width: 100%; height: 400px;">
+        </div>
 
     <?php echo Functions::widgetClose(); ?>
 
     <script>
-
         var mes = ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
-        
+        var colores = ['#FF0F00','#FF6600','#FF9E01','#FCD202','#F8FF01','#B0DE09','#04D215','#0D8ECF','#0D52D1','#2A0CD0','#8A0CCF','#CD0D74']
         function generatePageGraphs() {
             var dataServer = <?php echo json_encode($dataG)?>;
             var color = '',mees='',monto=0;
             var datos = '[';
             
             for(var m = 0;m<12;m++){
-                color = simpleScript.getRandomColor();
-                
+                monto = 0;
+                //color = simpleScript.getRandomColor();                   
                 mees = mes[m];
-                
+                color = colores[m]
                 for(var i in dataServer){
                     if((m+1) == dataServer[i].mes){
                         monto = dataServer[i].monto;
@@ -53,147 +46,58 @@
             }
           
             datos = datos.substring(0, datos.length-1);
-            datos += '];';
+            datos += ']';
             var chart;
 
             var chartData = eval(datos);
-//            [
-//                {
-//                    "country": "USA",
-//                    "visits": 4025,
-//                    "color": "#FF0F00"
-//                },
-//                {
-//                    "country": "China",
-//                    "visits": 1882,
-//                    "color": "#FF6600"
-//                },
-//                {
-//                    "country": "Japan",
-//                    "visits": 1809,
-//                    "color": "#FF9E01"
-//                },
-//                {
-//                    "country": "Germany",
-//                    "visits": 1322,
-//                    "color": "#FCD202"
-//                },
-//                {
-//                    "country": "UK",
-//                    "visits": 1122,
-//                    "color": "#F8FF01"
-//                },
-//                {
-//                    "country": "France",
-//                    "visits": 1114,
-//                    "color": "#B0DE09"
-//                },
-//                {
-//                    "country": "India",
-//                    "visits": 984,
-//                    "color": "#04D215"
-//                },
-//                {
-//                    "country": "Spain",
-//                    "visits": 711,
-//                    "color": "#0D8ECF"
-//                },
-//                {
-//                    "country": "Netherlands",
-//                    "visits": 665,
-//                    "color": "#0D52D1"
-//                },
-//                {
-//                    "country": "Russia",
-//                    "visits": 580,
-//                    "color": "#2A0CD0"
-//                },
-//                {
-//                    "country": "South Korea",
-//                    "visits": 443,
-//                    "color": "#8A0CCF"
-//                },
-//                {
-//                    "country": "Canada",
-//                    "visits": 441,
-//                    "color": "#CD0D74"
-//                },
-//                {
-//                    "country": "Brazil",
-//                    "visits": 395,
-//                    "color": "#754DEB"
-//                },
-//                {
-//                    "country": "Italy",
-//                    "visits": 386,
-//                    "color": "#DDDDDD"
-//                },
-//                {
-//                    "country": "Australia",
-//                    "visits": 384,
-//                    "color": "#999999"
-//                },
-//                {
-//                    "country": "Taiwan",
-//                    "visits": 338,
-//                    "color": "#333333"
-//                },
-//                {
-//                    "country": "Poland",
-//                    "visits": 328,
-//                    "color": "#000000"
-//                }
-//            ];
+            // SERIAL CHART
+            chart = new AmCharts.AmSerialChart();
+            chart.dataProvider = chartData;
+            chart.categoryField = "mes";
+            chart.type = "serial";
+            chart.theme = "light";
+            chart.pathToImages = "http://www.amcharts.com/lib/3/images/";
+            // the following two lines makes chart 3D
+            chart.depth3D = 20;
+            chart.angle = 30;
 
+            // AXES
+            // category
+            var categoryAxis = chart.categoryAxis;
+            categoryAxis.labelRotation = 45;
+            categoryAxis.dashLength = 5;
+            categoryAxis.gridPosition = "start";
 
-                // SERIAL CHART
-                chart = new AmCharts.AmSerialChart();
-                chart.dataProvider = chartData;
-                chart.categoryField = "mes";
-                // the following two lines makes chart 3D
-                chart.depth3D = 20;
-                chart.angle = 30;
+            // value
+            var valueAxis = new AmCharts.ValueAxis();
+            valueAxis.title = "Montos";
+            valueAxis.dashLength = 5;
+            chart.addValueAxis(valueAxis);
 
-                // AXES
-                // category
-                var categoryAxis = chart.categoryAxis;
-                categoryAxis.labelRotation = 90;
-                categoryAxis.dashLength = 5;
-                categoryAxis.gridPosition = "start";
+            // GRAPH
+            var graph = new AmCharts.AmGraph();
+            graph.valueField = "monto";
+            graph.colorField = "color";
+            graph.balloonText = "<span style='font-size:14px'>[[category]]: <b>S/.[[value]]</b></span>";
+            graph.type = "column";
+            graph.lineAlpha = 0;
+            graph.fillAlphas = 1;
+            chart.addGraph(graph);
 
-                // value
-                var valueAxis = new AmCharts.ValueAxis();
-                valueAxis.title = "Montos";
-                valueAxis.dashLength = 5;
-                chart.addValueAxis(valueAxis);
+            // CURSOR
+            var chartCursor = new AmCharts.ChartCursor();
+            chartCursor.cursorAlpha = 0;
+            chartCursor.zoomable = false;
+            chartCursor.categoryBalloonEnabled = false;
+            chart.addChartCursor(chartCursor);
 
-                // GRAPH
-                var graph = new AmCharts.AmGraph();
-                graph.valueField = "monto";
-                graph.colorField = "color";
-                graph.balloonText = "<span style='font-size:14px'>[[category]]: <b>[[value]]</b></span>";
-                graph.type = "column";
-                graph.lineAlpha = 0;
-                graph.fillAlphas = 1;
-                chart.addGraph(graph);
+            chart.creditsPosition = "top-right";
 
-                // CURSOR
-                var chartCursor = new AmCharts.ChartCursor();
-                chartCursor.cursorAlpha = 0;
-                chartCursor.zoomable = false;
-                chartCursor.categoryBalloonEnabled = false;
-                chart.addChartCursor(chartCursor);
-
-                chart.creditsPosition = "top-right";
-
-
-                // WRITE
-                chart.write("chartdiv");
-
+            // WRITE
+            chart.write("chartdiv");
         }
         
     </script>
-
 
     <article class="col-lg-6">
         <?php

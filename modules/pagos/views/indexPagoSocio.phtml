@@ -8,6 +8,7 @@
 */
 $buscar    = Session::getPermiso("GPASOBS");
 $anular = Session::getPermiso('GPASOAN');
+$generar    = Session::getPermiso("GPASOGN");
 echo Functions::widgetOpen(array(
         "id"=>GPASO,
         "title"=>GPASO_1
@@ -54,7 +55,11 @@ echo Functions::widgetOpen(array(
     <div class="dataTables_wrapper form-inline" role="grid">
         <div class="dt-top-row">
             <div class="DTTT btn-group">
-               
+               <?php if($generar['permiso']): ?>
+                <button id="<?php echo GPASO; ?>btnNew" type="button" onclick="index.postGenerarUtilidadSocioBtn();" class="btn txt-color-white bg-color-blueDark">
+                    <i class="<?php echo $generar['icono']; ?>"></i> <?php echo $generar['accion']; ?>
+                </button>
+                <?php endif; ?>
             </div>
         </div>
 

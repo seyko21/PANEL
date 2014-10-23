@@ -42,7 +42,7 @@ define('L_OLVIDE','¿Olvide mi contraseña?');
 define('L_ENTRAR','Entrar');
 define('L_L_EMAIL','Ingrese su email');
 define('L_L_PASS','Ingrese su clave');
-define('LABEL_GRAF1','Estadística de Ingreso');
+define('LABEL_GRAF1','Estadística de Ingreso - '.date("Y"));
 /*CONFIGURAR MENU*/
 define('M_TITLTE_DOM','Módulos');
 define('M_TITLTE_MOD','Menú Principal');

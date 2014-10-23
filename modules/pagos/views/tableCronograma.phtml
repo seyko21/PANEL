@@ -31,7 +31,7 @@ $anular = Session::getPermiso("CROPAAN");
                     <?php $fechaProgramada = Functions::cambiaf_a_normal($value['fecha_programada']);
                         echo $fechaProgramada; ?>
                 </td>
-                <td>
+                <td class="center">
                     <!--si es pagado o anulado solo se visualizara la fecha de pago-->
                     <?php if ($value['estado'] == 'P' || $value['estado'] == 'A'): ?>
                         <?php echo Functions::cambiaf_a_normal($value['fecha_pagoreal']) ?>

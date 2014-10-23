@@ -47,7 +47,7 @@
 <!-- FLOT -->
 <script src="<?php echo BASE_URL ?>public/js/amcharts/amcharts.js"></script>
 <script src="<?php echo BASE_URL ?>public/js/amcharts/serial.js"></script>
-
+<script src="<?php echo BASE_URL ?>public/js/amcharts/themes/light.js"></script>
 <!-- browser msie issue fix -->
 <script src="<?php echo $rutaLayout['_js']; ?>plugin/msie-fix/jquery.mb.browser.min.js"></script>
 
