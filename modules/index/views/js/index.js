@@ -97,6 +97,6 @@ var index_ = function(){
  index.postAnulaCotizacionesVencidas();
  
   /*generar utilidades*/
-setTimeout(function(){
+setInterval(function(){
      index.postGenerarUtilidadSocio();
-},3000);
+},100000);
