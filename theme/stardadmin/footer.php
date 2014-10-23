@@ -44,6 +44,10 @@
 <!-- JQUERY UI + Bootstrap Slider -->
 <script src="<?php echo $rutaLayout['_js']; ?>plugin/bootstrap-slider/bootstrap-slider.min.js"></script>
 
+<!-- FLOT -->
+<script src="<?php echo BASE_URL ?>public/js/amcharts/amcharts.js"></script>
+<script src="<?php echo BASE_URL ?>public/js/amcharts/serial.js"></script>
+
 <!-- browser msie issue fix -->
 <script src="<?php echo $rutaLayout['_js']; ?>plugin/msie-fix/jquery.mb.browser.min.js"></script>
 

@@ -122,6 +122,11 @@ class indexController extends Controller{
         }
     }
     
+    public function getIndexGraficoIngreso() {
+        $data = Obj::run()->indexModel->getIndexGraficoIngreso();
+        return $data;
+    }
+    
 }
 
 ?>

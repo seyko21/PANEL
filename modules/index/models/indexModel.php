@@ -64,6 +64,20 @@ class indexModel extends Model {
         return $data;
     }
     
+    public function getIndexGraficoIngreso(){
+        $query = "SELECT
+                SUM(p.`monto_pago`)AS monto,
+                MONTH(p.`fecha_pago`) AS mes
+        FROM lgk_pago p
+        WHERE p.estado = :estado AND LEFT(p.`fecha_pago`,4) = YEAR(CURDATE())
+        GROUP BY 2;";
+        $parms = array(
+            ':estado' => 'P'
+        );
+        $data = $this->queryAll($query,$parms);
+        return $data;
+    }
+    
 }
 
 ?>
