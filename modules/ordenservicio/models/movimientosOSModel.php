@@ -115,7 +115,54 @@ class movimientosOSModel extends Model{
         $data = $this->queryAll($query,$parms);
         return $data;
     }    
+    public function getMovIngresos(){
+        $aColumns       =   array("numero_cuota","costo_mora","monto_pago","fecha_programada","fecha_pagoreal","estado" ); //para la ordenacion y pintado en html
+        /*
+	 * Ordenando, se verifica por que columna se ordenara
+	 */
+        $sOrder = "";
+        for ( $i=0 ; $i<intval( $this->_iSortingCols ) ; $i++ ){
+                if ( $this->post( "bSortable_".intval($this->post("iSortCol_".$i)) ) == "true" ){
+                        $sOrder .= " ".$aColumns[ intval( $this->post("iSortCol_".$i) ) ]." ".
+                                ($this->post("sSortDir_".$i)==="asc" ? "asc" : "desc") .",";
+                }
+        }
+         $sOrder = substr_replace( $sOrder, "", -1 );
+        $query = "call sp_ordseMOVOSIngresosGrid(:idOrden,:iDisplayStart,:iDisplayLength,:sOrder);";
         
+        $parms = array(
+            ":idOrden" => $this->_idOS,
+            ":iDisplayStart" => $this->_iDisplayStart,
+            ":iDisplayLength" => $this->_iDisplayLength,
+            ":sOrder" => $sOrder
+        );
+        $data = $this->queryAll($query,$parms);
+        return $data;
+    }           
+    public function getMovUtilidad(){
+        $aColumns       =   array("codigo","cantidad_mes","importe","impuesto","egresos","utilidad" ); //para la ordenacion y pintado en html
+        /*
+	 * Ordenando, se verifica por que columna se ordenara
+	 */
+        $sOrder = "";
+        for ( $i=0 ; $i<intval( $this->_iSortingCols ) ; $i++ ){
+                if ( $this->post( "bSortable_".intval($this->post("iSortCol_".$i)) ) == "true" ){
+                        $sOrder .= " ".$aColumns[ intval( $this->post("iSortCol_".$i) ) ]." ".
+                                ($this->post("sSortDir_".$i)==="asc" ? "asc" : "desc") .",";
+                }
+        }
+         $sOrder = substr_replace( $sOrder, "", -1 );
+        $query = "call sp_ordseMOVOSUtilidadGrid(:idOrden,:iDisplayStart,:iDisplayLength,:sOrder);";
+        
+        $parms = array(
+            ":idOrden" => $this->_idOS,
+            ":iDisplayStart" => $this->_iDisplayStart,
+            ":iDisplayLength" => $this->_iDisplayLength,
+            ":sOrder" => $sOrder
+        );
+        $data = $this->queryAll($query,$parms);
+        return $data;
+    }      
 }
 
 ?>

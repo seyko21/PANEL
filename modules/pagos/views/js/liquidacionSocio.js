@@ -72,7 +72,7 @@ var liquidacionSocio_ = function(){
                 aoData.push({"name": "_f2", "value": _f2}); 
             },
             fnDrawCallback: function() {
-                $("#"+diccionario.tabs.LISOC+"gridLiquidacionSocio_filter").find("input").attr("placeholder","Buscar por Cliente").css("width","200px");
+                $("#"+diccionario.tabs.LISOC+"gridLiquidacionSocio_filter").find("input").attr("placeholder","Buscar por nombre").css("width","200px");
                 simpleScript.enterSearch("#"+diccionario.tabs.LISOC+"gridLiquidacionSocio",oTable);
                 /*para hacer evento invisible*/
                 simpleScript.removeAttr.click({

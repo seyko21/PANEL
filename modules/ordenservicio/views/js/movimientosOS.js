@@ -148,7 +148,65 @@ var movimientosOS_ = function(){
         });
         setup_widgets_desktop();
     };        
+
+    this.publico.getGridMOVIngresos= function (){
+         $('#'+diccionario.tabs.MOVOS+'gridMOVIN').dataTable({
+            bProcessing: true,
+            bServerSide: true,
+            bDestroy: true,
+            sPaginationType: "bootstrap_full", //two_button
+            sServerMethod: "POST",
+            bPaginate: true,
+            iDisplayLength: 10,   
+            sSearch: false,
+            bFilter: false,
+            aoColumns: [                
+                {sTitle: "Cuota", sWidth: "7%", sClass: "center"},
+                {sTitle: "Mora", sWidth: "7%", sClass: "right"},
+                {sTitle: "Monto", sWidth: "12%", sClass: "right"},
+                {sTitle: "F. Programada", sWidth: "11%", sClass: "center"},
+                {sTitle: "F. Pagado", sWidth: "11%", sClass: "center"},
+                {sTitle: "Estado", sWidth: "10%", sClass: "center"}
+            ],
+            aaSorting: [[0, 'asc']],
+            sScrollY: "260px",
+            sAjaxSource: _private.config.modulo+'getGridMovIngresos',
+            fnServerParams: function(aoData) {
+                aoData.push({"name": "_idOS", "value": _private.idOS });
+            }
+        });
+        setup_widgets_desktop();
+    };   
     
+    this.publico.getGridMOVUtilidad = function (){
+         $('#'+diccionario.tabs.MOVOS+'gridMOVUTILIDAD').dataTable({
+            bProcessing: true,
+            bServerSide: true,
+            bDestroy: true,
+            sPaginationType: "bootstrap_full", //two_button
+            sServerMethod: "POST",
+            bPaginate: true,
+            iDisplayLength: 10,   
+            sSearch: false,
+            bFilter: false,
+            aoColumns: [                
+                {sTitle: "Código", sWidth: "7%", sClass: "center"},
+                {sTitle: "Tiempo", sWidth: "15%", sClass: "center"},
+                {sTitle: "Alquiler", sWidth: "10%", sClass: "right"},
+                {sTitle: "Impuesto", sWidth: "10%", sClass: "right"},
+                {sTitle: "Egresos", sWidth: "10%", sClass: "right"},
+                {sTitle: "Utilidad", sWidth: "10%", sClass: "right"}
+            ],
+            aaSorting: [[0, 'asc']],
+            sScrollY: "260px",
+            sAjaxSource: _private.config.modulo+'getGridMovUtilidad',
+            fnServerParams: function(aoData) {
+                aoData.push({"name": "_idOS", "value": _private.idOS });
+            }
+        });
+        setup_widgets_desktop();
+    };   
+        
     this.publico.getConsulta = function(btn,idd,cod){
         _private.idOS = idd;
         simpleAjax.send({
@@ -159,7 +217,8 @@ var movimientosOS_ = function(){
             fnCallback: function(data){
                 $("#cont-modal").append(data);  /*los formularios con append*/
                 $("#"+diccionario.tabs.MOVOS+"formMOV").modal("show");                
-                movimientosOS.getGridMOVInstalacion();                 
+                setTimeout(function(){movimientosOS.getGridMOVInstalacion();},500);
+                
             }
         });
     };
