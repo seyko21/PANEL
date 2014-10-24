@@ -49,7 +49,7 @@ class liquidacionSocioModel extends Model{
     
     /*data para el grid: LiquidacionSocio*/
     public function getLiquidacionSocio(){
-        $aColumns       =   array('orden_numero','socio','fecha_contrato','cliente','monto_total','estado' ); //para la ordenacion y pintado en html
+        $aColumns       =   array('orden_numero','socio','fecha_contrato','cliente','ingresos','estado' ); //para la ordenacion y pintado en html
         /*
 	 * Ordenando, se verifica por que columna se ordenara
 	 */

@@ -81,7 +81,7 @@ class liquidacionSocioController extends Controller{
                 $axion .= ' </div>" ';
                 
                 /*registros a mostrar*/
-                $sOutput .= '["'.$aRow['orden_numero'].'","'.$aRow['socio'].'","'.  Functions::cambiaf_a_normal($aRow['fecha_contrato']).'","'.$aRow['cliente'].' - '.$aRow['representante'].'","S/.'.number_format($aRow['monto_total'],2).'","'.$estado.'",'.$axion.' ';
+                $sOutput .= '["'.$aRow['orden_numero'].'","'.$aRow['socio'].'","'.  Functions::cambiaf_a_normal($aRow['fecha_contrato']).'","'.$aRow['cliente'].' - '.$aRow['representante'].'","S/.'.number_format($aRow['ingresos'],2).'","'.$estado.'",'.$axion.' ';
 
                 $sOutput .= '],';
 

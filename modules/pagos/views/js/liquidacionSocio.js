@@ -60,7 +60,7 @@ var liquidacionSocio_ = function(){
                 {sTitle: "Socio", sWidth: "15%"},
                 {sTitle: "Fecha", sWidth: "10%",  sClass: "center"},
                 {sTitle: "Cliente", sWidth: "25%"},                
-                {sTitle: "Total", sWidth: "15%",sClass: "right"},
+                {sTitle: "Total Pagado", sWidth: "15%",sClass: "right"},
                 {sTitle: "Estado", sWidth: "10%", sClass: "center"},                
                 {sTitle: "Acciones", sWidth: "8%", sClass: "center", bSortable: false}               
             ],
