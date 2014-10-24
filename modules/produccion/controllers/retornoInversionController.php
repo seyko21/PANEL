@@ -116,7 +116,7 @@ class retornoInversionController extends Controller{
             
             foreach ( $rResult as $aRow ){
                 if($aRow['nro_cuotas'] < 0):
-                    $cuota =1;                     
+                    $cuota =1;          
                 else:
                     $cuota =$aRow['nro_cuotas'];                     
                 endif;
@@ -140,14 +140,14 @@ class retornoInversionController extends Controller{
                 $c2 =$aRow['codigo'];
                 $c3 =$aRow['fecha'];
                 $c4 = Functions::convertirDiaMes($aRow['cantidad_mes']);
-                $c5 = number_format($aRow['importe'],2);
-                $c6 = number_format($aRow['impuesto'],2);
+                $c5 = number_format($aRow['impuesto'],2);
+                $c6 = number_format($aRow['importe'],2);
                 $c7 = number_format($aRow['monto_total'],2);
                 $c8 = number_format($aRow['comision_venta'],2);
                 $c9 = number_format($aRow['egresos'],2);
                 $c10 = number_format($aRow['total_utilidad'],2);                    
                 $c11 = number_format($aRow['monto_utilidad'],2);
-                $c12 = number_format($aRow['monto_utilidad']/$cuota,2);
+                $c12 = number_format((($aRow['monto_utilidad']/$cuota)*$aRow['pagados']),2);
                 /*registros a mostrar*/
                 $sOutput .= '["'.$c1.'","'.$c2.'","'.$c3.'","'.$c4.'","'.$c6.'","'.$c7.'","'.$c8.'","'.$c9.'","'.$c10.'","'.$c11.'","'.$c12.'","'.$estado.'"  ';
 

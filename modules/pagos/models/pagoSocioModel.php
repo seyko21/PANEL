@@ -56,7 +56,7 @@ class pagoSocioModel extends Model{
     
     /*data para el grid: PagoSocio*/
     public function getPagoSocio(){
-         $aColumns       =   array("","","orden_numero","nombrecompleto","fecha","porcentaje_comision","comision_venta","comision_asignado","comision_saldo" ); //para la ordenacion y pintado en html
+         $aColumns       =   array("","orden_numero","nombrecompleto","fecha","porcentaje_comision","comision_venta","comision_asignado","comision_saldo" ); //para la ordenacion y pintado en html
         /*
 	 * Ordenando, se verifica por que columna se ordenara
 	 */

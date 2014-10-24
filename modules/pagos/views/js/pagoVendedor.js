@@ -60,7 +60,6 @@ var pagoVendedor_ = function(){
             bPaginate: true,
             iDisplayLength: 10,            
             aoColumns: [
-                {sTitle: "<input type='checkbox' id='"+diccionario.tabs.GPAVE+"chk_all' onclick='simpleScript.checkAll(this,\"#"+diccionario.tabs.GPAVE+"gridPagosVendedor\");'>", sWidth: "1%", sClass: "center", bSortable: false},
                 {sTitle: "N°", sWidth: "5%", bSortable: false},
                 {sTitle: "N° OS", sWidth: "10%"},
                 {sTitle: "Vendedor", sWidth: "28%"},
@@ -130,7 +129,7 @@ var pagoVendedor_ = function(){
                     simpleScript.notify.ok({
                         content: mensajes.MSG_3,
                         callback: function(){
-                            pagoVendedor.getGridPagosVendedor();
+                            simpleScript.reloadGrid('#'+diccionario.tabs.GPAVE+'gridPagosVendedor');
                             simpleScript.closeModal('#'+diccionario.tabs.GPAVE+'formPagarVendedor');
                             _private.idComision = 0;
                         }

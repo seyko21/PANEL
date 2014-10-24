@@ -68,7 +68,6 @@ var pagoSocio_ = function(){
             bPaginate: true,
             iDisplayLength: 10,            
             aoColumns: [
-                {sTitle: "<input type='checkbox' id='"+diccionario.tabs.GPASO+"chk_all' onclick='simpleScript.checkAll(this,\"#"+diccionario.tabs.GPASO+"gridPagoSocio\");'>", sWidth: "1%", sClass: "center", bSortable: false},
                 {sTitle: "N°", sWidth: "5%", bSortable: false},
                 {sTitle: "N° OS", sWidth: "10%"},
                 {sTitle: "Socio", sWidth: "28%"},
@@ -139,7 +138,7 @@ var pagoSocio_ = function(){
                     simpleScript.notify.ok({
                         content: mensajes.MSG_3,
                         callback: function(){
-                            pagoSocio.getGridPagoSocio();
+                            simpleScript.reloadGrid('#'+diccionario.tabs.GPASO+'gridPagoSocio');                           
                             simpleScript.closeModal('#'+diccionario.tabs.GPASO+'formPagarSocio');
                             _private.idComision = 0;
                         }

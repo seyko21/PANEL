@@ -184,7 +184,7 @@ class liquidacionSocioController extends Controller{
             <tr>              
                 <th style="width:10%">Gastos</th>               
                 <th style="width:10%">Impuesto</th>
-                <th style="width:10%">Comision</th>
+                <th style="width:10%">Comisión</th>
             </tr>';
         // Listado del servicio 
         $sumaUtilidadSocio = 0;
