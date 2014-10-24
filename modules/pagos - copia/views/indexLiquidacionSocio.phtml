@@ -1,0 +1,73 @@
+<?php 
+/*
+* ---------------------------------------
+* --------- CREATED BY CREATOR ----------
+* fecha: 30-09-2014 03:09:35 
+* Descripcion : indexLiquidacionSocio.phtml
+* ---------------------------------------
+*/
+
+$buscar    = Session::getPermiso("LISOCBS");
+echo Functions::widgetOpen(array(
+        "id"=>LISOC,
+        "title"=>LISOC_1
+    )); 
+?>
+
+<button id="<?php echo LISOC; ?>btnDowPDF" type="button" class="hide">Descargar</button>
+<div class="widget-body-toolbar">
+    <div class="smart-form" style="position: absolute;left: 250px;top:5px; width: 50% ">
+        <label class="label col col-1"><?php echo COGEN_2; ?></label>        
+        <div class="col col-3" style="padding-left:20px;">
+            <div class="input-group">
+                <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                <input class="form-control" type="text" id="<?php echo LISOC;?>txt_f1" name="<?php echo LISOC;?>txt_f1" value ="01/01/<?php echo date("Y"); ?>" style="padding-left:10px; width: 80px; " />
+             </div>            
+        </div>
+        <label class="label col col-1">&nbsp;<?php echo COGEN_3; ?></label>        
+        <div class="col col-3" >
+            <div class="input-group">
+                <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                <input class="form-control" type="text" id="<?php echo LISOC;?>txt_f2" name="<?php echo LISOC;?>txt_f2" value ="<?php echo date("d/m/Y"); ?>" style="padding-left:10px; width: 80px; " />
+             </div>            
+        </div>
+        <div class="col col-1" style="padding-left:15px;">
+            <div >
+                <button id="<?php echo LISOC; ?>btnBuscar" type="button" style="padding:6px 10px;"
+                        onclick="liquidacionSocio.getGridLiquidacionSocio();" 
+                        class="<?php echo $buscar['theme'];?> btn-sm"  >
+                      <i class="<?php echo $buscar['icono'];?>"></i> <?php echo $buscar['accion'];?>
+                </button>
+            </div>
+        </div>
+    </div>
+    
+    
+</div>
+    <div class="dataTables_wrapper form-inline" role="grid">
+        <div class="dt-top-row">
+            <div class="DTTT btn-group">           
+            </div>
+        </div>
+
+    </div>
+<form id="<?php echo LISOC; ?>formGridLiquidacionSocio" name="<?php echo LISOC; ?>formGridLiquidacionSocio" onsubmit="return false;">
+        <table id="<?php echo LISOC; ?>gridLiquidacionSocio" class="table table-striped table-hover table-condensed" style="width:100%"></table>
+    </form>
+<?php echo Functions::widgetClose(); ?>
+
+ 
+<script>
+
+    simpleScript.setEvent.dateRange({
+        ini: '#<?php echo LISOC; ?>txt_f1',
+        fin: '#<?php echo LISOC; ?>txt_f2',
+        opt: 'minDate'
+    });
+    simpleScript.setEvent.dateRange({
+        ini: '#<?php echo LISOC; ?>txt_f2',
+        fin: '#<?php echo LISOC; ?>txt_f1',
+        opt: 'maxDate'
+    });
+    
+</script>

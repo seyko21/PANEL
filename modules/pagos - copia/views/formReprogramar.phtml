@@ -1,0 +1,107 @@
+<?php /*
+* ---------------------------------------
+* --------- CREATED BY CREATOR ----------
+* fecha: 16-09-2014 22:09:43 
+* Descripcion : formReprogramar.phtml
+* ---------------------------------------
+*/
+
+/*prefijo: CROPA debe ser alias en tabla men_menuprincipal*/
+$grabar = Session::getPermiso("CROPAGR");
+
+$ncuota = Formulario::getParam('_ncuota');
+$fecha = Formulario::getParam('_fecha');
+?>
+<form id="<?php echo CROPA; ?>formReprogramar" name="<?php echo CROPA; ?>formReprogramar" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close"  aria-hidden="true">
+                    &times;
+                </button>
+                <h4 class="modal-title"><?php echo CROPA_5.$ncuota.' | Fecha: '.$fecha; ?></h4>
+            </div>
+            <div class="modal-body smart-form"> 
+                <section>
+                    <div class="row">
+                        <label class="label col col-2"><?php echo CROPA_6; ?></label>
+                        <div class="col col-3">
+                            <label class="input"> 
+                                <i class="icon-append fa fa-calendar-o"></i>
+                                <input type="text" id="<?php echo CROPA; ?>txt_fechare" name="<?php echo CROPA; ?>txt_fechare" >
+                                <b class="tooltip tooltip-top-right"><i class="fa fa-question-circle txt-color-teal"></i> <?php echo CROPA_7; ?></b>
+                            </label>
+                        </div>
+                        
+                        <label class="label col col-2"><?php echo CROPA_8; ?></label>
+                        <div class="col col-3">
+                            <label class="input"> 
+                                <i class="icon-append fa fa-keyboard-o"></i>
+                                <input type="text" id="<?php echo CROPA; ?>txt_mora" name="<?php echo CROPA; ?>txt_mora" >
+                                <b class="tooltip tooltip-top-right"><i class="fa fa-question-circle txt-color-teal"></i> <?php echo CROPA_9; ?></b>
+                            </label>
+                        </div>
+                    </div>
+                </section>
+                 <section>
+                        <div class="row">
+                            <label class="label col col-2"><?php echo CROPA_D1; ?></label>
+                            <div class="col col-9">
+                                <label class="textarea textarea-resizable"> 
+                                     <i class="icon-append fa fa-align-justify"></i>
+                                    <textarea id="<?php echo CROPA; ?>txt_observacion" name="<?php echo CROPA; ?>txt_observacion" class="custom-scroll" rows="3"></textarea> 
+                                     <b class="tooltip tooltip-top-right"><i class="fa fa-question-circle txt-color-teal"></i> <?php echo CROPA_D1M; ?></b>
+                                </label>
+
+                            </div>
+                        </div>
+                </section>           
+            </div>
+            <div class="modal-footer"> 
+                <?php if($grabar["permiso"]):?>
+                <button id="<?php echo CROPA; ?>btnGrep" type="submit" class="<?php echo $grabar["theme"]; ?>" >
+                    <i class="<?php echo $grabar["icono"]; ?>"></i> <?php echo $grabar["accion"]; ?>
+                </button>
+                <?php endif; ?>
+                <button type="button" class="<?php echo THEME_CLOSE; ?>">
+                    <i class="<?php echo ICON_CLOSE; ?>"></i> <?php echo BTN_CLOSE; ?>
+                </button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</form>
+<!-- si no tiene permiso se anula submit desde cualquier input -->
+<?php if(!$grabar["permiso"]): ?>
+<script>
+    simpleScript.noSubmit("#<?php echo CROPA; ?>formReprogramar");
+</script>
+<?php endif; ?>
+<script>
+    simpleScript.setEvent.date({
+      element: '#<?php echo CROPA; ?>txt_fechare' 
+    });
+    simpleScript.removeAttr.click({
+        container: "#<?php echo CROPA; ?>formReprogramar",
+        typeElement: "button"
+    });
+    
+    $("#<?php echo CROPA; ?>formReprogramar").validate({
+        // Rules for form validation
+        rules: {
+                    <?php echo CROPA; ?>txt_fechare: {
+                        required: true,
+                        date: true
+                    },
+                    <?php echo CROPA; ?>txt_mora: {
+                        number: true
+                    }        
+                },
+                // No cambie el código de abajo
+                errorPlacement: function(error, element) {
+                    error.insertAfter(element.parent());
+                },
+                submitHandler: function() {
+                    cronogramaPago.postReprogramar();
+                }
+            });
+</script>

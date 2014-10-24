@@ -62,9 +62,10 @@ class terminarContratoController extends Controller{
                 }
                 /*antes de enviar id se encrypta*/
                 $encryptReg = Aes::en($aRow['id_ordenservicio']);
+                $idPersona = Aes::en($aRow['id_persona']);
                 
                 /*registros a mostrar*/
-                $sOutput .= '["'.$aRow['orden_numero'].'","'.$aRow['cotizacion_numero'].'","'.$aRow['cliente'].' - '.$aRow['nombrecompleto'].'","'.$aRow['fecha'].'","'.number_format($aRow['monto_total'],2).'","'.$estado.'",';
+                $sOutput .= '["'.$aRow['orden_numero'].'","'.$aRow['cotizacion_numero'].'","<a href=\"javascript:;\" onclick=\"persona.getDatosPersonales(\''.$idPersona.'\');\">'.$aRow['cliente'].' - '.$aRow['nombrecompleto'].'</a>","'.$aRow['fecha'].'","'.number_format($aRow['monto_total'],2).'","'.$estado.'",';
 
                 /*
                  * configurando botones (add/edit/delete etc)

@@ -44,7 +44,7 @@ class compromisoPagarController extends Controller{
             foreach ( $rResult as $aRow ){
                 
                  $encryptReg = Aes::en($aRow['id_compromisopago']);
-                
+                $idPersona = Aes::en($aRow['id_persona']);
                 /*campo que maneja los estados, para el ejemplo aqui es ACTIVO, coloca tu campo*/
                 switch ($aRow['estado']){
                         case 'E': #emitido
@@ -88,7 +88,7 @@ class compromisoPagarController extends Controller{
                 }
                 $axion .= ' </div>" ';
                 /*registros a mostrar*/
-                $sOutput .= '["'.$aRow['orden_numero'].'","'.$aRow['numero_cuota'].'","'.$aRow['fecha_programada'].'","'.$aRow['cliente'].' - '.$aRow['representante'].'","'.number_format($aRow['mora'],2).'","'.number_format($aRow['monto_pago'],2).'","'.$estado.'",'.$axion.' ';
+                $sOutput .= '["'.$aRow['orden_numero'].'","'.$aRow['numero_cuota'].'","'.$aRow['fecha_programada'].'","<a href=\"javascript:;\" onclick=\"persona.getDatosPersonales(\''.$idPersona.'\');\">'.$aRow['cliente'].' - '.$aRow['representante'].'</a>","'.number_format($aRow['mora'],2).'","'.number_format($aRow['monto_pago'],2).'","'.$estado.'",'.$axion.' ';
 
                 $sOutput .= '],';
 

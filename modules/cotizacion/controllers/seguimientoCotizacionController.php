@@ -46,9 +46,10 @@ class seguimientoCotizacionController extends Controller{
                 $p++;
                 /*antes de enviar id se encrypta*/
                 $encryptReg = Aes::en($aRow['id_cotizacion']);
+                $idPersona = Aes::en($aRow['id_persona']);
                 
                 /*datos de manera manual*/
-                $sOutput .= '["'.$aRow['cotizacion_numero'].'","'.$aRow['nombrecompleto'].'","'.$aRow['creador'].'","'.$aRow['fechacoti'].'","'.$aRow['meses_contrato'].'","'.Functions::cambiaf_a_normal($aRow['vencimiento']).'","'.  number_format($aRow['mtotal'],2).'", ';
+                $sOutput .= '["'.$aRow['cotizacion_numero'].'","<a href=\"javascript:;\" onclick=\"persona.getDatosPersonales(\''.$idPersona.'\');\">'.$aRow['nombrecompleto'].'</a>","'.$aRow['creador'].'","'.$aRow['fechacoti'].'","'.$aRow['meses_contrato'].'","'.Functions::cambiaf_a_normal($aRow['vencimiento']).'","'.  number_format($aRow['mtotal'],2).'", ';
 
                 /*
                  * configurando botones (add/edit/delete etc)

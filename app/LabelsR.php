@@ -167,7 +167,8 @@ define('LABEL_RC5','Representantes');
 define('LABEL_RC6','Cliente:');
 define('LABEL_RC7','Nuevo Representante');
 define('LABEL_RC8','Editar Representante');
-
+define('LABEL_RC9','Datos Personales');
+define('LABEL_RC10','Apellidos y Nombres');
 /*----------------------    SEGUIMIENTO DE COTIZACION  ----------------------*/
 define('SEGCO_1','Seguimiento de Cotización');
 define('SEGCO_2','Observación - Cotización Nro.: ');

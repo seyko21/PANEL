@@ -127,17 +127,21 @@ class personaModel extends Model{
     /*seleccionar registro a editar: Persona*/
     public function findPersona(){
         $query = "SELECT 
-                        nombres,
-                        apellidopaterno,
-                        apellidomaterno,
-                        numerodocumento,
-                        id_ubigeo,
-                        direccion,
-                        dni,
-                        email,
-                        sexo,
-                        telefono                        
-                    FROM mae_persona WHERE id_persona = :idPersona;";
+                        p.nombres,
+                        p.apellidopaterno,
+                        p.apellidomaterno,
+                        p.numerodocumento,
+                        p.nombrecompleto,
+                        p.id_ubigeo,
+                        p.direccion,
+                        p.dni,
+                        p.email,
+                        p.sexo,
+                        p.telefono,
+                        u.foto
+                    FROM mae_persona p 
+                    INNER JOIN mae_usuario u ON u.persona=p.persona
+                    WHERE p.id_persona = :idPersona;";
 
             $parms = array(
                 ':idPersona'=>$this->_idPersona

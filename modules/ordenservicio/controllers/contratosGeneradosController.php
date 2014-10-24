@@ -63,7 +63,7 @@ class contratosGeneradosController extends Controller{
                 
                 /*antes de enviar id se encrypta*/
                 $encryptReg = Aes::en($aRow['id_ordenservicio']);
-                
+                $idPersona = Aes::en($aRow['id_persona']);
                 /*
                  * configurando botones (add/edit/delete etc)
                  * se verifica si tiene permisos para editar
@@ -82,7 +82,7 @@ class contratosGeneradosController extends Controller{
                 $creador = $aRow['creador'];
                 
                 /*registros a mostrar*/
-                $sOutput .= '["'.$aRow['orden_numero'].'","'.$aRow['fecha_contrato'].'","'.$aRow['cliente'].' - '.$aRow['representante'].'","'.$creador.'","S/.'.number_format($aRow['monto_total'],2).'","'.$estado.'",'.$axion.' ';
+                $sOutput .= '["'.$aRow['orden_numero'].'","'.$aRow['fecha_contrato'].'","<a href=\"javascript:;\" onclick=\"persona.getDatosPersonales(\''.$idPersona.'\');\">'.$aRow['cliente'].' - '.$aRow['representante'].'</a>","'.$creador.'","S/.'.number_format($aRow['monto_total'],2).'","'.$estado.'",'.$axion.' ';
 
                 $sOutput .= '],';
 

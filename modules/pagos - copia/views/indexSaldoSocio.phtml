@@ -1,0 +1,79 @@
+<?php 
+/*
+* ---------------------------------------
+* --------- CREATED BY CREATOR ----------
+* fecha: 26-09-2014 23:09:38 
+* Descripcion : indexSaldoSocio.phtml
+* ---------------------------------------
+*/
+$buscar    = Session::getPermiso("SASOCBS");
+echo Functions::widgetOpen(array(
+        "id"=>SASOC,
+        "title"=>SASOC_1
+    )); 
+?>
+
+
+<div class="widget-body-toolbar">
+     <div class="smart-form" style="position: absolute;left: 250px;top:5px">
+      <label class="label col col-7"><?php echo SEGCO_9; ?></label>
+      <label class="select pull-left">
+          <select style="width: 100px;" id="<?php echo SASOC; ?>lst_estadosearch" name="<?php echo SASOC; ?>lst_estadosearch" onchange="saldoSocio.getGridSaldoSocio();">
+              <option value="T"><?php echo SEGCO_4; ?></option>
+              <option value="S"  selected="selected"><?php echo SAVEN_2; ?></option>
+              <option value="P" ><?php echo SAVEN_3; ?></option>
+          </select>
+          <i></i>
+      </label>
+      
+      <label class="label col col-1"><?php echo COGEN_2; ?></label>        
+        <div class="col col-2" style="padding-left:5px;">
+            <div class="input-group">
+                <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                <input class="form-control" type="text" id="<?php echo SASOC;?>txt_f1" name="<?php echo SASOC;?>txt_f1" value ="01/01/<?php echo date("Y"); ?>" style="padding-left:10px; width: 80px; " />
+             </div>            
+        </div>
+        <label class="label col col-1">&nbsp;<?php echo COGEN_3; ?></label>        
+        <div class="col col-2" >
+            <div class="input-group">
+                <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                <input class="form-control" type="text" id="<?php echo SASOC;?>txt_f2" name="<?php echo SASOC;?>txt_f2" value ="<?php echo date("d/m/Y"); ?>" style="padding-left:10px; width: 80px; " />
+             </div>            
+        </div>
+        <div class="col col-1" style="padding-left:30px;">
+            <div class=" ">
+                <button id="<?php echo SASOC; ?>btnBuscar" type="button" style="padding:6px 10px;"
+                        onclick="saldoSocio.getGridSaldoSocio();" 
+                        class="<?php echo $buscar['theme'];?> btn-sm"  >
+                      <i class="<?php echo $buscar['icono'];?>"></i> <?php echo $buscar['accion'];?>
+                </button>
+            </div>
+        </div>
+  </div>    
+</div>
+    <div class="dataTables_wrapper form-inline" role="grid">
+        <div class="dt-top-row">
+            <div class="DTTT btn-group">
+            </div>
+        </div>
+    </div>
+    <form id="<?php echo SASOC; ?>formGridSaldoSocio" name="<?php echo SASOC; ?>formGridSaldoSocio" onsubmit="return false">
+        <table id="<?php echo SASOC; ?>gridSaldoSocio" class="table table-striped table-hover table-condensed" style="width:100%"></table>
+    </form>
+<?php echo Functions::widgetClose(); ?>
+
+<script>
+    
+    simpleScript.setEvent.dateRange({
+        ini: '#<?php echo SASOC; ?>txt_f1',
+        fin: '#<?php echo SASOC; ?>txt_f2',
+        opt: 'minDate'
+    });
+    
+    simpleScript.setEvent.dateRange({
+        ini: '#<?php echo SASOC; ?>txt_f2',
+        fin: '#<?php echo SASOC; ?>txt_f1',
+        opt: 'maxDate'
+    });    
+
+</script>

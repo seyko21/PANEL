@@ -47,6 +47,7 @@ class generarOrdenController extends Controller{
                 /*antes de enviar id se encrypta*/
                 $encryptReg = Aes::en($aRow['id_ordenservicio']);
                 $idUser = Aes::en($aRow['id_usuario']);
+                $idPersona = Aes::en($aRow['id_persona']);
                 
                 /*solo se anulara las ordenes que estan en estado E, porque no debde tener ningun pago hecho*/
                 $chk = '<input id=\"c_'.(++$key).'\" type=\"checkbox\" disabled=\"disabled\"  >';
@@ -87,7 +88,7 @@ class generarOrdenController extends Controller{
                 
                 
                 /*registros a mostrar*/
-                $sOutput .= '["'.$chk.'","'.$c1.'","'.$c2.'","'.$c3.'","'.$c4.'","'.$c5.'","'.$c6.'","'.$estado.'",';
+                $sOutput .= '["'.$chk.'","'.$c1.'","'.$c2.'","<a href=\"javascript:;\" onclick=\"persona.getDatosPersonales(\''.$idPersona.'\');\">'.$c3.'</a>","'.$c4.'","'.$c5.'","'.$c6.'","'.$estado.'",';
                 
                 /*
                  * configurando botones (add/edit/delete etc)

@@ -1,0 +1,41 @@
+<?php 
+/*
+* ---------------------------------------
+* --------- CREATED BY CREATOR ----------
+* fecha: 16-09-2014 22:09:43 
+* Descripcion : indexSeguimientoPago.phtml
+* ---------------------------------------
+*/
+echo Functions::widgetOpen(array(
+        "id"=>CROPA,
+        "title"=>CROPA_1
+    )); 
+?>
+    <div class="widget-body-toolbar">
+        <div class="smart-form" style="position: absolute;left: 400px;top:5px">
+            <label class="label col col-7"><?php echo SEGCO_9; ?></label>
+            <label class="select pull-left">
+                <select id="<?php echo CROPA; ?>lst_estadosearch" name="<?php echo CROPA; ?>lst_estadosearch" onchange="cronogramaPago.getGridOrdenes();">
+                    <option value="X"><?php echo SEGCO_4; ?></option>
+                    <option value="P"><?php echo SEGPA_7; ?></option>
+                    <option value="T"><?php echo SEGPA_8; ?></option>
+                    <option value="F"><?php echo SEGPA_29; ?></option>
+                    <option value="E"><?php echo SEGPA_6; ?></option>
+                </select>
+                <i></i>
+            </label>
+            
+        </div>
+    </div>
+    <div class="dataTables_wrapper form-inline" role="grid">
+        <div class="dt-top-row">
+            <div class="DTTT btn-group">
+               
+            </div>
+        </div>
+
+    </div>
+    <form id="<?php echo CROPA; ?>formGridOrdenes" name="<?php echo CROPA; ?>formGridOrdenes" onsubmit="return false;">
+        <table id="<?php echo CROPA; ?>getGridOrdenes" class="table table-striped table-hover table-condensed" style="width:100%"></table>
+    </form>        
+<?php echo Functions::widgetClose(); ?>

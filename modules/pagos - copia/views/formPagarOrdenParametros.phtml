@@ -1,0 +1,168 @@
+<?php /*
+* ---------------------------------------
+* --------- CREATED BY CREATOR ----------
+* fecha: 16-09-2014 22:09:43 
+* Descripcion : formPagarOrdenParametros.phtml
+* ---------------------------------------
+*/
+
+/*prefijo: SEGPA debe ser alias en tabla men_menuprincipal*/
+$grabar = Session::getPermiso("CROPAGR");
+
+$norden = Formulario::getParam('_norden');
+$ncuota = Formulario::getParam('_ncuota');
+
+?>
+<form id="<?php echo CROPA; ?>formPagarOrdenParametros" name="<?php echo CROPA; ?>formPagarOrdenParametros" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close"  aria-hidden="true">
+                    &times;
+                </button>
+                <h4 class="modal-title"><?php echo SEGPA_21.$norden.' / '.$ncuota?></h4>
+            </div>
+            <div class="modal-body smart-form"> 
+               <section>
+                    <div class="row">
+                        <label class="label col col-3"><?php echo SEGPA_22; ?></label>
+                        <div class="col col-3">
+                            <label class="select"> 
+                                <?php
+                                    $datat = array(
+                                        array('valor'=>'F','etiqueta'=>'Factura'),
+                                        array('valor'=>'B','etiqueta'=>'Boleta'),
+                                        array('valor'=>'R','etiqueta'=>'Recibo')
+                                    );
+                                    
+                                    echo Functions::selectHtml(array(
+                                        'data'=>$datat,
+                                        'atributes'=>array(
+                                            'id'=>CROPA.'lst_tipodoc',
+                                            'name'=>CROPA.'lst_tipodoc'
+                                        ),
+                                        'etiqueta'=>'etiqueta',
+                                        'value'=>'valor',
+                                        'txtSelect'=>true
+                                    ));
+                                ?><i></i>
+                            </label>
+                        </div>
+                        
+                        <label class="label col col-3"><?php echo SEGPA_5; ?></label>
+                        <div class="col col-3">
+                            <label class="input"> 
+                                <i class="icon-append fa fa-calendar-o"></i>
+                                <input type="text" id="<?php echo CROPA; ?>txt_fechapago" name="<?php echo CROPA; ?>txt_fechapago" >
+                                <b class="tooltip tooltip-top-right"><i class="fa fa-question-circle txt-color-teal"></i> <?php echo SEGPA_28; ?></b>
+                            </label>
+                        </div>
+                    </div>
+                </section>
+                 <section>
+                    <div class="row">
+                        <label class="label col col-3"><?php echo SEGPA_L23; ?></label>
+                        <div class="col col-9">
+                            <label class="select"> 
+                                <?php
+                                    $datap = array(
+                                        array('valor'=>'E','etiqueta'=>'Efectivo'),
+                                        array('valor'=>'B','etiqueta'=>'Cuenta Bancaria')                                        
+                                    );
+                                    
+                                    echo Functions::selectHtml(array(
+                                        'data'=>$datap,
+                                        'atributes'=>array(
+                                            'id'=>CROPA.'lst_formaPago',
+                                            'name'=>CROPA.'lst_formaPago'
+                                        ),
+                                        'etiqueta'=>'etiqueta',
+                                        'value'=>'valor',
+                                        'txtSelect'=>true
+                                    ));
+                                ?><i></i>
+                            </label>
+                        </div>
+                </section>
+                <section>
+                    <div class="row">
+                        <label class="label col col-3"><?php echo SEGPA_24; ?></label>
+                        <div class="col col-9">
+                            <label class="input"> 
+                                <i class="icon-append fa fa-keyboard-o"></i>
+                                <input type="text" id="<?php echo CROPA; ?>txt_seriedoc" name="<?php echo CROPA; ?>txt_seriedoc" >
+                                <b class="tooltip tooltip-top-right"><i class="fa fa-question-circle txt-color-teal"></i> <?php echo SEGPA_26; ?></b>
+                            </label>
+                        </div>
+                    </div>
+               </section>        
+                <section>
+                    <div class="row">
+                    <label class="label col col-3"><?php echo SEGPA_23; ?></label>
+                        <div class="col col-9">
+                            <label class="input"> 
+                                <i class="icon-append fa fa-keyboard-o"></i>
+                                <input type="text" id="<?php echo CROPA; ?>txt_numdoc" name="<?php echo CROPA; ?>txt_numdoc" >
+                                <b class="tooltip tooltip-top-right"><i class="fa fa-question-circle txt-color-teal"></i> <?php echo SEGPA_25; ?></b>
+                            </label>
+                        </div>
+                    </div>
+                </section>
+            </div>
+            <div class="modal-footer">     
+                <?php if($grabar["permiso"]):?>
+                <button id="<?php echo CROPA; ?>btnGpr" type="submit" class="<?php echo $grabar["theme"]; ?>" >
+                    <i class="<?php echo $grabar["icono"]; ?>"></i> <?php echo $grabar["accion"]; ?>
+                </button>
+                <?php endif; ?>
+                <button type="button" class="<?php echo THEME_CLOSE; ?>">
+                    <i class="<?php echo ICON_CLOSE; ?>"></i> <?php echo BTN_CLOSE; ?>
+                </button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</form>
+<!-- si no tiene permiso se anula submit desde cualquier input -->
+<?php if(!$grabar["permiso"]): ?>
+<script>
+    simpleScript.noSubmit("#<?php echo CROPA; ?>formPagarOrdenParametros");
+</script>
+<?php endif; ?>
+<script>
+    simpleScript.setEvent.date({
+      element: '#<?php echo CROPA; ?>txt_fechapago' 
+    });
+    simpleScript.removeAttr.click({
+        container: "#<?php echo CROPA; ?>formPagarOrdenParametros",
+        typeElement: "button"
+    });
+    
+    $("#<?php echo CROPA; ?>formPagarOrdenParametros").validate({
+        // Rules for form validation
+        rules: {
+                    <?php echo CROPA; ?>lst_tipodoc: {
+                        required: true
+                    },
+                    <?php echo CROPA; ?>txt_fechapago: {
+                        required: true,
+                        date: true
+                    },
+                    <?php echo CROPA; ?>txt_seriedoc: {
+                            required: true,
+                        number: true  
+                    },
+                    <?php echo CROPA; ?>txt_numdoc: {
+                        required: true,
+                        number: true
+                    }
+                },
+                // No cambie el código de abajo
+                errorPlacement: function(error, element) {
+                    error.insertAfter(element.parent());
+                },
+                submitHandler: function() {
+                    cronogramaPago.postPagarOrden();
+                }
+            });
+
+</script>

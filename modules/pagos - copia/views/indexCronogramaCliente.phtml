@@ -1,0 +1,54 @@
+<?php 
+/*
+* ---------------------------------------
+* --------- CREATED BY CREATOR ----------
+* fecha: 29-09-2014 17:09:58 
+* Descripcion : indexCronogramaCliente.phtml
+* ---------------------------------------
+*/
+$buscar    = Session::getPermiso("CRPGBS");
+echo Functions::widgetOpen(array(
+        "id"=>CRPG,
+        "title"=>CRPG_1
+    )); 
+?>
+
+<div class="widget-body-toolbar">
+    <div class="smart-form" style="position: absolute;left: 250px;top:5px; width: 50% ">
+        <label class="label col col-1"><?php echo COGEN_2; ?></label>        
+        <div class="col col-3" style="padding-left:20px;">
+            <div class="input-group">
+                <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                <input class="form-control" type="text" id="<?php echo CRPG;?>txt_f1" name="<?php echo CRPG;?>txt_f1" value ="01/01/<?php echo date("Y"); ?>" style="padding-left:10px; width: 80px; " />
+             </div>            
+        </div>
+        <label class="label col col-1">&nbsp;<?php echo COGEN_3; ?></label>        
+        <div class="col col-3" >
+            <div class="input-group">
+                <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                <input class="form-control" type="text" id="<?php echo CRPG;?>txt_f2" name="<?php echo CRPG;?>txt_f2" value ="<?php echo date("d/m/Y"); ?>" style="padding-left:10px; width: 80px; " />
+             </div>            
+        </div>
+        <div class="col col-1" style="padding-left:15px;">
+            <div >
+                <button id="<?php echo CRPG; ?>btnBuscar" type="button" style="padding:6px 10px;"
+                        onclick="cronogramaCliente.getGridCronogramaCliente();" 
+                        class="<?php echo $buscar['theme'];?> btn-sm"  >
+                      <i class="<?php echo $buscar['icono'];?>"></i> <?php echo $buscar['accion'];?>
+                </button>
+            </div>
+        </div>
+    </div>        
+</div>
+    <div class="dataTables_wrapper form-inline" role="grid">
+        <div class="dt-top-row">
+            <div class="DTTT btn-group">
+               
+            </div>
+        </div>
+
+    </div>
+    <form id="<?php echo CRPG; ?>formGridCronogramaCliente" name="<?php echo CRPG; ?>formGridCronogramaCliente" onsubmit="return false">
+        <table id="<?php echo CRPG; ?>gridCronogramaCliente" class="table table-striped table-hover table-condensed" style="width:100%"></table>
+    </form>
+<?php echo Functions::widgetClose(); ?>

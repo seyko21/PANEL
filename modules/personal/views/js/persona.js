@@ -88,6 +88,19 @@ var persona_ = function(){
         });
     };
     
+    this.publico.getDatosPersonales = function(id){
+        simpleAjax.send({
+            gifProcess: true,
+            dataType: "html",
+            root: _private.config.modulo + "getFormDatosPersonales",
+            data: '&_idPersona='+id,
+            fnCallback: function(data){
+                $("#cont-modal").append(data);  /*los formularios con append*/
+                $("#"+diccionario.tabs.REPER+"formDatosPersonales").modal("show");
+            }
+        });
+    };
+    
     //Ventana Editar Persona
     this.publico.getFormEditPersona = function(btn,id){
         _private.idPersona = id;

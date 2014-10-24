@@ -40,7 +40,8 @@ class panelesConfirmadoController extends Controller{
             $sOutput .= '"aaData": [ ';     
             
             foreach ( $rResult as $aRow ){
-
+                
+                $idPersona = AesCtr::en($aRow['id_persona']);
              $c1 = $aRow['orden_numero'];
              $c2 = $aRow['vendedor'];
              $c3 = $aRow['codigo'];
@@ -55,7 +56,7 @@ class panelesConfirmadoController extends Controller{
              }
                                  
              /*registros a mostrar*/
-              $sOutput .= '["'.$c1.'","'.$c2.'","'.$c3.'","'.$c4.'","'.$c5.'","'.$c6.'","'.$imagen.'" ';
+              $sOutput .= '["'.$c1.'","<a href=\"javascript:;\" onclick=\"persona.getDatosPersonales(\''.$idPersona.'\');\">'.$c2.'</a>","'.$c3.'","'.$c4.'","'.$c5.'","'.$c6.'","'.$imagen.'" ';
               $sOutput .= '],';
 
             }

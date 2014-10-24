@@ -85,6 +85,10 @@ class personaController extends Controller{
         Obj::run()->View->render("formEditPersona");
     }
     
+    public function getFormDatosPersonales(){
+        Obj::run()->View->render("formDatosPersonales");
+    }
+    
     /*envia datos para grabar registro: Persona*/
     public function postNewPersona(){
         $data = Obj::run()->personaModel->mantenimientoPersona();        
@@ -117,6 +121,11 @@ class personaController extends Controller{
     public function getProvincias(){
         $data = Obj::run()->registrarVendedorModel->getProvincias();        
         echo $data;
+    }
+    
+    public function getDatosPersonales(){
+        $data = Obj::run()->personaModel->findPersona();        
+        return $data;
     }
     
     public static function getProvinciasEst($dep=''){

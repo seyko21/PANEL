@@ -1,0 +1,80 @@
+<?php
+$data = Obj::run()->personaController->getDatosPersonales();
+?>
+<form id="<?php echo REPER; ?>formDatosPersonales" name="<?php echo REPER; ?>formDatosPersonales" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close"  aria-hidden="true">
+                    &times;
+                </button>
+                <h4 class="modal-title"><?php echo LABEL_RC9;?></h4>
+            </div>
+            <div class="modal-body smart-form scroll-form">
+                <section>
+                    <img src="<?php echo BASE_URL.'public/files/fotos/'. $data['foto']?>" width="100px" height="120px">
+                </section>
+                <section>
+                    <div class="row">
+                        <label class="label col col-3"><?php echo LABEL_RC10; ?></label>
+                        <div class="col col-8">
+                            <label class="input"> 
+                                <input type="text" id="<?php echo REGCL; ?>txt_nombres" name="<?php echo REGCL; ?>txt_nombres" value="<?php echo $data['nombrecompleto']; ?>">
+                            </label>
+                        </div>
+                    </div>
+                </section>
+                <section>
+                    <div class="row">
+                        <label class="label col col-3"><?php echo LABEL_RV22; ?></label>
+                        <div class="col col-8">
+                            <label class="input"> 
+                                <input type="text" id="<?php echo REGCL; ?>txt_nrodocumento" name="<?php echo REGCL; ?>txt_nrodocumento" value="<?php echo $data['numerodocumento']; ?>">
+                            </label>
+                        </div>
+                    </div>
+                </section>
+                <section>
+                    <div class="row">
+                        <label class="label col col-3"><?php echo LABEL_RV9; ?></label>
+                        <div class="col col-8">
+                            <label class="input"> 
+                                <input type="text" id="<?php echo REGCL; ?>txt_direccion" name="<?php echo REGCL; ?>txt_direccion" value="<?php echo $data['direccion']; ?>">
+                            </label>
+                        </div>
+                    </div>
+                </section>
+                <section>
+                    <div class="row">
+                        <label class="label col col-3"><?php echo LABEL_RV10; ?></label>
+                        <div class="col col-8">
+                            <label class="input"> 
+                                <input type="text" id="<?php echo REGCL; ?>txt_mail" name="<?php echo REGCL; ?>txt_mail" value="<?php echo $data['email']; ?>">
+                            </label>
+                        </div>
+                    </div>
+                </section>
+                <section>
+                    <div class="row">
+                        <label class="label col col-3"><?php echo LABEL_RV14; ?></label>
+                        <div class="col col-8">
+                            <label class="input"> 
+                                <input type="text" id="<?php echo REGCL; ?>txt_tel" name="<?php echo REGCL; ?>txt_tel" value="<?php echo $data['telefono']; ?>">
+                            </label>
+                        </div>
+                    </div>
+                </section>
+            </div>
+            <div class="modal-footer">
+               <button type="button" class="<?php echo THEME_CLOSE; ?>">
+                    <i class="<?php echo ICON_CLOSE; ?>"></i> <?php echo BTN_CLOSE; ?> 
+                </button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+
+<!-- si no riene permiso se anula submit desde cualquier input -->
+<script>
+    simpleScript.noSubmit('#<?php echo REPER; ?>formDatosPersonales');
+</script>
+</form>

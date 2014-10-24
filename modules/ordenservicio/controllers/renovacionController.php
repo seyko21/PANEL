@@ -39,6 +39,7 @@ class renovacionController extends Controller{
             foreach ( $rResult as $key=>$aRow ){
                 /*antes de enviar id se encrypta*/
                 $encryptReg = Aes::en($aRow['id_ordenservicio']);
+                $idPersona = Aes::en($aRow['id_persona']);
                 
                 /*solo se anulara las ordenes que estan en estado E, porque no debde tener ningun pago hecho*/
                 $chk = '<input id=\"c_'.(++$key).'\" type=\"checkbox\" disabled=\"disabled\"  >';
@@ -54,7 +55,7 @@ class renovacionController extends Controller{
                 }
                 
                 /*registros a mostrar*/
-                $sOutput .= '["'.$chk.'","'.$aRow['orden_numero'].'","'.$aRow['nombrecompleto'].'","'.$aRow['fecha'].'","'.$estado.'",';
+                $sOutput .= '["'.$chk.'","'.$aRow['orden_numero'].'","<a href=\"javascript:;\" onclick=\"persona.getDatosPersonales(\''.$idPersona.'\');\">'.$aRow['nombrecompleto'].'</a>","'.$aRow['fecha'].'","'.$estado.'",';
                 
                 /*
                  * configurando botones (add/edit/delete etc)

@@ -39,6 +39,7 @@ class generarCotizacionController extends Controller{
                 
                 /*antes de enviar id se encrypta*/
                 $encryptReg = Aes::en($aRow['id_cotizacion']);
+                $idPersona = Aes::en($aRow['id_persona']);
                 
                 $chk = '';
                 $estado = '';
@@ -51,7 +52,7 @@ class generarCotizacionController extends Controller{
                 }     
                                                 
                 /*datos de manera manual*/
-                $sOutput .= '["'.$chk.'","'.$aRow['cotizacion_numero'].'","'.$aRow['nombrecompleto'].'","'.$aRow['vendedor'].'","'.$aRow['fechacoti'].'","'.Functions::cambiaf_a_normal($aRow['vencimiento']).'","'.  number_format($aRow['total'],2).'","'.$estado.'", ';
+                $sOutput .= '["'.$chk.'","'.$aRow['cotizacion_numero'].'","<a href=\"javascript:;\" onclick=\"persona.getDatosPersonales(\''.$idPersona.'\');\">'.$aRow['nombrecompleto'].'</a>","'.$aRow['vendedor'].'","'.$aRow['fechacoti'].'","'.Functions::cambiaf_a_normal($aRow['vencimiento']).'","'.  number_format($aRow['total'],2).'","'.$estado.'", ';
 
                 /*
                  * configurando botones (add/edit/delete etc)

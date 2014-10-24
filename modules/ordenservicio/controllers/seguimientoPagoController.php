@@ -49,6 +49,7 @@ class seguimientoPagoController extends Controller{
                 
                 /*antes de enviar id se encrypta*/
                 $encryptReg = Aes::en($aRow['id_ordenservicio']);
+                $idPersona = Aes::en($aRow['id_persona']);
                 
                 switch($aRow['estado']){
                     case 'E':
@@ -68,7 +69,7 @@ class seguimientoPagoController extends Controller{
                         break;
                 }
                 /*registros a mostrar*/
-                $sOutput .= '["'.($num++).'","'.$aRow['orden_numero'].'","'.$aRow['cliente'].' - '.$aRow['nombrecompleto'].'","'.$aRow['creador'].'","'.$estado.'","'.$aRow['fecha'].'","S/.'.number_format($aRow['monto_total'],2).'",';
+                $sOutput .= '["'.($num++).'","'.$aRow['orden_numero'].'","<a href=\"javascript:;\" onclick=\"persona.getDatosPersonales(\''.$idPersona.'\');\">'.$aRow['cliente'].' - '.$aRow['nombrecompleto'].'</a>","'.$aRow['creador'].'","'.$estado.'","'.$aRow['fecha'].'","S/.'.number_format($aRow['monto_total'],2).'",';
                 
                 /*
                  * configurando botones (add/edit/delete etc)

@@ -1,0 +1,49 @@
+<?php /*
+* ---------------------------------------
+* --------- CREATED BY CREATOR ----------
+* fecha: 16-09-2014 22:09:43 
+* Descripcion : formPagarOrden.phtml
+* ---------------------------------------
+*/
+
+/*prefijo: CROPA debe ser alias en tabla men_menuprincipal*/
+$grabar = Session::getPermiso("CROPAPG");
+$reprogramar = Session::getPermiso("CROPARPG");
+
+$norden = Formulario::getParam('_norden');
+?>
+<form id="<?php echo CROPA; ?>formPagarOrden" name="<?php echo CROPA; ?>formPagarOrden" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog" style="width: 70%">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close"  aria-hidden="true">
+                    &times;
+                </button>
+                <h4 class="modal-title"><?php echo GNOSE_3.$norden?></h4>
+            </div>
+            <div class="modal-body" id="<?php echo CROPA; ?>tabCronograma"> 
+                <?php Obj::run()->cronogramaPagoController->getTableCronograma(); ?>
+            </div>
+            <div class="modal-footer">                
+                <button type="button" class="<?php echo THEME_CLOSE; ?>">
+                    <i class="<?php echo ICON_CLOSE; ?>"></i> <?php echo BTN_CLOSE; ?>
+                </button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</form>
+<!-- si no tiene permiso se anula submit desde cualquier input -->
+<?php if(!$grabar["permiso"]): ?>
+<script>
+    simpleScript.noSubmit("#<?php echo CROPA; ?>formPagarOrden");
+</script>
+<?php endif; ?>
+<script>
+//    simpleScript.setEvent.date({
+//      element: '.fechapago' 
+//    });
+    simpleScript.removeAttr.click({
+        container: "#<?php echo CROPA; ?>formPagarOrden",
+        typeElement: "button"
+    });
+</script>

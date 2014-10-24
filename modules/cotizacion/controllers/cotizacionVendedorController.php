@@ -51,6 +51,7 @@ class cotizacionVendedorController extends Controller{
                 /*antes de enviar id se encrypta*/
                 $encryptReg = Aes::en($aRow['id_cotizacion']);
                 $numCotizacion = $aRow['cotizacion_numero'];
+                $idPersona = Aes::en($aRow['id_persona']);
                 
                 switch($aRow['estado']) {
                     case "E":
@@ -91,7 +92,7 @@ class cotizacionVendedorController extends Controller{
                 $axion .= ' </div>" ';
                 
                 /*registros a mostrar*/
-                $sOutput .= '["'.$aRow['cotizacion_numero'].'","'.$aRow['dni'].'","'.$aRow['vendedor'].'","'.$aRow['fechacoti'].'","'.$aRow['meses_contrato'].'","'.  number_format($aRow['mtotal'],2).'",'.$xestado.','.$axion.' ';
+                $sOutput .= '["'.$aRow['cotizacion_numero'].'","'.$aRow['dni'].'","<a href=\"javascript:;\" onclick=\"persona.getDatosPersonales(\''.$idPersona.'\');\">'.$aRow['vendedor'].'</a>","'.$aRow['fechacoti'].'","'.$aRow['meses_contrato'].'","'.  number_format($aRow['mtotal'],2).'",'.$xestado.','.$axion.' ';
                 
                 
 

@@ -1,0 +1,70 @@
+<?php 
+/*
+* ---------------------------------------
+* --------- CREATED BY CREATOR ----------
+* fecha: 28-09-2014 00:09:34 
+* Descripcion : indexPagosRecibidos.phtml
+* ---------------------------------------
+*/
+$buscar    = Session::getPermiso("PAGREBS");
+
+echo Functions::widgetOpen(array(
+        "id"=>PAGRE,
+        "title"=>PAGRE_1
+    )); 
+?>
+ <div class="widget-body-toolbar">
+    <div class="smart-form" style="position: absolute;left: 390px;top:5px">
+        <label class="label col col-1"><?php echo COGEN_2; ?></label>        
+        <div class="col col-3" style="padding-left:20px;">
+            <div class="input-group">
+                <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                <input class="form-control" type="text" id="<?php echo PAGRE;?>txt_f1" name="<?php echo PAGRE;?>txt_f1" value ="01/01/<?php echo date("Y"); ?>" style="padding-left:10px; width: 80px; " />
+             </div>            
+        </div>
+        <label class="label col col-1">&nbsp;<?php echo COGEN_3; ?></label>        
+        <div class="col col-3" style="padding-left:20px;">
+            <div class="input-group">
+                <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                <input class="form-control" type="text" id="<?php echo PAGRE;?>txt_f2" name="<?php echo PAGRE;?>txt_f2" value ="<?php echo date("d/m/Y"); ?>" style="padding-left:10px; width: 80px; " />
+             </div>            
+        </div>
+        <div class="col col-1" style="padding-left:15px;">
+            <div class=" ">
+                <button id="<?php echo PAGRE; ?>btnBuscar" type="button" style="padding:6px 10px;"
+                        onclick="pagosRecibidos.getGridPagosRecibidos();" 
+                        class="<?php echo $buscar['theme'];?> btn-sm"  >
+                      <i class="<?php echo $buscar['icono'];?>"></i> <?php echo $buscar['accion'];?>
+                </button>
+            </div>
+        </div>
+    </div>
+ </div>     
+    <div class="dataTables_wrapper form-inline" role="grid">
+        <div class="dt-top-row">
+            <div class="DTTT btn-group">             
+             
+            </div>
+        </div>
+
+    </div>
+    <form id="<?php echo PAGRE; ?>formGridPagosRecibidos" name="<?php echo PAGRE; ?>formGridPagosRecibidos" onsubmit="return false;">
+        <table id="<?php echo PAGRE; ?>gridPagosRecibidos" class="table table-striped table-hover table-condensed" style="width:100%"></table>
+    </form>
+<?php echo Functions::widgetClose(); ?>
+
+<script>
+
+    simpleScript.setEvent.dateRange({
+        ini: '#<?php echo PAGRE; ?>txt_f1',
+        fin: '#<?php echo PAGRE; ?>txt_f2',
+        opt: 'minDate'
+    });
+    
+    simpleScript.setEvent.dateRange({
+        ini: '#<?php echo PAGRE; ?>txt_f2',
+        fin: '#<?php echo PAGRE; ?>txt_f1',
+        opt: 'maxDate'
+    });       
+    
+</script>
