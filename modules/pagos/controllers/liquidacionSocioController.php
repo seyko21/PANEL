@@ -252,7 +252,7 @@ class liquidacionSocioController extends Controller{
                 <td align="right">S/.'.number_format($egreso,2).'</td>
                 <td align="right">S/.'.number_format($sumaUtilidad,2).'</td>
                 <td align="right">S/.'.number_format($sumaUtilidadSocio,2).'</td>
-                <td align="right"><b>S/.'.number_format($sumaUtilidadSocio / $nroCuota,2).'</b></td>
+                <td align="right"><b>S/.'.number_format($sumaUtilidadSocio / $nroCuota,5).'</b></td>
          </tr>
         </table>';           
         if ($data[0]['observacion']!= '' ):
@@ -286,9 +286,9 @@ class liquidacionSocioController extends Controller{
                 <td style="text-align:center">'.$value['nrocuota'].'</td>
                 <td style="text-align:center">'.$value['fecha_creacion'].'</td>   
                 <td style="text-align:center">'.$value['ultimo_pago'].'</td>  
-                <td style="text-align:right">'.number_format($value['comision_venta'],2).'</td>
-                <td style="text-align:right">S/.'.number_format($value['comision_asignado'],2).'</td>  
-                <td style="text-align:right">S/.'.number_format($value['comision_saldo'],2).'</td> 
+                <td style="text-align:right">'.number_format($value['comision_venta'],5).'</td>
+                <td style="text-align:right">S/.'.number_format($value['comision_asignado'],5).'</td>  
+                <td style="text-align:right">S/.'.number_format($value['comision_saldo'],5).'</td> 
             </tr>';
         }
            $html .= '<tr>';

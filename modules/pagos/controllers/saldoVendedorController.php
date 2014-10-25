@@ -248,9 +248,9 @@ class saldoVendedorController extends Controller{
                 <th style="width:25%;" >Total Neto</th>
             </tr>
             <tr>
-                <td align="right">S/.'.number_format($data['monto_total'],2).'</td>
-                <td align="right">S/.'.number_format($data['monto_retencion'],2).'</td>
-                <td align="right">S/.'.number_format($data['monto_neto'],2).'</td>
+                <td align="right">S/.'.number_format($data['monto_total'],5).'</td>
+                <td align="right">S/.'.number_format($data['monto_retencion'],5).'</td>
+                <td align="right">S/.'.number_format($data['monto_neto'],5).'</td>
             </tr>
             </table>';
                     

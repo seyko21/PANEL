@@ -79,7 +79,7 @@ class pagoVendedorController extends Controller{
                     $chk = '<input id=\"c_'.(++$key).'\" type=\"checkbox\" name=\"'.GPAVE.'chk_delete[]\" disabled >'; 
                 }
                 /*registros a mostrar*/
-                $sOutput .= '["'.$chk.'","'.($num++).'","'.$c2.'","<a href=\"javascript:;\" onclick=\"persona.getDatosPersonales(\''.$idPersona.'\');\">'.$c3.'</a>","'.$c4.'","'.$c5.'","'.$c6.'","'.$c7.'","'.$c8.'",'.$axion.' ';
+                $sOutput .= '["'.($num++).'","'.$c2.'","<a href=\"javascript:;\" onclick=\"persona.getDatosPersonales(\''.$idPersona.'\');\">'.$c3.'</a>","'.$c4.'","'.$c5.'","'.$c6.'","'.$c7.'","'.$c8.'",'.$axion.' ';
 
                 $sOutput .= '],';
 
