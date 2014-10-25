@@ -47,8 +47,7 @@ class saldoSocioController extends Controller{
                                 
                 /*antes de enviar id se encrypta*/
                 $encryptReg = Aes::en($aRow['id_comision']);
-                $idPersona = Aes::en($aRow['id_persona']);
-                
+            
                 $num = Obj::run()->saldoSocioModel->_iDisplayStart;
                 if($num >= 10){
                     $num++;
@@ -62,7 +61,7 @@ class saldoSocioController extends Controller{
 
                 $c1 = $aRow['id_comision'];
                 $c2 = $aRow['orden_numero'];
-                $c3 = '<a href=\"javascript:;\" onclick=\"persona.getDatosPersonales(\''.$idPersona.'\');\">'.$aRow['nombrecompleto'].'</a>';
+                $c3 = $aRow['nombrecompleto'];
                 $c4 = $aRow['fecha'];
                 $c5 = (number_format($aRow['porcentaje_comision']*100)).' %';
                 $c6 = number_format($aRow['comision_venta'],2);

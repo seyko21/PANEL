@@ -43,9 +43,10 @@ class alquilerCulminarController extends Controller{
                 $fi = Functions::cambiaf_a_normal($aRow['fecha_inicio']);
                 $ff = '<span class=\"label label-danger\">'.Functions::cambiaf_a_normal($aRow['fecha_termino']).'</span>'; 
                 $oferta = $aRow['dias_oferta'].'d';
+                $idPersona = Aes::en($aRow['id_persona']);
                 /*registros a mostrar*/
                 
-                $sOutput .= '["'.$aRow['codigo'].'","'.$aRow['orden_numero'].'","'.$aRow['ordenin_numero'].'","'.$aRow['cliente'].'","'.$fi.'","'.$ff.'","'.Functions::convertirDiaMes($aRow['meses_contrato']).'","'.$oferta.'" ';
+                $sOutput .= '["'.$aRow['codigo'].'","'.$aRow['orden_numero'].'","'.$aRow['ordenin_numero'].'","<a href=\"javascript:;\" onclick=\"persona.getDatosPersonales(\''.$idPersona.'\');\">'.$aRow['cliente'].'</a>","'.$fi.'","'.$ff.'","'.Functions::convertirDiaMes($aRow['meses_contrato']).'","'.$oferta.'" ';
 
                 $sOutput .= '],';
 

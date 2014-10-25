@@ -10,10 +10,12 @@
 class indexModel extends Model {
 
     public $_usuario;
+    public $_idPersona;
     
     public function __construct() {
         parent::__construct();
         $this->_usuario = Session::get("sys_idUsuario");
+        $this->_idPersona = Session::get("sys_idPersona");
     }
 
     public function getFoto(){
@@ -77,6 +79,24 @@ class indexModel extends Model {
         $data = $this->queryAll($query,$parms);
         return $data;
     }
+
+    public function getIndexGraficoIngresoSocio(){
+        $query = "SELECT
+                    sum( tb.`monto_neto`) as monto, 
+                    MONTH( tb.`fecha_creacion`)	as mes             
+             FROM lgk_comisionvendedor cs 
+                    inner join `tes_boleta` tb on tb.`id_comision` = cs.`id_comision`
+             WHERE cs.`origen` = :origen AND tb.`estado` <> :estado and cs.`id_persona` = :idSocio;";
+        $parms = array(
+            ':origen' => 'S',
+            ':estado' => 'A',
+            ':idSocio' => $this->_idPersona
+        );
+        $data = $this->queryAll($query,$parms);
+        
+        return $data;
+    }
+    
     
 }
 

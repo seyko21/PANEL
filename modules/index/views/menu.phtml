@@ -137,8 +137,9 @@ endforeach;
                         setTimeout(function(){ panelesAlquilados.getGridIndexPA();},2200);
              <?php      break;
                         case APP_COD_SOCIO: ?>
-                        setTimeout(function(){ saldoCobrar.getGridIndexSaldoCobrar();},100);                                                                            
-                        setTimeout(function(){ panelesAlquilados.getGridIndexPAS();},800);                        
+                        setTimeout(function() {generatePageGraphs();}, 1000);
+                        setTimeout(function(){ saldoCobrar.getGridIndexSaldoCobrar();},1500);                                                                            
+                        setTimeout(function(){ panelesAlquilados.getGridIndexPAS();},2000);                        
              <?php     break;
                     }
             ?>

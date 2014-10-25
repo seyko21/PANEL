@@ -1,4 +1,101 @@
 <div aria-hidden="false" aria-expanded="true" role="tabpanel" class="ui-tabs-panel ui-widget-content ui-corner-bottom sortable-grid ui-sortable" aria-labelledby="ui-id-1" id="<?php echo PANP ?>_CONTAINER">
+  
+   <?php
+    $obj = array(
+        'id' => PANP . 'pest1',
+        'title' => LABEL_GRAF2,
+        'height' => 'auto',
+        'padding' => true
+    );
+    echo Functions::widgetOpen($obj);
+    
+    $dataG = Obj::run()->indexController->getIndexGraficoIngresoSocio();
+    ?>
+        <div id="chartdiv" style="width: 100%; height: 400px;">
+        </div>
+
+    <?php echo Functions::widgetClose(); ?>
+
+    <script>
+        var mes = ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
+        var colores = ['#FF0F00','#FF6600','#FF9E01','#FCD202','#F8FF01','#B0DE09','#04D215','#0D8ECF','#0D52D1','#2A0CD0','#8A0CCF','#CD0D74']
+        function generatePageGraphs() {
+            var dataServer = <?php echo json_encode($dataG)?>;
+            var color = '',mees='',monto=0;
+            var datos = '[';
+            
+            for(var m = 0;m<12;m++){
+                monto = 0;
+                //color = simpleScript.getRandomColor();                   
+                mees = mes[m];
+                color = colores[m]
+                for(var i in dataServer){
+                    if((m+1) == dataServer[i].mes){
+                        monto = dataServer[i].monto;
+                    }
+                }
+                
+                datos += '{\n\
+                    mes: "'+mees+'",\n\
+                    monto: '+monto+',\n\
+                    color: "'+color+'"\n\
+                },';
+               
+            }
+          
+            datos = datos.substring(0, datos.length-1);
+            datos += ']';
+            var chart;
+
+            var chartData = eval(datos);
+            // SERIAL CHART
+            chart = new AmCharts.AmSerialChart();
+            chart.dataProvider = chartData;
+            chart.categoryField = "mes";
+            chart.type = "serial";
+            chart.theme = "light";
+            // the following two lines makes chart 3D
+            chart.depth3D = 20;
+            chart.angle = 30;
+
+            // AXES
+            // category
+            var categoryAxis = chart.categoryAxis;
+            categoryAxis.labelRotation = 45;
+            categoryAxis.dashLength = 5;
+            categoryAxis.gridPosition = "start";
+
+            // value
+            var valueAxis = new AmCharts.ValueAxis();
+            valueAxis.title = "Montos";
+            valueAxis.dashLength = 5;
+            chart.addValueAxis(valueAxis);
+
+            // GRAPH
+            var graph = new AmCharts.AmGraph();
+            graph.valueField = "monto";
+            graph.colorField = "color";
+            graph.balloonText = "<span style='font-size:14px'>[[category]]: <b>S/.[[value]]</b></span>";
+            graph.type = "column";
+            graph.lineAlpha = 0;
+            graph.fillAlphas = 1;
+            chart.addGraph(graph);
+
+            // CURSOR
+            var chartCursor = new AmCharts.ChartCursor();
+            chartCursor.cursorAlpha = 0;
+            chartCursor.zoomable = false;
+            chartCursor.categoryBalloonEnabled = false;
+            chart.addChartCursor(chartCursor);
+
+            chart.creditsPosition = "top-right";
+
+            // WRITE
+            chart.write("chartdiv");
+        }
+        
+    </script>   
+    
     <article class="col-lg-6">
         <?php
         $obj = array(

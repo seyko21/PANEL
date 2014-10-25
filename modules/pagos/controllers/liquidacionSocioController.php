@@ -124,7 +124,7 @@ class liquidacionSocioController extends Controller{
     public function getHtmlLiquidacion($mpdf){
        $data = Obj::run()->liquidacionSocioModel->getRptDetalleOrden();
        $dataG = Obj::run()->liquidacionSocioModel->getRptGastosOrden();
-        
+       $dataP = Obj::run()->liquidacionSocioModel->getRptPagoGanancia(); 
       $html ='
         <style>           
            table,h2,h3,h4{font-family:Arial;} 
@@ -262,6 +262,45 @@ class liquidacionSocioController extends Controller{
         
         $mpdf->WriteHTML($html);
         $mpdf->AddPage();
+        $sumaMonto = 0;
+        $sumaPago = 0;
+        $sumaSaldo = 0;
+        // LISTADO DE PAGOS DEL SOCIO
+        $html = '<h3>Detalle de Ingresos</h3> 
+        <table id="td2" border="1" style="border-collapse:collapse" class="print-friendly">
+            <tr>
+                <th style="width:10%" >N° Cuota</th>
+                <th style="width:20%">Fecha </th>
+                <th style="width:20%">Ultimo Pago</th>
+                <th style="width:15%">Monto</th>                
+                <th style="width:15%">Pagado</th>   
+                <th style="width:15%">Saldo</th> 
+            </tr>
+           ';
+         foreach ($dataP as $value) {        
+             $sumaMonto += $value['comision_venta'];
+             $sumaSaldo += $value['comision_saldo'];
+             $sumaPago += $value['comision_asignado'];
+             
+             $html .= '<tr>
+                <td style="text-align:center">'.$value['nrocuota'].'</td>
+                <td style="text-align:center">'.$value['fecha_creacion'].'</td>   
+                <td style="text-align:center">'.$value['ultimo_pago'].'</td>  
+                <td style="text-align:right">'.number_format($value['comision_venta'],2).'</td>
+                <td style="text-align:right">S/.'.number_format($value['comision_asignado'],2).'</td>  
+                <td style="text-align:right">S/.'.number_format($value['comision_saldo'],2).'</td> 
+            </tr>';
+        }
+           $html .= '<tr>';
+           $html .= '<td colspan="3" style="text-align:right;">&nbsp;</td>';        
+           $html .= '<td style="text-align:right;font-weight:bold;">S/.'.number_format($sumaMonto,2).'</td>';   
+           $html .= '<td style="text-align:right;font-weight:bold;">S/.'.number_format($sumaPago,2).'</td>';   
+           $html .= '<td style="text-align:right;font-weight:bold;">S/.'.number_format($sumaSaldo,2).'</td>';   
+           $html .= '</tr>';
+           $html .='</table>';
+        
+        $mpdf->WriteHTML($html);
+        $mpdf->AddPage(); 
         
         $html = '<h3>Detalle de Gastos</h3> 
         <table id="td2" border="1" style="border-collapse:collapse" class="print-friendly">

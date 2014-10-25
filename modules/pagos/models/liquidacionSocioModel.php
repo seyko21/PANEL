@@ -148,8 +148,40 @@ class liquidacionSocioModel extends Model{
         
         $data = $this->queryAll($query, $parms);
         return $data;
-    }        
+    }   
     
+    public function getRptPagoGanancia(){
+        $query = 'SELECT
+             (SELECT cp.`numero_cuota` FROM `lgk_compromisopago` cp 
+	INNER JOIN `lgk_pago` pg ON pg.`id_compromisopago` = cp.`id_compromisopago`
+     WHERE pg.`id_pago` = cs.`id_pago`  ) AS nrocuota,
+            cs.`id_comision`,
+            cs.`id_persona`,
+            cs.`id_ordenservicio`,
+            cs.`origen`,
+            cs.`porcentaje_comision`,
+            cs.`comision_venta`,
+            cs.`comision_asignado`,
+            cs.`comision_saldo`,
+            cs.`observacion`,
+            cs.`estado`,
+            cs.`usuario_creacion`,
+            DATE_FORMAT(cs.`fecha_creacion`,"%d/%m/%Y %h:%i %p") AS fecha_creacion,
+            cs.`id_pago`,           
+            (SELECT DATE_FORMAT(tb.`fecha_creacion`,"%d/%m/%Y %h:%i %p") FROM `tes_boleta` tb WHERE tb.`id_comision` = cs.`id_comision` AND tb.estado <> "A" ORDER BY tb.id_boleta DESC LIMIT 1) ultimo_pago
+          FROM lgk_comisionvendedor cs
+          WHERE cs.`origen` = "S" AND cs.`id_persona` = :idPersona
+	AND cs.`id_ordenservicio` = :idOS 
+        ORDER BY 1;';        
+        
+        $parms = array(
+          ":idOS" => $this->_idOrden,
+          ":idPersona" => $this->_idSocio
+        );
+        
+        $data = $this->queryAll($query, $parms);
+        return $data;
+    }       
     
 }
 
