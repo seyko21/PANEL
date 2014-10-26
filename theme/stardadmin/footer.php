@@ -118,9 +118,9 @@ Obj::run()->Autoload->js('modules/', true);
             }
             activityTimeout = setTimeout(function() {
                 index.inactividad();
-            }, 3000);
+            }, 50000);
         });
     }
-   // test();
+    test();
 </script>
 <?php endif; ?>
