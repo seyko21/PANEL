@@ -36,7 +36,7 @@ define('LABEL_N','No');
 
 /*FORMULARIO LOGIN*/
 define('L_TITLE','Ingresar');
-define('L_EMAIL','E-mail o usuario');
+define('L_EMAIL','E-mail');
 define('L_PASS','Contraseña');
 define('L_OLVIDE','¿Olvide mi contraseña?');
 define('L_ENTRAR','Entrar');
