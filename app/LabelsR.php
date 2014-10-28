@@ -206,6 +206,8 @@ define('GNOSE_19','Monto');
 define('GNOSE_20','Fecha de Pago');
 define('GNOSE_21','Dias de Oferta');
 define('GNOSE_22','Ingrese días de Oferta despues de culminar el alquiler.');
+define('GNOSE_23','Caratulas de OS aun no se han instalado.');
+define('GNOSE_24','Porcentaje asignado: ');
 
 /*---------------------- SEGUIMIENTO DE PAGOS----------------*/
 define('SEGPA_1','Seguimiento de Pagos');

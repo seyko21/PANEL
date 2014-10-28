@@ -95,7 +95,7 @@ var pagoVendedor_ = function(){
         setup_widgets_desktop();
     };
     
-    this.publico.getFormPagar = function(btn,id,vendedor,saldo,persona){
+    this.publico.getFormPagar = function(btn,id,vendedor,saldo,persona,osnum){
         _private.idComision = id;  
         _private.saldo = saldo;
         _private.idPersona = persona;
@@ -104,7 +104,7 @@ var pagoVendedor_ = function(){
             gifProcess: true,
             dataType: 'html',
             root: _private.config.modulo + 'getFormPagar',
-            data: '&_idComision='+_private.idComision+'&_vendedor='+vendedor+'&_saldo='+saldo+'&_idPersona='+_private.idPersona,
+            data: '&_idComision='+_private.idComision+'&_vendedor='+vendedor+'&_saldo='+saldo+'&_idPersona='+_private.idPersona+'&_idOrdenServicio='+osnum,
             fnCallback: function(data){
                 $('#cont-modal').append(data);  /*los formularios con append*/
                 $('#'+diccionario.tabs.GPAVE+'formPagarVendedor').modal('show');

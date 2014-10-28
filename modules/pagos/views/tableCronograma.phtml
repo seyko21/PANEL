@@ -112,7 +112,7 @@ $anular = Session::getPermiso("CROPAAN");
                     <?php else: ?> 
                     
                         <?php if ($anular['permiso']): ?>
-                            <button type="button" class="<?php echo $anular["theme"]; ?> disabled" style="padding: 5px" >
+                            <button id="<?php echo CROPA.$key?>btnAnular" type="button" class="<?php echo $anular["theme"]; ?> disabled" style="padding: 5px" >
                                 <i class="<?php echo $anular["icono"]; ?>"></i> <?php echo $anular["accion"]; ?>
                             </button>
                         <?php endif; ?>

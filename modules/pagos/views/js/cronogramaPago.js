@@ -162,6 +162,12 @@ var cronogramaPago_ = function(){
                             $("#"+_private.fila+diccionario.tabs.CROPA+"tr_estado").html('<span class="label label-success">Pagado</span>');
                             $(_private.boton).off('click');
                             $(_private.boton).addClass('disabled');
+                            
+//                            $('#'+diccionario.tabs.CROPA+_private.fila+'btnAnular').removeClass('disabled');
+//                            $('#'+diccionario.tabs.CROPA+_private.fila+'btnAnular').click(function(){
+//                                cronogramaPago.postAnularPago(this,_private.idCompromiso);
+//                            });
+                            cronogramaPago.getTableCronograma();
                             _private.idCompromiso = 0;
                             _private.boton = 0;
                             _private.fila = 0;

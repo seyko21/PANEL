@@ -46,7 +46,7 @@ class asignarPanelSocioModel extends Model{
         $this->_inversiones        = Formulario::getParam(APASO."hhidInversion");   /*array*/
         $this->_montoInvertir        = Formulario::getParam(APASO."txt_montoinvertir");  /*array*/
         $this->_totalInvertido        = Formulario::getParam(APASO."txt_montototal");
-        $this->_term  =   Formulario::getParam("_term"); 
+        $this->_term  =   Formulario::getParam(APASO."_term"); 
         
         $this->_iDisplayStart  = Formulario::getParam("iDisplayStart"); 
         $this->_iDisplayLength = Formulario::getParam("iDisplayLength"); 
@@ -198,12 +198,19 @@ class asignarPanelSocioModel extends Model{
                 c.`ubicacion`,
                 pp.total_produccion,
                 pp.total_asignado,
-                pp.total_saldo
+                pp.total_saldo,
+                (SELECT SUM(`porcentaje_ganacia`) FROM `prod_asignacionpanel` WHERE `id_produccion` = pp.`id_produccion`)AS porcentaje
         FROM prod_produccionpanel pp 
         INNER JOIN lgk_catalogo c ON c.`id_producto`=pp.`id_producto`
-        WHERE pp.total_saldo > 0 AND c.`ubicacion` LIKE CONCAT('%".$this->_term."%'); ";
+        WHERE pp.total_saldo > 0 AND c.`ubicacion` LIKE CONCAT('%".$this->_term."%')
+        AND NOT EXISTS(
+			SELECT `id_produccion` FROM `prod_asignacionpanel` WHERE `id_produccion` = pp.`id_produccion`
+                        AND id_persona = :idSocioSel
+			); ";
         
-        $parms = array();
+        $parms = array(
+            ':idSocioSel'=>  $this->_socio
+        );
         $data = $this->queryAll($query,$parms);
         return $data;
     }

@@ -63,11 +63,6 @@ class confirmarInstalacionModel extends Model{
         return $data;
     }
     
-    /*grabar nuevo registro: ConfirmarInstalacion*/
-    public function newConfirmarInstalacion(){
-        /*-------------------------LOGICA PARA EL INSERT------------------------*/
-    }
-    
     public function getImagen(){
         $query = " SELECT `imagen` FROM `lgk_ordenserviciod` WHERE `id_ordenserviciod` = :idOrdenDdetalle;";
         $parms = array(

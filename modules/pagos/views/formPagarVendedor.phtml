@@ -13,6 +13,11 @@ $reprogramar = Session::getPermiso("GPAVERPG");
 $vendedor = Formulario::getParam('_vendedor');
 $saldo = Formulario::getParam('_saldo');
 
+$dataOS = Obj::run()->pagoVendedorController->getValidaImagenes();
+
+$numCaratulas = $dataOS['_numCaratulas'];
+$instaladas = $dataOS['_instaladas'];
+
 ?>
 <form id="<?php echo GPAVE; ?>formPagarVendedor" name="<?php echo GPAVE; ?>formPagarVendedor" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">
@@ -24,6 +29,8 @@ $saldo = Formulario::getParam('_saldo');
                 <h4 class="modal-title"><?php echo GPAVE_2.$vendedor?></h4>
             </div>
             <div class="modal-body smart-form"> 
+                <!--si caratulas de OS se instalaron se procede al pago-->
+                <?php if($numCaratulas == $instaladas):?>
                 <section>
                     <div class="row">
                         <label class="label col col-2"><?php echo GPAVE_3; ?></label>
@@ -69,9 +76,15 @@ $saldo = Formulario::getParam('_saldo');
                         </div>
                     </div>
                 </section>
+                <?php else:?>
+                    <div class="alert alert-danger"><i class="fa fa-warning"></i> 
+                        <?php echo GNOSE_23?>
+                        Se instalaron <?php echo $instaladas?> de <?php echo $numCaratulas?> caratulas
+                    </div>
+                <?php endif; ?>
             </div>
             <div class="modal-footer">  
-                <?php if($grabar["permiso"]):?>
+                <?php if($grabar["permiso"] && $numCaratulas == $instaladas):?>
                 <button id="<?php echo GPAVE; ?>btnGrPag" type="submit" class="<?php echo $grabar["theme"]; ?>">
                     <i class="<?php echo $grabar["icono"]; ?>"></i> <?php echo $grabar["accion"]; ?>
                 </button>

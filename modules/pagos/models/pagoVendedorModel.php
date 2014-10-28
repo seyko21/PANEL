@@ -15,8 +15,11 @@ class pagoVendedorModel extends Model{
     private $_f2;
     private $_idBoleta;
     private $_chkdel;
-    
-    
+    private $_idOS;
+
+
+
+
     public function __construct() {
         parent::__construct();
         $this->_set();
@@ -30,7 +33,7 @@ class pagoVendedorModel extends Model{
         $this->_f2    = Functions::cambiaf_a_mysql(Formulario::getParam("_f2")); 
         $this->_estadocb  = Formulario::getParam("_estadocb");   
         $this->_idBoleta  = Aes::de(Formulario::getParam("_idBoleta"));  
-        
+        $this->_idOS  = Formulario::getParam("_idOrdenServicio");  
         $this->_serie        = Formulario::getParam(GPAVE."txt_serie");
         $this->_numero       = Formulario::getParam(GPAVE."txt_numero");
         $this->_monto        = Formulario::getParam(GPAVE."txt_monto");
@@ -125,6 +128,18 @@ class pagoVendedorModel extends Model{
         $this->execute($query,$parms);
         
         $data = array('result'=>1);        
+        return $data;
+    }
+    
+    public function validaImagenes(){
+        $query = "call sp_ordseOrdenServicioConsultas(:flag,:criterio);";
+        
+        $parms = array(
+            ":flag"=>6,
+            ":criterio" => $this->_idOS
+        );
+        $data = $this->queryOne($query,$parms);
+        
         return $data;
     }
     

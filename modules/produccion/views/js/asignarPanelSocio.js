@@ -132,6 +132,7 @@ var asignarPanelSocio_ = function(){
             fnServerParams: function(aoData) {
                 aoData.push({"name": diccionario.tabs.APASO+"_term", "value": $('#'+diccionario.tabs.APASO+'txt_search').val()});
                 aoData.push({"name": "_tab", "value": _private.tab});
+                aoData.push({"name": diccionario.tabs.APASO+"txt_idpersona", "value": $('#'+diccionario.tabs.APASO+'txt_idpersona').val()});
             },
             fnDrawCallback: function() {
                 $('#'+diccionario.tabs.APASO+'gridProductosFound_wrapper').find('.dataTables_scrollBody').css('overflow-x','hidden');
@@ -178,6 +179,14 @@ var asignarPanelSocio_ = function(){
     };
     
     this.publico.formBuscarProductoPanelSocio = function(btn,tab){
+        var socio = $('#'+diccionario.tabs.APASO+'txt_idpersona').val();
+        if(socio === ''){
+            simpleScript.notify.warning({
+                content: 'Busque un socio'
+            });
+            return false;
+        }
+        
         _private.tab = tab;
          
         simpleAjax.send({

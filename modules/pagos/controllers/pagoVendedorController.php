@@ -52,7 +52,7 @@ class pagoVendedorController extends Controller{
                 $axion = '"<div class=\"btn-group\">';
                 if($pagar['permiso']){
                     if ($aRow['comision_saldo'] > 0 ){
-                        $axion .= '<button type=\"button\" class=\"'.$pagar['theme'].'\" title=\"'.$pagar['accion'].'\" onclick=\"pagoVendedor.getFormPagar(this,\''.$encryptReg.'\',\''.$c3.'\',\''.$aRow['comision_saldo'].'\',\''.$aRow['id_persona'].'\')\">';
+                        $axion .= '<button type=\"button\" class=\"'.$pagar['theme'].'\" title=\"'.$pagar['accion'].'\" onclick=\"pagoVendedor.getFormPagar(this,\''.$encryptReg.'\',\''.$c3.'\',\''.$aRow['comision_saldo'].'\',\''.$aRow['id_persona'].'\',\''.$aRow['id_ordenservicio'].'\')\">';
                         $axion .= '    <i class=\"'.$pagar['icono'].'\"></i>';
                         $axion .= '</button>';
                     }else{
@@ -99,6 +99,11 @@ class pagoVendedorController extends Controller{
         Obj::run()->View->render("formPagarVendedor");
     }
     
+    public function getValidaImagenes() {
+        $data = Obj::run()->pagoVendedorModel->validaImagenes();
+        
+        return $data;
+    }
     public function postPagoVendedor(){ 
         $data = Obj::run()->pagoVendedorModel->pagarComision();
         
