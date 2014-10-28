@@ -44,16 +44,16 @@ var registrarVendedor_ = function(){
             iDisplayLength: 10,            
             aoColumns: [
                 {sTitle: "<input type='checkbox' id='"+diccionario.tabs.T7+"chk_all' onclick='simpleScript.checkAll(this,\"#"+diccionario.tabs.T7+"getGridVendedor\");'>", sWidth: "1%", sClass: "center", bSortable: false},
-                {sTitle: "Foto", sClass: "center", sWidth: "10%", bSortable: false},
+                {sTitle: "Foto", sClass: "center", sWidth: "5%", bSortable: false},
                 {sTitle: "RUC", sClass: "center", sWidth: "10%"},
                 {sTitle: "DNI", sClass: "center", sWidth: "10%"},
-                {sTitle: "Nombres y Apellidos", sWidth: "25%"},
+                {sTitle: "Nombres y Apellidos", sWidth: "20%"},
                 {sTitle: "Email", sWidth: "20%"},
                 {sTitle: "Teléfonos", sWidth: "15%"},
                 {sTitle: "Estado", sWidth: "8%",  sClass: "center", bSortable: false},
                 {sTitle: "Acciones", sWidth: "10%", sClass: "center", bSortable: false}
             ],
-            aaSorting: [[1, 'asc']],
+            aaSorting: [[4, 'asc']],
             sScrollY: "300px",
             sAjaxSource: _private.config.modulo+'getGridVendedor',
             fnDrawCallback: function() {

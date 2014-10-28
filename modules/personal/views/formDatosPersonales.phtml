@@ -23,7 +23,7 @@ $data = Obj::run()->personaController->getDatosPersonales();
                         <label class="label col col-3"><?php echo LABEL_RC10; ?></label>
                         <div class="col col-8">
                             <label class="input"> 
-                                <input type="text" id="<?php echo REGCL; ?>txt_nombres" name="<?php echo REGCL; ?>txt_nombres" value="<?php echo $data['nombrecompleto']; ?>">
+                                <input type="text" id="<?php echo REGCL; ?>txt_nombres" name="<?php echo REGCL; ?>txt_nombres" value="<?php echo $data['nombrecompleto']; ?>" readonly>
                             </label>
                         </div>
                     </div>
@@ -33,7 +33,7 @@ $data = Obj::run()->personaController->getDatosPersonales();
                         <label class="label col col-3"><?php echo LABEL_RV22; ?></label>
                         <div class="col col-8">
                             <label class="input"> 
-                                <input type="text" id="<?php echo REGCL; ?>txt_nrodocumento" name="<?php echo REGCL; ?>txt_nrodocumento" value="<?php echo $data['numerodocumento']; ?>">
+                                <input type="text" id="<?php echo REGCL; ?>txt_nrodocumento" name="<?php echo REGCL; ?>txt_nrodocumento" value="<?php echo $data['numerodocumento']; ?>" readonly>
                             </label>
                         </div>
                     </div>
@@ -43,7 +43,7 @@ $data = Obj::run()->personaController->getDatosPersonales();
                         <label class="label col col-3"><?php echo LABEL_RV9; ?></label>
                         <div class="col col-8">
                             <label class="input"> 
-                                <input type="text" id="<?php echo REGCL; ?>txt_direccion" name="<?php echo REGCL; ?>txt_direccion" value="<?php echo $data['direccion']; ?>">
+                                <input type="text" id="<?php echo REGCL; ?>txt_direccion" name="<?php echo REGCL; ?>txt_direccion" value="<?php echo $data['direccion']; ?>" readonly> 
                             </label>
                         </div>
                     </div>
@@ -53,7 +53,7 @@ $data = Obj::run()->personaController->getDatosPersonales();
                         <label class="label col col-3"><?php echo LABEL_RV10; ?></label>
                         <div class="col col-8">
                             <label class="input"> 
-                                <input type="text" id="<?php echo REGCL; ?>txt_mail" name="<?php echo REGCL; ?>txt_mail" value="<?php echo $data['email']; ?>">
+                                <input type="text" id="<?php echo REGCL; ?>txt_mail" name="<?php echo REGCL; ?>txt_mail" value="<?php echo $data['email']; ?>" readonly>
                             </label>
                         </div>
                     </div>
@@ -63,7 +63,7 @@ $data = Obj::run()->personaController->getDatosPersonales();
                         <label class="label col col-3"><?php echo LABEL_RV14; ?></label>
                         <div class="col col-8">
                             <label class="input"> 
-                                <input type="text" id="<?php echo REGCL; ?>txt_tel" name="<?php echo REGCL; ?>txt_tel" value="<?php echo $data['telefono']; ?>">
+                                <input type="text" id="<?php echo REGCL; ?>txt_tel" name="<?php echo REGCL; ?>txt_tel" value="<?php echo $data['telefono']; ?>" readonly>
                             </label>
                         </div>
                     </div>
