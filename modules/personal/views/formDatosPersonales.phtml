@@ -11,9 +11,13 @@ $data = Obj::run()->personaController->getDatosPersonales();
                 <h4 class="modal-title"><?php echo LABEL_RC9;?></h4>
             </div>
             <div class="modal-body smart-form scroll-form">
+                <?php
+                    $file = BASE_URL.'public/files/fotos/'. $data['foto'];
+                if($data['foto'] != null || $data['foto'] != '' || file_exists($file) ): ?>
                 <section>
-                    <img src="<?php echo BASE_URL.'public/files/fotos/'. $data['foto']?>" width="100px" height="120px">
+                    <img src="<?php echo $file; ?>" width="100px" height="120px">
                 </section>
+                <?php endif; ?>
                 <section>
                     <div class="row">
                         <label class="label col col-3"><?php echo LABEL_RC10; ?></label>

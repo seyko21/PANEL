@@ -118,7 +118,7 @@ Obj::run()->Autoload->js('modules/', true);
             }
             activityTimeout = setTimeout(function() {
                 index.inactividad();
-            }, 50000);
+            }, 600000);
         });
     }
     test();

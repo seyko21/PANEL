@@ -56,7 +56,7 @@ class retornoInversionController extends Controller{
                  $c2 =$aRow['codigos'];
                  $c3 =$aRow['ubicacion'];                                  
                  $c4 = number_format($aRow['inversion'],2);
-                 $c5 = number_format($aRow['ingresos'],2);
+                 $c5 = number_format($aRow['ingresos'],3);
                  $c6 = number_format($aRow['roi']*100,2);
                  $c7 =number_format($aRow['porcentaje_ganacia']*100).' %';  
                  
@@ -147,7 +147,7 @@ class retornoInversionController extends Controller{
                 $c9 = number_format($aRow['egresos'],2);
                 $c10 = number_format($aRow['total_utilidad'],2);                    
                 $c11 = number_format($aRow['monto_utilidad'],2);
-                $c12 = number_format((($aRow['monto_utilidad']/$cuota)*$aRow['pagados']),2);
+                $c12 = number_format((($aRow['monto_utilidad']/$cuota)*$aRow['pagados']),3);
                 /*registros a mostrar*/
                 $sOutput .= '["'.$c1.'","'.$c2.'","'.$c3.'","'.$c4.'","'.$c6.'","'.$c7.'","'.$c8.'","'.$c9.'","'.$c10.'","'.$c11.'","'.$c12.'","'.$estado.'"  ';
 

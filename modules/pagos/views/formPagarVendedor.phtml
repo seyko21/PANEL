@@ -51,7 +51,7 @@ $saldo = Formulario::getParam('_saldo');
                         <div class="col col-4">
                             <label class="input"> 
                                 <i class="icon-append fa fa-keyboard-o"></i>
-                                <input class="right" type="text" id="<?php echo GPAVE; ?>txt_monto" name="<?php echo GPAVE; ?>txt_monto" value="<?php echo str_replace(',','', number_format($saldo,2))?>">
+                                <input class="right" type="text" id="<?php echo GPAVE; ?>txt_monto" name="<?php echo GPAVE; ?>txt_monto" value="<?php echo str_replace(',','', number_format($saldo,3))?>">
                                 <b class="tooltip tooltip-top-right"><i class="fa fa-keyboard-o txt-color-teal"></i> <?php echo GPAVE_9; ?></b>
                             </label>
                         </div>
