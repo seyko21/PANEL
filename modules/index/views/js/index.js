@@ -120,8 +120,3 @@ var index_ = function(){
  
  /*anular cotizaciones vencidas*/
  index.postAnulaCotizacionesVencidas();
- 
-  /*generar utilidades*/
-setInterval(function(){
-     index.postGenerarUtilidadSocio();
-},100000);

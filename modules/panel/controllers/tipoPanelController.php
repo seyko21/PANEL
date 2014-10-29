@@ -13,7 +13,7 @@ class tipoPanelController extends Controller{
     }
     
     public function index(){ 
-        Obj::run()->View->render('indexTipoPanel');
+        Obj::run()->View->render('indexTipoElemento');
     }
 
     public function getGridTipoPanel(){
@@ -64,7 +64,7 @@ class tipoPanelController extends Controller{
                 $sOutput .= '"<div class=\"btn-group\">';
                 
                 if($editar['permiso'] == 1){
-                    $sOutput .= '<button type=\"button\" class=\"'.$editar['theme'].'\" title=\"'.$editar['accion'].'\" onclick=\"tipoPanel.getEditarTipoPanel(\''.$encryptReg.'\')\">';
+                    $sOutput .= '<button type=\"button\" class=\"'.$editar['theme'].'\" title=\"'.$editar['accion'].'\" onclick=\"tipoPanel.getEditarTipoElemento(\''.$encryptReg.'\')\">';
                     $sOutput .= '    <i class=\"'.$editar['icono'].'\"></i>';
                     $sOutput .= '</button>';
                 }
@@ -87,12 +87,12 @@ class tipoPanelController extends Controller{
         
         echo $sOutput;
     }
-      public function getNuevoTipoPanel(){ 
-        Obj::run()->View->render('nuevoTipoPanel');
+      public function getNuevoTipoElemento(){ 
+        Obj::run()->View->render('nuevoTipoElemento');
     }
     
-    public function getEditarTipoPanel(){ 
-        Obj::run()->View->render('editarTipoPanel');
+    public function getEditarTipoElemento(){ 
+        Obj::run()->View->render('editarTipoElemento');
     }
     
        

@@ -46,11 +46,15 @@ class instalacionController extends Controller{
                 $encryptReg = Aes::en($aRow['id_ordeninstalacion']);
                 
                 /*campo que maneja los estados, para el ejemplo aqui es ACTIVO, coloca tu campo*/
-                if($aRow['estado'] == 'E'){
+                if($aRow['estado'] == 'E' && $aRow['generado'] == 0  ){
                     $chk = '<input id=\"c_'.(++$key).'\" type=\"checkbox\" name=\"'.ORINS.'chk_delete[]\" value=\"'.$encryptReg.'\"  >'; 
-                    $estado = '<span class=\"label label-success\">'.SEGCO_5.'</span>';
                 }else{
                     $chk = '<input id=\"c_'.(++$key).'\" type=\"checkbox\" disabled=\"disabled\"  >'; 
+                }
+                
+                if ($aRow['estado'] == 'E' ){
+                     $estado = '<span class=\"label label-success\">'.SEGCO_5.'</span>';
+                }else{
                     $estado = '<span class=\"label label-danger\">'.SEGPA_9.'</span>';
                 }
                 
@@ -161,11 +165,17 @@ class instalacionController extends Controller{
     }
     
     public function postPDF(){
+        $data = Obj::run()->instalacionModel->getOrdenInstalacion();
         $c = 'ordenInstalacion_'.Obj::run()->instalacionModel->_cod.'.pdf';
         
         $ar = ROOT.'public'.DS.'files'.DS.$c;
                
         $mpdf = new mPDF('c');
+        
+        if($data[0]['estado'] == 'A'){
+           $mpdf->SetWatermarkText('A N U L A D O');
+           $mpdf->showWatermarkText = true;         
+        }  
 
         $mpdf->SetHTMLHeader('<img src="'.ROOT.'public'.DS.'img'.DS.'logotipo.png" width="137" height="68" />','',TRUE);
         $mpdf->SetHTMLFooter('<table width="100%" style="vertical-align: bottom; font-family: serif; font-size: 8pt; color: #000000; font-weight: bold;"><tr>

@@ -49,7 +49,7 @@ class asignarPanelSocioController extends Controller{
                 
                 
                 /*registros a mostrar*/
-                $sOutput .= '["'.$aRow['nombrecompleto'].'","'.$aRow['ubicacion'].'","'.number_format($aRow['total_invertido'],2).'","'.number_format($aRow['porcentaje_ganacia'],2).'", ';
+                $sOutput .= '["'.$aRow['nombrecompleto'].'","'.$aRow['ubicacion'].'","'.number_format($aRow['total_invertido'],2).'","'.number_format($aRow['porcentaje_ganacia']*100,2).' %", ';
                 
                 /*
                  * configurando botones (add/edit/delete etc)

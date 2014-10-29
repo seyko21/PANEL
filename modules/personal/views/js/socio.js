@@ -43,7 +43,7 @@ var socio_ = function(){
     };
     
     this.publico.getGridSocio = function (){
-        $('#'+diccionario.tabs.TAB_SOCIO+'gridSocio').dataTable({
+       var oTable = $('#'+diccionario.tabs.TAB_SOCIO+'gridSocio').dataTable({
             bProcessing: true,
             bServerSide: true,
             bDestroy: true,
@@ -68,6 +68,7 @@ var socio_ = function(){
             sAjaxSource: _private.config.modulo+'getGridSocio',
             fnDrawCallback: function() {
                 $('#'+diccionario.tabs.TAB_SOCIO+'gridSocio_filter').find('input').attr('placeholder','Buscar por nombre o nro documento').css('width','300px');;
+                simpleScript.enterSearch("#"+diccionario.tabs.TAB_SOCIO+'gridSocio',oTable);
                 /*para hacer evento invisible*/
                 simpleScript.removeAttr.click({
                     container: '#widget_'+diccionario.tabs.TAB_SOCIO, //widget del datagrid

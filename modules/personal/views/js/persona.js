@@ -43,7 +43,7 @@ var persona_ = function(){
     };
     
     this.publico.getGridPersona = function (){
-     $('#'+diccionario.tabs.REPER+'gridPersona').dataTable({
+     var oTable = $('#'+diccionario.tabs.REPER+'gridPersona').dataTable({
             bProcessing: true,
             bServerSide: true,
             bDestroy: true,
@@ -66,6 +66,7 @@ var persona_ = function(){
             sAjaxSource: _private.config.modulo+'getGridPersona',
             fnDrawCallback: function() {
                 $('#'+diccionario.tabs.REPER+'gridPersona_filter').find('input').attr('placeholder','Buscar por Nombre o nro documento').css('width','300px');
+                simpleScript.enterSearch("#"+diccionario.tabs.REPER+'gridPersona',oTable);
                 /*para hacer evento invisible*/
                 simpleScript.removeAttr.click({
                     container: '#widget_'+diccionario.tabs.REPER, //widget del datagrid

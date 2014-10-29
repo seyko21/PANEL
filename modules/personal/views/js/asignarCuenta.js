@@ -61,11 +61,12 @@ var asignarCuenta_ = function(){
                 {sTitle: "Estado", sWidth: "8%", sClass: "center", bSortable: false},
                 {sTitle: "Acciones", sWidth: "5%", sClass: "center", bSortable: false}
             ],
-            aaSorting: [[1, 'desc']],
+            aaSorting: [[2, 'desc']],
             sScrollY: "300px",
             sAjaxSource: _private.config.modulo+'getGridAsignarCuenta',
             fnDrawCallback: function() {
                 $('#'+diccionario.tabs.ASCU+'gridAsignarCuenta_filter').find('input').attr('placeholder','Buscar por producto o vendedor').css('width','280px');
+                simpleScript.enterSearch("#"+diccionario.tabs.ASCU+'gridAsignarCuenta',oTable);
                 /*para hacer evento invisible*/
                 simpleScript.removeAttr.click({
                     container: '#widget_'+diccionario.tabs.ASCU,

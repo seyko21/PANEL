@@ -51,7 +51,7 @@ var tipoPanel_ = function(){
             sScrollY: "300px",
             sAjaxSource: _private.config.modulo+'getGridTipoPanel',            
             fnDrawCallback: function() {
-                $('#'+diccionario.tabs.T101+'gridTipoPanel_filter').find('input').attr('placeholder','Buscar descripción');
+                $('#'+diccionario.tabs.T101+'gridTipoPanel_filter').find('input').attr('placeholder','Buscar descripción').css('width','350px');
                 simpleScript.enterSearch("#"+diccionario.tabs.T101+'gridTipoPanel',oTable);
                 /*para hacer evento invisible*/
                 simpleScript.removeAttr.click({
@@ -63,13 +63,13 @@ var tipoPanel_ = function(){
         setup_widgets_desktop();
     };
     
-   this.publico.getNuevoTipoPanel = function(btn, callbackData){
+   this.publico.getNuevoTipoElemento = function(btn, callbackData){
        /*para cuando se llama formulario desde otro modulo*/
         _private.callbackData = callbackData;  
         simpleAjax.send({
             element: btn,
             dataType: 'html',
-            root: _private.config.modulo + 'getNuevoTipoPanel',
+            root: _private.config.modulo + 'getNuevoTipoElemento',
             fnCallback: function(data){
                 $('#cont-modal').append(data);  /*los formularios con append*/
                 $('#'+diccionario.tabs.T101+'formTipoPanel').modal('show');
@@ -77,13 +77,13 @@ var tipoPanel_ = function(){
         });
     };
     
-    this.publico.getEditarTipoPanel = function(id){
+    this.publico.getEditarTipoElemento = function(id){
         _private.idTipoPanel = id;
         
         simpleAjax.send({
             gifProcess: true,
             dataType: 'html',
-            root: _private.config.modulo + 'getEditarTipoPanel',
+            root: _private.config.modulo + 'getEditarTipoElemento',
             data: '&_idTipoPanel='+_private.idTipoPanel,
             fnCallback: function(data){
                 $('#cont-modal').append(data);  /*los formularios con append*/
@@ -141,7 +141,7 @@ var tipoPanel_ = function(){
         
         simpleAjax.send({
             flag: 2,
-            element: '#'+diccionario.tabs.T101+'btnAtipa',
+            element: '#'+diccionario.tabs.T101+'btnACTtipa',
             root: _private.config.modulo + 'postEditarTipoPanel',
             form: '#'+diccionario.tabs.T101+'formTipoPanel',
             data: '&_idTipoPanel='+_private.idTipoPanel,

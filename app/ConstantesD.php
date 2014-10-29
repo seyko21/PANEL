@@ -7,7 +7,7 @@
  */
 
 define("T100","VPARAM");     /*tab modulo Parametros*/
-define("T101","VTIPA");     /*tab modulo Tipo de Panel*/
+define("T101","TIELEMENTO");     /*tab modulo Tipo de Panel*/
 define("T102","FITEC");     /*tab modulo Ficha Tecnica*/
 define("PERMU","VPERMU");             /*tab modulo PERMISOMUNICIPAL*/
 define("TAB_CATPRE","CATPRE");             /*tab modulo CATALOGOPRECIO*/

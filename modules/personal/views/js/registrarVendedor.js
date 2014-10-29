@@ -34,7 +34,7 @@ var registrarVendedor_ = function(){
     };
     
     this.publico.getGridVendedor = function (){
-        $('#'+diccionario.tabs.T7+'getGridVendedor').dataTable({
+        var oTable = $('#'+diccionario.tabs.T7+'getGridVendedor').dataTable({
             bProcessing: true,
             bServerSide: true,
             bDestroy: true,
@@ -58,6 +58,7 @@ var registrarVendedor_ = function(){
             sAjaxSource: _private.config.modulo+'getGridVendedor',
             fnDrawCallback: function() {
                 $('#'+diccionario.tabs.T7+'getGridVendedor_filter').find('input').attr('placeholder','Buscar por nombre o nro documento').css('width','300px');;
+                simpleScript.enterSearch("#"+diccionario.tabs.T7+'getGridVendedor',oTable);
                 /*para hacer evento invisible*/
                 simpleScript.removeAttr.click({
                     container: '#widget_'+diccionario.tabs.T7, //widget del datagrid

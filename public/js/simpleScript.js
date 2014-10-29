@@ -367,7 +367,7 @@ var simpleScript_ = function(){
         }
         
         $(id).modal('hide');
-        setTimeout("$('"+id+"').remove()",1000);
+        setTimeout("$('"+id+"').remove()",500);
     };
     
     this.public.noSubmit = function(form){

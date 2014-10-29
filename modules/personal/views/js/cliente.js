@@ -66,7 +66,8 @@ var cliente_ = function(){
             sScrollY: "300px",
             sAjaxSource: _private.config.modulo+'getGridCliente',
             fnDrawCallback: function() {
-                $('#'+diccionario.tabs.REGCL+'gridCliente_filter').find('input').attr('placeholder','Buscar por Razón Social').css('width','200px');                
+                $('#'+diccionario.tabs.REGCL+'gridCliente_filter').find('input').attr('placeholder','Buscar por Razón Social').css('width','200px');        
+                simpleScript.enterSearch("#"+diccionario.tabs.REGCL+'gridCliente',oTable);
                 /*para hacer evento invisible*/
                 simpleScript.removeAttr.click({
                     container: '#widget_'+diccionario.tabs.REGCL, //widget del datagrid
@@ -75,12 +76,6 @@ var cliente_ = function(){
             }
         });
         setup_widgets_desktop();
-//        $('.dataTables_filter input').unbind('keypress keyup').bind('keypress keyup', function(e){
-//            if (e.which == 13){
-//                oTable.fnFilter($(this).val(), null, false, true);
-//                return false;
-//            }
-//        });
     };       
     
     this.publico.getGridRepresentantes = function(id,cl){

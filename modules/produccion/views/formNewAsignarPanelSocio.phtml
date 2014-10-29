@@ -250,9 +250,9 @@ $buscar = Session::getPermiso('APASOBS');
                             return false;
                         }
                         
-                        if($('#<?php echo APASO; ?>txt_ganancia').val() >= 1){
+                        if($('#<?php echo APASO; ?>txt_ganancia').val() > 1){
                             simpleScript.notify.warning({
-                                content: 'Ganancia debe ser en formato de porcentaje. Ejm: 0.50'
+                                content: 'Ganancia debe ser en formato de porcentaje. Ejm: 0.50, 1.0'
                             });
                             return false;
                         }

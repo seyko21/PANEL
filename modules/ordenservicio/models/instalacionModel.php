@@ -112,9 +112,8 @@ class instalacionModel extends Model{
     public function getConceptos(){
         if($this->_tipo == 'P'){ # produccion
             $destino = 'P';
-        }
-        if($this->_tipo == 'I'){ # instalacion
-            $destino = 'I';
+        }else if($this->_tipo == 'I'){ # instalacion
+            $destino = 'S';
         }
         $query = "
         SELECT 
@@ -124,12 +123,12 @@ class instalacionModel extends Model{
                 tc.`descripcion` AS tconcepto
         FROM `pub_concepto` c 
         INNER JOIN `pub_tipoconcepto` tc ON tc.`id_tipo`=c.`id_tipo`
-        WHERE c.`estado` = :estado AND c.`destino` = :destino
+        WHERE c.`estado` = :estado AND c.`destino` in ('G',:destino)
         ORDER BY 4,2; ";
         
         $parms = array(
             ':estado'=>'A',
-            ':destino'=> 'G' # por ahora generico preguntar a dani
+            ':destino'=> $destino 
         );
         $data = $this->queryAll($query,$parms);
         return $data;
