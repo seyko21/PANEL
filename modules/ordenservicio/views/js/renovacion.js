@@ -47,6 +47,7 @@ var renovacion_ = function(){
                 {sTitle: "Código OS", sWidth: "10%",sClass: "center"},
                 {sTitle: "Representante", sWidth: "20%"},
                 {sTitle: "Fecha", sWidth: "10%"},
+                {sTitle: "Total", sWidth: "15%", sClass: "right", bSortable: false},
                 {sTitle: "Estado", sWidth: "8%", sClass: "center", bSortable: false},
                 {sTitle: "Acciones", sWidth: "15%", sClass: "center", bSortable: false}
             ],

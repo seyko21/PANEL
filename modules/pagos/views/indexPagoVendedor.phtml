@@ -20,20 +20,7 @@ echo Functions::widgetOpen(array(
             </select>
             <i></i>
         </label>
-      <label class="label col col-1"><?php echo COGEN_2; ?></label>        
-        <div class="col col-2" style="padding-left:5px;"> 
-            <div class="input-group">
-                <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-                <input class="form-control" type="text" id="<?php echo GPAVE;?>txt_f1" name="<?php echo GPAVE;?>txt_f1" value ="01/<?php echo date("m"); ?>/<?php echo date("Y"); ?>" style="padding-left:10px; width: 80px; " />
-             </div>            
-        </div>
-        <label class="label col col-1" style="padding-left: 30px"><?php echo COGEN_3; ?></label>        
-        <div class="col col-2" >
-            <div class="input-group">
-                <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-                <input class="form-control" type="text" id="<?php echo GPAVE;?>txt_f2" name="<?php echo GPAVE;?>txt_f2" value ="<?php echo date("d/m/Y"); ?>" style="padding-left:10px; width: 80px; " />
-             </div>            
-        </div>
+     
         <div class="col col-1" style="padding-left:30px;">
             <div class=" ">
                 <button id="<?php echo GPAVE; ?>btnBuscar" type="button" style="padding:6px 10px;"
@@ -62,16 +49,3 @@ echo Functions::widgetOpen(array(
     </form>
 <?php echo Functions::widgetClose(); ?>
 
-<script>
-    simpleScript.setEvent.dateRange({
-        ini: '#<?php echo GPAVE; ?>txt_f1',
-        fin: '#<?php echo GPAVE; ?>txt_f2',
-        opt: 'minDate'
-    });
-    simpleScript.setEvent.dateRange({
-        ini: '#<?php echo GPAVE; ?>txt_f2',
-        fin: '#<?php echo GPAVE; ?>txt_f1',
-        opt: 'maxDate'
-    });
-            
-</script>

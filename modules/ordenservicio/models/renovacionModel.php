@@ -4,6 +4,7 @@ class renovacionModel extends Model{
 
     private $_flag;
     private $_idVendedor;
+    private $_idPersona;
     private $_idOrden;
     private $_usuario;
     private $_keyPersona;
@@ -35,6 +36,7 @@ class renovacionModel extends Model{
         $this->_idVendedor   = Aes::de(Formulario::getParam("_idVendedor"));    /*se decifra*/
         $this->_idOrden   = Aes::de(Formulario::getParam("_idOrden"));    /*se decifra*/
         $this->_usuario     = Session::get("sys_idUsuario");
+         $this->_idPersona     = Session::get("sys_idPersona");
         
         $this->_keyPersona  = Aes::de($this->post(GENRE.'txt_idpersona'));     /*el cliente, representante*/
         $this->_meses       = $this->post(GENRE.'txt_meses');                  /*meses de contrato*/
@@ -147,7 +149,7 @@ class renovacionModel extends Model{
     }
     
     public function postRenovacion(){
-        $query = "CALL sp_ordseRenovacionMantenimiento(:flag,:idOrden,:idRepresentante,:mesesContrato,:diasOferta,:total,:idCaratula,:precio,:produccion,:usuario,:igv,:validez,:obs,:campania);";
+        $query = "CALL sp_ordseRenovacionMantenimiento(:flag,:idOrden,:idRepresentante,:mesesContrato,:diasOferta,:total,:idCaratula,:precio,:produccion,:usuario,:igv,:validez,:obs,:campania,:acceso,:idPersona);";
         $parms = array(
             ':flag' => 1,
             ':idOrden' => $this->_idOrden,
@@ -162,10 +164,21 @@ class renovacionModel extends Model{
             ':igv' => ($this->_igv == '1')?'1':'0',
             ':validez' => $this->_validez,
             ':obs' => $this->_observacion,
-            ':campania' => $this->_campania
+            ':campania' => $this->_campania,
+            ':acceso' => Session::get('sys_all'),
+            ':idPersona' => $this->_idPersona
         );
-        $data = $this->queryOne($query,$parms);  
+        $data = $this->queryOne($query,$parms);          
         if($data['result'] == 1){
+            //Emitido:
+            $queryE = " CALL sp_ordSeTiempoInsertar(:idOrden,'E','Se creo la Orden de Servicio',:usuario);";
+            $parmsE = array(':idOrden' => $data['idOrden'], ':usuario' => $this->_usuario);
+            $this->execute($queryE,$parmsE); 
+            //Renovado:
+            $queryR = " CALL sp_ordSeTiempoInsertar(:idOrden,'R','Orden de Servicio fue Renovada',:usuario);";
+            $parmsR = array(':idOrden' => $this->_idOrden, ':usuario' => $this->_usuario);
+            $this->execute($queryR,$parmsR); 
+            //Ejecutamos For
             $item = 0;
             foreach ($this->_idProducto as $key => $prod) {
                 $item++;
@@ -183,7 +196,9 @@ class renovacionModel extends Model{
                     ':igv' => ($this->_igv == '1')?'1':'0',
                     ':validez' => '',
                     ':obs' => '',
-                    ':campania' => ''
+                    ':campania' => '',
+                    ':acceso' => Session::get('sys_all'),
+                    ':idPersona' => $this->_idPersona
                 );
                 $this->execute($query,$parms);                      
             }

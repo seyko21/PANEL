@@ -11,6 +11,7 @@ class seguimientoPagoController extends Controller{
 
     public function __construct() {
         $this->loadModel("seguimientoPago");
+        
     }
     
     public function index(){ 
@@ -132,7 +133,7 @@ class seguimientoPagoController extends Controller{
                         $estado = SEGCO_5;
                         break;
                     case "P":
-                        $et = 'label bg-color-blue txt-color-white';
+                        $et = 'label label-warning';
                         $estado = SEGPA_7;
                         break;                    
                     case "T":
@@ -140,15 +141,19 @@ class seguimientoPagoController extends Controller{
                         $estado = SEGPA_8;
                         break;
                     case "F":
-                        $et = 'label label-warning';
+                        $et = 'label label-info';
                         $estado = SEGPA_29;
                         break;
                     case "A":
                         $et = 'label label-danger';
                         $estado = SEGPA_9;
-                        break;                       
+                        break;   
+                    case "R":
+                        $et = 'label bg-color-magenta txt-color-white';
+                        $estado = SEGPA_30;
+                        break;
                 }
-                $xestado = '"<div class=\"'.$et.'\">'.$estado.'</div>"';
+                $xestado = '"<div class=\"'.$et.'\" style=\"text-align:center;color:#fff\">'.$estado.'</div>"';
                 /*
                  * configurando botones (add/edit/delete etc)
                  * se verifica si tiene permisos para editar

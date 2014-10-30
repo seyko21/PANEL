@@ -11,14 +11,10 @@ class pagoVendedorModel extends Model{
     private $_numero;
     private $_monto;
     private $_exonerar;
-    private $_f1;
-    private $_f2;
+
     private $_idBoleta;
     private $_chkdel;
     private $_idOS;
-
-
-
 
     public function __construct() {
         parent::__construct();
@@ -29,8 +25,7 @@ class pagoVendedorModel extends Model{
         $this->_flag        = Formulario::getParam("_flag");
         $this->_idComision   = Aes::de(Formulario::getParam("_idComision"));    /*se decifra*/
         $this->_usuario     = Session::get("sys_idUsuario");
-        $this->_f1    = Functions::cambiaf_a_mysql(Formulario::getParam("_f1"));
-        $this->_f2    = Functions::cambiaf_a_mysql(Formulario::getParam("_f2")); 
+
         $this->_estadocb  = Formulario::getParam("_estadocb");   
         $this->_idBoleta  = Aes::de(Formulario::getParam("_idBoleta"));  
         $this->_idOS  = Formulario::getParam("_idOrdenServicio");  
@@ -60,13 +55,11 @@ class pagoVendedorModel extends Model{
         }
         $sOrder = substr_replace( $sOrder, "", -1 );
   
-        $query = "call sp_pagoConsultaSaldoVendedorGrid(:rol,:estado,:f1,:f2,:iDisplayStart,:iDisplayLength,:sOrder,:sSearch);";
+        $query = "call sp_pagoProcesoSaldoVendedorGrid(:rol,:estado,:iDisplayStart,:iDisplayLength,:sOrder,:sSearch);";
         
         $parms = array(
             ":rol"=>'V',
             ":estado"=>$this->_estadocb,
-            ":f1" => $this->_f1,
-            ":f2" => $this->_f2,              
             ":iDisplayStart" => $this->_iDisplayStart,
             ":iDisplayLength" => $this->_iDisplayLength,
             ":sOrder" => $sOrder,

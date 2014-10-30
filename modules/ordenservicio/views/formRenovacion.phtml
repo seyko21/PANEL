@@ -122,7 +122,7 @@ $data = Obj::run()->renovacionController->getOrdenServicio();
                                 <th style="width:7%"><?php echo LABEL_GNCOT_5; ?></th>
                                 <th style="width:10%"><?php echo LABEL_GNCOT_6; ?></th>
                                 <th style="width:10%"><?php echo LABEL_GNCOT_7; ?></th>
-                                <th style="width:1%">...</th>
+<!--                                <th style="width:1%">...</th>-->
                                 </thead>
                                 <tbody>
                                     <?php
@@ -151,16 +151,16 @@ $data = Obj::run()->renovacionController->getOrdenServicio();
                                             <td class="right"><?php echo $value['cantidad_mes']; ?></td>
                                             
                                             <td class="center">
-                                                <input <?php echo $chk?> type="checkbox" id="<?php echo GENRE.$key; ?>chk_disenio" name="chk_disenio[]" onclick="renovacionScript.setDisenio(this,<?php echo $key; ?>,'<?php echo $idProducto; ?>');">
+                                                <label class="checkbox">
+                                                    <input <?php echo $chk?> type="checkbox" id="<?php echo GENRE.$key; ?>chk_disenio" name="chk_disenio[]" onclick="renovacionScript.setDisenio(this,<?php echo $key; ?>,'<?php echo $idProducto; ?>');" checked="checked"><i></i>Incl.
+                                                </label>
                                             </td>
-                                
-                                
                                             <td class="right"><?php echo number_format($value['costo_produccion'],2); ?></td>
                                             <td class="right"><?php echo number_format($value['importe'],2); ?></td>
-                                            <td>
+<!--                                            <td>
                                                 <button type="button" class="btn btn-danger btn-xs" onclick="renovacionScript.removeProducto('<?php echo $idProducto; ?>', '<?php echo $value['precio']; ?>');"><i class="fa fa-trash-o"></i>
                                                 </button>
-                                            </td>
+                                            </td>-->
                                         </tr>
                                         <?php
                                     endforeach;
@@ -211,7 +211,7 @@ $data = Obj::run()->renovacionController->getOrdenServicio();
                     <h4 class="text-center">
                         <button id="<?php echo GENRE; ?>btnGcoti" type="button" class="btn btn-success btn-large" title="<?php echo GENRE_1; ?>" onclick="renovacion.postRenovacion();">    
                             <i class="fa fa-plus-circle fa-lg"></i>
-                            <?php echo LABEL_GNC27; ?>
+                            <?php echo GENRE_4; ?>
                         </button>
                     </h4>
                     <br>

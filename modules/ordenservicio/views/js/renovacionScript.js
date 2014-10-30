@@ -65,12 +65,10 @@ var renovacionScript_ = function(){
                                     <input type="checkbox" id="'+diccionario.tabs.GENRE+index+'chk_disenio" name="chk_disenio[]" onclick="renovacionScript.setDisenio(this,'+index+',\''+idProducto+'\');" checked="checked">\n\
                                 </td>\n\
                                 <td class="right">'+produccion.toFixed(2)+'</td>\n\
-                                <td class="right">'+total.toFixed(2)+'</td>\n\
-                                <td>\n\
-                                    <button type="button" class="btn btn-danger btn-xs" onclick="renovacionScript.removeProducto(\''+idProducto+'\',\''+precio+'\');"><i class="fa fa-trash-o"></i></a>\n\
-                                </td>\n\
-                            </tr>';
-                            
+                                <td class="right">'+total.toFixed(2)+'</td>\n\ </tr>';
+//                              <td>\n\
+//                                    <button type="button" class="btn btn-danger btn-xs" onclick="renovacionScript.removeProducto(\''+idProducto+'\',\''+precio+'\');"><i class="fa fa-trash-o"></i></a>\n\
+//                                </td>\n\
                             _private.total += total;
                         }
                     }
@@ -137,7 +135,7 @@ var renovacionScript_ = function(){
             var chk  = $(this).find('td:eq(4)').find('input:checkbox');
             
             $(this).find('td:eq(2)').find('input:text').keyup(function(){
-                if(isNaN($(this).val()) || $(this).val() == '' ){
+                if(isNaN($(this).val()) || $(this).val() == '' || $(this).val() <= 0  ){
                     var precio = $(this).attr('data-value');
                     $(this).val(precio);                                                            
                 }else{

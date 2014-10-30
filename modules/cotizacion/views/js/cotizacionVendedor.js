@@ -90,8 +90,8 @@ var cotizacionVendedor_ = function(){
             bFilter: false,
             aoColumns: [                
                 {sTitle: "N°", sWidth: "5%", sClass: "center",bSortable: false},
-                {sTitle: "Fecha", sWidth: "23%", sClass: "center"},
-                {sTitle: "Observacion", sWidth: "50%", sClass: "left"},
+                {sTitle: "Fecha", sWidth: "23%", sClass: "center",bSortable: false},
+                {sTitle: "Observacion", sWidth: "50%", sClass: "left",bSortable: false},
                 {sTitle: "Estado", sWidth: "10%", bSortable: false}
             ],
             aaSorting: [[1, 'asc']],

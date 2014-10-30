@@ -228,6 +228,7 @@ define('SEGPA_26','Ingrese la serie del documento');
 define('SEGPA_27','Estado');
 define('SEGPA_28','Ingrese la fecha de pago');
 define('SEGPA_29','Finalizado');
+define('SEGPA_30','Renovado');
 
 /*---------------------- CRONOGRAMA DE PAGOS----------------*/
 define('CROPA_1','Cronograma de Pagos');
@@ -284,6 +285,7 @@ define('COMVE_6','OS: ');
 define('GENRE_1','Renovar orden');
 define('GENRE_2','Generar Renovación');
 define('GENRE_3','Costo de banner');
+define('GENRE_4','Click aquí para generar Renovación');
 
 /*----------------------------CAMBIAR CONTRASEÑA--------------------*/
 define('CLAV_1','Cambiar contraseña');

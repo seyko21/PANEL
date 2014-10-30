@@ -48,16 +48,6 @@ var pagoSocio_ = function(){
     this.publico.getGridPagoSocio = function (){
         
         var _cb = $("#"+diccionario.tabs.GPASO+"lst_estadosearch").val();
-        if (_cb == 'T'){
-            $("#"+diccionario.tabs.GPASO+"txt_f1").prop('disabled',true);
-            $("#"+diccionario.tabs.GPASO+"txt_f2").prop('disabled',true);
-        }else{                
-            $("#"+diccionario.tabs.GPASO+"txt_f1").prop('disabled',false);
-            $("#"+diccionario.tabs.GPASO+"txt_f2").prop('disabled',false);
-            var _f1 = $("#"+diccionario.tabs.GPASO+"txt_f1").val();
-            var _f2 = $("#"+diccionario.tabs.GPASO+"txt_f2").val();                  
-        }
-
         
         var oTable = $("#"+diccionario.tabs.GPASO+"gridPagoSocio").dataTable({
             bProcessing: true,
@@ -82,8 +72,6 @@ var pagoSocio_ = function(){
             sScrollY: "300px",
             sAjaxSource: _private.config.modulo+"getGridPagoSocio",
             fnServerParams: function(aoData) {
-                aoData.push({"name": "_f1", "value": _f1});                
-                aoData.push({"name": "_f2", "value": _f2}); 
                 aoData.push({"name": "_estadocb", "value": _cb});
             },
             fnDrawCallback: function() {

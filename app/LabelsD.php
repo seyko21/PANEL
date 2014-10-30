@@ -193,6 +193,7 @@ define('MOVOS_3','Orden de Instalación ');
 define('MOVOS_4','Comisión de Vendedor ');
 define('MOVOS_5','Ingresos');
 define('MOVOS_6','Utilidad');
+define('MOVOS_7','Historial');
 define('SACLI_1','Saldo de Clientes');
 define('SAVEN_1','Saldo de Vendedor');
 define('SAVEN_2','Saldo');

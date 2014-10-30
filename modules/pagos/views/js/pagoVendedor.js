@@ -40,17 +40,7 @@ var pagoVendedor_ = function(){
     this.publico.getGridPagosVendedor = function(){
         
         var _cb = $("#"+diccionario.tabs.GPAVE+"lst_estadosearch").val();
-        if (_cb == 'T'){
-            $("#"+diccionario.tabs.GPAVE+"txt_f1").prop('disabled',true);
-            $("#"+diccionario.tabs.GPAVE+"txt_f2").prop('disabled',true);
-        }else{                
-            $("#"+diccionario.tabs.GPAVE+"txt_f1").prop('disabled',false);
-            $("#"+diccionario.tabs.GPAVE+"txt_f2").prop('disabled',false);
-            var _f1 = $("#"+diccionario.tabs.GPAVE+"txt_f1").val();
-            var _f2 = $("#"+diccionario.tabs.GPAVE+"txt_f2").val();                  
-        }
-
-
+        
         var oTable = $("#"+diccionario.tabs.GPAVE+"gridPagosVendedor").dataTable({
             bProcessing: true,
             bServerSide: true,
@@ -73,9 +63,7 @@ var pagoVendedor_ = function(){
             aaSorting: [[2, "desc"],[3, "asc"]],
             sScrollY: "300px",
             sAjaxSource: _private.config.modulo+"getGridPagosVendedor",
-            fnServerParams: function(aoData) {
-                aoData.push({"name": "_f1", "value": _f1});                
-                aoData.push({"name": "_f2", "value": _f2}); 
+            fnServerParams: function(aoData) {             
                 aoData.push({"name": "_estadocb", "value": _cb});
             },
             fnDrawCallback: function() {

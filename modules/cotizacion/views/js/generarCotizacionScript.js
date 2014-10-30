@@ -137,7 +137,7 @@ var generarCotizacionScript_ = function(){
             var chk  = $(this).find('td:eq(4)').find('input:checkbox');
             
             $(this).find('td:eq(2)').find('input:text').keyup(function(){
-                if(isNaN($(this).val()) || $(this).val() == '' ){
+                if(isNaN($(this).val()) || $(this).val() == '' || $(this).val() <= 0 ){
                     var precio = $(this).attr('data-value');
                     $(this).val(precio);                                                            
                 }else{

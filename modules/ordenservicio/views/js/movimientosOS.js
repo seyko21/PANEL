@@ -63,7 +63,7 @@ var movimientosOS_ = function(){
                 {sTitle: "Total OS", sWidth: "12%",sClass: "right"},
                 {sTitle: "Impuesto", sWidth: "12%", sClass: "right"}, 
                 {sTitle: "Ingresos", sWidth: "12%",sClass: "right"},
-                {sTitle: "Egresos", sWidth: "12%", sClass: "right"},                
+                {sTitle: "Instalación", sWidth: "12%", sClass: "right"},                
                 {sTitle: "Comision", sWidth: "12%", sClass: "right"}, 
                 {sTitle: "Utilidad", sWidth: "12%", sClass: "right"},    
                 {sTitle: "Estado", sWidth: "8%", sClass: "center", bSortable: false},
@@ -206,6 +206,32 @@ var movimientosOS_ = function(){
         });
         setup_widgets_desktop();
     };   
+    
+    this.publico.getGridHIOR= function (){
+         $('#'+diccionario.tabs.MOVOS+'gridHIOR').dataTable({
+            bProcessing: true,
+            bServerSide: true,
+            bDestroy: true,
+            sPaginationType: "bootstrap_full", //two_button
+            sServerMethod: "POST",
+            bPaginate: true,
+            iDisplayLength: 10,   
+            sSearch: false,
+            bFilter: false,
+            aoColumns: [                
+                {sTitle: "N°", sWidth: "5%", sClass: "center",bSortable: false},
+                {sTitle: "Fecha", sWidth: "23%", sClass: "center",bSortable: false},
+                {sTitle: "Observacion", sWidth: "40%", sClass: "left",bSortable: false},
+                {sTitle: "Estado", sWidth: "10%", bSortable: false}
+            ],            
+            sScrollY: "260px",
+            sAjaxSource: _private.config.modulo+'getGridTiempoOrden',
+            fnServerParams: function(aoData) {
+                aoData.push({"name": "_idOrden", "value": _private.idOS});
+            }
+        });
+        setup_widgets_desktop();
+    };
         
     this.publico.getConsulta = function(btn,idd,cod){
         _private.idOS = idd;
@@ -217,7 +243,7 @@ var movimientosOS_ = function(){
             fnCallback: function(data){
                 $("#cont-modal").append(data);  /*los formularios con append*/
                 $("#"+diccionario.tabs.MOVOS+"formMOV").modal("show");                
-                setTimeout(function(){movimientosOS.getGridMOVInstalacion();},500);
+                setTimeout(function(){movimientosOS.getGridHIOR();},500);
                 
             }
         });

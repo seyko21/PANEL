@@ -49,13 +49,15 @@ class renovacionController extends Controller{
                         $chk = '<input id=\"c_'.(++$key).'\" type=\"checkbox\" name=\"'.GNOSE.'chk_delete[]\" value=\"'.$encryptReg.'\"  >'; 
                         $estado = '<span class=\"label label-success\">'.SEGPA_8.'</span>';
                         break;
-                    case 'F':
-                        $estado = '<span class=\"label label-info\">'.SEGPA_29.'</span>';
+                    case 'R':
+                        $estado = '<span class=\"label label-info\">'.SEGPA_30.'</span>';
                         break;
                 }
                 
+                $total = 'S/.'.number_format($aRow['monto_total'],2);                                
+                
                 /*registros a mostrar*/
-                $sOutput .= '["'.$chk.'","'.$aRow['orden_numero'].'","<a href=\"javascript:;\" onclick=\"persona.getDatosPersonales(\''.$idPersona.'\');\">'.$aRow['nombrecompleto'].'</a>","'.$aRow['fecha'].'","'.$estado.'",';
+                $sOutput .= '["'.$chk.'","'.$aRow['orden_numero'].'","<a href=\"javascript:;\" onclick=\"persona.getDatosPersonales(\''.$idPersona.'\');\">'.$aRow['nombrecompleto'].'</a>","'.$aRow['fecha'].'","'.$total.'","'.$estado.'",';
                 
                 /*
                  * configurando botones (add/edit/delete etc)
@@ -64,7 +66,7 @@ class renovacionController extends Controller{
                 $sOutput .= '"<div class=\"btn-group\">';
                  
                 if($editar['permiso']){
-                    if($aRow['estado'] == 'F'){
+                    if($aRow['estado'] == 'R'){
                         $sOutput .= '<button type=\"button\" class=\"'.$editar['theme'].' disabled\" title=\"'.GENRE_1.'\" disabled>';
                         $sOutput .= '    <i class=\"'.$editar['icono'].'\"></i>';
                         $sOutput .= '</button>';

@@ -11,6 +11,7 @@ class movimientosOSController extends Controller{
 
     public function __construct() {
         $this->loadModel("movimientosOS");
+        $this->loadController(array('modulo'=>'ordenservicio','controller'=>'seguimientoPago'));   
     }
     
     public function index(){ 
@@ -65,7 +66,6 @@ class movimientosOSController extends Controller{
                 $axion .= ' </div>" ';                                
                  switch($aRow['estado']){
                     case 'E':
-                        $chk = '<input id=\"c_'.(++$key).'\" type=\"checkbox\" name=\"'.GNOSE.'chk_delete[]\" value=\"'.$encryptReg.'\"  >'; 
                         $estado = '<span class=\"label label-default\">'.SEGCO_5.'</span>';
                         break;
                     case 'T':
@@ -79,6 +79,9 @@ class movimientosOSController extends Controller{
                         break;
                     case 'F':
                         $estado = '<span class=\"label label-info\">'.SEGPA_29.'</span>';
+                        break;
+                    case 'R':
+                        $estado = '<span class=\"label bg-color-magenta txt-color-white\">'.SEGPA_30.'</span>';
                         break;
                 }
                 $m = number_format($aRow['monto_total'],2);
@@ -172,9 +175,9 @@ class movimientosOSController extends Controller{
             
             foreach ( $rResult as $key=>$aRow ){
 
-                $c1 = 'S/'.number_format($aRow['importe'],2);
+                $c1 = 'S/.'.number_format($aRow['importe'],2);
                 $c2 =  number_format($aRow['porcentaje_comision']*100,2).'%';
-                $c3 = 'S/'.number_format($aRow['comision_venta'],2);
+                $c3 = 'S/.'.number_format($aRow['comision_venta'],2);
         
                 /*registros a mostrar*/
                 $sOutput .= '["'.$aRow['codigo'].'","'.$aRow['ubicacion'].' - '.$aRow['descripcion'].'","'.  Functions::convertirDiaMes($aRow['cantidad_mes']).'","'.$c1.'","'.$c2.'","'.$c3.'" ';
@@ -298,6 +301,9 @@ class movimientosOSController extends Controller{
 
     }    
     
+    public function getGridTiempoOrden(){
+        return Obj::run()->seguimientoPagoController->getGridTiempoOrden();
+    }
 }
 
 ?>
