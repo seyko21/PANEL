@@ -261,7 +261,7 @@ define('ORINS_16','Tipo de Concepto');
 define('ORINS_17','Cantidad');
 define('ORINS_18','Total');
 define('ORINS_19','Click para finalizar Orden de Instalación');
-
+define('ORINS_20','Click para finalizar Producción');
 /*---------------------- TERMINAR CONTRATO ----------------*/
 define('TERCO_1','Ordenes de Servicio');
 define('TERCO_2','Finalizar contrato: ');

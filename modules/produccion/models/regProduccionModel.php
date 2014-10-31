@@ -229,6 +229,7 @@ class regProduccionModel extends Model{
     }
     
     public function getConceptos(){
+        //c.destino = 'P' and 
         $query = "
         SELECT
                 pd.`id_concepto`,
@@ -238,7 +239,7 @@ class regProduccionModel extends Model{
                 pd.`costo_importe`
         FROM `prod_produccionpaneld` pd
         INNER JOIN pub_concepto c ON c.`id_concepto`=pd.`id_concepto`
-        WHERE c.destino = 'P' and pd.`id_producion` = :idProduccion; ";
+        WHERE pd.`id_producion` = :idProduccion; ";
         
         $parms = array(
             ':idProduccion'=>  $this->_idProduccion
