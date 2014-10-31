@@ -14,7 +14,7 @@ $doc = $data = Obj::run()->indexModel->getFoto();
                 <form class="dropzone" id="mydropzone">
                 </form>
                 <?php if(sizeof($doc) && isset($doc['foto'])):?>
-                <a id="<?php echo T4; ?>dow" href="javascript:;" onclick="window.open('<?php echo 'public/files/fotos/'.$doc['foto']; ?>','_blank');"><?php echo $doc['foto'];?></a>
+                <a id="<?php echo T4; ?>dow" href="javascript:;" onclick="registrarVendedor.getFormViewFoto('<?php echo AesCtr::en(BASE_URL.'public/files/fotos/'.$doc['foto']); ?>');"><?php echo $doc['foto'];?></a>
                 <!--<button id="<?php echo T4; ?>btndow" type="button" class="btn btn-danger" style="padding: 5px" onclick="registrarVendedor.deleteAdjuntar(this,'<?php echo Obj::run()->indexModel->_usuario; ?>','<?php echo 'public/files/fotos/'.$doc['foto']; ?>');"><i class="fa fa-trash-o"></i> Eliminar</button>-->
                 <?php else: ?>
                 <a id="<?php echo T4; ?>dow" href="javascript:;"></a>

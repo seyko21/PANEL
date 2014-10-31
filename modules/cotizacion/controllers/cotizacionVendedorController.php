@@ -92,7 +92,7 @@ class cotizacionVendedorController extends Controller{
                 $axion .= ' </div>" ';
                 
                 /*registros a mostrar*/
-                $sOutput .= '["'.$aRow['cotizacion_numero'].'","'.$aRow['dni'].'","<a href=\"javascript:;\" onclick=\"persona.getDatosPersonales(\''.$idPersona.'\');\">'.$aRow['vendedor'].'</a>","'.$aRow['fechacoti'].'","'.$aRow['meses_contrato'].'","'.  number_format($aRow['mtotal'],2).'",'.$xestado.','.$axion.' ';
+                $sOutput .= '["'.$aRow['cotizacion_numero'].'","'.$aRow['dni'].'","'.$aRow['vendedor'].'","'.$aRow['fechacoti'].'","'.$aRow['meses_contrato'].'","'.  number_format($aRow['mtotal'],2).'",'.$xestado.','.$axion.' ';
                 
                 
 

@@ -17,7 +17,7 @@ $produccion = Formulario::getParam('_idProduccion');
                 <form class="dropzone" id="<?php echo REPRO; ?>mydropzone" name="<?php echo REPRO; ?>mydropzone">
                     <input type="hidden" id="_idProduccion" name="_idProduccion" value="<?php echo $produccion; ?>">
                 </form>
-                <a id="<?php echo REPRO; ?>dow" href="javascript:;" onclick="window.open('<?php echo 'public/img/produccion/'.$doc['imagen']; ?>','_blank');"><?php echo $doc['imagen'];?></a>
+                <a id="<?php echo REPRO; ?>dow" href="javascript:;" onclick="registrarVendedor.getFormViewFoto('<?php echo AesCtr::en(BASE_URL.'public/img/produccion/'.$doc['imagen']); ?>');"><?php echo $doc['imagen'];?></a>
             </div>
             <div class="modal-footer">
                <button type="button" class="<?php echo THEME_CLOSE; ?>">

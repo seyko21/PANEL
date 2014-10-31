@@ -59,6 +59,9 @@ class contratosGeneradosController extends Controller{
                     case 'F':
                         $estado = '<span class=\"label label-info\">'.SEGPA_29.'</span>';
                         break;
+                     case 'R':
+                        $estado = '<span class=\"label bg-color-magenta txt-color-white\">'.SEGPA_30.'</span>';
+                        break;
                 }
                 
                 /*antes de enviar id se encrypta*/

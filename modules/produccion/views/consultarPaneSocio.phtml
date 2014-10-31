@@ -7,9 +7,10 @@
  * Descripcion : 
  */
 $data = panelesInvertidoController::getGeografico();
+$ruta = 'public/img/uploads/'.$data['imagen'];
 
-if($data['imagen'] != '' or $data['imagen'] != null){
-    $imagen = '<a href=\"'.BASE_URL.'public/img/uploads/'.$data['imagen'].'\" target=\"_blank\" ><img border=\"0\" src=\"'.BASE_URL.'public/img/upload/'.$data['imagen'].'\" style=\"width:300px; height:200px;\" class=\"img-circle\" /></a>';
+if( file_exists($ruta) && $data['imagen'] != '' ){    
+    $imagen = '<img border=\"0\" src=\"'.$ruta.'\" style=\"width:300px; height:200px;cursor:pointer;\" class=\"img-circle\" onclick=\"registrarVendedor.getFormViewFoto(\''.AesCtr::en($ruta).'\');\"  />';
 }else{
     $imagen = '<img src=\"'.BASE_URL.'public/img/sin_foto.jpg\" style=\"width:250px; height:auto;\" class=\"img-circle\" />';
  }
@@ -18,6 +19,7 @@ $html = "<h4>Vista previa:</h4>"
         . "<center>".$imagen."</center>";
 
 ?>
+
 <form id="<?php echo PAINV; ?>formConsultaPanelSocio" name="<?php echo PAINV; ?>formConsultaPanelSocio" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog" style="width:50%">
         <div class="modal-content" >

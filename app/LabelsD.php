@@ -238,7 +238,8 @@ define('INDEX_P7','Cronograma de Pago');
 define('INDEX_P8','Utilidad de Venta');
 
 define('LABEL_APC1','Asignar Socio a Panel');
-
+define('MISPA1','Alquilado');
+define('MISPA2','Disponible');
 
 
 ?>

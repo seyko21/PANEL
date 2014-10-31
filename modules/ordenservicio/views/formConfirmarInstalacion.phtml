@@ -32,7 +32,7 @@ $doc = $data = Obj::run()->confirmarInstalacionController->getImagen();
                 </form>
                 <div class="form-inline">
                     <?php if(sizeof($doc) && isset($doc['imagen'])):?>
-                        <a id="<?php echo COINS; ?>dow" href="javascript:;" onclick="window.open('<?php echo 'public/img/confirmacion/'.$doc['imagen']; ?>','_blank');"><?php echo $doc['imagen'];?></a>
+                        <a id="<?php echo COINS; ?>dow" href="javascript:;" onclick="registrarVendedor.getFormViewFoto('<?php echo AesCtr::en(BASE_URL.'public/img/confirmacion/'.$doc['imagen']); ?>');"><?php echo $doc['imagen'];?></a>
                         <button id="<?php echo COINS; ?>btndow" type="button" class="btn btn-danger" style="padding: 5px" onclick="confirmarInstalacion.deleteImagen(this,'<?php echo $idOrdenDetalle; ?>','<?php echo 'public/img/confirmacion/'.$doc['imagen']; ?>');"><i class="fa fa-trash-o"></i> Eliminar</button>
                     <?php else: ?>
                         <a id="<?php echo COINS; ?>dow" href="javascript:;"></a>

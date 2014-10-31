@@ -12,8 +12,8 @@ $data = Obj::run()->personaController->getDatosPersonales();
             </div>
             <div class="modal-body smart-form scroll-form">
                 <?php
-                    $file = BASE_URL.'public/files/fotos/'. $data['foto'];
-                if( file_exists($file) ): ?>
+                    $file = 'public/files/fotos/'. $data['foto'];
+                if( file_exists($file) && $data['foto'] != ''): ?>
                 <section>
                     <img src="<?php echo $file; ?>" width="100px" height="120px">
                 </section>

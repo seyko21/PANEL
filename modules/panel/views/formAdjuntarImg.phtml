@@ -16,7 +16,7 @@ $doc = Obj::run()->fichaTecnicaModel->getAdjuntado();
                     <input type="hidden" id="_idCaratula" name="_idCaratula" value="<?php echo $this->idCaratula; ?>">
                 </form>
                 <?php if(sizeof($doc) && (isset($doc['imagen']) && ($doc['imagen'] != '' or $doc['imagen']!= NULL ))) :?>
-                <a id="<?php echo T102; ?>dow" href="javascript:;" onclick="window.open('<?php echo 'public/img/uploads/'.$doc['imagen']; ?>','_blank');"><?php echo $doc['imagen'];?></a>
+                <a id="<?php echo T102; ?>dow" href="javascript:;" onclick="registrarVendedor.getFormViewFoto('<?php echo AesCtr::en(BASE_URL.'public/img/uploads/'.$doc['imagen']); ?>');"><?php echo $doc['imagen'];?></a>
                 <button id="<?php echo T102; ?>btndow" type="button" class="btn btn-danger" style="padding: 5px" onclick="contrato.deleteAdjuntar(this,'<?php echo $this->idCaratula; ?>','<?php echo 'public/img/uploads/'.$doc['imagen']; ?>');"><i class="fa fa-trash-o"></i> Eliminar</button>
                 <?php else: ?>
                 <a id="<?php echo T102; ?>dow" href="javascript:;"></a>

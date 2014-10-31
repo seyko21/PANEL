@@ -50,7 +50,8 @@ class panelesConfirmadoController extends Controller{
              $c6 = $aRow['fecha_imagen'];
              
              if($aRow['imagen'] != '' or $aRow['imagen'] != null){
-                $imagen = '<a href=\"'.BASE_URL.'public/img/confirmacion/'.$aRow['imagen'].'\" target=\"_blank\" ><img border=\"0\" src=\"'.BASE_URL.'public/img/confirmacion/'.$aRow['imagen'].'\" style=\"width:70px; height:40px;\" /></a>';
+                 $ruta = BASE_URL.'public/img/confirmacion/'.$aRow['imagen'];
+                 $imagen = '<img border=\"0\" src=\"'.BASE_URL.'public/img/confirmacion/'.$aRow['imagen'].'\" style=\"width:70px; height:40px;cursor:pointer;\" onclick=\"registrarVendedor.getFormViewFoto(\''.AesCtr::en($ruta).'\');\"  />';
              }else{
                 $imagen = '<img src=\"'.BASE_URL.'public/img/sin_foto.jpg\" style=\"width:70px; height:40px;\" />';
              }

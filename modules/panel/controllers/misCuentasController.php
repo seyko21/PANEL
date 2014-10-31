@@ -39,19 +39,20 @@ public function getGridProducto(){
                 $encryptReg = Aes::en($aRow['id_producto']);
                 
                 if($aRow['estado'] == 'D'){
-                    $estado = '<span class=\"label label-success\">Disponible</span>';
+                    $estado = '<span class=\"label label-success\">'.MISPA2.'</span>';
                 }elseif($aRow['estado'] == 'A'){
-                    $estado = '<span class=\"label label-warning\">Alquilado</span>';
+                    $estado = '<span class=\"label label-warning\">'.MISPA1.'</span>';
                 }
                 
                 if($aRow['iluminado'] == 1){
-                    $iluminado = '<span class=\"label label-success\">SI</span>';
+                    $iluminado = '<span class=\"label label-success\">'.LABEL_S.'</span>';
                 }elseif($aRow['iluminado'] == 0){
-                    $iluminado = '<span class=\"label label-danger\">NO</span>';
+                    $iluminado = '<span class=\"label label-danger\">'.LABEL_N.'</span>';
                 }
-              
+               
                 if($aRow['imagen'] != '' or $aRow['imagen'] != null){
-                    $imagen = '<a href=\"'.BASE_URL.'public/img/uploads/'.$aRow['imagen'].'\" target=\"_blank\" ><img border=\"0\" src=\"'.BASE_URL.'public/img/uploads/'.$aRow['imagen'].'\" style=\"width:70px; height:40px;\" /></a>';
+                    $ruta = BASE_URL.'public/img/uploads/'.$aRow['imagen'];
+                    $imagen = '<img border=\"0\" src=\"'.BASE_URL.'public/img/uploads/'.$aRow['imagen'].'\" style=\"width:70px; height:40px;cursor:pointer;\" onclick=\"registrarVendedor.getFormViewFoto(\''.AesCtr::en($ruta).'\');\"  />';
                 }else{
                     $imagen = '<img src=\"'.BASE_URL.'public/img/sin_foto.jpg\" style=\"width:70px; height:40px;\" />';
                 }

@@ -148,7 +148,7 @@ class fichaTecnicaController extends Controller{
                 }
                 if($aRow['imagen'] != '' or $aRow['imagen'] != null){
                     $ruta = BASE_URL.'public/img/uploads/'.$aRow['imagen'];
-                    $imagen = '<img border=\"0\" src=\"'.$ruta.'\" style=\"width:70px; height:40px;\" onclick=\"registrarVendedor.getFormViewFoto(\''.AesCtr::en($ruta).'\');\" style=\"cursor:pointer\"/>';
+                    $imagen = '<img border=\"0\" src=\"'.$ruta.'\" style=\"width:70px; height:40px;cursor:pointer;\" onclick=\"registrarVendedor.getFormViewFoto(\''.AesCtr::en($ruta).'\');\" />';
                 }else{
                     $imagen = '<img src=\"'.BASE_URL.'public/img/sin_foto.jpg\" style=\"width:70px; height:40px;\" />';
                 }
