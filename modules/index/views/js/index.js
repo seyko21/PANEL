@@ -117,6 +117,5 @@ var index_ = function(){
     
 };
  var index = new index_();
+
  
- /*anular cotizaciones vencidas*/
- index.postAnulaCotizacionesVencidas();
