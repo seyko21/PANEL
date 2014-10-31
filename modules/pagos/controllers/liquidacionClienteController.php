@@ -59,6 +59,9 @@ class liquidacionClienteController extends Controller{
                     case 'F':
                         $estado = '<span class=\"label label-info\">'.SEGPA_29.'</span>';
                         break;
+                    case 'R':
+                        $estado = '<span class=\"label bg-color-magenta txt-color-white\">'.SEGPA_30.'</span>';
+                        break;
                 }
                 
                 /*antes de enviar id se encrypta*/
@@ -140,6 +143,7 @@ class liquidacionClienteController extends Controller{
             case 'T': $estado = 'Pago total'; break;
             case 'F': $estado = 'Finalizado'; break;
             case 'A': $estado = 'Anulado'; break;
+            case 'R': $estado = 'Renovado'; break;
         }
                         
         $html .='<table width="100%" border="0" cellpadding="5" cellspacing="3">
