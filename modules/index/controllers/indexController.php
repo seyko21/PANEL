@@ -98,9 +98,7 @@ class indexController extends Controller{
             $targetPath = ROOT . 'public' . DS .'files' .DS . 'fotos' . DS;
             $tempFile = $_FILES['file']['tmp_name'];
             
-            $nn = explode('.',$_FILES['file']['name']);
-            
-            $file = $p.'.'.$nn[1];
+            $file = $p.'_'.$_FILES['file']['name'];
             $targetFile = $targetPath.$file;
             if (move_uploaded_file($tempFile, $targetFile)) {
                $array = array("img" => $targetPath, "thumb" => $targetPath,'archivo'=>$file);
