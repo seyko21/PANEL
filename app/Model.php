@@ -125,7 +125,7 @@ class Model{
             if(is_array($_POST[$parametro])){
                 return $_POST[$parametro];
             }else{
-                return htmlspecialchars(trim($_POST[$parametro]),ENT_QUOTES);
+                return trim($_POST[$parametro]);
             }
         }else{
             return false;

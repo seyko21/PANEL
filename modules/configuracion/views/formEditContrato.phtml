@@ -46,7 +46,9 @@ $data = contratoController::findContrato();
                                     <!-- widget content -->
                                     <div class="widget-body no-padding">
                                             <div class="summernote">	
-                                                <?php echo html_entity_decode($data['cuerpo_contrato']); ?>
+                                                <?php 
+                                                $html = str_replace('\\','',$data['cuerpo_contrato'] );
+                                                echo htmlspecialchars_decode($html,ENT_QUOTES); ?>
                                             </div>						
                                             <div class="widget-footer smart-form">
                                                 <div class="btn-group">

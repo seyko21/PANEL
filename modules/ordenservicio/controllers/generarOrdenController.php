@@ -255,14 +255,6 @@ class generarOrdenController extends Controller{
         $ar = ROOT.'public'.DS.'files'.DS.$c;
                
         $mpdf = new mPDF('c');
-
-//        $mpdf->mirrorMargins = 1;
-//        $mpdf->defaultheaderfontsize = 10; /* in pts */
-//        $mpdf->defaultheaderfontstyle = B; /* blank, B, I, or BI */
-//        $mpdf->defaultheaderline = 1; /* 1 to include line below header/above footer */
-//        $mpdf->defaultfooterfontsize = 12; /* in pts */
-//        $mpdf->defaultfooterfontstyle = B; /* blank, B, I, or BI */
-//        $mpdf->defaultfooterline = 1; /* 1 to include line below header/above footer */
         
         $mpdf->SetHTMLHeader('<div style="margin:0 auto; width:137px;"><img src="'.ROOT.'public'.DS.'img'.DS.'logotipo.png" width="137" height="68" /></div>','',TRUE);
         $mpdf->SetHTMLFooter('<table width="100%" style="vertical-align: bottom; font-family: serif; font-size: 8pt; color: #000000; font-weight: bold;"><tr>
@@ -285,8 +277,8 @@ class generarOrdenController extends Controller{
         $cronograma = Obj::run()->generarOrdenModel->getCronogramaContrato();
         $caratula = Obj::run()->generarOrdenModel->getCaratula();
 
-        $html = $contrato['cuerpo_contrato'];
-        
+        $html = str_replace('\\','',$contrato['cuerpo_contrato'] );
+        $html = htmlspecialchars_decode($html,ENT_QUOTES);
         //Panel: Caratula
         $panel = '<table border="0" style="width:100%; font-family:Arial; font-size:12px;"> '
                 . '<tr>'
@@ -391,7 +383,7 @@ class generarOrdenController extends Controller{
         $html = str_replace('{{CONTRATO_DINERO_EN_LETRAS}}',  $nl->convertir($contrato['monto_total']), $html);
         
         
-        return html_entity_decode($html);
+        return $html;
     }
     
     public function postAnularOrdenAll(){

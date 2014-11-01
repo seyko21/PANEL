@@ -31,7 +31,7 @@ class contratoModel extends Model{
         $this->_idContrato   = Aes::de(Formulario::getParam("_idContrato"));    /*se decifra*/
         $this->_usuario     = Session::get("sys_idUsuario");
         $this->_nombre     = Formulario::getParam(CONTR.'txt_nombre');
-        $this->_cuerpo     = Formulario::getParam(CONTR.'txt_cuerpo');
+        $this->_cuerpo     = $this->post(CONTR.'txt_cuerpo');
         $this->_chkdel  = Formulario::getParam(CONTR.'chk_delete');
         
         $this->_iDisplayStart  = Formulario::getParam("iDisplayStart"); 
