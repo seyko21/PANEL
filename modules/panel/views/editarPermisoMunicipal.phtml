@@ -27,7 +27,7 @@ $data = permisoMunicipalController::getPermisoMunicipal();
                         <div class="col col-4">
                             <label class="input"> 
                                 <i class="icon-append fa fa-calendar-o "></i>
-                                <input type="text" id="<?php echo PERMU; ?>txt_fi" name="<?php echo PERMU; ?>txt_fi" value="<?php echo functions::cambiaf_a_normal($data['fecha_inicio']); ?>" >
+                                <input type="text" id="<?php echo PERMU; ?>txt_fi" name="<?php echo PERMU; ?>txt_fi" value="<?php echo Functions::cambiaf_a_normal($data['fecha_inicio']); ?>" >
                                 <b class="tooltip tooltip-top-right"><i class="fa fa-question-circle txt-color-teal"></i> <?php echo LABEL_A54M; ?></b>
                             </label>
                         </div>
@@ -35,7 +35,7 @@ $data = permisoMunicipalController::getPermisoMunicipal();
                         <div class="col col-4">
                             <label class="input"> 
                                 <i class="icon-append fa fa-calendar-o "></i>
-                                <input type="text" id="<?php echo PERMU; ?>txt_ff" name="<?php echo PERMU; ?>txt_ff" value="<?php echo functions::cambiaf_a_normal($data['fecha_final']); ?>" >
+                                <input type="text" id="<?php echo PERMU; ?>txt_ff" name="<?php echo PERMU; ?>txt_ff" value="<?php echo Functions::cambiaf_a_normal($data['fecha_final']); ?>" >
                                 <b class="tooltip tooltip-top-right"><i class="fa fa-question-circle txt-color-teal"></i> <?php echo LABEL_A55M; ?></b>
                             </label>
                         </div>
