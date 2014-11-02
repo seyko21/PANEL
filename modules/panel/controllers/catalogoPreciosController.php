@@ -10,7 +10,7 @@
 class catalogoPreciosController extends Controller{
            
     public function __construct() {
-        $this->loadModel("catalogoPrecios");
+        $this->loadModel(array('modulo'=>'panel','modelo'=>'catalogoPrecios'));
         $this->loadController(array('modulo'=>'panel','controller'=>'fichaTecnica'));        
     }    
     public function index(){ 
@@ -355,7 +355,9 @@ class catalogoPreciosController extends Controller{
     public function deleteAdjuntar() {
         echo Obj::run()->fichaTecnicaController->deleteAdjuntar();     
     }           
-    
+    public function deleteImagen(){
+          echo Obj::run()->fichaTecnicaController->deleteImagen();   
+    }
 }
 
 ?>

@@ -9,7 +9,8 @@
 class fichaTecnicaController extends Controller{
 
     public function __construct() {
-        $this->loadModel('fichaTecnica');
+        $this->loadModel(array('modulo'=>'panel','modelo'=>'fichaTecnica'));
+        $this->loadController(array('modulo' => 'configuracion', 'controller' => 'contrato')); 
     }
     
    public function index(){ 
@@ -454,7 +455,7 @@ class fichaTecnicaController extends Controller{
         unlink($filename);
         echo $filename;
     }  
-   
+   //Para subir Imagen en el servidor
     public function adjuntarImagen() {
 //        header("Access-Control-Allow-Origin: *");
 //        header('Content-type: application/json');
@@ -475,20 +476,15 @@ class fichaTecnicaController extends Controller{
             echo json_encode($array);
         }
     }
-    
+    //Para eliminar el archivo de Imagen en el servidor
     public function deleteAdjuntar() {
-        $data = Obj::run()->fichaTecnicaModel->deleteAdjuntar();
-        
-        $file = Formulario::getParam('_img');
-        
-        $file = str_replace("/","\\", $file);
-        
-        $targetPath =  $file;
-        
-        unlink($targetPath);
-        
-        echo json_encode($data);
-    }          
+       echo Obj::run()->contratoController->deleteAdjuntar();
+    }         
+    //Para actualizar la imagen en la BD
+    public function deleteImagen(){
+         $data = Obj::run()->fichaTecnicaModel->deleteAdjuntar();
+         echo json_encode($data);        
+    }
     
 }
 

@@ -43,7 +43,7 @@ $doc = $data = Obj::run()->registrarVendedorModel->getAdjuntado();
             acceptedFiles: ".pdf",
             url: '<?php echo BASE_URL; ?>personal/registrarVendedor/adjuntarDocumento',
             maxFiles: 1, // Number of files at a time
-            maxFilesize: 10, //in MB
+            maxFilesize: 50, //in MB
             addRemoveLinks: true,
             dictResponseError: 'Error uploading file!',
             dictDefaultMessage: 'Arrastre aquí una imagen',
@@ -57,7 +57,7 @@ $doc = $data = Obj::run()->registrarVendedorModel->getAdjuntado();
                     var json = JSON.parse(data.xhr.responseText);   
                     $('#<?php echo T7; ?>dow').attr('onclick',"window.open('public/files/docs/"+json.archivo+"','_blank');");
                     $('#<?php echo T7; ?>dow').html(json.archivo); 
-                    $('#<?php echo T7; ?>btndow').attr('onclick',"registrarVendedor.deleteAdjuntar(this,'<?php echo $this->idVendedor; ?>','public/files/docs/"+json.archivo+"');");
+                    $('#<?php echo T7; ?>btndow').attr('onclick',"registrarVendedor.deleteAdjuntar(this,'<?php echo Aes::en($this->idVendedor); ?>','public/files/docs/"+json.archivo+"');");
                     $('#<?php echo T7; ?>btndow').css('display','block');
                 }
             }

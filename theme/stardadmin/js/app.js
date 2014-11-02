@@ -195,9 +195,9 @@ $(document).ready(function() {
 		$.SmartMessageBox({
 			title : "<i class='fa fa-refresh' style='color:green'></i> Clear Local Storage",
 			content : $.widresetMSG || "Would you like to RESET all your saved widgets and clear LocalStorage?",
-			buttons : '[No][Yes]'
+			buttons : '[No][Si]'
 		}, function(ButtonPressed) {
-			if (ButtonPressed == "Yes" && localStorage) {
+			if (ButtonPressed == "Si" && localStorage) {
 				localStorage.clear();
 				location.reload();
 			}
@@ -217,10 +217,10 @@ $(document).ready(function() {
 		$.SmartMessageBox({
 			title : "<i class='fa fa-sign-out txt-color-orangeDark'></i> Desea salir: <span class='txt-color-orangeDark'><strong>" + $('#cont-nameuser').text() + "</strong></span> ?",
 			content : $.logoutMSG || "You can improve your security further after logging out by closing this opened browser",
-			buttons : '[No][Yes]'
+			buttons : '[No][Si]'
 
 		}, function(ButtonPressed) {
-			if (ButtonPressed == "Yes") {
+			if (ButtonPressed == "Si") {
 				$.root_.addClass('animated fadeOutUp');
                                 index.postLogout();
 			}

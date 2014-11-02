@@ -9,8 +9,8 @@
 
 class consultaPermisosController extends Controller{
 
-    public function __construct() {
-        $this->loadModel("consultaPermisos");
+    public function __construct() {        
+        $this->loadModel(array('modulo'=>'panel','modelo'=>'consultaPermisos'));
         $this->loadController(array('modulo'=>'panel','controller'=>'fichaTecnica')); 
     }
     
