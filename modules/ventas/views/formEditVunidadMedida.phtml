@@ -1,0 +1,94 @@
+<?php /*
+* ---------------------------------------
+* --------- CREATED BY CREATOR ----------
+* fecha: 06-11-2014 16:11:31 
+* Descripcion : formEditVunidadMedida.phtml
+* ---------------------------------------
+*/
+
+/*prefijo: VUNID debe ser alias en tabla men_menuprincipal*/
+$editar = Session::getPermiso("VUNIDACT");
+    
+$data = vunidadMedidaController::findVunidadMedida();
+
+?>
+<form id="<?php echo VUNID; ?>formEditVunidadMedida" name="<?php echo VUNID; ?>formEditVunidadMedida" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close"  aria-hidden="true">
+                    &times;
+                </button>
+                <h4 class="modal-title"><?php echo VUNID3; ?></h4>
+            </div>
+            <div class="modal-body smart-form"> 
+              <section>
+                    <div class="row">
+                        <label class="label col col-2"><?php echo VUNID4; ?></label>
+                        <div class="col col-10">
+                            <label class="input"> 
+                                <i class="icon-append fa fa-keyboard-o"></i>
+                                <input type="text" id="<?php echo VUNID; ?>txt_descripcion" name="<?php echo VUNID; ?>txt_descripcion" value="<?php echo $data['nombre']; ?>">
+                                <b class="tooltip tooltip-top-right"><i class="fa fa-keyboard-o txt-color-teal"></i> <?php echo VUNID4M; ?></b>
+                            </label>
+                        </div>
+                    </div>
+                </section>
+                <section>
+                    <div class="row">
+                        <label class="label col col-2"><?php echo VUNID5; ?></label>
+                        <div class="col col-5">
+                            <label class="input"> 
+                                <i class="icon-append fa fa-keyboard-o"></i>
+                                <input type="text" id="<?php echo VUNID; ?>txt_sigla" name="<?php echo VUNID; ?>txt_sigla" value="<?php echo $data['sigla']; ?>">
+                                <b class="tooltip tooltip-top-right"><i class="fa fa-keyboard-o txt-color-teal"></i> <?php echo VUNID5M; ?></b>
+                            </label>
+                        </div>
+                    </div>
+                </section>
+            </div>
+            <div class="modal-footer">
+                <div class="foot-obligar"></div>
+                <?php if($editar["permiso"]):?>
+                <button id="<?php echo VUNID; ?>btnEdVunidadMedida" type="submit" class="<?php echo $editar["theme"]; ?>">
+                    <i class="<?php echo $editar["icono"]; ?>"></i> <?php echo $editar["accion"]; ?>
+                </button>
+                <?php endif; ?>
+                <button type="button" class="<?php echo THEME_CLOSE; ?>">
+                    <i class="<?php echo ICON_CLOSE; ?>"></i> <?php echo BTN_CLOSE; ?>
+                </button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</form>
+<!-- si no tiene permiso se anula submit desde cualquier input -->
+<?php if(!$editar["permiso"]): ?>
+<script>
+    simpleScript.noSubmit("#<?php echo VUNID; ?>formEditVunidadMedida");
+</script>
+<?php endif; ?>
+<script>
+/*configurar validacion de formulario -- este codigo es de ejemplo*/
+$("#<?php echo VUNID; ?>formEditVunidadMedida").validate({
+    // Rules for form validation
+    rules : {
+         <?php echo VUNID; ?>txt_descripcion : {
+            required : true,
+            minlength: 2
+        },
+        <?php echo VUNID; ?>txt_sigla : {
+            required : true,
+            minlength: 1
+        }
+    },
+
+    // No cambie el código de abajo
+    errorPlacement : function(error, element) {
+        error.insertAfter(element.parent());
+    },
+
+    submitHandler: function(){
+        vunidadMedida.postEditVunidadMedida();
+    }   
+});
+</script>

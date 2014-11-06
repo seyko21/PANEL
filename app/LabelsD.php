@@ -236,10 +236,16 @@ define('INDEX_P5','Mis Contratos');
 define('INDEX_P6','Deuda - Saldo a Pagar');
 define('INDEX_P7','Cronograma de Pago');
 define('INDEX_P8','Utilidad de Venta');
-
 define('LABEL_APC1','Asignar Socio a Panel');
 define('MISPA1','Alquilado');
 define('MISPA2','Disponible');
-
+/*----------------------Unidad de Medida ----------------------*/
+define('VUNID1','Unidad de Medida');
+define('VUNID2','Nueva Unidad de Medida');
+define('VUNID3','Editar Unidad de Medida');
+define('VUNID4','Descripción');
+define('VUNID4M','Ingrese el nombre de la Unidad de Medida');
+define('VUNID5','Sigla');
+define('VUNID5M','Ingrese la sigla de la Unidad de Medida');
 
 ?>

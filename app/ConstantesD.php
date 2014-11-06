@@ -42,5 +42,6 @@ define("LISOC","LISOC");             /*tab modulo LIQUIDACIONSOCIO*/
 define("PAINV","PAINV");             /*tab modulo PANELESINVERTIDO*/
 define("CREIN","CREIN");             /*tab modulo RETORNODEINVERSION*/
 define("GPASO","GPASO");             /*tab modulo PAGOSOCIO*/
+define("VUNID","VUNID");             /*tab modulo VUNIDADMEDIDA*/
 
 ?>
