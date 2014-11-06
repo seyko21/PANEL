@@ -217,7 +217,7 @@ $(document).ready(function() {
 		$.SmartMessageBox({
 			title : "<i class='fa fa-sign-out txt-color-orangeDark'></i> Desea salir: <span class='txt-color-orangeDark'><strong>" + $('#cont-nameuser').text() + "</strong></span> ?",
 			content : $.logoutMSG || "You can improve your security further after logging out by closing this opened browser",
-			buttons : '[No][Si]'
+			buttons : '[No][Si]'                        
 
 		}, function(ButtonPressed) {
 			if (ButtonPressed == "Si") {
