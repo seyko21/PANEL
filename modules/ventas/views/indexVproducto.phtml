@@ -1,0 +1,40 @@
+<?php 
+/*
+* ---------------------------------------
+* --------- CREATED BY CREATOR ----------
+* fecha: 07-11-2014 00:11:47 
+* Descripcion : indexVproducto.phtml
+* ---------------------------------------
+*/
+$nuevo    = Session::getPermiso("VPRODNEW");
+$eliminar = Session::getPermiso("VPRODDEL");
+echo Functions::widgetOpen(array(
+        "id"=>VPROD,
+        "title"=>VPROD1
+    )); 
+?>
+
+    <div class="widget-body-toolbar"></div>
+    <div class="dataTables_wrapper form-inline" role="grid">
+        <div class="dt-top-row">
+            <div class="DTTT btn-group">
+                <!-- verificar permisos -->
+                <?php if($nuevo["permiso"]): ?>
+                <button id="<?php echo VPROD; ?>btnNewVproducto" type="button" onclick="vproducto.getFormNewVproducto(this);" class="<?php echo $nuevo["theme"]; ?>">
+                    <i class="<?php echo $nuevo["icono"]; ?>"></i> <?php echo $nuevo["accion"]; ?>
+                </button>
+                <?php endif; ?>
+                <!-- verificar permisos -->
+                <?php if($eliminar["permiso"]): ?>
+                <button id="<?php echo VPROD; ?>btnDeleteVproducto" type="button" onclick="vproducto.postDeleteVproductoAll(this);" class="<?php echo $eliminar["theme"]; ?>">
+                    <i class="<?php echo $eliminar["icono"]; ?>"></i> <?php echo $eliminar["accion"]; ?>
+                </button>
+                <?php endif; ?>
+            </div>
+        </div>
+
+    </div>
+    <form id="<?php echo VPROD; ?>formGridVproducto" name="<?php echo VPROD; ?>formGridVproducto" onsubmit="return false"  >
+        <table id="<?php echo VPROD; ?>gridVproducto" class="table table-striped table-hover table-condensed" style="width:100%"></table>
+    </form>
+<?php echo Functions::widgetClose(); ?>

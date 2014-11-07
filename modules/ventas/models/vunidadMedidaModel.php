@@ -9,7 +9,7 @@
 
 class vunidadMedidaModel extends Model{
 
-    private $_flag;
+    private $_chkdel;
     private $_idVunidadMedida;
     private $_nombre;
     private $_sigla;
@@ -29,7 +29,7 @@ class vunidadMedidaModel extends Model{
     private function _set(){        
         $this->_idVunidadMedida   = Aes::de(Formulario::getParam("_idVunidadMedida"));    /*se decifra*/
         $this->_usuario     = Session::get("sys_idUsuario");
-        
+        $this->_chkdel  = Formulario::getParam(VUNID.'chk_delete');
         $this->_nombre     = Formulario::getParam(VUNID.'txt_descripcion');
         $this->_sigla     = Formulario::getParam(VUNID.'txt_sigla');
         

@@ -34,7 +34,8 @@
         PAINV: '<?php echo PAINV; ?>',
         CREIN: '<?php echo CREIN; ?>',
         GPASO: '<?php echo GPASO; ?>',
-        VUNID: '<?php echo VUNID; ?>'
+        VUNID: '<?php echo VUNID; ?>',
+        VPROD: '<?php echo VPROD; ?>'
     }
 };
 </script>

@@ -247,5 +247,15 @@ define('VUNID4','Descripción');
 define('VUNID4M','Ingrese el nombre de la Unidad de Medida');
 define('VUNID5','Sigla');
 define('VUNID5M','Ingrese la sigla de la Unidad de Medida');
+/*----------------------Producto ----------------------*/
+define('VPROD1','Listado de Producto');
+define('VPROD2','Nuevo Producto');
+define('VPROD3','Editar Producto');
+define('VPROD4','Descripción');
+define('VPROD4M','Ingrese el nombre del Producto.');
+define('VPROD5','Precio');
+define('VPROD5M','Ingrese el precio Unitario del Producto.');
+define('VPROD6','Unidad medida');
+
 
 ?>

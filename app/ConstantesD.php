@@ -43,5 +43,6 @@ define("PAINV","PAINV");             /*tab modulo PANELESINVERTIDO*/
 define("CREIN","CREIN");             /*tab modulo RETORNODEINVERSION*/
 define("GPASO","GPASO");             /*tab modulo PAGOSOCIO*/
 define("VUNID","VUNID");             /*tab modulo VUNIDADMEDIDA*/
+define("VPROD","VPROD");             /*tab modulo VPRODUCTO*/
 
 ?>

@@ -1,0 +1,76 @@
+<?php /*
+* ---------------------------------------
+* --------- CREATED BY CREATOR ----------
+* fecha: 07-11-2014 00:11:47 
+* Descripcion : formEditVproducto.phtml
+* ---------------------------------------
+*/
+
+/*prefijo: VPROD debe ser alias en tabla men_menuprincipal*/
+$editar = Session::getPermiso("VPRODACT");
+    
+$data = vproductoController::findVproducto();
+
+?>
+<form id="<?php echo VPROD; ?>formEditVproducto" name="<?php echo VPROD; ?>formEditVproducto" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close"  aria-hidden="true">
+                    &times;
+                </button>
+                <h4 class="modal-title"><?php echo VPROD3;?></h4>
+            </div>
+            <div class="modal-body smart-form"> 
+                CONTENIDO DEL FORM (utilizar constantes en Labels.php)
+            </div>
+            <div class="modal-footer">
+                <div class="foot-obligar"></div>
+                <?php if($editar["permiso"]):?>
+                <button id="<?php echo VPROD; ?>btnEdVproducto" type="submit" class="<?php echo $editar["theme"]; ?>">
+                    <i class="<?php echo $editar["icono"]; ?>"></i> <?php echo $editar["accion"]; ?>
+                </button>
+                <?php endif; ?>
+                <button type="button" class="<?php echo THEME_CLOSE; ?>">
+                    <i class="<?php echo ICON_CLOSE; ?>"></i> <?php echo BTN_CLOSE; ?>
+                </button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</form>
+<!-- si no tiene permiso se anula submit desde cualquier input -->
+<?php if(!$editar["permiso"]): ?>
+<script>
+    simpleScript.noSubmit("#<?php echo VPROD; ?>formEditVproducto");
+</script>
+<?php endif; ?>
+<script>
+/*configurar validacion de formulario -- este codigo es de ejemplo*/
+$("#<?php echo VPROD; ?>formEditVproducto").validate({
+    // Rules for form validation
+    rules : {
+        <?php echo VPROD; ?>txt_campo : {
+            required : true,
+            regular: true,
+            minlength: 3
+        }
+    },
+
+    // Msn para validacion -- es opcional -- se puede eliminar, validate tiene los msn configurados por defecto
+    messages : {
+        <?php echo VPROD; ?>txt_campo : {
+            required : "Campo requerido",
+            regular: "No se permite caracteres inválidos"
+        }
+    },
+
+    // No cambie el código de abajo
+    errorPlacement : function(error, element) {
+        error.insertAfter(element.parent());
+    },
+
+    submitHandler: function(){
+        vproducto.postEditVproducto();
+    }   
+});
+</script>
