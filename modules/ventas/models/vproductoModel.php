@@ -9,9 +9,11 @@
 
 class vproductoModel extends Model{
 
-    private $_flag;
     private $_idVproducto;
-    private $_activo;
+    private $_chkdel;
+    private $_nombre;
+    private $_precio;
+    private $_idUM;
     private $_usuario;
     
     /*para el grid*/
@@ -29,6 +31,11 @@ class vproductoModel extends Model{
         $this->_flag        = Formulario::getParam("_flag");
         $this->_idVproducto   = Aes::de(Formulario::getParam("_idVproducto"));    /*se decifra*/
         $this->_usuario     = Session::get("sys_idUsuario");
+        
+        $this->_chkdel  = Formulario::getParam(VPROD.'chk_delete');
+        $this->_nombre     = Formulario::getParam(VPROD.'txt_descripcion');
+        $this->_precio     = str_replace(',','',Formulario::getParam(VPROD.'txt_precio')); 
+        $this->_idUM     = Formulario::getParam(VPROD.'lst_unidadMedida');
         
         $this->_iDisplayStart  = Formulario::getParam("iDisplayStart"); 
         $this->_iDisplayLength = Formulario::getParam("iDisplayLength"); 
@@ -65,23 +72,78 @@ class vproductoModel extends Model{
     
     /*grabar nuevo registro: Vproducto*/
     public function newVproducto(){
-        /*-------------------------LOGICA PARA EL INSERT------------------------*/
+        $query = "call sp_ventaProductoMantenimiento(:flag,:key,:nombre,:precio,:idum,:usuario);";
+        $parms = array(
+            ':flag' => 1,
+            ':key' => $this->_idVproducto,
+            ':nombre' => $this->_nombre,
+            ':precio' => $this->_precio,            
+            ':idum' => $this->_idUM, 
+            ':usuario' => $this->_usuario
+        );
+        $data = $this->queryOne($query,$parms);
+        return $data;
     }
     
     /*seleccionar registro a editar: Vproducto*/
     public function findVproducto(){
-        /*-----------------LOGICA PARA SELECT REGISTRO A EDITAR-----------------*/
+       $query = "SELECT
+        `id_producto`,
+        `descripcion`,
+        `precio`,
+        `estado`,
+        `id_unidadmedida`  
+      FROM `ven_producto` WHERE id_producto = :idd; ";
+        
+        $parms = array(
+            ':idd' => $this->_idVproducto
+        );
+        $data = $this->queryOne($query,$parms);
+        return $data;
     }
     
     /*editar registro: Vproducto*/
     public function editVproducto(){
-        /*-------------------------LOGICA PARA EL UPDATE------------------------*/
+        $query = "call sp_ventaProductoMantenimiento(:flag,:key,:nombre,:precio,:idum,:usuario);";
+        $parms = array(
+            ':flag' => 2,
+            ':key' => $this->_idVproducto,
+            ':nombre' => $this->_nombre,
+            ':precio' => $this->_precio,            
+            ':idum' => $this->_idUM, 
+            ':usuario' => $this->_usuario
+        );
+        $data = $this->queryOne($query,$parms);
+        return $data;
     }
     
     /*eliminar varios registros: Vproducto*/
     public function deleteVproductoAll(){
-        /*--------------------------LOGICA PARA DELETE--------------------------*/
+        foreach ($this->_chkdel as $value) {
+            $query = "call sp_ventaProductoMantenimiento(:flag,:key,:nombre,:precio,:idum,:usuario);";
+            $parms = array(
+                ':flag' => 3,
+                ':key' => Aes::de($value),
+                ':nombre' => '',
+                ':precio' => '',   
+                ':idum' => '',
+                ':usuario' => $this->_usuario
+            );
+            $this->execute($query,$parms);
+        }
+        $data = array('result'=>1);
+        return $data;
     }
+    
+    public function getUnidadMedida(){
+        $query = "SELECT id_unidadmedida,CONCAT(TRIM(nombre),' - ', TRIM(sigla)) AS nombre FROM ven_unidadmedida WHERE estado = :estado; ";
+        
+        $parms = array(
+            ':estado' => 'A'
+        );
+        $data = $this->queryAll($query,$parms);
+        return $data;
+    }    
     
     public function postDesactivar(){
         $query = "UPDATE ven_producto SET

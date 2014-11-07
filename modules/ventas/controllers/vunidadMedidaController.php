@@ -94,6 +94,12 @@ class vunidadMedidaController extends Controller{
 
     }
     
+    public function getAddListUnidadMedida(){ 
+        $data = Obj::run()->vunidadMedidaModel->getLastUnidadMedida();
+        
+        echo json_encode($data);
+    }    
+    
     /*carga formulario (newVunidadMedida.phtml) para nuevo registro: VunidadMedida*/
     public function getFormNewVunidadMedida(){
         Obj::run()->View->render("formNewVunidadMedida");

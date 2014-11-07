@@ -22,7 +22,61 @@ $data = vproductoController::findVproducto();
                 <h4 class="modal-title"><?php echo VPROD3;?></h4>
             </div>
             <div class="modal-body smart-form"> 
-                CONTENIDO DEL FORM (utilizar constantes en Labels.php)
+               <section>
+                    <div class="row">
+                        <label class="label col col-2"><?php echo VPROD4; ?></label>
+                        <div class="col col-10">
+                            <label class="input"> 
+                                <i class="icon-append fa fa-keyboard-o"></i>
+                                <input type="text" id="<?php echo VPROD; ?>txt_descripcion" name="<?php echo VPROD; ?>txt_descripcion" value="<?php echo $data["descripcion"] ?>">
+                                <b class="tooltip tooltip-top-right"><i class="fa fa-keyboard-o txt-color-teal"></i> <?php echo VPROD4M; ?></b>
+                            </label>
+                        </div>
+                    </div>
+                </section>
+                <!-- Combo unidad de Medida-->
+                <section>
+                    <div class="row">
+                        <label class="label col col-2"><?php echo VPROD6; ?></label>
+                        <div class="col col-8">
+                            <label class="select"> 
+                                <?php
+                                    $datac = vproductoController::getUnidadMedida();
+                                    
+                                    echo Functions::selectHtml(array(
+                                        'data'=>$datac,
+                                        'atributes'=>array(
+                                            'id'=>VPROD.'lst_unidadMedida',
+                                            'name'=>VPROD.'lst_unidadMedida'
+                                        ),
+                                        'etiqueta'=>'nombre',
+                                        'value'=>'id_unidadmedida',
+                                        'defaultEtiqueta'=>$data['id_unidadmedida'],
+                                        'txtSelect'=>true
+                                    ));
+                                ?><i></i>
+                            </label>
+                        </div>
+                        <?php if ($nuevo['permiso']): ?>
+                        <button id="<?php echo VPROD; ?>btnNew" type="button" onclick="vunidadMedida.getFormNewVunidadMedida(this,'#<?php echo VPROD; ?>lst_unidadMedida');" class="<?php echo $nuevo['theme'];?>" title="<?php echo $nuevo['accion'];?>">
+                                <i class="<?php echo $nuevo['icono'];?> pd8"></i>
+                            </button>
+                        <?php endif; ?>
+                    </div>
+               
+                </section>                
+                <section>
+                    <div class="row">
+                        <label class="label col col-2"><?php echo VPROD5; ?></label>
+                        <div class="col col-5">
+                            <label class="input"> 
+                                <i class="icon-append fa fa-money"></i>
+                                <input type="text" id="<?php echo VPROD; ?>txt_precio" name="<?php echo VPROD; ?>txt_precio" value="<?php echo number_format($data["precio"],2) ?>" >
+                                <b class="tooltip tooltip-top-right"><i class="fa fa-keyboard-o txt-color-teal"></i> <?php echo VPROD5M; ?></b>
+                            </label>
+                        </div>
+                    </div>
+                </section>
             </div>
             <div class="modal-footer">
                 <div class="foot-obligar"></div>

@@ -20,7 +20,7 @@ echo Functions::widgetOpen(array(
             <div class="DTTT btn-group">
                 <!-- verificar permisos -->
                 <?php if($nuevo["permiso"]): ?>
-                <button id="<?php echo VUNID; ?>btnNewVunidadMedida" type="button" onclick="vunidadMedida.getFormNewVunidadMedida(this);" class="<?php echo $nuevo["theme"]; ?>">
+                <button id="<?php echo VUNID; ?>btnNewVunidadMedida" type="button" onclick="vunidadMedida.getFormNewVunidadMedida(this,'');" class="<?php echo $nuevo["theme"]; ?>">
                     <i class="<?php echo $nuevo["icono"]; ?>"></i> <?php echo $nuevo["accion"]; ?>
                 </button>
                 <?php endif; ?>

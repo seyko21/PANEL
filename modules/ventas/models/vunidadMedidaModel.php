@@ -8,9 +8,9 @@
 */ 
 
 class vunidadMedidaModel extends Model{
-
-    private $_chkdel;
+   
     private $_idVunidadMedida;
+    private $_chkdel;
     private $_nombre;
     private $_sigla;
     private $_usuario;
@@ -149,7 +149,17 @@ class vunidadMedidaModel extends Model{
         $this->execute($query,$parms);
         $data = array('result'=>1);
         return $data;
-    }            
+    }        
+    
+     public function getLastUnidadMedida(){
+        $query = " SELECT id_unidadmedida,CONCAT(TRIM(nombre),' - ', TRIM(sigla)) AS nombre "
+                . " FROM `ven_unidadmedida` WHERE estado = :estado ORDER BY 1 DESC LIMIT 1 ";
+        $parms = array(
+            ':estado' => 'A',
+        );
+        $data = $this->queryOne($query,$parms);
+        return $data;
+    }    
     
 }
 

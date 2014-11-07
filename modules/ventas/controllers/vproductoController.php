@@ -96,6 +96,12 @@ class vproductoController extends Controller{
 
     }
     
+    public static function getUnidadMedida(){ 
+        $data = Obj::run()->vproductoModel->getUnidadMedida();
+        
+        return $data;
+    }    
+    
     /*carga formulario (newVproducto.phtml) para nuevo registro: Vproducto*/
     public function getFormNewVproducto(){
         Obj::run()->View->render("formNewVproducto");

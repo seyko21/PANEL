@@ -114,7 +114,7 @@ var vproducto_ = function(){
                     simpleScript.notify.ok({
                         content: mensajes.MSG_3,
                         callback: function(){
-                            simpleScript.reloadGrid("#"+diccionario.tabs.VPROD+"gridVproducto");
+                            vproducto.getGridVproducto();
                         }
                     });
                 }else if(!isNaN(data.result) && parseInt(data.result) === 2){

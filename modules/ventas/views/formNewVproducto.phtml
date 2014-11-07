@@ -8,6 +8,7 @@
 
 /*prefijo: VPROD debe ser alias en tabla men_menuprincipal*/
 $grabar = Session::getPermiso("VPRODGR");
+$nuevo = Session::getPermiso('VPRODNEW');
 ?>
 <form id="<?php echo VPROD; ?>formNewVproducto" name="<?php echo VPROD; ?>formNewVproducto" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">
@@ -34,23 +35,40 @@ $grabar = Session::getPermiso("VPRODGR");
                 <!-- Combo unidad de Medida-->
                 <section>
                     <div class="row">
-                        <label class="label col col-2"><?php echo VPROD5; ?></label>
-                        <div class="col col-5">
-                            <label class="input"> 
-                                <i class="icon-append fa fa-keyboard-o"></i>
-                                <input type="text" id="<?php echo VPROD; ?>txt_precio" name="<?php echo VPROD; ?>txt_precio">
-                                <b class="tooltip tooltip-top-right"><i class="fa fa-keyboard-o txt-color-teal"></i> <?php echo VPROD5M; ?></b>
+                        <label class="label col col-2"><?php echo VPROD6; ?></label>
+                        <div class="col col-8">
+                            <label class="select"> 
+                                <?php
+                                    $data = vproductoController::getUnidadMedida();
+                                    
+                                    echo Functions::selectHtml(array(
+                                        'data'=>$data,
+                                        'atributes'=>array(
+                                            'id'=>VPROD.'lst_unidadMedida',
+                                            'name'=>VPROD.'lst_unidadMedida'
+                                        ),
+                                        'etiqueta'=>'nombre',
+                                        'value'=>'id_unidadmedida',
+                                        'defaultEtiqueta'=>'',
+                                        'txtSelect'=>true
+                                    ));
+                                ?><i></i>
                             </label>
                         </div>
+                        <?php if ($nuevo['permiso']): ?>
+                        <button id="<?php echo VPROD; ?>btnNew" type="button" onclick="vunidadMedida.getFormNewVunidadMedida(this,'#<?php echo VPROD; ?>lst_unidadMedida');" class="<?php echo $nuevo['theme'];?>" title="<?php echo $nuevo['accion'];?>">
+                                <i class="<?php echo $nuevo['icono'];?> pd8"></i>
+                            </button>
+                        <?php endif; ?>
                     </div>
-                </section>
-                
+               
+                </section>                
                 <section>
                     <div class="row">
                         <label class="label col col-2"><?php echo VPROD5; ?></label>
                         <div class="col col-5">
                             <label class="input"> 
-                                <i class="icon-append fa fa-keyboard-o"></i>
+                                <i class="icon-append fa fa-money"></i>
                                 <input type="text" id="<?php echo VPROD; ?>txt_precio" name="<?php echo VPROD; ?>txt_precio">
                                 <b class="tooltip tooltip-top-right"><i class="fa fa-keyboard-o txt-color-teal"></i> <?php echo VPROD5M; ?></b>
                             </label>
@@ -84,21 +102,15 @@ $grabar = Session::getPermiso("VPRODGR");
 $("#<?php echo VPROD; ?>formNewVproducto").validate({
     // Rules for form validation
     rules : {
-        <?php echo VPROD; ?>txt_campo : {
+        <?php echo VPROD; ?>txt_descripcion : {
             required : true,
-            regular: true,
             minlength: 3
+        },
+         <?php echo VPROD; ?>txt_precio : {
+            required : true,
+            number : true 
         }
-    },
-
-    // Msn para validacion -- es opcional -- se puede eliminar, validate tiene los msn configurados por defecto
-    messages : {
-        <?php echo VPROD; ?>txt_campo : {
-            required : "Campo requerido",
-            regular: "No se permite caracteres inválidos"
-        }
-    },
-
+    },  
     // No cambie el código de abajo
     errorPlacement : function(error, element) {
         error.insertAfter(element.parent());

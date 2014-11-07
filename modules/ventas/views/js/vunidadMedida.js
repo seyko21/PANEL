@@ -12,6 +12,8 @@ var vunidadMedida_ = function(){
     
     _private.idVunidadMedida = 0;
     
+    _private.callbackData = null;
+    
     _private.config = {
         modulo: "ventas/vunidadMedida/"
     };
@@ -74,7 +76,10 @@ var vunidadMedida_ = function(){
         setup_widgets_desktop();
     };
     
-    this.publico.getFormNewVunidadMedida = function(btn){
+    this.publico.getFormNewVunidadMedida = function(btn,callbackData){
+         /*para cuando se llama formulario desde otro modulo*/
+        _private.callbackData = callbackData;  
+        
         simpleAjax.send({
             element: btn,
             dataType: "html",
@@ -101,6 +106,18 @@ var vunidadMedida_ = function(){
         });
     };
     
+    this.publico.getAddListUnidadMedida = function(){
+        simpleAjax.send({
+            root: _private.config.modulo + 'getAddListUnidadMedida ',
+            fnCallback: function(data){
+                simpleScript.closeModal('#'+diccionario.tabs.VUNID+'formNewVunidadMedida');                
+                $(_private.callbackData).append('<option value="'+data.id_unidadmedida+'">'+data.nombre+'</option>');
+                _private.callbackData = null;
+            }
+        });
+        
+    };
+    
     this.publico.postNewVunidadMedida = function(){
         simpleAjax.send({
             element: "#"+diccionario.tabs.VUNID+"btnGrVunidadMedida",
@@ -112,7 +129,14 @@ var vunidadMedida_ = function(){
                     simpleScript.notify.ok({
                         content: mensajes.MSG_3,
                         callback: function(){
-                            simpleScript.reloadGrid("#"+diccionario.tabs.VUNID+"gridVunidadMedida");
+                             /*si se graba desde otro modulo*/                                  
+                            if(_private.callbackData.length > 0){                                
+                               vunidadMedida.getAddListUnidadMedida();                                
+                            }
+                            /*se verifica si existe tabb para recargar grid*/
+                            if($('#'+diccionario.tabs.VUNID+'_CONTAINER').length > 0){
+                               vunidadMedida.getGridVunidadMedida();
+                            }                                                        
                         }
                     });
                 }else if(!isNaN(data.result) && parseInt(data.result) === 2){
@@ -122,7 +146,7 @@ var vunidadMedida_ = function(){
                 }
             }
         });
-    };
+    };    
     
     this.publico.postEditVunidadMedida = function(){
         simpleAjax.send({
