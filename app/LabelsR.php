@@ -22,7 +22,7 @@ define('BTN_ACT','Activar');
 define('BTN_DESACT','Desactivar');
 define('LABEL_ADV','Advertencia');
 define('LABEL_ADVMSN','Todas las caratulas han sido cotizadas.');
-define('COPY','Copyright SmartAdmin 2014-2020.');
+define('COPY','Copyright SEVEND 2011-'.date("Y").'.');
 define('ICON_CLOSE','fa fa-ban');
 define('THEME_CLOSE','btn btn-default xClose');
 define('ACTIONS','Acciones');
