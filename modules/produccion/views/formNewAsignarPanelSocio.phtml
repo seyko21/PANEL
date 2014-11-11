@@ -105,7 +105,7 @@ $buscar = Session::getPermiso('APASOBS');
                         var p = parseFloat($('#<?php echo APASO; ?>txt_gananciaasig').val());
                         var r = parseFloat(this.value) + p;
 
-                        if(r > 1 ){
+                        if(r > 100 ){
                             simpleScript.notify.warning({
                                 content: 'Ganancia excede el 100%'
                             });
@@ -250,9 +250,9 @@ $buscar = Session::getPermiso('APASOBS');
                             return false;
                         }
                         
-                        if($('#<?php echo APASO; ?>txt_ganancia').val() > 1){
+                        if($('#<?php echo APASO; ?>txt_ganancia').val() > 100){
                             simpleScript.notify.warning({
-                                content: 'Ganancia debe ser en formato de porcentaje. Ejm: 0.50, 1.0'
+                                content: 'Ganancia debe ser en porcentaje. Ejm: 50, 100'
                             });
                             return false;
                         }

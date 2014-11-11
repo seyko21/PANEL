@@ -42,7 +42,7 @@ class asignarPanelSocioModel extends Model{
         $this->_xSearch        = Formulario::getParam(APASO."_term");
         $this->_socio        = Aes::de(Formulario::getParam(APASO."txt_idpersona"));
         $this->_producto        = Aes::de(Formulario::getParam(APASO."txt_idproducto"));
-        $this->_ganancia        = Formulario::getParam(APASO."txt_ganancia");
+        $this->_ganancia        = (Formulario::getParam(APASO."txt_ganancia")/100);
         $this->_inversiones        = Formulario::getParam(APASO."hhidInversion");   /*array*/
         $this->_montoInvertir        = Formulario::getParam(APASO."txt_montoinvertir");  /*array*/
         $this->_totalInvertido        = Formulario::getParam(APASO."txt_montototal");
