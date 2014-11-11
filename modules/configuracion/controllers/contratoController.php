@@ -10,7 +10,7 @@
 class contratoController extends Controller{
 
     public function __construct() {
-        $this->loadModel(array('modulo'=>'configuracion','modelo'=>'contrato'));        
+        $this->loadModel("contrato");
     }
     
     public function index(){ 
@@ -213,8 +213,10 @@ class contratoController extends Controller{
         $data = Obj::run()->contratoModel->deleteAdjuntar();
         
         $file = Formulario::getParam('_img');
-                
-        $targetPath = $file;
+        
+        $file = str_replace("/","\\", $file);
+        
+        $targetPath =  $file;
         
         unlink($targetPath);
         

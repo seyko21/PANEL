@@ -110,7 +110,7 @@ class liquidacionClienteController extends Controller{
         $mpdf->SetHTMLFooter('<table width="100%" style="vertical-align: bottom; font-family: serif; font-size: 8pt; color: #000000; font-weight: bold;"><tr>
                                 <td width="33%"><span style="font-weight: bold;">{DATE j-m-Y}</span></td>
                                 <td width="33%" align="center" style="font-weight: bold;">{PAGENO}/{nbpg}</td>
-                                <td width="33%" style="text-align: right; ">SEVEND.pe</td>
+                                <td width="33%" style="text-align: right; ">'.LB_EMPRESA.'</td>
                              </tr></table>');
                 
         $html = $this->getHtmlLiquidacion();         

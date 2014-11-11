@@ -183,11 +183,11 @@ class configurarUsuariosController extends Controller{
         $body = '
             <h3><b>ACCESOS</b></h3>
             <h3>Estimado: ' . $nombres . '</h3>
-            <p>Este es un mensaje automatico enviado desde www.sevend.pe</p>
+            <p>Este es un mensaje automatico enviado desde '.BASE_URL.'</p>
             <table border="0" style="border-collapse:collapse">
                <tr>
                     <td>
-                        <p>El motivo del mensaje es porque Usted a sido agregado como usuario al sistema de SEVEND.</p>
+                        <p>El motivo del mensaje es porque Usted a sido agregado como usuario al sistema de '.LB_EMPRESA.'.</p>
                         <p><a href="' . BASE_URL . 'usuarios/configurarUsuarios/confirm/'.$idd.'/'.$persona.'">Pulse aqui</a> para ingresar al sistema.</p>
                     </td>
                </tr>
@@ -201,7 +201,7 @@ class configurarUsuariosController extends Controller{
 
         $mail->AddAddress($email, $nombres);
 
-        $mail->Subject = "Accesos a SEVEND";
+        $mail->Subject = "Accesos a ".LB_EMPRESA;
 
         $mail->MsgHTML($body);
 

@@ -181,6 +181,8 @@ class registrarVendedorController extends Controller {
     }
 
     public function adjuntarDocumento() {
+//        header("Access-Control-Allow-Origin: *");
+//        header('Content-type: application/json');
         $p = Obj::run()->registrarVendedorModel->_idPersona;
         
         if (!empty($_FILES)) {
@@ -202,7 +204,7 @@ class registrarVendedorController extends Controller {
         
         $file = Formulario::getParam('_doc');
         
-        //$file = str_replace("/","\\", $file);
+        $file = str_replace("/","\\", $file);
         
         $targetPath =  $file;
         

@@ -197,14 +197,14 @@ class generarCotizacionController extends Controller{
         //Html de Cotizacion:
          $body = '
             <h3>Estimado: ' . $cliente . '</h3>
-            <p>Muchas gracias por confiar en <b>SEVEND</b>, le enviamos nuestra cotizacion acerca del Servicio.
+            <p>Muchas gracias por confiar en <b>'.LB_EMPRESA.'</b>, le enviamos nuestra cotizacion acerca del Servicio.
             <br/>Esperamos su pronta respuesta.</p>
             <hr>
             <p>Atte:<br/>
             <b>'.$vendedor.'</b><br/>
             <i>Representante Corporativo</i><br/>
             Cel#: '.$numVendedor.'<br/>
-            <a href="http://.sevend.pe">www.sevend.pe</a></p>';
+            <a href="'.URL_WEBSITE.'">'.URL_WEBSITE.'</a></p>';
          
         //$body = $this->getHtmlCotizacion();        
         
@@ -246,7 +246,7 @@ class generarCotizacionController extends Controller{
         $mpdf->SetHTMLFooter('<table width="100%" style="vertical-align: bottom; font-family: serif; font-size: 8pt; color: #000000; font-weight: bold;"><tr>
                                 <td width="33%"><span style="font-weight: bold;">{DATE j-m-Y}</span></td>
                                 <td width="33%" align="center" style="font-weight: bold;">{PAGENO}/{nbpg}</td>
-                                <td width="33%" style="text-align: right; ">SEVEND.pe</td>
+                                <td width="33%" style="text-align: right; ">'.LB_EMPRESA.'</td>
                              </tr></table>');
                 
         $html = $this->getHtmlCotizacion();         

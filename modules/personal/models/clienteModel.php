@@ -40,26 +40,26 @@ class clienteModel extends Model{
     }
     
     private function _set(){
-        $this->_flag    = Formulario::getParam('_flag');
-        $this->_idPersona     = Aes::de(Formulario::getParam('_idPersona'));    /*se decifra*/
-        $this->_ancestro     = Aes::de(Formulario::getParam('_ancestro'));    /*se decifra*/
-        $this->_idDepartamento = Formulario::getParam('_idDepartamento');
-        $this->_idProvincia = Formulario::getParam('_idProvincia');
-        $this->_apellidoPaterno = Formulario::getParam(REGCL.'txt_apellidopaterno');
-        $this->_apellidoMaterno = Formulario::getParam(REGCL.'txt_apellidomaterno');
-        $this->_nombres = Formulario::getParam(REGCL.'txt_nombres');
-        $this->_sexo = Formulario::getParam(REGCL.'rd_sexo');
-        $this->_direccion = Formulario::getParam(REGCL.'txt_direccion');
-        $this->_email = Formulario::getParam(REGCL.'txt_email');
-        $this->_telefono = Formulario::getParam(REGCL.'txt_telefonos');
-        $this->_numeroDoc = Formulario::getParam(REGCL.'txt_nrodocumento');
-        $this->_ubigeo = Formulario::getParam(REGCL.'lst_ubigeo');
-        $this->_tipoDoc = Formulario::getParam(REGCL.'lst_tipodoc');
-        $this->_chkdel  = Formulario::getParam(REGCL.'chk_delete');
-        $this->_chkdelrp  = Formulario::getParam(REGCL.'chk_deleterp');
+        $this->_flag    = $this->post('_flag');
+        $this->_idPersona     = Aes::de($this->post('_idPersona'));    /*se decifra*/
+        $this->_ancestro     = Aes::de($this->post('_ancestro'));    /*se decifra*/
+        $this->_idDepartamento = $this->post('_idDepartamento');
+        $this->_idProvincia = $this->post('_idProvincia');
+        $this->_apellidoPaterno = $this->post(REGCL.'txt_apellidopaterno');
+        $this->_apellidoMaterno = $this->post(REGCL.'txt_apellidomaterno');
+        $this->_nombres = $this->post(REGCL.'txt_nombres');
+        $this->_sexo = $this->post(REGCL.'rd_sexo');
+        $this->_direccion = $this->post(REGCL.'txt_direccion');
+        $this->_email = $this->post(REGCL.'txt_email');
+        $this->_telefono = $this->post(REGCL.'txt_telefonos');
+        $this->_numeroDoc = $this->post(REGCL.'txt_nrodocumento');
+        $this->_ubigeo = $this->post(REGCL.'lst_ubigeo');
+        $this->_tipoDoc = $this->post(REGCL.'lst_tipodoc');
+        $this->_chkdel  = $this->post(REGCL.'chk_delete');
+        $this->_chkdelrp  = $this->post(REGCL.'chk_deleterp');
         $this->_usuario = Session::get("sys_idUsuario");
         
-        $this->_xsearch  = Formulario::getParam(REGCL.'_term');
+        $this->_xsearch  = $this->post(REGCL.'_term');
         
         $this->_iDisplayStart  =   Formulario::getParam("iDisplayStart"); 
         $this->_iDisplayLength =   Formulario::getParam("iDisplayLength"); 
@@ -74,9 +74,9 @@ class clienteModel extends Model{
 	 */
         $sOrder = "";
         for ( $i=0 ; $i<intval( $this->_iSortingCols ) ; $i++ ){
-                if ( Formulario::getParam( 'bSortable_'.intval(Formulario::getParam('iSortCol_'.$i)) ) == "true" ){
-                        $sOrder .= " ".$aColumns[ intval( Formulario::getParam('iSortCol_'.$i) ) ]." ".
-                                (Formulario::getParam('sSortDir_'.$i)==='asc' ? 'asc' : 'desc') ." ";
+                if ( $this->post( 'bSortable_'.intval($this->post('iSortCol_'.$i)) ) == "true" ){
+                        $sOrder .= " ".$aColumns[ intval( $this->post('iSortCol_'.$i) ) ]." ".
+                                ($this->post('sSortDir_'.$i)==='asc' ? 'asc' : 'desc') ." ";
                 }
         }
         
@@ -101,9 +101,9 @@ class clienteModel extends Model{
 	 */
         $sOrder = "";
         for ( $i=0 ; $i<intval( $this->_iSortingCols ) ; $i++ ){
-                if ( Formulario::getParam( 'bSortable_'.intval(Formulario::getParam('iSortCol_'.$i)) ) == "true" ){
-                        $sOrder .= " ".$aColumns[ intval( Formulario::getParam('iSortCol_'.$i) ) ]." ".
-                                (Formulario::getParam('sSortDir_'.$i)==='asc' ? 'asc' : 'desc') ." ";
+                if ( $this->post( 'bSortable_'.intval($this->post('iSortCol_'.$i)) ) == "true" ){
+                        $sOrder .= " ".$aColumns[ intval( $this->post('iSortCol_'.$i) ) ]." ".
+                                ($this->post('sSortDir_'.$i)==='asc' ? 'asc' : 'desc') ." ";
                 }
         }
         

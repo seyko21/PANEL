@@ -193,11 +193,11 @@ var fichaTecnica_ = function(){
         });        
         
     };
-    this.publico.getEditarFichaTecnica = function(id){
+    this.publico.getEditarFichaTecnica = function(btn,id){
         _private.idProducto = id;
         
         simpleAjax.send({
-            gifProcess: true,
+            element: btn,
             dataType: 'html',
             root: _private.config.modulo + 'getEditarFichaTecnica',
             data: '&_idProducto='+_private.idProducto,
@@ -221,11 +221,11 @@ var fichaTecnica_ = function(){
         });        
         
     };    
-     this.publico.getEditarCaratula = function(id, idd){
+     this.publico.getEditarCaratula = function(btn,id, idd){
         _private.idCaratula = id;
         _private.idProducto  = idd;         
         simpleAjax.send({
-            gifProcess: true,
+            element: btn,
             dataType: 'html',
             root: _private.config.modulo + 'getEditarCaratula',
             data: '&_idCaratula='+_private.idCaratula,
@@ -485,7 +485,7 @@ var fichaTecnica_ = function(){
             }
         });
     };
-    //Para eliminar los archivos PDF
+    
     this.publico.deleteArchivo = function(archivo){
        setTimeout(function(){
             simpleAjax.send({
@@ -495,7 +495,6 @@ var fichaTecnica_ = function(){
         },7000);
     };
     
-    //Para eliminar las imagenes
     this.publico.deleteAdjuntar = function(btn,id,img){
         simpleScript.notify.confirm({
             content: mensajes.MSG_7,
@@ -509,11 +508,9 @@ var fichaTecnica_ = function(){
                             simpleScript.notify.ok({
                                 content: mensajes.MSG_8,
                                 callback: function(){
-                                    fichaTecnica.deleteImagen(id);  
-                                    simpleScript.reloadGrid('#'+diccionario.tabs.T102+'gridFichaTecnica');                                                                                     
-                                    setTimeout(function(){            
-                                          fichaTecnica.getGridCaratula(_private.idProducto);                                   
-                                    }, 1000);                
+                                    $('#'+diccionario.tabs.T102+'dow').attr('onclick','');
+                                    $('#'+diccionario.tabs.T102+'dow').html(''); 
+                                    $('#'+diccionario.tabs.T102+'btndow').css('display','none');
                                 }
                             });
                         }
@@ -522,20 +519,6 @@ var fichaTecnica_ = function(){
             }
         });
     };   
-    //Actualizar imagen
-    this.publico.deleteImagen = function(id){     
-            simpleAjax.send({
-                root: _private.config.modulo + 'deleteImagen',
-                data: '&_idCaratula='+id,
-                fnCallback: function(data) {
-                    if(parseInt(data.result) === 1){
-                        $('#'+diccionario.tabs.T102+'dow').attr('onclick','');
-                        $('#'+diccionario.tabs.T102+'dow').html(''); 
-                        $('#'+diccionario.tabs.T102+'btndow').css('display','none');
-                    }      
-                }
-            });     
-    };    
     
     return this.publico;
     

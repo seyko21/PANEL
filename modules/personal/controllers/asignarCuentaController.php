@@ -46,11 +46,8 @@ class asignarCuentaController extends Controller{
                     $estado = '<span class=\"label label-danger\">'.LABEL_AN.'</span>';
                 }
                 
-                
-                
-                
                 /*datos de manera manual*/
-                $sOutput .= '["'.$chk.'","'.$aRow['codigo'].'","'.$aRow['fecha_creacion'].'","'.$aRow['ubicacion'].' - '.$aRow['lado'].'","'.$aRow['nombrecompleto'].'","'.$aRow['porcentaje_comision'].'","'.$estado.'" , ';
+                $sOutput .= '["'.$chk.'","'.$aRow['codigo'].'","'.$aRow['fecha_creacion'].'","'.$aRow['ubicacion'].' - '.$aRow['lado'].'","'.$aRow['nombrecompleto'].'","'.($aRow['porcentaje_comision']*100).' %","'.$estado.'" , ';
 
                 /*
                  * configurando botones (add/edit/delete etc)

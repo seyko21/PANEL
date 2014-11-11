@@ -39,30 +39,30 @@ class registrarVendedorModel extends Model{
     }
     
     private function _set(){
-        $this->_flag    = Formulario::getParam('_flag');
-        $this->_idPersona     = Aes::de(Formulario::getParam('_idPersona'));    /*se decifra*/
-        $this->_idVendedor     = Aes::de(Formulario::getParam('_idVendedor'));    /*se decifra*/
-        $this->_pass     = Aes::de(Formulario::getParam('_pass'));    /*se decifra*/
+        $this->_flag    = $this->post('_flag');
+        $this->_idPersona     = Aes::de($this->post('_idPersona'));    /*se decifra*/
+        $this->_idVendedor     = Aes::de($this->post('_idVendedor'));    /*se decifra*/
+        $this->_pass     = Aes::de($this->post('_pass'));    /*se decifra*/
         
-        $this->_idDepartamento = Formulario::getParam('_idDepartamento');
-        $this->_idProvincia = Formulario::getParam('_idProvincia');
-        $this->_apellidoPaterno = Formulario::getParam(T7.'txt_apellidopaterno');
-        $this->_apellidoMaterno = Formulario::getParam(T7.'txt_apellidomaterno');
-        $this->_nombres = Formulario::getParam(T7.'txt_nombres');
-        $this->_sexo = Formulario::getParam(T7.'rd_sexo');
-        $this->_direccion = Formulario::getParam(T7.'txt_direccion');
-        $this->_email = Formulario::getParam(T7.'txt_email');
-        $this->_telefono = Formulario::getParam(T7.'txt_telefonos');
-        $this->_numeroDoc = Formulario::getParam(T7.'txt_nrodocumento');
-        $this->_dni = Formulario::getParam(T7.'txt_dni');
-        $this->_ubigeo = Formulario::getParam(T7.'lst_ubigeo');
+        $this->_idDepartamento = $this->post('_idDepartamento');
+        $this->_idProvincia = $this->post('_idProvincia');
+        $this->_apellidoPaterno = $this->post(T7.'txt_apellidopaterno');
+        $this->_apellidoMaterno = $this->post(T7.'txt_apellidomaterno');
+        $this->_nombres = $this->post(T7.'txt_nombres');
+        $this->_sexo = $this->post(T7.'rd_sexo');
+        $this->_direccion = $this->post(T7.'txt_direccion');
+        $this->_email = $this->post(T7.'txt_email');
+        $this->_telefono = $this->post(T7.'txt_telefonos');
+        $this->_numeroDoc = $this->post(T7.'txt_nrodocumento');
+        $this->_dni = $this->post(T7.'txt_dni');
+        $this->_ubigeo = $this->post(T7.'lst_ubigeo');
         $this->_usuario = Session::get('sys_idUsuario');
-        $this->_chkdel  = Formulario::getParam(T7.'chk_delete');
+        $this->_chkdel  = $this->post(T7.'chk_delete');
         
-        $this->_iDisplayStart  =   Formulario::getParam('iDisplayStart'); 
-        $this->_iDisplayLength =   Formulario::getParam('iDisplayLength'); 
-        $this->_iSortingCols   =   Formulario::getParam('iSortingCols');
-        $this->_sSearch        =   Formulario::getParam('sSearch');
+        $this->_iDisplayStart  =   $this->post('iDisplayStart'); 
+        $this->_iDisplayLength =   $this->post('iDisplayLength'); 
+        $this->_iSortingCols   =   $this->post('iSortingCols');
+        $this->_sSearch        =   $this->post('sSearch');
     }
     
     public function getGridVendedor() {
@@ -72,9 +72,9 @@ class registrarVendedorModel extends Model{
 	 */
         $sOrder = "";
         for ( $i=0 ; $i<intval( $this->_iSortingCols ) ; $i++ ){
-                if ( Formulario::getParam( 'bSortable_'.intval(Formulario::getParam('iSortCol_'.$i)) ) == "true" ){
-                        $sOrder .= " ".$aColumns[ intval( Formulario::getParam('iSortCol_'.$i) ) ]." ".
-                                (Formulario::getParam('sSortDir_'.$i)==='asc' ? 'asc' : 'desc') ." ";
+                if ( $this->post( 'bSortable_'.intval($this->post('iSortCol_'.$i)) ) == "true" ){
+                        $sOrder .= " ".$aColumns[ intval( $this->post('iSortCol_'.$i) ) ]." ".
+                                ($this->post('sSortDir_'.$i)==='asc' ? 'asc' : 'desc') ." ";
                 }
         }
         

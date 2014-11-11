@@ -83,11 +83,11 @@ var catalogoPrecios_ = function(){
         setup_widgets_desktop();       
     };
            
-    this.publico.getEditarCaratula = function(id, idd){
+    this.publico.getEditarCaratula = function(btn,id, idd){
         _private.idCaratula = id;
         _private.idProducto  = idd;         
         simpleAjax.send({
-            gifProcess: true,
+            element: btn,
             dataType: 'html',
             root: _private.config.modulo + 'getEditarCaratula',
             data: '&_idCaratula='+_private.idCaratula,
@@ -171,12 +171,10 @@ var catalogoPrecios_ = function(){
               }
           });
       };  
-     
-     //Eliminar Archivo Imagen
+      
     this.publico.deleteAdjuntar = function(btn,id,img){
         simpleScript.notify.confirm({
             content: mensajes.MSG_7,
-            timeout: 1000,
             callbackSI: function(){
                 simpleAjax.send({
                     element: btn,
@@ -187,8 +185,9 @@ var catalogoPrecios_ = function(){
                             simpleScript.notify.ok({
                                 content: mensajes.MSG_8,
                                 callback: function(){
-                                    catalogoPrecios.deleteImagen(id);  
-                                    simpleScript.reloadGrid('#'+diccionario.tabs.TAB_CATPRE+'gridCatalogoPrecio');
+                                    $('#'+diccionario.tabs.TAB_CATPRE+'dow').attr('onclick','');
+                                    $('#'+diccionario.tabs.TAB_CATPRE+'dow').html(''); 
+                                    $('#'+diccionario.tabs.TAB_CATPRE+'btndow').css('display','none');
                                 }
                             });
                         }
@@ -197,22 +196,6 @@ var catalogoPrecios_ = function(){
             }
         });
     };         
-    
-    //Actualizar imagen
-    this.publico.deleteImagen = function(id){     
-            simpleAjax.send({
-                root: _private.config.modulo + 'deleteImagen',
-                data: '&_idCaratula='+id,
-                fnCallback: function(data) {
-                    if(parseInt(data.result) === 1){
-                        $('#'+diccionario.tabs.TAB_CATPRE+'dow').attr('onclick','');
-                        $('#'+diccionario.tabs.TAB_CATPRE+'dow').html(''); 
-                        $('#'+diccionario.tabs.TAB_CATPRE+'btndow').css('display','none');                        
-                    }      
-                }
-            });     
-    };    
-    
     
     return this.publico;
     

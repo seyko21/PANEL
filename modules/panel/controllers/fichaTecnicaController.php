@@ -9,8 +9,7 @@
 class fichaTecnicaController extends Controller{
 
     public function __construct() {
-        $this->loadModel(array('modulo'=>'panel','modelo'=>'fichaTecnica'));
-        $this->loadController(array('modulo' => 'configuracion', 'controller' => 'contrato')); 
+        $this->loadModel('fichaTecnica');
     }
     
    public function index(){ 
@@ -88,7 +87,7 @@ class fichaTecnicaController extends Controller{
                     $sOutput .= '</button>';
                 }                        
                 if($editar['permiso'] == 1){
-                    $sOutput .= '<button type=\"button\" class=\"'.$editar['theme'].'\" title=\"'.$editar['accion'].' Ficha Técnica\" onclick=\"fichaTecnica.getEditarFichaTecnica(\''.$encryptReg.'\')\">';
+                    $sOutput .= '<button type=\"button\" class=\"'.$editar['theme'].'\" title=\"'.$editar['accion'].' Ficha Técnica\" onclick=\"fichaTecnica.getEditarFichaTecnica(this,\''.$encryptReg.'\')\">';
                     $sOutput .= '    <i class=\"'.$editar['icono'].'\"></i>';
                     $sOutput .= '</button>';
                 }   
@@ -169,7 +168,7 @@ class fichaTecnicaController extends Controller{
                 
                 //Visualizar Detalle                
                 if($editar['permiso'] == 1){
-                    $sOutput .= '<button type=\"button\" class=\"'.$editar['theme'].'\" title=\"'.$editar['accion'].'\" onclick=\"fichaTecnica.getEditarCaratula(\''.$encryptReg.'\',\''.$idProd.'\')\">';
+                    $sOutput .= '<button type=\"button\" class=\"'.$editar['theme'].'\" title=\"'.$editar['accion'].'\" onclick=\"fichaTecnica.getEditarCaratula(this,\''.$encryptReg.'\',\''.$idProd.'\')\">';
                     $sOutput .= '    <i class=\"'.$editar['icono'].'\"></i>';
                     $sOutput .= '</button>';
                 }      
@@ -294,7 +293,7 @@ class fichaTecnicaController extends Controller{
         $mpdf->SetHTMLFooter('<table width="100%" style="vertical-align: bottom; font-family: serif; font-size: 8pt; color: #000000; font-weight: bold;"><tr>
                                 <td width="33%"><span style="font-weight: bold;">{DATE j-m-Y}</span></td>
                                 <td width="33%" align="center" style="font-weight: bold;">{PAGENO}/{nbpg}</td>
-                                <td width="33%" style="text-align: right; ">SEVEND.pe</td>
+                                <td width="33%" style="text-align: right; ">'.LB_EMPRESA.'</td>
                              </tr></table>');
         
         $html = $this->getHtmlReporte();        
@@ -455,7 +454,7 @@ class fichaTecnicaController extends Controller{
         unlink($filename);
         echo $filename;
     }  
-   //Para subir Imagen en el servidor
+   
     public function adjuntarImagen() {
 //        header("Access-Control-Allow-Origin: *");
 //        header('Content-type: application/json');
@@ -476,15 +475,20 @@ class fichaTecnicaController extends Controller{
             echo json_encode($array);
         }
     }
-    //Para eliminar el archivo de Imagen en el servidor
+    
     public function deleteAdjuntar() {
-       echo Obj::run()->contratoController->deleteAdjuntar();
-    }         
-    //Para actualizar la imagen en la BD
-    public function deleteImagen(){
-         $data = Obj::run()->fichaTecnicaModel->deleteAdjuntar();
-         echo json_encode($data);        
-    }
+        $data = Obj::run()->fichaTecnicaModel->deleteAdjuntar();
+        
+        $file = Formulario::getParam('_img');
+        
+        $file = str_replace("/","\\", $file);
+        
+        $targetPath =  $file;
+        
+        unlink($targetPath);
+        
+        echo json_encode($data);
+    }          
     
 }
 

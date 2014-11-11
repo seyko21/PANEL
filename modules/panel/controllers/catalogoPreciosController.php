@@ -10,7 +10,7 @@
 class catalogoPreciosController extends Controller{
            
     public function __construct() {
-        $this->loadModel(array('modulo'=>'panel','modelo'=>'catalogoPrecios'));
+        $this->loadModel("catalogoPrecios");
         $this->loadController(array('modulo'=>'panel','controller'=>'fichaTecnica'));        
     }    
     public function index(){ 
@@ -72,7 +72,7 @@ class catalogoPreciosController extends Controller{
                 
                 //Visualizar Detalle                
                 if($editar['permiso'] == 1){
-                    $sOutput .= '<button type=\"button\" class=\"'.$editar['theme'].'\" title=\"'.$editar['accion'].'\" onclick=\"catalogoPrecios.getEditarCaratula(\''.$encryptReg.'\',\''.$idProd.'\')\">';
+                    $sOutput .= '<button type=\"button\" class=\"'.$editar['theme'].'\" title=\"'.$editar['accion'].'\" onclick=\"catalogoPrecios.getEditarCaratula(this,\''.$encryptReg.'\',\''.$idProd.'\')\">';
                     $sOutput .= '    <i class=\"'.$editar['icono'].'\"></i>';
                     $sOutput .= '</button>';
                 }
@@ -124,7 +124,7 @@ class catalogoPreciosController extends Controller{
         $mpdf->SetHTMLFooter('<table width="100%" style="vertical-align: bottom; font-family: serif; font-size: 8pt; color: #000000; font-weight: bold;"><tr>
                                 <td width="33%"><span style="font-weight: bold;">{DATE j-m-Y}</span></td>
                                 <td width="33%" align="center" style="font-weight: bold;">{PAGENO}/{nbpg}</td>
-                                <td width="33%" style="text-align: right; ">SEVEND.pe</td>
+                                <td width="33%" style="text-align: right; ">'.LB_EMPRESA.'</td>
                              </tr></table>');
         
         $html = $this->getHtmlReporte();        
@@ -355,9 +355,7 @@ class catalogoPreciosController extends Controller{
     public function deleteAdjuntar() {
         echo Obj::run()->fichaTecnicaController->deleteAdjuntar();     
     }           
-    public function deleteImagen(){
-          echo Obj::run()->fichaTecnicaController->deleteImagen();   
-    }
+    
 }
 
 ?>

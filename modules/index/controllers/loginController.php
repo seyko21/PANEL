@@ -64,7 +64,7 @@ class loginController extends Controller{
             <table border="0" style="border-collapse:collapse">
                <tr>
                     <td>
-                        <p>El motivo del mensaje es porque Usted a solicitado recuperar su clave del sistema en SEVEND.</p>
+                        <p>El motivo del mensaje es porque Usted a solicitado recuperar su clave del sistema en '.LB_EMPRESA.'.</p>
                         <p><a href="' . BASE_URL . 'usuarios/configurarUsuarios/confirm/'.$idd.'/'.$persona.'">Pulse aqui</a> para ingresar al sistema.</p>
                     </td>
                </tr>
@@ -78,7 +78,7 @@ class loginController extends Controller{
 
         $mail->AddAddress($email, $nombres);
 
-        $mail->Subject = "Proceso de recuperacion de Acceso en SEVEND";
+        $mail->Subject = "Proceso de recuperacion de Acceso en ".LB_EMPRESA;
 
         $mail->MsgHTML($body);
 

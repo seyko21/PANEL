@@ -39,7 +39,7 @@ class regProduccionModel extends Model{
         $this->_flag                    = Formulario::getParam("_flag");
         $this->_idProduccion   = Aes::de(Formulario::getParam("_idProduccion"));    /*se decifra*/
         $this->_usuario                 = Session::get("sys_idUsuario");
-        $this->_term  =   Formulario::getParam("_term"); 
+        $this->_term  =   Formulario::getParam(REPRO."_term"); 
         $this->_chkdel  = $this->post(REPRO.'chk_delete');
         $this->_fecha     = Functions::cambiaf_a_mysql(Formulario::getParam(REPRO."txt_fechains"));
         $this->_idProducto     = AesCtr::de(Formulario::getParam(REPRO."txt_idproducto"));

@@ -42,7 +42,7 @@ $comision = asignarCuentaController::getComision();
                     <label class="control-label col-md-2" for="prepend"><?php echo LABEL_ASC3; ?></label>
                     <div class="col-md-10">
                         <div class="input-group input-group-sm">
-                            <input class="form-control" type="text" id="<?php echo ASCU; ?>txt_comision" name="<?php echo ASCU; ?>txt_comision" value="<?php echo $comision['valor'] ?>">
+                            <input class="form-control" type="text" id="<?php echo ASCU; ?>txt_comision" name="<?php echo ASCU; ?>txt_comision" value="<?php echo (100*$comision['valor']) ?>">
                         </div>
                     </div>
                 </div>

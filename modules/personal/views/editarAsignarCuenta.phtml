@@ -47,7 +47,7 @@ $data = asignarCuentaController::findAsignarCuenta();
                     <label class="control-label col-md-2" for="prepend"><?php echo LABEL_A111; ?></label>
                     <div class="col-md-10">
                         <div class="input-group input-group-sm">
-                            <input class="form-control" type="text" id="<?php echo ASCU; ?>txt_comision" name="<?php echo ASCU; ?>txt_comision" value="<?php echo $data['porcentaje_comision']; ?>">
+                            <input class="form-control" type="text" id="<?php echo ASCU; ?>txt_comision" name="<?php echo ASCU; ?>txt_comision" value="<?php echo (100*$data['porcentaje_comision']); ?>">
                         </div>
                     </div>
                 </div>             

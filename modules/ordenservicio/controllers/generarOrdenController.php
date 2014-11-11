@@ -260,7 +260,7 @@ class generarOrdenController extends Controller{
         $mpdf->SetHTMLFooter('<table width="100%" style="vertical-align: bottom; font-family: serif; font-size: 8pt; color: #000000; font-weight: bold;"><tr>
                                 <td width="33%"><span style="font-weight: bold;">Contrato</span></td>
                                 <td width="33%" align="center" style="font-weight: bold;">{PAGENO}/{nbpg}</td>
-                                <td width="33%" style="text-align: right; ">SEVEND.pe</td>
+                                <td width="33%" style="text-align: right; ">'.LB_EMPRESA.'</td>
                              </tr></table>');
                 
         $html = $this->getHtmlContrato();         
@@ -360,7 +360,7 @@ class generarOrdenController extends Controller{
                 
         $diaoferta = '';
          if ( $contrato['dias_oferta'] > 0){
-            $diaoferta = 'La empresa SEVEND S.A.C. adiciona un plus promocional de '.$contrato['dias_oferta'].' días calendarios luego de haber finalizado la publicación.';
+            $diaoferta = 'La empresa '.LB_EMPRESA.' adiciona un plus promocional de '.$contrato['dias_oferta'].' días calendarios luego de haber finalizado la publicación.';
          }
          
         $html = str_replace('{{CLIENTE_EMPRESA}}',$contrato['cliente'], $html);

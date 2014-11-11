@@ -10,20 +10,7 @@ define('BTN_AANULAR','Anular');
 define('LABEL_AC100','Todas las caratulas han sido asignadas.');
 define('LABEL_BSVEN','Buscar vendedor');
 define('LABEL_BSPER','Buscar Persona');
-define('LABEL_ENVIADO','Enviado');
-define('LABEL_REDSOCIAL','- Redes Sociales -');
-define('URL_FACEBOOK','http://fb.com/sevendcorp');
-define('URL_TWITTER','https://twitter.com/sevendcorp');
-define('URL_WEBSITE','http://www.sevend.pe');
-define('LABEL_URL','Visite nuestro sitio Web');
-define('RC_TITLE','¿Olvido su contraseña?');
-define('RC_SOLCLAVE','Solicitar Clave');
-define('RC_RECLAVE','Si recuerdo mi contraseña');
-define('LOGIN_TITULO','Bienvenidos: ');
-define('LOGIN_BIENVENIDA','Gracias por confiar en SEVEND, para ingresar al sistema debe de indicar su correo electrónico (e-mail) y luego su contraseña. Para mayor información en informes@sevend.pe');
-define('RC_TITULO','Advertencia: ');
-define('RC_BIENVENIDA','Para poder recuperar su contraseña debe de indicarnos su correo electrónico (E-mail) para enviarle sus accesos y reinicio de clave. Si usa Hotmail, revise en su bandeja de correo no deseado.');
-define('LABEL_MAS','Más Detalle');
+
 /*----------------------PARAMETROS----------------------*/
 define('LABEL_A1','Parámetro');
 define('LABEL_A2','Nuevo Parámetro');
@@ -132,7 +119,7 @@ define('LABEL_A105','Monto a Invertir ');
 define('LABEL_A105M','Debe de ingresar el monto de inversión');
 /*----------------------Editar Asignar Cuenta - Comision----------------------*/
 define('LABEL_A110','Editar Comisión');
-define('LABEL_A111','Comisión');
+define('LABEL_A111','Comisión %');
 define('LABEL_A111M','Debe de especificar la Comisión de ganancia del vendedor.');
 define('LABEL_A112','Vendedor');
 define('LABEL_A113','Panel');
@@ -239,6 +226,12 @@ define('INDEX_P8','Utilidad de Venta');
 define('LABEL_APC1','Asignar Socio a Panel');
 define('MISPA1','Alquilado');
 define('MISPA2','Disponible');
+
+
+/*MAS LABEL*/
+
+
+
 /*----------------------Unidad de Medida ----------------------*/
 define('VUNID1','Unidad de Medida');
 define('VUNID2','Nueva Unidad de Medida');

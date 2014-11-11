@@ -32,7 +32,7 @@ class asignarCuentaModel extends Model{
         $this->_idAsignarCuenta = Aes::de(Formulario::getParam("_idAsignarCuenta"));    /*se decifra*/
         $this->_idPersona       = Aes::de(Formulario::getParam(ASCU."txt_idpersona"));    /*se decifra*/;
         $this->_productos       = Formulario::getParam(ASCU."chk_prod");
-        $this->_comision        = Formulario::getParam(ASCU."txt_comision");
+        $this->_comision        = (Formulario::getParam(ASCU."txt_comision")/100);
         $this->_usuario         = Session::get("sys_idUsuario");
         $this->_chkdel          = $this->post(ASCU.'chk_delete');
         
@@ -79,7 +79,7 @@ class asignarCuentaModel extends Model{
                 ':idAsignacion'=>  $this->_idAsignarCuenta,
                 ':idProducto'=> AesCtr::de($prod[0]),
                 ':idPersona'=>  $this->_idPersona,
-                ':comision'=>  $this->_comision,
+                ':comision'=> $this->_comision,
                 ':usuario'=>  $this->_usuario
             );
 

@@ -5,6 +5,21 @@
  * Autor       : ..... .....
  * Descripcion : todas las etiquetas del sistema
  */
+define('LB_EMPRESA','SEVEND Marketing');
+define('LABEL_REDSOCIAL','- Redes Sociales -');
+define('URL_FACEBOOK','http://fb.com/sevendcorp');
+define('URL_TWITTER','https://twitter.com/sevendcorp');
+define('URL_WEBSITE','http://www.sevend.pe');
+define('LABEL_URL','Visite nuestro sitio Web');
+define('RC_TITLE','¿Olvido su contraseña?');
+define('RC_SOLCLAVE','Solicitar Clave');
+define('RC_RECLAVE','Si recuerdo mi contraseña');
+define('LOGIN_TITULO','Bienvenidos: ');
+define('LOGIN_BIENVENIDA','Gracias por confiar en SEVEND, para ingresar al sistema debe de indicar su correo electrónico (e-mail) y luego su contraseña. Para mayor información en informes@sevend.pe');
+define('RC_TITULO','Advertencia: ');
+define('RC_BIENVENIDA','Para poder recuperar su contraseña debe de indicarnos su correo electrónico (E-mail) para enviarle sus accesos y reinicio de clave. Si usa Hotmail, revise en su bandeja de correo no deseado.');
+define('LABEL_MAS','Más Detalle');
+define('LABEL_ENVIADO','Enviado');
 
 /*ETIQUETAS GENERALES*/
 define('H_PANEL','Panel:');
@@ -156,7 +171,7 @@ define('LABEL_GNC28','Foto');
 /*----------------------    ASIGNAR CUENTAS----------------------*/
 define('LABEL_ASC1','Cuentas');
 define('LABEL_ASC2','Nueva Asignación');
-define('LABEL_ASC3','Comisión');
+define('LABEL_ASC3','Comisión %');
 define('LABEL_ASC4','Empleado');
 
 /*----------------------    CLIENTE  ----------------------*/
