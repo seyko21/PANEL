@@ -132,6 +132,7 @@ class vproductoModel extends Model{
                 ':nombre' => '',
                 ':precio' => '',   
                 ':idum' => '',
+                ':moneda' => '', 
                 ':usuario' => $this->_usuario
             );
             $this->execute($query,$parms);

@@ -107,7 +107,7 @@ echo Functions::widgetOpen(array(
                         <label class="control-label col-md-2" for="prepend"><?php echo VGEVE_4; ?></label>
                         <div class="col-md-2">
                             <div class="input">
-                                <input class="form-control"  type="text" id="<?php echo VGEVE; ?>txt_fecha" name="<?php echo VGEVE; ?>txt_fecha" value="<?php echo date("d/m/Y",strtotime("-1 day")); ?>" >
+                                <input class="form-control"  type="text" id="<?php echo VGEVE; ?>txt_fecha" name="<?php echo VGEVE; ?>txt_fecha" value="<?php echo date("d/m/Y"); ?>" >
                             </div>
                         </div>
                        
@@ -276,27 +276,28 @@ echo Functions::widgetOpen(array(
                         $('#<?php echo VGEVE; ?>bootstrap-wizard-1').find('.form-wizard').children('li').eq(index - 1).find('.step').html('<i class="fa fa-check"></i>');
                     }
                     if(index === 2){
+                        var pr = 0;
                         var r = simpleScript.validaTable({
                             id: '#'+diccionario.tabs.VGEVE+'gridProductos',
                             msn: mensajes.MSG_10,
-                            fnCallback: function(){         
-//                                var pr = 0;
-//                                var collection = $('#'+diccionario.tabs.VGEVE+'gridProductos').find('tbody tr td');
-//                                $.each(collection,function(){
-//                                    var precio = $('#'+diccionario.tabs.VGEVE+'gridProductos').find('td:eq(5)').find('input:text').val();
-//                                    /*solo ingresa una sola vez*/
-//                                    if(precio <= 0){                                                                    
-//                                        pr = false;
-//                                    }
-//                                });
-//                                if (pr == false){
-//                                    simpleScript.notify.warning({
-//                                           content: 'El precio que ingreso es menor o igual que CERO (0.00)'
-//                                       }); 
-//                                    return false;
-//                                }
+                            fnCallback: function(){                                         
+                                var collection = $('#'+diccionario.tabs.VGEVE+'gridProductos').find('tbody tr td');
+                                $.each(collection,function(){
+                                    var precio = 0;
+                                    precio = $('#'+diccionario.tabs.VGEVE+'gridProductos').find('td:eq(5)').find('input:text').val();                                                                       
+                                    if(precio === 0){                                                                    
+                                        pr = pr + 1;                                      
+                                    }
+                                });                                
+                            }
                         });
-                        if(r === false){
+                        
+                        if (pr > 0){
+                            simpleScript.notify.warning({
+                                content: 'El precio que ingreso es menor o igual que CERO (0.00)'
+                            }); 
+                           return false;
+                        }else if(r === false){
                             return false;
                         }else{
                             /*marca el paso como completado*/

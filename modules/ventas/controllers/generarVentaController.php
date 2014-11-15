@@ -108,12 +108,11 @@ class generarVentaController extends Controller{
     public function getFormEditGenerarVenta(){
         Obj::run()->View->render("formEditGenerarVenta");
     }
-    
+    //abrir ventana de busqueda:
     public function getFormBuscarProductos(){
         Obj::run()->View->render("formBuscarProductos");
     }
-    
-    
+    //Buscar productos al abrir ventana:    
     public function getFindProductos(){
         $data = Obj::run()->generarVentaModel->getFindProductos();
         
@@ -121,7 +120,7 @@ class generarVentaController extends Controller{
     }
     
     public function postPDF(){
-        $c = 'produccion_'.Obj::run()->generarVentaModel->_cod.'.pdf';
+        $c = 'venta_'.Obj::run()->generarVentaModel->_cod.'.pdf';
         
         $ar = ROOT.'public'.DS.'files'.DS.$c;
                
@@ -145,7 +144,7 @@ class generarVentaController extends Controller{
     }
     
     public function postExcel(){
-        $c = 'produccion_'.Obj::run()->generarVentaModel->_cod.'.xls';
+        $c = 'venta_'.Obj::run()->generarVentaModel->_cod.'.xls';
         
         $ar = ROOT.'public'.DS.'files'.DS.$c;
         
@@ -161,7 +160,8 @@ class generarVentaController extends Controller{
     }
     
     private function getHtmlGenerarVenta($mpdf){
-        $data = Obj::run()->generarVentaModel->getGenerarVenta();
+        $dataC = Obj::run()->generarVentaModel->getFindVenta();
+        $dataD = Obj::run()->generarVentaModel->getFindVentaD();
         $html ='
         <style>           
            table,h3,h4,p{font-family:Arial;} 
@@ -171,52 +171,73 @@ class generarVentaController extends Controller{
            #td2 td{font-size:10px;height:25px;}           
         </style>';
         
+        $mon = ($dataC['moneda']=='SO')?'S/.':'$USD';
+        
+        switch ($dataC['tipo_doc']){
+            case 'R': $tipoDoc = 'Recibo'; break;
+            case 'B': $tipoDoc = 'Boleta'; break;
+            case 'F': $tipoDoc = 'Factura'; break;
+        }
+        $nom = $dataC['nombre_descripcion'];
+        if($nom == '') $nom = '- Sin Descripción -';
+        
         $html .='<table width="100%" border="0" cellpadding="5" cellspacing="3">
           <tr bgcolor="#901D78">
-            <th colspan="6"><div align="center"><h2 style="color:#FFF;">PRODUCCIÓN</h2></div></th>
+            <th colspan="6"><div align="center"><h2 style="color:#FFF;">DOCUMENTO DE VENTA </h2></div></th>
           </tr>
           <tr>
-            <td width="16%"><strong>N° Producción:</strong></td>
-            <td width="26%"><h3>'.$data[0]['numero_produccion'].'</h3></td>
+            <td width="16%"><strong>N° Impresión:</strong></td>
+            <td width="26%"><h3>'.$dataC['periodo'].' - '.$dataC['codigo_impresion'].'</h3></td>
             <td width="15%"></td>
             <td width="15%"></td>
-            <td width="20%"><strong>Fecha Producción:</strong></td>
-            <td width="15%">'.$data[0]['fecha'].'</td>
+            <td width="20%"><strong>Fecha :</strong></td>
+            <td width="15%">'.$dataC['fecha'].'</td>
           </tr>
           <tr>
-            <td><strong>Producto:</strong></td>
-            <td colspan="5">'.$data[0]['ubicacion'].' - '.$data[0]['dimension_alto'].' x '.$data[0]['dimension_ancho'].' mts</td>
+            <td><strong>Descripción:</strong></td>
+            <td colspan="5">'.$dataC['nombre_descripcion'].'</td>
           </tr>
           <tr>         
-            <td width="20%"><strong>Ciudad:</strong></td>
-            <td width="15%">'.$data[0]['ciudad'].'</td>
+            <td width="20%"><strong>Moneda:</strong></td>
+            <td width="15%">'.$mon.'</td>
+            <td width="20%"><strong>Tipo Doc:</strong></td>
+            <td width="15%">'.$tipoDoc.'</td>
           </tr>
         </table> 
         <br />
         <table id="td2" border="1" style="border-collapse:collapse">
             <tr>
                 <th style="width:5%">Item</th>
-                <th style="width:40%">Descripción del Concepto</th>
+                <th style="width:40%">Descripción del Producto</th>
+                <th style="width:12%">Unid. Medid</th>
                 <th style="width:12%">Cantidad</th>
                 <th style="width:12%">Precio</th>
-                <th style="width:12%">Total</th>
+                <th style="width:12%">Importe</th>
             </tr>';
         $i =1;
-        foreach ($data as $value) {
+        foreach ($dataD as $value) {
+            
+            if ($value['cantidad_multiple'] == '1'){
+                $cantidad = number_format($value['cantidad_1'],2).' x '.number_format($value['cantidad_2'],2);
+            }else{
+                $cantidad = number_format($value['cantidad_real'],2);
+            }
+            
             $html .= '<tr>
                 <td style="text-align:center">'.($i++).'</td>
-                <td>'.$value['concepto'].'</td>
-                <td style="text-align:right">'.number_format($value['cantidad'],2).'</td>
-                <td style="text-align:right">S/.'.number_format($value['precio'],2).'</td>
-                <td style="text-align:right">S/.'.number_format($value['costo_importe'],2).'</td>
+                <td>'.$value['descripcion'].'</td>
+                <td>'.$value['sigla'].'</td>                    
+                <td style="text-align:center">'.$cantidad.'</td>
+                <td style="text-align:right">'.$mon.number_format($value['precio'],2).'</td>
+                <td style="text-align:right">'.$mon.number_format($value['importe'],2).'</td>
             </tr>';
         }    
-        $html .= '<tr><td colspan="4"></td><td class="totales" style="text-align:right; font-weight:bold;">S/.'.number_format($data[0]['total_produccion'],2).'</td></tr>';
+        $html .= '<tr><td colspan="5"></td><td class="totales" style="text-align:right; font-weight:bold;">'.$mon.number_format($dataC['monto_importe'],2).'</td></tr>';
         
         $html .='</table>';
         $html .= '<h4>Observación </h4>';
-        if ($data[0]['observacion']!= '' ):
-            $html .= '<p>- '.$data[0]['observacion'].'</p>';
+        if ($dataC['observacion']!= '' ):
+            $html .= '<p>- '.$dataC['observacion'].'</p>';
         else:
             $html .= '<p>- NINGUNO.</p>';
         endif;   
@@ -225,17 +246,7 @@ class generarVentaController extends Controller{
            return $html; 
         }
         
-        $mpdf->WriteHTML($html);
-        
-        $img = $data[0]['imagen'];
-        
-        if ($img != ''):
-            $mpdf->AddPage();
-            $html = '<h3>Vista Previa </h3>';                
-            $html .= '<img src="'.BASE_URL.'public/img/produccion/'.$img.'" />';
-            $mpdf->WriteHTML($html);   
-        endif;
-
+        $mpdf->WriteHTML($html);               
     }
     
     /*envia datos para grabar registro: GenerarVenta*/

@@ -29,10 +29,7 @@ class generarVentaModel extends Model{
     
     private $_cantidad1;
     private $_cantidad2;
-
     private $_precio;
-
-
 
     /*para el grid*/
     private $_iDisplayStart;
@@ -233,7 +230,7 @@ class generarVentaModel extends Model{
             `id_docventa`,
             `periodo`,
             `codigo_impresion`,
-            DATE_FORMAT(`fecha`,'%d-%m-%Y')AS fecha,
+            DATE_FORMAT(`fecha`,'%d/%m/%Y')AS fecha,
             `nombre_descripcion`,
             `moneda`,
             `monto_importe`,
@@ -266,7 +263,9 @@ class generarVentaModel extends Model{
         );
         $data = $this->queryAll($query,$parms);
         return $data;
-    }        
+    }   
+        
+    
 }
 
 ?>

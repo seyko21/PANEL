@@ -315,11 +315,27 @@ $datad = Obj::run()->generarVentaController->getFindVentaD();
                                 .html('<i class="fa fa-check"></i>');
                     }
                     if(index === 2){
+                        var pr = true;
                         var r = simpleScript.validaTable({
                             id: '#'+diccionario.tabs.VGEVE+'gridProductos',
-                            msn: mensajes.MSG_10
+                            msn: mensajes.MSG_10,
+                            fnCallback: function(){                                         
+                                var collection = $('#'+diccionario.tabs.VGEVE+'gridProductos').find('tbody tr td');
+                                $.each(collection,function(){
+                                    var precio = $('#'+diccionario.tabs.VGEVE+'gridProductos').find('td:eq(5)').find('input:text').val();
+                                    /*solo ingresa una sola vez*/
+                                    if(precio <= 0){                                                                    
+                                        pr = false;
+                                    }
+                                });                                
+                            }
                         });
-                        if(r === false){
+                        if (pr == false){
+                            simpleScript.notify.warning({
+                                content: 'El precio que ingreso es menor o igual que CERO (0.00)'
+                            }); 
+                           return false;
+                        }else if(r === false){
                             return false;
                         }else{
                             /*marca el paso como completado*/
