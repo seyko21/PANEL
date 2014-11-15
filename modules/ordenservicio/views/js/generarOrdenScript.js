@@ -52,6 +52,19 @@ var generarOrdenScript_ = function(){
         return retorna;
     };    
     
+     this.publico.calcularImpuesto = function(){
+         var st = simpleScript.deleteComa($('#'+diccionario.tabs.GNOSE+'txt_venta').val());
+         var t = simpleScript.deleteComa($('#'+diccionario.tabs.GNOSE+'txt_total').val());
+                  
+         var chk = $('#'+diccionario.tabs.GNOSE+'chk_impuesto').is(':checked');
+         if (chk ){
+             st = globalScript.number_format(st,2,'.', ',');
+             $('#'+diccionario.tabs.GNOSE+'txt_totalF').val( st );
+         }else{
+             t = globalScript.number_format(t,2,'.', ',');
+             $('#'+diccionario.tabs.GNOSE+'txt_totalF').val( t );
+         }                      
+     }    
     
     return this.publico;
     

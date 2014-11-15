@@ -236,6 +236,13 @@ define('GNOSE_27','F. Contratado');
 define('GNOSE_28','F. Instalado');
 define('GNOSE_29','F. Retiro');
 define('GNOSE_30','Alquiler');
+define('GNOSE_31','Libre Impuesto');
+define('GNOSE_32','Subtotal');
+define('GNOSE_33','Impuesto');
+define('GNOSE_34','Total');
+define('GNOSE_35','Total Final');
+define('GNOSE_36','Precios');
+define('GNOSE_37','Incl. IGV');
 /*---------------------- SEGUIMIENTO DE PAGOS----------------*/
 define('SEGPA_1','Seguimiento de Pagos');
 define('SEGPA_2','Cuota');

@@ -93,7 +93,7 @@ var generarOrden_ = function(){
             iDisplayLength: 50,            
             aoColumns: [
                 {sTitle: "N°", sWidth: "1%"},
-                {sTitle: "Monto S/.", sWidth: "10%",sClass: "right",bSortable: false},                
+                {sTitle: "Monto ", sWidth: "10%",sClass: "right",bSortable: false},                
                 {sTitle: "Programado", sWidth: "10%",sClass: "center",bSortable: false},                
                 {sTitle: "Mora", sWidth: "5%",sClass: "right",bSortable: false},
                 {sTitle: "Estado", sWidth: "10%",sClass: "center",bSortable: false},                
