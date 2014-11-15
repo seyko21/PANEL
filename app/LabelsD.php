@@ -41,7 +41,7 @@ define('LABEL_A28','Ancho (m)');
 define('LABEL_A28M','Escriba el ancho en Metros');
 define('LABEL_A29','Alto (m)');
 define('LABEL_A29M','Escriba el alto en Metros');
-define('LABEL_A30','Observación');
+define('LABEL_A30','Transito');
 define('LABEL_A30M','En caso exista una Observación, escribirla.');
 define('LABEL_A31','Buscar Dirección');
 define('LABEL_A31M','Escriba una dirección para buscar en el mapa');
@@ -62,6 +62,8 @@ define('LABEL_A43','Medidas');
 define('LABEL_A44','Precio');
 define('LABEL_A45','Producción');
 define('LABEL_A46','Multiple Cotiz');
+define('LABEL_A47','Area m2');
+define('LABEL_A48','Estado');
 /*----------------------Permiso Municipal----------------------*/
 define('LABEL_A50','Permiso Municipal de Panel');
 define('LABEL_A51','Registro de Permiso Municipal');
@@ -240,7 +242,7 @@ define('VUNID4','Descripción');
 define('VUNID4M','Ingrese el nombre de la Unidad de Medida');
 define('VUNID5','Sigla');
 define('VUNID5M','Ingrese la sigla de la Unidad de Medida');
-define('VUNID6','Area?');
+define('VUNID6','Calcular Area?');
 /*----------------------Producto ----------------------*/
 define('VPROD1','Listado de Producto');
 define('VPROD2','Nuevo Producto');

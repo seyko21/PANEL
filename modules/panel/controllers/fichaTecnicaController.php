@@ -335,43 +335,43 @@ class fichaTecnicaController extends Controller{
                     <th colspan="6"><div align="center"><h2 style="color:#FFF;">FICHA TECNICA </h2></div></th>
             </tr>
             <tr>
-              <td width="16%"><b>DEPARTAMENTO:</b></td><td width="21%">'.$data[0]['departamento'].'</td>
-              <td width="10%"><b>PROVINCIA:</b></td><td width="20%">'.$data[0]['provincia'].'</td>
-              <td width="8%"><b>DISTRITO:</b></td><td width="26%">'.$data[0]['distrito'].'</td>
+              <td width="16%"><b>'.LABEL_A91.':</b></td><td width="21%">'.$data[0]['departamento'].'</td>
+              <td width="10%"><b>'.LABEL_A92.':</b></td><td width="20%">'.$data[0]['provincia'].'</td>
+              <td width="8%"><b>'.LABEL_A93.':</b></td><td width="26%">'.$data[0]['distrito'].'</td>
             </tr>
             <tr>
-              <td><b>UBICACION:</b></td><td colspan="5">'.strtoupper($data[0]['ubicacion']).'</td>
+              <td><b>'.LABEL_A26.':</b></td><td colspan="5">'.strtoupper($data[0]['ubicacion']).'</td>
             </tr>
             <tr>
-              <td><b>TIPO PANEL:</b></td><td>'.strtoupper($data[0]['tipoPanel']).'</td>
+              <td><b>'.LABEL_A27.':</b></td><td>'.strtoupper($data[0]['tipoPanel']).'</td>
               <td colspan="4"><table width="100%" border="0">
                 <tr>
-                  <td width="20%"><b>ANCHO:</b></td><td width="21%" >'.$data[0]['dimension_ancho'].'</td>
-                  <td width="20%"><b>ALTO:</b></td><td width="21%" >'.$data[0]['dimension_alto'].'</td>
-                  <td width="20%"><b>AREA:</b></td><td width="21%" >'.$data[0]['dimesion_area'].' m <sup>2</sup></td>
+                  <td width="20%"><b>'.LABEL_A28.':</b></td><td width="21%" >'.$data[0]['dimension_ancho'].'</td>
+                  <td width="20%"><b>'.LABEL_A29.':</b></td><td width="21%" >'.$data[0]['dimension_alto'].'</td>
+                  <td width="20%"><b>'.LABEL_A47.':</b></td><td width="21%" >'.$data[0]['dimesion_area'].' m <sup>2</sup></td>
                 </tr>
               </table></td>
             </tr>           
             <tr>
                 <td colspan="6"><table width="100%" border="0">
                   <tr>
-                    <td width="11%"><b>LATITUD:</b></td><td width="41%">'.$data[0]['google_latitud'].'</td>
-                    <td width="7%"><b>LONGITUD:</b></td><td width="41%">'.$data[0]['google_longitud'].'</td>
+                    <td width="11%"><b>'.LABEL_A32.':</b></td><td width="41%">'.$data[0]['google_latitud'].'</td>
+                    <td width="7%"><b>'.LABEL_A33.':</b></td><td width="41%">'.$data[0]['google_longitud'].'</td>
                   </tr>
                 </table></td>
               </tr>
               <tr>
-              <td><b>OBSERVACION:</b></td><td colspan="5">'.strtoupper($data[0]['observacion']).'</td>
+              <td><b>'.LABEL_A30.':</b></td><td colspan="5">'.strtoupper($data[0]['observacion']).'</td>
             </tr>
           </table>              
           <h4>LISTADO DE CARATULAS</h4>
         <table id="td2" style="border-collapse:collapse;" border="1">        
             <tr >
-                <th  style="width:20%">CODIGO</th>
-                <th style="width:40%">DESCRIPCION</th>
-                <th style="width:10%">PRECIO</th>
-                <th style="width:10%">ILUMINADO</th>           
-                <th style="width:10%">ESTADO</th> 
+                <th  style="width:20%">'.LABEL_A37.'</th>
+                <th style="width:40%">'.LABEL_A38.'</th>
+                <th style="width:10%">'.LABEL_A39.'</th>
+                <th style="width:10%">'.LABEL_A40.'</th>           
+                <th style="width:10%">'.LABEL_A48.'</th> 
             </tr>';
         foreach ($data as $value) {
             $iluminado = ($value['iluminado']=='1')?'SI':'NO';
@@ -388,9 +388,9 @@ class fichaTecnicaController extends Controller{
             </tr>';
             if($data['multiplecotizacion'] == 'N'):
                 $html .= '<tr>
-                    <td style="text-align:right"><b>VENDEDOR:</b></td>
+                    <td style="text-align:right"><b>'.LABEL_A112.':</b></td>
                     <td>'.strtoupper($vendedor).'</td>
-                    <td style="text-align:right"><b>% COMISION:</b></td>               
+                    <td style="text-align:right"><b>'.LABEL_A111.':</b></td>               
                     <td style="text-align:right">'.number_format($comision).'% </td>                
                     <td style="text-align:center">&nbsp;</td>                                    
                 </tr>';
@@ -398,8 +398,8 @@ class fichaTecnicaController extends Controller{
                 $dataV = Obj::run()->fichaTecnicaModel->getRptVendedorCuenta($value['id_caratula']);
                   $html .= '<tr>
                     <td>&nbsp;</td>
-                    <td><b>VENDEDOR</b></td>
-                    <td><b>% COMISION:</b></td>               
+                    <td><b>'.LABEL_A112.'</b></td>
+                    <td><b>'.LABEL_A111.':</b></td>               
                     <td>&nbsp;</td>                
                     <td style="text-align:center">&nbsp;</td>                                    
                 </tr>';
@@ -427,17 +427,17 @@ class fichaTecnicaController extends Controller{
             $html .= '
                 <table width="100%" border="0">
                     <tr>
-                      <td width="18%"><strong>FECHA INICIO:</strong></td>
+                      <td width="18%"><strong>'.LABEL_A54.':</strong></td>
                       <td width="22%">'.Functions::cambiaf_a_normal($data[0]['fecha_inicio']).'</td>
-                      <td width="18%"><strong>FECHA FINAL:</strong></td>
+                      <td width="18%"><strong>'.LABEL_A55.':</strong></td>
                       <td width="49%">'.Functions::cambiaf_a_normal($data[0]['fecha_final']).'</td>
                     </tr>
                     <tr>
-                      <td><strong>MONTO PAGADO:</strong></td>
+                      <td><strong>'.LABEL_A56.':</strong></td>
                       <td colspan="2">S/. '.number_format($data[0]['pm_precio'],2).'</td>
                     </tr>
                     <tr>
-                      <td><strong>OBSERVACIONES:</strong></td>
+                      <td><strong>'.LABEL_A57.':</strong></td>
                       <td colspan="3">'.strtoupper($data[0]['pm_obs']).'</td>
                     </tr>
                   </table>';
@@ -456,8 +456,7 @@ class fichaTecnicaController extends Controller{
     }  
    
     public function adjuntarImagen() {
-//        header("Access-Control-Allow-Origin: *");
-//        header('Content-type: application/json');
+
         $p = Obj::run()->fichaTecnicaModel->_idCaratula;
         
         if (!empty($_FILES)) {

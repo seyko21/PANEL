@@ -249,17 +249,14 @@ $data = clienteController::findCliente();
         rules : {
                 <?php echo REGCL; ?>txt_nombres : {
                         required : true,
-                        regular: true,
                         minlength: 3
                 },
                 <?php echo REGCL; ?>txt_apellidopaterno : {
                         required : true,
-                        regular: true,
                         minlength: 3
                 },
                 <?php echo REGCL; ?>txt_apellidomaterno : {
                         required : true,
-                        regular: true,
                         minlength: 3
                 },
                 <?php echo REGCL; ?>lst_tipodoc:{
@@ -278,9 +275,6 @@ $data = clienteController::findCliente();
                 },
                 <?php echo REGCL; ?>lst_ubigeo : {
                         required : true
-                },
-                <?php echo REGCL; ?>txt_direccion : {
-                        regular2: true
                 },
                 <?php echo REGCL; ?>txt_email : {
                         required : true,

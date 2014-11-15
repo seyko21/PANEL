@@ -177,49 +177,49 @@ class catalogoPreciosController extends Controller{
                     <td colspan="4">
                         <table width="100%" border="0">
                             <tr>
-                              <td width="5%"><strong>CÓDIGO:</strong></td>
+                              <td width="5%"><strong>'.LABEL_A37.':</strong></td>
                               <td width="25%"><h3 style="color:#901D78">'.$data[0]['codigo'].'</h3></td>                            
                             </tr>                           
                         </table>
                     </td>
                 </tr>
                 <tr>
-                  <td width="16%"><b>DEPARTAMENTO:</b></td><td width="21%">'.$data[0]['departamento'].'</td>
-                  <td width="10%"><b>PROVINCIA:</b></td><td width="20%">'.$data[0]['provincia'].'</td>
-                  <td width="8%"><b>DISTRITO:</b></td><td width="26%">'.$data[0]['distrito'].'</td>
+                  <td width="16%"><b>'.LABEL_A91.':</b></td><td width="21%">'.$data[0]['departamento'].'</td>
+                  <td width="10%"><b>'.LABEL_A92.':</b></td><td width="20%">'.$data[0]['provincia'].'</td>
+                  <td width="8%"><b>'.LABEL_A93.':</b></td><td width="26%">'.$data[0]['distrito'].'</td>
                 </tr>
                 <tr>
-                  <td><b>UBICACION:</b></td><td colspan="5">'.strtoupper($data[0]['ubicacion']).'</td>
+                  <td><b>'.LABEL_A26.':</b></td><td colspan="5">'.strtoupper($data[0]['ubicacion']).'</td>
                 </tr>
                 <tr>
-                  <td><b>TIPO PANEL:</b></td><td>'.strtoupper($data[0]['tipoPanel']).'</td>
+                  <td><b>'.LABEL_A27.':</b></td><td>'.strtoupper($data[0]['tipoPanel']).'</td>
                   <td colspan="4"><table width="100%" border="0">
                     <tr>
-                      <td width="20%"><b>ANCHO:</b></td><td width="21%" >'.$data[0]['dimension_ancho'].'</td>
-                      <td width="20%"><b>ALTO:</b></td><td width="21%" >'.$data[0]['dimension_alto'].'</td>
-                      <td width="20%"><b>AREA:</b></td><td width="21%" >'.$data[0]['dimesion_area'].' m <sup>2</sup></td>
+                       <td width="20%"><b>'.LABEL_A28.':</b></td><td width="21%" >'.$data[0]['dimension_ancho'].'</td>
+                        <td width="20%"><b>'.LABEL_A29.':</b></td><td width="21%" >'.$data[0]['dimension_alto'].'</td>
+                        <td width="20%"><b>'.LABEL_A47.':</b></td><td width="21%" >'.$data[0]['dimesion_area'].' m <sup>2</sup></td>
                     </tr>
                   </table></td>
                 </tr>           
                 <tr>
                     <td colspan="6"><table width="100%" border="0">
                       <tr>
-                        <td width="11%"><b>LATITUD:</b></td><td width="41%">'.$data[0]['google_latitud'].'</td>
-                        <td width="7%"><b>LONGITUD:</b></td><td width="41%">'.$data[0]['google_longitud'].'</td>
+                        <td width="11%"><b>'.LABEL_A32.':</b></td><td width="41%">'.$data[0]['google_latitud'].'</td>
+                        <td width="7%"><b>'.LABEL_A33.':</b></td><td width="41%">'.$data[0]['google_longitud'].'</td>
                       </tr>
                     </table></td>
                   </tr>
                   <tr>
-                  <td><b>OBSERVACION:</b></td><td colspan="5">'.strtoupper($data[0]['observacion']).'</td>
+                  <td><b>'.LABEL_A30.':</b></td><td colspan="5">'.strtoupper($data[0]['observacion']).'</td>
                 </tr>
                  <tr>
-                    <td><strong>PRECIO:</strong></td>
+                    <td><strong>'.LABEL_A39.':</strong></td>
                     <td>'.number_format($data[0]['precio'],2).'</td>
-                    <td><strong>ILUMINADO:</strong></td>
+                    <td><strong>'.LABEL_A40.':</strong></td>
                     <td>'.$iluminado.'</td>
                   </tr>                 
                  <tr>
-                    <td><strong>ESTADO:</strong></td>
+                    <td><strong>'.LABEL_A48.':</strong></td>
                     <td colspan="3">'.$estado.'</td>                 
                 </tr>
           </table>';
@@ -229,8 +229,8 @@ class catalogoPreciosController extends Controller{
             if ($multiple == 'S'):
                 $html .= '<table id="td2" style="border-collapse:collapse;" border="1">        
                     <tr >
-                        <th  style="width:60%">Vendedor</th>
-                        <th style="width:20%">Comision</th>                
+                        <th  style="width:60%">'.LABEL_A112.'</th>
+                        <th style="width:20%">'.LABEL_A111.'</th>                
                     </tr>';
                     $i=0;
                     foreach ($dataV as $value) {            
@@ -257,11 +257,11 @@ class catalogoPreciosController extends Controller{
                 $vendedor = ($data[0]['vendedor'] == ''?'No se asigno vendedor':$data[0]['vendedor']);
                 $html .='<table width="70%" border="0" cellpadding="5" cellspacing="3">
                             <tr>
-                                <td width="10%"><strong>VENDEDOR:</strong></td>
+                                <td width="10%"><strong>'.LABEL_A112.':</strong></td>
                                 <td width="50%">'.strtoupper($vendedor).'</td>
                           </tr>
                           <tr>
-                                <td><strong>COMISION:</strong></td>
+                                <td><strong>'.LABEL_A111.':</strong></td>
                                 <td >'.$comision.' %</td>
                           </tr>
                         </table>';                
@@ -276,17 +276,17 @@ class catalogoPreciosController extends Controller{
             $html .= '
                 <table width="100%" border="0" cellpadding="5" cellspacing="3">
                     <tr>
-                      <td width="18%"><strong>FECHA INICIO:</strong></td>
+                      <td width="18%"><strong>'.LABEL_A54.':</strong></td>
                       <td width="22%">'.Functions::cambiaf_a_normal($data[0]['fecha_inicio']).'</td>
-                      <td width="18%"><strong>FECHA FINAL:</strong></td>
+                      <td width="18%"><strong>'.LABEL_A55.':</strong></td>
                       <td width="49%">'.Functions::cambiaf_a_normal($data[0]['fecha_final']).'</td>
                     </tr>
                     <tr>
-                      <td><strong>MONTO PAGADO:</strong></td>
+                      <td><strong>'.LABEL_A56.':</strong></td>
                       <td colspan="2">S/. '.number_format($data[0]['pm_precio'],2).'</td>
                     </tr>
                     <tr>
-                      <td><strong>OBSERVACIONES:</strong></td>
+                      <td><strong>'.LABEL_A57.':</strong></td>
                       <td colspan="3">'.strtoupper($data[0]['pm_obs']).'</td>
                     </tr>
                   </table>';
@@ -296,39 +296,39 @@ class catalogoPreciosController extends Controller{
             $ruc ='';  
             if($dataOS['ruc'] != '') $ruc = $dataOS['ruc'].' - ';
             switch ($dataOS['estado']){
-                case 'E': $estado = 'EMITIDO'; break;
-                case 'P': $estado = 'PAGO PARCIAL'; break;
-                case 'T': $estado = 'PAGO TOTAL'; break;
-                case 'F': $estado = 'FINALIZADO'; break;
-                case 'A': $estado = 'ANULADO'; break;
+                case 'E': $estado = SEGPA_6; break;
+                case 'P': $estado = SEGPA_7; break;
+                case 'T': $estado = SEGPA_8; break;
+                case 'F': $estado = SEGPA_29; break;
+                case 'A': $estado = SEGPA_9; break;
             }
             $html .= '
                 <table width="100%" border="0" >
                    <tr>
-                        <td width="16%"><strong>CLIENTE:</strong></td>
+                        <td width="16%"><strong>'.GNOSE_25.':</strong></td>
                         <td width="84%">'.$ruc.strtoupper($dataOS['cliente']).'</td>                       
                     </tr>
                     <tr>
-                        <td width="16%"><strong>REPRESENTANTE:</strong></td>
+                        <td width="16%"><strong>'.GNOSE_26.':</strong></td>
                         <td width="84%">'.strtoupper($dataOS['representante']).'</td>                       
                     </tr>
                     <tr>
                         <td colspan="2" >
                             <table width="100%" border="0" >
                                 <tr>
-                                    <td width="5%" style="text-align:right"><strong>F. CONTRATADO:</strong></td>
+                                    <td width="5%" style="text-align:right"><strong>'.GNOSE_27.':</strong></td>
                                     <td width="10%">'.($dataOS['fecha_contrato']).'</td>
-                                    <td width="5%" style="text-align:right"><strong>F. INSTALADO:</strong></td>
+                                    <td width="5%" style="text-align:right"><strong>'.GNOSE_28.':</strong></td>
                                     <td width="10%">'.($dataOS['fecha_inicio']).'</td>
-                                    <td width="5%" style="text-align:right"><strong>F. RETIRO:</strong></td>
+                                    <td width="5%" style="text-align:right"><strong>'.GNOSE_29.':</strong></td>
                                     <td width="10%">'.($dataOS['fecha_termino']).'</td>
                                 </tr>
                                 <tr>
-                                    <td width="5%" align="right"><strong>N° ORDEN SERV:</strong></td>
+                                    <td width="5%" align="right"><strong>'.SEGCO_7.':</strong></td>
                                     <td width="10%" align="left">'.($dataOS['orden_numero']).'</td>
-                                    <td width="5%" align="right"><strong>ALQUILER:</strong></td>
+                                    <td width="5%" align="right"><strong>'.GNOSE_30.':</strong></td>
                                     <td width="10%" align="left">'.Functions::convertirDiaMes($dataOS['cantidad_mes']).'</td>
-                                    <td width="5%" align="right" ><strong>ESTADO:</strong></td>
+                                    <td width="5%" align="right" ><strong>'.LABEL_A48.':</strong></td>
                                     <td width="10%" align="left">'.$estado.'</td>                                    
                                 </tr>
                             </table>

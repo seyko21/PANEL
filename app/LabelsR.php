@@ -6,6 +6,7 @@
  * Descripcion : todas las etiquetas del sistema
  */
 define('LB_EMPRESA','SEVEND Marketing');
+
 define('LABEL_REDSOCIAL','- Redes Sociales -');
 define('URL_FACEBOOK','http://fb.com/sevendcorp');
 define('URL_TWITTER','https://twitter.com/sevendcorp');
@@ -167,7 +168,13 @@ define('LABEL_GNC25','Observaciones');
 define('LABEL_GNC26','Campaña');
 define('LABEL_GNC27','Click aquí para generar cotización');
 define('LABEL_GNC28','Foto');
-
+define('LABEL_GNC29','N° Cotización');
+define('LABEL_GNC30','Fecha');
+define('LABEL_GNC31','Fecha Vencimiento');
+define('LABEL_GNC32','Estado');
+define('LABEL_GNC33','Representante');
+define('LABEL_GNC34','Tiempo');
+define('LABEL_GNC35','Comentarios');
 /*----------------------    ASIGNAR CUENTAS----------------------*/
 define('LABEL_ASC1','Cuentas');
 define('LABEL_ASC2','Nueva Asignación');
@@ -223,7 +230,12 @@ define('GNOSE_21','Dias de Oferta');
 define('GNOSE_22','Ingrese días de Oferta despues de culminar el alquiler.');
 define('GNOSE_23','Caratulas de OS aun no se han instalado.');
 define('GNOSE_24','Porcentaje asignado: ');
-
+define('GNOSE_25','Cliente ');
+define('GNOSE_26','Representante');
+define('GNOSE_27','F. Contratado');
+define('GNOSE_28','F. Instalado');
+define('GNOSE_29','F. Retiro');
+define('GNOSE_30','Alquiler');
 /*---------------------- SEGUIMIENTO DE PAGOS----------------*/
 define('SEGPA_1','Seguimiento de Pagos');
 define('SEGPA_2','Cuota');

@@ -262,7 +262,11 @@ var cliente_ = function(){
                     });
                 }else if(!isNaN(data.result) && parseInt(data.result) === 2){
                     simpleScript.notify.error({
-                        content: mensajes.MSG_4
+                        content: 'Numero de Documento ya existe en la Base de datos'
+                    });
+                }else if(!isNaN(data.result) && parseInt(data.result) === 3){
+                    simpleScript.notify.error({
+                        content:  'E-mail ya existe en la Base de datos'
                     });
                 }
             }
@@ -314,7 +318,11 @@ var cliente_ = function(){
                     });
                 }else if(!isNaN(data.result) && parseInt(data.result) === 2){
                     simpleScript.notify.error({
-                        content: mensajes.MSG_4
+                        content: 'Numero de Documento ya existe en la Base de datos'
+                    });
+                }else if(!isNaN(data.result) && parseInt(data.result) === 3){
+                    simpleScript.notify.error({
+                        content:  'E-mail ya existe en la Base de datos'
                     });
                 }
             }

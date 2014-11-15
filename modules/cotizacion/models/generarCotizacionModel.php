@@ -344,7 +344,14 @@ class generarCotizacionModel extends Model{
         );
         $data = $this->execute($query,$parms);            
     }
-    
+     public function getPiePagina(){
+        $query = "SELECT valor FROM `pub_parametro` WHERE alias = :alias;";
+        $parms = array(
+            ':alias' => 'PIE'
+        );
+        $data = $this->queryOne($query,$parms);
+        return $data;
+    }   
 }
 
 ?>

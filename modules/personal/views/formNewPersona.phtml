@@ -231,8 +231,7 @@ $("#<?php echo REPER; ?>formNewPersona").validate({
                         number: true,
                         maxlength: 12
                 },
-                <?php echo REPER; ?>txt_dni:{
-                        required: true,
+                <?php echo REPER; ?>txt_dni:{                        
                         number: true,
                         maxlength: 8
                 },        
@@ -244,11 +243,6 @@ $("#<?php echo REPER; ?>formNewPersona").validate({
                 },
                 <?php echo REPER; ?>lst_ubigeo : {
                         required : true
-                },
-                <?php echo REPER; ?>txt_direccion : {
-                        required : true,
-                        regular2: true,
-                        minlength: 3
                 },
                 <?php echo REPER; ?>txt_email : {
                         required : true,

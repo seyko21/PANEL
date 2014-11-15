@@ -138,9 +138,11 @@ class personaModel extends Model{
                         p.email,
                         p.sexo,
                         p.telefono,
-                        u.foto
-                    FROM mae_persona p 
-                    INNER JOIN mae_usuario u ON u.persona=p.persona
+                        (select u.foto
+                            from mae_usuario u where 
+                                u.persona=p.persona
+                         ) as foto
+                    FROM mae_persona p                    
                     WHERE p.id_persona = :idPersona;";
 
             $parms = array(

@@ -265,7 +265,6 @@ $data = personaController::findPersona();
                         maxlength: 12
                 },
                 <?php echo REPER; ?>txt_dni:{
-                        required: true,
                         number: true,
                         maxlength: 8
                 },        
@@ -277,12 +276,7 @@ $data = personaController::findPersona();
                 },
                 <?php echo REPER; ?>lst_ubigeo : {
                         required : true
-                },
-                <?php echo REPER; ?>txt_direccion : {
-                        required : true,
-                        regular2: true,
-                        minlength: 3
-                },
+                },          
                 <?php echo REPER; ?>txt_email : {
                         required : true,
                         email: true
