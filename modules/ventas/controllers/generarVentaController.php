@@ -18,15 +18,13 @@ class generarVentaController extends Controller{
     }
     
     public function getGridGenerarVenta(){
-       $editar = Session::getPermiso('REPROED');
-       $eliminar = Session::getPermiso('REPRODE');
-       $exportarpdf   = Session::getPermiso('REPROEP');
-       $exportarexcel = Session::getPermiso('REPROEX');
-       $adjuntar = Session::getPermiso('REPROAJ');
+       $editar = Session::getPermiso('VGEVEED');
+       $exportarpdf   = Session::getPermiso('VGEVEEP');
+       $exportarexcel = Session::getPermiso('VGEVEEX');
        
        $sEcho          =   $this->post('sEcho');
         
-       $rResult = Obj::run()->generarVentaModel->getGridProduccion();
+       $rResult = Obj::run()->generarVentaModel->getGridGenerarVenta();
         
         if(!isset($rResult['error'])){  
             $iTotal         = isset($rResult[0]['total'])?$rResult[0]['total']:0;
@@ -39,16 +37,30 @@ class generarVentaController extends Controller{
             foreach ( $rResult as $key=>$aRow ){
                              
                 /*antes de enviar id se encrypta*/
-                $encryptReg = Aes::en($aRow['id_produccion']);
+                $encryptReg = Aes::en($aRow['id_docventa']);
                 
-                $chk = '<input id=\"c_'.(++$key).'\" type=\"checkbox\" name=\"'.REPRO.'chk_delete[]\" value=\"'.$encryptReg.'\">';
-                if($aRow['total_asignado'] > 0){
-                    $chk = '<input id=\"c_'.(++$key).'\" type=\"checkbox\" name=\"'.REPRO.'chk_delete[]\" disabled>';
+                switch($aRow['estado']){
+                    case 'E':
+                         $chk = '<input id=\"c_'.(++$key).'\" type=\"checkbox\" name=\"'.VGEVE.'chk_delete[]\" value=\"'.$encryptReg.'\">';
+                        $estado = '<span class=\"label label-default\">'.SEGCO_5.'</span>';
+                        break;                  
+                    case 'A':
+                        $chk = '<input id=\"c_'.(++$key).'\" type=\"checkbox\" name=\"'.VGEVE.'chk_delete[]\" disabled>';       
+                        $estado = '<span class=\"label label-danger\">'.SEGPA_9.'</span>';
+                        break;                 
                 }
                 
+                switch($aRow['tipo_doc']){
+                    case 'F': $tipoDoc = 'Factura';break;                  
+                    case 'B': $tipoDoc = 'Boleta';break;                  
+                    case 'R': $tipoDoc = 'Recibo';break;                                                                     
+                }
+                $nombre = $aRow['nombre_descripcion'];
+                if ($nombre == '') $nombre = '- Sin Descripción -';
+                    
                 
                 /*datos de manera manual*/
-                $sOutput .= '["'.$chk.'","'.$aRow['numero_produccion'].'","'.$aRow['distrito'].'","'.  Functions::cambiaf_a_normal($aRow['fecha']).'","'.$aRow['ubicacion'].'","'.$aRow['elemento'].'","'.number_format($aRow['total_produccion'],2).'","'.number_format($aRow['total_asignado'],2).'","'.number_format($aRow['total_saldo'],2).'", ';
+                $sOutput .= '["'.$chk.'","'.$aRow['codigo_impresion'].'","'.$nombre.'","'.$tipoDoc.'","'.  Functions::cambiaf_a_normal($aRow['fecha']).'","'.$aRow['moneda'].'","'.number_format($aRow['monto_total'],2).'","'.$estado.'", ';
                 
                 /*
                  * configurando botones (add/edit/delete etc)
@@ -56,23 +68,18 @@ class generarVentaController extends Controller{
                  */
                 $sOutput .= '"<div class=\"btn-group\">';                      
                        
-                if($editar['permiso'] == 1){
-                    $sOutput .= '<button type=\"button\" class=\"'.$editar['theme'].'\" title=\"'.$editar['accion'].'\" onclick=\"generarVenta.getFormEditarProduccion(this,\''.$encryptReg.'\')\">';
+                if($editar['permiso'] == 1 && $aRow['estado'] == 'E'){
+                    $sOutput .= '<button type=\"button\" class=\"'.$editar['theme'].'\" title=\"'.$editar['accion'].'\" onclick=\"generarVenta.getFormEditarGenerarVenta(this,\''.$encryptReg.'\')\">';
                     $sOutput .= '    <i class=\"'.$editar['icono'].'\"></i>';
                     $sOutput .= '</button>';
-                }   
-                if($adjuntar['permiso'] == 1){
-                    $sOutput .= '<button type=\"button\" class=\"'.$adjuntar['theme'].'\" title=\"'.$adjuntar['accion'].'\" onclick=\"generarVenta.getFormImagen(this,\''.$encryptReg.'\',\''.$aRow['numero_produccion'].'\')\">';
-                    $sOutput .= '    <i class=\"'.$adjuntar['icono'].'\"></i>';
-                    $sOutput .= '</button>';
-                }   
+                }                 
                 if($exportarpdf['permiso'] == 1){
-                    $sOutput .= '<button type=\"button\" class=\"'.$exportarpdf['theme'].'\" title=\"'.$exportarpdf['accion'].'\" onclick=\"generarVenta.postPDF(this,\''.$encryptReg.'\',\''.$aRow['numero_produccion'].'\')\">';
+                    $sOutput .= '<button type=\"button\" class=\"'.$exportarpdf['theme'].'\" title=\"'.$exportarpdf['accion'].'\" onclick=\"generarVenta.postPDF(this,\''.$encryptReg.'\',\''.$aRow['codigo_impresion'].'\')\">';
                     $sOutput .= '    <i class=\"'.$exportarpdf['icono'].'\"></i>';
                     $sOutput .= '</button>';
                 }
                 if($exportarexcel['permiso'] == 1){
-                    $sOutput .= '<button type=\"button\" class=\"'.$exportarexcel['theme'].'\" title=\"'.$exportarexcel['accion'].'\" onclick=\"generarVenta.postExcel(this,\''.$encryptReg.'\',\''.$aRow['numero_produccion'].'\')\">';
+                    $sOutput .= '<button type=\"button\" class=\"'.$exportarexcel['theme'].'\" title=\"'.$exportarexcel['accion'].'\" onclick=\"generarVenta.postExcel(this,\''.$encryptReg.'\',\''.$aRow['codigo_impresion'].'\')\">';
                     $sOutput .= '    <i class=\"'.$exportarexcel['icono'].'\"></i>';
                     $sOutput .= '</button>';
                 }
@@ -91,61 +98,24 @@ class generarVentaController extends Controller{
         
         echo $sOutput;
     }
-    
-    public function getProductos(){
-        $tab = $this->post('_tab');
-        $sEcho          =   $this->post('sEcho');
         
-        $rResult = Obj::run()->generarVentaModel->getProductos();
-        
-        if(!isset($rResult['error'])){  
-            $iTotal         = isset($rResult[0]['total'])?$rResult[0]['total']:0;
-            
-            $sOutput = '{';
-            $sOutput .= '"sEcho": '.intval($sEcho).', ';
-            $sOutput .= '"iTotalRecords": '.$iTotal.', ';
-            $sOutput .= '"iTotalDisplayRecords": '.$iTotal.', ';
-            $sOutput .= '"aaData": [ ';
-            foreach ( $rResult as $key=>$aRow ){
-                /*antes de enviar id se encrypta*/
-                $encryptReg = Aes::en($aRow['id_producto']);
-                
-                $nom = '<a href=\"javascript:;\" onclick=\"simpleScript.setInput({'.$tab.'txt_idproducto:\''.$encryptReg.'\', '.$tab.'txt_producto:\''.$aRow['ubicacion'].'\'},\'#'.REPRO.'formBuscarProducto\');\" >'.$aRow['ubicacion'].'</a>';
-                
-                /*datos de manera manual*/
-                $sOutput .= '["'.(++$key).'","'.$nom.'" ';
-
-                $sOutput .= '],';
-            }
-            $sOutput = substr_replace( $sOutput, "", -1 );
-            $sOutput .= '] }';
-        }else{
-            $sOutput = $rResult['error'];
-        }
-        
-        echo $sOutput;
-    }
-    
     /*carga formulario (newGenerarVenta.phtml) para nuevo registro: GenerarVenta*/
-    public function getFormNewProduccion(){
+    public function getFormNewGenerarVenta(){
         Obj::run()->View->render("formNewGenerarVenta");
     }
     
     /*carga formulario (editGenerarVenta.phtml) para editar registro: GenerarVenta*/
-    public function getFormEditProduccion(){
+    public function getFormEditGenerarVenta(){
         Obj::run()->View->render("formEditGenerarVenta");
     }
     
-    public function getFormBuscarProducto(){
-        Obj::run()->View->render("formBuscarProducto");
+    public function getFormBuscarProductos(){
+        Obj::run()->View->render("formBuscarProductos");
     }
     
-    public function getFormImagen(){
-        Obj::run()->View->render("formImagen");
-    }
     
-    public function getConceptos(){
-        $data = Obj::run()->generarVentaModel->getConceptos();
+    public function getFindProductos(){
+        $data = Obj::run()->generarVentaModel->getFindProductos();
         
         return $data;
     }
@@ -164,7 +134,7 @@ class generarVentaController extends Controller{
                                 <td width="33%" style="text-align: right; ">SEVEND.pe</td>
                              </tr></table>');
                 
-        $html = $this->getHtmlProduccion($mpdf);         
+        $html = $this->getHtmlGenerarVenta($mpdf);         
 
         //$mpdf->WriteHTML($html);
         $mpdf->Output($ar,'F');
@@ -179,7 +149,7 @@ class generarVentaController extends Controller{
         
         $ar = ROOT.'public'.DS.'files'.DS.$c;
         
-        $html = $this->getHtmlProduccion("EXCEL");
+        $html = $this->getHtmlGenerarVenta("EXCEL");
         
         $f=fopen($ar,'wb');
         if(!$f){$data = array('result'=>2);}
@@ -190,8 +160,8 @@ class generarVentaController extends Controller{
         echo json_encode($data);
     }
     
-    private function getHtmlProduccion($mpdf){
-        $data = Obj::run()->generarVentaModel->getProduccion();
+    private function getHtmlGenerarVenta($mpdf){
+        $data = Obj::run()->generarVentaModel->getGenerarVenta();
         $html ='
         <style>           
            table,h3,h4,p{font-family:Arial;} 
@@ -289,12 +259,16 @@ class generarVentaController extends Controller{
         echo json_encode($data);
     }
     
-    public function findProduccion(){
-        $data = Obj::run()->generarVentaModel->findProduccion();
+    public function getFindVenta(){
+        $data = Obj::run()->generarVentaModel->getFindVenta();
         
         return $data;
     }        
-    
+    public function getFindVentaD(){
+        $data = Obj::run()->generarVentaModel->getFindVentaD();
+        
+        return $data;
+    }      
 }
 
 ?>

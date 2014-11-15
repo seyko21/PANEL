@@ -11,17 +11,27 @@ class generarVentaModel extends Model{
 
     private $_flag;
     private $_idVenta;
-    public $_cod;
-    private $_usuario;
+    public $_cod;    
     private $_term;
+    private $_idMoneda;
+    private $_chkdel;
+    
     private $_fecha;
     private $_idProducto;
     private $_montoTotal;
     private $_observacion;
-    private $_idConcepto;
-    private $_cantidad;
-    private $_precio ;
-    private $_chkdel;
+    private $_codImpr;
+    private $_nombre;
+    private $_moneda;
+    private $_tipoDoc;
+    private $_tipoMov;    
+    private $_usuario;
+    
+    private $_cantidad1;
+    private $_cantidad2;
+
+    private $_precio;
+
 
 
     /*para el grid*/
@@ -39,24 +49,34 @@ class generarVentaModel extends Model{
         $this->_flag                    = Formulario::getParam("_flag");
         $this->_idVenta   = Aes::de(Formulario::getParam("_idVenta"));    /*se decifra*/
         $this->_usuario                 = Session::get("sys_idUsuario");
-        $this->_term  =   Formulario::getParam("_term"); 
-        $this->_chkdel  = $this->post(REPRO.'chk_delete');
-        $this->_fecha     = Functions::cambiaf_a_mysql(Formulario::getParam(REPRO."txt_fechains"));
-        $this->_idProducto     = AesCtr::de(Formulario::getParam(REPRO."txt_idproducto"));
-        $this->_montoTotal     = Functions::deleteComa(Formulario::getParam(ORINS."txt_total"));
-        $this->_observacion     = Formulario::getParam(REPRO."txt_obs");
-        $this->_idConcepto     = Formulario::getParam(ORINS."hhddIdConcepto"); #array
-        $this->_cantidad     = Formulario::getParam(ORINS."txt_cantidad");#array
-        $this->_precio     = Formulario::getParam(ORINS."txt_precio");#array
+        
+        $this->_fecha     = Functions::cambiaf_a_mysql(Formulario::getParam(VGEVE."txt_fecha"));
+        $this->_montoTotal     = Functions::deleteComa(Formulario::getParam(VGEVE."txt_total"));
+        $this->_observacion     = Formulario::getParam(VGEVE."txt_obs");
+        $this->_codImpr     = Formulario::getParam(VGEVE."txt_codImpr");
+        $this->_nombre     = Formulario::getParam(VGEVE."txt_nombre");
+        $this->_moneda     = Formulario::getParam(VGEVE."lst_moneda");
+        $this->_tipoDoc     = Formulario::getParam(VGEVE."lst_tipoDoc");
+        $this->_tipoMov     = 'I';
+        
+        $this->_idProducto     = Formulario::getParam(VGEVE."hhddIdProducto"); #array
+        $this->_cantidad1     = Formulario::getParam(VGEVE."txt_cantidad1");#array
+        $this->_cantidad2     = Formulario::getParam(VGEVE."txt_cantidad2");#array        
+        $this->_precio     = Formulario::getParam(VGEVE."txt_precio");#array
+        
         $this->_cod =  Formulario::getParam("_cod"); 
+        $this->_term  =   Formulario::getParam("_term");         
+        $this->_chkdel  = $this->post(VGEVE.'chk_delete');        
+        $this->_idMoneda   = Formulario::getParam("_idMoneda");
+         
         $this->_iDisplayStart  =   Formulario::getParam("iDisplayStart"); 
         $this->_iDisplayLength =   Formulario::getParam("iDisplayLength"); 
         $this->_iSortingCols   =   Formulario::getParam("iSortingCols");
         $this->_sSearch        =   Formulario::getParam("sSearch");
     }
     
-    public function getGridVenta(){
-        $aColumns       =   array( 'chk','numero_produccion','u.distrito','fecha','ubicacion','elemento','total_produccion','total_asignado','total_saldo' ); //para la ordenacion y pintado en html
+    public function getGridGenerarVenta(){
+        $aColumns       =   array( 'chk','codigo_impresion','nombre_descripcion','tipo_doc','fecha','moneda','monto_total','estado'); //para la ordenacion y pintado en html
         /*
 	 * Ordenando, se verifica por que columna se ordenara
 	 */
@@ -68,7 +88,7 @@ class generarVentaModel extends Model{
                 }
         }
         $sOrder = substr_replace( $sOrder, "", -1 );
-        $query = "call sp_prodVentaGrid(:iDisplayStart,:iDisplayLength,:sOrder,:sSearch);";
+        $query = "call sp_ventaGenerarVentaGrid(:iDisplayStart,:iDisplayLength,:sOrder,:sSearch);";
         
         $parms = array(
             ':iDisplayStart' => $this->_iDisplayStart,
@@ -82,31 +102,21 @@ class generarVentaModel extends Model{
        
     }
     
-    public function getProductos(){
-        $query = "
-        SELECT 
-                c.`id_producto`,
-                c.`ubicacion`
-        FROM lgk_catalogo c
-        WHERE c.`ubicacion` LIKE CONCAT('%".$this->_term."%') AND c.estado <> '0'
-        AND c.`id_producto` NOT IN(SELECT id_producto FROM `prod_produccionpanel` WHERE estado = 'A'); ";
-        
-        
-        $parms = array();
-        $data = $this->queryAll($query,$parms);
-        return $data;
-    }
-    
     public function newGenerarVenta(){
-        $query = "CALL sp_prodVentaMantenimiento("
+        $query = "CALL sp_ventaGenerarVentaMantenimiento("
                 . ":flag,"
                 . ":idVenta,"
+                . ":codigoImpr,"
                 . ":fecha,"
-                . ":idProducto,"
+                . ":nombre,"
+                . ":moneda,"
                 . ":montoTotal,"
+                . ":tipoDoc,"
                 . ":obs,"
-                . ":idConcepto,"
-                . ":cantidad,"
+                . ":tipoMov,"
+                . ":idProducto,"
+                . ":cant1,"
+                . ":cant2,"
                 . ":precio,"
                 . ":usuario"
             . "); ";
@@ -116,13 +126,18 @@ class generarVentaModel extends Model{
             $parms = array(
                 ':flag'=> 3,
                 ':idVenta'=> $this->_idVenta,
-                ':fecha'=> '',
-                ':idProducto'=> '',
-                ':montoTotal'=> '',
-                ':obs'=> '',
-                ':idConcepto'=> '',
-                ':cantidad'=> '',
-                ':precio'=> '',
+                ':codigoImpr'=>'',
+                ':fecha'=>'',
+                ':nombre'=>'',
+                ':moneda'=>'',
+                ':montoTotal'=>'',
+                ':tipoDoc' => '',
+                ':obs' => '',
+                ':tipoMov' => '',
+                ':idProducto' => '',
+                ':cant1' => '',                
+                ':cant2' => '',
+                ':precio' => '',
                 ':usuario'=> $this->_usuario
             );
             $data = $this->execute($query,$parms);
@@ -131,75 +146,55 @@ class generarVentaModel extends Model{
         $parms = array(
             ':flag'=> 1,
             ':idVenta'=> $this->_idVenta,
-            ':fecha'=> $this->_fecha,
-            ':idProducto'=> $this->_idProducto,
-            ':montoTotal'=> $this->_montoTotal,
-            ':obs'=> $this->_observacion,
-            ':idConcepto'=> '',
-            ':cantidad'=> '',
-            ':precio'=> '',
+            ':codigoImpr'=>$this->_codImpr,
+            ':fecha'=>$this->_fecha,
+            ':nombre'=>$this->_nombre,
+            ':moneda'=>$this->_moneda,
+            ':montoTotal'=>$this->_montoTotal,
+            ':tipoDoc' => $this->_tipoDoc,
+            ':obs' => $this->_observacion,
+            ':tipoMov' => $this->_tipoMov,
+            ':idProducto' => '',
+            ':cant1' => '',                
+            ':cant2' => '',
+            ':precio' => '',
             ':usuario'=> $this->_usuario
         );
         $data = $this->queryOne($query,$parms);
-        
+              
         $idVenta = $data['idVenta'];
         
         if($data['result'] == '1'){
             /*detalle de produccion*/
-            foreach ($this->_idConcepto as $key=>$idConcepto) {
+            foreach ($this->_idProducto as $key=>$idProducto) {
                 $parmsx = array(
                     ':flag'=> 2,
                     ':idVenta'=>$idVenta,
-                    ':fecha'=> $this->_fecha,
-                    ':idProducto'=> '',
-                    ':montoTotal'=> '',
-                    ':obs'=> '',
-                    ':idConcepto'=> AesCtr::de($idConcepto),
-                    ':cantidad'=> Functions::deleteComa($this->_cantidad[$key]),
-                    ':precio'=> Functions::deleteComa($this->_precio[$key]),
+                    ':codigoImpr'=>'',
+                    ':fecha'=>'',
+                    ':nombre'=>'',
+                    ':moneda'=>'',
+                    ':montoTotal'=>'',
+                    ':tipoDoc' => '',
+                    ':obs' => '',
+                    ':tipoMov' => '',
+                    ':idProducto' => AesCtr::de($idProducto),
+                    ':cant1' => Functions::deleteComa($this->_cantidad1[$key]),                
+                    ':cant2' => Functions::deleteComa($this->_cantidad2[$key]),
+                    ':precio'=> Functions::deleteComa($this->_precio[$key]),                                       
                     ':usuario'=> $this->_usuario
                 );
                 $this->execute($query,$parmsx);
+              
             }
         }
         $datax = array('result'=>1);
         return $datax;
     }
-    
-    public function getVenta(){
-        $query = "
-        SELECT 
-                p.`numero_produccion`,
-                DATE_FORMAT(p.`fecha`,'%d/%m/%Y')AS fecha,
-                p.`observacion`,
-                pd.`precio`,
-                pd.`cantidad`,
-                pd.`costo_importe`,
-                c.`descripcion` AS concepto,
-                ct.`ubicacion`,
-                p.`total_produccion`,
-                ct.`dimension_alto`,
-                ct.`dimension_ancho`,
-                ct.`dimesion_area`,
-                ub.distrito as ciudad,
-                p.imagen
-        FROM `prod_produccionpaneld` pd
-        INNER JOIN `prod_produccionpanel` p ON p.`id_produccion`=pd.`id_producion`
-        INNER JOIN pub_concepto c ON c.`id_concepto`=pd.`id_concepto`
-        INNER JOIN lgk_catalogo ct ON ct.`id_producto`=p.`id_producto`     
-        INNER JOIN ub_ubigeo ub on ub.id_ubigeo = ct.id_ubigeo
-        WHERE pd.`id_producion`=:idVenta; ";
-        
-        $parms = array(
-            ':idVenta'=>  $this->_idVenta
-        );
-        $data = $this->queryAll($query,$parms);
-        return $data;
-    }
-    
+      
     public function anularGenerarVentaAll(){
         foreach ($this->_chkdel as $value) {
-            $query = "UPDATE prod_produccionpanel SET estado = '0' WHERE id_produccion = :idVenta; ";
+            $query = "UPDATE ven_documento SET estado = 'A' WHERE id_docventa = :idVenta; ";
             $parms = array(
                 ':idVenta' => AesCtr::de($value)
             );
@@ -207,47 +202,71 @@ class generarVentaModel extends Model{
         }
         $data = array('result'=>1);
         return $data;
-    }
+    }    
     
-    public function findVenta(){
+    public function getFindProductos(){
         $query = "
         SELECT
-                p.`id_produccion`,
-                p.`id_producto`,
-                c.`ubicacion`,
-                DATE_FORMAT(p.`fecha`,'%d-%m-%Y')AS fecha,
-                p.`observacion`
-        FROM `prod_produccionpanel` p
-        INNER JOIN lgk_catalogo c ON c.`id_producto`=p.`id_producto`
-        WHERE p.`id_produccion`=:idVenta; ";
+            p.`id_producto`,
+            p.`descripcion`,
+            p.`precio`,
+            p.`estado`,
+            p.`moneda`,
+            (case p.moneda when 'SO' then 'S/.' when 'DO' then '$ USD' end) as monedad,
+            u.`sigla` AS unidad_medida,
+            p.`id_unidadmedida`,
+            u.cantidad_multiple
+          FROM `ven_producto` p
+            inner join `ven_unidadmedida` u on u.`id_unidadmedida` = p.`id_unidadmedida`
+          WHERE p.estado = 'A' and  p.`moneda` = :moneda; ";
+        
+        $parms = array(
+            ':moneda'=>  $this->_idMoneda
+        );
+        $data = $this->queryAll($query,$parms);
+        return $data;
+    } 
+    
+    public function getFindVenta(){
+        $query = "
+        SELECT
+            `id_docventa`,
+            `periodo`,
+            `codigo_impresion`,
+            DATE_FORMAT(`fecha`,'%d-%m-%Y')AS fecha,
+            `nombre_descripcion`,
+            `moneda`,
+            `monto_importe`,
+            `tipo_doc`,
+            `observacion`
+          FROM `ven_documento`
+          WHERE `id_docventa` = :idVenta; ";
         
         $parms = array(
             ':idVenta'=>  $this->_idVenta
         );
-        $data = $this->queryOne($query,$parms);
+        $data = $this->queryOne($query,$parms);      
+        
         return $data;
-    }
+    }    
     
-    public function getConceptos(){
-        //c.destino = 'P' and 
+    public function getFindVentaD(){
         $query = "
         SELECT
-                pd.`id_concepto`,
-                c.`descripcion` AS concepto,
-                pd.`precio`,
-                pd.`cantidad`,
-                pd.`costo_importe`
-        FROM `prod_produccionpaneld` pd
-        INNER JOIN pub_concepto c ON c.`id_concepto`=pd.`id_concepto`
-        WHERE pd.`id_producion` = :idVenta; ";
+            dd.`cantidad_1`, dd.`cantidad_2`, dd.`cantidad_real`,
+            dd.`id_detalle`, dd.`id_docventa`, dd.`id_producto`, dd.`importe`, dd.`precio`,
+            p.`descripcion`, u.`sigla`, u.`cantidad_multiple`
+        FROM `ven_documentod` dd
+                INNER JOIN `ven_producto` p ON p.`id_producto` = dd.`id_producto`
+                INNER JOIN `ven_unidadmedida` u ON u.`id_unidadmedida` = p.`id_unidadmedida`
+        WHERE dd.`id_docventa` =  :idVenta; ";
         
         $parms = array(
             ':idVenta'=>  $this->_idVenta
         );
         $data = $this->queryAll($query,$parms);
         return $data;
-    } 
-    
+    }        
 }
 
 ?>

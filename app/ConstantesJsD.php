@@ -35,7 +35,8 @@
         CREIN: '<?php echo CREIN; ?>',
         GPASO: '<?php echo GPASO; ?>',
         VUNID: '<?php echo VUNID; ?>',
-        VPROD: '<?php echo VPROD; ?>'
+        VPROD: '<?php echo VPROD; ?>',
+        VGEVE: '<?php echo VGEVE; ?>'
     }
 };
 </script>

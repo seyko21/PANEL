@@ -81,7 +81,7 @@ class vproductoController extends Controller{
                 $axion .= ' </div>" ';
                 
                 /*registros a mostrar*/
-                $sOutput .= '["'.$chk.'","'.$aRow['descripcion'].'","'.$aRow['unidadMedida'].'","'.number_format($aRow['precio'],2).'","'.$estado.'",'.$axion.' ';
+                $sOutput .= '["'.$chk.'","'.$aRow['descripcion'].'","'.$aRow['unidadMedida'].'","'.$aRow['moneda'].'","'.number_format($aRow['precio'],2).'","'.$estado.'",'.$axion.' ';
 
                 $sOutput .= '],';
 

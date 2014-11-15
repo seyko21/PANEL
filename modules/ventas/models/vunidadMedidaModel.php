@@ -13,6 +13,7 @@ class vunidadMedidaModel extends Model{
     private $_chkdel;
     private $_nombre;
     private $_sigla;
+    private $_cantMultiple;
     private $_usuario;
     
     /*para el grid*/
@@ -32,6 +33,8 @@ class vunidadMedidaModel extends Model{
         $this->_chkdel  = Formulario::getParam(VUNID.'chk_delete');
         $this->_nombre     = Formulario::getParam(VUNID.'txt_descripcion');
         $this->_sigla     = Formulario::getParam(VUNID.'txt_sigla');
+        
+        $this->_cantMultiple = Formulario::getParam(VUNID.'chk_multi');  
         
         $this->_iDisplayStart  = Formulario::getParam("iDisplayStart"); 
         $this->_iDisplayLength = Formulario::getParam("iDisplayLength"); 
@@ -67,12 +70,13 @@ class vunidadMedidaModel extends Model{
     
     /*grabar nuevo registro: VunidadMedida*/
     public function newVunidadMedida(){
-        $query = "call sp_ventaUnidadMedidaMantenimiento(:flag,:key,:nombre,:sigla,:usuario);";
+        $query = "call sp_ventaUnidadMedidaMantenimiento(:flag,:key,:nombre,:sigla,:cmulti, :usuario);";
         $parms = array(
             ':flag' => 1,
             ':key' => $this->_idVunidadMedida,
             ':nombre' => $this->_nombre,
-            ':sigla' => $this->_sigla,            
+            ':sigla' => $this->_sigla,        
+            ':cmulti' => $this->_cantMultiple,
             ':usuario' => $this->_usuario
         );
         $data = $this->queryOne($query,$parms);
@@ -85,7 +89,8 @@ class vunidadMedidaModel extends Model{
                 `id_unidadmedida`,
                 `nombre`,
                 `sigla`,
-                `estado`
+                `estado`,
+                cantidad_multiple
               from `ven_unidadmedida` WHERE id_unidadmedida = :idd; ";
         
         $parms = array(
@@ -97,12 +102,13 @@ class vunidadMedidaModel extends Model{
     
     /*editar registro: VunidadMedida*/
     public function editVunidadMedida(){
-        $query = "call sp_ventaUnidadMedidaMantenimiento(:flag,:key,:nombre,:sigla,:usuario);";
+        $query = "call sp_ventaUnidadMedidaMantenimiento(:flag,:key,:nombre,:sigla,:cmulti,:usuario);";
         $parms = array(
             ':flag' => 2,
             ':key' => $this->_idVunidadMedida,
             ':nombre' => $this->_nombre,
-            ':sigla' => $this->_sigla,            
+            ':sigla' => $this->_sigla,         
+            ':cmulti' => $this->_cantMultiple,
             ':usuario' => $this->_usuario
         );
         $data = $this->queryOne($query,$parms);
@@ -112,12 +118,13 @@ class vunidadMedidaModel extends Model{
     /*eliminar varios registros: VunidadMedida*/
     public function deleteVunidadMedidaAll(){
         foreach ($this->_chkdel as $value) {
-            $query = "call sp_ventaUnidadMedidaMantenimiento(:flag,:key,:nombre,:sigla,:usuario);";
+            $query = "call sp_ventaUnidadMedidaMantenimiento(:flag,:key,:nombre,:sigla,:cmulti,:usuario);";
             $parms = array(
                 ':flag' => 3,
                 ':key' => Aes::de($value),
                 ':nombre' => '',
-                ':sigla' => '',             
+                ':sigla' => '',     
+                ':cmulti' => '',
                 ':usuario' => $this->_usuario
             );
             $this->execute($query,$parms);

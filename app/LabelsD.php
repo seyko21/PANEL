@@ -240,6 +240,7 @@ define('VUNID4','Descripción');
 define('VUNID4M','Ingrese el nombre de la Unidad de Medida');
 define('VUNID5','Sigla');
 define('VUNID5M','Ingrese la sigla de la Unidad de Medida');
+define('VUNID6','Area?');
 /*----------------------Producto ----------------------*/
 define('VPROD1','Listado de Producto');
 define('VPROD2','Nuevo Producto');
@@ -249,6 +250,48 @@ define('VPROD4M','Ingrese el nombre del Producto.');
 define('VPROD5','Precio');
 define('VPROD5M','Ingrese el precio Unitario del Producto.');
 define('VPROD6','Unidad medida');
+define('VPROD7','Moneda');
+
+/*----------------------Registrar Venta----------------------*/
+define('VGEVE_1','Registro de Venta');
+define('VGEVE_2','Nueva Venta');
+define('VGEVE_3','Editar Venta');
+define('VGEVE_4','Fecha');
+define('VGEVE_5','Moneda');
+define('VGEVE_6','Nombre o Descripción');
+define('VGEVE_7','Código Impresión');
+define('VGEVE_8','Tipo Doc');
+
+define('VGEVE_9','Producto');
+define('VGEVE_10','Unid. Med.');
+define('VGEVE_11','Cant / Ancho');
+define('VGEVE_12','Largo');
+define('VGEVE_13','Precio');
+define('VGEVE_14','Importe');
+
+
+define('VGEVE_15','Buscar Productos');
+define('VGEVE_16','Descripcion');
+define('VGEVE_17','Descripción del Producto');
+define('VGEVE_18','Unid. Med.');
+define('VGEVE_19','Moneda');
+define('VGEVE_20','Precio');
+define('VGEVE_21','Buscar...');
+define('VGEVE_22','Cantidad');
+define('VGEVE_23','Click aquí para generar Venta');
+
+define('VGEVETAB1','Información General');
+define('VGEVETAB2','Listado de Productos');
+define('VGEVETAB3','Finalizar');
+
+define('LABEL_VGEVE1','Factura');
+define('LABEL_VGEVE2','Boleta');
+define('LABEL_VGEVE3','Recibo');
+
+define ('MONEDA_1','S/. - Nuevo SOL');
+define ('MONEDA_2','$USD - Dolar Americano');
+
+
 
 
 ?>
