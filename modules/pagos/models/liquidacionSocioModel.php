@@ -90,17 +90,31 @@ class liquidacionSocioModel extends Model{
                 DATE_FORMAT(osd.`fecha_inicio`, "%d/%m/%Y") AS fecha_inicio,
                 DATE_FORMAT(osd.`fecha_termino`, "%d/%m/%Y") AS fecha_termino, 
                 osd.porcentaje_comision,                
-                os.`monto_venta`,os.`monto_impuesto`,(os.`monto_total`) AS total_final,
+                os.`monto_venta`,os.`monto_impuesto`,(os.`monto_total_final`) AS total_final,
                 (SELECT SUM(`monto_pago`) FROM `lgk_compromisopago` cp 
                 WHERE cp.`id_ordenservicio` = os.`id_ordenservicio` AND cp.`estado` = "E" ) AS deuda,
                 (SELECT SUM(`monto_pago`) FROM `lgk_compromisopago` cp 
                 WHERE cp.`id_ordenservicio` = os.`id_ordenservicio` AND cp.`estado` = "P" ) AS pagado,
-                (SELECT ppx.nombrecompleto FROM `mae_persona` ppx WHERE ppx.id_persona = app.`id_persona` ) AS socio,                
-                (osd.importe_incigv + osd.`impuesto` )AS importe,
-                osd.`impuesto`, 
+                (SELECT ppx.nombrecompleto FROM `mae_persona` ppx WHERE ppx.id_persona = app.`id_persona` ) AS socio,
+                
+                (CASE os.`flag_impuesto`
+				WHEN "0" THEN osd.importe_incigv + osd.`impuesto`
+				WHEN "1" THEN osd.importe_incigv
+			END )AS importe,
+                (CASE os.`flag_impuesto`
+				WHEN "0" THEN osd.`impuesto`
+				WHEN "1" THEN 0
+		END ) AS impuesto,
+                        
 		oi.`monto_total` AS orden_instalacion,
                 osd.`comision_venta`,
-		(osd.`comision_venta` + oi.`monto_total` + osd.`impuesto` )AS egresos,				
+		(osd.`comision_venta` + oi.`monto_total` + 
+                    (CASE os.`flag_impuesto`
+				WHEN "0" THEN osd.`impuesto`
+				WHEN "1" THEN 0
+                    END ) 
+                )AS egresos,		
+                
 		((osd.`monto_total`) - (osd.`comision_venta` + oi.`monto_total`  + osd.`impuesto`)) AS utilidad,				
 		app.`porcentaje_ganacia`,		
 		(SELECT COUNT(*) FROM `lgk_compromisopago` cp WHERE cp.`id_ordenservicio` = os.`id_ordenservicio` AND cp.`estado` IN("E","P") ) AS nrocuotas,

@@ -91,7 +91,7 @@ class liquidacionClienteModel extends Model{
                 DATE_FORMAT(osd.`fecha_termino`, "%d/%m/%Y") AS fecha_termino,                
                 osd.`precio_incigv`,osd.`produccion_incigv`, osd.`importe_incigv`,osd.`porcentaje_igv`,
                 osd.`impuesto`, osd.`monto_total`,  os.`porcentaje_impuesto`,
-                os.`monto_venta`,os.`monto_impuesto`,os.`monto_total` as total,
+                os.`monto_venta`,os.`monto_impuesto`,os.`monto_total_final` as total,
                 (SELECT SUM(`monto_pago`) FROM `lgk_compromisopago` cp 
                 WHERE cp.`id_ordenservicio` = os.`id_ordenservicio` AND cp.`estado` = "E" ) AS deuda,
                 (SELECT SUM(`monto_pago`) FROM `lgk_compromisopago` cp 

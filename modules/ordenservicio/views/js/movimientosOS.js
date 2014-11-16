@@ -192,7 +192,7 @@ var movimientosOS_ = function(){
             aoColumns: [                
                 {sTitle: "Código", sWidth: "7%", sClass: "center"},
                 {sTitle: "Tiempo", sWidth: "15%", sClass: "center"},
-                {sTitle: "Alquiler", sWidth: "10%", sClass: "right"},
+                {sTitle: "Alquiler + Prod", sWidth: "10%", sClass: "right"},
                 {sTitle: "Impuesto", sWidth: "10%", sClass: "right"},
                 {sTitle: "Egresos", sWidth: "10%", sClass: "right"},
                 {sTitle: "Utilidad", sWidth: "10%", sClass: "right"}

@@ -326,8 +326,8 @@ class generarOrdenController extends Controller{
                 . '<td style="text-align:right;width:15%">S/.'.number_format($caratula[0]['monto_venta'],2).'</td>'
                 . '<td style="text-align:right;width:10%"><b>IGV '.(number_format($caratula[0]['porcentaje_impuesto']*100)).'%:</b></td>'
                 . '<td style="text-align:right;width:15%">S/.'.number_format($caratula[0]['monto_impuesto'],2).'</td>'
-                . '<td style="text-align:right;width:10%"><b>Total:</b></td>'
-                . '<td style="text-align:right;width:15%">S/.'.number_format($caratula[0]['monto_total'],2).'</td>'                
+//                . '<td style="text-align:right;width:10%"><b>Total:</b></td>'
+//                . '<td style="text-align:right;width:15%">S/.'.number_format($caratula[0]['monto_total'],2).'</td>'                
                 . '</tr>'
                 . '</table>';
         
