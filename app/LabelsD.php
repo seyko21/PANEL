@@ -290,10 +290,16 @@ define('LABEL_VGEVE1','Factura');
 define('LABEL_VGEVE2','Boleta');
 define('LABEL_VGEVE3','Recibo');
 
-define ('MONEDA_1','S/. - Nuevo SOL');
-define ('MONEDA_2','$USD - Dolar Americano');
+define ('MONEDA_1','S/. - Nuevo SOL'); //Cambiar por BD
+define ('MONEDA_2','$USD - Dolar Americano');//Cambiar por BD
 
-
-
+/*----------------------Registrar Cliente----------------------*/
+define ('VRECL_1','Registro de Clientes');
+define ('VRECL_2','Nuevo Cliente');
+define ('VRECL_3','Editar Cliente');
+define ('VRECL_4','Tipo de Persona');
+define ('VRECL_5','Razon social');
+define ('VRECL_6','N° Documento');
+define ('VRECL_6M','Ingrese N° de Documento: RUC o DNI');
 
 ?>

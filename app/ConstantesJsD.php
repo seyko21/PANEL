@@ -36,7 +36,8 @@
         GPASO: '<?php echo GPASO; ?>',
         VUNID: '<?php echo VUNID; ?>',
         VPROD: '<?php echo VPROD; ?>',
-        VGEVE: '<?php echo VGEVE; ?>'
+        VGEVE: '<?php echo VGEVE; ?>',
+        VRECL: '<?php echo VRECL; ?>'
     }
 };
 </script>

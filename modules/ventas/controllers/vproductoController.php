@@ -40,7 +40,7 @@ class vproductoController extends Controller{
             $sOutput .= '"iTotalDisplayRecords": '.$iTotal.', ';
             $sOutput .= '"aaData": [ ';     
             
-            foreach ( $rResult as $aRow ){
+            foreach ( $rResult as $key=>$aRow  ){
                 /*antes de enviar id se encrypta*/
                 $encryptReg = Aes::en($aRow['id_producto']);
                 

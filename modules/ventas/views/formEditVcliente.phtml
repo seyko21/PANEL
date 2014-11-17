@@ -1,105 +1,122 @@
 <?php /*
 * ---------------------------------------
 * --------- CREATED BY CREATOR ----------
-* fecha: 03-09-2014 02:09:26 
-* Descripcion : formNewSocio.phtml
+* fecha: 17-11-2014 17:11:18 
+* Descripcion : formEditVcliente.phtml
 * ---------------------------------------
 */
 
-/*prefijo: TAB_SOCIO debe ser alias en tabla men_menuprincipal*/
-$editar = Session::getPermiso('REGSOACT');
-$data = socioController::findSocio();
+/*prefijo: VRECL debe ser alias en tabla men_menuprincipal*/
+$editar = Session::getPermiso("VRECLACT");
+    
+$data = vclienteController::findVcliente();
+
 ?>
-<form id="<?php echo TAB_SOCIO; ?>formEditSocio" name="<?php echo TAB_SOCIO; ?>formEditSocio" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-   <div class="modal-dialog">
+<form id="<?php echo VRECL; ?>formEditVcliente" name="<?php echo VRECL; ?>formEditVcliente" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close"  aria-hidden="true">
                     &times;
                 </button>
-                <h4 class="modal-title"><?php echo LABEL_A82;?></h4>
+               <h4 class="modal-title"><?php echo VRECL_3;?></h4>
             </div>
             <div class="modal-body smart-form" style="height: 350px;overflow-y: auto;overflow-x: hidden;">
+              <section>
+                    <div class="row">
+                       <label class="label col col-3"><?php echo VRECL_4; ?></label>
+                        <div class="col col-8">
+                            <label class="select"> 
+                                <?php
+                                    $tipoPer = Array (
+                                            Array ( 'id' => 'N', 'descripcion' => 'P. Natural' ),
+                                            Array ( 'id' => 'J', 'descripcion' => 'P. Juridica' )
+                                    );                                   
+                                    echo Functions::selectHtml(array(
+                                        'data'=>$tipoPer,
+                                        'atributes'=>array(
+                                            'id'=>VRECL.'lst_tipoPersona',
+                                            'name'=>VRECL.'lst_tipoPersona',
+                                            'onchange'=>'vclienteScript.validarTipoPersona(this);'
+                                        ),
+                                        'etiqueta'=>'descripcion',
+                                        'value'=>'id',
+                                        'defaultEtiqueta'=>$data['tipo_persona'],
+                                        'txtSelect'=>false
+                                    ));
+                                ?><i></i>
+                            </label>
+                        </div>                         
+                    </div>
+                </section>  
                 <section>
                     <div class="row">
                         <label class="label col col-3"><?php echo LABEL_A83; ?></label>
                         <div class="col col-8">
                             <label class="input"> 
                                 <i class="icon-append fa fa-user"></i>
-                                <input type="text" id="<?php echo TAB_SOCIO; ?>txt_nombres" name="<?php echo TAB_SOCIO; ?>txt_nombres" value="<?php echo $data['nombres']; ?>">
+                                <input type="text" id="<?php echo VRECL; ?>txt_nombres" name="<?php echo VRECL; ?>txt_nombres" value="<?php echo $data['nombres']; ?>">
                                 <b class="tooltip tooltip-top-right"><i class="fa fa-user txt-color-teal"></i> <?php echo LABEL_A83M; ?></b>
                             </label>
                         </div>
                     </div>
                 </section>
-                <section>
+                <section class="frmpn">
                     <div class="row">
                         <label class="label col col-3"><?php echo LABEL_A84; ?></label>
                         <div class="col col-8">
                             <label class="input"> 
                                 <i class="icon-append fa fa-user"></i>
-                                <input type="text" id="<?php echo TAB_SOCIO; ?>txt_apellidopaterno" name="<?php echo TAB_SOCIO; ?>txt_apellidopaterno" value="<?php echo $data['apellidopaterno']; ?>">
+                                <input type="text" id="<?php echo VRECL; ?>txt_apellidopaterno" name="<?php echo VRECL; ?>txt_apellidopaterno" value="<?php echo $data['apellidoPaterno']; ?>">
                                 <b class="tooltip tooltip-top-right"><i class="fa fa-user txt-color-teal"></i> <?php echo LABEL_A84M; ?></b>
                             </label>
                         </div>
                     </div>
                 </section>
-                <section>
+                <section class="frmpn">
                     <div class="row">
                         <label class="label col col-3"><?php echo LABEL_A85; ?></label>
                         <div class="col col-8">
                             <label class="input"> 
                                 <i class="icon-append fa fa-user"></i>
-                                <input type="text" id="<?php echo TAB_SOCIO; ?>txt_apellidomaterno" name="<?php echo TAB_SOCIO; ?>txt_apellidomaterno" value="<?php echo $data['apellidomaterno']; ?>">
+                                <input type="text" id="<?php echo VRECL; ?>txt_apellidomaterno" name="<?php echo VRECL; ?>txt_apellidomaterno" value="<?php echo $data['apellidoMaterno']; ?>">
                                 <b class="tooltip tooltip-top-right"><i class="fa fa-user txt-color-teal"></i> <?php echo LABEL_A85M; ?></b>
                             </label>
                         </div>
                     </div>
-                </section>   
+                </section>                                           
                 <section>
                     <div class="row">
-                        <label class="label col col-3"><?php echo LABEL_A90; ?></label>
+                        <label class="label col col-3"><?php echo VRECL_6; ?></label>
                         <div class="col col-8">
                             <label class="input"> 
                                 <i class="icon-append fa fa-keyboard-o"></i>
-                                <input type="text" id="<?php echo TAB_SOCIO; ?>txt_nrodocumento" name="<?php echo TAB_SOCIO; ?>txt_nrodocumento" value="<?php echo $data['numerodocumento']; ?>">
-                                <b class="tooltip tooltip-top-right"><i class="fa fa-keyboard-o txt-color-teal"></i> <?php echo LABEL_A90M; ?></b>
+                                <input type="text" id="<?php echo VRECL; ?>txt_nrodocumento" name="<?php echo VRECL; ?>txt_nrodocumento" value="<?php echo $data['numerodocumento']; ?>">
+                                <b class="tooltip tooltip-top-right"><i class="fa fa-keyboard-o txt-color-teal"></i> <?php echo VRECL_6M; ?></b>
                             </label>
                         </div>
                     </div>
                 </section>
-                <section>
-                    <div class="row">
-                        <label class="label col col-3"><?php echo LABEL_A95; ?></label>
-                        <div class="col col-8">
-                            <label class="input"> 
-                                <i class="icon-append fa fa-keyboard-o"></i>
-                                <input type="text" id="<?php echo TAB_SOCIO; ?>txt_dni" name="<?php echo TAB_SOCIO; ?>txt_dni" value="<?php echo $data['dni']; ?>">
-                                <b class="tooltip tooltip-top-right"><i class="fa fa-keyboard-o txt-color-teal"></i> <?php echo LABEL_A95M; ?></b>
-                            </label>
-                        </div>
-                    </div>
-                </section>
+               
                 <section>
                     <div class="row">
                         <label class="label col col-3"><?php echo LABEL_A91; ?></label>
                         <div class="col col-8">
                             <label class="select"> 
                                 <?php
-                                    $datad = socioController::getDepartamentos();
-                                    
+                                    $datad = personaController::getDepartamentos();                                    
                                     echo Functions::selectHtml(array(
                                         'data'=>$datad,
                                         'atributes'=>array(
-                                            'id'=>TAB_SOCIO.'lst_departamento',
-                                            'name'=>TAB_SOCIO.'lst_departamento',
+                                            'id'=>VRECL.'lst_departamento',
+                                            'name'=>VRECL.'lst_departamento',
                                             'onchange'=>'registrarVendedor.getProvincias({
-                                                            idDepartamento: $(\'#'.TAB_SOCIO.'lst_departamento\').val(),
-                                                            content: \'#'.TAB_SOCIO.'cont-provincias\',
-                                                            idElement: \''.TAB_SOCIO.'lst_provincia\',
-                                                            nameElement: \''.TAB_SOCIO.'lst_provincia\',
-                                                            contentUbigeo: \'#'.TAB_SOCIO.'cont-ubigeo\',
-                                                            idUbigeo: \''.TAB_SOCIO.'lst_ubigeo\'
+                                                            idDepartamento: $(\'#'.VRECL.'lst_departamento\').val(),
+                                                            content: \'#'.VRECL.'cont-provincias\',
+                                                            idElement: \''.VRECL.'lst_provincia\',
+                                                            nameElement: \''.VRECL.'lst_provincia\',
+                                                            contentUbigeo: \'#'.VRECL.'cont-ubigeo\',
+                                                            idUbigeo: \''.VRECL.'lst_ubigeo\'
                                                         });'
                                         ),
                                         'etiqueta'=>'departamento',
@@ -116,20 +133,20 @@ $data = socioController::findSocio();
                     <div class="row">
                         <label class="label col col-3"><?php echo LABEL_A92; ?></label>
                         <div class="col col-8">
-                            <label class="select" id="<?php echo TAB_SOCIO; ?>cont-provincias"> 
+                            <label class="select" id="<?php echo VRECL; ?>cont-provincias"> 
                                  <?php 
-                                    $datap = socioController::getProvinciasEst(substr($data['id_ubigeo'], 0,2));
+                                    $datap = personaController::getProvinciasEst(substr($data['id_ubigeo'], 0,2));
                                     
                                     echo Functions::selectHtml(array(
                                         'data'=>$datap,
                                         'atributes'=>array(
-                                            'id'=>TAB_SOCIO.'lst_provincia',
-                                            'name'=>TAB_SOCIO.'lst_provincia',
+                                            'id'=>VRECL.'lst_provincia',
+                                            'name'=>VRECL.'lst_provincia',
                                             'onchange'=>'registrarVendedor.getUbigeo({                                                                
-                                                            idProvincia: $(\'#'.TAB_SOCIO.'lst_provincia\').val(),
-                                                            content: \'#'.TAB_SOCIO.'cont-ubigeo\',
-                                                            idElement: \''.TAB_SOCIO.'lst_ubigeo\',
-                                                            nameElement: \''.TAB_SOCIO.'lst_ubigeo\'
+                                                            idProvincia: $(\'#'.VRECL.'lst_provincia\').val(),
+                                                            content: \'#'.VRECL.'cont-ubigeo\',
+                                                            idElement: \''.VRECL.'lst_ubigeo\',
+                                                            nameElement: \''.VRECL.'lst_ubigeo\'
                                                         });'
                                         ),
                                         'etiqueta'=>'provincia',
@@ -147,15 +164,15 @@ $data = socioController::findSocio();
                     <div class="row">
                         <label class="label col col-3"><?php echo LABEL_A93; ?></label>
                         <div class="col col-8">
-                            <label class="select" id="<?php echo TAB_SOCIO; ?>cont-ubigeo"> 
-                              <?php 
-                                    $datau = socioController::getUbigeoEst(substr($data['id_ubigeo'], 0,4));
+                            <label class="select" id="<?php echo VRECL; ?>cont-ubigeo"> 
+                                <?php 
+                                    $datau = personaController::getUbigeoEst(substr($data['id_ubigeo'], 0,4));
                                     
                                     echo Functions::selectHtml(array(
                                         'data'=>$datau,
                                         'atributes'=>array(
-                                            'id'=>TAB_SOCIO.'lst_ubigeo',
-                                            'name'=>TAB_SOCIO.'lst_ubigeo'
+                                            'id'=>VRECL.'lst_ubigeo',
+                                            'name'=>VRECL.'lst_ubigeo'
                                         ),
                                         'etiqueta'=>'distrito',
                                         'value'=>'id_ubigeo',
@@ -174,7 +191,7 @@ $data = socioController::findSocio();
                         <div class="col col-8">
                             <label class="input"> 
                                 <i class="icon-append fa fa-keyboard-o"></i>
-                                <input type="text" id="<?php echo TAB_SOCIO; ?>txt_direccion" name="<?php echo TAB_SOCIO; ?>txt_direccion"  value="<?php echo $data['direccion']; ?>">
+                                <input type="text" id="<?php echo VRECL; ?>txt_direccion" name="<?php echo VRECL; ?>txt_direccion" value="<?php echo $data['direccion']; ?>">
                                 <b class="tooltip tooltip-top-right"><i class="fa fa-keyboard-o txt-color-teal"></i> <?php echo LABEL_A86M; ?></b>
                             </label>
                         </div>
@@ -186,22 +203,22 @@ $data = socioController::findSocio();
                         <div class="col col-8">
                             <label class="input"> 
                                 <i class="icon-append fa fa-keyboard-o"></i>
-                                <input type="text" id="<?php echo TAB_SOCIO; ?>txt_email" name="<?php echo TAB_SOCIO; ?>txt_email" value="<?php echo $data['email']; ?>">
+                                <input type="text" id="<?php echo VRECL; ?>txt_email" name="<?php echo VRECL; ?>txt_email" value="<?php echo $data['email']; ?>">
                                 <b class="tooltip tooltip-top-right"><i class="fa fa-keyboard-o txt-color-teal"></i> <?php echo LABEL_A87M; ?></b>
                             </label>
                         </div>
                     </div>
                 </section>
-                <section>
+                <section class="frmpn">
                     <div class="row">
                         <label class="label col col-3"><?php echo LABEL_A88; ?></label>
                         <div class="inline-group col col-8">
                             <label class="radio"> 
-                                <input name="<?php echo TAB_SOCIO; ?>rd_sexo" id="<?php echo TAB_SOCIO; ?>rd_sexoH" checked type="radio" value="H" <?php echo ($data['sexo'] == 'H')?'checked':''; ?>>
+                                <input name="<?php echo VRECL; ?>rd_sexo" id="<?php echo VRECL; ?>rd_sexoH" checked type="radio" value="H" <?php echo ($data['sexo'] == 'H')?'checked':''; ?>>
                                 <i></i>Hombre
                             </label>
                             <label class="radio"> 
-                                <input name="<?php echo TAB_SOCIO; ?>rd_sexo" id="<?php echo TAB_SOCIO; ?>rd_sexoM" type="radio" value="M" <?php echo ($data['sexo'] == 'M')?'checked':''; ?>>
+                                <input name="<?php echo VRECL; ?>rd_sexo" id="<?php echo VRECL; ?>rd_sexoM" type="radio" value="M" <?php echo ($data['sexo'] == 'M')?'checked':''; ?>>
                                 <i></i>Mujer
                             </label>
                         </div>
@@ -213,110 +230,77 @@ $data = socioController::findSocio();
                         <div class="col col-8">
                             <label class="input"> 
                                 <i class="icon-append fa fa-keyboard-o"></i>
-                                <input type="text" id="<?php echo TAB_SOCIO; ?>txt_telefonos" name="<?php echo TAB_SOCIO; ?>txt_telefonos" value="<?php echo $data['telefono']; ?>">
+                                <input type="text" id="<?php echo VRECL; ?>txt_telefonos" name="<?php echo VRECL; ?>txt_telefonos" value="<?php echo $data['telefono']; ?>">
                                 <b class="tooltip tooltip-top-right"><i class="fa fa-keyboard-o txt-color-teal"></i> <?php echo LABEL_A89M; ?></b>
                             </label>
                         </div>
                     </div>
                 </section>
-                <section>
-                    <div class="row">
-                        <label class="label col col-3"><?php echo LABEL_A96; ?></label>
-                        <div class="col col-8">
-                            <label class="select"> 
-                                <?php
-                                    $tiposoc = Array (
-                                            Array ( 'id' => 'P', 'descripcion' => 'PRINCIPAL' ),
-                                            Array ( 'id' => 'A', 'descripcion' => 'ASOCIADO' )
-                                    );                                   
-                                    echo Functions::selectHtml(array(
-                                        'data'=>$tiposoc,
-                                        'atributes'=>array(
-                                            'id'=>TAB_SOCIO.'lst_tiposocio',
-                                            'name'=>TAB_SOCIO.'lst_tiposocio'
-                                        ),
-                                        'etiqueta'=>'descripcion',
-                                        'value'=>'id',
-                                        'defaultEtiqueta'=>$data['tipo_socio'],
-                                        'txtSelect'=>true
-                                    ));
-                                ?><i></i>
-                            </label>
-                        </div>
-                    </div>
-                </section>                                           
-                
-               
-            </div>
+            </div> 
             <div class="modal-footer">
-                <?php if($editar['permiso']):?>
-                <button id="<?php echo TAB_SOCIO; ?>btnGsocio" type="submit" class="<?php echo $editar['theme'];?>">
-                    <i class="<?php echo $editar['icono'];?>"></i> <?php echo $editar['accion']; ?>
+                <div class="foot-obligar"></div>
+                <?php if($editar["permiso"]):?>
+                <button id="<?php echo VRECL; ?>btnEdVcliente" type="submit" class="<?php echo $editar["theme"]; ?>">
+                    <i class="<?php echo $editar["icono"]; ?>"></i> <?php echo $editar["accion"]; ?>
                 </button>
                 <?php endif; ?>
                 <button type="button" class="<?php echo THEME_CLOSE; ?>">
-                    <i class="<?php echo ICON_CLOSE; ?>"></i> <?php echo BTN_CLOSE; ?> 
+                    <i class="<?php echo ICON_CLOSE; ?>"></i> <?php echo BTN_CLOSE; ?>
                 </button>
             </div>
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
-
-<!-- si no riene permiso se anula submit desde cualquier input -->
-<?php if(!$editar['permiso']): ?>
+</form>
+<!-- si no tiene permiso se anula submit desde cualquier input -->
+<?php if(!$editar["permiso"]): ?>
 <script>
-    simpleScript.noSubmit('#<?php echo TAB_SOCIO; ?>formEditSocio');
+    simpleScript.noSubmit("#<?php echo VRECL; ?>formEditVcliente");
 </script>
 <?php endif; ?>
 <script>
-    $('#<?php echo TAB_SOCIO; ?>formEditSocio').validate({
-        // Rules for form validation
-        rules : {
-                <?php echo TAB_SOCIO; ?>txt_nombres : {
+/*configurar validacion de formulario -- este codigo es de ejemplo*/
+$("#<?php echo VRECL; ?>formEditVcliente").validate({
+    // Rules for form validation
+    rules : {
+         <?php echo VRECL; ?>txt_nombres : {
                         required : true,
                         regular: true,
                         minlength: 3
                 },
-                <?php echo TAB_SOCIO; ?>txt_apellidopaterno : {
+                <?php echo VRECL; ?>txt_apellidopaterno : {
                         required : true,
                         regular: true,
                         minlength: 3
                 },
-                <?php echo TAB_SOCIO; ?>txt_apellidomaterno : {
+                <?php echo VRECL; ?>txt_apellidomaterno : {
                         required : true,
                         regular: true,
                         minlength: 3
-                },
-                <?php echo TAB_SOCIO; ?>txt_nrodocumento:{
-                        number: true,
-                        maxlength: 12
-                },
-                <?php echo TAB_SOCIO; ?>txt_dni:{
-                        number: true,
-                        maxlength: 8
-                },   
-                <?php echo TAB_SOCIO; ?>lst_departamento : {
-                        required : true
-                },
-                <?php echo TAB_SOCIO; ?>lst_provincia : {
-                        required : true
-                },
-                <?php echo TAB_SOCIO; ?>lst_ubigeo : {
-                        required : true
-                },
-                <?php echo TAB_SOCIO; ?>txt_email : {
-                        required : true,
+                },     
+                <?php echo VRECL; ?>txt_email : {
                         email: true
-                }    
-        },
+                },
+                <?php echo VRECL; ?>txt_nrodocumento : {
+                        required : true,
+                        number: true,
+                        maxlength: 13
+                }
+    },    
+    // No cambie el código de abajo
+    errorPlacement : function(error, element) {
+        error.insertAfter(element.parent());
+    },
 
-        // Do not change code below
-        errorPlacement : function(error, element) {
-                error.insertAfter(element.parent());
-        },
+    submitHandler: function(){
+        vcliente.postEditVcliente();
+    }      
+       
+});
 
-        submitHandler: function(){
-            socio.postEditarSocio();
-        }   
-    });
+  <?php if ($data['tipo_persona'] == 'N'): ?>
+        $('.frmpn ').css('display','block');
+  <?php  else: ?>
+        $('.frmpn ').css('display','none');
+   <?php endif; ?>
+
 </script>
-</form>

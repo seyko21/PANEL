@@ -255,12 +255,10 @@ $grabar = Session::getPermiso("REGSOGR");
                         minlength: 3
                 },
                 <?php echo TAB_SOCIO; ?>txt_nrodocumento:{
-                        required: true,
                         number: true,
                         maxlength: 12
                 },
                 <?php echo TAB_SOCIO; ?>txt_dni:{
-                        required: true,
                         number: true,
                         maxlength: 8
                 },        
@@ -272,11 +270,6 @@ $grabar = Session::getPermiso("REGSOGR");
                 },
                 <?php echo TAB_SOCIO; ?>lst_ubigeo : {
                         required : true
-                },
-                <?php echo TAB_SOCIO; ?>txt_direccion : {
-                        required : true,
-                        regular2: true,
-                        minlength: 3
                 },
                 <?php echo TAB_SOCIO; ?>txt_email : {
                         required : true,

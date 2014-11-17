@@ -259,15 +259,7 @@ $data = personaController::findPersona();
                         required : true,
                         regular: true,
                         minlength: 3
-                },
-                <?php echo REPER; ?>txt_nrodocumento:{
-                        number: true,
-                        maxlength: 12
-                },
-                <?php echo REPER; ?>txt_dni:{
-                        number: true,
-                        maxlength: 8
-                },        
+                },     
                 <?php echo REPER; ?>lst_departamento : {
                         required : true
                 },
@@ -280,7 +272,11 @@ $data = personaController::findPersona();
                 <?php echo REPER; ?>txt_email : {
                         required : true,
                         email: true
-                }    
+                },
+                <?php echo REPER; ?>txt_nrodocumento:{
+                        number: true,
+                        maxlength: 13
+                }
         },
 
         // Do not change code below

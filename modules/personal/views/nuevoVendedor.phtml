@@ -230,13 +230,11 @@ $grabar = Session::getPermiso('REGVEGR');
                         regular: true,
                         minlength: 3
                 },
-                <?php echo T7; ?>txt_nrodocumento:{
-                        required: true,
+                <?php echo T7; ?>txt_nrodocumento:{                        
                         number: true,
                         maxlength: 12
                 },
-                <?php echo T7; ?>txt_dni:{
-                        required: true,
+                <?php echo T7; ?>txt_dni:{                        
                         number: true,
                         maxlength: 8
                 },        
@@ -248,12 +246,7 @@ $grabar = Session::getPermiso('REGVEGR');
                 },
                 <?php echo T7; ?>lst_ubigeo : {
                         required : true
-                },
-                <?php echo T7; ?>txt_direccion : {
-                        required : true,
-                        regular2: true,
-                        minlength: 3
-                },
+                },              
                 <?php echo T7; ?>txt_email : {
                         required : true,
                         email: true

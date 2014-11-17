@@ -45,5 +45,6 @@ define("GPASO","GPASO");             /*tab modulo PAGOSOCIO*/
 define("VUNID","VUNID");             /*tab modulo VUNIDADMEDIDA*/
 define("VPROD","VPROD");             /*tab modulo VPRODUCTO*/
 define("VGEVE","VGEVE");             /*tab modulo Generar Venta*/
+define("VRECL","VRECL");             /*tab modulo VCLIENTE*/
 
 ?>

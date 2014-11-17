@@ -253,12 +253,10 @@ $data = registrarVendedorController::findVendedor();
                         minlength: 3
                 },
                 <?php echo T7; ?>txt_nrodocumento:{
-                        required: true,
                         number: true,
                         maxlength: 12
                 },
                 <?php echo T7; ?>txt_dni:{
-                        required: true,
                         number: true,
                         maxlength: 8
                 },
@@ -270,11 +268,6 @@ $data = registrarVendedorController::findVendedor();
                 },
                 <?php echo T7; ?>lst_ubigeo : {
                         required : true
-                },
-                <?php echo T7; ?>txt_direccion : {
-                        required : true,
-                        regular2: true,
-                        minlength: 3
                 },
                 <?php echo T7; ?>txt_email : {
                         required : true,

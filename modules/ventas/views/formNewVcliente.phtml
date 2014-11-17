@@ -1,84 +1,100 @@
 <?php /*
 * ---------------------------------------
 * --------- CREATED BY CREATOR ----------
-* fecha: 16-09-2014 03:09:14 
-* Descripcion : formNewPersona.phtml
+* fecha: 17-11-2014 17:11:18 
+* Descripcion : formNewVcliente.phtml
 * ---------------------------------------
 */
 
-/*prefijo: REPER debe ser alias en tabla men_menuprincipal*/
-$grabar = Session::getPermiso("REPERGR");
+/*prefijo: VRECL debe ser alias en tabla men_menuprincipal*/
+$grabar = Session::getPermiso("VRECLGR");
 ?>
-<form id="<?php echo REPER; ?>formNewPersona" name="<?php echo REPER; ?>formNewPersona" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-   <div class="modal-dialog">
+<form id="<?php echo VRECL; ?>formNewVcliente" name="<?php echo VRECL; ?>formNewVcliente" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close"  aria-hidden="true">
                     &times;
                 </button>
-                <h4 class="modal-title"><?php echo LABEL_A161;?></h4>
+                <h4 class="modal-title"><?php echo VRECL_2;?></h4>
             </div>
-            <div class="modal-body smart-form" style="height: 350px;overflow-y: auto;overflow-x: hidden;">                
+          <div class="modal-body smart-form" style="height: 350px;overflow-y: auto;overflow-x: hidden;">
+              <section>
+                    <div class="row">
+                       <label class="label col col-3"><?php echo VRECL_4; ?></label>
+                        <div class="col col-8">
+                            <label class="select"> 
+                                <?php
+                                    $tipoPer = Array (
+                                            Array ( 'id' => 'N', 'descripcion' => 'P. Natural' ),
+                                            Array ( 'id' => 'J', 'descripcion' => 'P. Juridica' )
+                                    );                                   
+                                    echo Functions::selectHtml(array(
+                                        'data'=>$tipoPer,
+                                        'atributes'=>array(
+                                            'id'=>VRECL.'lst_tipoPersona',
+                                            'name'=>VRECL.'lst_tipoPersona',
+                                            'onchange'=>'vclienteScript.validarTipoPersona(this);'
+                                        ),
+                                        'etiqueta'=>'descripcion',
+                                        'value'=>'id',
+                                        'defaultEtiqueta'=>'N',
+                                        'txtSelect'=>false
+                                    ));
+                                ?><i></i>
+                            </label>
+                        </div>                         
+                    </div>
+                </section>  
                 <section>
                     <div class="row">
                         <label class="label col col-3"><?php echo LABEL_A83; ?></label>
                         <div class="col col-8">
                             <label class="input"> 
                                 <i class="icon-append fa fa-user"></i>
-                                <input type="text" id="<?php echo REPER; ?>txt_nombres" name="<?php echo REPER; ?>txt_nombres">
+                                <input type="text" id="<?php echo VRECL; ?>txt_nombres" name="<?php echo VRECL; ?>txt_nombres">
                                 <b class="tooltip tooltip-top-right"><i class="fa fa-user txt-color-teal"></i> <?php echo LABEL_A83M; ?></b>
                             </label>
                         </div>
                     </div>
                 </section>
-                <section>
+                <section class="frmpn">
                     <div class="row">
                         <label class="label col col-3"><?php echo LABEL_A84; ?></label>
                         <div class="col col-8">
                             <label class="input"> 
                                 <i class="icon-append fa fa-user"></i>
-                                <input type="text" id="<?php echo REPER; ?>txt_apellidopaterno" name="<?php echo REPER; ?>txt_apellidopaterno">
+                                <input type="text" id="<?php echo VRECL; ?>txt_apellidopaterno" name="<?php echo VRECL; ?>txt_apellidopaterno">
                                 <b class="tooltip tooltip-top-right"><i class="fa fa-user txt-color-teal"></i> <?php echo LABEL_A84M; ?></b>
                             </label>
                         </div>
                     </div>
                 </section>
-                <section>
+                <section class="frmpn">
                     <div class="row">
                         <label class="label col col-3"><?php echo LABEL_A85; ?></label>
                         <div class="col col-8">
                             <label class="input"> 
                                 <i class="icon-append fa fa-user"></i>
-                                <input type="text" id="<?php echo REPER; ?>txt_apellidomaterno" name="<?php echo REPER; ?>txt_apellidomaterno">
+                                <input type="text" id="<?php echo VRECL; ?>txt_apellidomaterno" name="<?php echo VRECL; ?>txt_apellidomaterno">
                                 <b class="tooltip tooltip-top-right"><i class="fa fa-user txt-color-teal"></i> <?php echo LABEL_A85M; ?></b>
                             </label>
                         </div>
                     </div>
-                </section>   
+                </section>                                           
                 <section>
                     <div class="row">
-                        <label class="label col col-3"><?php echo LABEL_A90; ?></label>
+                        <label class="label col col-3"><?php echo VRECL_6; ?></label>
                         <div class="col col-8">
                             <label class="input"> 
                                 <i class="icon-append fa fa-keyboard-o"></i>
-                                <input type="text" id="<?php echo REPER; ?>txt_nrodocumento" name="<?php echo REPER; ?>txt_nrodocumento">
-                                <b class="tooltip tooltip-top-right"><i class="fa fa-keyboard-o txt-color-teal"></i> <?php echo LABEL_A90M; ?></b>
+                                <input type="text" id="<?php echo VRECL; ?>txt_nrodocumento" name="<?php echo VRECL; ?>txt_nrodocumento">
+                                <b class="tooltip tooltip-top-right"><i class="fa fa-keyboard-o txt-color-teal"></i> <?php echo VRECL_6M; ?></b>
                             </label>
                         </div>
                     </div>
                 </section>
-                <section>
-                    <div class="row">
-                        <label class="label col col-3"><?php echo LABEL_A95; ?></label>
-                        <div class="col col-8">
-                            <label class="input"> 
-                                <i class="icon-append fa fa-keyboard-o"></i>
-                                <input type="text" id="<?php echo REPER; ?>txt_dni" name="<?php echo REPER; ?>txt_dni">
-                                <b class="tooltip tooltip-top-right"><i class="fa fa-keyboard-o txt-color-teal"></i> <?php echo LABEL_A95M; ?></b>
-                            </label>
-                        </div>
-                    </div>
-                </section>
+               
                 <section>
                     <div class="row">
                         <label class="label col col-3"><?php echo LABEL_A91; ?></label>
@@ -89,15 +105,15 @@ $grabar = Session::getPermiso("REPERGR");
                                     echo Functions::selectHtml(array(
                                         'data'=>$data,
                                         'atributes'=>array(
-                                            'id'=>REPER.'lst_departamento',
-                                            'name'=>REPER.'lst_departamento',
+                                            'id'=>VRECL.'lst_departamento',
+                                            'name'=>VRECL.'lst_departamento',
                                             'onchange'=>'registrarVendedor.getProvincias({
-                                                            idDepartamento: $(\'#'.REPER.'lst_departamento\').val(),
-                                                            content: \'#'.REPER.'cont-provincias\',
-                                                            idElement: \''.REPER.'lst_provincia\',
-                                                            nameElement: \''.REPER.'lst_provincia\',
-                                                            contentUbigeo: \'#'.REPER.'cont-ubigeo\',
-                                                            idUbigeo: \''.REPER.'lst_ubigeo\'
+                                                            idDepartamento: $(\'#'.VRECL.'lst_departamento\').val(),
+                                                            content: \'#'.VRECL.'cont-provincias\',
+                                                            idElement: \''.VRECL.'lst_provincia\',
+                                                            nameElement: \''.VRECL.'lst_provincia\',
+                                                            contentUbigeo: \'#'.VRECL.'cont-ubigeo\',
+                                                            idUbigeo: \''.VRECL.'lst_ubigeo\'
                                                         });'
                                         ),
                                         'etiqueta'=>'departamento',
@@ -114,8 +130,8 @@ $grabar = Session::getPermiso("REPERGR");
                     <div class="row">
                         <label class="label col col-3"><?php echo LABEL_A92; ?></label>
                         <div class="col col-8">
-                            <label class="select" id="<?php echo REPER; ?>cont-provincias"> 
-                                <select id="<?php echo REPER; ?>lst_provincia" name="<?php echo REPER; ?>lst_provincia">
+                            <label class="select" id="<?php echo VRECL; ?>cont-provincias"> 
+                                <select id="<?php echo VRECL; ?>lst_provincia" name="<?php echo VRECL; ?>lst_provincia">
                                     <option value="">Seleccionar</option>
                                 </select>
                                 <i></i>
@@ -127,8 +143,8 @@ $grabar = Session::getPermiso("REPERGR");
                     <div class="row">
                         <label class="label col col-3"><?php echo LABEL_A93; ?></label>
                         <div class="col col-8">
-                            <label class="select" id="<?php echo REPER; ?>cont-ubigeo"> 
-                                <select id="<?php echo REPER; ?>lst_ubigeo" name="<?php echo REPER; ?>lst_ubigeo">
+                            <label class="select" id="<?php echo VRECL; ?>cont-ubigeo"> 
+                                <select id="<?php echo VRECL; ?>lst_ubigeo" name="<?php echo VRECL; ?>lst_ubigeo">
                                     <option value="">Seleccionar</option>
                                 </select>
                                 <i></i>
@@ -142,7 +158,7 @@ $grabar = Session::getPermiso("REPERGR");
                         <div class="col col-8">
                             <label class="input"> 
                                 <i class="icon-append fa fa-keyboard-o"></i>
-                                <input type="text" id="<?php echo REPER; ?>txt_direccion" name="<?php echo REPER; ?>txt_direccion">
+                                <input type="text" id="<?php echo VRECL; ?>txt_direccion" name="<?php echo VRECL; ?>txt_direccion">
                                 <b class="tooltip tooltip-top-right"><i class="fa fa-keyboard-o txt-color-teal"></i> <?php echo LABEL_A86M; ?></b>
                             </label>
                         </div>
@@ -154,22 +170,22 @@ $grabar = Session::getPermiso("REPERGR");
                         <div class="col col-8">
                             <label class="input"> 
                                 <i class="icon-append fa fa-keyboard-o"></i>
-                                <input type="text" id="<?php echo REPER; ?>txt_email" name="<?php echo REPER; ?>txt_email">
+                                <input type="text" id="<?php echo VRECL; ?>txt_email" name="<?php echo VRECL; ?>txt_email">
                                 <b class="tooltip tooltip-top-right"><i class="fa fa-keyboard-o txt-color-teal"></i> <?php echo LABEL_A87M; ?></b>
                             </label>
                         </div>
                     </div>
                 </section>
-                <section>
+                <section class="frmpn">
                     <div class="row">
                         <label class="label col col-3"><?php echo LABEL_A88; ?></label>
                         <div class="inline-group col col-8">
                             <label class="radio"> 
-                                <input name="<?php echo REPER; ?>rd_sexo" id="<?php echo REPER; ?>rd_sexoH" checked type="radio" value="H">
+                                <input name="<?php echo VRECL; ?>rd_sexo" id="<?php echo VRECL; ?>rd_sexoH" checked type="radio" value="H">
                                 <i></i>Hombre
                             </label>
                             <label class="radio"> 
-                                <input name="<?php echo REPER; ?>rd_sexo" id="<?php echo REPER; ?>rd_sexoM" type="radio" value="M">
+                                <input name="<?php echo VRECL; ?>rd_sexo" id="<?php echo VRECL; ?>rd_sexoM" type="radio" value="M">
                                 <i></i>Mujer
                             </label>
                         </div>
@@ -181,21 +197,22 @@ $grabar = Session::getPermiso("REPERGR");
                         <div class="col col-8">
                             <label class="input"> 
                                 <i class="icon-append fa fa-keyboard-o"></i>
-                                <input type="text" id="<?php echo REPER; ?>txt_telefonos" name="<?php echo REPER; ?>txt_telefonos">
+                                <input type="text" id="<?php echo VRECL; ?>txt_telefonos" name="<?php echo VRECL; ?>txt_telefonos">
                                 <b class="tooltip tooltip-top-right"><i class="fa fa-keyboard-o txt-color-teal"></i> <?php echo LABEL_A89M; ?></b>
                             </label>
                         </div>
                     </div>
                 </section>
-            </div>   
+            </div> 
             <div class="modal-footer">
+                <div class="foot-obligar"></div>
                 <?php if($grabar["permiso"]):?>
-                <button id="<?php echo REPER; ?>btnGpersona" type="submit" class="<?php echo $grabar['theme'];?>">
-                    <i class="<?php echo $grabar['icono'];?>"></i> <?php echo $grabar['accion']; ?>
+                <button id="<?php echo VRECL; ?>btnGrVcliente" type="submit" class="<?php echo $grabar["theme"]; ?>">
+                    <i class="<?php echo $grabar["icono"]; ?>"></i> <?php echo $grabar["accion"]; ?>
                 </button>
                 <?php endif; ?>
                 <button type="button" class="<?php echo THEME_CLOSE; ?>">
-                    <i class="<?php echo ICON_CLOSE; ?>"></i> <?php echo BTN_CLOSE; ?> 
+                    <i class="<?php echo ICON_CLOSE; ?>"></i> <?php echo BTN_CLOSE; ?>
                 </button>
             </div>
         </div><!-- /.modal-content -->
@@ -204,54 +221,45 @@ $grabar = Session::getPermiso("REPERGR");
 <!-- si no tiene permiso se anula submit desde cualquier input -->
 <?php if(!$grabar["permiso"]): ?>
 <script>
-    simpleScript.noSubmit("#<?php echo REPER; ?>formNewPersona");
+    simpleScript.noSubmit("#<?php echo VRECL; ?>formNewVcliente");
 </script>
 <?php endif; ?>
 <script>
 /*configurar validacion de formulario -- este codigo es de ejemplo*/
-$("#<?php echo REPER; ?>formNewPersona").validate({
+$("#<?php echo VRECL; ?>formNewVcliente").validate({
     // Rules for form validation
-      rules : {
-                <?php echo REPER; ?>txt_nombres : {
+    rules : {
+            <?php echo VRECL; ?>txt_nombres : {
                         required : true,
                         regular: true,
                         minlength: 3
                 },
-                <?php echo REPER; ?>txt_apellidopaterno : {
+                <?php echo VRECL; ?>txt_apellidopaterno : {
                         required : true,
                         regular: true,
                         minlength: 3
                 },
-                <?php echo REPER; ?>txt_apellidomaterno : {
+                <?php echo VRECL; ?>txt_apellidomaterno : {
                         required : true,
                         regular: true,
                         minlength: 3
                 },     
-                <?php echo REPER; ?>lst_departamento : {
-                        required : true
-                },
-                <?php echo REPER; ?>lst_provincia : {
-                        required : true
-                },
-                <?php echo REPER; ?>lst_ubigeo : {
-                        required : true
-                },
-                <?php echo REPER; ?>txt_email : {
-                        required : true,
+                <?php echo VRECL; ?>txt_email : {
                         email: true
                 },
-                <?php echo REPER; ?>txt_nrodocumento:{
+                <?php echo VRECL; ?>txt_nrodocumento : {
+                        required : true,
                         number: true,
                         maxlength: 13
                 }
-        },  
+    },
     // No cambie el código de abajo
     errorPlacement : function(error, element) {
         error.insertAfter(element.parent());
     },
 
     submitHandler: function(){
-        persona.postNewPersona();
+        vcliente.postNewVcliente();
     }   
 });
 </script>
