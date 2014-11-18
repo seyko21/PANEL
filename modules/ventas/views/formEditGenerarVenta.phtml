@@ -99,10 +99,7 @@ $datad = Obj::run()->generarVentaController->getFindVentaD();
                         <div class="col-md-3">
                             <label class="select"> 
                                 <?php                               
-                                    $dataMoneda = Array (
-                                            Array ( 'id' => 'SO', 'descripcion' => MONEDA_1 ),
-                                            Array ( 'id' => 'DO', 'descripcion' => MONEDA_2 )
-                                    );                                   
+                                    $dataMoneda = vproductoController::getMoneda();                              
                                     echo Functions::selectHtml(array(
                                         'data'=>$dataMoneda,
                                         'atributes'=>array(

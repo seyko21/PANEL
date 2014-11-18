@@ -11,6 +11,9 @@ echo Functions::widgetOpen(array(
     'padding' => true,
     'wizard' => true
 ));
+
+$dataCodigo = generarVentaController::getCodigo();
+$codigo = $dataCodigo['cod'];
 ?>
 <div class="row">
     <form id="<?php echo VGEVE; ?>formNewGenerarVenta" name="<?php echo VGEVE; ?>formNewGenerarVenta" novalidate="novalidate">
@@ -62,7 +65,7 @@ echo Functions::widgetOpen(array(
                        <label class="control-label col-md-2" for="prepend"><?php echo VGEVE_7; ?></label>
                        <div class="col-md-2">
                            <div class="input">
-                               <input class="form-control"  type="text" id="<?php echo VGEVE; ?>txt_codImpr" name="<?php echo VGEVE; ?>txt_codImpr" maxlength="7"  >
+                               <input class="form-control"  type="text" id="<?php echo VGEVE; ?>txt_codImpr" name="<?php echo VGEVE; ?>txt_codImpr" maxlength="7" value="<?php echo $codigo;?>"  >
                            </div>
                        </div>
                     </div>
@@ -94,10 +97,7 @@ echo Functions::widgetOpen(array(
                         <div class="col-md-3">
                             <label class="select"> 
                                 <?php                               
-                                    $dataMoneda = Array (
-                                            Array ( 'id' => 'SO', 'descripcion' => MONEDA_1 ),
-                                            Array ( 'id' => 'DO', 'descripcion' => MONEDA_2 )
-                                    );                                   
+                                   $dataMoneda = vproductoController::getMoneda();                           
                                     echo Functions::selectHtml(array(
                                         'data'=>$dataMoneda,
                                         'atributes'=>array(

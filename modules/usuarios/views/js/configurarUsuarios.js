@@ -60,7 +60,13 @@ var configurarUsuarios_ = function(){
                     container: '#widget_'+diccionario.tabs.T4+'usuarios',
                     typeElement: 'button'
                 });
-            }
+                $('#'+diccionario.tabs.T4+'refresh').click(function(){
+                   oTable.fnReloadAjax(oTable.fnSettings());
+                }); 
+            },
+            fnInfoCallback: function( oSettings, iStart, iEnd, iMax, iTotal, sPre ) {
+               return '<button id="'+diccionario.tabs.T4+'refresh" class="btn btn-primary" title="Actualizar"><i class="fa fa-refresh"></i></button> '+iStart +" al "+ iEnd+' de '+iTotal;
+           }
         });
         setup_widgets_desktop();
     };

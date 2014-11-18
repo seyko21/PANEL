@@ -94,13 +94,19 @@ var saldoCliente_ = function(){
                     container: "#widget_"+diccionario.tabs.SACLI,
                     typeElement: "select"
                 });
-            }
+                $('#'+diccionario.tabs.SACLI+'refresh').click(function(){
+                   oTable.fnReloadAjax(oTable.fnSettings());
+                }); 
+            },
+            fnInfoCallback: function( oSettings, iStart, iEnd, iMax, iTotal, sPre ) {
+               return '<button id="'+diccionario.tabs.SACLI+'refresh" class="btn btn-primary" title="Actualizar"><i class="fa fa-refresh"></i></button> '+iStart +" al "+ iEnd+' de '+iTotal;
+           }
         });
         setup_widgets_desktop();
     };
     
     this.publico.getGridIndexSaldoCliente = function (){
-         $('#'+diccionario.tabs.PANP+'gridSaldoCliente').dataTable({
+         var oTable = $('#'+diccionario.tabs.PANP+'gridSaldoCliente').dataTable({
             bProcessing: true,
             bServerSide: true,
             bDestroy: true,
@@ -119,13 +125,21 @@ var saldoCliente_ = function(){
             ],
             aaSorting: [[1, 'desc'],[0, 'asc']],
             sScrollY: "125px",
-            sAjaxSource: _private.config.modulo+'getGridIndexSaldoCliente'            
+            sAjaxSource: _private.config.modulo+'getGridIndexSaldoCliente',
+            fnDrawCallback: function() {
+            $('#'+diccionario.tabs.PANP+'gridSaldoCliente_refresh').click(function(){
+                   oTable.fnReloadAjax(oTable.fnSettings());
+                }); 
+            },
+            fnInfoCallback: function( oSettings, iStart, iEnd, iMax, iTotal, sPre ) {
+               return '<button id="'+diccionario.tabs.PANP+'gridSaldoCliente_refresh" class="btn btn-primary" title="Actualizar"><i class="fa fa-refresh"></i></button> '+iStart +" al "+ iEnd+' de '+iTotal;
+           }
         });
 
     };     
     
     this.publico.getGridIndexSaldoClienteProximo = function (){
-         $('#'+diccionario.tabs.PANP+'gridSaldoCliente').dataTable({
+         var oTable = $('#'+diccionario.tabs.PANP+'gridSaldoCliente').dataTable({
             bProcessing: true,
             bServerSide: true,
             bDestroy: true,
@@ -144,7 +158,16 @@ var saldoCliente_ = function(){
             ],
             aaSorting: [[1, 'desc'],[0, 'asc']],
             sScrollY: "125px",
-            sAjaxSource: _private.config.modulo+'getIndexSaldoClienteProximo'            
+            sAjaxSource: _private.config.modulo+'getIndexSaldoClienteProximo',
+             fnDrawCallback: function() {
+            $('#'+diccionario.tabs.PANP+'gridSaldoCliente_refresh2').click(function(){
+                   oTable.fnReloadAjax(oTable.fnSettings());
+                }); 
+            },
+            fnInfoCallback: function( oSettings, iStart, iEnd, iMax, iTotal, sPre ) {
+               return '<button id="'+diccionario.tabs.PANP+'gridSaldoCliente_refresh2" class="btn btn-primary" title="Actualizar"><i class="fa fa-refresh"></i></button> '+iStart +" al "+ iEnd+' de '+iTotal;
+           }
+            
         });
 
     };        

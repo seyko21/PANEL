@@ -83,7 +83,13 @@ var seguimientoCotizacion_ = function(){
                     container: "#widget_"+diccionario.tabs.SEGCO,
                     typeElement: "select"
                 });
-            }
+                $('#'+diccionario.tabs.SEGCO+'refresh').click(function(){
+                   oTable.fnReloadAjax(oTable.fnSettings());
+                }); 
+            },
+            fnInfoCallback: function( oSettings, iStart, iEnd, iMax, iTotal, sPre ) {
+               return '<button id="'+diccionario.tabs.SEGCO+'refresh" class="btn btn-primary" title="Actualizar"><i class="fa fa-refresh"></i></button> '+iStart +" al "+ iEnd+' de '+iTotal;
+           }
         });
         setup_widgets_desktop();
     };

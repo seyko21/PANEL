@@ -76,14 +76,20 @@ var permisoMunicipal_ = function(){
                     container: '#widget_'+diccionario.tabs.PERMU, //widget del datagrid
                     typeElement: 'button, #'+diccionario.tabs.PERMU+'chk_all'
                 });
-            }
+                $('#'+diccionario.tabs.PERMU+'refresh').click(function(){
+                   oTable.fnReloadAjax(oTable.fnSettings());
+                }); 
+            },
+            fnInfoCallback: function( oSettings, iStart, iEnd, iMax, iTotal, sPre ) {
+               return '<button id="'+diccionario.tabs.PERMU+'refresh" class="btn btn-primary" title="Actualizar"><i class="fa fa-refresh"></i></button> '+iStart +" al "+ iEnd+' de '+iTotal;
+           }
         });        
         setup_widgets_desktop();     
     };
         
      this.publico.getGridPermisoMunicipal = function(){        
         _private.idProducto = simpleScript.getParam(arguments[0]);                        
-        $('#'+diccionario.tabs.PERMU+'gridPermisoMunicipal').dataTable({
+        var oTable = $('#'+diccionario.tabs.PERMU+'gridPermisoMunicipal').dataTable({
             bFilter: false, 
             bProcessing: true,
             bServerSide: true,
@@ -111,7 +117,13 @@ var permisoMunicipal_ = function(){
                     container: '#widget_'+diccionario.tabs.PERMU+'pm', //widget del datagrid
                     typeElement: 'button'
                 });
-            }
+                $('#'+diccionario.tabs.PERMU+'pm_refresh').click(function(){
+                   oTable.fnReloadAjax(oTable.fnSettings());
+                }); 
+            },
+            fnInfoCallback: function( oSettings, iStart, iEnd, iMax, iTotal, sPre ) {
+               return '<button id="'+diccionario.tabs.PERMU+'pm_refresh" class="btn btn-primary" title="Actualizar"><i class="fa fa-refresh"></i></button> '+iStart +" al "+ iEnd+' de '+iTotal;
+           }
         });        
         setup_widgets_desktop();     
         //Ubicacion:

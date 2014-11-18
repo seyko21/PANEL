@@ -59,7 +59,13 @@ var parametro_ = function(){
                     container: '#widget_'+diccionario.tabs.T100, //widget del datagrid
                     typeElement: 'button, #'+diccionario.tabs.T100+'chk_all'
                 });
-            }
+                $('#'+diccionario.tabs.T100+'refresh').click(function(){
+                   oTable.fnReloadAjax(oTable.fnSettings());
+                }); 
+            },
+            fnInfoCallback: function( oSettings, iStart, iEnd, iMax, iTotal, sPre ) {
+               return '<button id="'+diccionario.tabs.T100+'refresh" class="btn btn-primary" title="Actualizar"><i class="fa fa-refresh"></i></button> '+iStart +" al "+ iEnd+' de '+iTotal;
+           }
         });
         setup_widgets_desktop();
     };

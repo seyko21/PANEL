@@ -69,7 +69,13 @@ var fichaTecnica_ = function(){
                     container: '#widget_'+diccionario.tabs.T102, //widget del datagrid
                     typeElement: 'button, #'+diccionario.tabs.T102+'chk_all'
                 });
-            }
+                $('#'+diccionario.tabs.T102+'refresh').click(function(){
+                   oTable.fnReloadAjax(oTable.fnSettings());
+                }); 
+            },
+            fnInfoCallback: function( oSettings, iStart, iEnd, iMax, iTotal, sPre ) {
+               return '<button id="'+diccionario.tabs.T102+'refresh" class="btn btn-primary" title="Actualizar"><i class="fa fa-refresh"></i></button> '+iStart +" al "+ iEnd+' de '+iTotal;
+           }
         });
         setup_widgets_desktop();                
         
@@ -106,7 +112,13 @@ var fichaTecnica_ = function(){
                     container: '#widget_'+diccionario.tabs.T102+'Caratula', //widget del datagrid
                     typeElement: 'img, button, #'+diccionario.tabs.T102+'chk_all'
                 });
-            }
+                $('#'+diccionario.tabs.T102+'Caratula_refresh').click(function(){
+                   oTable.fnReloadAjax(oTable.fnSettings());
+                }); 
+            },
+            fnInfoCallback: function( oSettings, iStart, iEnd, iMax, iTotal, sPre ) {
+               return '<button id="'+diccionario.tabs.T102+'Caratula_refresh" class="btn btn-primary" title="Actualizar"><i class="fa fa-refresh"></i></button> '+iStart +" al "+ iEnd+' de '+iTotal;
+           }
         });
         setup_widgets_desktop();                
         //Ubicacion:

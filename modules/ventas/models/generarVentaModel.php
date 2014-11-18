@@ -289,7 +289,19 @@ class generarVentaModel extends Model{
         $data = $this->queryAll($query,$parms);
         return $data;
     }
-           
+   // Generar Codigo de Impresión
+    public function getGenerarCodigo(){
+        $query = "
+        SELECT
+	CONCAT(LPAD(IF(MAX(RIGHT(`codigo_impresion`,7)) IS NULL = 1,1,(MAX(RIGHT(`codigo_impresion`,7)) + 1)),7,0)) as cod
+        FROM `ven_documento`
+        WHERE `periodo` = YEAR(CURDATE()); ";
+        
+        $parms = array();
+        $data = $this->queryOne($query,$parms);      
+        
+        return $data;
+    }    
     
 }
 

@@ -64,7 +64,13 @@ var registrarVendedor_ = function(){
                     container: '#widget_'+diccionario.tabs.T7, //widget del datagrid
                     typeElement: 'img, button, #'+diccionario.tabs.T7+'chk_all'
                 });
-            }
+                $('#'+diccionario.tabs.T7+'refresh').click(function(){
+                   oTable.fnReloadAjax(oTable.fnSettings());
+                }); 
+            },
+            fnInfoCallback: function( oSettings, iStart, iEnd, iMax, iTotal, sPre ) {
+               return '<button id="'+diccionario.tabs.T7+'refresh" class="btn btn-primary" title="Actualizar"><i class="fa fa-refresh"></i></button> '+iStart +" al "+ iEnd+' de '+iTotal;
+           }
         });
         setup_widgets_desktop();
     };

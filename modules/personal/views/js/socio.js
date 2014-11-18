@@ -74,7 +74,13 @@ var socio_ = function(){
                     container: '#widget_'+diccionario.tabs.TAB_SOCIO, //widget del datagrid
                     typeElement: 'button, #'+diccionario.tabs.TAB_SOCIO+'chk_all'
                 });
-            }
+                $('#'+diccionario.tabs.TAB_SOCIO+'refresh').click(function(){
+                   oTable.fnReloadAjax(oTable.fnSettings());
+                }); 
+            },
+            fnInfoCallback: function( oSettings, iStart, iEnd, iMax, iTotal, sPre ) {
+               return '<button id="'+diccionario.tabs.TAB_SOCIO+'refresh" class="btn btn-primary" title="Actualizar"><i class="fa fa-refresh"></i></button> '+iStart +" al "+ iEnd+' de '+iTotal;
+           }
         });
         setup_widgets_desktop();
     };

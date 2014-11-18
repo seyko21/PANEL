@@ -75,13 +75,19 @@ var panelesAlquilados_ = function(){
                     container: '#widget_'+diccionario.tabs.PAAL, //widget del datagrid
                     typeElement: 'button'
                 });
-            }
+                $('#'+diccionario.tabs.PAAL+'refresh').click(function(){
+                   oTable.fnReloadAjax(oTable.fnSettings());
+                }); 
+            },
+            fnInfoCallback: function( oSettings, iStart, iEnd, iMax, iTotal, sPre ) {
+               return '<button id="'+diccionario.tabs.PAAL+'refresh" class="btn btn-primary" title="Actualizar"><i class="fa fa-refresh"></i></button> '+iStart +" al "+ iEnd+' de '+iTotal;
+           }
         });
         setup_widgets_desktop();
     }; 
     
     this.publico.getGridPAOS = function (){
-         $('#'+diccionario.tabs.PAAL+'gridPAOS').dataTable({
+       var oTable = $('#'+diccionario.tabs.PAAL+'gridPAOS').dataTable({
             bProcessing: true,
             bServerSide: true,
             bDestroy: true,
@@ -104,7 +110,15 @@ var panelesAlquilados_ = function(){
             sAjaxSource: _private.config.modulo+'getGridOrdenServicio',
             fnServerParams: function(aoData) {
                 aoData.push({"name": "_idCaratula", "value": _private.idCaratula});
-            }
+            },
+             fnDrawCallback: function() {
+              $('#'+diccionario.tabs.PAAL+'gridPAOS_refresh').click(function(){
+                   oTable.fnReloadAjax(oTable.fnSettings());
+                }); 
+            },
+            fnInfoCallback: function( oSettings, iStart, iEnd, iMax, iTotal, sPre ) {
+               return '<button id="'+diccionario.tabs.PAAL+'gridPAOS_refresh" class="btn btn-primary" title="Actualizar"><i class="fa fa-refresh"></i></button> '+iStart +" al "+ iEnd+' de '+iTotal;
+           }
         });
         setup_widgets_desktop();
     };
@@ -128,7 +142,7 @@ var panelesAlquilados_ = function(){
     };   
     
     this.publico.getGridIndexPA = function (){
-         $('#'+diccionario.tabs.PANP+'gridPanelAlquilado').dataTable({
+        var oTable = $('#'+diccionario.tabs.PANP+'gridPanelAlquilado').dataTable({
             bProcessing: true,
             bServerSide: true,
             bDestroy: true,
@@ -146,13 +160,21 @@ var panelesAlquilados_ = function(){
             ],
             aaSorting: [[2, 'desc']],
             sScrollY: "125px",
-            sAjaxSource: _private.config.modulo+'getGridIndexPanelAlquilado'            
+            sAjaxSource: _private.config.modulo+'getGridIndexPanelAlquilado',
+            fnDrawCallback: function() {
+              $('#'+diccionario.tabs.PAAL+'gridPanelAlquilado_refresh').click(function(){
+                   oTable.fnReloadAjax(oTable.fnSettings());
+                }); 
+            },
+            fnInfoCallback: function( oSettings, iStart, iEnd, iMax, iTotal, sPre ) {
+               return '<button id="'+diccionario.tabs.PAAL+'gridPanelAlquilado_refresh" class="btn btn-primary" title="Actualizar"><i class="fa fa-refresh"></i></button> '+iStart +" al "+ iEnd+' de '+iTotal;
+           }
         });
 
     }; 
     
     this.publico.getGridIndexPAS = function (){
-         $('#'+diccionario.tabs.PANP+'gridPanelAlquilado').dataTable({
+        var oTable = $('#'+diccionario.tabs.PANP+'gridPanelAlquilado').dataTable({
             bProcessing: true,
             bServerSide: true,
             bDestroy: true,
@@ -170,7 +192,15 @@ var panelesAlquilados_ = function(){
             ],
             aaSorting: [[2, 'desc']],
             sScrollY: "125px",
-            sAjaxSource: _private.config.modulo+'getGridIndexPanelAlquiladoSocio'            
+            sAjaxSource: _private.config.modulo+'getGridIndexPanelAlquiladoSocio',
+             fnDrawCallback: function() {
+              $('#'+diccionario.tabs.PAAL+'gridPanelAlquilado_refresh').click(function(){
+                   oTable.fnReloadAjax(oTable.fnSettings());
+                }); 
+            },
+            fnInfoCallback: function( oSettings, iStart, iEnd, iMax, iTotal, sPre ) {
+               return '<button id="'+diccionario.tabs.PAAL+'gridPanelAlquilado_refresh" class="btn btn-primary" title="Actualizar"><i class="fa fa-refresh"></i></button> '+iStart +" al "+ iEnd+' de '+iTotal;
+           }
         });
 
     };     

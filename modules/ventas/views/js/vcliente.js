@@ -73,7 +73,7 @@ var vcliente_ = function(){
                     container: "#widget_"+diccionario.tabs.VRECL,
                     typeElement: "button"
                 });
-                 $('#'+diccionario.tabs.VRECL+'refresh').click(function(){
+                $('#'+diccionario.tabs.VRECL+'refresh').click(function(){
                    oTable.fnReloadAjax(oTable.fnSettings());
                 }); 
             },

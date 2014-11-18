@@ -79,14 +79,20 @@ var saldoCobrar_ = function(){
                     container: "#widget_"+diccionario.tabs.SACOB,
                     typeElement: "button"
                 });
-            }
+                $('#'+diccionario.tabs.SACOB+'refresh').click(function(){
+                   oTable.fnReloadAjax(oTable.fnSettings());
+                }); 
+            },
+            fnInfoCallback: function( oSettings, iStart, iEnd, iMax, iTotal, sPre ) {
+               return '<button id="'+diccionario.tabs.SACOB+'refresh" class="btn btn-primary" title="Actualizar"><i class="fa fa-refresh"></i></button> '+iStart +" al "+ iEnd+' de '+iTotal;
+           }
         });
         setup_widgets_desktop();
     };
     
     this.publico.getGridIndexSaldoCobrar = function (){
 
-        $("#"+diccionario.tabs.PANP+"gridSaldoCobrar").dataTable({
+        var oTable = $("#"+diccionario.tabs.PANP+"gridSaldoCobrar").dataTable({
             bProcessing: true,
             bServerSide: true,
             bDestroy: true,
@@ -105,7 +111,15 @@ var saldoCobrar_ = function(){
             ],
             aaSorting: [[0, "asc"]],
             sScrollY: "125px",
-            sAjaxSource: _private.config.modulo+"getGridIndexSaldoCobrar"           
+            sAjaxSource: _private.config.modulo+"getGridIndexSaldoCobrar",
+            fnDrawCallback: function() {
+            $('#'+diccionario.tabs.PANP+'gridSaldoCobrar_refresh').click(function(){
+                   oTable.fnReloadAjax(oTable.fnSettings());
+                }); 
+            },
+            fnInfoCallback: function( oSettings, iStart, iEnd, iMax, iTotal, sPre ) {
+               return '<button id="'+diccionario.tabs.PANP+'gridSaldoCobrar_refresh" class="btn btn-primary" title="Actualizar"><i class="fa fa-refresh"></i></button> '+iStart +" al "+ iEnd+' de '+iTotal;
+           }
         });
     };    
     

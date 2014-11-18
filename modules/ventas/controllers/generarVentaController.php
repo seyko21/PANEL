@@ -10,7 +10,8 @@
 class generarVentaController extends Controller{
 
     public function __construct() {
-        $this->loadModel("generarVenta");
+        $this->loadModel(array('modulo'=>'ventas','modelo'=>'generarVenta'));
+        $this->loadController(array('modulo'=>'ventas','controller'=>'vproducto')); 
     }
     
     public function index(){ 
@@ -22,9 +23,9 @@ class generarVentaController extends Controller{
     }
     
     public function getGridGenerarVenta(){
-       $editar = Session::getPermiso('VGEVEED');
        $exportarpdf   = Session::getPermiso('VGEVEEP');
        $exportarexcel = Session::getPermiso('VGEVEEX');
+       $clonar         = Session::getPermiso('VGEVECL');
        
        $sEcho          =   $this->post('sEcho');
         
@@ -71,12 +72,12 @@ class generarVentaController extends Controller{
                  * se verifica si tiene permisos para editar
                  */
                 $sOutput .= '"<div class=\"btn-group\">';                      
-                       
-                if($editar['permiso'] == 1 && $aRow['estado'] == 'E'){
-                    $sOutput .= '<button type=\"button\" class=\"'.$editar['theme'].'\" title=\"'.$editar['accion'].'\" onclick=\"generarVenta.getFormEditarGenerarVenta(this,\''.$encryptReg.'\')\">';
-                    $sOutput .= '    <i class=\"'.$editar['icono'].'\"></i>';
+                                       
+                if($clonar['permiso'] && $aRow['estado'] == 'E'){
+                    $sOutput .= '<button type=\"button\" class=\"'.$clonar['theme'].'\" title=\"'.$clonar['accion'].'\" onclick=\"generarVenta.getFormEditarGenerarVenta(this,\''.$encryptReg.'\')\">';
+                    $sOutput .= '    <i class=\"'.$clonar['icono'].'\"></i>';
                     $sOutput .= '</button>';
-                }                 
+                }
                 if($exportarpdf['permiso'] == 1){
                     $sOutput .= '<button type=\"button\" class=\"'.$exportarpdf['theme'].'\" title=\"'.$exportarpdf['accion'].'\" onclick=\"generarVenta.postPDF(this,\''.$encryptReg.'\',\''.$aRow['codigo_impresion'].'\')\">';
                     $sOutput .= '    <i class=\"'.$exportarpdf['icono'].'\"></i>';
@@ -317,7 +318,13 @@ class generarVentaController extends Controller{
         $data = Obj::run()->generarVentaModel->getFindVentaD();
         
         return $data;
-    }      
+    }
+    
+    public static function getCodigo(){ 
+        $data = Obj::run()->generarVentaModel->getGenerarCodigo();        
+        return $data;
+    }       
+
 }
 
 ?>

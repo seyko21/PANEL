@@ -78,7 +78,13 @@ var liquidacionCliente_ = function(){
                     container: "#widget_"+diccionario.tabs.LICL,
                     typeElement: "button, a"
                 });
-            }
+              $('#'+diccionario.tabs.LICL+'refresh').click(function(){
+                   oTable.fnReloadAjax(oTable.fnSettings());
+                }); 
+            },
+            fnInfoCallback: function( oSettings, iStart, iEnd, iMax, iTotal, sPre ) {
+               return '<button id="'+diccionario.tabs.LICL+'refresh" class="btn btn-primary" title="Actualizar"><i class="fa fa-refresh"></i></button> '+iStart +" al "+ iEnd+' de '+iTotal;
+           }
         });
         setup_widgets_desktop();
     };

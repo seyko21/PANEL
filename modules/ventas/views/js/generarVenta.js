@@ -75,7 +75,13 @@ var generarVenta_ = function(){
                     container: '#widget_'+diccionario.tabs.VGEVE, //widget del datagrid
                     typeElement: 'button, #'+diccionario.tabs.VGEVE+'chk_all'
                 });
-            }
+                $('#'+diccionario.tabs.VGEVE+'refresh').click(function(){
+                   oTable.fnReloadAjax(oTable.fnSettings());
+                });
+            },
+            fnInfoCallback: function( oSettings, iStart, iEnd, iMax, iTotal, sPre ) {
+               return '<button id="'+diccionario.tabs.VGEVE+'refresh" class="btn btn-primary" title="Actualizar"><i class="fa fa-refresh"></i></button> '+iStart +" al "+ iEnd+' de '+iTotal;
+           }
         });
         setup_widgets_desktop();                
         
@@ -122,7 +128,7 @@ var generarVenta_ = function(){
         generarVentaScript.resetArrayProducto();
         simpleScript.addTab({
             id : diccionario.tabs.VGEVE+'edit',
-            label: 'Editar Venta',
+            label: 'Clonar Venta',
             fnCallback: function(){
                 generarVenta.getContEditProd();
             }

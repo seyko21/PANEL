@@ -45,7 +45,7 @@ var regInversion_ = function(){
     };
     
     this.publico.getGridSocio = function (){
-      $('#'+diccionario.tabs.REINV+'gridSocio').dataTable({
+      var oTable = $('#'+diccionario.tabs.REINV+'gridSocio').dataTable({
             bProcessing: true,
             bServerSide: true,
             bDestroy: true,
@@ -71,7 +71,13 @@ var regInversion_ = function(){
                     container: '#widget_'+diccionario.tabs.REINV, //widget del datagrid
                     typeElement: 'button, #'+diccionario.tabs.REINV+'chk_all'
                 });
-            }
+                $('#'+diccionario.tabs.REINV+'refresh').click(function(){
+                   oTable.fnReloadAjax(oTable.fnSettings());
+                }); 
+            },
+            fnInfoCallback: function( oSettings, iStart, iEnd, iMax, iTotal, sPre ) {
+               return '<button id="'+diccionario.tabs.REINV+'refresh" class="btn btn-primary" title="Actualizar"><i class="fa fa-refresh"></i></button> '+iStart +" al "+ iEnd+' de '+iTotal;
+           }
         });
         setup_widgets_desktop();
     };
@@ -80,7 +86,7 @@ var regInversion_ = function(){
         _private.idSocio = id;
         _private.nameSocio = cl;
         
-        $('#'+diccionario.tabs.REINV+'gridInversion').dataTable({
+       var oTable = $('#'+diccionario.tabs.REINV+'gridInversion').dataTable({
             bProcessing: true,
             bServerSide: true,
             bDestroy: true,

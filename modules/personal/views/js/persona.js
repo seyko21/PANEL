@@ -72,7 +72,13 @@ var persona_ = function(){
                     container: '#widget_'+diccionario.tabs.REPER, //widget del datagrid
                     typeElement: 'button, #'+diccionario.tabs.REPER+'chk_all'
                 });
-            }
+                 $('#'+diccionario.tabs.REPER+'refresh').click(function(){
+                   oTable.fnReloadAjax(oTable.fnSettings());
+                }); 
+            },
+            fnInfoCallback: function( oSettings, iStart, iEnd, iMax, iTotal, sPre ) {
+               return '<button id="'+diccionario.tabs.REPER+'refresh" class="btn btn-primary" title="Actualizar"><i class="fa fa-refresh"></i></button> '+iStart +" al "+ iEnd+' de '+iTotal;
+           }
         });
         setup_widgets_desktop();
     };

@@ -95,7 +95,13 @@ var misInversiones_ = function(){
                     container: "#widget_"+diccionario.tabs.MIINV,
                     typeElement: "select"
                 });
-            }
+                $('#'+diccionario.tabs.MIINV+'refresh').click(function(){
+                   oTable.fnReloadAjax(oTable.fnSettings());
+                }); 
+            },
+            fnInfoCallback: function( oSettings, iStart, iEnd, iMax, iTotal, sPre ) {
+               return '<button id="'+diccionario.tabs.MIINV+'refresh" class="btn btn-primary" title="Actualizar"><i class="fa fa-refresh"></i></button> '+iStart +" al "+ iEnd+' de '+iTotal;
+           }
         });
         setup_widgets_desktop();
     };
