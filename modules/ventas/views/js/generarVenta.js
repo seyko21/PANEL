@@ -193,11 +193,30 @@ var generarVenta_ = function(){
     
     
     this.publico.postNewGenerarVenta = function(f){
+        var acuenta = $('#'+diccionario.tabs.VGEVE+'txt_pago').val();
+        if(totalPagado <= 0){
+             simpleScript.notify.warning({
+                        content: 'El total a pagar no debe ser Cero'
+             });
+             return false;
+         }else if(parseFloat(totalPagado) < acuenta){
+            simpleScript.notify.warning({
+                        content: 'El pago inicial sobrepasa el pago Total.'
+             });
+             return false;          
+        }else if(acuenta < pago ){
+            simpleScript.notify.warning({
+                        content: 'El pago inicial debe ser mayor al 50% ('+pago.toFixed(2)+')'
+             });
+             return false;  
+        }
+                         
         simpleAjax.send({
+            flag: f,
             element: "#"+diccionario.tabs.VGEVE+"btnGrVenta",
             root: _private.config.modulo + "postNewGenerarVenta",
             form: "#"+diccionario.tabs.VGEVE+"formNewGenerarVenta",
-            data: '&_flag='+f+'&_idVenta='+_private.idVenta,
+            data: '&_idVenta='+_private.idVenta,
             clear: true,
             fnCallback: function(data) {
                 if(!isNaN(data.result) && parseInt(data.result) === 1){

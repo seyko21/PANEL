@@ -19,6 +19,7 @@ class generarVentaModel extends Model{
     private $_fecha;
     private $_idProducto;
     private $_montoTotal;
+    private $_montoAsignado;
     private $_observacion;
     private $_codImpr;
     private $_idPersona;
@@ -55,6 +56,7 @@ class generarVentaModel extends Model{
         $this->_moneda     = Formulario::getParam(VGEVE."lst_moneda");
         $this->_tipoDoc     = Formulario::getParam(VGEVE."lst_tipoDoc");
         $this->_tipoMov     = 'I';
+        $this->_montoAsignado     = Functions::deleteComa(Formulario::getParam(VGEVE."txt_pago"));
         
         $this->_idProducto     = Formulario::getParam(VGEVE."hhddIdProducto"); #array
         $this->_cantidad1     = Formulario::getParam(VGEVE."txt_cantidad1");#array
@@ -102,6 +104,11 @@ class generarVentaModel extends Model{
     }
     
     public function newGenerarVenta(){
+        if($this->_flag == 3){//cuando se clona una cotizacion, hay q anularla
+            $this->anularUnaVenta();
+            $this->_flag = 1; //retorna a 1 para ael SP
+        }
+                
         $query = "CALL sp_ventaGenerarVentaMantenimiento("
                 . ":flag,"
                 . ":idVenta,"
@@ -117,33 +124,12 @@ class generarVentaModel extends Model{
                 . ":cant1,"
                 . ":cant2,"
                 . ":precio,"
+                . ":pago,"
                 . ":usuario"
             . "); ";
-        
-        /*si flag == 2, se elimina detalle para editar*/
-        if($this->_flag == 3){
-            $parms = array(
-                ':flag'=> 3,
-                ':idVenta'=> $this->_idVenta,
-                ':codigoImpr'=>'',
-                ':fecha'=>'',
-                ':nombre'=>'',
-                ':moneda'=>'',
-                ':montoTotal'=>'',
-                ':tipoDoc' => '',
-                ':obs' => '',
-                ':tipoMov' => '',
-                ':idProducto' => '',
-                ':cant1' => '',                
-                ':cant2' => '',
-                ':precio' => '',
-                ':usuario'=> $this->_usuario
-            );
-            $data = $this->execute($query,$parms);
-        }
-        
+               
         $parms = array(
-            ':flag'=> 1,
+            ':flag'=> $this->_flag,
             ':idVenta'=> $this->_idVenta,
             ':codigoImpr'=>$this->_codImpr,
             ':fecha'=>$this->_fecha,
@@ -157,6 +143,7 @@ class generarVentaModel extends Model{
             ':cant1' => '',                
             ':cant2' => '',
             ':precio' => '',
+            ':pago'=>$this->_montoAsignado,
             ':usuario'=> $this->_usuario
         );
         $data = $this->queryOne($query,$parms);
@@ -180,7 +167,8 @@ class generarVentaModel extends Model{
                     ':idProducto' => AesCtr::de($idProducto),
                     ':cant1' => Functions::deleteComa($this->_cantidad1[$key]),                
                     ':cant2' => Functions::deleteComa($this->_cantidad2[$key]),
-                    ':precio'=> Functions::deleteComa($this->_precio[$key]),                                       
+                    ':precio'=> Functions::deleteComa($this->_precio[$key]),
+                    ':pago'=>'',
                     ':usuario'=> $this->_usuario
                 );
                 $this->execute($query,$parmsx);
@@ -190,7 +178,15 @@ class generarVentaModel extends Model{
         $datax = array('result'=>1);
         return $datax;
     }
-      
+
+    private function anularUnaVenta(){
+        $query = "call sp_ventaAnulacion(:idVenta);";
+        $parms = array(
+             ':idVenta' => $this->_idVenta           
+        );
+        $this->execute($query,$parms);
+    }
+    
     public function anularGenerarVentaAll(){
         foreach ($this->_chkdel as $value) {
             $query = "UPDATE ven_documento SET estado = 'A' WHERE id_docventa = :idVenta; ";

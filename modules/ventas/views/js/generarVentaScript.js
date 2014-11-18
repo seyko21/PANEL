@@ -150,8 +150,6 @@ var generarVentaScript_ = function(){
                 }
             });
             
-            
-            
             /*keyup para Cantidad 2*/
             $(this).find('td:eq(3)').find('input:text').keyup(function(){
                 if(isNaN($(this).val()) || $(this).val() <= 0 ){
@@ -175,7 +173,6 @@ var generarVentaScript_ = function(){
                     generarVentaScript.calculoTotal();
                 }
             });
-            
             
             /*keyup para precio*/
             $(this).find('td:eq(5)').find('input:text').keyup(function(){

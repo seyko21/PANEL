@@ -281,6 +281,8 @@ define('VGEVE_20','Precio');
 define('VGEVE_21','Buscar...');
 define('VGEVE_22','Cantidad');
 define('VGEVE_23','Click aquí para generar Venta');
+define('VGEVE_24','Total a Pagar');
+define('VGEVE_25','A cuenta');
 
 define('VGEVETAB1','Información General');
 define('VGEVETAB2','Listado de Productos');

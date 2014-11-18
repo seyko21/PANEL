@@ -175,7 +175,25 @@ $codigo = $dataCodigo['cod'];
                 <!--INICIO TAB3-->
                 <div class="tab-pane form-horizontal" id="<?php echo VGEVE; ?>tab3">
                     <br>
-                    <h3><strong><?php echo LABEL_GNC23; ?></strong><?php echo LABEL_GNC24; ?></h3>
+                    <h3><strong><?php echo LABEL_GNC23; ?></strong><?php echo  LABEL_GNC24; ?></h3>
+                    
+                    <div class="form-group">
+                       <label class="control-label col-md-2" for="prepend"><?php echo VGEVE_24; ?></label>
+                       <div class="col-md-2">
+                           <div class="input">
+                               <input style="text-align: right" class="form-control"  type="text" id="<?php echo VGEVE; ?>txt_totalPago" name="<?php echo VGEVE; ?>txt_totalPago" readonly  >
+                           </div>
+                       </div>
+                    </div>
+                    
+                    <div class="form-group">
+                       <label class="control-label col-md-2" for="prepend"><?php echo VGEVE_25; ?></label>
+                       <div class="col-md-2">
+                           <div class="input">
+                               <input style="text-align: right" class="form-control"  type="text" id="<?php echo VGEVE; ?>txt_pago" name="<?php echo VGEVE; ?>txt_pago"   >
+                           </div>
+                       </div>
+                    </div>
                     
                     <div class="form-group">
                         <label class="control-label col-md-2" for="prepend"><?php echo LABEL_GNC25; ?></label>
@@ -187,7 +205,7 @@ $codigo = $dataCodigo['cod'];
                     </div>
                     
                     <h4 class="text-center">
-                        <button id="<?php echo VGEVE; ?>btnGrVenta" type="button" class="btn btn-success btn-large" onclick="generarVenta.postNewGenerarVenta();">    
+                        <button id="<?php echo VGEVE; ?>btnGrVenta" type="button" class="btn btn-success btn-large" onclick="generarVenta.postNewGenerarVenta(1);">    
                             <i class="fa fa-plus-circle fa-lg"></i>
                             <?php echo VGEVE_23; ?>
                         </button>
@@ -224,6 +242,8 @@ $codigo = $dataCodigo['cod'];
             
         </div>
 <script>
+    var totalPagado = 0;
+    var pago = 0;
         simpleScript.setEvent.date({
             element: '#<?php echo VGEVE; ?>txt_fecha' 
         });
@@ -248,7 +268,7 @@ $codigo = $dataCodigo['cod'];
                     <?php echo VGEVE; ?>txt_fecha: {
                         required: true,
                         date: true
-                    }      
+                    }        
                 },
                 highlight: function(element) {
                     $(element).closest('.form-group').removeClass('has-success').addClass('has-error');
@@ -293,19 +313,24 @@ $codigo = $dataCodigo['cod'];
                         var pr = 0;
                         var r = simpleScript.validaTable({
                             id: '#'+diccionario.tabs.VGEVE+'gridProductos',
-                            msn: mensajes.MSG_10,
-                            fnCallback: function(){                                         
-                                var collection = $('#'+diccionario.tabs.VGEVE+'gridProductos').find('tbody tr td');
-                                $.each(collection,function(){
-                                    var precio = 0;
-                                    precio = $('#'+diccionario.tabs.VGEVE+'gridProductos').find('td:eq(5)').find('input:text').val();                                                                       
-                                    if(precio === 0){                                                                    
-                                        pr = pr + 1;                                      
-                                    }
-                                });                                
-                            }
+                            msn: mensajes.MSG_10
                         });
                         
+                        //Validar que precios no sean 0                      
+                          $('#'+diccionario.tabs.VGEVE+'gridProductos tbody tr').each(function (index) {
+                                var precio;
+                                $(this).children("td").each(function (index2) {
+                                  switch (index2) {
+                                      case 6:
+                                          precio = $(this).text();
+                                           if(parseFloat(precio) <= 0 || isNaN(parseFloat(precio)) ){   
+                                                pr = pr + 1;                                      
+                                            }
+                                          break;      
+                                  }
+                              })
+                          });
+                                          
                         if (pr > 0){
                             simpleScript.notify.warning({
                                 content: 'El precio que ingreso es menor o igual que CERO (0.00)'
@@ -317,6 +342,14 @@ $codigo = $dataCodigo['cod'];
                             /*marca el paso como completado*/
                             $('#<?php echo VGEVE; ?>bootstrap-wizard-1').find('.form-wizard').children('li').eq(index - 1).addClass('complete');
                             $('#<?php echo VGEVE; ?>bootstrap-wizard-1').find('.form-wizard').children('li').eq(index - 1).find('.step').html('<i class="fa fa-check"></i>');
+                            //Poner valor total:
+                            totalPagado = $('#'+diccionario.tabs.VGEVE+'txt_total').val();
+                            $('#'+diccionario.tabs.VGEVE+'txt_totalPago').val(parseFloat(totalPagado).toFixed(2));
+                            if (totalPagado > 0){
+                                pago = parseFloat(totalPagado) * 0.5;
+                                $('#'+diccionario.tabs.VGEVE+'txt_pago').val(parseFloat(pago).toFixed(2));
+                            }
+                            
                         }
                     }
                     

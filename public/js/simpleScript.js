@@ -249,7 +249,12 @@ var simpleScript_ = function(){
                 prevText: '<i class="fa fa-chevron-left"></i>',
                 nextText: '<i class="fa fa-chevron-right"></i>',
                 changeMonth: true,
-                changeYear: true
+                changeYear: true,
+                beforeShow: function() {
+                    setTimeout(function(){
+                        $('.ui-datepicker').css('z-index', 99999999999999);
+                    }, 0);
+                }
             });
             $(obj.element).mask('99/99/9999');
         },
@@ -262,6 +267,11 @@ var simpleScript_ = function(){
                 numberOfMonths: 1,
                 onClose: function( selectedDate ) {
                     $(obj.fin).datepicker( "option", obj.opt, selectedDate );
+                },
+                beforeShow: function() {
+                    setTimeout(function(){
+                        $('.ui-datepicker').css('z-index', 99999999999999);
+                    }, 0);
                 }
             });
             $(obj.ini).mask('99/99/9999');

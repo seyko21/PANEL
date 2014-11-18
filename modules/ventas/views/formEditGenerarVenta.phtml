@@ -52,10 +52,10 @@ $datad = Obj::run()->generarVentaController->getFindVentaD();
                                 <input class="form-control" type="text" id="<?php echo VGEVE; ?>txt_cliente" name="<?php echo VGEVE; ?>txt_cliente" value="<?php echo $datac['cliente'];?>" readonly>
                                 <span class="input-group-btn">
                                     <?php if ($buscar['permiso']): ?>
-                                        <button class="<?php echo $buscar['theme'];?>" type="button" onclick="generarVenta.getFormBuscarCliente(this, '<?php echo VGEVE; ?>');"><i class="<?php echo $buscar['icono'];?>"></i> <?php echo $buscar['accion'];?></button>
+                                        <button class="<?php echo $buscar['theme'];?>" type="button" disabled><i class="<?php echo $buscar['icono'];?>"></i> <?php echo $buscar['accion'];?></button>
                                     <?php endif; ?>
                                      <?php if($nuevo['permiso']): ?>
-                                        <button id="<?php echo VGEVE; ?>newCliente" type="button" onclick="vcliente.getFormNewVcliente(this,'<?php echo VGEVE; ?>');" class="<?php echo $nuevo['theme'];?>" title="Nuevo Cliente">
+                                        <button id="<?php echo VGEVE; ?>newCliente" type="button"  class="<?php echo $nuevo['theme'];?>" title="Nuevo Cliente" disabled>
                                              <i class="<?php echo $nuevo['icono'];?>"></i> <?php echo $nuevo['accion'];?>
                                         </button>
                                         <?php endif; ?>    
@@ -211,7 +211,23 @@ $datad = Obj::run()->generarVentaController->getFindVentaD();
                 <div class="tab-pane form-horizontal" id="<?php echo VGEVE; ?>tab3">
                     <br>
                     <h3><strong><?php echo LABEL_GNC23; ?></strong><?php echo LABEL_GNC24; ?></h3>
+                    <div class="form-group">
+                       <label class="control-label col-md-2" for="prepend"><?php echo VGEVE_24; ?></label>
+                       <div class="col-md-2">
+                           <div class="input">
+                               <input style="text-align: right" class="form-control"  type="text" id="<?php echo VGEVE; ?>txt_totalPago" name="<?php echo VGEVE; ?>txt_totalPago" readonly  >
+                           </div>
+                       </div>
+                    </div>
                     
+                    <div class="form-group">
+                       <label class="control-label col-md-2" for="prepend"><?php echo VGEVE_25; ?></label>
+                       <div class="col-md-2">
+                           <div class="input">
+                               <input style="text-align: right" class="form-control"  type="text" id="<?php echo VGEVE; ?>txt_pago" name="<?php echo VGEVE; ?>txt_pago"   >
+                           </div>
+                       </div>
+                    </div>
                     <div class="form-group">
                         <label class="control-label col-md-2" for="prepend"><?php echo LABEL_GNC25; ?></label>
                         <div class="col-md-9">
@@ -326,22 +342,26 @@ $datad = Obj::run()->generarVentaController->getFindVentaD();
                                 .html('<i class="fa fa-check"></i>');
                     }
                     if(index === 2){
-                        var pr = true;
+                        var pr = 0;
                         var r = simpleScript.validaTable({
                             id: '#'+diccionario.tabs.VGEVE+'gridProductos',
-                            msn: mensajes.MSG_10,
-                            fnCallback: function(){                                         
-                                var collection = $('#'+diccionario.tabs.VGEVE+'gridProductos').find('tbody tr td');
-                                $.each(collection,function(){
-                                    var precio = $('#'+diccionario.tabs.VGEVE+'gridProductos').find('td:eq(5)').find('input:text').val();
-                                    /*solo ingresa una sola vez*/
-                                    if(precio <= 0){                                                                    
-                                        pr = false;
-                                    }
-                                });                                
-                            }
+                            msn: mensajes.MSG_10                                                       
                         });
-                        if (pr == false){
+                        //Validar que precios no sean 0                      
+                          $('#'+diccionario.tabs.VGEVE+'gridProductos tbody tr').each(function (index) {
+                                var precio;
+                                $(this).children("td").each(function (index2) {
+                                  switch (index2) {
+                                      case 6:
+                                          precio = $(this).text();
+                                           if(parseFloat(precio) <= 0 || isNaN(parseFloat(precio)) ){   
+                                                pr = pr + 1;                                      
+                                            }
+                                          break;      
+                                  }
+                              })
+                          });
+                        if (pr > 0){
                             simpleScript.notify.warning({
                                 content: 'El precio que ingreso es menor o igual que CERO (0.00)'
                             }); 
@@ -354,6 +374,13 @@ $datad = Obj::run()->generarVentaController->getFindVentaD();
                                     'complete');
                             $('#<?php echo VGEVE; ?>bootstrap-wizard-1').find('.form-wizard').children('li').eq(index - 1).find('.step')
                                     .html('<i class="fa fa-check"></i>');
+                            //Poner valor total:
+                            totalPagado = $('#'+diccionario.tabs.VGEVE+'txt_total').val();
+                            $('#'+diccionario.tabs.VGEVE+'txt_totalPago').val(parseFloat(totalPagado).toFixed(2));
+                            if (totalPagado > 0){
+                                pago = parseFloat(totalPagado) * 0.5;
+                                $('#'+diccionario.tabs.VGEVE+'txt_pago').val(parseFloat(pago).toFixed(2));
+                            }
                         }
                     }
                     
