@@ -77,7 +77,7 @@ class generarVentaModel extends Model{
     }
     
     public function getGridGenerarVenta(){
-        $aColumns       =   array( 'chk','codigo_impresion','nombre_descripcion','tipo_doc','fecha','moneda','monto_total','estado'); //para la ordenacion y pintado en html
+        $aColumns       =   array( 'chk','codigo_impresion','nombre_descripcion','tipo_doc','fecha','moneda','monto_total', 'monto_saldo','estado'); //para la ordenacion y pintado en html
         /*
 	 * Ordenando, se verifica por que columna se ordenara
 	 */

@@ -304,4 +304,15 @@ define ('VRECL_5','Razon social');
 define ('VRECL_6','N° Documento');
 define ('VRECL_6M','Ingrese N° de Documento: RUC o DNI');
 
+/*----------------------Registrar Pago de venta----------------------*/
+define ('VSEVE_1','Seguimiento de Venta');
+define ('VSEVE_2','Pagar Saldo de Cliente');
+define ('VSEVE_3','Fecha');
+define ('VSEVE_3M','Ingrese la Fecha de pago');
+define ('VSEVE_4','Saldo');
+define ('VSEVE_4M','Ingrese el Saldo a pagar');
+
+
+
+
 ?>

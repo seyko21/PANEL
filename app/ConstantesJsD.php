@@ -37,7 +37,8 @@
         VUNID: '<?php echo VUNID; ?>',
         VPROD: '<?php echo VPROD; ?>',
         VGEVE: '<?php echo VGEVE; ?>',
-        VRECL: '<?php echo VRECL; ?>'
+        VRECL: '<?php echo VRECL; ?>',
+        VSEVE: '<?php echo VSEVE; ?>'
     }
 };
 </script>

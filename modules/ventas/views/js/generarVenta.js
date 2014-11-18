@@ -55,16 +55,17 @@ var generarVenta_ = function(){
             iDisplayLength: 10,            
             aoColumns: [
                 {sTitle: "<input type='checkbox' id='"+diccionario.tabs.VGEVE+"chk_all' onclick='simpleScript.checkAll(this,\"#"+diccionario.tabs.VGEVE+"gridGenerarVenta\");'>", sWidth: "1%", sClass: "center", bSortable: false},                
-                {sTitle: "Código", sWidth: "10%"},
+                {sTitle: "Código", sWidth: "7%"},
                 {sTitle: "Cliente", sWidth: "20%"},
                 {sTitle: "Tipo Doc", sWidth: "8%"},
                 {sTitle: "Fecha", sWidth: "10%",  sClass: "center"},
                 {sTitle: "Moneda", sWidth: "7%"},                                
-                {sTitle: "Total", sWidth: "15%",  sClass: "right"},           
-                {sTitle: "Estado", sWidth: "10%",  sClass: "center"},
-                {sTitle: "Acciones", sWidth: "15%", sClass: "center", bSortable: false}
+                {sTitle: "Total", sWidth: "11%",  sClass: "right"},  
+                {sTitle: "Saldo", sWidth: "11%",  sClass: "right"},
+                {sTitle: "Estado", sWidth: "8%",  sClass: "center"},
+                {sTitle: "Acciones", sWidth: "10%", sClass: "center", bSortable: false}
             ],
-            aaSorting: [[1, 'desc']],
+            aaSorting: [[4, 'desc'],[1, 'desc']],
             sScrollY: "350px",
             sAjaxSource: _private.config.modulo+'getGridGenerarVenta',
             fnDrawCallback: function() {

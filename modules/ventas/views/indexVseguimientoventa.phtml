@@ -1,0 +1,28 @@
+<?php 
+/*
+* ---------------------------------------
+* --------- CREATED BY CREATOR ----------
+* fecha: 18-11-2014 17:11:41 
+* Descripcion : indexVseguimientoventa.phtml
+* ---------------------------------------
+*/
+
+echo Functions::widgetOpen(array(
+        "id"=>VSEVE,
+        "title"=>VSEVE_1
+    )); 
+?>
+
+    <div class="widget-body-toolbar"></div>
+    <div class="dataTables_wrapper form-inline" role="grid">
+        <div class="dt-top-row">
+            <div class="DTTT btn-group">                
+              
+            </div>
+        </div>
+
+    </div>
+    <form id="<?php echo VSEVE; ?>formGridVseguimientoventa" name="<?php echo VSEVE; ?>formGridVseguimientoventa" onsubmit="return false"  >
+        <table id="<?php echo VSEVE; ?>gridVseguimientoventa" class="table table-striped table-hover table-condensed" style="width:100%"></table>
+    </form>
+<?php echo Functions::widgetClose(); ?>

@@ -61,11 +61,10 @@ class generarVentaController extends Controller{
                     case 'R': $tipoDoc = 'Recibo';break;                                                                     
                 }
                 $nombre = $aRow['nombre_descripcion'];
-                if ($nombre == '') $nombre = '- Sin Descripción -';
                     
-                
+                $saldo = number_format($aRow['monto_saldo'],2);
                 /*datos de manera manual*/
-                $sOutput .= '["'.$chk.'","'.$aRow['codigo_impresion'].'","'.$nombre.'","'.$tipoDoc.'","'.  Functions::cambiaf_a_normal($aRow['fecha']).'","'.$aRow['moneda'].'","'.number_format($aRow['monto_total'],2).'","'.$estado.'", ';
+                $sOutput .= '["'.$chk.'","'.$aRow['codigo_impresion'].'","'.$nombre.'","'.$tipoDoc.'","'.  Functions::cambiaf_a_normal($aRow['fecha']).'","'.$aRow['moneda'].'","'.number_format($aRow['monto_total'],2).'","'.$saldo.'","'.$estado.'", ';
                 
                 /*
                  * configurando botones (add/edit/delete etc)
