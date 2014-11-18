@@ -77,10 +77,11 @@ $nuevo = Session::getPermiso('VPRODNEW');
                         <div class="col col-5">
                             <label class="select"> 
                                 <?php
-                                    $moneda = Array (
-                                            Array ( 'id' => 'SO', 'descripcion' => MONEDA_1 ),
-                                            Array ( 'id' => 'DO', 'descripcion' => MONEDA_2 )
-                                    );                                   
+                                    $moneda = vproductoController::getMoneda();
+//                                    $moneda = Array (
+//                                            Array ( 'id' => 'SO', 'descripcion' => MONEDA_1 ),
+//                                            Array ( 'id' => 'DO', 'descripcion' => MONEDA_2 )
+//                                    );                                   
                                     echo Functions::selectHtml(array(
                                         'data'=>$moneda,
                                         'atributes'=>array(
@@ -90,7 +91,7 @@ $nuevo = Session::getPermiso('VPRODNEW');
                                         'etiqueta'=>'descripcion',
                                         'value'=>'id',
                                         'defaultEtiqueta'=>'SO',
-                                        'txtSelect'=>true
+                                        'txtSelect'=>false
                                     ));
                                 ?><i></i>
                             </label>

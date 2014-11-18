@@ -12,7 +12,7 @@ class generarVentaModel extends Model{
     private $_flag;
     private $_idVenta;
     public $_cod;    
-    private $_term;
+    private $_term, $_xSearch;
     private $_idMoneda;
     private $_chkdel;
     
@@ -21,7 +21,7 @@ class generarVentaModel extends Model{
     private $_montoTotal;
     private $_observacion;
     private $_codImpr;
-    private $_nombre;
+    private $_idPersona;
     private $_moneda;
     private $_tipoDoc;
     private $_tipoMov;    
@@ -51,7 +51,7 @@ class generarVentaModel extends Model{
         $this->_montoTotal     = Functions::deleteComa(Formulario::getParam(VGEVE."txt_total"));
         $this->_observacion     = Formulario::getParam(VGEVE."txt_obs");
         $this->_codImpr     = Formulario::getParam(VGEVE."txt_codImpr");
-        $this->_nombre     = Formulario::getParam(VGEVE."txt_nombre");
+        $this->_idPersona     = Aes::de(Formulario::getParam(VGEVE."txt_idpersona"));
         $this->_moneda     = Formulario::getParam(VGEVE."lst_moneda");
         $this->_tipoDoc     = Formulario::getParam(VGEVE."lst_tipoDoc");
         $this->_tipoMov     = 'I';
@@ -65,7 +65,9 @@ class generarVentaModel extends Model{
         $this->_term  =   Formulario::getParam("_term");         
         $this->_chkdel  = $this->post(VGEVE.'chk_delete');        
         $this->_idMoneda   = Formulario::getParam("_idMoneda");
-         
+        
+        $this->_xSearch     = Formulario::getParam(VGEVE.'_term');
+        
         $this->_iDisplayStart  =   Formulario::getParam("iDisplayStart"); 
         $this->_iDisplayLength =   Formulario::getParam("iDisplayLength"); 
         $this->_iSortingCols   =   Formulario::getParam("iSortingCols");
@@ -105,7 +107,7 @@ class generarVentaModel extends Model{
                 . ":idVenta,"
                 . ":codigoImpr,"
                 . ":fecha,"
-                . ":nombre,"
+                . ":idPersona,"
                 . ":moneda,"
                 . ":montoTotal,"
                 . ":tipoDoc,"
@@ -145,7 +147,7 @@ class generarVentaModel extends Model{
             ':idVenta'=> $this->_idVenta,
             ':codigoImpr'=>$this->_codImpr,
             ':fecha'=>$this->_fecha,
-            ':nombre'=>$this->_nombre,
+            ':idPersona'=>$this->_idPersona,
             ':moneda'=>$this->_moneda,
             ':montoTotal'=>$this->_montoTotal,
             ':tipoDoc' => $this->_tipoDoc,
@@ -169,7 +171,7 @@ class generarVentaModel extends Model{
                     ':idVenta'=>$idVenta,
                     ':codigoImpr'=>'',
                     ':fecha'=>'',
-                    ':nombre'=>'',
+                    ':idPersona'=>'',
                     ':moneda'=>'',
                     ':montoTotal'=>'',
                     ':tipoDoc' => '',
@@ -227,17 +229,18 @@ class generarVentaModel extends Model{
     public function getFindVenta(){
         $query = "
         SELECT
-            `id_docventa`,
-            `periodo`,
-            `codigo_impresion`,
-            DATE_FORMAT(`fecha`,'%d/%m/%Y')AS fecha,
-            `nombre_descripcion`,
-            `moneda`,
-            `monto_importe`,
-            `tipo_doc`,
-            `observacion`
-          FROM `ven_documento`
-          WHERE `id_docventa` = :idVenta; ";
+            d.`id_docventa`,
+            d.`periodo`,
+            d.`codigo_impresion`,
+            DATE_FORMAT(d.`fecha`,'%d/%m/%Y')AS fecha,
+            d.`id_persona`,
+            (select pp.nombrecompleto from mae_persona pp where pp.id_persona = d.id_persona) as cliente,
+            d.`moneda`,
+            d.`monto_importe`,
+            d.`tipo_doc`,
+            d.`observacion`
+          FROM `ven_documento` d
+          WHERE d.`id_docventa` = :idVenta; ";
         
         $parms = array(
             ':idVenta'=>  $this->_idVenta
@@ -264,7 +267,29 @@ class generarVentaModel extends Model{
         $data = $this->queryAll($query,$parms);
         return $data;
     }   
+    /*selecciona todos los clientes Registrados*/
+    public function getClientes(){
+        $query = "
+         select t.id_persona, t.nombrecompleto, t.numerodocumento
+         from (
+         SELECT 
+                p.id_persona,
+                p.nombrecompleto,
+                p.numerodocumento
+         FROM mae_persona p
+         WHERE  p.estado <> '0' and p.id_empresa = 2 ) as t
+         where (
+                   t.nombrecompleto LIKE CONCAT('%',:cliente,'%') or
+                   t.numerodocumento LIKE CONCAT('%',:cliente,'%') 
+                ); ";
         
+        $parms = array(
+            ':cliente' => trim($this->_xSearch),
+        );
+        $data = $this->queryAll($query,$parms);
+        return $data;
+    }
+           
     
 }
 

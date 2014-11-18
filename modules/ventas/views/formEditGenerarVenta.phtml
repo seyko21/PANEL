@@ -3,6 +3,7 @@
 $grabar = Session::getPermiso('VGEVEACT');
 $agregar = Session::getPermiso('VGEVEAG');
 $buscar = Session::getPermiso('VGEVEBS');
+$nuevo = Session::getPermiso('VRECLNEW');
 
 echo Functions::widgetOpen(array(
     'id' => VGEVE.'_EDIT',
@@ -44,6 +45,25 @@ $datad = Obj::run()->generarVentaController->getFindVentaD();
                     <h3><strong><?php echo LABEL_GNC19; ?></strong> - <?php echo VGEVETAB1; ?></h3>
   
                     <div class="form-group">
+                        <label class="control-label col-md-2" for="prepend"><?php echo LABEL_GNC3; ?></label>
+                        <div class="col-md-8">
+                            <div class="input-group input-group-sm">
+                                <input type="hidden" id="<?php echo VGEVE; ?>txt_idpersona" name="<?php echo VGEVE; ?>txt_idpersona" value="<?php echo Aes::en($datac['id_persona']);?>">
+                                <input class="form-control" type="text" id="<?php echo VGEVE; ?>txt_cliente" name="<?php echo VGEVE; ?>txt_cliente" value="<?php echo $datac['cliente'];?>" readonly>
+                                <span class="input-group-btn">
+                                    <?php if ($buscar['permiso']): ?>
+                                        <button class="<?php echo $buscar['theme'];?>" type="button" onclick="generarVenta.getFormBuscarCliente(this, '<?php echo VGEVE; ?>');"><i class="<?php echo $buscar['icono'];?>"></i> <?php echo $buscar['accion'];?></button>
+                                    <?php endif; ?>
+                                     <?php if($nuevo['permiso']): ?>
+                                        <button id="<?php echo VGEVE; ?>newCliente" type="button" onclick="vcliente.getFormNewVcliente(this,'<?php echo VGEVE; ?>');" class="<?php echo $nuevo['theme'];?>" title="Nuevo Cliente">
+                                             <i class="<?php echo $nuevo['icono'];?>"></i> <?php echo $nuevo['accion'];?>
+                                        </button>
+                                        <?php endif; ?>    
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
                        <label class="control-label col-md-2" for="prepend"><?php echo VGEVE_7; ?></label>
                        <div class="col-md-2">
                            <div class="input">
@@ -51,15 +71,6 @@ $datad = Obj::run()->generarVentaController->getFindVentaD();
                            </div>
                        </div>
                     </div>
-                   <div class="form-group">
-                        <label class="control-label col-md-2" for="prepend"><?php echo VGEVE_6; ?></label>
-                        <div class="col-md-9">
-                            <div class="input">
-                                <input class="form-control" type="text" id="<?php echo VGEVE; ?>txt_nombre" name="<?php echo VGEVE; ?>txt_nombre" value="<?php echo $datac['nombre_descripcion'];?>">                                                               
-                            </div>                                    
-                        </div>                                                                      
-                    </div>
-                    
                     <div class="form-group">                      
                         <label class="control-label col-md-2" for="prepend"><?php echo VGEVE_8; ?></label>
                         <div class="col-md-2">                           
@@ -258,7 +269,10 @@ $datad = Obj::run()->generarVentaController->getFindVentaD();
         
             var $validator = $("#<?php echo VGEVE; ?>formNewGenerarVenta").validate({
                 rules: {
-                     <?php echo VGEVE; ?>txt_codImpr: {
+                    <?php echo VGEVE; ?>txt_cliente: {
+                        required: true
+                    },
+                    <?php echo VGEVE; ?>txt_codImpr: {
                         required: true,
                         number:true
                     },  

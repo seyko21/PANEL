@@ -56,7 +56,7 @@ var generarVenta_ = function(){
             aoColumns: [
                 {sTitle: "<input type='checkbox' id='"+diccionario.tabs.VGEVE+"chk_all' onclick='simpleScript.checkAll(this,\"#"+diccionario.tabs.VGEVE+"gridGenerarVenta\");'>", sWidth: "1%", sClass: "center", bSortable: false},                
                 {sTitle: "Código", sWidth: "10%"},
-                {sTitle: "Descripción", sWidth: "20%"},
+                {sTitle: "Cliente", sWidth: "20%"},
                 {sTitle: "Tipo Doc", sWidth: "8%"},
                 {sTitle: "Fecha", sWidth: "10%",  sClass: "center"},
                 {sTitle: "Moneda", sWidth: "7%"},                                
@@ -139,6 +139,52 @@ var generarVenta_ = function(){
             }
         });
     };           
+    
+    this.publico.getFormBuscarCliente = function(btn,tab){
+        _private.tab = tab;
+        simpleAjax.send({
+            element: btn,
+            dataType: 'html',
+            root: _private.config.modulo + 'getFormBuscarCliente',
+            fnCallback: function(data){
+                $('#cont-modal').append(data);  /*los formularios con append*/
+                $('#'+diccionario.tabs.VGEVE+'formBuscarCliente').modal('show');
+            }
+        });
+    };    
+    
+    this.publico.getClientes = function(){
+        $('#'+diccionario.tabs.VGEVE+'gridClientesFound').dataTable({
+            bProcessing: true,
+            bServerSide: true,
+            bDestroy: true,
+            bFilter: false, 
+            sServerMethod: "POST",
+            bPaginate: false,
+            aoColumns: [
+                {sTitle: "Nro.", sClass: "center",sWidth: "2%",  bSortable: false},
+                {sTitle: "Cliente", sWidth: "50%"},
+                {sTitle: "N° Documento", sWidth: "20%"}
+            ],
+            aaSorting: [[1, 'asc']],
+            sScrollY: "250px",
+            sAjaxSource: _private.config.modulo+'getClientes',
+            fnServerParams: function(aoData) {
+                aoData.push({"name": diccionario.tabs.VGEVE+"_term", "value": $('#'+diccionario.tabs.VGEVE+'txt_search').val()});
+                aoData.push({"name": "_tab", "value": _private.tab});
+            },
+            fnDrawCallback: function() {
+                $('#'+diccionario.tabs.VGEVE+'gridClientesFound_wrapper').find('.dataTables_scrollBody').css('overflow-x','hidden');
+                /*para hacer evento invisible*/
+                simpleScript.removeAttr.click({
+                    container: '#'+diccionario.tabs.VGEVE+'gridClientesFound',
+                    typeElement: 'a'
+                });
+            }
+        });
+        $('#'+diccionario.tabs.VGEVE+'gridClientesFound_filter').remove();
+    };    
+    
     
     this.publico.postNewGenerarVenta = function(f){
         simpleAjax.send({

@@ -101,6 +101,11 @@ class vproductoController extends Controller{
         
         return $data;
     }    
+    public static function getMoneda(){ 
+        $data = Obj::run()->vproductoModel->getMoneda();
+        
+        return $data;
+    }   
     
     /*carga formulario (newVproducto.phtml) para nuevo registro: Vproducto*/
     public function getFormNewVproducto(){

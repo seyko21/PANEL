@@ -11,6 +11,7 @@ var vcliente_ = function(){
     var _private = {};
     
     _private.idVcliente = 0;
+    _private.callbackData = null;
     
     _private.config = {
         modulo: "ventas/vcliente/"
@@ -80,15 +81,11 @@ var vcliente_ = function(){
                return '<button id="'+diccionario.tabs.VRECL+'refresh" class="btn btn-primary" title="Actualizar"><i class="fa fa-refresh"></i></button> '+iStart +" al "+ iEnd+' de '+iTotal;
            }
         });
-        setup_widgets_desktop();
-        
-      
-        
+        setup_widgets_desktop();                      
     };
-    
-   
-    
-    this.publico.getFormNewVcliente = function(btn){
+           
+    this.publico.getFormNewVcliente = function(btn,callbackData){
+        _private.callbackData = callbackData;   
         simpleAjax.send({
             element: btn,
             dataType: "html",
@@ -126,7 +123,15 @@ var vcliente_ = function(){
                     simpleScript.notify.ok({
                         content: mensajes.MSG_3,
                         callback: function(){
-                            vcliente.getGridVcliente();
+                            
+                            if(_private.callbackData.length > 0){                                
+                               $("#"+diccionario.tabs.VGEVE+"txt_idpersona").val(simpleAjax.stringPost(data.idPersona));       
+                               $("#"+diccionario.tabs.VGEVE+"txt_cliente").val(data.nombre); 
+                            }
+                            /*se verifica si existe tabb para recargar grid*/
+                            if($('#'+diccionario.tabs.VRECL+'_CONTAINER').length > 0){
+                               vcliente.getGridVcliente();
+                            }                                                        
                             simpleScript.closeModal("#"+diccionario.tabs.VRECL+"formNewVcliente");
                         }
                     });

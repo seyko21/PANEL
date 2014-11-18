@@ -79,10 +79,11 @@ $data = vproductoController::findVproducto();
                         <div class="col col-5">
                             <label class="select"> 
                                 <?php
-                                    $moneda = Array (
-                                            Array ( 'id' => 'SO', 'descripcion' => MONEDA_1 ),
-                                            Array ( 'id' => 'DO', 'descripcion' => MONEDA_2 )
-                                    );                                   
+//                                    $moneda = Array (
+//                                            Array ( 'id' => 'SO', 'descripcion' => MONEDA_1 ),
+//                                            Array ( 'id' => 'DO', 'descripcion' => MONEDA_2 )
+//                                    );     
+                                    $moneda = vproductoController::getMoneda();
                                     echo Functions::selectHtml(array(
                                         'data'=>$moneda,
                                         'atributes'=>array(
@@ -92,7 +93,7 @@ $data = vproductoController::findVproducto();
                                         'etiqueta'=>'descripcion',
                                         'value'=>'id',
                                         'defaultEtiqueta'=>$data["moneda"],
-                                        'txtSelect'=>true
+                                        'txtSelect'=>false
                                     ));
                                 ?><i></i>
                             </label>

@@ -175,6 +175,21 @@ class vproductoModel extends Model{
         $data = array('result'=>1);
         return $data;
     }         
+
+    public function getMoneda(){
+        $query = "select
+                `id_moneda` as id,
+                CONCAT(`sigla`,' - ',`descripcion`) as descripcion
+              from `pub_moneda`
+              where estado = :estado; ";
+        
+        $parms = array(
+            ':estado' => 'A'
+        );
+        $data = $this->queryAll($query,$parms);
+        return $data;
+    }    
+        
     
 }
 

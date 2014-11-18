@@ -120,7 +120,7 @@ var vproducto_ = function(){
                     });
                 }else if(!isNaN(data.result) && parseInt(data.result) === 2){
                     simpleScript.notify.error({
-                        content: "Vproducto ya existe."
+                        content: "Producto ya existe."
                     });
                 }
             }
@@ -146,7 +146,7 @@ var vproducto_ = function(){
                     });
                 }else if(!isNaN(data.result) && parseInt(data.result) === 2){
                     simpleScript.notify.error({
-                        content: "Vproducto ya existe."
+                        content: "Producto ya existe."
                     });
                 }
             }

@@ -17,6 +17,10 @@ class generarVentaController extends Controller{
         Obj::run()->View->render("indexGenerarVenta");
     }
     
+    public function getFormBuscarCliente(){ 
+        Obj::run()->View->render('formBuscarCliente');
+    }
+    
     public function getGridGenerarVenta(){
        $editar = Session::getPermiso('VGEVEED');
        $exportarpdf   = Session::getPermiso('VGEVEEP');
@@ -98,6 +102,40 @@ class generarVentaController extends Controller{
         
         echo $sOutput;
     }
+    
+    public function getClientes(){ 
+        $tab = $this->post('_tab');
+        $sEcho          =   $this->post('sEcho');
+        
+        $rResult = Obj::run()->generarVentaModel->getClientes();
+        
+        if(!isset($rResult['error'])){  
+            $iTotal         = isset($rResult[0]['total'])?$rResult[0]['total']:0;
+            
+            $sOutput = '{';
+            $sOutput .= '"sEcho": '.intval($sEcho).', ';
+            $sOutput .= '"iTotalRecords": '.$iTotal.', ';
+            $sOutput .= '"iTotalDisplayRecords": '.$iTotal.', ';
+            $sOutput .= '"aaData": [ ';
+            foreach ( $rResult as $key=>$aRow ){
+                /*antes de enviar id se encrypta*/
+                $encryptReg = Aes::en($aRow['id_persona']);
+                
+                $nom = '<a href=\"javascript:;\" onclick=\"simpleScript.setInput({'.$tab.'txt_idpersona:\''.$encryptReg.'\', '.$tab.'txt_cliente:\''.$aRow['nombrecompleto'].'\'},\'#'.VGEVE.'formBuscarCliente\');\" >'.$aRow['nombrecompleto'].'</a>';
+                
+                /*datos de manera manual*/
+                $sOutput .= '["'.(++$key).'","'.$nom.'", "'.$aRow['numerodocumento'].'" ';
+
+                $sOutput .= '],';
+            }
+            $sOutput = substr_replace( $sOutput, "", -1 );
+            $sOutput .= '] }';
+        }else{
+            $sOutput = $rResult['error'];
+        }
+        
+        echo $sOutput;
+    }    
         
     /*carga formulario (newGenerarVenta.phtml) para nuevo registro: GenerarVenta*/
     public function getFormNewGenerarVenta(){
@@ -194,8 +232,8 @@ class generarVentaController extends Controller{
             <td width="15%">'.$dataC['fecha'].'</td>
           </tr>
           <tr>
-            <td><strong>Descripción:</strong></td>
-            <td colspan="5">'.$dataC['nombre_descripcion'].'</td>
+            <td><strong>Cliente:</strong></td>
+            <td colspan="5">'.$dataC['cliente'].'</td>
           </tr>
           <tr>         
             <td width="20%"><strong>Moneda:</strong></td>

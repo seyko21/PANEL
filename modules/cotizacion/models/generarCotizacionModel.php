@@ -250,7 +250,7 @@ class generarCotizacionModel extends Model{
                 (SELECT pp.nombrecompleto 
                 FROM mae_persona pp WHERE pp.id_persona=p.id_personapadre) AS razon_social
          FROM mae_persona p
-         WHERE  p.estado <> '0' and ".$all." p.id_personapadre <> '' ) as t
+         WHERE  p.estado <> '0' and ".$all." p.id_personapadre <> '' and p.id_empresa = 1 ) as t
          where (
                    t.nombrecompleto LIKE CONCAT('%',:cliente,'%') or
                    t.razon_social LIKE CONCAT('%',:cliente,'%') 

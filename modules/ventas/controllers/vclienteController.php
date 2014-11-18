@@ -16,7 +16,7 @@ class vclienteController extends Controller{
     }
     
     public function index(){ 
-        Obj::run()->View->render("indexVcliente");
+        Obj::run()->View->render("indexVcliente");        
     }
     
     public function getGridVcliente(){
