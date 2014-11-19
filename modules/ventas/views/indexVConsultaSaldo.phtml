@@ -1,0 +1,66 @@
+<?php 
+/*
+* ---------------------------------------
+* --------- CREATED BY CREATOR ----------
+* fecha: 18-11-2014 22:11:42 
+* Descripcion : indexVConsultaSaldo.phtml
+* ---------------------------------------
+*/
+$buscar    = Session::getPermiso("VCSCLBS");
+echo Functions::widgetOpen(array(
+        "id"=>VCSCL,
+        "title"=>VCSCL_1
+    )); 
+?>
+<button id="<?php echo VCSCL; ?>btnDowPDF" type="button" class="hide">Descargar</button>
+<div class="widget-body-toolbar">
+    <div class="smart-form" style="position: absolute;left: 250px;top:5px;width: 65% ">        
+        <label class="label col col-1" style="padding-left:10px;"><?php echo SEGCO_9; ?></label>
+        <label class="select pull-left ">
+            <select style="width: 100px;" id="<?php echo VCSCL; ?>lst_tiposearch" name="<?php echo VCSCL_2; ?>lst_tiposearch" onchange="vConsultaSaldo.getGridVConsultaSaldo();">
+                <option value="T"><?php echo VCSCL_2; ?></option>
+                <option value="P"><?php echo VCSCL_3; ?></option>              
+                <option value="S"><?php echo VCSCL_4; ?></option>                 
+            </select>
+            <i></i>
+        </label>
+        <label class="label col col-1"><?php echo COGEN_2; ?></label>        
+        <div class="col col-2" style="padding-left:5px;">
+            <div class="input-group">
+                <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                <input class="form-control" type="text" id="<?php echo VCSCL;?>txt_f1" name="<?php echo VCSCL;?>txt_f1" value ="01/<?php echo date("m"); ?>/<?php echo date("Y"); ?>" style="padding-left:10px; width: 80px; " />
+             </div>            
+        </div>
+        <label class="label col col-1" >&nbsp;<?php echo COGEN_3; ?></label>        
+        <div class="col col-2" >
+            <div class="input-group">
+                <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                <input class="form-control" type="text" id="<?php echo VCSCL;?>txt_f2" name="<?php echo VCSCL;?>txt_f2" value ="<?php echo date("d/m/Y"); ?>" style="padding-left:10px; width: 80px; " />
+             </div>            
+        </div>
+       
+        <div class="col col-1" style="padding-left:30px;">
+            <div class=" ">
+                <button id="<?php echo VCSCL; ?>btnBuscar" type="button" style="padding:6px 10px;"
+                        onclick="vConsultaSaldo.getGridVConsultaSaldo();" 
+                        class="<?php echo $buscar['theme'];?> btn-sm"  >
+                      <i class="<?php echo $buscar['icono'];?>"></i> <?php echo $buscar['accion'];?>
+                </button>
+            </div>
+        </div>
+    </div>
+    
+    
+</div>
+    <div class="dataTables_wrapper form-inline" role="grid">
+        <div class="dt-top-row">
+            <div class="DTTT btn-group">
+             
+            </div>
+        </div>
+
+    </div>
+    <form id="<?php echo VCSCL; ?>formGridVConsultaSaldo" name="<?php echo VCSCL; ?>formGridVConsultaSaldo" onsubmit="return false"  >
+        <table id="<?php echo VCSCL; ?>gridVConsultaSaldo" class="table table-striped table-hover table-condensed" style="width:100%"></table>
+    </form>
+<?php echo Functions::widgetClose(); ?>

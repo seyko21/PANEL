@@ -47,5 +47,8 @@ define("VPROD","VPROD");             /*tab modulo VPRODUCTO*/
 define("VGEVE","VGEVE");             /*tab modulo Generar Venta*/
 define("VRECL","VRECL");             /*tab modulo VCLIENTE*/
 define("VSEVE","VSEVE");             /*tab modulo VSEGUIMIENTOVENTA*/
+define("VCSCL","VCSCL");             /*tab modulo VCONSULTASALDO*/
+
+
 
 ?>

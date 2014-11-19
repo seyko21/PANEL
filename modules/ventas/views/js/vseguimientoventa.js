@@ -102,32 +102,53 @@ var vseguimientoventa_ = function(){
         });
     };    
     
-    this.publico.postEditVseguimientoventa = function(){
+    this.publico.postPagoVenta = function(){        
+        
+        if(parseFloat($('#'+diccionario.tabs.VSEVE+'txt_monto').val()) > parseFloat(_private.saldo)){
+            simpleScript.notify.warning({
+                content: 'Monto es mayor que saldo.'
+            });
+            return false;
+        }
         simpleAjax.send({
-            element: "#"+diccionario.tabs.VSEVE+"btnEdVseguimientoventa",
-            root: _private.config.modulo + "postEditVseguimientoventa",
-            form: "#"+diccionario.tabs.VSEVE+"formEditVseguimientoventa",
+            element: "#"+diccionario.tabs.VSEVE+"btnGrVseguimientoventa",
+            root: _private.config.modulo + "postPagarVenta",
+            form: "#"+diccionario.tabs.VSEVE+"formPagarVenta",
             data: "&_idVseguimientoventa="+_private.idVseguimientoventa,
             clear: true,
             fnCallback: function(data) {
                 if(!isNaN(data.result) && parseInt(data.result) === 1){
                     simpleScript.notify.ok({
-                        content: mensajes.MSG_10,
+                        content: mensajes.MSG_3,
                         callback: function(){
                             _private.idVseguimientoventa = 0;
-                            simpleScript.closeModal("#"+diccionario.tabs.VSEVE+"formEditVseguimientoventa");
-                            simpleScript.reloadGrid("#"+diccionario.tabs.VSEVE+"gridVseguimientoventa");
+                            simpleScript.closeModal("#"+diccionario.tabs.VSEVE+"formPagarVenta");
+                           vseguimientoventa.getGridVseguimientoventa();
                         }
                     });
                 }else if(!isNaN(data.result) && parseInt(data.result) === 2){
                     simpleScript.notify.error({
-                        content: "Vseguimientoventa ya existe."
+                        content: "No existe saldo para registrar pago."
                     });
                 }
             }
         });
     };
        
+    this.publico.postPDF = function(btn,id,cod){
+        simpleAjax.send({
+            element: btn,
+            root: _private.config.modulo + 'postPDF',
+            data: '&_idVenta='+id+'&_cod='+cod,
+            fnCallback: function(data) {
+                if(parseInt(data.result) === 1){
+                    $('#'+diccionario.tabs.VSEVE+'btnDowPDF').off('click');
+                    $('#'+diccionario.tabs.VSEVE+'btnDowPDF').attr("onclick","window.open('public/files/"+data.archivo+"','_blank');generarCotizacion.deleteArchivo('"+data.archivo+"');");
+                    $('#'+diccionario.tabs.VSEVE+'btnDowPDF').click();
+                }
+            }
+        });
+    };
     
     return this.publico;
     

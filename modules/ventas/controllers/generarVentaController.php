@@ -163,7 +163,12 @@ class generarVentaController extends Controller{
         $ar = ROOT.'public'.DS.'files'.DS.$c;
                
         $mpdf = new mPDF('c');
-
+        
+        $dataC = Obj::run()->generarVentaModel->getFindVenta();
+        if($dataC['estado'] == 'A'){
+           $mpdf->SetWatermarkText('A N U L A D O');
+           $mpdf->showWatermarkText = true;         
+        }   
         $mpdf->SetHTMLHeader('<img src="'.ROOT.'public'.DS.'img'.DS.'logotipo.png" width="137" height="68" />','',TRUE);
         $mpdf->SetHTMLFooter('<table width="100%" style="vertical-align: bottom; font-family: serif; font-size: 8pt; color: #000000; font-weight: bold;"><tr>
                                 <td width="33%"><span style="font-weight: bold;">{DATE j-m-Y}</span></td>
@@ -209,8 +214,13 @@ class generarVentaController extends Controller{
            #td2 td{font-size:10px;height:25px;}           
         </style>';
         
-        $mon = ($dataC['moneda']=='SO')?'S/.':'$USD';
+        $mon = $dataC['moneda'];
         
+        switch ($dataC['estado']){
+            case 'E': $estado = 'Emitido'; break;
+            case 'A': $estado = 'Anulado'; break;
+        }
+                
         switch ($dataC['tipo_doc']){
             case 'R': $tipoDoc = 'Recibo'; break;
             case 'B': $tipoDoc = 'Boleta'; break;
@@ -237,9 +247,11 @@ class generarVentaController extends Controller{
           </tr>
           <tr>         
             <td width="20%"><strong>Moneda:</strong></td>
-            <td width="15%">'.$mon.'</td>
-            <td width="20%"><strong>Tipo Doc:</strong></td>
+            <td width="15%">'.$dataC['descripcion_moneda'].'</td>
+            <td width="10%"><strong>Tipo Doc:</strong></td>
             <td width="15%">'.$tipoDoc.'</td>
+            <td width="20%"><strong>Estado:</strong></td>
+            <td width="15%">'.$estado.'</td>
           </tr>
         </table> 
         <br />

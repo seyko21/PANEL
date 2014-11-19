@@ -312,7 +312,10 @@ define ('VSEVE_3M','Ingrese la Fecha de pago');
 define ('VSEVE_4','Saldo');
 define ('VSEVE_4M','Ingrese el Saldo a pagar');
 
-
+define ('VCSCL_1','Saldo de Clientes');
+define ('VCSCL_2','Todos');
+define ('VCSCL_3','Pagados');
+define ('VCSCL_4','Saldo');
 
 
 ?>

@@ -2,30 +2,31 @@
 /*
 * ---------------------------------------
 * --------- CREATED BY CREATOR ----------
-* fecha: 18-11-2014 17:11:41 
-* Descripcion : vseguimientoventaController.php
+* fecha: 18-11-2014 22:11:42 
+* Descripcion : vConsultaSaldoController.php
 * ---------------------------------------
 */    
 
-class vseguimientoventaController extends Controller{
+class vConsultaSaldoController extends Controller{
 
     public function __construct() {
-        $this->loadModel(array('modulo'=>'ventas','modelo'=>'vseguimientoventa'));
+        $this->loadModel(array('modulo'=>'ventas','modelo'=>'vConsultaSaldo'));
         $this->loadController(array('modulo'=>'ventas','controller'=>'generarVenta')); 
+        
     }
     
     public function index(){ 
-        Obj::run()->View->render("indexVseguimientoventa");
+        Obj::run()->View->render("indexVConsultaSaldo");
     }
     
-    public function getGridVseguimientoventa(){
-        $pagar   = Session::getPermiso('VSEVEPG');
-        $exportarpdf   = Session::getPermiso('VSEVEEP');
+    public function getGridVConsultaSaldo(){        
+       $exportarpdf   = Session::getPermiso('VCSCLEP');
+        
         $sEcho          =   $this->post('sEcho');
         
-        $rResult = Obj::run()->vseguimientoventaModel->getVseguimientoventa();
+        $rResult = Obj::run()->vConsultaSaldoModel->getVConsultaSaldo();
         
-        $num = Obj::run()->vseguimientoventaModel->_iDisplayStart;
+        $num = Obj::run()->vConsultaSaldoModel->_iDisplayStart;
         if($num >= 10){
             $num++;
         }else{
@@ -54,32 +55,33 @@ class vseguimientoventaController extends Controller{
                         $estado = '<span class=\"label label-danger\">'.SEGPA_9.'</span>';
                         break;                 
                 }
+                
                 /*
                  * configurando botones (add/edit/delete etc)
                  * se verifica si tiene permisos para editar
                  */
                 $axion = '"<div class=\"btn-group\">';
                  
-                if($pagar['permiso']){
-                    $axion .= '<button type=\"button\" class=\"'.$pagar['theme'].'\" title=\"'.$pagar['accion'].'\" onclick=\"vseguimientoventa.getFormPagarVenta(this,\''.$encryptReg.'\',\''.$aRow['monto_saldo'].'\')\">';
-                    $axion .= '    <i class=\"'.$pagar['icono'].'\"></i>';
-                    $axion .= '</button>';
-                }              
                 if($exportarpdf['permiso'] == 1){
-                    $axion .= '<button type=\"button\" class=\"'.$exportarpdf['theme'].'\" title=\"'.$exportarpdf['accion'].'\" onclick=\"vseguimientoventa.postPDF(this,\''.$encryptReg.'\',\''.$aRow['codigo_impresion'].'\')\">';
+                    $axion .= '<button type=\"button\" class=\"'.$exportarpdf['theme'].'\" title=\"'.$exportarpdf['accion'].'\" onclick=\"vConsultaSaldo.postPDF(this,\''.$encryptReg.'\',\''.$aRow['codigo_impresion'].'\')\">';
                     $axion .= '    <i class=\"'.$exportarpdf['icono'].'\"></i>';
                     $axion .= '</button>';
                 }
+                
                 $axion .= ' </div>" ';
-                
-                /*registros a mostrar*/
-                $saldo = '<span class=\"badge bg-color-red\">'.number_format($aRow['monto_saldo'],2).'</span>';
+                if ($aRow['monto_saldo'] > 0):
+                    $saldo = '<span class=\"badge bg-color-red\">'.number_format($aRow['monto_saldo'],2).'</span>';
+                else :
+                     $saldo = number_format($aRow['monto_saldo'],2);
+                endif;
+                                
                 $nombre = $aRow['nombre_descripcion'];
+                $pagado = number_format($aRow['monto_asignado'],2);
+                /*registros a mostrar*/
+                $sOutput .= '["'.($num++).'","'.$aRow['codigo_impresion'].'","'.$nombre.'","'.  Functions::cambiaf_a_normal($aRow['fecha']).'","'.$aRow['moneda'].'","'.number_format($aRow['monto_total'],2).'","'.$pagado.'","'.$saldo.'","'.$estado.'",'.$axion.' ';;
 
-                $sOutput .= '["'.($num++).'","'.$aRow['codigo_impresion'].'","'.$nombre.'","'.  Functions::cambiaf_a_normal($aRow['fecha']).'","'.$aRow['moneda'].'","'.number_format($aRow['monto_total'],2).'","'.$saldo.'","'.$estado.'",'.$axion.' ';
-                
                 $sOutput .= '],';
-                
+
             }
             $sOutput = substr_replace( $sOutput, "", -1 );
             $sOutput .= '] }';
@@ -91,19 +93,7 @@ class vseguimientoventaController extends Controller{
 
     }
     
-    /*Formulario para pagar Cuenta - Saldo de Cliente*/
-    public function getFormPagarVenta(){
-        Obj::run()->View->render("formPagarVenta");
-    }
-
-    /*envia datos para editar registro: Vseguimientoventa*/
-    public function postPagarVenta(){
-        $data = Obj::run()->vseguimientoventaModel->newPagoVenta();
-        
-        echo json_encode($data);
-    }
-    
-     public function postPDF(){
+    public function postPDF(){
         $data = Obj::run()->generarVentaController->postPDF();
         
         return $data;

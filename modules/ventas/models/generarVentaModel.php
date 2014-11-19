@@ -231,10 +231,12 @@ class generarVentaModel extends Model{
             DATE_FORMAT(d.`fecha`,'%d/%m/%Y')AS fecha,
             d.`id_persona`,
             (select pp.nombrecompleto from mae_persona pp where pp.id_persona = d.id_persona) as cliente,
-            d.`moneda`,
+            (select concat(`sigla`,' - ',`descripcion`) from pub_moneda mo where mo.id_moneda = d.`moneda`) as descripcion_moneda,
+            (select `sigla` from pub_moneda mo where mo.id_moneda = d.`moneda`) as moneda,
             d.`monto_importe`,
             d.`tipo_doc`,
-            d.`observacion`
+            d.`observacion`,
+            d.estado
           FROM `ven_documento` d
           WHERE d.`id_docventa` = :idVenta; ";
         

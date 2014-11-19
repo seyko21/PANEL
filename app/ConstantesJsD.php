@@ -38,7 +38,8 @@
         VPROD: '<?php echo VPROD; ?>',
         VGEVE: '<?php echo VGEVE; ?>',
         VRECL: '<?php echo VRECL; ?>',
-        VSEVE: '<?php echo VSEVE; ?>'
+        VSEVE: '<?php echo VSEVE; ?>',
+        VCSCL: '<?php echo VCSCL; ?>'
     }
 };
 </script>

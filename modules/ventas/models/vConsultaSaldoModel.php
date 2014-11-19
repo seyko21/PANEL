@@ -2,18 +2,19 @@
 /*
 * ---------------------------------------
 * --------- CREATED BY CREATOR ----------
-* fecha: 18-11-2014 17:11:41 
-* Descripcion : vseguimientoventaModel.php
+* fecha: 18-11-2014 22:11:42 
+* Descripcion : vConsultaSaldoModel.php
 * ---------------------------------------
 */ 
 
-class vseguimientoventaModel extends Model{
+class vConsultaSaldoModel extends Model{
 
     private $_flag;
-    private $_idVseguimientoventa;
-    private $_montoAsignado;
-    private $_fecha;
+    private $_idVConsultaSaldo;
     private $_usuario;
+    private $_f1;
+    private $_f2;
+    private $_tipo;
     
     /*para el grid*/
     public  $_iDisplayStart;
@@ -28,11 +29,12 @@ class vseguimientoventaModel extends Model{
     
     private function _set(){
         $this->_flag        = Formulario::getParam("_flag");
-        $this->_idVseguimientoventa   = Aes::de(Formulario::getParam("_idVseguimientoventa"));    /*se decifra*/
+        $this->_idVConsultaSaldo   = Aes::de(Formulario::getParam("_idVConsultaSaldo"));    /*se decifra*/
         $this->_usuario     = Session::get("sys_idUsuario");
         
-        $this->_montoAsignado     = Functions::deleteComa(Formulario::getParam(VSEVE."txt_monto"));
-        $this->_fecha     = Functions::cambiaf_a_mysql(Formulario::getParam(VSEVE."txt_fecha"));
+        $this->_f1    = Functions::cambiaf_a_mysql(Formulario::getParam("_f1"));
+        $this->_f2    = Functions::cambiaf_a_mysql(Formulario::getParam("_f2"));         
+        $this->_tipo        = Formulario::getParam("_tipocb");
         
         $this->_iDisplayStart  = Formulario::getParam("iDisplayStart"); 
         $this->_iDisplayLength = Formulario::getParam("iDisplayLength"); 
@@ -40,9 +42,9 @@ class vseguimientoventaModel extends Model{
         $this->_sSearch        = Formulario::getParam("sSearch");
     }
     
-    /*data para el grid: Vseguimientoventa*/
-    public function getVseguimientoventa(){
-        $aColumns       =   array('','codigo_impresion','nombre_descripcion','fecha','moneda','monto_total', 'monto_saldo','estado' ); //para la ordenacion y pintado en html
+    /*data para el grid: VConsultaSaldo*/
+    public function getVConsultaSaldo(){
+        $aColumns       =   array('','codigo_impresion','nombre_descripcion','fecha','moneda','monto_total', 'monto_asignado','monto_saldo','estado' ); //para la ordenacion y pintado en html
         /*
 	 * Ordenando, se verifica por que columna se ordenara
 	 */
@@ -55,9 +57,12 @@ class vseguimientoventaModel extends Model{
         }
         $sOrder = substr_replace( $sOrder, "", -1 );
         
-        $query = "call sp_ventaSeguimientoVentaGrid(:iDisplayStart,:iDisplayLength,:sOrder,:sSearch);";
+        $query = "call sp_ventaRptSaldoClienteGrid(:f1,:f2,:tipo,:iDisplayStart,:iDisplayLength,:sOrder,:sSearch);";
         
         $parms = array(
+            ":f1" => $this->_f1,
+            ":f2" => $this->_f2,
+            ":tipo" => $this->_tipo,
             ":iDisplayStart" => $this->_iDisplayStart,
             ":iDisplayLength" => $this->_iDisplayLength,
             ":sOrder" => $sOrder,
@@ -66,24 +71,8 @@ class vseguimientoventaModel extends Model{
         $data = $this->queryAll($query,$parms);
         return $data;
     }
-       
     
-    /*editar registro: Vseguimientoventa*/
-    public function newPagoVenta(){
-         $query = "call sp_ventaPagoMantenimiento(:flag,:key,:pago,:fecha,:usuario);";
-        $parms = array(
-            ':flag' => 1,
-            ':key' => $this->_idVseguimientoventa,
-            ':pago' => $this->_montoAsignado,
-            ':fecha' => $this->_fecha,                      
-            ':usuario' => $this->_usuario
-        );
-        $data = $this->queryOne($query,$parms);
-        return $data;
-    }
-    
-   
-    
+
 }
 
 ?>
