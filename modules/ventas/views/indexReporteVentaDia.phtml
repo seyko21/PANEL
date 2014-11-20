@@ -7,7 +7,7 @@
 * ---------------------------------------
 */
 $pdf    = Session::getPermiso("VRPT1EP");
-
+$recuperar    = Session::getPermiso("VRPT1RC");
 ?>   
     
 <?php
@@ -18,114 +18,32 @@ $pdf    = Session::getPermiso("VRPT1EP");
         'padding' => true
     );
     echo Functions::widgetOpen($obj);
-    
-    $dataG = Obj::run()->reporteVentaDiaController->getGraficoVentaDia();
-    
+        
     ?>
-<div class="widget-body-toolbar">  
-      <div class="smart-form" style="position: absolute;left:0px;top:5px;width: 65% ">           
-        <label class="label col col-1"><?php echo VRPT1_2; ?></label>   
-        <label class="label col col-1"><?php echo date("d/m/Y"); ?></label>   
 
-       <div class="col col-1" style="padding-left:30px;">
-               <div class=" ">
-                   <button id="<?php echo VRPT2; ?>btnPDF" type="button" style="padding:6px 6px"
-                           onclick="reporteVentaFecha.getGridReporteVentaFecha();" 
-                           class="<?php echo $pdf['theme'];?> btn-sm"  >
-                         <i class="<?php echo $pdf['icono'];?>"></i> <?php echo $pdf['accion'];?>
-                   </button>
+    <div class="widget-body-toolbar" style="margin:0px; padding:10px">  
+          <div class="smart-form" style="position: absolute;left:5px;top:15px;width: 65% ">           
+            <label class="label col col-1"><?php echo VRPT1_2; ?></label>   
+            <label class="label col col-2"><b><?php echo date("d/m/Y"); ?></b></label>   
+
+            <div class="col col-7" style="padding-left:30px;" >        
+         
+                <button id="<?php echo VRPT2; ?>btnRefresh" type="button" style="padding:6px 7px; margin-top:6px;" 
+                        onclick="reporteVentaDia.getGraficoReporteVentaDia();"
+                         class="<?php echo $recuperar['theme'];?> btn-sm"  >
+                      <i class="<?php echo $recuperar['icono'];?>"></i> <?php echo $recuperar['accion'];?>
+                 </button> 
+                <button id="<?php echo VRPT2; ?>btnPDF" type="button" style="padding:6px 7px"
+                        onclick="reporteVentaDia.getPDF();" 
+                        class="<?php echo $pdf['theme'];?> btn-sm"  >
+                      <i class="<?php echo $pdf['icono'];?>"></i> <?php echo $pdf['accion'];?>
+                </button>  
                </div>
-           </div>
-      </div>
-</div>
-
-        <div id="<?php echo VRPT1; ?>chartdiv" style="width: auto; height: 500px;">
-        </div>
-
-    <?php echo Functions::widgetClose(); ?>
-
-    <script>
-        var moned = ['SO','DO'];
-        function generarGraficoVenta() {
-            var dataServer = <?php echo json_encode($dataG)?>;
-            var color = '',moneda='',monto=0,monedaD='';
-            var datos = '[';
-            
-            for(var m = 0;m<2;m++){
-                monto = 0;
-                color = simpleScript.getRandomColor();                   
-                moneda = moned[m];
-                if(moneda == 'SO'){
-                    monedaD = "S/";
-                }else if(moneda == 'DO'){
-                    monedaD = "$USD";
-                }
-                for(var i in dataServer){
-                    if(moneda == dataServer[i].id_moneda){
-                        monto = dataServer[i].monto;
-                    }
-                }
-                
-                datos += '{\n\
-                    moneda: "'+monedaD+'",\n\
-                    monto: '+monto+',\n\
-                    color: "'+color+'"\n\
-                },';
-               
-            }
           
-            datos = datos.substring(0, datos.length-1);
-            datos += ']';
-            var chart;
-
-            var chartData = eval(datos);
-            // SERIAL CHART
-            chart = new AmCharts.AmSerialChart();
-            chart.dataProvider = chartData;
-            chart.categoryField = "moneda";
-            chart.type = "serial";
-            chart.theme = "light";
-            // the following two lines makes chart 3D
-            chart.depth3D = 20;
-            chart.angle = 30;
-
-            // AXES
-            // category
-            var categoryAxis = chart.categoryAxis;
-            categoryAxis.labelRotation = 45;
-            categoryAxis.dashLength = 5;
-            categoryAxis.gridPosition = "start";
-
-            // value
-            var valueAxis = new AmCharts.ValueAxis();
-            valueAxis.title = "Montos";
-            valueAxis.dashLength = 5;
-            chart.addValueAxis(valueAxis);
-
-            // GRAPH
-            var graph = new AmCharts.AmGraph();
-            graph.valueField = "monto";
-            graph.colorField = "color";
-            graph.balloonText = "<span style='font-size:14px'>[[category]]: <b>[[value]]</b></span>";
-            graph.type = "column";
-            graph.lineAlpha = 0;
-            graph.fillAlphas = 1;
-            chart.addGraph(graph);
-
-            // CURSOR
-            var chartCursor = new AmCharts.ChartCursor();
-            chartCursor.cursorAlpha = 0;
-            chartCursor.zoomable = false;
-            chartCursor.categoryBalloonEnabled = false;
-            chart.addChartCursor(chartCursor);
-
-            chart.creditsPosition = "top-right";
-
-            // WRITE
-            chart.write("<?php echo VRPT1; ?>chartdiv");
-        }
-        setTimeout(function() {generarGraficoVenta();}, 0);
-    </script>       
-    
+        </div>
+    </div>
+        <div id="<?php echo VRPT1; ?>chartdiv" style="width: auto; height: 400px;">
+        </div>
+   
     
 <?php echo Functions::widgetClose(); ?>

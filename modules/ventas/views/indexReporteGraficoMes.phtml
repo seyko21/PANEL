@@ -1,0 +1,62 @@
+<?php 
+/*
+* ---------------------------------------
+* --------- CREATED BY CREATOR ----------
+* fecha: 20-11-2014 17:11:16 
+* Descripcion : indexReporteGraficoMes.phtml
+* ---------------------------------------
+*/
+$recuperar    = Session::getPermiso("VRPT3RC");
+?>   
+    
+<?php
+    $obj = array(
+        'id' => VRPT3,
+        'title' => VRPT3_1,
+        'height' => 'auto',
+        'padding' => true
+    );
+    echo Functions::widgetOpen($obj);
+        
+    ?>
+
+    <div class="widget-body-toolbar " style="margin:0px; padding:10px ">  
+          <div class="smart-form" style="position: absolute;left:5px;top:15px;width: 65%; padding-top:5px; "> 
+            <label class="label col col-7 pull-left"><?php echo VRPT3_2; ?></label>
+            <label class="input pull-left col col-2" >
+                <input type="text" id="<?php echo VRPT3; ?>txt_periodo" name="<?php echo VRPT3; ?>txt_periodo" value="<?php echo date("Y"); ?>" readonly>
+            </label>
+            <label class="label col col-2 pull-left"><?php echo VRPT3_3; ?></label>
+            <label class="select pull-left">
+               <?php
+                   $datax = reporteGraficoMesController::getMoneda(); 
+                    echo Functions::selectHtml(array(
+                        'data'=>$datax,
+                        'atributes'=>array(
+                            'id'=>VRPT3.'lst_moneda',
+                            'name'=>VRPT3.'lst_moneda'
+                        ),
+                        'etiqueta'=>'descripcion',
+                        'value'=>'id',
+                        'defaultEtiqueta'=>'SO',
+                        'txtSelect'=>false
+                    ));
+                ?>
+                <i></i>
+            </label>
+              
+            <div class="col col-7 pull-left" style="padding-left:30px;" >                      
+                <button id="<?php echo VRPT3; ?>btnRefresh" type="button" style="padding:6px 7px; margin-top:-3px; " 
+                        onclick="reporteGraficoMes.getReporteGraficoMes();"
+                         class="<?php echo $recuperar['theme'];?> btn-sm"  >
+                      <i class="<?php echo $recuperar['icono'];?>"></i> <?php echo $recuperar['accion'];?>
+                 </button>                              
+               </div>
+          
+        </div>
+    </div>
+        <div id="<?php echo VRPT3; ?>chartdiv" style="width: auto; height: 400px;">
+        </div>
+   
+    
+<?php echo Functions::widgetClose(); ?>

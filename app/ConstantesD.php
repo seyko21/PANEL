@@ -50,6 +50,8 @@ define("VSEVE","VSEVE");             /*tab modulo VSEGUIMIENTOVENTA*/
 define("VCSCL","VCSCL");             /*tab modulo VCONSULTASALDO*/
 define("VRPT1","VRPT1");             /*tab modulo REPORTEVENTADIA*/
 define("VRPT2","VRPT2");             /*tab modulo REPORTEVENTAFECHA*/
+define("VRPT3","VRPT3");             /*tab modulo REPORTEGRAFICOMES*/
+define("VRPT4","VRPT4");             /*tab modulo REPORTEPRODUCTOMES*/
 
 
 

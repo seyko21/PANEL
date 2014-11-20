@@ -41,7 +41,9 @@
         VSEVE: '<?php echo VSEVE; ?>',
         VCSCL: '<?php echo VCSCL; ?>',
         VRPT1: '<?php echo VRPT1; ?>',
-        VRPT2: '<?php echo VRPT2; ?>'
+        VRPT2: '<?php echo VRPT2; ?>',
+        VRPT3: '<?php echo VRPT3; ?>',
+        VRPT4: '<?php echo VRPT4; ?>'
     }
 };
 </script>

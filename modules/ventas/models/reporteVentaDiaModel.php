@@ -55,7 +55,7 @@ class reporteVentaDiaModel extends Model{
             ':fecha' => date("Y-m-d")            
         );
         $data = $this->queryAll($query,$parms);
-        
+
         return $data;
     }
     

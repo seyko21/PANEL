@@ -19,7 +19,8 @@ class reporteVentaFechaController extends Controller{
     
     public function getGridReporteVentaFecha(){
         $consultar   = Session::getPermiso('VRPT2CC');
-        
+        $exportarpdf   = Session::getPermiso('VRPT2EP');
+         
         $sEcho          =   $this->post('sEcho');
         
         $rResult = Obj::run()->reporteVentaFechaModel->getReporteVentaFecha();
@@ -44,7 +45,7 @@ class reporteVentaFechaController extends Controller{
                 
                 /*antes de enviar id se encrypta*/
                 $encryptReg = Aes::en($aRow['fecha']);
-                
+                $encryptReg2 = Aes::en($aRow['id_moneda']);
                 
                 /*
                  * configurando botones (add/edit/delete etc)
@@ -53,8 +54,13 @@ class reporteVentaFechaController extends Controller{
                 $axion = '"<div class=\"btn-group\">';
                  
                 if($consultar['permiso']){
-                    $axion .= '<button type=\"button\" class=\"'.$consultar['theme'].'\" title=\"'.$consultar['accion'].'\" onclick=\"reporteVentaFecha.getFormConsultarVenta(this,\''.$encryptReg.'\')\">';
+                    $axion .= '<button type=\"button\" class=\"'.$consultar['theme'].'\" title=\"'.$consultar['accion'].'\" onclick=\"reporteVentaFecha.getFormConsultarVenta(this,\''.$encryptReg.'\',\''.$encryptReg2.'\')\">';
                     $axion .= '    <i class=\"'.$consultar['icono'].'\"></i>';
+                    $axion .= '</button>';
+                }
+                 if($exportarpdf['permiso'] == 1){
+                    $axion .= '<button type=\"button\" class=\"'.$exportarpdf['theme'].'\" title=\"'.$exportarpdf['accion'].'\" onclick=\"reporteVentaFecha.postPDF(this,\''.$encryptReg.'\',\''.$encryptReg2.'\')\">';
+                    $axion .= '    <i class=\"'.$exportarpdf['icono'].'\"></i>';
                     $axion .= '</button>';
                 }
                 

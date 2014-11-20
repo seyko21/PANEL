@@ -1,83 +1,82 @@
 /*
 * ---------------------------------------
 * --------- CREATED BY CREATOR ----------
-* fecha: 19-11-2014 22:11:59 
-* Descripcion : reporteVentaDia.js
+* fecha: 20-11-2014 17:11:16 
+* Descripcion : reporteGraficoMes.js
 * ---------------------------------------
 */
-var reporteVentaDia_ = function(){
+var reporteGraficoMes_ = function(){
     
     /*metodos privados*/
     var _private = {};
     
-    _private.idReporteVentaDia = 0;
-    _private.dataServer = {};
+    _private.idReporteGraficoMes = 0;
+    
     _private.config = {
-        modulo: "ventas/reporteVentaDia/"
+        modulo: "ventas/reporteGraficoMes/"
     };
 
     /*metodos publicos*/
     this.publico = {};
     
-    /*crea tab : ReporteVentaDia*/
+    /*crea tab : ReporteGraficoMes*/
     this.publico.main = function(element){
         simpleScript.addTab({
-            id : diccionario.tabs.VRPT1,
+            id : diccionario.tabs.VRPT3,
             label: $(element).attr("title"),
             fnCallback: function(){
-                reporteVentaDia.getContenido();
+                reporteGraficoMes.getContenido();
             }
         });
     };
     
-    /*contenido de tab: ReporteVentaDia*/
+    /*contenido de tab: ReporteGraficoMes*/
     this.publico.getContenido = function(){
         simpleAjax.send({
             dataType: "html",
             root: _private.config.modulo,
             fnCallback: function(data){
-                $("#"+diccionario.tabs.VRPT1+"_CONTAINER").html(data);
-                reporteVentaDia.getGraficoReporteVentaDia();
+                $("#"+diccionario.tabs.VRPT3+"_CONTAINER").html(data);
+                reporteGraficoMes.getReporteGraficoMes();
             }
         });
     };
     
-    this.publico.getGraficoReporteVentaDia = function (){
-        var moned = ['SO','DO'];
+    this.publico.getReporteGraficoMes = function (){
+        var mes = ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];        
         var montoArray = {};
-        var monedaArray = {};
+        var mesArray = {};
+        
+        
+        var idMoneda = $("#"+diccionario.tabs.VRPT3+"lst_moneda").val();
+        var periodo =  $("#"+diccionario.tabs.VRPT3+"txt_periodo").val();
         
         simpleAjax.send({            
-            root: _private.config.modulo + 'getGraficoVentaDia',            
+            root: _private.config.modulo + 'getGrafico',  
+            data: '&_idMoneda='+idMoneda+'&_periodo='+periodo,
             fnCallback: function(data) {
                 for(var i in data){
                        montoArray[i] = data[i].monto;
-                       monedaArray[i] = data[i].id_moneda;
+                       mesArray[i] = data[i].mes;
                 }
-                var color = '',moneda='',monto=0,monedaD='';
+                var color = '',mees='',monto=0;
                 var datos = '[';
 
-                for(var m = 0;m<2;m++){
-                    monto = 0;
-                    color = simpleScript.getRandomColor();                   
-                    moneda = moned[m];
-                    if(moneda == 'SO'){
-                        monedaD = "S/";
-                    }else if(moneda == 'DO'){
-                        monedaD = "$USD";
-                    }
-                    for(var i in montoArray){                
-                        if(moneda == monedaArray[i]){
+                for(var m = 0;m<12;m++){
+                    monto = 0;                             
+                    mees = mes[m];
+                    color = simpleScript.getRandomColor();  
+                    for(var i in montoArray){
+                        if((m+1) == mesArray[i]){
                             monto = montoArray[i];
                         }
                     }
 
                     datos += '{\n\
-                        moneda: "'+monedaD+'",\n\
+                        mes: "'+mees+'",\n\
                         monto: '+monto+',\n\
                         color: "'+color+'"\n\
                     },';
-
                 }
 
                 datos = datos.substring(0, datos.length-1);
@@ -88,7 +87,7 @@ var reporteVentaDia_ = function(){
                 // SERIAL CHART
                 chart = new AmCharts.AmSerialChart();
                 chart.dataProvider = chartData;
-                chart.categoryField = "moneda";
+                chart.categoryField = "mes";
                 chart.type = "serial";
                 chart.theme = "light";
                 // the following two lines makes chart 3D
@@ -128,7 +127,7 @@ var reporteVentaDia_ = function(){
                 chart.creditsPosition = "top-right";
 
                 // WRITE
-                chart.write(diccionario.tabs.VRPT1+"chartdiv");
+                chart.write(diccionario.tabs.VRPT3+"chartdiv");
             }
         });                        
     };
@@ -138,4 +137,4 @@ var reporteVentaDia_ = function(){
     return this.publico;
     
 };
-var reporteVentaDia = new reporteVentaDia_();
+var reporteGraficoMes = new reporteGraficoMes_();

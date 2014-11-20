@@ -19,7 +19,8 @@ class reporteVentaDiaController extends Controller{
     
     public function getGraficoVentaDia() {
         $data = Obj::run()->reporteVentaDiaModel->getGraficoVentaDia();
-        return $data;
+        echo json_encode($data);
+        
     }
     
 }
