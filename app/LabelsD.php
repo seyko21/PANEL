@@ -317,5 +317,11 @@ define ('VCSCL_2','Todos');
 define ('VCSCL_3','Pagados');
 define ('VCSCL_4','Saldo');
 
+/*----------------------Reportes ----------------------*/
+define ('VRPT1_1','Ventas por día');
+define ('VRPT1_2','Fecha :');
+define ('VRPT2_1','Ventas por Fecha');
+
+
 
 ?>

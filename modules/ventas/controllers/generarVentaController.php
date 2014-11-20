@@ -243,7 +243,7 @@ class generarVentaController extends Controller{
           </tr>
           <tr>
             <td><strong>Cliente:</strong></td>
-            <td colspan="5">'.$dataC['cliente'].'</td>
+            <td colspan="5">'.strtoupper($dataC['cliente']).'</td>
           </tr>
           <tr>         
             <td width="20%"><strong>Moneda:</strong></td>
@@ -276,13 +276,15 @@ class generarVentaController extends Controller{
             $html .= '<tr>
                 <td style="text-align:center">'.($i++).'</td>
                 <td>'.$value['descripcion'].'</td>
-                <td>'.$value['sigla'].'</td>                    
+                <td style="text-align:center">'.$value['sigla'].'</td>                    
                 <td style="text-align:center">'.$cantidad.'</td>
                 <td style="text-align:right">'.$mon.number_format($value['precio'],2).'</td>
                 <td style="text-align:right">'.$mon.number_format($value['importe'],2).'</td>
             </tr>';
         }    
-        $html .= '<tr><td colspan="5"></td><td class="totales" style="text-align:right; font-weight:bold;">'.$mon.number_format($dataC['monto_importe'],2).'</td></tr>';
+        $html .= '<tr><td colspan="4"></td><td>Total:</td><td class="totales" style="text-align:right; font-weight:bold;">'.$mon.number_format($dataC['monto_importe'],2).'</td></tr>';
+        $html .= '<tr><td colspan="4"></td><td>A cuenta:</td><td style="text-align:right; font-weight:bold;">'.$mon.number_format($dataC['monto_asignado'],2).'</td></tr>';
+        $html .= '<tr><td colspan="4"></td><td>Saldo:</td><td  style="text-align:right; font-weight:bold;">'.$mon.number_format($dataC['monto_saldo'],2).'</td></tr>';
         
         $html .='</table>';
         $html .= '<h4>Observación </h4>';

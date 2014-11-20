@@ -48,6 +48,8 @@ define("VGEVE","VGEVE");             /*tab modulo Generar Venta*/
 define("VRECL","VRECL");             /*tab modulo VCLIENTE*/
 define("VSEVE","VSEVE");             /*tab modulo VSEGUIMIENTOVENTA*/
 define("VCSCL","VCSCL");             /*tab modulo VCONSULTASALDO*/
+define("VRPT1","VRPT1");             /*tab modulo REPORTEVENTADIA*/
+define("VRPT2","VRPT2");             /*tab modulo REPORTEVENTAFECHA*/
 
 
 

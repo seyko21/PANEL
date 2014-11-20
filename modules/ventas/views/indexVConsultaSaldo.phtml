@@ -20,7 +20,7 @@ echo Functions::widgetOpen(array(
             <select style="width: 100px;" id="<?php echo VCSCL; ?>lst_tiposearch" name="<?php echo VCSCL_2; ?>lst_tiposearch" onchange="vConsultaSaldo.getGridVConsultaSaldo();">
                 <option value="T"><?php echo VCSCL_2; ?></option>
                 <option value="P"><?php echo VCSCL_3; ?></option>              
-                <option value="S"><?php echo VCSCL_4; ?></option>                 
+                <option value="S" selected ><?php echo VCSCL_4; ?></option>                 
             </select>
             <i></i>
         </label>
@@ -64,3 +64,18 @@ echo Functions::widgetOpen(array(
         <table id="<?php echo VCSCL; ?>gridVConsultaSaldo" class="table table-striped table-hover table-condensed" style="width:100%"></table>
     </form>
 <?php echo Functions::widgetClose(); ?>
+<script>
+
+    simpleScript.setEvent.dateRange({
+        ini: '#<?php echo VCSCL; ?>txt_f1',
+        fin: '#<?php echo VCSCL; ?>txt_f2',
+        opt: 'minDate'
+    });
+    
+    simpleScript.setEvent.dateRange({
+        ini: '#<?php echo VCSCL; ?>txt_f2',
+        fin: '#<?php echo VCSCL; ?>txt_f1',
+        opt: 'maxDate'
+    });       
+    
+</script>

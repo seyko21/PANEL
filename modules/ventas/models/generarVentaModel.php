@@ -189,7 +189,7 @@ class generarVentaModel extends Model{
     
     public function anularGenerarVentaAll(){
         foreach ($this->_chkdel as $value) {
-            $query = "UPDATE ven_documento SET estado = 'A' WHERE id_docventa = :idVenta; ";
+            $query = "call sp_ventaAnulacion(:idVenta); ";
             $parms = array(
                 ':idVenta' => AesCtr::de($value)
             );
@@ -236,7 +236,9 @@ class generarVentaModel extends Model{
             d.`monto_importe`,
             d.`tipo_doc`,
             d.`observacion`,
-            d.estado
+            d.estado,
+            d.`monto_asignado`,
+            d.`monto_saldo`
           FROM `ven_documento` d
           WHERE d.`id_docventa` = :idVenta; ";
         

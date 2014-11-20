@@ -1,4 +1,6 @@
 <?php
+date_default_timezone_set('America/Lima');
+setlocale(LC_ALL,"es_ES@euro","es_ES","esp");
 define('DS',DIRECTORY_SEPARATOR);
 define('ROOT',  realpath(dirname(__FILE__)) . DS);
 
