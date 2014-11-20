@@ -214,6 +214,7 @@ class generarCotizacionController extends Controller{
         
         $mail->AddAddress($emailCliente, $cliente);
         $mail->AddBCC($emailEmpresa, $empresa);
+        $mail->AddBCC($emailUser, $vendedor);
         $mail->Subject    = "Cotizacion Nro: ".$numCotizacion;
         
         $mail->MsgHTML($body);
@@ -379,7 +380,7 @@ class generarCotizacionController extends Controller{
         }    
         $html .= '<tr><td colspan="5"></td><td>'.LABEL_13.':</td><td style="text-align:right">S/.'.number_format($data[0]['subtotal'],2).'</td></tr>';
         $html .= '<tr><td colspan="5"></td><td>'.LABEL_GNC6.' '.(number_format($data[0]['pigv']*100)).'%:</td><td style="text-align:right">S/.'.number_format($data[0]['impuesto'],2).'</td></tr>';
-        $html .= '<tr><td colspan="6"></td><td class="totales" style="text-align:right; font-weight:bold;">S/.'.number_format($data[0]['total'],2).'</td></tr>';
+        $html .= '<tr><td colspan="5"></td><td>Total:</td><td class="totales" style="text-align:right; font-weight:bold;">S/.'.number_format($data[0]['total'],2).'</td></tr>';
         
         $html .='</table>';
                            
