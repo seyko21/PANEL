@@ -62,7 +62,11 @@ class generarVentaController extends Controller{
                 }
                 $nombre = $aRow['nombre_descripcion'];
                     
-                $saldo = number_format($aRow['monto_saldo'],2);
+                 if($aRow['monto_saldo'] > 0 && $aRow['estado'] == 'E'){
+                    $saldo = '<span class=\"badge bg-color-red\">'.number_format($aRow['monto_saldo'],2).'</span>';
+                }else{
+                    $saldo = number_format($aRow['monto_saldo'],2);
+                }
                 /*datos de manera manual*/
                 $sOutput .= '["'.$chk.'","'.$aRow['codigo_impresion'].'","'.$nombre.'","'.$tipoDoc.'","'.  Functions::cambiaf_a_normal($aRow['fecha']).'","'.$aRow['moneda'].'","'.number_format($aRow['monto_total'],2).'","'.$saldo.'","'.$estado.'", ';
                 
@@ -173,7 +177,7 @@ class generarVentaController extends Controller{
         $mpdf->SetHTMLFooter('<table width="100%" style="vertical-align: bottom; font-family: serif; font-size: 8pt; color: #000000; font-weight: bold;"><tr>
                                 <td width="33%"><span style="font-weight: bold;">{DATE j-m-Y}</span></td>
                                 <td width="33%" align="center" style="font-weight: bold;">{PAGENO}/{nbpg}</td>
-                                <td width="33%" style="text-align: right; ">SEVEND.pe</td>
+                                <td width="33%" style="text-align: right; ">'.LB_EMPRESA2.'</td>
                              </tr></table>');
                 
         $html = $this->getHtmlGenerarVenta($mpdf);         
@@ -214,7 +218,7 @@ class generarVentaController extends Controller{
            #td2 td{font-size:10px;height:25px;}           
         </style>';
         
-        $mon = $dataC['moneda'];
+        $mon = $dataC['moneda'].' ';
         
         switch ($dataC['estado']){
             case 'E': $estado = 'Emitido'; break;
@@ -227,7 +231,6 @@ class generarVentaController extends Controller{
             case 'F': $tipoDoc = 'Factura'; break;
         }
         $nom = $dataC['nombre_descripcion'];
-        if($nom == '') $nom = '- Sin Descripción -';
         
         $html .='<table width="100%" border="0" cellpadding="5" cellspacing="3">
           <tr bgcolor="#901D78">

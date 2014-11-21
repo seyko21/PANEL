@@ -73,7 +73,12 @@ class vseguimientoventaController extends Controller{
                 $axion .= ' </div>" ';
                 
                 /*registros a mostrar*/
-                $saldo = '<span class=\"badge bg-color-red\">'.number_format($aRow['monto_saldo'],2).'</span>';
+                if($aRow['monto_saldo'] > 0){
+                    $saldo = '<span class=\"badge bg-color-red\">'.number_format($aRow['monto_saldo'],2).'</span>';
+                }else{
+                    $saldo = number_format($aRow['monto_saldo'],2);
+                }
+                
                 $nombre = $aRow['nombre_descripcion'];
 
                 $sOutput .= '["'.($num++).'","'.$aRow['codigo_impresion'].'","'.$nombre.'","'.  Functions::cambiaf_a_normal($aRow['fecha']).'","'.$aRow['moneda'].'","'.number_format($aRow['monto_total'],2).'","'.$saldo.'","'.$estado.'",'.$axion.' ';

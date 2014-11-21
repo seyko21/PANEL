@@ -24,7 +24,8 @@ class loginController extends Controller{
             /*los roles*/
             Session::set('sys_roles', Obj::run()->loginModel->getRoles());
             
-            $rol = Session::get('sys_roles');
+            $rol = Session::get('sys_roles');            
+            
             /*asignando rol por defecto*/
             Session::set('sys_defaultRol',$rol[0]['id_rol']);
                         

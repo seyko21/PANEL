@@ -6,6 +6,7 @@
  * Descripcion : todas las etiquetas del sistema
  */
 define('LB_EMPRESA','SEVEND Marketing');
+define('LB_EMPRESA2','SEVEND Diseño');
 
 define('LABEL_REDSOCIAL','- Redes Sociales -');
 define('URL_FACEBOOK','http://fb.com/sevendcorp');

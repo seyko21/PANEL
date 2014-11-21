@@ -11,6 +11,8 @@ var reporteVentaFecha_ = function(){
     var _private = {};
     
     _private.idReporteVentaFecha = 0;
+    _private.fecha = '';
+    _private.moneda = '';
     
     _private.config = {
         modulo: "ventas/reporteVentaFecha/"
@@ -57,10 +59,11 @@ var reporteVentaFecha_ = function(){
             iDisplayLength: 10,            
             aoColumns: [
                 {sTitle: "N°", sWidth: "1%",bSortable: false},              
-                {sTitle: "Fecha", sWidth: "15%", sClass: "center"},
+                {sTitle: "Fecha", sWidth: "10%", sClass: "center"},
                 {sTitle: "Numero Documentos", sWidth: "15%", sClass: "center"},
                 {sTitle: "Moneda", sWidth: "20%"},
-                {sTitle: "Total Ingresado", sWidth: "15%", sClass: "right"},
+                {sTitle: "Ingresado", sWidth: "10%", sClass: "right"},
+                {sTitle: "Saldo", sWidth: "10%", sClass: "right"},
                 {sTitle: "Acciones", sWidth: "8%", sClass: "center", bSortable: false}
             ],
             aaSorting: [[1, "asc"]],
@@ -86,20 +89,113 @@ var reporteVentaFecha_ = function(){
         setup_widgets_desktop();
     };
     
-    this.publico.getFormConsultaVenta = function(btn){
+    this.publico.getGridConsultaVentaFecha = function (){       
+        
+        var oTable = $("#"+diccionario.tabs.VRPT2+"gridConsultaVenta").dataTable({
+            bFilter:false,
+            bProcessing: true,
+            bServerSide: true,
+            bDestroy: true,
+            sPaginationType: "bootstrap_full", //two_button
+            sServerMethod: "POST",
+            bPaginate: true,
+            iDisplayLength: 10,            
+            aoColumns: [
+                {sTitle: "N°", sWidth: "1%",bSortable: false},
+                {sTitle: "Código", sWidth: "7%"},
+                {sTitle: "Cliente", sWidth: "20%"},
+                {sTitle: "Moneda", sWidth: "7%"},                                
+                {sTitle: "Total", sWidth: "11%",  sClass: "right"},  
+                {sTitle: "Pagado", sWidth: "11%",  sClass: "right"},
+                {sTitle: "Saldo", sWidth: "11%",  sClass: "right"},
+                {sTitle: "Acciones", sWidth: "10%", sClass: "center", bSortable: false} 
+            ],
+            aaSorting: [[2, "asc"]],
+            sScrollY: "150px",
+            sAjaxSource: _private.config.modulo+"getGridConsultaVentaFecha",       
+            fnServerParams: function(aoData) {
+                aoData.push({"name": "_fecha", "value": _private.fecha });
+                aoData.push({"name": "_moneda", "value": _private.moneda });
+            },
+            fnDrawCallback: function(){
+                /*para hacer evento invisible*/
+                simpleScript.removeAttr.click({
+                    container: "#widget_"+diccionario.tabs.VCSCL,
+                    typeElement: "button"
+                });               
+            }
+        });
+        setup_widgets_desktop();
+    };    
+    
+    this.publico.getFormConsultaVenta = function(btn,fecha,moneda){
+        _private.fecha = fecha;
+        _private.moneda = moneda;
         simpleAjax.send({
             element: btn,
             dataType: "html",
             root: _private.config.modulo + "getFormConsultaVenta",
+            data:'&_fecha='+_private.fecha+'&_moneda='+_private.moneda,
             fnCallback: function(data){
                 $("#cont-modal").append(data);  /*los formularios con append*/
                 $("#"+diccionario.tabs.VRPT2+"formConsultaVenta").modal("show");
+                 setTimeout(function(){                    
+                    reporteVentaFecha.getGridConsultaVentaFecha()
+                }, 500);
             }
         });
     };
     
-   
+    this.publico.postPDFVenta = function(btn,id,cod){
+        simpleAjax.send({
+            element: btn,
+            root: _private.config.modulo + 'postPDFUnaVenta',
+            data: '&_idVenta='+id+'&_cod='+cod,
+            fnCallback: function(data) {
+                if(parseInt(data.result) === 1){
+                    $('#'+diccionario.tabs.VRPT2+'btnDowPDF').off('click');
+                    $('#'+diccionario.tabs.VRPT2+'btnDowPDF').attr("onclick","window.open('public/files/"+data.archivo+"','_blank');generarCotizacion.deleteArchivo('"+data.archivo+"');");
+                    $('#'+diccionario.tabs.VRPT2+'btnDowPDF').click();
+                }
+            }
+        });
+    }; 
     
+    
+    this.publico.postPDF = function(btn,f,m){
+        simpleAjax.send({
+            element: btn,
+            root: _private.config.modulo + 'postPDF',
+            data: '&_fecha='+f+'&_moneda='+m,
+            fnCallback: function(data) {
+                if(parseInt(data.result) === 1){
+                    $('#'+diccionario.tabs.VRPT2+'btnDowPDF').off('click');
+                    $('#'+diccionario.tabs.VRPT2+'btnDowPDF').attr("onclick","window.open('public/files/"+data.archivo+"','_blank');generarCotizacion.deleteArchivo('"+data.archivo+"');");
+                    $('#'+diccionario.tabs.VRPT2+'btnDowPDF').click();
+                }
+            }
+        });
+    };
+    
+    this.publico.postExcel = function(btn,f,m){
+        simpleAjax.send({
+            element: btn,
+            root: _private.config.modulo + 'postExcel',
+            data: '&_fecha='+f+'&_moneda='+m,
+            fnCallback: function(data) {
+                if(parseInt(data.result) === 1){
+                    $('#'+diccionario.tabs.VRPT2+'btnDowExcel').off('click');
+                    $('#'+diccionario.tabs.VRPT2+'btnDowExcel').attr("onclick","window.open('public/files/"+data.archivo+"','_self');generarCotizacion.deleteArchivo('"+data.archivo+"');");
+                    $('#'+diccionario.tabs.VRPT2+'btnDowExcel').click();
+                }
+                if(!isNaN(data.result) && parseInt(data.result) === 2){
+                    simpleScript.notify.error({
+                        content: 'Ocurrió un error al exportar Venta.'
+                    });
+                }
+            }
+        });
+    };    
     return this.publico;
     
 };

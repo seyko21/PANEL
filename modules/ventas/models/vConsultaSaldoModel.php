@@ -72,7 +72,7 @@ class vConsultaSaldoModel extends Model{
         return $data;
     }
     
-
+   
 }
 
 ?>

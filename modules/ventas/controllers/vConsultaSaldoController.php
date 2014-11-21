@@ -78,7 +78,7 @@ class vConsultaSaldoController extends Controller{
                 $nombre = $aRow['nombre_descripcion'];
                 $pagado = number_format($aRow['monto_asignado'],2);
                 /*registros a mostrar*/
-                $sOutput .= '["'.($num++).'","'.$aRow['codigo_impresion'].'","'.$nombre.'","'.  Functions::cambiaf_a_normal($aRow['fecha']).'","'.$aRow['moneda'].'","'.number_format($aRow['monto_total'],2).'","'.$pagado.'","'.$saldo.'","'.$estado.'",'.$axion.' ';;
+                $sOutput .= '["'.($num++).'","'.$aRow['codigo_impresion'].'","'.$nombre.'","'.  Functions::cambiaf_a_normal($aRow['fecha']).'","'.$aRow['moneda'].'","'.number_format($aRow['monto_total'],2).'","'.$pagado.'","'.$saldo.'","'.$estado.'",'.$axion.' ';
 
                 $sOutput .= '],';
 
