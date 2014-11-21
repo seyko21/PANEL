@@ -108,11 +108,8 @@ $buscar = Session::getPermiso('GNCOTBS');
     </script>
 <?php endif; ?>
 <script>
-//        $("[rel=popover-hover]").popover({
-//            trigger : "hover"
-//        });
+
     $('#<?php echo T8; ?>formGenerarCotizacion').validate({
-        // Rules for form validation
         rules: {
             <?php echo T8; ?>txt_idpersona: {
                 required: true
@@ -134,7 +131,6 @@ $buscar = Session::getPermiso('GNCOTBS');
                 maxlength: 3
             }        
         },
-        // Do not change code below
         errorPlacement: function(error, element) {
             error.insertAfter(element.parent());
         },

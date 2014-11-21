@@ -52,8 +52,7 @@ class tipoConceptoController extends Controller{
                 }                                
                 
                 $chk = '<input id=\"c_'.(++$key).'\" type=\"checkbox\" name=\"'.T5.'chk_delete[]\" value=\"'.$encryptReg.'\">';
-//                $chk = str_replace(chr(10), "", $chk);
-//                $chk = str_replace(chr(13), "", $chk);
+
                 
                 /*datos de manera manual*/
                 $sOutput .= '["'.$chk.'","'.$aRow['descripcion'].'","'.$estado.'", ';
@@ -69,11 +68,7 @@ class tipoConceptoController extends Controller{
                     $sOutput .= '    <i class=\"'.$editar['icono'].'\"></i>';
                     $sOutput .= '</button>';
                 }
-//                if($eliminar['permiso'] == 1){
-//                    $sOutput .= '<button type=\"button\" class=\"'.$eliminar['theme'].'\" title=\"'.$eliminar['accion'].'\" onclick=\"tipoConcepto.postDeleteTipoConcepto(\''.$encryptReg.'\')\">';
-//                    $sOutput .= '    <i class=\"'.$eliminar['icono'].'\"></i>';
-//                    $sOutput .= '</button>';
-//                }
+
                 
                 $sOutput .= ' </div>" ';
 

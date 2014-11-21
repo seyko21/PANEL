@@ -134,7 +134,6 @@ $data = conceptoController::getConcepto();
 <?php endif; ?>
 <script>
     $('#<?php echo T6; ?>formConcepto').validate({
-        // Rules for form validation
         rules : {
                 <?php echo T6; ?>lst_tipoconcento : {
                         required : true
@@ -149,8 +148,7 @@ $data = conceptoController::getConcepto();
                         maxlength: 10
                 }        
         },
-
-        // Do not change code below
+        
         errorPlacement : function(error, element) {
                 error.insertAfter(element.parent());
         },

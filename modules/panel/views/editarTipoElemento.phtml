@@ -67,7 +67,6 @@ $tipa = tipoPanelController::getTipoPanel();
 <?php endif; ?>
 <script>
     $('#<?php echo T101; ?>formTipoPanel').validate({
-        // Rules for form validation
         rules : {
                 <?php echo T101; ?>txt_descripcion : {
                         required : true,
@@ -75,8 +74,6 @@ $tipa = tipoPanelController::getTipoPanel();
                         minlength: 3
                 }
         },
-
-        // Do not change code below
         errorPlacement : function(error, element) {
                 error.insertAfter(element.parent());
         },

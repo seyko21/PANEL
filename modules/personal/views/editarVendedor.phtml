@@ -235,7 +235,6 @@ $data = registrarVendedorController::findVendedor();
 <?php endif; ?>
 <script>
     $('#<?php echo T7; ?>formVendedor').validate({
-        // Rules for form validation
         rules : {
                 <?php echo T7; ?>txt_nombres : {
                         required : true,
@@ -275,7 +274,6 @@ $data = registrarVendedorController::findVendedor();
                 }                
         },
 
-        // Do not change code below
         errorPlacement : function(error, element) {
                 error.insertAfter(element.parent());
         },

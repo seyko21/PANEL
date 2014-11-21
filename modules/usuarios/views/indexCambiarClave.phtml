@@ -45,14 +45,12 @@ $editar = Session::getPermiso('CLAVACT');
 <?php endif; ?>
 <script>
     $('#<?php echo CLAV; ?>indexCambiarClave').validate({
-        // Rules for form validation
         rules: {
             <?php echo CLAV; ?>txt_clave: {
                 required: true,
                 minlength: 3
             }      
         },
-        // Do not change code below
         errorPlacement: function(error, element) {
             error.insertAfter(element.parent());
         },

@@ -223,7 +223,6 @@ $nuevo = Session::getPermiso('TIPANEW');
            
     $('.xhelp').tooltip({placement: 'right'});
     $('#<?php echo T102; ?>formFichaTecnica').validate({
-        // Rules for form validation
         rules: {
             <?php echo T102; ?>txt_ubicacion : {
                 required: true,
@@ -254,14 +253,12 @@ $nuevo = Session::getPermiso('TIPANEW');
                 required: true
             } 
         },
-        // Do not change code below
         errorPlacement: function(error, element) {
             error.insertAfter(element.parent());
         },
         submitHandler: function() {
             
            fichaTecnica.postNuevoFichaTecnica();
-           //valores por defecto:
               setTimeout(function() {
                 $("#<?php echo T102; ?>txt_direccion").val('Chimbote, Perú');
                 $("#<?php echo T102; ?>txt_ancho").val('10');

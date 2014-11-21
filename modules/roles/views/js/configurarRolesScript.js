@@ -5,7 +5,6 @@ var configurarRolesScript_ = function(){
    
    this.public.validateRol = function(obj){
         $(obj.form).validate({
-            // Rules for form validation
             rules : {
                     CRDCRtxt_rol : {
                             required : true,
@@ -14,15 +13,13 @@ var configurarRolesScript_ = function(){
                     }
             },
 
-            // Messages for form validation
             messages : {
                     CRDCRtxt_rol : {
                             required : 'Rol requerido',
                             regular: 'No se permite caracteres inválidos'
                     }
             },
-
-            // Do not change code below
+            
             errorPlacement : function(error, element) {
                     error.insertAfter(element.parent());
             },

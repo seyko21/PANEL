@@ -6,7 +6,6 @@ var loginScript_ = function(){
     
     this.public.validate = function(){
         $("#login-form").validate({
-            // Rules for form validation
             rules : {
                     txtUser : {
                             required : true,
@@ -19,7 +18,6 @@ var loginScript_ = function(){
                     }
             },
 
-            // Messages for form validation
             messages : {
                     txtEmail : {
                             required : 'Ingrese su correo'
@@ -29,7 +27,6 @@ var loginScript_ = function(){
                     }
             },
 
-            // Do not change code below
             errorPlacement : function(error, element) {
                     error.insertAfter(element.parent());
             },

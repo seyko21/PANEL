@@ -97,7 +97,6 @@ $data = configurarMenuController::getOpcion($this->_idOpcion);
 <script>
     $('.xhelp').tooltip({placement:'right'});
     $('#<?php echo T3; ?>formEditarOpcion').validate({
-        // Rules for form validation
         rules : {
                 <?php echo T3; ?>txt_opcion : {
                         required : true,
@@ -122,7 +121,6 @@ $data = configurarMenuController::getOpcion($this->_idOpcion);
                 }
         },
 
-        // Do not change code below
         errorPlacement : function(error, element) {
                 error.insertAfter(element.parent());
         },

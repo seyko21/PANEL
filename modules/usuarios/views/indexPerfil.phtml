@@ -107,7 +107,6 @@ $data = Obj::run()->perfilController->findMiPerfil();
 <?php endif; ?>
 <script>
     $('#<?php echo PERF; ?>indexPerfil').validate({
-        // Rules for form validation
         rules: {
             <?php echo PERF; ?>txt_nombres: {
                 required: true
@@ -126,7 +125,6 @@ $data = Obj::run()->perfilController->findMiPerfil();
                 email: true
             }       
         },
-        // Do not change code below
         errorPlacement: function(error, element) {
             error.insertAfter(element.parent());
         },

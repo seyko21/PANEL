@@ -68,11 +68,6 @@ class conceptoController extends Controller{
                     $sOutput .= '    <i class=\"'.$editar['icono'].'\"></i>';
                     $sOutput .= '</button>';
                 }
-//                if($eliminar['permiso'] == 1){
-//                    $sOutput .= '<button type=\"button\" class=\"'.$eliminar['theme'].'\" title=\"'.$eliminar['accion'].'\" onclick=\"tipoConcepto.postDeleteTipoConcepto(\''.$encryptReg.'\')\">';
-//                    $sOutput .= '    <i class=\"'.$eliminar['icono'].'\"></i>';
-//                    $sOutput .= '</button>';
-//                }
                 
                 $sOutput .= ' </div>" ';
 

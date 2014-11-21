@@ -50,17 +50,8 @@ $buscar = Session::getPermiso('CUSBS');
     </script>
 <?php endif; ?>
 <script>
-    $('#<?php echo T8; ?>formBuscarCliente').validate({
-            // Rules for form validation
-//            rules : {
-//                    <?php echo T8; ?>txt_search : {
-//                            required : true,
-//                            regular: true,
-//                            minlength: 3
-//                    }
-//            },
+    $('#<?php echo T8; ?>formBuscarCliente').validate({          
 
-            // Do not change code below
             errorPlacement : function(error, element) {
                     error.insertAfter(element.parent());
             },

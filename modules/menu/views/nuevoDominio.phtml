@@ -84,7 +84,6 @@ $grabar = Session::getPermiso('MNUGR');
 <script>
     $('.xhelp').tooltip({placement:'right'});
     $('#<?php echo T3; ?>formNuevoDominio').validate({
-        // Rules for form validation
         rules : {
                 <?php echo T3; ?>txt_dominio : {
                         required : true,
@@ -103,7 +102,6 @@ $grabar = Session::getPermiso('MNUGR');
                 }
         },
 
-        // Do not change code below
         errorPlacement : function(error, element) {
                 error.insertAfter(element.parent());
         },

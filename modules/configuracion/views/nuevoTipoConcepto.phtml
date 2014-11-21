@@ -63,7 +63,6 @@ $grabar = Session::getPermiso('TICNGR');
 <?php endif; ?>
 <script>
     $('#<?php echo T5; ?>formTipoConcepto').validate({
-        // Rules for form validation
         rules : {
                 <?php echo T5; ?>txt_descripcion : {
                         required : true,
@@ -72,7 +71,6 @@ $grabar = Session::getPermiso('TICNGR');
                 }
         },
 
-        // Do not change code below
         errorPlacement : function(error, element) {
                 error.insertAfter(element.parent());
         },

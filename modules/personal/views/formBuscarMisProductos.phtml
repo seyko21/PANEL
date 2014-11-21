@@ -51,7 +51,6 @@ $buscar = Session::getPermiso('REGVEBS');
 <?php endif; ?>
 <script>
     $('#<?php echo T7; ?>formBuscarProducto').validate({
-            // Rules for form validation
             rules : {
                     <?php echo T7; ?>txt_search : {
                             required : true,
@@ -60,7 +59,6 @@ $buscar = Session::getPermiso('REGVEBS');
                     }
             },
 
-            // Do not change code below
             errorPlacement : function(error, element) {
                     error.insertAfter(element.parent());
             },

@@ -51,16 +51,7 @@ $buscar = Session::getPermiso('APASOBS');
 <?php endif; ?>
 <script>
     $('#<?php echo APASO; ?>formBuscarProductoPanelSocio').validate({
-            // Rules for form validation
-//            rules : {
-//                    <?php echo ORINS; ?>txt_search : {
-//                            required : true,
-//                            regular: true,
-//                            minlength: 3
-//                    }
-//            },
 
-            // Do not change code below
             errorPlacement : function(error, element) {
                     error.insertAfter(element.parent());
             },

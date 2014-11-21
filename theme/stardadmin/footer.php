@@ -67,10 +67,8 @@
 <h1>Your browser is out of date, please update your browser by going to www.microsoft.com/download</h1>
 
 <![endif]-->
-
 <!-- Demo purpose only -->
 <script src="<?php echo $rutaLayout['_js']; ?>demo.js"></script>
-
 <!-- MAIN APP JS FILE -->
 <script src="<?php echo $rutaLayout['_js']; ?>app.js"></script>
 
@@ -87,14 +85,13 @@
 </body>  
 
 <?php
-/* autoload de los js de cada vista */
 Obj::run()->Autoload->js('modules/', true);
 ?>
 <script>
     pageSetUp();
     $('input[type="checkbox"]#smart-fixed-nav').click();
     $('input[type="checkbox"]#smart-fixed-ribbon').click();
-    //$('input[type="checkbox"]#smart-fixed-navigation').click();
+    
 </script>
 
 </html>
@@ -102,9 +99,6 @@ Obj::run()->Autoload->js('modules/', true);
 <?php require_once (ROOT . 'app' . DS . 'ConstantesJsD.php'); ?>
 
 <script>
-//    $.each($('script'),function(){
-//        alert($(this).attr('src'))
-//    });
 
 </script>
 <?php if(Session::get('sys_usuario')):?>
@@ -124,3 +118,4 @@ Obj::run()->Autoload->js('modules/', true);
    //test();
 </script>
 <?php endif; ?>
+<?php  ob_end_flush(); ?>                    

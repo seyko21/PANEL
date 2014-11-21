@@ -73,7 +73,6 @@ $data = asignarCuentaController::findAsignarCuenta();
 <?php endif; ?>
 <script>
     $('#<?php echo ASCU; ?>formEditAsignarCuenta').validate({
-        // Rules for form validation
         rules : {
                 <?php echo ASCU; ?>txt_comision : {
                         required : true,                        
@@ -81,7 +80,6 @@ $data = asignarCuentaController::findAsignarCuenta();
                 }
         },
 
-        // Do not change code below
         errorPlacement : function(error, element) {
                 error.insertAfter(element.parent());
         },

@@ -4,7 +4,6 @@ var accionesScript_ = function(){
     
     this.public.validateAccion = function(obj){
         $(obj.form).validate({
-            // Rules for form validation
             rules : {
                     CRDACtxt_accion : {
                             required : true,
@@ -28,8 +27,7 @@ var accionesScript_ = function(){
                             minlength: 3
                     }
             },
-
-            // Do not change code below
+            
             errorPlacement : function(error, element) {
                     error.insertAfter(element.parent());
             },

@@ -1,3 +1,12 @@
+<?php
+    header ('Content-type: text/html; charset=utf-8');
+    if (DB_ENTORNO == 'P') ob_start("compress");                
+    function compress($buffer) {
+            $buffer = str_replace(array("\r\n", "\r", "\n", "\t", '   ', '    ', '    '), '', $buffer);
+            return $buffer;
+    }
+?>
+
 <!DOCTYPE html>
 <html lang="es">
     <head>
@@ -6,7 +15,7 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
         <meta name="description" content="Simple FW" />
-        <meta name="author" content="RDCC" />
+        <meta name="author" content="Beholia.com" />
         
         <!-- Basic Styles -->
         <link rel="stylesheet" type="text/css" media="screen" href="<?php echo $rutaLayout['_css']; ?>bootstrap.min.css">
@@ -57,3 +66,4 @@
                 <?php if (isset($this->mensaje)): ?>
                     <div id="mensaje-content"><?php echo $this->mensaje; ?></div>
                 <?php endif; ?>
+

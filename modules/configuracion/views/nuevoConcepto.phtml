@@ -134,7 +134,6 @@ $nuevo = Session::getPermiso('TICNNEW');
 <?php endif; ?>
 <script>
     $('#<?php echo T6; ?>formConcepto').validate({
-        // Rules for form validation
         rules : {
                 <?php echo T6; ?>lst_tipoconcento : {
                         required : true
@@ -150,7 +149,6 @@ $nuevo = Session::getPermiso('TICNNEW');
                 }        
         },
 
-        // Do not change code below
         errorPlacement : function(error, element) {
                 error.insertAfter(element.parent());
         },

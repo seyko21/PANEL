@@ -219,7 +219,6 @@ $buscar = Session::getPermiso('REGCLBS');
 <?php endif; ?>
 <script>
     $('#<?php echo REGCL; ?>formNewRepresentante').validate({
-        // Rules for form validation
         rules : {
                 <?php echo REGCL; ?>txt_nombres : {
                         required : true,
@@ -244,7 +243,6 @@ $buscar = Session::getPermiso('REGCLBS');
                 }      
         },
 
-        // Do not change code below
         errorPlacement : function(error, element) {
                 error.insertAfter(element.parent());
         },

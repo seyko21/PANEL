@@ -241,7 +241,6 @@ $data = clienteController::findCliente();
 <?php endif; ?>
 <script>
     $('#<?php echo REGCL; ?>formEditCliente').validate({
-        // Rules for form validation
         rules : {
                 <?php echo REGCL; ?>txt_nombres : {
                         required : true,
@@ -262,7 +261,6 @@ $data = clienteController::findCliente();
                 }
         },
 
-        // Do not change code below
         errorPlacement : function(error, element) {
                 error.insertAfter(element.parent());
         },

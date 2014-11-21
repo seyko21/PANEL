@@ -49,16 +49,7 @@ $buscar = Session::getPermiso('VRECLBS');
 <?php endif; ?>
 <script>
     $('#<?php echo VGEVE; ?>formBuscarCliente').validate({
-            // Rules for form validation
-//            rules : {
-//                    <?php echo VGEVE; ?>txt_search : {
-//                            required : true,
-//                            regular: true,
-//                            minlength: 3
-//                    }
-//            },
 
-            // Do not change code below
             errorPlacement : function(error, element) {
                     error.insertAfter(element.parent());
             },

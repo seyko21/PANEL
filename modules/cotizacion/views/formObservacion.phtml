@@ -52,14 +52,13 @@ $ncoti = Formulario::getParam('_ncoti');
 <?php endif; ?>
 <script>
     $('#<?php echo SEGCO; ?>formObservacion').validate({
-        // Rules for form validation
         rules: {
             <?php echo SEGCO; ?>txt_obs: {
                 required: true,
                 minlength: 2
             }
         },
-        // Do not change code below
+        
         errorPlacement: function(error, element) {
             error.insertAfter(element.parent());
         },

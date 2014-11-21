@@ -14,14 +14,12 @@ var forgotPasswordScript_ = function(){
                         }
                 },
 
-                // Messages for form validation
                 messages : {
                         txtEmail : {
                                 required : 'Ingrese su correo'
                         }
                 },
 
-                // Do not change code below
                 errorPlacement : function(error, element) {
                         error.insertAfter(element.parent());
                 },

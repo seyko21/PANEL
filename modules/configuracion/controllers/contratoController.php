@@ -189,8 +189,7 @@ class contratoController extends Controller{
     }       
     
     public function adjuntarImagen() {
-//        header("Access-Control-Allow-Origin: *");
-//        header('Content-type: application/json');
+
         $p = Obj::run()->contratoModel->_idContrato;
         
         if (!empty($_FILES)) {

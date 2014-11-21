@@ -23,7 +23,7 @@ define('APP_COD_CLIE','0004');
 define('APP_COD_SOCIO','0005');
 define('APP_COD_CAJERO','0006');
 
-define('DB_ENTORNO','D');  /*D=DESARROLLO, P=PRODUCCION*/
+define('DB_ENTORNO','P');  /*D=DESARROLLO, P=PRODUCCION*/
 define('DB_MOTOR','mysql');
 
 define('DB_HOST','localhost');

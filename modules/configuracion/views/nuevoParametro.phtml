@@ -87,7 +87,6 @@ $grabar = Session::getPermiso('PARMGR');
 <?php endif; ?>
 <script>    
     $('#<?php echo T100; ?>formParametro').validate({
-        // Rules for form validation
         rules : {
                 <?php echo T100; ?>txt_nombre : {
                         required : true,
@@ -101,7 +100,6 @@ $grabar = Session::getPermiso('PARMGR');
                 }                        
         },
 
-        // Do not change code below
         errorPlacement : function(error, element) {
                 error.insertAfter(element.parent());
         },

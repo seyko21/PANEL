@@ -116,7 +116,6 @@ $buscar = Session::getPermiso('CUSBS');
 <script>
     $('.xhelp').tooltip({placement: 'right'});
     $('#<?php echo T4; ?>formUsuario').validate({
-        // Rules for form validation
         rules: {
             <?php echo T4; ?>txt_empleado: {
                 required: true
@@ -131,7 +130,6 @@ $buscar = Session::getPermiso('CUSBS');
                 minlength: 2
             }      
         },
-        // Do not change code below
         errorPlacement: function(error, element) {
             error.insertAfter(element.parent());
         },

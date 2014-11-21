@@ -77,7 +77,6 @@ $data = configurarMenuController::getModulo($this->_idModulo);
 <script>
     $('.xhelp').tooltip({placement:'right'});
     $('#<?php echo T3; ?>formEditarModulo').validate({
-        // Rules for form validation
         rules : {
                 <?php echo T3; ?>txt_modulo : {
                         required : true,
@@ -92,7 +91,6 @@ $data = configurarMenuController::getModulo($this->_idModulo);
                 }
         },
 
-        // Do not change code below
         errorPlacement : function(error, element) {
                 error.insertAfter(element.parent());
         },

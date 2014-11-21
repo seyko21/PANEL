@@ -32,10 +32,11 @@ class View{
             if($ajax){
                 /*cuando peticion es via ajax no se necesita el header y el footer*/
                 require_once ($rutaVista);
-            }else{
+            }else{                                                
                 require_once (ROOT . 'theme' . DS . DEFAULT_LAYOUT . DS . 'header.php');
                 require_once ($rutaVista);
                 require_once (ROOT . 'theme' . DS . DEFAULT_LAYOUT . DS . 'footer.php');
+                               
             }
         }else{
             throw new Exception('Error de vista: <b>'.$rutaVista.'</b> no encontrada .');

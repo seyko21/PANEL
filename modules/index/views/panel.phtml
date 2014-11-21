@@ -18,17 +18,16 @@
 
     <script>
         var mes = ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
-        var colores = ['#FF0F00','#FF6600','#FF9E01','#FCD202','#F8FF01','#B0DE09','#04D215','#0D8ECF','#0D52D1','#2A0CD0','#8A0CCF','#CD0D74']
+        var colores = ['#FF0F00','#FF6600','#FF9E01','#FCD202','#F8FF01','#B0DE09','#04D215','#0D8ECF','#0D52D1','#2A0CD0','#8A0CCF','#CD0D74'];
         function generatePageGraphs() {
             var dataServer = <?php echo json_encode($dataG)?>;
             var color = '',mees='',monto=0;
             var datos = '[';
             
             for(var m = 0;m<12;m++){
-                monto = 0;
-                //color = simpleScript.getRandomColor();                   
+                monto = 0;                
                 mees = mes[m];
-                color = colores[m]
+                color = colores[m];
                 for(var i in dataServer){
                     if((m+1) == dataServer[i].mes){
                         monto = dataServer[i].monto;
@@ -47,31 +46,25 @@
             datos += ']';
             var chart;
 
-            var chartData = eval(datos);
-            // SERIAL CHART
+            var chartData = eval(datos);            
             chart = new AmCharts.AmSerialChart();
             chart.dataProvider = chartData;
             chart.categoryField = "mes";
             chart.type = "serial";
-            chart.theme = "light";
-            // the following two lines makes chart 3D
+            chart.theme = "light";            
             chart.depth3D = 20;
             chart.angle = 30;
-
-            // AXES
-            // category
+            
             var categoryAxis = chart.categoryAxis;
             categoryAxis.labelRotation = 45;
             categoryAxis.dashLength = 5;
             categoryAxis.gridPosition = "start";
-
-            // value
+            
             var valueAxis = new AmCharts.ValueAxis();
             valueAxis.title = "Montos";
             valueAxis.dashLength = 5;
             chart.addValueAxis(valueAxis);
-
-            // GRAPH
+            
             var graph = new AmCharts.AmGraph();
             graph.valueField = "monto";
             graph.colorField = "color";
@@ -80,8 +73,7 @@
             graph.lineAlpha = 0;
             graph.fillAlphas = 1;
             chart.addGraph(graph);
-
-            // CURSOR
+            
             var chartCursor = new AmCharts.ChartCursor();
             chartCursor.cursorAlpha = 0;
             chartCursor.zoomable = false;
@@ -89,8 +81,7 @@
             chart.addChartCursor(chartCursor);
 
             chart.creditsPosition = "top-right";
-
-            // WRITE
+   
             chart.write("chartdiv");
         }
         

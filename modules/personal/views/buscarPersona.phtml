@@ -49,14 +49,12 @@
 
 <script>
     $('#<?php echo REGCL; ?>formBuscarPersona').validate({
-            // Rules for form validation
             rules : {
                     <?php echo REGCL; ?>txt_search : {
                             regular2: true                            
                     }
             },
 
-            // Do not change code below
             errorPlacement : function(error, element) {
                     error.insertAfter(element.parent());
             },

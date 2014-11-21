@@ -66,11 +66,6 @@ class parametroController extends Controller{
                     $sOutput .= '    <i class=\"'.$editar['icono'].'\"></i>';
                     $sOutput .= '</button>';
                 }
-//                if($eliminar['permiso'] == 1){
-//                    $sOutput .= '<button type=\"button\" class=\"btn btn-danger btn-xs\" title=\"'.$eliminar['accion'].'\" onclick=\"parametro.postDeleteParametro(\''.$encryptReg.'\')\">';
-//                    $sOutput .= '    <i class=\"fa fa-ban fa-lg\"></i>';
-//                    $sOutput .= '</button>';
-//                }
                 
                 $sOutput .= ' </div>" ';
 

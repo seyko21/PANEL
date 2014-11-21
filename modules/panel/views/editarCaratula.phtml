@@ -93,7 +93,6 @@ $data = fichaTecnicaController::getCaratula();
 </script>
 <script>
     $('#<?php echo T102; ?>formCaratula').validate({
-        // Rules for form validation
         rules : {
                 <?php echo T102; ?>txt_codigo : {
                         required : true,
@@ -110,7 +109,6 @@ $data = fichaTecnicaController::getCaratula();
                 }
         },
 
-        // Do not change code below
         errorPlacement : function(error, element) {
                 error.insertAfter(element.parent());
         },
