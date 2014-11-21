@@ -60,6 +60,10 @@ class indexController extends Controller{
         Obj::run()->View->render('panelSocio');
     }    
     
+    public function getPanelCajero(){
+        Obj::run()->View->render('panelCajero');
+    }  
+    
     public static function getDominios(){
         Obj::run()->View->render('dominios');
     }

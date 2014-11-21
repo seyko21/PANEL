@@ -11,7 +11,7 @@ class reporteVentaDiaModel extends Model{
 
     private $_flag;
     private $_idReporteVentaDia;
-    private $_activo;
+    public  $_fecha;
     private $_usuario;
     
     /*para el grid*/
@@ -29,6 +29,8 @@ class reporteVentaDiaModel extends Model{
         $this->_flag        = Formulario::getParam("_flag");
         $this->_idReporteVentaDia   = Aes::de(Formulario::getParam("_idReporteVentaDia"));    /*se decifra*/
         $this->_usuario     = Session::get("sys_idUsuario");
+        
+        $this->_fecha        =  Aes::de(Formulario::getParam("_fecha"));        
         
         $this->_iDisplayStart  = Formulario::getParam("iDisplayStart"); 
         $this->_iDisplayLength = Formulario::getParam("iDisplayLength"); 
@@ -58,6 +60,37 @@ class reporteVentaDiaModel extends Model{
 
         return $data;
     }
+    
+    public function getListadoVenta(){
+        $query = "
+        SELECT
+            d.`id_docventa`,
+            d.`periodo`,
+            d.`codigo_impresion`,
+            DATE_FORMAT(d.`fecha`,'%d/%m/%Y')AS fecha,
+            d.`id_persona`,
+            (select pp.nombrecompleto from mae_persona pp where pp.id_persona = d.id_persona) as cliente,
+            (select concat(`sigla`,' - ',`descripcion`) from pub_moneda mo where mo.id_moneda = d.`moneda`) as descripcion_moneda,
+            (select `sigla` from pub_moneda mo where mo.id_moneda = d.`moneda`) as moneda,
+            d.moneda as id_moneda,
+            d.`monto_importe`,
+            d.`tipo_doc`,
+            d.`observacion`,
+            d.estado,
+            d.`monto_asignado`,
+            d.`monto_saldo`
+          FROM `ven_documento` d
+          WHERE d.estado = :estado and d.`fecha` = :fecha 
+          order by d.`fecha`, d.moneda desc, d.`codigo_impresion`  ";
+        
+        $parms = array(
+            ':estado'=>  "E",
+            ':fecha'=>  $this->_fecha            
+        );
+        $data = $this->queryAll($query,$parms);      
+        
+        return $data;
+    }    
     
 }
 

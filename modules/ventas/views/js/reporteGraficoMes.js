@@ -49,7 +49,7 @@ var reporteGraficoMes_ = function(){
         
         
         var idMoneda = $("#"+diccionario.tabs.VRPT3+"lst_moneda").val();
-        var periodo =  $("#"+diccionario.tabs.VRPT3+"txt_periodo").val();
+        var periodo =  $("#"+diccionario.tabs.VRPT3+"lst_periodo").val();
         
         simpleAjax.send({            
             root: _private.config.modulo + 'getGrafico',  

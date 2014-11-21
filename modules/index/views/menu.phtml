@@ -140,7 +140,11 @@ endforeach;
                         setTimeout(function() {generatePageGraphs();}, 1000);
                         setTimeout(function(){ saldoCobrar.getGridIndexSaldoCobrar();},1500);                                                                            
                         setTimeout(function(){ panelesAlquilados.getGridIndexPAS();},2000);                        
-             <?php     break;
+             <?php      break;
+                        case APP_COD_CAJERO: ?>                           
+                        setTimeout(function(){ vConsultaSaldo.getGridIndexVConsultaSaldo();},100);
+                        setTimeout(function(){ reporteVentaFecha.getGridIndexVentaFecha();},800);
+              <?php      break;
                     }
             ?>
             setup_widgets_desktop();  

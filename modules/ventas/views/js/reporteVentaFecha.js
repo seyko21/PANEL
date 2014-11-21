@@ -128,6 +128,39 @@ var reporteVentaFecha_ = function(){
         setup_widgets_desktop();
     };    
     
+    this.publico.getGridIndexVentaFecha = function (){
+        var oTable = $('#'+diccionario.tabs.PANP+'gridVentaFecha').dataTable({
+            bProcessing: true,
+            bServerSide: true,
+            bDestroy: true,
+            sPaginationType: "bootstrap_full", //two_button
+            sServerMethod: "POST",
+            bPaginate: true,
+            iDisplayLength: 10,   
+            sSearch: false,
+            bFilter: false,
+            aoColumns: [                                
+                {sTitle: "Fecha", sWidth: "10%", sClass: "center"},
+                {sTitle: "Numero Documentos", sWidth: "15%", sClass: "center"},
+                {sTitle: "Moneda", sWidth: "20%"},
+                {sTitle: "Ingresado", sWidth: "10%", sClass: "right"},
+                {sTitle: "Saldo", sWidth: "10%", sClass: "right"}
+            ],
+            aaSorting: [[0, 'desc']],
+            sScrollY: "125px",
+            sAjaxSource: _private.config.modulo+'getGridIndexVentaFecha',
+            fnDrawCallback: function() {
+              $('#'+diccionario.tabs.PAAL+'gridVentaFecha_refresh').click(function(){
+                   oTable.fnReloadAjax(oTable.fnSettings());
+                }); 
+            },
+            fnInfoCallback: function( oSettings, iStart, iEnd, iMax, iTotal, sPre ) {
+               return '<button id="'+diccionario.tabs.PAAL+'gridVentaFecha_refresh" class="btn btn-primary" title="Actualizar"><i class="fa fa-refresh"></i></button> '+iStart +" al "+ iEnd+' de '+iTotal;
+           }
+        });
+
+    };     
+    
     this.publico.getFormConsultaVenta = function(btn,fecha,moneda){
         _private.fecha = fecha;
         _private.moneda = moneda;

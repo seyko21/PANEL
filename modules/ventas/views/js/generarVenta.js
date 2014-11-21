@@ -69,7 +69,7 @@ var generarVenta_ = function(){
             sScrollY: "350px",
             sAjaxSource: _private.config.modulo+'getGridGenerarVenta',
             fnDrawCallback: function() {
-                $('#'+diccionario.tabs.VGEVE+'gridGenerarVenta_filter').find('input').attr('placeholder','Buscar por Código o Descripción').css('width','400px');               
+                $('#'+diccionario.tabs.VGEVE+'gridGenerarVenta_filter').find('input').attr('placeholder','Buscar por Código o Cliente').css('width','400px');               
                 simpleScript.enterSearch("#"+diccionario.tabs.VGEVE+"gridGenerarVenta",oTable);
                 /*para hacer evento invisible*/
                 simpleScript.removeAttr.click({

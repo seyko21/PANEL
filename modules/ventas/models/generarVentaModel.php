@@ -25,7 +25,6 @@ class generarVentaModel extends Model{
     private $_idPersona;
     private $_moneda;
     private $_tipoDoc;
-    private $_tipoMov;    
     private $_usuario;
     
     private $_cantidad1;
@@ -55,7 +54,6 @@ class generarVentaModel extends Model{
         $this->_idPersona     = Aes::de(Formulario::getParam(VGEVE."txt_idpersona"));
         $this->_moneda     = Formulario::getParam(VGEVE."lst_moneda");
         $this->_tipoDoc     = Formulario::getParam(VGEVE."lst_tipoDoc");
-        $this->_tipoMov     = 'I';
         $this->_montoAsignado     = Functions::deleteComa(Formulario::getParam(VGEVE."txt_pago"));
         
         $this->_idProducto     = Formulario::getParam(VGEVE."hhddIdProducto"); #array
@@ -119,7 +117,6 @@ class generarVentaModel extends Model{
                 . ":montoTotal,"
                 . ":tipoDoc,"
                 . ":obs,"
-                . ":tipoMov,"
                 . ":idProducto,"
                 . ":cant1,"
                 . ":cant2,"
@@ -138,7 +135,6 @@ class generarVentaModel extends Model{
             ':montoTotal'=>$this->_montoTotal,
             ':tipoDoc' => $this->_tipoDoc,
             ':obs' => $this->_observacion,
-            ':tipoMov' => $this->_tipoMov,
             ':idProducto' => '',
             ':cant1' => '',                
             ':cant2' => '',
@@ -163,7 +159,6 @@ class generarVentaModel extends Model{
                     ':montoTotal'=>'',
                     ':tipoDoc' => '',
                     ':obs' => '',
-                    ':tipoMov' => '',
                     ':idProducto' => AesCtr::de($idProducto),
                     ':cant1' => Functions::deleteComa($this->_cantidad1[$key]),                
                     ':cant2' => Functions::deleteComa($this->_cantidad2[$key]),

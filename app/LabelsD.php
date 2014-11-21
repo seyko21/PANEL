@@ -316,12 +316,14 @@ define ('VCSCL_1','Saldo de Clientes');
 define ('VCSCL_2','Todos');
 define ('VCSCL_3','Pagados');
 define ('VCSCL_4','Saldo');
-
+define ('VCSCL_5','Deuda de Clientes');
 /*----------------------Reportes ----------------------*/
 define ('VRPT1_1','Ventas por día');
 define ('VRPT1_2','Fecha :');
 define ('VRPT2_1','Ventas por Fecha');
 define ('VRPT2_2','Detalle de Ventas - Fecha: ');
+define ('VRPT2_3','Dinero Ingresado hace 10 días - Fecha: '.date("d/m/Y"));
+
 
 define ('VRPT3_1','Ingresos por Meses por Periodo y Moneda');
 define ('VRPT3_2','Periodo');

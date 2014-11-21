@@ -93,6 +93,40 @@ var vConsultaSaldo_ = function(){
         setup_widgets_desktop();
     };
     
+    this.publico.getGridIndexVConsultaSaldo = function (){
+        var oTable = $('#'+diccionario.tabs.PANP+'gridConsultaSaldo').dataTable({
+            bProcessing: true,
+            bServerSide: true,
+            bDestroy: true,
+            sPaginationType: "bootstrap_full", //two_button
+            sServerMethod: "POST",
+            bPaginate: true,
+            iDisplayLength: 10,   
+            sSearch: false,
+            bFilter: false,
+            aoColumns: [                                
+                {sTitle: "Código", sWidth: "7%"},
+                {sTitle: "Cliente", sWidth: "20%"},
+                {sTitle: "Fecha", sWidth: "10%",  sClass: "center"},
+                {sTitle: "Moneda", sWidth: "7%"},                                
+                {sTitle: "Total", sWidth: "11%",  sClass: "right"},  
+                {sTitle: "Saldo", sWidth: "11%",  sClass: "right"}
+            ],
+            aaSorting: [[2, 'desc']],
+            sScrollY: "125px",
+            sAjaxSource: _private.config.modulo+'getGridIndexConsultaSaldo',
+            fnDrawCallback: function() {
+              $('#'+diccionario.tabs.PAAL+'gridConsultaSaldo_refresh').click(function(){
+                   oTable.fnReloadAjax(oTable.fnSettings());
+                }); 
+            },
+            fnInfoCallback: function( oSettings, iStart, iEnd, iMax, iTotal, sPre ) {
+               return '<button id="'+diccionario.tabs.PAAL+'gridConsultaSaldo_refresh" class="btn btn-primary" title="Actualizar"><i class="fa fa-refresh"></i></button> '+iStart +" al "+ iEnd+' de '+iTotal;
+           }
+        });
+
+    };     
+    
     this.publico.postPDF = function(btn,id,cod){
         simpleAjax.send({
             element: btn,

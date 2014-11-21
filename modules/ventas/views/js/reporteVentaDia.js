@@ -133,7 +133,40 @@ var reporteVentaDia_ = function(){
         });                        
     };
     
-  
+    this.publico.postPDF = function(btn,f){
+           simpleAjax.send({
+               element: btn,
+               root: _private.config.modulo + 'postPDF',
+               data: '&_fecha='+f,
+               fnCallback: function(data) {
+                   if(parseInt(data.result) === 1){
+                       $('#'+diccionario.tabs.VRPT1+'btnDowPDF').off('click');
+                       $('#'+diccionario.tabs.VRPT1+'btnDowPDF').attr("onclick","window.open('public/files/"+data.archivo+"','_blank');generarCotizacion.deleteArchivo('"+data.archivo+"');");
+                       $('#'+diccionario.tabs.VRPT1+'btnDowPDF').click();
+                   }
+               }
+           });
+       };
+    
+    this.publico.postExcel = function(btn,f){
+        simpleAjax.send({
+            element: btn,
+            root: _private.config.modulo + 'postExcel',
+            data: '&_fecha='+f,
+            fnCallback: function(data) {
+                if(parseInt(data.result) === 1){
+                    $('#'+diccionario.tabs.VRPT1+'btnDowExcel').off('click');
+                    $('#'+diccionario.tabs.VRPT1+'btnDowExcel').attr("onclick","window.open('public/files/"+data.archivo+"','_self');generarCotizacion.deleteArchivo('"+data.archivo+"');");
+                    $('#'+diccionario.tabs.VRPT1+'btnDowExcel').click();
+                }
+                if(!isNaN(data.result) && parseInt(data.result) === 2){
+                    simpleScript.notify.error({
+                        content: 'Ocurrió un error al exportar Venta.'
+                    });
+                }
+            }
+        });
+    };      
     
     return this.publico;
     

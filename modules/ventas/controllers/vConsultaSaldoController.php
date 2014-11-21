@@ -93,6 +93,56 @@ class vConsultaSaldoController extends Controller{
 
     }
     
+    public function getGridIndexConsultaSaldo(){        
+        
+        $sEcho          =   $this->post('sEcho');
+        
+        $rResult = Obj::run()->vConsultaSaldoModel->getIndexConsultaSaldo();
+        
+        $num = Obj::run()->vConsultaSaldoModel->_iDisplayStart;
+        if($num >= 10){
+            $num++;
+        }else{
+            $num = 1;
+        }
+        
+        if(!isset($rResult['error'])){  
+            $iTotal         = isset($rResult[0]['total'])?$rResult[0]['total']:0;
+            
+            $sOutput = '{';
+            $sOutput .= '"sEcho": '.intval($sEcho).', ';
+            $sOutput .= '"iTotalRecords": '.$iTotal.', ';
+            $sOutput .= '"iTotalDisplayRecords": '.$iTotal.', ';
+            $sOutput .= '"aaData": [ ';     
+            
+            foreach ( $rResult as $aRow ){
+                
+                /*antes de enviar id se encrypta*/
+                $encryptReg = Aes::en($aRow['id_docventa']);
+                
+                if ($aRow['monto_saldo'] > 0):
+                    $saldo = '<span class=\"badge bg-color-red\">'.number_format($aRow['monto_saldo'],2).'</span>';
+                else :
+                     $saldo = number_format($aRow['monto_saldo'],2);
+                endif;
+                                
+                $nombre = $aRow['nombre_descripcion'];
+                /*registros a mostrar*/
+                $sOutput .= '["'.$aRow['codigo_impresion'].'","'.$nombre.'","'.  Functions::cambiaf_a_normal($aRow['fecha']).'","'.$aRow['moneda'].'","'.number_format($aRow['monto_total'],2).'","'.$saldo.'" ';
+
+                $sOutput .= '],';
+
+            }
+            $sOutput = substr_replace( $sOutput, "", -1 );
+            $sOutput .= '] }';
+        }else{
+            $sOutput = $rResult['error'];
+        }
+        
+        echo $sOutput;
+
+    }    
+    
     public function postPDF(){
         $data = Obj::run()->generarVentaController->postPDF();
         

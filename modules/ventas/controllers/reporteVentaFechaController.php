@@ -158,6 +158,57 @@ class reporteVentaFechaController extends Controller{
         echo $sOutput;
 
     }    
+    
+ public function getGridIndexVentaFecha(){
+
+        $sEcho          =   $this->post('sEcho');
+        
+        $rResult = Obj::run()->reporteVentaFechaModel->getIndexVentaFecha();
+        
+        $num = Obj::run()->reporteVentaFechaModel->_iDisplayStart;
+        if($num >= 10){
+            $num++;
+        }else{
+            $num = 1;
+        }
+        
+        if(!isset($rResult['error'])){  
+            $iTotal         = isset($rResult[0]['total'])?$rResult[0]['total']:0;
+            
+            $sOutput = '{';
+            $sOutput .= '"sEcho": '.intval($sEcho).', ';
+            $sOutput .= '"iTotalRecords": '.$iTotal.', ';
+            $sOutput .= '"iTotalDisplayRecords": '.$iTotal.', ';
+            $sOutput .= '"aaData": [ ';     
+            
+            foreach ( $rResult as $aRow ){                                
+                
+                /*antes de enviar id se encrypta*/
+                $encryptReg = Aes::en($aRow['fecha']);
+                $encryptReg2 = Aes::en($aRow['id_moneda']);                                               
+                
+                if($aRow['saldo'] > 0){
+                    $saldo = '<span class=\"badge bg-color-red\">'.number_format($aRow['saldo'],2).'</span>';
+                }else{
+                    $saldo = number_format($aRow['saldo'],2);
+                }
+                /*registros a mostrar*/
+                $sOutput .= '["'.  Functions::cambiaf_a_normal($aRow['fecha']).'","'.$aRow['numero_doc'].'","'.$aRow['moneda'].'","'.number_format($aRow['monto'],2).'","'.$saldo.'" ';
+
+                $sOutput .= '],';
+
+            }
+            $sOutput = substr_replace( $sOutput, "", -1 );
+            $sOutput .= '] }';
+        }else{
+            $sOutput = $rResult['error'];
+        }
+        
+        echo $sOutput;
+
+    }    
+    
+    
     /*carga formulario (newReporteVentaFecha.phtml) para nuevo registro: ReporteVentaFecha*/
     public function getFormConsultaVenta(){
         Obj::run()->View->render("formConsultarVentas");
@@ -265,13 +316,13 @@ class reporteVentaFechaController extends Controller{
                 <td>'.$value['cliente'].'</td>
                 <td style="text-align:center">'.$tipoDoc.'</td>                    
                 <td style="text-align:right">'.$mon.number_format($value['monto_importe'],2).'</td>
-                <td style="text-align:right">'.$mon.number_format($value['monto_asignado'],2).'</td>
+                <td style="text-align:right"><b>'.$mon.number_format($value['monto_asignado'],2).'</b></td>
                 <td style="text-align:right">'.$mon.number_format($value['monto_saldo'],2).'</td>
             </tr>';            
         }    
-        $html .= '<tr><td colspan="4"></td><td class="totales" style="text-align:right; font-weight:bold;">'.$mon.number_format($total,2).'</td>'
-                .'<td class="totales" style="text-align:right; font-weight:bold;">'.$mon.number_format($acuenta,2).'</td>'
-                .'<td class="totales" style="text-align:right; font-weight:bold;">'.$mon.number_format($saldo,2).'</td>'
+        $html .= '<tr><td colspan="4"></td><td style="text-align:right; font-weight:bold;"><b>'.$mon.number_format($total,2).'</b></td>'
+                .'<td style="text-align:right; font-weight:bold;"><b>'.$mon.number_format($acuenta,2).'</b></td>'
+                .'<td style="text-align:right; font-weight:bold;"><b>'.$mon.number_format($saldo,2).'</b></td>'
                 . '</tr>';
         
         

@@ -24,7 +24,26 @@ $recuperar    = Session::getPermiso("VRPT3RC");
           <div class="smart-form" style="position: absolute;left:5px;top:15px;width: 65%; padding-top:5px; "> 
             <label class="label col col-7 pull-left"><?php echo VRPT3_2; ?></label>
             <label class="input pull-left col col-2" >
-                <input type="text" id="<?php echo VRPT3; ?>txt_periodo" name="<?php echo VRPT3; ?>txt_periodo" value="<?php echo date("Y"); ?>" readonly>
+                 <label class="select"> 
+                                <?php
+                                    $anio = Array();
+                                    for($i=2014; $i<=date("Y"); $i++){
+                                        $anio[] = Array ( 'id' => $i, 'descripcion' => $i );
+                                    }                                                                                                                      
+                                    echo Functions::selectHtml(array(
+                                        'data'=>$anio,
+                                        'atributes'=>array(
+                                            'id'=>VRPT3.'lst_periodo',
+                                            'name'=>VRPT3.'lst_periodo'
+                                        ),
+                                        'etiqueta'=>'descripcion',
+                                        'value'=>'id',
+                                        'defaultEtiqueta'=>date("Y"),
+                                        'txtSelect'=>false
+                                    ));
+                                ?><i></i>
+                            </label>
+                
             </label>
             <label class="label col col-2 pull-left"><?php echo VRPT3_3; ?></label>
             <label class="select pull-left">
