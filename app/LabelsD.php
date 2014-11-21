@@ -330,5 +330,10 @@ define ('VRPT3_2','Periodo');
 define ('VRPT3_3','Moneda');
 define ('VRPT4_1','Reporte del Producto más vendido');
 
+/* ---------------------- Reporte Paneles Disponibles ----------------- */
+define ('PANED_1','Reporte de Paneles Disponibles');
+define ('PANED_2','Ciudad');
+
+
 
 ?>

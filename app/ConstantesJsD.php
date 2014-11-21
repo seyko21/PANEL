@@ -43,7 +43,8 @@
         VRPT1: '<?php echo VRPT1; ?>',
         VRPT2: '<?php echo VRPT2; ?>',
         VRPT3: '<?php echo VRPT3; ?>',
-        VRPT4: '<?php echo VRPT4; ?>'
+        VRPT4: '<?php echo VRPT4; ?>',
+        PANED: '<?php echo PANED; ?>'
     }
 };
 </script>

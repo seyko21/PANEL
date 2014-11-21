@@ -164,7 +164,7 @@ var vunidadMedida_ = function(){
             fnCallback: function(data) {
                 if(!isNaN(data.result) && parseInt(data.result) === 1){
                     simpleScript.notify.ok({
-                        content: mensajes.MSG_10,
+                        content: mensajes.MSG_19,
                         callback: function(){
                             _private.idVunidadMedida = 0;
                             simpleScript.closeModal("#"+diccionario.tabs.VUNID+"formEditVunidadMedida");
