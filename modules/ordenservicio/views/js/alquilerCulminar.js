@@ -78,7 +78,7 @@ var alquilerCulminar_ = function(){
                     container: "#widget_"+diccionario.tabs.CALCU,
                     typeElement: "select"
                 });
-              $('#'+diccionario.tabs.CALCU+'refresh').click(function(){
+                $('#'+diccionario.tabs.CALCU+'refresh').click(function(){
                    oTable.fnReloadAjax(oTable.fnSettings());
                 }); 
             },

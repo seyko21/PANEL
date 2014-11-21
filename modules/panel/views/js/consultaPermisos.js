@@ -22,7 +22,7 @@ var consultaPermisos_ = function(){
     /*crea tab : ConsultaPermisos*/
     this.publico.main = function(element){
         simpleScript.addTab({
-            id : diccionario.tabs.CONPER,
+            id : diccionario.tabs.TAB_CONPER,
             label: $(element).attr("title"),
             fnCallback: function(){
                 consultaPermisos.getContenido();
@@ -36,14 +36,14 @@ var consultaPermisos_ = function(){
             dataType: "html",
             root: _private.config.modulo,
             fnCallback: function(data){
-                $("#"+diccionario.tabs.CONPER+"_CONTAINER").html(data);
+                $("#"+diccionario.tabs.TAB_CONPER+"_CONTAINER").html(data);
                 consultaPermisos.getGridConsultaPermisos();
             }
         });
     };
     
     this.publico.getGridConsultaPermisos = function (){
-     var oTable  = $('#'+diccionario.tabs.CONPER+'gridConsultaPermisos').dataTable({
+     var oTable  = $('#'+diccionario.tabs.TAB_CONPER+'gridConsultaPermisos').dataTable({
             bProcessing: true,
             bServerSide: true,
             bDestroy: true,
@@ -59,22 +59,23 @@ var consultaPermisos_ = function(){
                 {sTitle: "Area m2", sWidth: "8%",  sClass: "center"},                                
                 {sTitle: "Acciones", sWidth: "15%", sClass: "center", bSortable: false}
             ],
-            aaSorting: [[3, 'asc']],            
+            aaSorting: [[3, 'asc']],      
+            sScrollY: "350px",
             sAjaxSource: _private.config.modulo+'getGridConsultaPermiso',
             fnDrawCallback: function() {
-                $('#'+diccionario.tabs.CONPER+'gridConsultaPermisos_filter').find('input').attr('placeholder','Buscar por Ciudad o Ubicación').css('width','350px');
-                simpleScript.enterSearch("#"+diccionario.tabs.CONPER+'gridConsultaPermisos',oTable);
+                $('#'+diccionario.tabs.TAB_CONPER+'gridConsultaPermisos_filter').find('input').attr('placeholder','Buscar por Ciudad o Ubicación').css('width','350px');
+                simpleScript.enterSearch("#"+diccionario.tabs.TAB_CONPER+'gridConsultaPermisos',oTable);
                 /*para hacer evento invisible*/
                 simpleScript.removeAttr.click({
-                    container: '#widget_'+diccionario.tabs.CONPER, //widget del datagrid
-                    typeElement: 'button, #'+diccionario.tabs.CONPER+'chk_all'
+                    container: '#widget_'+diccionario.tabs.TAB_CONPER, //widget del datagrid
+                    typeElement: 'button, #'+diccionario.tabs.TAB_CONPER+'chk_all'
                 });
-                $('#'+diccionario.tabs.CONPER+'refresh').click(function(){
+                $('#'+diccionario.tabs.TAB_CONPER+'refresh').click(function(){
                    oTable.fnReloadAjax(oTable.fnSettings());
                 }); 
             },
             fnInfoCallback: function( oSettings, iStart, iEnd, iMax, iTotal, sPre ) {
-               return '<button id="'+diccionario.tabs.CONPER+'refresh" class="btn btn-primary" title="Actualizar"><i class="fa fa-refresh"></i></button> '+iStart +" al "+ iEnd+' de '+iTotal;
+               return '<button id="'+diccionario.tabs.TAB_CONPER+'refresh" class="btn btn-primary" title="Actualizar"><i class="fa fa-refresh"></i></button> '+iStart +" al "+ iEnd+' de '+iTotal;
            }
         });
         setup_widgets_desktop();                
@@ -119,8 +120,8 @@ var consultaPermisos_ = function(){
             data: '&_idProducto='+id,
             fnCallback: function(data) {
                 if(parseInt(data.result) === 1){
-                     $('#'+diccionario.tabs.CONPER+'btnDowPDF').attr("onclick","window.open('public/files/"+data.archivo+"','_blank');fichaTecnica.deleteArchivo('"+data.archivo+"');");
-                     $('#'+diccionario.tabs.CONPER+'btnDowPDF').click();                    
+                     $('#'+diccionario.tabs.TAB_CONPER+'btnDowPDF').attr("onclick","window.open('public/files/"+data.archivo+"','_blank');fichaTecnica.deleteArchivo('"+data.archivo+"');");
+                     $('#'+diccionario.tabs.TAB_CONPER+'btnDowPDF').click();                    
                 }                
             }
         });
@@ -133,8 +134,8 @@ var consultaPermisos_ = function(){
             data: '&_idProducto='+id,
             fnCallback: function(data) {
                 if(parseInt(data.result) === 1){
-                   $('#'+diccionario.tabs.CONPER+'btnDowExcel').attr("onclick","window.open('public/files/"+data.archivo+"','_self');fichaTecnica.deleteArchivo('"+data.archivo+"');");
-                   $('#'+diccionario.tabs.CONPER+'btnDowExcel').click();                                       
+                   $('#'+diccionario.tabs.TAB_CONPER+'btnDowExcel').attr("onclick","window.open('public/files/"+data.archivo+"','_self');fichaTecnica.deleteArchivo('"+data.archivo+"');");
+                   $('#'+diccionario.tabs.TAB_CONPER+'btnDowExcel').click();                                       
                 }
                 if(!isNaN(data.result) && parseInt(data.result) === 2){
                     simpleScript.notify.error({
