@@ -445,20 +445,21 @@ var simpleScript_ = function(){
         var d = $(tab).find('tbody tr');
         var a = d.attr('style');
         
-        if(a !== 'display: none;'){
-            if($(el).is(':checked')){
-                d.each(function(){  
-                    /*solo marca los que no estan desabiblitados*/
+        if($(el).is(':checked')){
+            d.each(function(){  
+                /*solo marca los que no estan desabiblitados*/
+                if(a !== 'display: none;'){
                     if(!$(this).find(':checkbox').is(':disabled')){
                         $(this).find(':checkbox').prop('checked','checked');  
                     }
-                });
-            }else{
-                d.each(function(){    
-                    $(this).find(':checkbox').prop('checked','');     
-                });
-            }
+                }
+            });
+        }else{
+            d.each(function(){    
+                $(this).find(':checkbox').prop('checked','');     
+            });
         }
+        
     };
     
     this.public.closeTab = function(tab){
