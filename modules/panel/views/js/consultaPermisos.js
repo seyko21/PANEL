@@ -22,7 +22,7 @@ var consultaPermisos_ = function(){
     /*crea tab : ConsultaPermisos*/
     this.publico.main = function(element){
         simpleScript.addTab({
-            id : diccionario.tabs.PANP,
+            id : diccionario.tabs.CONPER,
             label: $(element).attr("title"),
             fnCallback: function(){
                 consultaPermisos.getContenido();
@@ -36,14 +36,14 @@ var consultaPermisos_ = function(){
             dataType: "html",
             root: _private.config.modulo,
             fnCallback: function(data){
-                $("#"+diccionario.tabs.PANP+"_CONTAINER").html(data);
+                $("#"+diccionario.tabs.CONPER+"_CONTAINER").html(data);
                 consultaPermisos.getGridConsultaPermisos();
             }
         });
     };
     
     this.publico.getGridConsultaPermisos = function (){
-     var oTable  = $('#'+diccionario.tabs.PANP+'gridConsultaPermisos').dataTable({
+     var oTable  = $('#'+diccionario.tabs.CONPER+'gridConsultaPermisos').dataTable({
             bProcessing: true,
             bServerSide: true,
             bDestroy: true,
@@ -62,19 +62,19 @@ var consultaPermisos_ = function(){
             aaSorting: [[3, 'asc']],            
             sAjaxSource: _private.config.modulo+'getGridConsultaPermiso',
             fnDrawCallback: function() {
-                $('#'+diccionario.tabs.PANP+'gridConsultaPermisos_filter').find('input').attr('placeholder','Buscar por Ciudad o Ubicación').css('width','350px');
-                simpleScript.enterSearch("#"+diccionario.tabs.PANP+'gridConsultaPermisos',oTable);
+                $('#'+diccionario.tabs.CONPER+'gridConsultaPermisos_filter').find('input').attr('placeholder','Buscar por Ciudad o Ubicación').css('width','350px');
+                simpleScript.enterSearch("#"+diccionario.tabs.CONPER+'gridConsultaPermisos',oTable);
                 /*para hacer evento invisible*/
                 simpleScript.removeAttr.click({
-                    container: '#widget_'+diccionario.tabs.PANP, //widget del datagrid
-                    typeElement: 'button, #'+diccionario.tabs.PANP+'chk_all'
+                    container: '#widget_'+diccionario.tabs.CONPER, //widget del datagrid
+                    typeElement: 'button, #'+diccionario.tabs.CONPER+'chk_all'
                 });
-                $('#'+diccionario.tabs.PANP+'refresh').click(function(){
+                $('#'+diccionario.tabs.CONPER+'refresh').click(function(){
                    oTable.fnReloadAjax(oTable.fnSettings());
                 }); 
             },
             fnInfoCallback: function( oSettings, iStart, iEnd, iMax, iTotal, sPre ) {
-               return '<button id="'+diccionario.tabs.PANP+'refresh" class="btn btn-primary" title="Actualizar"><i class="fa fa-refresh"></i></button> '+iStart +" al "+ iEnd+' de '+iTotal;
+               return '<button id="'+diccionario.tabs.CONPER+'refresh" class="btn btn-primary" title="Actualizar"><i class="fa fa-refresh"></i></button> '+iStart +" al "+ iEnd+' de '+iTotal;
            }
         });
         setup_widgets_desktop();                
@@ -119,8 +119,8 @@ var consultaPermisos_ = function(){
             data: '&_idProducto='+id,
             fnCallback: function(data) {
                 if(parseInt(data.result) === 1){
-                     $('#'+diccionario.tabs.PANP+'btnDowPDF').attr("onclick","window.open('public/files/"+data.archivo+"','_blank');fichaTecnica.deleteArchivo('"+data.archivo+"');");
-                     $('#'+diccionario.tabs.PANP+'btnDowPDF').click();                    
+                     $('#'+diccionario.tabs.CONPER+'btnDowPDF').attr("onclick","window.open('public/files/"+data.archivo+"','_blank');fichaTecnica.deleteArchivo('"+data.archivo+"');");
+                     $('#'+diccionario.tabs.CONPER+'btnDowPDF').click();                    
                 }                
             }
         });
@@ -133,8 +133,8 @@ var consultaPermisos_ = function(){
             data: '&_idProducto='+id,
             fnCallback: function(data) {
                 if(parseInt(data.result) === 1){
-                   $('#'+diccionario.tabs.PANP+'btnDowExcel').attr("onclick","window.open('public/files/"+data.archivo+"','_self');fichaTecnica.deleteArchivo('"+data.archivo+"');");
-                   $('#'+diccionario.tabs.PANP+'btnDowExcel').click();                                       
+                   $('#'+diccionario.tabs.CONPER+'btnDowExcel').attr("onclick","window.open('public/files/"+data.archivo+"','_self');fichaTecnica.deleteArchivo('"+data.archivo+"');");
+                   $('#'+diccionario.tabs.CONPER+'btnDowExcel').click();                                       
                 }
                 if(!isNaN(data.result) && parseInt(data.result) === 2){
                     simpleScript.notify.error({

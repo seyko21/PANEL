@@ -22,7 +22,7 @@ var alquilerCulminar_ = function(){
     /*crea tab : AlquilerCulminar*/
     this.publico.main = function(element){
         simpleScript.addTab({
-            id : diccionario.tabs.PANP,
+            id : diccionario.tabs.CALCU,
             label: $(element).attr("title"),
             fnCallback: function(){
                 alquilerCulminar.getContenido();
@@ -36,14 +36,14 @@ var alquilerCulminar_ = function(){
             dataType: "html",
             root: _private.config.modulo,
             fnCallback: function(data){
-                $("#"+diccionario.tabs.PANP+"_CONTAINER").html(data);
+                $("#"+diccionario.tabs.CALCU+"_CONTAINER").html(data);
                 alquilerCulminar.getGridAlquilerCulminar();
             }
         });
     };
     
     this.publico.getGridAlquilerCulminar = function (){
-        var oTable = $("#"+diccionario.tabs.PANP+"gridAlquilerCulminar").dataTable({
+        var oTable = $("#"+diccionario.tabs.CALCU+"gridAlquilerCulminar").dataTable({
             bProcessing: true,
             bServerSide: true,
             bDestroy: true,
@@ -65,25 +65,25 @@ var alquilerCulminar_ = function(){
             sScrollY: "300px",
             sAjaxSource: _private.config.modulo+"getGridAlquilerCulminar",
             fnServerParams: function(aoData) {
-                aoData.push({"name": "_tipo", "value": $("#"+diccionario.tabs.PANP+"lst_tiposearch").val()});                
+                aoData.push({"name": "_tipo", "value": $("#"+diccionario.tabs.CALCU+"lst_tiposearch").val()});                
             },     
             fnDrawCallback: function() {
-                $("#"+diccionario.tabs.PANP+"gridAlquilerCulminar_filter").find("input").attr("placeholder","Buscar por N° OS o Caratula o Cliente").css("width","350px");
+                $("#"+diccionario.tabs.CALCU+"gridAlquilerCulminar_filter").find("input").attr("placeholder","Buscar por N° OS o Caratula o Cliente").css("width","350px");
                 /*para hacer evento invisible*/
                 simpleScript.removeAttr.click({
-                    container: "#widget_"+diccionario.tabs.PANP,
+                    container: "#widget_"+diccionario.tabs.CALCU,
                     typeElement: "button"
                 });
                 simpleScript.removeAttr.change({
-                    container: "#widget_"+diccionario.tabs.PANP,
+                    container: "#widget_"+diccionario.tabs.CALCU,
                     typeElement: "select"
                 });
-              $('#'+diccionario.tabs.PANP+'refresh').click(function(){
+              $('#'+diccionario.tabs.CALCU+'refresh').click(function(){
                    oTable.fnReloadAjax(oTable.fnSettings());
                 }); 
             },
             fnInfoCallback: function( oSettings, iStart, iEnd, iMax, iTotal, sPre ) {
-               return '<button id="'+diccionario.tabs.PANP+'refresh" class="btn btn-primary" title="Actualizar"><i class="fa fa-refresh"></i></button> '+iStart +" al "+ iEnd+' de '+iTotal;
+               return '<button id="'+diccionario.tabs.CALCU+'refresh" class="btn btn-primary" title="Actualizar"><i class="fa fa-refresh"></i></button> '+iStart +" al "+ iEnd+' de '+iTotal;
            }
             
         });
@@ -95,7 +95,7 @@ var alquilerCulminar_ = function(){
             bProcessing: true,
             bServerSide: true,
             bDestroy: true,
-            sPaginationType: "bootstrap_full", //two_button
+            sPaginationType: "bootstrap_full", 
             sServerMethod: "POST",
             bPaginate: true,
             iDisplayLength: 10,   
