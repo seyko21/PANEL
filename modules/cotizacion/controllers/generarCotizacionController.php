@@ -50,9 +50,17 @@ class generarCotizacionController extends Controller{
                     $estado = '<span class=\"label label-danger\">'.LABEL_AN.'</span>';
                     $chk = '<input id=\"c_'.(++$key).'\" type=\"checkbox\" name=\"'.T8.'chk_delete[]\" disabled  >';
                 }     
-                                                
+                     
+                 if($aRow['incluyeigv'] == 1){
+                    $incl = '<span class=\"label label-success\">'.LABEL_S.'</span>';                    
+                }elseif($aRow['incluyeigv'] == 0){                   
+                    $incl = '<span class=\"label label-info\">'.LABEL_N.'</span>';                    
+                }     
+                
+                $total = 'S/. '.number_format($aRow['total'],2);
+                
                 /*datos de manera manual*/
-                $sOutput .= '["'.$chk.'","'.$aRow['cotizacion_numero'].'","<a href=\"javascript:;\" onclick=\"persona.getDatosPersonales(\''.$idPersona.'\');\">'.$aRow['nombrecompleto'].'</a>","'.$aRow['vendedor'].'","'.$aRow['fechacoti'].'","'.Functions::cambiaf_a_normal($aRow['vencimiento']).'","'.  number_format($aRow['total'],2).'","'.$estado.'", ';
+                $sOutput .= '["'.$chk.'","'.$aRow['cotizacion_numero'].'","<a href=\"javascript:;\" onclick=\"persona.getDatosPersonales(\''.$idPersona.'\');\">'.$aRow['nombrecompleto'].'</a>","'.$aRow['fechacoti'].'","'.Functions::cambiaf_a_normal($aRow['vencimiento']).'","'.$incl.'","'.  $total.'","'.$estado.'", ';
 
                 /*
                  * configurando botones (add/edit/delete etc)
@@ -314,7 +322,7 @@ class generarCotizacionController extends Controller{
         
         $html .='<table width="100%" border="0" cellpadding="5" cellspacing="3">
           <tr bgcolor="#901D78">
-            <th colspan="6"><div align="center"><h2 style="color:#FFF;">COTIZACIONES DE PANELES</h2></div></th>
+            <th colspan="6"><div align="center"><h2 style="color:#FFF;">COTIZACION DE SERVICIO</h2></div></th>
           </tr>
           <tr>
             <td width="13%"><strong>'.LABEL_GNC29.':</strong></td>
