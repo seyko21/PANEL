@@ -234,8 +234,8 @@ class reporteVentaFechaController extends Controller{
           <tr>
             <td width="16%"><strong>Fecha:</strong></td>
             <td width="26%"><h3>'.$data[0]['fecha'].'</h3></td>                        
-            <td width="20%"><strong>Moneda :</strong></td>
-            <td width="15%">'.$data[0]['descripcion_moneda'].'</td>
+            <td width="16%"><strong>Moneda :</strong></td>
+            <td width="30%">'.$data[0]['descripcion_moneda'].'</td>
           </tr>         
         </table> 
         <br />
