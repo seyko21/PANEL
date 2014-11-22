@@ -36,17 +36,7 @@ class misCuentasModel extends Model{
         $this->_iSortingCols   =   Formulario::getParam("iSortingCols");
         $this->_sSearch        =   Formulario::getParam("sSearch");
     }
-    
-     public function getTipoPanelCuenta(){
-        $query = "call sp_catalogoTipoPanelConsultas(:acceso, :usuario,:estado); ";        
-        $parms = array(
-            ':acceso' => Session::get('sys_all'),
-            ':usuario' => $this->_idPersona,
-            ':estado' => '' 
-        );
-        $data = $this->queryAll($query,$parms);
-        return $data;
-    }
+       
     public function getGridProducto(){
         $aColumns       =   array( 'codigo','distrito','ubicacion','elemento','dimesion_area','precio','iluminado','estado' ); //para la ordenacion y pintado en html
         /*
@@ -77,6 +67,18 @@ class misCuentasModel extends Model{
         return $data; 
        
     }
+    
+    public function getTipoPanelCuenta(){
+        $query = "call sp_catalogoTipoPanelConsultas(:acceso, :usuario,:estado); ";        
+        $parms = array(
+            ':acceso' => Session::get('sys_all'),
+            ':usuario' => $this->_idPersona,
+            ':estado' => '' 
+        );
+        $data = $this->queryAll($query,$parms);
+        return $data;
+    }    
+    
 }
 
 ?>

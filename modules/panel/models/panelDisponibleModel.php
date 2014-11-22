@@ -11,7 +11,8 @@ class panelDisponibleModel extends Model{
 
     private $_flag;
     private $_idPanelDisponible;
-    private $_activo;
+    private $_ciudad;
+    private $_idPersona;
     private $_usuario;
     
     /*para el grid*/
@@ -29,6 +30,8 @@ class panelDisponibleModel extends Model{
         $this->_flag        = Formulario::getParam("_flag");
         $this->_idPanelDisponible   = Aes::de(Formulario::getParam("_idPanelDisponible"));    /*se decifra*/
         $this->_usuario     = Session::get("sys_idUsuario");
+        $this->_idPersona                 = Session::get("sys_idPersona");
+        $this->_ciudad        = Formulario::getParam("_ciudad");        
         
         $this->_iDisplayStart  = Formulario::getParam("iDisplayStart"); 
         $this->_iDisplayLength = Formulario::getParam("iDisplayLength"); 
@@ -38,7 +41,7 @@ class panelDisponibleModel extends Model{
     
     /*data para el grid: PanelDisponible*/
     public function getPanelDisponible(){
-        $aColumns       =   array("","","REGISTRO_A_ORDENAR" ); //para la ordenacion y pintado en html
+        $aColumns       =   array("","t.ubicacion","t.dimesion_area","t.distrito","t.elemento","t.codigos" ); //para la ordenacion y pintado en html
         /*
 	 * Ordenando, se verifica por que columna se ordenara
 	 */
@@ -51,9 +54,12 @@ class panelDisponibleModel extends Model{
         }
         $sOrder = substr_replace( $sOrder, "", -1 );
         
-        $query = "call sp [NOMBRE_PROCEDIMIENTO_GRID] Grid(:iDisplayStart,:iDisplayLength,:sOrder,:sSearch);";
+        $query = "call sp_catalogoRptPanelDisponibleGrid(:acceso,:idPersona,:ciudad,:iDisplayStart,:iDisplayLength,:sOrder,:sSearch);";
         
         $parms = array(
+            ':acceso' => Session::get('sys_all'),
+            ':idPersona' => $this->_idPersona, 
+            ':ciudad' => $this->_ciudad, 
             ":iDisplayStart" => $this->_iDisplayStart,
             ":iDisplayLength" => $this->_iDisplayLength,
             ":sOrder" => $sOrder,
@@ -63,25 +69,16 @@ class panelDisponibleModel extends Model{
         return $data;
     }
     
-    /*grabar nuevo registro: PanelDisponible*/
-    public function newPanelDisponible(){
-        /*-------------------------LOGICA PARA EL INSERT------------------------*/
-    }
-    
-    /*seleccionar registro a editar: PanelDisponible*/
-    public function findPanelDisponible(){
-        /*-----------------LOGICA PARA SELECT REGISTRO A EDITAR-----------------*/
-    }
-    
-    /*editar registro: PanelDisponible*/
-    public function editPanelDisponible(){
-        /*-------------------------LOGICA PARA EL UPDATE------------------------*/
-    }
-    
-    /*eliminar varios registros: PanelDisponible*/
-    public function deletePanelDisponibleAll(){
-        /*--------------------------LOGICA PARA DELETE--------------------------*/
-    }
+   public function getCiudad(){
+        $query = "call sp_catalogoCiudadPanel(:acceso, :usuario); ";        
+        $parms = array(
+            ':acceso' => Session::get('sys_all'),
+            ':usuario' => $this->_idPersona            
+        );
+        $data = $this->queryAll($query,$parms);
+        return $data;
+    }   
+   
     
 }
 

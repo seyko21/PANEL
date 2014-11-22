@@ -16,24 +16,21 @@ echo Functions::widgetOpen(array(
 ?>
 
    <div class="widget-body-toolbar " style="margin:0px; padding:10px ">  
-          <div class="smart-form" style="position: absolute;left:250px;top:5px;width: 65%; "> 
+          <div class="smart-form" style="position: absolute;left:300px;top:5px;width: 65%; "> 
             <label class="label col col-7 pull-left"><?php echo PANED_2; ?></label>
-            <label class="input pull-left col col-2" >
+            <label class="input pull-left col col-3" >
                  <label class="select"> 
                                 <?php
-                                    $anio = Array();
-                                    for($i=2014; $i<=date("Y"); $i++){
-                                        $anio[] = Array ( 'id' => $i, 'descripcion' => $i );
-                                    }                                                                                                                      
+                                   $datal = panelDisponibleController::getListadoCiudad();                                                                                                   
                                     echo Functions::selectHtml(array(
-                                        'data'=>$anio,
+                                        'data'=>$datal,
                                         'atributes'=>array(
-                                            'id'=>VRPT3.'lst_periodo',
-                                            'name'=>VRPT3.'lst_periodo'
+                                            'id'=>PANED.'lst_ciudad',
+                                            'name'=>PANED.'lst_ciudad'
                                         ),
                                         'etiqueta'=>'descripcion',
                                         'value'=>'id',
-                                        'defaultEtiqueta'=>date("Y"),
+                                        'defaultEtiqueta'=>'',
                                         'txtAll'=>true
                                     ));
                                 ?><i></i>
