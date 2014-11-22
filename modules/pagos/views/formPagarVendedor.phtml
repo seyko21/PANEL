@@ -109,7 +109,6 @@ $instaladas = $dataOS['_instaladas'];
     });
     
     $("#<?php echo GPAVE; ?>formPagarVendedor").validate({
-        // Rules for form validation
         rules: {
                 <?php echo GPAVE; ?>txt_serie: {
                         required: true
@@ -122,7 +121,6 @@ $instaladas = $dataOS['_instaladas'];
                         number: true
                     }
                 },
-                // No cambie el código de abajo
                 errorPlacement: function(error, element) {
                     error.insertAfter(element.parent());
                 },

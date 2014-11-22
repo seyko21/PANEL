@@ -79,7 +79,6 @@ $grabar = Session::getPermiso("VUNIDGR");
 <script>
 /*configurar validacion de formulario -- este codigo es de ejemplo*/
 $("#<?php echo VUNID; ?>formNewVunidadMedida").validate({
-    // Rules for form validation
     rules : {
         <?php echo VUNID; ?>txt_descripcion : {
             required : true,
@@ -91,7 +90,6 @@ $("#<?php echo VUNID; ?>formNewVunidadMedida").validate({
         }
     },   
 
-    // No cambie el código de abajo
     errorPlacement : function(error, element) {
         error.insertAfter(element.parent());
     },

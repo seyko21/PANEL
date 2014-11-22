@@ -97,7 +97,6 @@ $saldo = Formulario::getParam('_saldo');
     });
     
     $("#<?php echo GPASO; ?>formPagarSocio").validate({
-        // Rules for form validation
         rules: {
                 <?php echo GPASO; ?>txt_serie: {
                         required: true
@@ -110,7 +109,6 @@ $saldo = Formulario::getParam('_saldo');
                         number: true
                     }
                 },
-                // No cambie el código de abajo
                 errorPlacement: function(error, element) {
                     error.insertAfter(element.parent());
                 },

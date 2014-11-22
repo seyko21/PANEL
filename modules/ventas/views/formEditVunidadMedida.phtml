@@ -82,7 +82,6 @@ $data = vunidadMedidaController::findVunidadMedida();
 <script>
 /*configurar validacion de formulario -- este codigo es de ejemplo*/
 $("#<?php echo VUNID; ?>formEditVunidadMedida").validate({
-    // Rules for form validation
     rules : {
          <?php echo VUNID; ?>txt_descripcion : {
             required : true,
@@ -94,7 +93,6 @@ $("#<?php echo VUNID; ?>formEditVunidadMedida").validate({
         }
     },
 
-    // No cambie el código de abajo
     errorPlacement : function(error, element) {
         error.insertAfter(element.parent());
     },

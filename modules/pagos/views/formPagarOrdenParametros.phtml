@@ -138,7 +138,6 @@ $ncuota = Formulario::getParam('_ncuota');
     });
     
     $("#<?php echo CROPA; ?>formPagarOrdenParametros").validate({
-        // Rules for form validation
         rules: {
                     <?php echo CROPA; ?>lst_tipodoc: {
                         required: true
@@ -156,7 +155,6 @@ $ncuota = Formulario::getParam('_ncuota');
                         number: true
                     }
                 },
-                // No cambie el código de abajo
                 errorPlacement: function(error, element) {
                     error.insertAfter(element.parent());
                 },

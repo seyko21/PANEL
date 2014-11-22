@@ -260,7 +260,6 @@ $data = vclienteController::findVcliente();
 <script>
 /*configurar validacion de formulario -- este codigo es de ejemplo*/
 $("#<?php echo VRECL; ?>formEditVcliente").validate({
-    // Rules for form validation
     rules : {
          <?php echo VRECL; ?>txt_nombres : {
                         required : true,
@@ -283,7 +282,6 @@ $("#<?php echo VRECL; ?>formEditVcliente").validate({
                         maxlength: 13
                 }
     },    
-    // No cambie el código de abajo
     errorPlacement : function(error, element) {
         error.insertAfter(element.parent());
     },

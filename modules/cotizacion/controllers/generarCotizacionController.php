@@ -322,7 +322,7 @@ class generarCotizacionController extends Controller{
         
         $html .='<table width="100%" border="0" cellpadding="5" cellspacing="3">
           <tr bgcolor="#901D78">
-            <th colspan="6"><div align="center"><h2 style="color:#FFF;">COTIZACION DE SERVICIO</h2></div></th>
+            <th colspan="7"><div align="center"><h2 style="color:#FFF;">COTIZACION DE SERVICIO</h2></div></th>
           </tr>
           <tr>
             <td width="13%"><strong>'.LABEL_GNC29.':</strong></td>

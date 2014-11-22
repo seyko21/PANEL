@@ -131,43 +131,14 @@ $comision = asignarCuentaController::getComision();
 
         (function() {
             var mySt = new scrollTable('<?php echo ASCU; ?>gridProductos',{
-            //fixedCols : 1,
             colWidths : [30, 100, 425, 100, 80]
         });
         })();
         $('.sHeaderInner').find('table').removeAttr('id');
     }, 1000)
 
-//    var oTable = $('#<?php echo ASCU; ?>gridProductos').dataTable({
-//            bProcessing: true,
-//            bDestroy: true,
-//            bPaginate: false,
-//            aoColumns: [
-//                {sClass: "center",sWidth: "3%", bSortable: false},
-//                {sWidth: "10%",sClass: "center", bSortable: false},
-//                {sWidth: "69%"},
-//                {sWidth: "13%",sClass: "right", bSortable: false},
-//                {sWidth: "10%", sClass: "center", bSortable: false}
-//            ],
-//            aaSorting: [[2, 'desc']],
-//            sScrollY: "150px",
-//            fnDrawCallback: function() {
-//                $('#<?php echo ASCU; ?>gridProductos_filter').hide();
-    //var d = setTimeout("$('#<?php echo ASCU; ?>pro').click()",2000);
-//                
-////                /*para hacer evento invisible*/
-////                simpleScript.removeAttr.click({
-////                    container: '#widget_'+diccionario.tabs.T8,
-////                    typeElement: 'button'
-////                });
-//            }
-//        });
-//    $(window).resize(function(){
-//        oTable.fnAdjustColumnSizing();
-//    });
     /*configurar validacion de formulario -- este codigo es de ejemplo*/
     $("#<?php echo ASCU; ?>formNewAsignarCuenta").validate({
-        // Rules for form validation
         rules: {
 <?php echo ASCU; ?>txt_idpersona: {
                         required: true
@@ -181,7 +152,6 @@ $comision = asignarCuentaController::getComision();
                         maxlength: 4
                     }
                 },
-                // No cambie el código de abajo
                 errorPlacement: function(error, element) {
                     error.insertAfter(element.parent());
                 },

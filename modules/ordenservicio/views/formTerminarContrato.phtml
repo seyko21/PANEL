@@ -57,7 +57,6 @@ $numOS = Formulario::getParam('_numOS');
 <script>
 /*configurar validacion de formulario -- este codigo es de ejemplo*/
 $("#<?php echo TERCO; ?>formTerminarContrato").validate({
-    // Rules for form validation
     rules : {
         <?php echo TERCO; ?>txt_obs : {
             required : true,
@@ -65,7 +64,6 @@ $("#<?php echo TERCO; ?>formTerminarContrato").validate({
         }
     },
 
-    // No cambie el código de abajo
     errorPlacement : function(error, element) {
         error.insertAfter(element.parent());
     },

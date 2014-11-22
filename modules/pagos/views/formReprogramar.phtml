@@ -86,7 +86,6 @@ $fecha = Formulario::getParam('_fecha');
     });
     
     $("#<?php echo CROPA; ?>formReprogramar").validate({
-        // Rules for form validation
         rules: {
                     <?php echo CROPA; ?>txt_fechare: {
                         required: true,
@@ -96,7 +95,6 @@ $fecha = Formulario::getParam('_fecha');
                         number: true
                     }        
                 },
-                // No cambie el código de abajo
                 errorPlacement: function(error, element) {
                     error.insertAfter(element.parent());
                 },

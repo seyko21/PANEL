@@ -4,13 +4,31 @@ var simpleAjax_ = function(){
     var _private = {};
     
     _private.clear = function(form){
+        /*
         $(form+" :text").val('');
         $(form+" :hidden").val('');
         $(form+" :password").val('');
         $(form+" textarea").val('');
-        $(form+" select").val(''); // 
+        $(form+" select").val(''); 
         $(form+" :checked").attr("checked",false);
         $(form+" :radio").attr("checked",false);
+        */
+        $(':input', form).each(function() {
+		var type = this.type;
+		var tag = this.tagName.toLowerCase();
+		/*limpiamos los valores de los campos…*/
+		if (type == 'text' || type == 'password' || tag == 'textarea')
+			this.value = "";
+		/* excepto de los checkboxes y radios, le quitamos el checked
+		 pero su valor no debe ser cambiado */
+		else if (type == 'checkbox' || type == 'radio')
+			this.checked = false;
+		/* los selects le ponemos el indice a -*/
+		else if (tag == 'select')
+			this.selectedIndex = -1;
+	});	
+
+
     };
     
     _private.processIn = function(){

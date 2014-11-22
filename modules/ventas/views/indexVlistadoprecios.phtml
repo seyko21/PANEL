@@ -1,0 +1,45 @@
+<?php 
+/*
+* ---------------------------------------
+* --------- CREATED BY CREATOR ----------
+* fecha: 22-11-2014 19:11:31 
+* Descripcion : indexVlistadoprecios.phtml
+* ---------------------------------------
+*/
+$pdf    = Session::getPermiso("VRPT5EP");
+$excel    = Session::getPermiso("VRPT5EX");
+echo Functions::widgetOpen(array(
+        "id"=>VRPT5,
+        "title"=>VRPT5_1
+    )); 
+?>
+<button id="<?php echo VRPT5; ?>btnDowPDF" type="button" class="hide">Descargar</button>
+<button id="<?php echo VRPT5; ?>btnDowExcel" type="button" class="hide">Descargar</button>
+<div class="widget-body-toolbar">
+    <div class="smart-form" style="position: absolute;left:400px;top:5px;width: 65%; "> 
+      <div class="col col-7 pull-left" style="padding-left:30px;" >                                   
+           <button id="<?php echo VRPT2; ?>btnPDF" type="button"  style="margin-top: -2px;" 
+                        onclick="vlistadoprecios.postPDF(this);" 
+                        class="<?php echo $pdf['theme'];?> btn-sm"  >
+                      <i class="<?php echo $pdf['icono'];?>"></i> <?php echo $pdf['accion'];?>
+            </button>  
+             <button id="<?php echo VRPT2; ?>btnExcel" type="button"  style="margin-top: -2px;" 
+                    onclick="vlistadoprecios.postExcel(this);" 
+                    class="<?php echo $excel['theme'];?> btn-sm"  >
+                  <i class="<?php echo $excel['icono'];?>"></i> <?php echo $excel['accion'];?>
+            </button>  
+       </div>
+    </div>
+</div>
+    <div class="dataTables_wrapper form-inline" role="grid">
+        <div class="dt-top-row">
+            <div class="DTTT btn-group">
+             
+            </div>
+        </div>
+
+    </div>
+    <form id="<?php echo VRPT5; ?>formGridVlistadoprecios" name="<?php echo VRPT5; ?>formGridVlistadoprecios" onsubmit="return false" >
+        <table id="<?php echo VRPT5; ?>gridVlistadoprecios" class="table table-striped table-hover table-condensed" style="width:100%"></table>
+    </form>
+<?php echo Functions::widgetClose(); ?>

@@ -85,16 +85,12 @@ $grabar = Session::getPermiso("CONTRGR");
 <script>
     
     pageSetUp();
-    // PAGE RELATED SCRIPTS
-    // pagefunction	
     var pagefunction = function() {		
-            // summernote
             $('.summernote').summernote({
                     height : 300,
                     focus : true,
                     tabsize : 2,
                     toolbar: [
-                    //[groupname, [button list]]
                     ['style', ['style','bold', 'italic', 'underline', 'clear']],                    
                     ['fontsize', ['fontsize']],
                     ['color', ['color']],
@@ -108,25 +104,19 @@ $grabar = Session::getPermiso("CONTRGR");
     };	
         
     var save = function() {
-        var aHTML = $( '#'+diccionario.tabs.CONTR+'formNewContrato .summernote').code(); //save HTML If you need(aHTML: array).
+        var aHTML = $( '#'+diccionario.tabs.CONTR+'formNewContrato .summernote').code(); 
         alert(aHTML);
-       //
     }
         
-    // end pagefunction	
-    // load summernote, and all markdown related plugins
     loadScript("theme/<?php echo DEFAULT_LAYOUT ?>/js/plugin/summernote/summernote.min.js", function(){
             loadScript("theme/<?php echo DEFAULT_LAYOUT ?>/js/plugin/markdown/markdown.min.js", function(){
-                    //loadScript("theme/<?php echo DEFAULT_LAYOUT ?>js/plugin/markdown/to-markdown.js", function(){
                             loadScript("theme/<?php echo DEFAULT_LAYOUT ?>/js/plugin/markdown/bootstrap-markdown.min.js", pagefunction);
-                    //});
             });
     });
     
 
     /*configurar validacion de formulario -- este codigo es de ejemplo*/
     $("#<?php echo CONTR; ?>formNewContrato").validate({
-        // Rules for form validation
         rules : {
             <?php echo CONTR; ?>txt_nombre : {
                 required : true,
@@ -135,7 +125,7 @@ $grabar = Session::getPermiso("CONTRGR");
             }
         },       
 
-        // No cambie el código de abajo
+       
         errorPlacement : function(error, element) {
             error.insertAfter(element.parent());
         },

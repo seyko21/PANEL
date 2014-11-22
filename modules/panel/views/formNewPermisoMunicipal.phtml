@@ -91,7 +91,6 @@ $grabar = Session::getPermiso("PERMUGR");
     
 /*configurar validacion de formulario -- este codigo es de ejemplo*/
 $("#<?php echo PERMU; ?>formNewPermisoMunicipal").validate({
-    // Rules for form validation
     rules : {
         <?php echo PERMU; ?>txt_fi : {
             required : true,
@@ -104,7 +103,7 @@ $("#<?php echo PERMU; ?>formNewPermisoMunicipal").validate({
             number : true     
         }
     },
-    // No cambie el código de abajo
+   
     errorPlacement : function(error, element) {
         error.insertAfter(element.parent());
     },

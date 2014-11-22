@@ -78,8 +78,11 @@ class reporteVentaFechaController extends Controller{
                 }else{
                     $saldo = number_format($aRow['saldo'],2);
                 }
+                
+                $egresos = number_format($aRow['egresos'],2);
+                $utilidad = number_format($aRow['utilidad'],2);
                 /*registros a mostrar*/
-                $sOutput .= '["'.($num++).'","'.  Functions::cambiaf_a_normal($aRow['fecha']).'","'.$aRow['numero_doc'].'","'.$aRow['moneda'].'","'.number_format($aRow['monto'],2).'","'.$saldo.'",'.$axion.' ';
+                $sOutput .= '["'.($num++).'","'.  Functions::cambiaf_a_normal($aRow['fecha']).'","'.$aRow['numero_doc'].'","'.$aRow['moneda'].'","'.number_format($aRow['monto'],2).'","'.$egresos.'","'.$utilidad.'","'.$saldo.'",'.$axion.' ';
 
                 $sOutput .= '],';
 
@@ -192,8 +195,10 @@ class reporteVentaFechaController extends Controller{
                 }else{
                     $saldo = number_format($aRow['saldo'],2);
                 }
+                $egresos = number_format($aRow['egresos'],2);
+                $utilidad = number_format($aRow['utilidad'],2);
                 /*registros a mostrar*/
-                $sOutput .= '["'.  Functions::cambiaf_a_normal($aRow['fecha']).'","'.$aRow['numero_doc'].'","'.$aRow['moneda'].'","'.number_format($aRow['monto'],2).'","'.$saldo.'" ';
+                $sOutput .= '["'.  Functions::cambiaf_a_normal($aRow['fecha']).'","'.$aRow['numero_doc'].'","'.$aRow['moneda'].'","'.number_format($aRow['monto'],2).'","'.$egresos.'","'.$utilidad.'","'.$saldo.'" ';
 
                 $sOutput .= '],';
 
@@ -280,7 +285,7 @@ class reporteVentaFechaController extends Controller{
         
         $html .='<table width="100%" border="0" cellpadding="5" cellspacing="3">
           <tr bgcolor="#901D78">
-            <th colspan="6"><div align="center"><h2 style="color:#FFF;">REPORTE DE VENTAS </h2></div></th>
+            <th colspan="6"><div align="center"><h2 style="color:#FFF;">REPORTE DE CAJA </h2></div></th>
           </tr>
           <tr>
             <td width="16%"><strong>Fecha:</strong></td>

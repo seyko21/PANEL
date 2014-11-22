@@ -318,21 +318,27 @@ define ('VCSCL_3','Pagados');
 define ('VCSCL_4','Saldo');
 define ('VCSCL_5','Deuda de Clientes');
 /*----------------------Reportes ----------------------*/
-define ('VRPT1_1','Ventas por día');
+define ('VRPT1_1','Caja del día');
 define ('VRPT1_2','Fecha :');
-define ('VRPT2_1','Ventas por Fecha');
+define ('VRPT2_1','Caja por Fecha');
 define ('VRPT2_2','Detalle de Ventas - Fecha: ');
 define ('VRPT2_3','Dinero Ingresado hace 10 días - Fecha: '.date("d/m/Y"));
-
-
 define ('VRPT3_1','Ingresos por Meses por Periodo y Moneda');
 define ('VRPT3_2','Periodo');
 define ('VRPT3_3','Moneda');
 define ('VRPT4_1','Reporte del Producto más vendido');
-
+define ('VRPT5_1','Listado de precios de Productos');
+/* ---------------------- Egresos ----------------- */
+define ('VEGRE_1','Egresos por Día');
+define ('VEGRE_2','Nuevo Egreso');
+define ('VEGRE_3','Editar Egreso');
+define ('VEGRE_4','Gasto');
+define ('VEGRE_4M','Ingrese el monto del Egreso');
+define ('VEGRE_5M','Ingrese la descripción del Gasto');
 /* ---------------------- Reporte Paneles Disponibles ----------------- */
 define ('PANED_1','Reporte de Paneles Disponibles');
 define ('PANED_2','Ciudad');
+
 
 
 

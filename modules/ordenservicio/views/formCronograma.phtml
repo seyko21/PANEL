@@ -72,7 +72,6 @@ $norden = Formulario::getParam('_norden');
       element: '#<?php echo GNOSE; ?>txt_fechapago' 
     });
 $("#<?php echo GNOSE; ?>formCronograma").validate({
-    // Rules for form validation
     rules : {
         <?php echo GNOSE; ?>txt_monto : {
             required : true,
@@ -82,7 +81,6 @@ $("#<?php echo GNOSE; ?>formCronograma").validate({
             date: true     
         }
     },
-    // No cambie el código de abajo
     errorPlacement : function(error, element) {
         error.insertAfter(element.parent());
     },

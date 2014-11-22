@@ -122,6 +122,12 @@ var vproducto_ = function(){
                         content: mensajes.MSG_3,
                         callback: function(){
                             vproducto.getGridVproducto();
+                            _private.idVproducto = 0;
+                            setTimeout(function(){
+                                $("#"+diccionario.tabs.VPROD+"lst_moneda").val('SO');
+                                $("#"+diccionario.tabs.VPROD+"lst_unidadMedida").val('');    
+                            },100);
+                            
                         }
                     });
                 }else if(!isNaN(data.result) && parseInt(data.result) === 2){

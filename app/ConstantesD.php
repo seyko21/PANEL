@@ -53,6 +53,8 @@ define("VRPT2","VRPT2");             /*tab modulo REPORTEVENTAFECHA*/
 define("VRPT3","VRPT3");             /*tab modulo REPORTEGRAFICOMES*/
 define("VRPT4","VRPT4");             /*tab modulo REPORTEPRODUCTOMES*/
 define("PANED","PANED");             /*tab modulo PANELDISPONIBLE*/
+define("VRPT5","VRPT5");             /*tab modulo VLISTADOPRECIOS*/
+define("VEGRE","VEGRE");             /*tab modulo VEGRESOS*/
 
 
 

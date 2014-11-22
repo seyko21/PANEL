@@ -44,7 +44,7 @@ class reporteGraficoMesModel extends Model{
         $query = "
             SELECT MONTH( p.`fecha`) AS mes  ,                     
                    dd.moneda AS id_moneda,                    
-                   SUM(p.`monto_pagado`) AS monto
+                   ( SUM(p.`monto_pagado`) - (SELECT SUM(e.`monto`) FROM `ven_egreso` e WHERE e.fecha = p.`fecha` and e.estado = 'E' ) ) AS monto
               FROM `ven_pago` p
                             INNER JOIN ven_documento dd ON dd.`id_docventa` = p.`id_docventa`
                     WHERE p.`estado` = 'E' AND YEAR( p.`fecha`) = :periodo AND dd.`moneda` = :moneda

@@ -153,7 +153,6 @@ $estado = Formulario::getParam('_estado');
       element: '#<?php echo GNOSE; ?>txt_fechapago, #<?php echo GNOSE; ?>txt_fechacontrato' 
     });
 $("#<?php echo GNOSE; ?>formEditOrden").validate({
-    // Rules for form validation
     rules : {
         <?php echo GNOSE; ?>txt_fechapago : {
             required : true,
@@ -172,7 +171,6 @@ $("#<?php echo GNOSE; ?>formEditOrden").validate({
             integer: true
         },
     },
-    // No cambie el código de abajo
     errorPlacement : function(error, element) {
         error.insertAfter(element.parent());
     },

@@ -45,7 +45,7 @@ class reporteVentaFechaModel extends Model{
     
     /*data para el grid: ReporteVentaFecha*/
     public function getReporteVentaFecha(){
-        $aColumns       =   array("","t.fecha","t.numero_doc","t.moneda","t.monto","t.saldo" ); //para la ordenacion y pintado en html
+        $aColumns       =   array("","t.fecha","t.numero_doc","t.moneda","t.monto","t.egresos","9","t.saldo" ); //para la ordenacion y pintado en html
         /*
 	 * Ordenando, se verifica por que columna se ordenara
 	 */
@@ -99,7 +99,7 @@ class reporteVentaFechaModel extends Model{
     } 
     
     public function getIndexVentaFecha(){
-        $aColumns       =   array("t.fecha","t.numero_doc","t.moneda","t.monto","t.saldo" ); //para la ordenacion y pintado en html
+        $aColumns       =   array("t.fecha","t.numero_doc","t.moneda","t.monto","t.egresos","9","t.saldo" ); //para la ordenacion y pintado en html
         /*
 	 * Ordenando, se verifica por que columna se ordenara
 	 */
@@ -153,7 +153,29 @@ class reporteVentaFechaModel extends Model{
         return $data;
     }    
     
-   
+    public function getListadoEgresos(){
+        $query = "
+        SELECT
+            e.`id_egreso`,
+            e.`descripcion`,
+            e.`fecha`,
+            e.`monto`,
+            (select pm.sigla from pub_moneda pm where pm.id_moneda = e.`moneda`) as moneda,
+            e.moneda as id_moneda,
+            e.`estado`  
+          FROM ven_egreso e
+          where e.estado = :estado and e.fecha = :fecha and e.moneda = :moneda
+          order by e.`descripcion`;  ";
+        
+        $parms = array(
+            ':estado'=>  "E",
+            ':fecha'=>  $this->_fecha,
+            ':moneda'=>  $this->_moneda     
+        );
+        $data = $this->queryAll($query,$parms);      
+        
+        return $data;
+    }           
     
 }
 

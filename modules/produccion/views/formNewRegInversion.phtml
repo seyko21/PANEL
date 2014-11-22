@@ -67,7 +67,6 @@ simpleScript.setEvent.date({
     
 /*configurar validacion de formulario -- este codigo es de ejemplo*/
 $("#<?php echo REINV; ?>formNewRegInversion").validate({
-    // Rules for form validation
     rules : {
         <?php echo REINV; ?>txt_monto : {
             required : true,
@@ -78,7 +77,6 @@ $("#<?php echo REINV; ?>formNewRegInversion").validate({
             date: true     
         }
     },
-    // No cambie el código de abajo
     errorPlacement : function(error, element) {
         error.insertAfter(element.parent());
     },

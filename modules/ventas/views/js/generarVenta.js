@@ -285,7 +285,7 @@ var generarVenta_ = function(){
                             fnCallback: function(data) {
                                 if(!isNaN(data.result) && parseInt(data.result) === 1){
                                     simpleScript.notify.ok({
-                                        content: mensajes.MSG_8,
+                                        content: mensajes.MSG_14,
                                         callback: function(){
                                             generarVenta.getGridGenerarVenta();
                                         }

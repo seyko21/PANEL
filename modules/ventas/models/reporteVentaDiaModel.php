@@ -39,19 +39,21 @@ class reporteVentaDiaModel extends Model{
     }
     
     public function getGraficoVentaDia(){
-        $query = "select 
-                t.fecha, t.moneda, t.monto, t.id_moneda
-            from(
+        $query = "SELECT 
+                t.fecha, t.moneda, t.ingresos, t.id_moneda, t.egresos,
+                (t.ingresos - t.egresos) AS monto
+            FROM(
             SELECT p.`fecha`, 
-                    (select concat(m.sigla,' - ',m.descripcion) from pub_moneda m where dd.`moneda` = m.id_moneda) as moneda,
-                    dd.moneda as id_moneda,
-                    (select count(d.`codigo_impresion`) as codigo from `ven_documento` d where p.`fecha` = d.`fecha` and d.estado = 'E' and d.moneda = dd.`moneda` ) as numero_doc,	
-                    SUM(p.`monto_pagado`) as monto
-                    from `ven_pago` p
-                            inner join ven_documento dd on dd.`id_docventa` = p.`id_docventa`
-                    where p.`estado` = 'E'		
-                    group by 1,2,3
-            ) as t
+                    (SELECT CONCAT(m.sigla,' - ',m.descripcion) FROM pub_moneda m WHERE dd.`moneda` = m.id_moneda) AS moneda,
+                    dd.moneda AS id_moneda,
+                    (SELECT COUNT(d.`codigo_impresion`) AS codigo FROM `ven_documento` d WHERE p.`fecha` = d.`fecha` AND d.estado = 'E' AND d.moneda = dd.`moneda` ) AS numero_doc,	
+                    SUM(p.`monto_pagado`) AS ingresos,
+                    (SELECT SUM(e.`monto`) FROM `ven_egreso` e WHERE e.fecha = p.`fecha` and e.estado = 'E' ) AS egresos
+                    FROM `ven_pago` p
+                            INNER JOIN ven_documento dd ON dd.`id_docventa` = p.`id_docventa`
+                    WHERE p.`estado` = 'E'		
+                    GROUP BY 1,2,3
+            ) AS t
             where t.`fecha` = :fecha;";
         $parms = array(
             ':fecha' => date("Y-m-d")            
@@ -91,6 +93,29 @@ class reporteVentaDiaModel extends Model{
         
         return $data;
     }    
+    
+    public function getListadoEgresos(){
+        $query = "
+        SELECT
+            e.`id_egreso`,
+            e.`descripcion`,
+            e.`fecha`,
+            e.`monto`,
+            (select pm.sigla from pub_moneda pm where pm.id_moneda = e.`moneda`) as moneda,
+            e.moneda as id_moneda,
+            e.`estado`  
+          FROM ven_egreso e
+          where e.estado = :estado and e.fecha = :fecha 
+          order by e.`descripcion`; ";
+        
+        $parms = array(
+            ':estado'=>  "E",
+            ':fecha'=>  $this->_fecha            
+        );
+        $data = $this->queryAll($query,$parms);      
+        
+        return $data;
+    }        
     
 }
 

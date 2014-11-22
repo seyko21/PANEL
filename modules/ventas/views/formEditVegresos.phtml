@@ -1,0 +1,133 @@
+<?php /*
+* ---------------------------------------
+* --------- CREATED BY CREATOR ----------
+* fecha: 22-11-2014 20:11:18 
+* Descripcion : formEditVegresos.phtml
+* ---------------------------------------
+*/
+
+/*prefijo: VEGRE debe ser alias en tabla men_menuprincipal*/
+$editar = Session::getPermiso("VEGREACT");
+    
+$data = vegresosController::findVegresos();
+
+?>
+<form id="<?php echo VEGRE; ?>formEditVegresos" name="<?php echo VEGRE; ?>formEditVegresos" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close"  aria-hidden="true">
+                    &times;
+                </button>
+                <h4 class="modal-title"><?php echo VEGRE_3; ?></h4>
+            </div>
+            <div class="modal-body smart-form"> 
+               <section>
+                    <div class="row">
+                        <label class="label col col-2"><?php echo VPROD4; ?></label>
+                        <div class="col col-10">
+                            <label class="input"> 
+                                <i class="icon-append fa fa-keyboard-o"></i>
+                                <input type="text" id="<?php echo VEGRE; ?>txt_descripcion" name="<?php echo VEGRE; ?>txt_descripcion" value="<?php echo $data['descripcion']; ?>">
+                                <b class="tooltip tooltip-top-right"><i class="fa fa-keyboard-o txt-color-teal"></i> <?php echo VEGRE_5M; ?></b>
+                            </label>
+                        </div>
+                    </div>
+                </section>
+                 <section>
+                    <div class="row">
+                        <label class="label col col-2"><?php echo VSEVE_3; ?></label>
+                        <div class="col col-4">
+                            <label class="input"> 
+                                <i class="icon-append fa fa-calendar-o "></i>
+                                <input type="text" id="<?php echo VEGRE; ?>txt_fecha" name="<?php echo VEGRE; ?>txt_fecha" value="<?php echo Functions::cambiaf_a_normal($data['fecha']); ?>">
+                                <b class="tooltip tooltip-top-right"><i class="fa fa-question-circle txt-color-teal"></i> <?php echo VSEVE_3M; ?></b>
+                            </label>
+                        </div>                       
+                    </div>
+                </section>     
+                 <section>
+                    <div class="row">
+                        <label class="label col col-2"><?php echo VEGRE_4; ?></label>
+                        <div class="col col-4">
+                            <label class="input"> 
+                                <i class="icon-append fa fa-money"></i>
+                                <input type="text" id="<?php echo VEGRE; ?>txt_monto" name="<?php echo VEGRE; ?>txt_monto" value="<?php echo number_format($data['monto'],2); ?>">
+                                <b class="tooltip tooltip-top-right"><i class="fa fa-keyboard-o txt-color-teal"></i> <?php echo VEGRE_4M; ?></b>
+                            </label>
+                        </div>
+                       <label class="label col col-1"><?php echo VPROD7; ?></label>
+                        <div class="col col-5">
+                            <label class="select"> 
+                                <?php
+                                    $moneda = vproductoController::getMoneda();
+
+                                    echo Functions::selectHtml(array(
+                                        'data'=>$moneda,
+                                        'atributes'=>array(
+                                            'id'=>VEGRE.'lst_moneda',
+                                            'name'=>VEGRE.'lst_moneda'
+                                        ),
+                                        'etiqueta'=>'descripcion',
+                                        'value'=>'id',
+                                        'defaultEtiqueta'=>$data['moneda'],
+                                        'txtSelect'=>false
+                                    ));
+                                ?><i></i>
+                            </label>
+                        </div>                         
+                    </div>
+                </section> 
+            </div>
+            <div class="modal-footer">
+                <div class="foot-obligar"></div>
+                <?php if($editar["permiso"]):?>
+                <button id="<?php echo VEGRE; ?>btnEdVegresos" type="submit" class="<?php echo $editar["theme"]; ?>">
+                    <i class="<?php echo $editar["icono"]; ?>"></i> <?php echo $editar["accion"]; ?>
+                </button>
+                <?php endif; ?>
+                <button type="button" class="<?php echo THEME_CLOSE; ?>">
+                    <i class="<?php echo ICON_CLOSE; ?>"></i> <?php echo BTN_CLOSE; ?>
+                </button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</form>
+<!-- si no tiene permiso se anula submit desde cualquier input -->
+<?php if(!$editar["permiso"]): ?>
+<script>
+    simpleScript.noSubmit("#<?php echo VEGRE; ?>formEditVegresos");
+</script>
+<?php endif; ?>
+<script>
+    simpleScript.setEvent.date({
+        element: '#<?php echo VEGRE; ?>txt_fecha' 
+    });
+/*configurar validacion de formulario -- este codigo es de ejemplo*/
+$("#<?php echo VEGRE; ?>formEditVegresos").validate({
+    rules : {
+      <?php echo VEGRE; ?>txt_descripcion : {
+            required : true,
+            minlength: 3
+        },
+        <?php echo VEGRE; ?>txt_fecha : {
+           required : true,
+           date:true
+        },
+        <?php echo VEGRE; ?>txt_monto : {
+            required : true,
+            number: true
+        },
+        <?php echo VEGRE; ?>lst_moneda : {
+            required : true
+        }      
+    },
+    errorPlacement : function(error, element) {
+        error.insertAfter(element.parent());
+    },
+
+    submitHandler: function(){
+        vegresos.postEditVegresos();
+    }   
+});
+</script>
