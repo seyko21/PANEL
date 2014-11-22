@@ -58,10 +58,16 @@ class configurarUsuariosController extends Controller{
                     $sOutput .= '</button>';
                 }
                 if($eliminar['permiso'] == 1){
-                    $sOutput .= '<button type=\"button\" class=\"'.$eliminar['theme'].'\" title=\"'.$eliminar['accion'].'\" onclick=\"configurarUsuarios.postDeleteUsuario(\''.$encryptReg.'\')\">';
-                    $sOutput .= '    <i class=\"'.$eliminar['icono'].'\"></i>';
-                    $sOutput .= '</button>';
-                } 
+                    if ($aRow['sistema'] == 0){
+                        $sOutput .= '<button type=\"button\" class=\"'.$eliminar['theme'].'\" title=\"'.$eliminar['accion'].'\" onclick=\"configurarUsuarios.postDeleteUsuario(\''.$encryptReg.'\')\">';
+                        $sOutput .= '    <i class=\"'.$eliminar['icono'].'\"></i>';
+                        $sOutput .= '</button>';
+                    }else{
+                       $sOutput .= '<button type=\"button\" class=\"'.$eliminar['theme'].'\" title=\"'.$eliminar['accion'].'\" disabled >';
+                       $sOutput .= '    <i class=\"'.$eliminar['icono'].'\"></i>';
+                       $sOutput .= '</button>';
+                    }
+                }
                 if ($mail['permiso']) {
                     $sOutput .= '<button type=\"button\" class=\"'.$mail['theme'].'\" title=\"' . $mail['accion'] . '\" onclick=\"configurarUsuarios.postAcceso(this,\'' . $encryptReg . '\',\'' . $aRow['nombrecompleto'] . '\',\'' . $aRow['usuario'] . '\')\">';
                     $sOutput .= '    <i class=\"'.$mail['icono'].'\"></i>';
