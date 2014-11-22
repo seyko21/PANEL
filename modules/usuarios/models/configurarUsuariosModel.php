@@ -75,7 +75,13 @@ class configurarUsuariosModel extends Model{
     }
     
     public function getRoles(){
-        $query = " SELECT id_rol,rol FROM men_rol WHERE activo = :activo ";
+        
+        if (Session::get('sys_defaultRol') == APP_COD_SADM){
+            $query = " SELECT id_rol,rol FROM men_rol WHERE activo = :activo ";    
+        }else{
+            $query = " SELECT id_rol,rol FROM men_rol WHERE activo = :activo and not id_rol ='".APP_COD_SADM."' ";
+        }
+                
         $parms = array(
             ':activo' => '1',
         );
@@ -84,11 +90,21 @@ class configurarUsuariosModel extends Model{
     }
     
     public function getRolesUser(){
-        $query = " SELECT 
+        
+        if (Session::get('sys_defaultRol') == APP_COD_SADM){
+            $query = " SELECT 
                 r.id_rol,
                 r.rol,
                 (SELECT COUNT(*) FROM `men_usuariorol` xx WHERE xx.`id_rol`=r.id_rol AND xx.`id_usuario`=:idUsuario) AS chk
-        FROM men_rol r WHERE activo = :activo  ";
+        FROM men_rol r WHERE activo = :activo  ";  
+        }else{
+            $query = " SELECT 
+                r.id_rol,
+                r.rol,
+                (SELECT COUNT(*) FROM `men_usuariorol` xx WHERE xx.`id_rol`=r.id_rol AND xx.`id_usuario`=:idUsuario) AS chk
+                FROM men_rol r WHERE activo = :activo and not id_rol ='".APP_COD_SADM."' ";
+        }
+               
         $parms = array(
             ':idUsuario'=> $this->_idUsuario,
             ':activo' => '1',
@@ -183,7 +199,12 @@ class configurarUsuariosModel extends Model{
         
         if($data['result'] != 3){
             /*se borra roles*/
-            $query = "DELETE FROM men_usuariorol WHERE id_usuario = :idUsuario";
+            if (Session::get('sys_defaultRol') == APP_COD_SADM){
+                $query = "DELETE FROM men_usuariorol WHERE id_usuario = :idUsuario";
+            }else{
+                 $query = "DELETE FROM men_usuariorol WHERE id_usuario = :idUsuario and not id_rol ='".APP_COD_SADM."'  ";
+            }
+           
             $parms = array(
                 ':idUsuario' => $this->_idUsuario
             );

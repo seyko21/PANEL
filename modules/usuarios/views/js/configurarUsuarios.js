@@ -55,6 +55,7 @@ var configurarUsuarios_ = function(){
             sAjaxSource: _private.config.modulo+'getUsuarios',
             fnDrawCallback: function() {
                 $('#'+diccionario.tabs.T4+'gridUsuariosx_filter').find('input').attr('placeholder','Buscar por nombres').css("width","350px");
+                simpleScript.enterSearch("#"+diccionario.tabs.T4+'gridUsuariosx',oTable);
                 /*para hacer evento invisible*/
                 simpleScript.removeAttr.click({
                     container: '#widget_'+diccionario.tabs.T4+'usuarios',
