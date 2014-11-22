@@ -45,9 +45,10 @@ class asignarCuentaController extends Controller{
                     $chk = '<input id=\"c_'.(++$key).'\" type=\"checkbox\" name=\"'.ASCU.'chk_delete[]\" disabled=\"disabled\">';
                     $estado = '<span class=\"label label-danger\">'.LABEL_AN.'</span>';
                 }
-                
+                 $idPersona = Aes::en($aRow['id_persona']);
+                $vendedor = '<a href=\"javascript:;\" onclick=\"persona.getDatosPersonales(\''.$idPersona.'\');\">'.$aRow['nombrecompleto'].'</a>';
                 /*datos de manera manual*/
-                $sOutput .= '["'.$chk.'","'.$aRow['codigo'].'","'.$aRow['fecha_creacion'].'","'.$aRow['ubicacion'].' - '.$aRow['lado'].'","'.$aRow['nombrecompleto'].'","'.($aRow['porcentaje_comision']*100).' %","'.$estado.'" , ';
+                $sOutput .= '["'.$chk.'","'.$aRow['codigo'].'","'.$aRow['fecha_creacion'].'","'.$aRow['ubicacion'].' - '.$aRow['lado'].'","'.$vendedor.'","'.($aRow['porcentaje_comision']*100).' %","'.$estado.'" , ';
 
                 /*
                  * configurando botones (add/edit/delete etc)

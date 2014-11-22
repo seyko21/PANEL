@@ -85,7 +85,7 @@ class contratosGeneradosController extends Controller{
                 $creador = $aRow['creador'];
                 
                 /*registros a mostrar*/
-                $sOutput .= '["'.$aRow['orden_numero'].'","'.$aRow['fecha_contrato'].'","<a href=\"javascript:;\" onclick=\"persona.getDatosPersonales(\''.$idPersona.'\');\">'.$aRow['cliente'].' - '.$aRow['representante'].'</a>","'.$creador.'","S/.'.number_format($aRow['monto_total'],2).'","'.$estado.'",'.$axion.' ';
+                $sOutput .= '["'.$aRow['orden_numero'].'","'.$aRow['fecha_contrato'].'","<a href=\"javascript:;\" onclick=\"persona.getDatosPersonales(\''.$idPersona.'\');\">'.$aRow['cliente'].'</a>","'.$creador.'","S/.'.number_format($aRow['monto_total'],2).'","'.$estado.'",'.$axion.' ';
 
                 $sOutput .= '],';
 

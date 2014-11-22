@@ -71,7 +71,7 @@ var liquidacionCliente_ = function(){
                 aoData.push({"name": "_f2", "value": _f2}); 
             },
             fnDrawCallback: function() {
-                $("#"+diccionario.tabs.LICL+"gridLiquidacionCliente_filter").find("input").attr("placeholder","Buscar por nombre").css("width","200px");
+                $("#"+diccionario.tabs.LICL+"gridLiquidacionCliente_filter").find("input").attr("placeholder","Buscar por razón social").css("width","200px");
                 simpleScript.enterSearch("#"+diccionario.tabs.LICL+"gridLiquidacionCliente",oTable);
                 /*para hacer evento invisible*/
                 simpleScript.removeAttr.click({

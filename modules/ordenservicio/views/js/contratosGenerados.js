@@ -60,8 +60,8 @@ var contratosGenerados_ = function(){
             aoColumns: [
                 {sTitle: "N° OS", sWidth: "10%",},                
                 {sTitle: "Fecha", sWidth: "8%",  sClass: "center"},
-                {sTitle: "Cliente", sWidth: "35%"},
-                {sTitle: "Creado por", sWidth: "15%"},
+                {sTitle: "Cliente", sWidth: "28%"},
+                {sTitle: "Creado por", sWidth: "25%"},
                 {sTitle: "Total", sWidth: "15%",sClass: "right"},
                 {sTitle: "Estado", sWidth: "8%", sClass: "center"},                
                 {sTitle: "Acciones", sWidth: "8%", sClass: "center", bSortable: false}
@@ -75,6 +75,7 @@ var contratosGenerados_ = function(){
             },
             fnDrawCallback: function() {    
                 $("#"+diccionario.tabs.COGEN+"gridContratosGenerados_filter").find("input").attr("placeholder","Buscar por N° OS").css("width","200px");
+                simpleScript.enterSearch("#"+diccionario.tabs.COGEN+'gridContratosGenerados',oTable);
                 /*para hacer evento invisible*/
                 simpleScript.removeAttr.click({
                     container: "#widget_"+diccionario.tabs.COGEN,

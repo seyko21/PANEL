@@ -26,7 +26,8 @@ echo Functions::widgetOpen(array(
                                         'data'=>$datal,
                                         'atributes'=>array(
                                             'id'=>PANED.'lst_ciudad',
-                                            'name'=>PANED.'lst_ciudad'
+                                            'name'=>PANED.'lst_ciudad',
+                                            'onchange'=>'panelDisponible.getGridPanelDisponible();'
                                         ),
                                         'etiqueta'=>'descripcion',
                                         'value'=>'id',
@@ -35,9 +36,8 @@ echo Functions::widgetOpen(array(
                                     ));
                                 ?><i></i>
                             </label>
-                
             </label>                         
-            <div class="col col-7 pull-left" style="padding-left:30px;" >                      
+            <div class="col col-5 pull-left" style="padding-left:30px;" >                      
                 <button id="<?php echo VRPT3; ?>btnRefresh" type="button"  
                         onclick="panelDisponible.getGridPanelDisponible();"
                          class="<?php echo $buscar['theme'];?> btn-sm"  >

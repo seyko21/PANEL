@@ -130,7 +130,7 @@ class asignarPanelSocioController extends Controller{
                 /*antes de enviar id se encrypta*/
                 $encryptReg = Aes::en($aRow['id_producto']);
                 
-                $nom = '<a href=\"javascript:;\" onclick=\"simpleScript.setInput({'.$tab.'txt_idproducto:\''.$encryptReg.'\', '.$tab.'txt_producto:\''.$aRow['ubicacion'].'\','.$tab.'txt_saldo:\''.$aRow['total_saldo'].'\','.$tab.'txt_gananciaasig:\''.$aRow['porcentaje'].'\'},\'#'.$tab.'formBuscarProductoPanelSocio\');\" >'.$aRow['ubicacion'].'</a>';
+                $nom = '<a href=\"javascript:;\" onclick=\"simpleScript.setInput({'.$tab.'txt_idproducto:\''.$encryptReg.'\', '.$tab.'txt_producto:\''.$aRow['ubicacion'].'\','.$tab.'txt_saldo:\''.$aRow['total_saldo'].'\','.$tab.'txt_gananciaasig:\''.($aRow['porcentaje']*100).'\'},\'#'.$tab.'formBuscarProductoPanelSocio\');\" >'.$aRow['ubicacion'].'</a>';
                 
                 /*datos de manera manual*/
                 $sOutput .= '["'.(++$key).'","'.$nom.'","'.number_format($aRow['total_produccion'],2).'","'.number_format($aRow['total_asignado'],2).'","'.number_format($aRow['total_saldo'],2).'" ';

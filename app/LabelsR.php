@@ -298,7 +298,7 @@ define('ORINS_18','Total');
 define('ORINS_19','Click para finalizar Orden de Instalación');
 define('ORINS_20','Click para finalizar Producción');
 /*---------------------- TERMINAR CONTRATO ----------------*/
-define('TERCO_1','Ordenes de Servicio');
+define('TERCO_1','Listado de Ordenes de Servicio');
 define('TERCO_2','Finalizar contrato: ');
 define('TERCO_3','Motivo');
 define('TERCO_4','Ingrese un motivo por el cual se finaliza el contrato');

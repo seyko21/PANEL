@@ -7,7 +7,7 @@
 */
 
 /*prefijo: REPER debe ser alias en tabla men_menuprincipal*/
-$editar = Session::getPermiso('REGSOACT');
+$editar = Session::getPermiso('REPERACT');
 $data = personaController::findPersona();
 ?>
 <form id="<?php echo REPER; ?>formEditPersona" name="<?php echo REPER; ?>formEditPersona" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -250,12 +250,10 @@ $data = personaController::findPersona();
                         minlength: 3
                 },
                 <?php echo REPER; ?>txt_apellidopaterno : {
-                        required : true,
                         regular: true,
                         minlength: 3
                 },
                 <?php echo REPER; ?>txt_apellidomaterno : {
-                        required : true,
                         regular: true,
                         minlength: 3
                 },     
@@ -273,7 +271,6 @@ $data = personaController::findPersona();
                         email: true
                 },
                 <?php echo REPER; ?>txt_nrodocumento:{
-                        number: true,
                         maxlength: 13
                 }
         },

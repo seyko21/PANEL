@@ -188,7 +188,7 @@ var asignarPanelSocio_ = function(){
         var socio = $('#'+diccionario.tabs.APASO+'txt_idpersona').val();
         if(socio === ''){
             simpleScript.notify.warning({
-                content: 'Busque un socio'
+                content: 'Debe de buscar un socio'
             });
             return false;
         }

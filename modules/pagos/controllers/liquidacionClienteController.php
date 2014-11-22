@@ -83,7 +83,7 @@ class liquidacionClienteController extends Controller{
                 $axion .= ' </div>" ';
                 
                 /*registros a mostrar*/
-                $sOutput .= '["'.$aRow['orden_numero'].'","'.  Functions::cambiaf_a_normal($aRow['fecha_contrato']).'","<a href=\"javascript:;\" onclick=\"persona.getDatosPersonales(\''.$idPersona.'\');\">'.$aRow['cliente'].' - '.$aRow['representante'].'</a>","S/.'.number_format($aRow['monto_total'],2).'","'.$estado.'",'.$axion.' ';
+                $sOutput .= '["'.$aRow['orden_numero'].'","'.  Functions::cambiaf_a_normal($aRow['fecha_contrato']).'","<a href=\"javascript:;\" onclick=\"persona.getDatosPersonales(\''.$idPersona.'\');\">'.$aRow['cliente'].'</a>","S/.'.number_format($aRow['monto_total'],2).'","'.$estado.'",'.$axion.' ';
 
                 $sOutput .= '],';
 

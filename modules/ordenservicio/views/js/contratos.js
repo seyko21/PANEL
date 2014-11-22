@@ -22,7 +22,7 @@ var contratos_ = function(){
     /*crea tab : Contratos*/
     this.publico.main = function(element){
         simpleScript.addTab({
-            id : diccionario.tabs.PANP,
+            id : diccionario.tabs.CONTR,
             label: $(element).attr("title"),
             fnCallback: function(){
                 contratos.getContenido();
@@ -36,17 +36,17 @@ var contratos_ = function(){
             dataType: "html",
             root: _private.config.modulo,
             fnCallback: function(data){
-                $("#"+diccionario.tabs.PANP+"_CONTAINER").html(data);
+                $("#"+diccionario.tabs.CONTR+"_CONTAINER").html(data);
                 contratos.getGridContratos();
             }
         });
     };
     
     this.publico.getGridContratos = function (){
-        var _f1 = $("#"+diccionario.tabs.PANP+"txt_f1").val();
-        var _f2 = $("#"+diccionario.tabs.PANP+"txt_f2").val();        
+        var _f1 = $("#"+diccionario.tabs.CONTR+"txt_f1").val();
+        var _f2 = $("#"+diccionario.tabs.CONTR+"txt_f2").val();        
        
-        var oTable = $("#"+diccionario.tabs.PANP+"gridContratos").dataTable({
+        var oTable = $("#"+diccionario.tabs.CONTR+"gridContratos").dataTable({
             bProcessing: true,
             bServerSide: true,
             bDestroy: true,
@@ -57,8 +57,8 @@ var contratos_ = function(){
             aoColumns: [
                 {sTitle: "N° OS", sWidth: "10%",},                
                 {sTitle: "Fecha", sWidth: "8%",  sClass: "center"},
-                {sTitle: "Cliente", sWidth: "35%"},
-                {sTitle: "Creado por", sWidth: "18%"},
+                {sTitle: "Cliente", sWidth: "28%"},
+                {sTitle: "Creado por", sWidth: "25%"},
                 {sTitle: "Total", sWidth: "15%",sClass: "right"},
                 {sTitle: "Estado", sWidth: "8%", sClass: "center"},                
                 {sTitle: "Acciones", sWidth: "8%", sClass: "center", bSortable: false}
@@ -71,18 +71,19 @@ var contratos_ = function(){
                 aoData.push({"name": "_f2", "value": _f2}); 
             },            
             fnDrawCallback: function() {
-                $("#"+diccionario.tabs.PANP+"gridContratos_filter").find("input").attr("placeholder","Buscar por N° OS").css("width","200px");
+                $("#"+diccionario.tabs.CONTR+"gridContratos_filter").find("input").attr("placeholder","Buscar por N° OS").css("width","200px");
+                simpleScript.enterSearch("#"+diccionario.tabs.CONTR+'gridContratos',oTable);
                 /*para hacer evento invisible*/
                 simpleScript.removeAttr.click({
-                    container: "#widget_"+diccionario.tabs.PANP,
+                    container: "#widget_"+diccionario.tabs.CONTR,
                     typeElement: "button"
                 });
-                $('#'+diccionario.tabs.PANP+'refresh').click(function(){
+                $('#'+diccionario.tabs.CONTR+'refresh').click(function(){
                    oTable.fnReloadAjax(oTable.fnSettings());
                 }); 
             },
             fnInfoCallback: function( oSettings, iStart, iEnd, iMax, iTotal, sPre ) {
-               return '<button id="'+diccionario.tabs.PANP+'refresh" class="btn btn-primary" title="Actualizar"><i class="fa fa-refresh"></i></button> '+iStart +" al "+ iEnd+' de '+iTotal;
+               return '<button id="'+diccionario.tabs.CONTR+'refresh" class="btn btn-primary" title="Actualizar"><i class="fa fa-refresh"></i></button> '+iStart +" al "+ iEnd+' de '+iTotal;
            }
         });
         setup_widgets_desktop();
@@ -129,10 +130,10 @@ var contratos_ = function(){
             data: '&_idOrden='+id+'&_numOrden='+num,
             fnCallback: function(data) {
                 if(parseInt(data.result) === 1){
-                    $('#'+diccionario.tabs.PANP+'btnDowPDF').off('onclick');
-                    $('#'+diccionario.tabs.PANP+'btnDowPDF').off('click');
-                    $('#'+diccionario.tabs.PANP+'btnDowPDF').attr("onclick","window.open('public/files/"+data.archivo+"','_blank');generarCotizacion.deleteArchivo('"+data.archivo+"');");
-                    $('#'+diccionario.tabs.PANP+'btnDowPDF').click();
+                    $('#'+diccionario.tabs.CONTR+'btnDowPDF').off('onclick');
+                    $('#'+diccionario.tabs.CONTR+'btnDowPDF').off('click');
+                    $('#'+diccionario.tabs.CONTR+'btnDowPDF').attr("onclick","window.open('public/files/"+data.archivo+"','_blank');generarCotizacion.deleteArchivo('"+data.archivo+"');");
+                    $('#'+diccionario.tabs.CONTR+'btnDowPDF').click();
                 }
             }
         });
@@ -145,10 +146,10 @@ var contratos_ = function(){
             data: '&_idOrden='+id+'&_numOrden='+num,
             fnCallback: function(data) {
                 if(parseInt(data.result) === 1){
-                    $('#'+diccionario.tabs.PANP+'btnDowPDF').off('onclick');
-                    $('#'+diccionario.tabs.PANP+'btnDowPDF').off('click');
-                    $('#'+diccionario.tabs.PANP+'btnDowPDF').attr("onclick","window.open('public/files/"+data.archivo+"','_blank');generarCotizacion.deleteArchivo('"+data.archivo+"');");
-                    $('#'+diccionario.tabs.PANP+'btnDowPDF').click();
+                    $('#'+diccionario.tabs.CONTR+'btnDowPDF').off('onclick');
+                    $('#'+diccionario.tabs.CONTR+'btnDowPDF').off('click');
+                    $('#'+diccionario.tabs.CONTR+'btnDowPDF').attr("onclick","window.open('public/files/"+data.archivo+"','_blank');generarCotizacion.deleteArchivo('"+data.archivo+"');");
+                    $('#'+diccionario.tabs.CONTR+'btnDowPDF').click();
                 }
             }
         });

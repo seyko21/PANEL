@@ -76,6 +76,7 @@ var compromisoPagar_ = function(){
             },            
             fnDrawCallback: function(){
                 $("#"+diccionario.tabs.COPAG+"gridCompromisoPagar_filter").find("input").attr("placeholder","Buscar por N° OS").css("width","200px");
+                simpleScript.enterSearch("#"+diccionario.tabs.COPAG+'gridCompromisoPagar',oTable);
                 /*para hacer evento invisible*/
                 simpleScript.removeAttr.click({
                     container: "#widget_"+diccionario.tabs.COPAG,

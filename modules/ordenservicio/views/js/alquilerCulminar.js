@@ -69,6 +69,7 @@ var alquilerCulminar_ = function(){
             },     
             fnDrawCallback: function() {
                 $("#"+diccionario.tabs.CALCU+"gridAlquilerCulminar_filter").find("input").attr("placeholder","Buscar por N° OS o Caratula o Cliente").css("width","350px");
+                simpleScript.enterSearch("#"+diccionario.tabs.CALCU+'gridAlquilerCulminar',oTable);
                 /*para hacer evento invisible*/
                 simpleScript.removeAttr.click({
                     container: "#widget_"+diccionario.tabs.CALCU,

@@ -78,6 +78,7 @@ var movimientosOS_ = function(){
             },            
             fnDrawCallback: function() {
                 $("#"+diccionario.tabs.MOVOS+"gridMovimientosOS_filter").find("input").attr("placeholder","Buscar por N° OS").css("width","200px");
+                simpleScript.enterSearch("#"+diccionario.tabs.MOVOS+'gridMovimientosOS',oTable);
                 /*para hacer evento invisible*/
                 simpleScript.removeAttr.click({
                     container: "#widget_"+diccionario.tabs.MOVOS,

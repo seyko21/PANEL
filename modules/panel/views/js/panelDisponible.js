@@ -54,8 +54,8 @@ var panelDisponible_ = function(){
             iDisplayLength: 10,            
             aoColumns: [
                 {sTitle: "N°", sWidth: "1%",bSortable: false},
-                {sTitle: "Ubicación", sWidth: "35%"},
-                {sTitle: "Area", sWidth: "8%"},
+                {sTitle: "Ubicación", sWidth: "30%"},
+                {sTitle: "Area", sWidth: "10%"},
                 {sTitle: "Ciudad", sWidth: "15%"},
                 {sTitle: "Elemento", sWidth: "15%"},
                 {sTitle: "Códigos", sWidth: "10%"}
@@ -74,7 +74,13 @@ var panelDisponible_ = function(){
                     container: "#widget_"+diccionario.tabs.PANED,
                     typeElement: "button"
                 });
-            }
+                $('#'+diccionario.tabs.PANED+'refresh').click(function(){
+                   oTable.fnReloadAjax(oTable.fnSettings());
+                }); 
+            },
+            fnInfoCallback: function( oSettings, iStart, iEnd, iMax, iTotal, sPre ) {
+               return '<button id="'+diccionario.tabs.PANED+'refresh" class="btn btn-primary" title="Actualizar"><i class="fa fa-refresh"></i></button> '+iStart +" al "+ iEnd+' de '+iTotal;
+           }
         });
         setup_widgets_desktop();
     };

@@ -60,6 +60,7 @@ var comisionVendedor_ = function(){
             sAjaxSource: _private.config.modulo+"getGridComisionVendedor",
             fnDrawCallback: function() {
                 $("#"+diccionario.tabs.COMVE+"gridComisionVendedor_filter").find("input").attr("placeholder","Buscar por vendedor").css("width","250px");
+                simpleScript.enterSearch("#"+diccionario.tabs.COMVE+'gridComisionVendedor',oTable);
                 /*para hacer evento invisible*/
                 simpleScript.removeAttr.click({
                     container: "#widget_"+diccionario.tabs.COMVE,

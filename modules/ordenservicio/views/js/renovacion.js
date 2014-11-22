@@ -45,7 +45,7 @@ var renovacion_ = function(){
             aoColumns: [
                 {sTitle: "<input type='checkbox' id='"+diccionario.tabs.GENRE+"chk_all' onclick='simpleScript.checkAll(this,\"#"+diccionario.tabs.GENRE+"gridRenovacion\");'>", sWidth: "1%", sClass: "center", bSortable: false},
                 {sTitle: "Código OS", sWidth: "10%",sClass: "center"},
-                {sTitle: "Representante", sWidth: "20%"},
+                {sTitle: "Cliente", sWidth: "20%"},
                 {sTitle: "Fecha", sWidth: "10%"},
                 {sTitle: "Total", sWidth: "15%", sClass: "right", bSortable: false},
                 {sTitle: "Estado", sWidth: "8%", sClass: "center", bSortable: false},
@@ -55,7 +55,8 @@ var renovacion_ = function(){
             sScrollY: "300px",
             sAjaxSource: _private.config.modulo+"gridRenovacion",
             fnDrawCallback: function() {
-                $("#"+diccionario.tabs.GENRE+"gridRenovacion_filter").find("input").attr("placeholder","Buscar por código OS o representante").css("width","340px");
+                $("#"+diccionario.tabs.GENRE+"gridRenovacion_filter").find("input").attr("placeholder","Buscar por código OS o Cliente").css("width","340px");
+                simpleScript.enterSearch("#"+diccionario.tabs.GENRE+'gridRenovacion',oTable);
                 /*para hacer evento invisible*/
                 simpleScript.removeAttr.click({
                     container: "#widget_"+diccionario.tabs.GENRE,

@@ -72,6 +72,7 @@ var panelesConfirmado_ = function(){
             },            
             fnDrawCallback: function() {
                 $("#"+diccionario.tabs.PANCO+"gridPanelesConfirmado_filter").find("input").attr("placeholder","Buscar por N° OS o codigo o Vendedor").css("width","350px");
+                simpleScript.enterSearch("#"+diccionario.tabs.PANCO+'gridPanelesConfirmado',oTable);
                 /*para hacer evento invisible*/
                 simpleScript.removeAttr.click({
                     container: "#widget_"+diccionario.tabs.PANCO,

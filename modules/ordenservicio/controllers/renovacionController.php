@@ -57,7 +57,7 @@ class renovacionController extends Controller{
                 $total = 'S/.'.number_format($aRow['monto_total'],2);                                
                 
                 /*registros a mostrar*/
-                $sOutput .= '["'.$chk.'","'.$aRow['orden_numero'].'","<a href=\"javascript:;\" onclick=\"persona.getDatosPersonales(\''.$idPersona.'\');\">'.$aRow['nombrecompleto'].'</a>","'.$aRow['fecha'].'","'.$total.'","'.$estado.'",';
+                $sOutput .= '["'.$chk.'","'.$aRow['orden_numero'].'","<a href=\"javascript:;\" onclick=\"persona.getDatosPersonales(\''.$idPersona.'\');\">'.$aRow['cliente'].'</a>","'.$aRow['fecha'].'","'.$total.'","'.$estado.'",';
                 
                 /*
                  * configurando botones (add/edit/delete etc)

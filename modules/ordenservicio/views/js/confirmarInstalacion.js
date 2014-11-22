@@ -65,6 +65,7 @@ var confirmarInstalacion_ = function(){
             sAjaxSource: _private.config.modulo+"getGridConfirmarInstalacion",
             fnDrawCallback: function() {
                 $("#"+diccionario.tabs.COINS+"gridConfirmarInstalacion_filter").find("input").attr("placeholder","Buscar por N° OS o Codigo o producto").css("width","350px");
+                simpleScript.enterSearch("#"+diccionario.tabs.COINS+'gridConfirmarInstalacion',oTable);
                 /*para hacer evento invisible*/
                 simpleScript.removeAttr.click({
                     container: "#widget_"+diccionario.tabs.COINS,

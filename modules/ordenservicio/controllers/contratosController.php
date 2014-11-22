@@ -86,7 +86,7 @@ class contratosController extends Controller{
                 $creador = $aRow['creador'];
                 
                 /*registros a mostrar*/
-                $sOutput .= '["'.$aRow['orden_numero'].'","'.$aRow['fecha_contrato'].'","'.$aRow['cliente'].' - '.$aRow['representante'].'","'.$creador.'","S/.'.number_format($aRow['monto_total'],2).'","'.$estado.'",'.$axion.' ';
+                $sOutput .= '["'.$aRow['orden_numero'].'","'.$aRow['fecha_contrato'].'","'.$aRow['cliente'].'","'.$creador.'","S/.'.number_format($aRow['monto_total'],2).'","'.$estado.'",'.$axion.' ';
 
                 $sOutput .= '],';
 

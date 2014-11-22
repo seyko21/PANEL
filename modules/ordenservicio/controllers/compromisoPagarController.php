@@ -88,7 +88,7 @@ class compromisoPagarController extends Controller{
                 }
                 $axion .= ' </div>" ';
                 /*registros a mostrar*/
-                $sOutput .= '["'.$aRow['orden_numero'].'","'.$aRow['numero_cuota'].'","'.$aRow['fecha_programada'].'","<a href=\"javascript:;\" onclick=\"persona.getDatosPersonales(\''.$idPersona.'\');\">'.$aRow['cliente'].' - '.$aRow['representante'].'</a>","'.number_format($aRow['mora'],2).'","'.number_format($aRow['monto_pago'],2).'","'.$estado.'",'.$axion.' ';
+                $sOutput .= '["'.$aRow['orden_numero'].'","'.$aRow['numero_cuota'].'","'.$aRow['fecha_programada'].'","<a href=\"javascript:;\" onclick=\"persona.getDatosPersonales(\''.$idPersona.'\');\">'.$aRow['cliente'].'</a>","'.number_format($aRow['mora'],2).'","'.number_format($aRow['monto_pago'],2).'","'.$estado.'",'.$axion.' ';
 
                 $sOutput .= '],';
 

@@ -43,7 +43,7 @@ class seguimientoCotizacionModel extends Model{
     
     /*data para el grid: SeguimientoCotizacion*/
     public function getSeguimientoCotizacion(){
-        $aColumns       =   array( 'cotizacion_numero','nombrecompleto','14' ,'fechacoti','meses_contrato','13','total'); //para la ordenacion y pintado en html
+        $aColumns       =   array( 'cotizacion_numero','nombrecompleto','creador' ,'fechacoti','meses_contrato','vencimiento','mtotal'); //para la ordenacion y pintado en html
         /*
 	 * Ordenando, se verifica por que columna se ordenara
 	 */

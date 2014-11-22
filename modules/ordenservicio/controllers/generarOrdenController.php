@@ -78,7 +78,7 @@ class generarOrdenController extends Controller{
                 
                 $c1 = $aRow['orden_numero'];
                 $c2 = $aRow['cotizacion_numero'];
-                $c3 = $aRow['cliente'].' - '.$aRow['nombrecompleto'];
+                $c3 = $aRow['cliente'];
                 $c4 = $aRow['fecha'];
                 $c5 = Functions::convertirDiaMes($aRow['meses_contrato']);
                 
