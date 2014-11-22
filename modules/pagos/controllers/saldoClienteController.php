@@ -65,11 +65,11 @@ class saldoClienteController extends Controller{
                 }
                
                 $axion .= ' </div>" ';
-                $idPersona = Aes::en($aRow['id_persona']);
-                
+                              
                 $c1 = $aRow['numero_cuota'];
                 $c2 = $aRow['orden_numero'];
                 $c3 = Functions::cambiaf_a_normal($aRow['fecha_programada']);
+                $idPersona = Aes::en($aRow['id_persona']);
                 $c4 = '<a href=\"javascript:;\" onclick=\"persona.getDatosPersonales(\''.$idPersona.'\');\">'.$aRow['descripcion_cliente'].'</a>';
                 $c5 = number_format($aRow['costo_mora'],2);
                 $c6 = 'S/.'.number_format($aRow['monto_pago'],2);

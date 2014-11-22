@@ -60,8 +60,10 @@ class generarVentaController extends Controller{
                     case 'B': $tipoDoc = 'Boleta';break;                  
                     case 'R': $tipoDoc = 'Recibo';break;                                                                     
                 }
-                $nombre = $aRow['nombre_descripcion'];
-                    
+                
+                $idPersona = Aes::en($aRow['id_persona']);
+                $nombre = '<a href=\"javascript:;\" onclick=\"persona.getDatosPersonales(\''.$idPersona.'\');\">'.$aRow['nombre_descripcion'].'</a>';
+                                    
                  if($aRow['monto_saldo'] > 0 && $aRow['estado'] == 'E'){
                     $saldo = '<span class=\"badge bg-color-red\">'.number_format($aRow['monto_saldo'],2).'</span>';
                 }else{

@@ -79,8 +79,9 @@ class vseguimientoventaController extends Controller{
                     $saldo = number_format($aRow['monto_saldo'],2);
                 }
                 
-                $nombre = $aRow['nombre_descripcion'];
-
+                $idPersona = Aes::en($aRow['id_persona']);
+                $nombre = '<a href=\"javascript:;\" onclick=\"persona.getDatosPersonales(\''.$idPersona.'\');\">'.$aRow['nombre_descripcion'].'</a>';
+           
                 $sOutput .= '["'.($num++).'","'.$aRow['codigo_impresion'].'","'.$nombre.'","'.  Functions::cambiaf_a_normal($aRow['fecha']).'","'.$aRow['moneda'].'","'.number_format($aRow['monto_total'],2).'","'.$saldo.'","'.$estado.'",'.$axion.' ';
                 
                 $sOutput .= '],';

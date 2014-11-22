@@ -75,7 +75,9 @@ class vConsultaSaldoController extends Controller{
                      $saldo = number_format($aRow['monto_saldo'],2);
                 endif;
                                 
-                $nombre = $aRow['nombre_descripcion'];
+                $idPersona = Aes::en($aRow['id_persona']);
+                $nombre = '<a href=\"javascript:;\" onclick=\"persona.getDatosPersonales(\''.$idPersona.'\');\">'.$aRow['nombre_descripcion'].'</a>';
+           
                 $pagado = number_format($aRow['monto_asignado'],2);
                 /*registros a mostrar*/
                 $sOutput .= '["'.($num++).'","'.$aRow['codigo_impresion'].'","'.$nombre.'","'.  Functions::cambiaf_a_normal($aRow['fecha']).'","'.$aRow['moneda'].'","'.number_format($aRow['monto_total'],2).'","'.$pagado.'","'.$saldo.'","'.$estado.'",'.$axion.' ';
