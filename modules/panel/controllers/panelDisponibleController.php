@@ -117,7 +117,7 @@ class panelDisponibleController extends Controller{
         $html .= '<table width="100%" border="0" cellpadding="5" cellspacing="3" style="margin-top:-30px;">
                 <tr><td style="text-align:center"><img src="'.ROOT.'public'.DS.'img'.DS.'sevend_grande.jpg"  width="700" height="380"  /></td></tr>
                 <tr bgcolor="#901D78">
-                  <td style="padding:30px;text-align:center"><h1 style="color:#FFF;">Ubicaciones Disponibles</h1>
+                  <td style="padding:30px;text-align:center"><h1 style="color:#FFF;">Ubicaciones Disponibles al '.date("d/m/Y").'</h1>
                   <b style="color:#FFF; font-size:17px;">- '.$descripcion_ciudad.' -</b></td>
                 </tr></table>'; 
                 
