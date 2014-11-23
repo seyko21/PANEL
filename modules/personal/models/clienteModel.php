@@ -248,10 +248,9 @@ class clienteModel extends Model{
     /*eliminar varios registros: Cliente*/
     public function deleteClienteAll(){
         foreach ($this->_chkdel as $value) {
-            $query = "UPDATE `mae_persona` SET
-			`estado` = '0'
-                    WHERE `id_persona` = :idPersona;";
+            $query = "call sp_perAnularCliente(:flag, :idPersona);";
             $parms = array(
+                'flag'=>1,
                 ':idPersona' => Aes::de($value)
             );
             $this->execute($query,$parms);
@@ -286,10 +285,9 @@ class clienteModel extends Model{
     
     public function deleteClienteAllRp(){
         foreach ($this->_chkdelrp as $value) {
-            $query = "UPDATE `mae_persona` SET
-			`id_personapadre` = NULL
-                    WHERE `id_persona` = :idPersona;";
+            $query = "call sp_perAnularCliente(:flag, :idPersona);";
             $parms = array(
+                'flag'=>2,
                 ':idPersona' => Aes::de($value)
             );
             $this->execute($query,$parms);

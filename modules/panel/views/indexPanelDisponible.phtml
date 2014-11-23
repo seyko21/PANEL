@@ -14,11 +14,11 @@ echo Functions::widgetOpen(array(
         "title"=>PANED_1
     )); 
 ?>
-
+<button id="<?php echo PANED; ?>btnDowPDF" type="button" class="hide">Descargar</button>
    <div class="widget-body-toolbar " style="margin:0px; padding:10px ">  
           <div class="smart-form" style="position: absolute;left:300px;top:5px;width: 65%; "> 
             <label class="label col col-7 pull-left"><?php echo PANED_2; ?></label>
-            <label class="input pull-left col col-3" >
+            <label class="input pull-left col col-4" >
                  <label class="select"> 
                                 <?php
                                    $datal = panelDisponibleController::getListadoCiudad();                                                                                                   
@@ -44,7 +44,7 @@ echo Functions::widgetOpen(array(
                       <i class="<?php echo $buscar['icono'];?>"></i> <?php echo $buscar['accion'];?>
                  </button> 
                   <button id="<?php echo VRPT2; ?>btnPDF" type="button" style="margin-top: -2px;" 
-                        onclick="reporteVentaDia.postPDF(this,'<?php echo Aes::en(date("Y-m-d"));?>');" 
+                        onclick="panelDisponible.postPDF(this);" 
                         class="<?php echo $pdf['theme'];?> btn-sm"  >
                       <i class="<?php echo $pdf['icono'];?>"></i> <?php echo $pdf['accion'];?>
                 </button>  

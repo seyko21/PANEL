@@ -11,7 +11,7 @@ class panelDisponibleModel extends Model{
 
     private $_flag;
     private $_idPanelDisponible;
-    private $_ciudad;
+    public $_ciudad;
     private $_idPersona;
     private $_usuario;
     
@@ -79,6 +79,33 @@ class panelDisponibleModel extends Model{
         return $data;
     }   
    
+   public function getRptPaneles(){
+        $query = "call sp_catalogoRptPanelDisponible(:acceso,:idPersona,:ciudad); ";        
+        $parms = array(
+            ':acceso' => Session::get('sys_all'),
+            ':idPersona' => $this->_idPersona, 
+            ':ciudad' => $this->_ciudad, 
+        );
+        $data = $this->queryAll($query,$parms);
+        return $data;
+    }       
+    public function getPiePagina(){
+        $query = "SELECT valor FROM `pub_parametro` WHERE alias = :alias;";
+        $parms = array(
+            ':alias' => 'PIE'
+        );
+        $data = $this->queryOne($query,$parms);
+        return $data;
+    }       
+    public function getAgenteVenta(){
+        $query = "SELECT concat(`nombrecompleto`,' - ',`telefono`) as contacto"
+                . " FROM `mae_persona` WHERE id_persona = :idd;";
+        $parms = array(
+            ':idd' => $this->_idPersona
+        );
+        $data = $this->queryOne($query,$parms);
+        return $data;
+    }     
     
 }
 

@@ -84,7 +84,22 @@ var panelDisponible_ = function(){
         });
         setup_widgets_desktop();
     };
-       
+
+    this.publico.postPDF = function(btn){
+           var c =$("#"+diccionario.tabs.PANED+"lst_ciudad").val();        
+           simpleAjax.send({
+               element: btn,
+               root: _private.config.modulo + 'postPDF',
+               data: '&_ciudad='+c,
+               fnCallback: function(data) {
+                   if(parseInt(data.result) === 1){
+                       $('#'+diccionario.tabs.PANED+'btnDowPDF').off('click');
+                       $('#'+diccionario.tabs.PANED+'btnDowPDF').attr("onclick","window.open('public/files/"+data.archivo+"','_blank');generarCotizacion.deleteArchivo('"+data.archivo+"');");
+                       $('#'+diccionario.tabs.PANED+'btnDowPDF').click();
+                   }
+               }
+           });
+       };    
     
     return this.publico;
     
