@@ -441,14 +441,15 @@ var simpleScript_ = function(){
         }
     };
     
-    this.public.checkAll = function(el,tab){
+     this.public.checkAll = function(el,tab){
         var d = $(tab).find('tbody tr');
-        var a = d.attr('style');
         
         if($(el).is(':checked')){
             d.each(function(){  
-                /*solo marca los que no estan desabiblitados*/
-                if(a !== 'display: none;'){
+                var h = $(this).attr('style');
+                
+                if(h !== 'display: none;'){
+                    /*solo marca los que no estan desabiblitados*/
                     if(!$(this).find(':checkbox').is(':disabled')){
                         $(this).find(':checkbox').prop('checked','checked');  
                     }
@@ -459,8 +460,8 @@ var simpleScript_ = function(){
                 $(this).find(':checkbox').prop('checked','');     
             });
         }
-        
     };
+    
     
     this.public.closeTab = function(tab){
         $('#li-'+tab).find('span.delete-tab').click();
