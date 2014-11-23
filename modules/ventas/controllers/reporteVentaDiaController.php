@@ -76,11 +76,9 @@ class reporteVentaDiaController extends Controller{
         
         $ingresosD = 0;
         $egresosD = 0;
-        $utilidadD = 0;
         
         $ingresosS = 0;
         $egresosS = 0;
-        $utilidadS = 0;
         
         $moneda_1 = 'Nuevos soles';
         $moneda_2 = 'Dolares';
