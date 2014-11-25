@@ -121,7 +121,7 @@ class panelDisponibleController extends Controller{
                   <b style="color:#FFF; font-size:17px;">- '.$descripcion_ciudad.' -</b></td>
                 </tr></table>'; 
                 
-        $mpdf->AddPage();
+        $mpdf->AddPage();                
         
         $html .= '<table width="100%" border="0" cellpadding="3" cellspacing="3">';
         foreach ($data as $value) {       
@@ -137,10 +137,12 @@ class panelDisponibleController extends Controller{
                         <tr><td class="fondo"><b>Observación:</b> '.$value['referencia'].'</td></tr>
                         <tr><td class="fondo"><b>Códigos:</b> '.$value['codigos'].'</td></tr>
                         <tr><td class="fondo"><br/><b>Tarifa:</b> S/.'.number_format($value['precio'],2).' + IGV <br>(Incluye Ambas Caras)</td></tr>  
-                        <tr><td><p></p><p></p><p></p></td></tr>
+                        <tr><td>
+                        <p><img src="http://maps.googleapis.com/maps/api/staticmap?center='.$value['googlemap_latitud'].','.$value['googlemap_longitud'].'&zoom=16&size=300x300&maptype=roadmap&markers=color:purple%7Clabel:7%7C'.$value['googlemap_latitud'].','.$value['googlemap_longitud'].'&sensor=false"></p>
+                        </td></tr>
                     </table>
                 </td>
-                <td valign="top" style="width:70%;" ><img src="'.$rutaImagen.'" width="700" height="600"  /></td>            
+                <td valign="top" style="width:70%; border:solid 1px #CCC" ><img src="'.$rutaImagen.'" width="700" height="600"  /></td>            
             </tr>'; 
             
         }    
