@@ -28,7 +28,7 @@ $saldo = Formulario::getParam('_saldo');
                         <div class="col col-4">
                             <label class="input"> 
                                 <i class="icon-append fa fa-calendar-o "></i>
-                                <input type="text" id="<?php echo VSEVE; ?>txt_fecha" name="<?php echo VSEVE; ?>txt_fecha" value="<?php echo date("d/m/Y"); ?>" >
+                                <input type="text" id="<?php echo VSEVE; ?>txt_fecha" name="<?php echo VSEVE; ?>txt_fecha" value="<?php echo date("d/m/Y"); ?>" readonly >
                                 <b class="tooltip tooltip-top-right"><i class="fa fa-question-circle txt-color-teal"></i> <?php echo VSEVE_3M; ?></b>
                             </label>
                         </div>   
@@ -66,9 +66,9 @@ $saldo = Formulario::getParam('_saldo');
 <?php endif; ?>
 <script>
     
-    simpleScript.setEvent.date({
+   /* simpleScript.setEvent.date({
       element: '#<?php echo VSEVE; ?>txt_fecha'
-    });
+    });*/
     
     $("#<?php echo VSEVE; ?>formPagarVenta").validate({
         rules : {
