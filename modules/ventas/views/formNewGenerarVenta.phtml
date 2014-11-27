@@ -118,7 +118,7 @@ $codigo = $dataCodigo['cod'];
                         <label class="control-label col-md-2" for="prepend"><?php echo VGEVE_4; ?></label>
                         <div class="col-md-2">
                             <div class="input">
-                                <input class="form-control"  type="text" id="<?php echo VGEVE; ?>txt_fecha" name="<?php echo VGEVE; ?>txt_fecha" value="<?php echo date("d/m/Y"); ?>" >
+                                <input class="form-control"  type="text" id="<?php echo VGEVE; ?>txt_fecha" name="<?php echo VGEVE; ?>txt_fecha" value="<?php echo date("d/m/Y"); ?>" readonly >
                             </div>
                         </div>
                        
@@ -244,9 +244,9 @@ $codigo = $dataCodigo['cod'];
 <script>
     var totalPagado = 0;
     var pago = 0;
-        simpleScript.setEvent.date({
+        /*simpleScript.setEvent.date({
             element: '#<?php echo VGEVE; ?>txt_fecha' 
-        });
+        });*/
         
         $("#<?php echo VGEVE; ?>formNewGenerarVenta select").addClass('form-control');
         

@@ -22,7 +22,7 @@ echo Functions::widgetOpen(array(
         <div class="col col-2" style="padding-left:5px;">
             <div class="input-group">
                 <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-                <input class="form-control" type="text" id="<?php echo VEGRE;?>txt_fechaGrid" name="<?php echo VEGRE;?>txt_fechaGrid" value ="<?php echo date("d/m/Y"); ?>" style="padding-left:10px; width: 80px; " />
+                <input class="form-control" type="text" id="<?php echo VEGRE;?>txt_fechaGrid" name="<?php echo VEGRE;?>txt_fechaGrid" value ="<?php echo date("d/m/Y"); ?>" style="padding-left:10px; width: 80px; " readonly />
              </div>            
         </div>     
         <div class="col col-1" style="padding-left:30px;">
@@ -60,7 +60,7 @@ echo Functions::widgetOpen(array(
     </form>
 <?php echo Functions::widgetClose(); ?>
 <script>
-    simpleScript.setEvent.date({
+  /*  simpleScript.setEvent.date({
         element: '#<?php echo VEGRE; ?>txt_fechaGrid' 
-    });
+    });*/
 </script>

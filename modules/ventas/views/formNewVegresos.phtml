@@ -37,7 +37,7 @@ $grabar = Session::getPermiso("VEGREGR");
                         <div class="col col-4">
                             <label class="input"> 
                                 <i class="icon-append fa fa-calendar-o "></i>
-                                <input type="text" id="<?php echo VEGRE; ?>txt_fecha" name="<?php echo VEGRE; ?>txt_fecha" value="<?php echo date("d/m/Y"); ?>" >
+                                <input type="text" id="<?php echo VEGRE; ?>txt_fecha" name="<?php echo VEGRE; ?>txt_fecha" value="<?php echo date("d/m/Y"); ?>" readonly >
                                 <b class="tooltip tooltip-top-right"><i class="fa fa-question-circle txt-color-teal"></i> <?php echo VSEVE_3M; ?></b>
                             </label>
                         </div>                       
@@ -97,9 +97,9 @@ $grabar = Session::getPermiso("VEGREGR");
 </script>
 <?php endif; ?>
 <script>
-    simpleScript.setEvent.date({
+ /*   simpleScript.setEvent.date({
         element: '#<?php echo VEGRE; ?>txt_fecha' 
-    });
+    });*/
 /*configurar validacion de formulario -- este codigo es de ejemplo*/
 $("#<?php echo VEGRE; ?>formNewVegresos").validate({
     rules : {

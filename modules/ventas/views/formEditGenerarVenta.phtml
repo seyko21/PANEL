@@ -120,7 +120,7 @@ $datad = Obj::run()->generarVentaController->getFindVentaD();
                         <label class="control-label col-md-2" for="prepend"><?php echo VGEVE_4; ?></label>
                         <div class="col-md-2">
                             <div class="input">
-                                <input class="form-control"  type="text" id="<?php echo VGEVE; ?>txt_fecha" name="<?php echo VGEVE; ?>txt_fecha" value="<?php echo $datac['fecha'];?>" >
+                                <input class="form-control"  type="text" id="<?php echo VGEVE; ?>txt_fecha" name="<?php echo VGEVE; ?>txt_fecha" value="<?php echo date("d/m/Y");?>" readonly >
                             </div>
                         </div>
                        
@@ -275,9 +275,9 @@ $datad = Obj::run()->generarVentaController->getFindVentaD();
             
         </div>
 <script>
-        simpleScript.setEvent.date({
+     /*   simpleScript.setEvent.date({
             element: '#<?php echo VGEVE; ?>txt_fecha' 
-        });
+        });*/
         $("#<?php echo VGEVE; ?>formNewGenerarVenta select").addClass('form-control');
         
             var $validator = $("#<?php echo VGEVE; ?>formNewGenerarVenta").validate({
