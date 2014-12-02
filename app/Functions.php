@@ -250,6 +250,6 @@ class Functions{
         }                    
         return $resultado;
     }
-    
+
 }
 ?>

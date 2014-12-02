@@ -80,7 +80,7 @@ class loginController extends Controller{
         $mail->AddAddress($email, $nombres);
 
         $mail->Subject = "Proceso de recuperacion de Acceso en ".LB_EMPRESA;
-
+        $mail->CharSet = 'UTF-8';
         $mail->MsgHTML($body);
 
         if ($mail->Send()) {

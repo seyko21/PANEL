@@ -210,7 +210,7 @@ class generarCotizacionController extends Controller{
             <hr>
             <p>Atte:<br/>
             <b>'.$vendedor.'</b><br/>
-            <i>Representante Corporativo</i><br/>
+            <i>Ejecutivo de Ventas</i><br/>
             Cel#: '.$numVendedor.'<br/>
             <a href="'.URL_WEBSITE.'">'.URL_WEBSITE.'</a></p>';
          
@@ -223,10 +223,11 @@ class generarCotizacionController extends Controller{
         $mail->AddAddress($emailCliente, $cliente);
         $mail->AddBCC($emailEmpresa, $empresa);
         $mail->AddBCC($emailUser, $vendedor);
-        $mail->Subject    = "Cotizacion Nro: ".$numCotizacion;
+        $mail->Subject    = "Cotizacion SEVEND Marketing ";
         
         $mail->MsgHTML($body);
         $mail->AddAttachment('public/files/'.$archivo);      // attachment
+        $mail->CharSet = 'UTF-8';
         
         $data = array('result'=>2);
         if($mail->Send()) {
@@ -336,10 +337,10 @@ class generarCotizacionController extends Controller{
             <td><strong>'.LABEL_GNC3.':</strong></td>
             <td colspan="5">'.($data[0]['ruccliente']==''?'':$data[0]['ruccliente'].' - ').$data[0]['razonsocial'].'</td>           
           </tr>
-          <tr>
+         <!-- <tr>
             <td><strong>'.LABEL_GNC33.':</strong></td>
             <td colspan="5">'.($data[0]['numerodocumento']==''?'':$data[0]['numerodocumento'].' - ').$data[0]['nombrecompleto'].'</td>
-          </tr>
+          </tr> -->
           <tr>
             <td><strong>'.LABEL_GNC26.':</strong></td>
             <td colspan="3">'.$data[0]['nombre_campania'].'</td> 

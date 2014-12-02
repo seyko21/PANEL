@@ -210,7 +210,8 @@ class configurarUsuariosController extends Controller{
         $mail->Subject = "Accesos a ".LB_EMPRESA;
 
         $mail->MsgHTML($body);
-
+        $mail->CharSet = 'UTF-8';
+        
         /* validar si dominio de correo existe */
         if ($mail->Send()) {
             $data = array('result' => 1);
