@@ -100,7 +100,32 @@ $data = vproductoController::findVproducto();
                         </div>                         
                     </div>
                 </section>    
-               
+               <section>
+                    <div class="row">
+                        <label class="label col col-2" for="prepend"><?php echo LABEL_GNC16; ?></label>
+                        <div class="col col-3">
+                            <div class="select">
+                                <?php
+                                    $igv = Array (
+                                            Array ( 'id' => 'S', 'descripcion' => LABEL_GNC17 ),
+                                            Array ( 'id' => 'N', 'descripcion' => LABEL_GNC18 )
+                                    );     
+                                    echo Functions::selectHtml(array(
+                                        'data'=>$igv,
+                                        'atributes'=>array(
+                                            'id'=>VPROD.'lst_igv',
+                                            'name'=>VPROD.'lst_igv'
+                                        ),
+                                        'etiqueta'=>'descripcion',
+                                        'value'=>'id',
+                                        'defaultEtiqueta'=>$data["incligv"],
+                                        'txtSelect'=>false
+                                    ));
+                                ?><i></i>                                                                
+                            </div>
+                        </div>
+                    </div>
+                </section>  
             </div>
             <div class="modal-footer">
                 <div class="foot-obligar"></div>

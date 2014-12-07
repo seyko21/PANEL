@@ -46,7 +46,10 @@
         VRPT4: '<?php echo VRPT4; ?>',
         PANED: '<?php echo PANED; ?>',
         VRPT5: '<?php echo VRPT5; ?>',
-        VEGRE: '<?php echo VEGRE; ?>'
+        VEGRE: '<?php echo VEGRE; ?>',
+        VCOTI: '<?php echo VCOTI; ?>',
+        CAJAA: '<?php echo CAJAA; ?>',
+        CAJAC: '<?php echo CAJAC; ?>'
     }
 };
 </script>

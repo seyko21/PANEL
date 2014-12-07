@@ -124,9 +124,15 @@ var vcliente_ = function(){
                         content: mensajes.MSG_3,
                         callback: function(){
                             
-                            if(_private.callbackData.length > 0){                                
-                               $("#"+diccionario.tabs.VGEVE+"txt_idpersona").val(simpleAjax.stringPost(data.idPersona));       
-                               $("#"+diccionario.tabs.VGEVE+"txt_cliente").val(data.nombre); 
+                            if(_private.callbackData.length > 0){       
+                                 if($('#'+diccionario.tabs.VRECL+'_CONTAINER').length > 0){
+                                    $("#"+diccionario.tabs.VGEVE+"txt_idpersona").val(simpleAjax.stringPost(data.idPersona));       
+                                    $("#"+diccionario.tabs.VGEVE+"txt_cliente").val(data.nombre); 
+                                }
+                                if($('#'+diccionario.tabs.VCOTI+'_CONTAINER').length > 0){
+                                    $("#"+diccionario.tabs.VCOTI+"txt_idpersona").val(simpleAjax.stringPost(data.idPersona));       
+                                    $("#"+diccionario.tabs.VCOTI+"txt_cliente").val(data.nombre); 
+                                }
                             }
                             /*se verifica si existe tabb para recargar grid*/
                             if($('#'+diccionario.tabs.VRECL+'_CONTAINER').length > 0){

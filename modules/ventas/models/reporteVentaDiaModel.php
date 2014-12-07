@@ -47,8 +47,11 @@ class reporteVentaDiaModel extends Model{
                     (SELECT CONCAT(m.sigla,' - ',m.descripcion) FROM pub_moneda m WHERE dd.`moneda` = m.id_moneda) AS moneda,
                     dd.moneda AS id_moneda,
                     (SELECT COUNT(d.`codigo_impresion`) AS codigo FROM `ven_documento` d WHERE p.`fecha` = d.`fecha` AND d.estado = 'E' AND d.moneda = dd.`moneda` ) AS numero_doc,	
-                    SUM(p.`monto_pagado`) AS ingresos,
-                    (SELECT SUM(e.`monto`) FROM `ven_egreso` e WHERE e.fecha = p.`fecha` and e.estado = 'E' ) AS egresos
+                    SUM(p.`monto_pagado`) AS ingresos,                                         
+                    (SELECT 
+                           if( SUM(e.`monto`) is null, 0, SUM(e.`monto`) )                     
+                    FROM `ven_egreso` e WHERE e.fecha = p.`fecha` and e.estado = 'E' ) AS egresos
+
                     FROM `ven_pago` p
                             INNER JOIN ven_documento dd ON dd.`id_docventa` = p.`id_docventa`
                     WHERE p.`estado` = 'E'		

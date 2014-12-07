@@ -3,33 +3,34 @@
 * ---------------------------------------
 * --------- CREATED BY CREATOR ----------
 * fecha: 05-09-2014 23:09:58 
-* Descripcion : generarVentaController.php
+* Descripcion : generarCotizacionController.php
 * ---------------------------------------
 */    
 
-class generarVentaController extends Controller{
+class generarCotizacionController extends Controller{
 
     public function __construct() {
-        $this->loadModel(array('modulo'=>'ventas','modelo'=>'generarVenta'));
+        $this->loadModel(array('modulo'=>'ventas','modelo'=>'generarCotizacion'));
         $this->loadController(array('modulo'=>'ventas','controller'=>'vproducto')); 
+        $this->loadController(array('modulo' => 'usuarios', 'controller' => 'configurarUsuarios'));            
     }
     
     public function index(){ 
-        Obj::run()->View->render("indexGenerarVenta");
+        Obj::run()->View->render("indexGenerarCotizacion");
     }
     
     public function getFormBuscarCliente(){ 
-        Obj::run()->View->render('formBuscarCliente');
+        Obj::run()->View->render('formBuscarClienteCotizacion');
     }
     
-    public function getGridGenerarVenta(){
-       $exportarpdf   = Session::getPermiso('VGEVEEP');
-       $exportarexcel = Session::getPermiso('VGEVEEX');
-       $clonar         = Session::getPermiso('VGEVECL');
+    public function getGridGenerarCotizacion(){
+       $exportarpdf   = Session::getPermiso('VCOTIEP');
+       $exportarexcel = Session::getPermiso('VCOTIEX');
+       $enviaremail   = Session::getPermiso('VCOTIEE');
        
        $sEcho          =   $this->post('sEcho');
         
-       $rResult = Obj::run()->generarVentaModel->getGridGenerarVenta();
+       $rResult = Obj::run()->generarCotizacionModel->getGridGenerarCotizacion();
         
         if(!isset($rResult['error'])){  
             $iTotal         = isset($rResult[0]['total'])?$rResult[0]['total']:0;
@@ -42,35 +43,24 @@ class generarVentaController extends Controller{
             foreach ( $rResult as $key=>$aRow ){
                              
                 /*antes de enviar id se encrypta*/
-                $encryptReg = Aes::en($aRow['id_docventa']);
+                $encryptReg = Aes::en($aRow['id_cotizacion']);
                 
                 switch($aRow['estado']){
                     case 'E':
-                        $chk = '<input id=\"c_'.(++$key).'\" type=\"checkbox\" name=\"'.VGEVE.'chk_delete[]\" value=\"'.$encryptReg.'\">';
+                         $chk = '<input id=\"c_'.(++$key).'\" type=\"checkbox\" name=\"'.VCOTI.'chk_delete[]\" value=\"'.$encryptReg.'\">';
                         $estado = '<span class=\"label label-default\">'.SEGCO_5.'</span>';
                         break;                  
                     case 'A':
-                        $chk = '<input id=\"c_'.(++$key).'\" type=\"checkbox\" name=\"'.VGEVE.'chk_delete[]\" disabled>';       
+                        $chk = '<input id=\"c_'.(++$key).'\" type=\"checkbox\" name=\"'.VCOTI.'chk_delete[]\" disabled>';       
                         $estado = '<span class=\"label label-danger\">'.SEGPA_9.'</span>';
                         break;                 
                 }
                 
-                switch($aRow['tipo_doc']){
-                    case 'F': $tipoDoc = 'Factura';break;                  
-                    case 'B': $tipoDoc = 'Boleta';break;                  
-                    case 'R': $tipoDoc = 'Recibo';break;                                                                     
-                }
-                
                 $idPersona = Aes::en($aRow['id_persona']);
                 $nombre = '<a href=\"javascript:;\" onclick=\"persona.getDatosPersonales(\''.$idPersona.'\');\">'.$aRow['nombre_descripcion'].'</a>';
-                                    
-                 if($aRow['monto_saldo'] > 0 && $aRow['estado'] == 'E'){
-                    $saldo = '<span class=\"badge bg-color-red\">'.number_format($aRow['monto_saldo'],2).'</span>';
-                }else{
-                    $saldo = number_format($aRow['monto_saldo'],2);
-                }
+                                               
                 /*datos de manera manual*/
-                $sOutput .= '["'.$chk.'","'.$aRow['codigo_impresion'].'","'.$nombre.'","'.$tipoDoc.'","'.  Functions::cambiaf_a_normal($aRow['fecha']).'","'.$aRow['moneda'].'","'.number_format($aRow['monto_total'],2).'","'.$saldo.'","'.$estado.'", ';
+                $sOutput .= '["'.$chk.'","'.$aRow['codigo'].'","'.$nombre.'","'.  Functions::cambiaf_a_normal($aRow['fecha']).'","'.$aRow['moneda'].'","'.number_format($aRow['monto_total'],2).'","'.$estado.'", ';
                 
                 /*
                  * configurando botones (add/edit/delete etc)
@@ -78,21 +68,23 @@ class generarVentaController extends Controller{
                  */
                 $sOutput .= '"<div class=\"btn-group\">';                      
                                        
-                if($clonar['permiso'] && $aRow['estado'] == 'E'){
-                    $sOutput .= '<button type=\"button\" class=\"'.$clonar['theme'].'\" title=\"'.$clonar['accion'].'\" onclick=\"generarVenta.getFormEditarGenerarVenta(this,\''.$encryptReg.'\')\">';
-                    $sOutput .= '    <i class=\"'.$clonar['icono'].'\"></i>';
-                    $sOutput .= '</button>';
-                }
+        
                 if($exportarpdf['permiso'] == 1){
-                    $sOutput .= '<button type=\"button\" class=\"'.$exportarpdf['theme'].'\" title=\"'.$exportarpdf['accion'].'\" onclick=\"generarVenta.postPDF(this,\''.$encryptReg.'\',\''.$aRow['codigo_impresion'].'\')\">';
+                    $sOutput .= '<button type=\"button\" class=\"'.$exportarpdf['theme'].'\" title=\"'.$exportarpdf['accion'].'\" onclick=\"vGenerarCotizacion.postPDF(this,\''.$encryptReg.'\',\''.$aRow['codigo'].'\')\">';
                     $sOutput .= '    <i class=\"'.$exportarpdf['icono'].'\"></i>';
                     $sOutput .= '</button>';
-                }
+                }    
                 if($exportarexcel['permiso'] == 1){
-                    $sOutput .= '<button type=\"button\" class=\"'.$exportarexcel['theme'].'\" title=\"'.$exportarexcel['accion'].'\" onclick=\"generarVenta.postExcel(this,\''.$encryptReg.'\',\''.$aRow['codigo_impresion'].'\')\">';
+                    $sOutput .= '<button type=\"button\" class=\"'.$exportarexcel['theme'].'\" title=\"'.$exportarexcel['accion'].'\" onclick=\"vGenerarCotizacion.postExcel(this,\''.$encryptReg.'\',\''.$aRow['codigo'].'\')\">';
                     $sOutput .= '    <i class=\"'.$exportarexcel['icono'].'\"></i>';
                     $sOutput .= '</button>';
                 }
+                if($enviaremail['permiso'] && $aRow['estado'] != 'A'){
+                    $sOutput .= '<button type=\"button\" class=\"'.$enviaremail['theme'].'\" title=\"'.$enviaremail['accion'].'\" onclick=\"vGenerarCotizacion.postEmail(this,\''.$encryptReg.'\', \''.$aRow['codigo'].'\')\">';
+                    $sOutput .= '    <i class=\"'.$enviaremail['icono'].'\"></i>';
+                    $sOutput .= '</button>';
+                }
+  
                 
                 $sOutput .= ' </div>" ';
 
@@ -113,7 +105,7 @@ class generarVentaController extends Controller{
         $tab = $this->post('_tab');
         $sEcho          =   $this->post('sEcho');
         
-        $rResult = Obj::run()->generarVentaModel->getClientes();
+        $rResult = Obj::run()->generarCotizacionModel->getClientes();
         
         if(!isset($rResult['error'])){  
             $iTotal         = isset($rResult[0]['total'])?$rResult[0]['total']:0;
@@ -127,10 +119,15 @@ class generarVentaController extends Controller{
                 /*antes de enviar id se encrypta*/
                 $encryptReg = Aes::en($aRow['id_persona']);
                 
-                $nom = '<a href=\"javascript:;\" onclick=\"simpleScript.setInput({'.$tab.'txt_idpersona:\''.$encryptReg.'\', '.$tab.'txt_cliente:\''.$aRow['nombrecompleto'].'\'},\'#'.VGEVE.'formBuscarCliente\');\" >'.$aRow['nombrecompleto'].'</a>';
-                
+                if ($aRow['email'] !== ''){               
+                    $nom = '<a href=\"javascript:;\" onclick=\"simpleScript.setInput({'.$tab.'txt_idpersona:\''.$encryptReg.'\', '.$tab.'txt_cliente:\''.$aRow['nombrecompleto'].'\'},\'#'.VCOTI.'formBuscarCliente\');\" >'.$aRow['nombrecompleto'].'</a>';
+                    $email = $aRow['email'];
+                }else{
+                    $nom = '<span class=\"txt-color-red\">'.$aRow['nombrecompleto'].'</span>';                    
+                    $email = '<span class=\"txt-color-red\">- no tiene email -<span>';
+                }
                 /*datos de manera manual*/
-                $sOutput .= '["'.(++$key).'","'.$nom.'", "'.$aRow['numerodocumento'].'" ';
+                $sOutput .= '["'.(++$key).'","'.$nom.'", "'.$email.'" ';
 
                 $sOutput .= '],';
             }
@@ -143,34 +140,34 @@ class generarVentaController extends Controller{
         echo $sOutput;
     }    
         
-    /*carga formulario (newGenerarVenta.phtml) para nuevo registro: GenerarVenta*/
-    public function getFormNewGenerarVenta(){
-        Obj::run()->View->render("formNewGenerarVenta");
+    /*carga formulario (newGenerarCotizacion.phtml) para nuevo registro: GenerarCotizacion*/
+    public function getFormNewVGenerarCotizacion(){
+        Obj::run()->View->render("formNewGenerarCotizacion");
     }
     
-    /*carga formulario (editGenerarVenta.phtml) para editar registro: GenerarVenta*/
-    public function getFormEditGenerarVenta(){
-        Obj::run()->View->render("formEditGenerarVenta");
+    /*carga formulario (editGenerarCotizacion.phtml) para editar registro: GenerarCotizacion*/
+    public function getFormEditVGenerarCotizacion(){
+        Obj::run()->View->render("formEditGenerarCotizacion");
     }
     //abrir ventana de busqueda:
     public function getFormBuscarProductos(){
-        Obj::run()->View->render("formBuscarProductos");
+        Obj::run()->View->render("formBuscarProductosCotizacion");
     }
     //Buscar productos al abrir ventana:    
     public function getFindProductos(){
-        $data = Obj::run()->generarVentaModel->getFindProductos();
+        $data = Obj::run()->generarCotizacionModel->getFindProductos();
         
         return $data;
     }
     
-    public function postPDF(){
-        $c = 'venta_'.Obj::run()->generarVentaModel->_cod.'.pdf';
+    public function postPDF($n=''){
+        $c = 'cotizacion_'.Obj::run()->generarCotizacionModel->_cod.'.pdf';
         
         $ar = ROOT.'public'.DS.'files'.DS.$c;
                
         $mpdf = new mPDF('c');
         
-        $dataC = Obj::run()->generarVentaModel->getFindVenta();
+        $dataC = Obj::run()->generarCotizacionModel->getFindCotizacion();
         if($dataC['estado'] == 'A'){
            $mpdf->SetWatermarkText('A N U L A D O');
            $mpdf->showWatermarkText = true;         
@@ -182,22 +179,24 @@ class generarVentaController extends Controller{
                                 <td width="33%" style="text-align: right; ">'.LB_EMPRESA2.'</td>
                              </tr></table>');
                 
-        $html = $this->getHtmlGenerarVenta($mpdf);         
+        $html = $this->getHtmlGenerarCotizacion($mpdf);         
 
         //$mpdf->WriteHTML($html);
         $mpdf->Output($ar,'F');
-        
-        $data = array('result'=>1,'archivo'=>$c);
-        echo json_encode($data);
+                        
+         if($n != 'N'){
+            $data = array('result'=>1,'archivo'=>$c);
+            echo json_encode($data);
+        }
         
     }
     
     public function postExcel(){
-        $c = 'venta_'.Obj::run()->generarVentaModel->_cod.'.xls';
+        $c = 'cotizacion_'.Obj::run()->generarCotizacionModel->_cod.'.xls';
         
         $ar = ROOT.'public'.DS.'files'.DS.$c;
         
-        $html = $this->getHtmlGenerarVenta("EXCEL");
+        $html = $this->getHtmlGenerarCotizacion("EXCEL");
         
         $f=fopen($ar,'wb');
         if(!$f){$data = array('result'=>2);}
@@ -208,9 +207,9 @@ class generarVentaController extends Controller{
         echo json_encode($data);
     }
     
-    private function getHtmlGenerarVenta($mpdf){
-        $dataC = Obj::run()->generarVentaModel->getFindVenta();
-        $dataD = Obj::run()->generarVentaModel->getFindVentaD();
+    private function getHtmlGenerarCotizacion($mpdf){
+        $dataC = Obj::run()->generarCotizacionModel->getFindCotizacion();
+        $dataD = Obj::run()->generarCotizacionModel->getFindCotizacionD();
         $html ='
         <style>           
            table,h3,h4,p{font-family:Arial;} 
@@ -236,14 +235,14 @@ class generarVentaController extends Controller{
         
         $html .='<table width="100%" border="0" cellpadding="5" cellspacing="3">
           <tr bgcolor="#901D78">
-            <th colspan="6"><div align="center"><h2 style="color:#FFF;">DOCUMENTO DE VENTA </h2></div></th>
+            <th colspan="6"><div align="center"><h2 style="color:#FFF;">Cotización de Venta </h2></div></th>
           </tr>
           <tr>
-            <td width="16%"><strong>N° Impresión:</strong></td>
-            <td width="26%"><h3>'.$dataC['periodo'].' - '.$dataC['codigo_impresion'].'</h3></td>
+            <td width="10%"><strong>Código:</strong></td>
+            <td width="26%"><h3>'.$dataC['codigo'].'</h3></td>
             <td width="15%"></td>
             <td width="15%"></td>
-            <td width="20%"><strong>Fecha :</strong></td>
+            <td width="20%"><strong>Fecha Emitido :</strong></td>
             <td width="15%">'.$dataC['fecha'].'</td>
           </tr>
           <tr>
@@ -251,12 +250,12 @@ class generarVentaController extends Controller{
             <td colspan="5">'.strtoupper($dataC['cliente']).'</td>
           </tr>
           <tr>         
-            <td width="20%"><strong>Moneda:</strong></td>
-            <td width="15%">'.$dataC['descripcion_moneda'].'</td>
-            <td width="10%"><strong>Tipo Doc:</strong></td>
-            <td width="15%">'.$tipoDoc.'</td>
-            <td width="20%"><strong>Estado:</strong></td>
-            <td width="15%">'.$estado.'</td>
+            <td ><strong>Moneda:</strong></td>
+            <td >'.$dataC['descripcion_moneda'].'</td>
+            <td ></td>
+            <td ></td>
+            <td ><strong>Estado:</strong></td>
+            <td >'.$estado.'</td>
           </tr>
         </table> 
         <br />
@@ -295,9 +294,7 @@ class generarVentaController extends Controller{
         }    
         $html .= '<tr><td colspan="4"></td><td>Sub Total:</td><td  style="text-align:right; font-weight:bold;">'.$mon.number_format($subtotal,2).'</td></tr>';
         $html .= '<tr><td colspan="4"></td><td>Impuesto ('.($dataC['porcentaje_igv']*100).'%):</td><td style="text-align:right; font-weight:bold;">'.$mon.number_format($impuesto,2).'</td></tr>';
-        $html .= '<tr><td colspan="4"></td><td>Total:</td><td class="totales" style="text-align:right; font-weight:bold;">'.$mon.number_format($total,2).'</td></tr>';        
-        $html .= '<tr><td colspan="4"></td><td>A cuenta:</td><td style="text-align:right; font-weight:bold;">'.$mon.number_format($dataC['monto_asignado'],2).'</td></tr>';
-        $html .= '<tr><td colspan="4"></td><td>Saldo:</td><td  style="text-align:right; font-weight:bold;">'.$mon.number_format($dataC['monto_saldo'],2).'</td></tr>';
+        $html .= '<tr><td colspan="4"></td><td>Total:</td><td class="totales" style="text-align:right; font-weight:bold;">'.$mon.number_format($total,2).'</td></tr>';
         
         $html .='</table>';
         $html .= '<h4>Observación </h4>';
@@ -314,43 +311,93 @@ class generarVentaController extends Controller{
         $mpdf->WriteHTML($html);               
     }
     
-    /*envia datos para grabar registro: GenerarVenta*/
-    public function postNewGenerarVenta(){
-        $data = Obj::run()->generarVentaModel->newGenerarVenta();
+ public function postEmail(){ 
+        $this->postPDF('N');
+        Obj::run()->generarCotizacionModel->postTiempoCotizacion();
+        $data = Obj::run()->generarCotizacionModel->getFindCotizacion();
+        
+        $data0 = Obj::run()->configurarUsuariosController->getParametros('EMAIL');        
+        $data1 = Obj::run()->configurarUsuariosController->getParametros('EMCO');        
+        $emailEmpresa = $data0['valor'];
+        $empresa = $data1['valor'];
+        
+        $emailCliente = $data[0]['email'];
+        $cliente = $data[0]['nombrecompleto'];
+        $emailUser = $data[0]['mail_user'];
+        $vendedor = $data[0]['vendedor'];
+        $numCotizacion = $data[0]['cotizacion_numero'];
+        $numVendedor = $data[0]['telefono_vendedor'];
+        
+        $archivo = 'cotizacion_'.$numCotizacion.'.pdf';
+        //Html de Cotizacion:
+         $body = '
+            <h3>Estimado: ' . $cliente . '</h3>
+            <p>Muchas gracias por confiar en <b>'.LB_EMPRESA.'</b>, le enviamos nuestra cotizacion acerca de nuestros productos y servicios.
+            <br/>Esperamos su pronta respuesta.</p>
+            <hr>
+            <p>Atte:<br/>
+            <b>'.$vendedor.'</b><br/>
+            <i>Ejecutivo de Ventas</i><br/>
+            Cel#: '.$numVendedor.'<br/>
+            <a href="'.URL_WEBSITE.'">'.URL_WEBSITE.'</a></p>';
+         
+        //$body = $this->getHtmlCotizacion();        
+        
+        $mail             = new PHPMailer(); // defaults to using php "mail()"
+ 
+        $mail->SetFrom($emailUser, $vendedor);
+        
+        $mail->AddAddress($emailCliente, $cliente);
+        $mail->AddBCC($emailEmpresa, $empresa);
+        $mail->AddBCC($emailUser, $vendedor);
+        $mail->Subject    = "Cotizacion SEVEND";
+        
+        $mail->MsgHTML($body);
+        $mail->AddAttachment('public/files/'.$archivo);      // attachment
+        $mail->CharSet = 'UTF-8';
+        
+        $data = array('result'=>2);
+        if($mail->Send()) {
+            $data = array('result'=>1,'archivo'=>$archivo);
+        } else {
+            $data = array('result'=>2);
+        }
+               
+        echo json_encode($data);
+    }    
+    
+    /*envia datos para grabar registro: GenerarCotizacion*/
+    public function postNewGenerarCotizacion(){
+        $data = Obj::run()->generarCotizacionModel->newGenerarCotizacion();
         
         echo json_encode($data);
     }
     
-    /*envia datos para editar registro: GenerarVenta*/
-    public function postEditGenerarVenta(){
-        $data = Obj::run()->generarVentaModel->editGenerarVenta();
+    /*envia datos para editar registro: GenerarCotizacion*/
+    public function postEditGenerarCotizacion(){
+        $data = Obj::run()->generarCotizacionModel->editGenerarCotizacion();
         
         echo json_encode($data);
     }
     
-    /*envia datos para eliminar registro: GenerarVenta*/
-    public function postAnularGenerarVentaAll(){
-        $data = Obj::run()->generarVentaModel->anularGenerarVentaAll();
+    /*envia datos para eliminar registro: GenerarCotizacion*/
+    public function postAnularGenerarCotizacionAll(){
+        $data = Obj::run()->generarCotizacionModel->anularGenerarCotizacionAll();
         
         echo json_encode($data);
     }
     
-    public function getFindVenta(){
-        $data = Obj::run()->generarVentaModel->getFindVenta();
+    public function getFindCotizacion(){
+        $data = Obj::run()->generarCotizacionModel->getFindCotizacion();
         
         return $data;
     }        
-    public function getFindVentaD(){
-        $data = Obj::run()->generarVentaModel->getFindVentaD();
+    public function getFindCotizacionD(){
+        $data = Obj::run()->generarCotizacionModel->getFindCotizacionD();
         
         return $data;
     }
     
-    public static function getCodigo(){ 
-        $data = Obj::run()->generarVentaModel->getGenerarCodigo();        
-        return $data;
-    }       
-
 }
 
 ?>

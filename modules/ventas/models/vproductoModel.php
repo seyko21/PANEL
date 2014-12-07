@@ -16,6 +16,7 @@ class vproductoModel extends Model{
     private $_idUM;
     private $_idMoneda;
     private $_usuario;
+    private $_incigv;
     
     /*para el grid*/
     public  $_iDisplayStart;
@@ -38,6 +39,7 @@ class vproductoModel extends Model{
         $this->_precio     = str_replace(',','',Formulario::getParam(VPROD.'txt_precio')); 
         $this->_idUM     = Formulario::getParam(VPROD.'lst_unidadMedida');
         $this->_idMoneda     = Formulario::getParam(VPROD.'lst_moneda');
+        $this->_incigv         = Formulario::getParam(VPROD.'lst_igv');
         
         $this->_iDisplayStart  = Formulario::getParam("iDisplayStart"); 
         $this->_iDisplayLength = Formulario::getParam("iDisplayLength"); 
@@ -74,7 +76,7 @@ class vproductoModel extends Model{
     
     /*grabar nuevo registro: Vproducto*/
     public function newVproducto(){
-        $query = "call sp_ventaProductoMantenimiento(:flag,:key,:nombre,:precio,:idum,:moneda,:usuario);";
+        $query = "call sp_ventaProductoMantenimiento(:flag,:key,:nombre,:precio,:idum,:moneda,:incligv,:usuario);";
         $parms = array(
             ':flag' => 1,
             ':key' => $this->_idVproducto,
@@ -82,6 +84,7 @@ class vproductoModel extends Model{
             ':precio' => $this->_precio,            
             ':idum' => $this->_idUM, 
             ':moneda' => $this->_idMoneda, 
+            ':incligv' => $this->_incigv, 
             ':usuario' => $this->_usuario
         );
         $data = $this->queryOne($query,$parms);
@@ -96,7 +99,8 @@ class vproductoModel extends Model{
         `precio`,
         `estado`,
         `id_unidadmedida`,
-        `moneda`
+        `moneda`,
+        incligv
       FROM `ven_producto` WHERE id_producto = :idd; ";
         
         $parms = array(
@@ -108,7 +112,7 @@ class vproductoModel extends Model{
     
     /*editar registro: Vproducto*/
     public function editVproducto(){
-        $query = "call sp_ventaProductoMantenimiento(:flag,:key,:nombre,:precio,:idum,:moneda,:usuario);";
+        $query = "call sp_ventaProductoMantenimiento(:flag,:key,:nombre,:precio,:idum,:moneda,:incligv,:usuario);";
         $parms = array(
             ':flag' => 2,
             ':key' => $this->_idVproducto,
@@ -116,6 +120,7 @@ class vproductoModel extends Model{
             ':precio' => $this->_precio,            
             ':idum' => $this->_idUM, 
             ':moneda' => $this->_idMoneda, 
+             ':incligv' => $this->_incigv, 
             ':usuario' => $this->_usuario
         );
         $data = $this->queryOne($query,$parms);
@@ -125,7 +130,7 @@ class vproductoModel extends Model{
     /*eliminar varios registros: Vproducto*/
     public function deleteVproductoAll(){
         foreach ($this->_chkdel as $value) {
-            $query = "call sp_ventaProductoMantenimiento(:flag,:key,:nombre,:precio,:idum,:moneda,:usuario);";
+            $query = "call sp_ventaProductoMantenimiento(:flag,:key,:nombre,:precio,:idum,:moneda,:incligv,:usuario);";
             $parms = array(
                 ':flag' => 3,
                 ':key' => Aes::de($value),
@@ -133,6 +138,7 @@ class vproductoModel extends Model{
                 ':precio' => '',   
                 ':idum' => '',
                 ':moneda' => '', 
+                ':incligv' => '', 
                 ':usuario' => $this->_usuario
             );
             $this->execute($query,$parms);

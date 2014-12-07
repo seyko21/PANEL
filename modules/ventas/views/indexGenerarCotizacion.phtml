@@ -1,0 +1,41 @@
+<?php 
+/*
+* ---------------------------------------
+* --------- CREATED BY CREATOR ----------
+* fecha: 14-11-2014 09:50:58 
+* Descripcion : indexVGenerarCotizacion.phtml
+* ---------------------------------------
+*/
+$nuevo   = Session::getPermiso("VCOTINEW");
+$anular = Session::getPermiso("VCOTIAN");
+echo Functions::widgetOpen(array(
+        "id"=>VCOTI,
+        "title"=>VCOTI_1
+    )); 
+?>
+<button id="<?php echo VCOTI; ?>btnDowPDF" type="button" class="hide">Descargar</button>
+<button id="<?php echo VCOTI; ?>btnDowExcel" type="button" class="hide">Descargar</button>
+
+    <div class="widget-body-toolbar"></div>
+    <div class="dataTables_wrapper form-inline" role="grid">
+        <div class="dt-top-row">
+            <div class="DTTT btn-group">
+                <!-- verificar permisos -->
+                <?php if($nuevo["permiso"]): ?>
+                <button id="<?php echo VCOTI; ?>btnNewRegVGenerarCotizacion" type="button" onclick="vGenerarCotizacion.getFormNewVGenerarCotizacion(this);" class="<?php echo $nuevo['theme'];?>">
+                    <i class="<?php echo $nuevo['icono'];?>"></i> <?php echo $nuevo['accion'];?>
+                </button>
+                <?php endif; ?>
+                <?php if($anular["permiso"]): ?>
+                <button id="<?php echo VCOTI; ?>btnNewRegVGenerarCotizacion" type="button" onclick="vGenerarCotizacion.postAnularVGenerarCotizacionAll(this);" class="<?php echo $anular['theme'];?>">
+                    <i class="<?php echo $anular['icono'];?>"></i> <?php echo $anular['accion'];?>
+                </button>
+                <?php endif; ?>
+            </div>
+        </div>
+
+    </div>
+    <form id="<?php echo VCOTI; ?>formGridVGenerarCotizacion" name="<?php echo VCOTI; ?>formGridVGenerarCotizacion" onsubmit="return false;">
+        <table id="<?php echo VCOTI; ?>gridVGenerarCotizacion" class="table table-striped table-hover table-condensed" style="width:100%"></table>
+    </form>
+<?php echo Functions::widgetClose(); ?>

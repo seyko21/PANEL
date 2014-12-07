@@ -1,0 +1,311 @@
+<?php 
+/*prefijo: VCOTI debe ser alias en tabla men_menuprincipal*/
+$grabar = Session::getPermiso('VCOTIGR');
+$agregar = Session::getPermiso('VCOTIAG');
+$buscar = Session::getPermiso('VCOTIBS');
+$nuevo = Session::getPermiso('VRECLNEW');
+
+echo Functions::widgetOpen(array(
+    'id' => VCOTI.'_NEW',
+    'title' => VCOTI_2,
+    'padding' => true,
+    'wizard' => true
+));
+
+?>
+<div class="row">
+    <form id="<?php echo VCOTI; ?>formNewGenerarCotizacion" name="<?php echo VCOTI; ?>formNewGenerarCotizacion" novalidate="novalidate">
+        <div id="<?php echo VCOTI; ?>bootstrap-wizard-1" class="col-sm-12">
+            <div class="form-bootstrapWizard">
+                <ul class="bootstrapWizard form-wizard">
+                     <li class="active" data-target="#step1">
+                        <a href="#<?php echo VCOTI; ?>tab1" data-toggle="tab"> <span class="step">1</span> <span class="title"><?php echo VGEVETAB1?></span> </a>
+                    </li>
+                    <li data-target="#step2">
+                        <a href="#<?php echo VCOTI; ?>tab2" data-toggle="tab"> <span class="step">2</span> <span class="title"><?php echo VGEVETAB2?></span> </a>
+                    </li>
+                    <li data-target="#step3">
+                        <a href="#<?php echo VCOTI; ?>tab3" data-toggle="tab"> <span class="step">3</span> <span class="title"><?php echo VGEVETAB3?></span> </a>
+                    </li>
+                </ul>
+                <div class="clearfix"></div>
+            </div>
+            
+            <!--INI TAB-CONTENT-->
+            <div class="tab-content">
+                
+                
+                <!--INICIO TAB1-->
+                <div class="tab-pane active form-horizontal" id="<?php echo VCOTI; ?>tab1">
+                    <br><br>
+                    <h3><strong><?php echo LABEL_GNC19; ?></strong> - <?php echo VGEVETAB1; ?></h3>
+  
+                  <div class="form-group">
+                        <label class="control-label col-md-2" for="prepend"><?php echo LABEL_GNC3; ?></label>
+                        <div class="col-md-8">
+                            <div class="input-group input-group-sm">
+                                <input type="hidden" id="<?php echo VCOTI; ?>txt_idpersona" name="<?php echo VCOTI; ?>txt_idpersona">
+                                <input class="form-control" type="text" id="<?php echo VCOTI; ?>txt_cliente" name="<?php echo VCOTI; ?>txt_cliente" readonly>
+                                <span class="input-group-btn">
+                                    <?php if ($buscar['permiso']): ?>
+                                        <button class="<?php echo $buscar['theme'];?>" type="button" onclick="vGenerarCotizacion.getFormBuscarCliente(this, '<?php echo VCOTI; ?>');"><i class="<?php echo $buscar['icono'];?>"></i> <?php echo $buscar['accion'];?></button>
+                                    <?php endif; ?>
+                                     <?php if($nuevo['permiso']): ?>
+                                        <button id="<?php echo VCOTI; ?>newCliente" type="button" onclick="vcliente.getFormNewVcliente(this,'<?php echo VCOTI; ?>');" class="<?php echo $nuevo['theme'];?>" title="Nuevo Cliente">
+                                             <i class="<?php echo $nuevo['icono'];?>"></i> <?php echo $nuevo['accion'];?>
+                                        </button>
+                                        <?php endif; ?>    
+                                </span>
+                            </div>
+                        </div>
+                    </div>                      
+                    <div class="form-group">
+                        <label class="control-label col-md-2" for="prepend"><?php echo VGEVE_4; ?></label>
+                        <div class="col-md-2">
+                            <div class="input">
+                                <input class="form-control"  type="text" id="<?php echo VCOTI; ?>txt_fecha" name="<?php echo VCOTI; ?>txt_fecha" value="<?php echo date("d/m/Y"); ?>"  >
+                            </div>
+                        </div>
+                        <label class="control-label col-md-1" for="prepend"><?php echo VGEVE_5; ?></label>
+                        <div class="col-md-3">
+                            <label class="select"> 
+                                <?php                               
+                                   $dataMoneda = vproductoController::getMoneda();                           
+                                    echo Functions::selectHtml(array(
+                                        'data'=>$dataMoneda,
+                                        'atributes'=>array(
+                                            'id'=>VCOTI.'lst_moneda',
+                                            'name'=>VCOTI.'lst_moneda'
+                                        ),
+                                        'etiqueta'=>'descripcion',
+                                        'value'=>'id',
+                                        'defaultEtiqueta'=>'SO',
+                                        'txtSelect'=>false
+                                    ));
+                                ?><i></i>
+                            </label> 
+                        </div>         
+                       
+                                                   
+                    </div>
+                </div>
+                <!--FIN TAB1-->
+                
+                <!--INICIO TAB2-->
+                <div class="tab-pane" id="<?php echo VCOTI; ?>tab2">
+                    <br>
+                    <h3><strong><?php echo LABEL_GNC21; ?></strong> - <?php echo VGEVETAB2; ?></h3>
+
+                    <div class="form-group">
+                        <label class="control-label col-md-2" for="prepend">
+                            <?php if($agregar['permiso']):?>
+                            <button id="<?php echo VCOTI; ?>btnGadd" type="button" class="btn txt-color-white bg-color-blueDark" onclick="vGenerarCotizacion.getFormBuscarProductos(this,'<?php echo VCOTI; ?>',$('#<?php echo VCOTI; ?>lst_moneda').val() );">
+                                <i class="fa fa-plus-circle"></i> <?php echo BTN_ADD; ?>
+                            </button>
+                            <?php endif; ?>
+                        </label>
+                    </div>
+                    <br><br>
+                    <div style="padding: 10px">
+                        <div class="si-access" style="min-height: 200px; max-height: auto;">
+                            <table id="<?php echo VCOTI; ?>gridProductos" class="table table-bordered table-striped table-condensed table-hover smart-form has-tickbox">
+                                <thead>
+                                    <th style="width:39%"><?php echo VGEVE_9?></th>
+                                    <th style="width:9%"><?php echo VGEVE_10?></th>
+                                    <th style="width:9%"><?php echo VGEVE_11?></th>
+                                    <th style="width:8%"><?php echo VGEVE_12?></th>
+                                    <th style="width:8%"><?php echo VGEVE_22?></th>
+                                    <th style="width:10%"><?php echo VGEVE_13?></th>
+                                    <th style="width:10%"><?php echo VGEVE_14?></th>
+                                    <th style="width:1%">...</th>
+                                </thead>
+                                <tbody>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="form-group" style="margin-top:5px">
+                            <div class="col-md-2 pull-right">
+                                <div class="input">
+                                    <input class="form-control right" type="text" id="<?php echo VCOTI; ?>txt_total" name="<?php echo VCOTI; ?>txt_total" readonly>
+                                </div>
+                            </div>
+                            <label class="control-label col-md-2 pull-right" for="prepend"><?php echo LABEL_T; ?></label>
+                        </div>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+                <!--FIN TAB2-->
+                
+                <!--INICIO TAB3-->
+                <div class="tab-pane form-horizontal" id="<?php echo VCOTI; ?>tab3">
+                    <br>
+                    <h3><strong><?php echo LABEL_GNC23; ?></strong><?php echo  LABEL_GNC24; ?></h3>
+                          
+                    <div class="form-group">
+                        <label class="control-label col-md-2" for="prepend"><?php echo LABEL_GNC25; ?></label>
+                        <div class="col-md-9">
+                            <div class="textarea">
+                                <textarea class="form-control" id="<?php echo VCOTI; ?>txt_obs" name="<?php echo VCOTI; ?>txt_obs"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <h4 class="text-center">
+                        <button id="<?php echo VCOTI; ?>btnGrCotizacion" type="button" class="btn btn-success btn-large" onclick="vGenerarCotizacion.postNewVGenerarCotizacion(1);">    
+                            <i class="fa fa-plus-circle fa-lg"></i>
+                            <?php echo VCOTI_4; ?>
+                        </button>
+                    </h4>
+                    <br>
+                    <br>
+                </div>
+                <!--FIN TAB3-->
+                
+                <div class="form-actions">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <ul class="pager wizard no-margin no-border">
+                                <!--<li class="previous first disabled">
+                                <a href="javascript:void(0);" class="btn btn-lg btn-default"> First </a>
+                                </li>-->
+                                <li class="previous disabled">
+                                    <a href="javascript:void(0);" class="btn btn-lg btn-default"> <?php echo LABEL_ANT?> </a>
+                                </li>
+                                <!--<li class="next last">
+                                <a href="javascript:void(0);" class="btn btn-lg btn-primary"> Last </a>
+                                </li>-->
+                                <li class="next">
+                                    <a href="javascript:void(0);" class="btn btn-lg txt-color-darken"> <?php echo LABEL_SIG?> </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
+                
+            </div>
+            <!--FIN TAB-CONTENT-->
+            
+        </div>
+<script>
+    simpleScript.setEvent.date({
+        element: '#<?php echo VCOTI; ?>txt_fecha' 
+    });       
+        $("#<?php echo VCOTI; ?>formNewGenerarCotizacion select").addClass('form-control');
+        
+            var $validator = $("#<?php echo VCOTI; ?>formNewGenerarCotizacion").validate({
+                rules: {
+                    <?php echo VCOTI; ?>txt_cliente: {
+                        required: true
+                    },                 
+                    <?php echo VCOTI; ?>lst_moneda: {
+                        required: true
+                    },                                                                       
+                    <?php echo VCOTI; ?>txt_fecha: {
+                        required: true,
+                        date: true
+                    }        
+                },
+                highlight: function(element) {
+                    $(element).closest('.form-group').removeClass('has-success').addClass('has-error');
+                },
+                unhighlight: function(element) {
+                    $(element).closest('.form-group').removeClass('has-error').addClass('has-success');
+                },
+                errorElement: 'span',
+                errorClass: 'help-block',
+                errorPlacement: function(error, element) {
+                    if (element.parent('.input-group').length) {
+                        error.insertAfter(element.parent());
+                    } else {
+                        error.insertAfter(element);
+                    }
+                }
+            });
+            
+            var baseItemSelector = 'li:has([data-toggle="tab"])';
+            
+            $('#<?php echo VCOTI; ?>bootstrap-wizard-1').bootstrapWizard({
+                tabClass: 'form-wizard',
+                onTabClick: function(tab, navigation, index) {
+                    //desactivar tabs
+                    return false;
+                },
+                onTabChange: function(tab, navigation, index) {
+                    
+                },
+                onNext: function(tab, navigation, index) {
+                    var $valid = $("#<?php echo VCOTI; ?>formNewGenerarCotizacion").valid();
+                    if(index === 1){
+                        if (!$valid) {
+                            $validator.focusInvalid();
+                            return false;
+                        }
+                        /*marca el paso como completado*/
+                        $('#<?php echo VCOTI; ?>bootstrap-wizard-1').find('.form-wizard').children('li').eq(index - 1).addClass('complete');
+                        $('#<?php echo VCOTI; ?>bootstrap-wizard-1').find('.form-wizard').children('li').eq(index - 1).find('.step').html('<i class="fa fa-check"></i>');
+                    }
+                    if(index === 2){
+                        var pr = 0;
+                        var r = simpleScript.validaTable({
+                            id: '#'+diccionario.tabs.VCOTI+'gridProductos',
+                            msn: mensajes.MSG_10
+                        });
+                        
+                        //Validar que precios no sean 0                      
+                          $('#'+diccionario.tabs.VCOTI+'gridProductos tbody tr').each(function (index) {
+                                var precio;
+                                $(this).children("td").each(function (index2) {
+                                  switch (index2) {
+                                      case 6:
+                                          precio = $(this).text();
+                                           if(parseFloat(precio) <= 0 || isNaN(parseFloat(precio)) ){   
+                                                pr = pr + 1;                                      
+                                            }
+                                          break;      
+                                  }
+                              })
+                          });
+                                          
+                        if (pr > 0){
+                            simpleScript.notify.warning({
+                                content: 'El precio que ingreso es menor o igual que CERO (0.00)'
+                            }); 
+                           return false;
+                        }else if(r === false){
+                            return false;
+                        }else{
+                            /*marca el paso como completado*/
+                            $('#<?php echo VCOTI; ?>bootstrap-wizard-1').find('.form-wizard').children('li').eq(index - 1).addClass('complete');
+                            $('#<?php echo VCOTI; ?>bootstrap-wizard-1').find('.form-wizard').children('li').eq(index - 1).find('.step').html('<i class="fa fa-check"></i>');                                                       
+                        }
+                    }
+                    
+                }
+            });
+            
+            var wizard = $('.wizard').wizard();
+
+            wizard.on('finished', function(e, data) {
+                //$("#fuelux-wizard").submit();
+                //console.log("submitted!");
+                $.smallBox({
+                    title: "Congratulations! Your form was submitted",
+                    content: "<i class='fa fa-clock-o'></i> <i>1 seconds ago...</i>",
+                    color: "#5F895F",
+                    iconSmall: "fa fa-check bounce animated",
+                    timeout: 4000
+                });
+            });
+            /*para hacer evento invisible*/
+            simpleScript.removeAttr.click({
+                container: '#<?php echo VCOTI; ?>formNewGenerarCotizacion',
+                typeElement: 'button'
+            });
+            simpleScript.removeAttr.keyup({
+                container: '#<?php echo VCOTI; ?>formNewGenerarCotizacion',
+                typeElement: 'input'
+            });
+</script>
+    </form>
+</div>

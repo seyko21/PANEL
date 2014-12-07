@@ -6,10 +6,10 @@
  * Descripcion : 
  */
 
-$buscar = Session::getPermiso('VGEVEBS');
+$buscar = Session::getPermiso('VCOTIBS');
 
 ?>
-<form id="<?php echo VGEVE; ?>formBuscarProductos" name="<?php echo VGEVE; ?>formBuscarProductos" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<form id="<?php echo VCOTI; ?>formBuscarProductos" name="<?php echo VCOTI; ?>formBuscarProductos" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog" style="width: 70%">
         <div class="modal-content">
             <div class="modal-header">
@@ -24,18 +24,18 @@ $buscar = Session::getPermiso('VGEVEBS');
                         <label class="label col col-2"><?php echo VGEVE_16; ?></label>
                         <div class="col col-8">
                             <label class="input"> 
-                                <input type="text" id="<?php echo VGEVE; ?>txt_search" name="<?php echo VGEVE; ?>txt_search" placeholder="<?php echo VGEVE_21; ?>" onkeypress="simpleScript.triggerSearch(this,'#<?php echo VGEVE; ?>gridProductosFound',2);"></input>
+                                <input type="text" id="<?php echo VCOTI; ?>txt_search" name="<?php echo VCOTI; ?>txt_search" placeholder="<?php echo VGEVE_21; ?>" onkeypress="simpleScript.triggerSearch(this,'#<?php echo VCOTI; ?>gridProductosFound',2);"></input>
                             </label>
                         </div>
                     </div>
                 </section>
                 <div class="well" style="overflow: auto;height: 300px;overflow-x: hidden">
-                    <table id="<?php echo VGEVE; ?>gridProductosFound" class="table table-bordered table-striped table-condensed smart-form table-hover has-tickbox" style="width:100%">
+                    <table id="<?php echo VCOTI; ?>gridProductosFound" class="table table-bordered table-striped table-condensed smart-form table-hover has-tickbox" style="width:100%">
                         <thead>
                             <th style="width: 5%;"><?php echo LABEL_NRO?></th>
                             <th style="width: 3%">
                                 <label class="checkbox">
-                                    <input type="checkbox" id="<?php echo VGEVE; ?>chk_all" name="<?php echo VGEVE; ?>chk_all" onclick="simpleScript.checkAll(this,'#<?php echo VGEVE; ?>gridProductosFound');"><i></i>
+                                    <input type="checkbox" id="<?php echo VCOTI; ?>chk_all" name="<?php echo VCOTI; ?>chk_all" onclick="simpleScript.checkAll(this,'#<?php echo VCOTI; ?>gridProductosFound');"><i></i>
                                 </label>
                             </th>
                             <th style="width: 35%;" class="center"><?php echo VGEVE_17?></th>
@@ -47,7 +47,7 @@ $buscar = Session::getPermiso('VGEVEBS');
                         <tbody>
                             <?php 
                                 $f = 0;
-                                $datap = Obj::run()->generarVentaController->getFindProductos(); 
+                                $datap = Obj::run()->generarCotizacionController->getFindProductos(); 
                                 $rows = sizeof($datap);
                                 foreach ($datap as $value):
                                     $f++;
@@ -57,7 +57,7 @@ $buscar = Session::getPermiso('VGEVEBS');
                                 <td><?php echo $f; ?></td>
                                 <td>
                                     <label class="checkbox">
-                                        <input type="checkbox" id="<?php echo $f.VGEVE; ?>chk_prod" name="<?php echo VGEVE; ?>chk_prod[]" value="<?php echo $prod; ?>"><i></i>
+                                        <input type="checkbox" id="<?php echo $f.VCOTI; ?>chk_prod" name="<?php echo VCOTI; ?>chk_prod[]" value="<?php echo $prod; ?>"><i></i>
                                     </label>
                                 </td>
                                 <td><?php echo $value['descripcion']; ?></td>
@@ -96,11 +96,11 @@ $buscar = Session::getPermiso('VGEVEBS');
                 </div>
             </div>
             <div class="modal-footer">
-                <button id="<?php echo VGEVE; ?>btnSubSearchPro" type="submit" class="hide">
+                <button id="<?php echo VCOTI; ?>btnSubSearchPro" type="submit" class="hide">
                     <i class="fa fa-ban"></i> <?php echo BTN_CLOSE; ?>
                 </button>
                 
-                <button id="<?php echo VGEVE; ?>btnAddProd" type="button" class="btn txt-color-white bg-color-blueDark" onclick="generarVentaScript.addProducto();">
+                <button id="<?php echo VCOTI; ?>btnAddProd" type="button" class="btn txt-color-white bg-color-blueDark" onclick="vGenerarCotizacionScript.addProducto();">
                     <i class="fa fa-plus-circle"></i> <?php echo BTN_ADD; ?>
                 </button>
                 <button type="button" class="btn btn-default xClose">
@@ -112,10 +112,10 @@ $buscar = Session::getPermiso('VGEVEBS');
 </form>
 <!-- si no riene permiso se anula submit desde cualquier input -->
 <script>
-    simpleScript.noSubmit('#<?php echo VGEVE; ?>formBuscarProductos');
+    simpleScript.noSubmit('#<?php echo VCOTI; ?>formBuscarProductos');
     
     simpleScript.removeAttr.click({
-        container: '#<?php echo VGEVE; ?>formBuscarProductos',
+        container: '#<?php echo VCOTI; ?>formBuscarProductos',
         typeElement: 'button'
     });
 </script>

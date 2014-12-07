@@ -55,7 +55,9 @@ define("VRPT4","VRPT4");             /*tab modulo REPORTEPRODUCTOMES*/
 define("PANED","PANED");             /*tab modulo PANELDISPONIBLE*/
 define("VRPT5","VRPT5");             /*tab modulo VLISTADOPRECIOS*/
 define("VEGRE","VEGRE");             /*tab modulo VEGRESOS*/
-
+define("VCOTI","VCOTI");             /*tab modulo VEGRESOS*/
+define("CAJAA","CAJAA");             /*tab modulo CAJAAPERTURA*/
+define("CAJAC","CAJAC");             /*tab modulo CAJACIERRE*/
 
 
 ?>

@@ -108,7 +108,7 @@ $datad = Obj::run()->generarVentaController->getFindVentaD();
                                         ),
                                         'etiqueta'=>'descripcion',
                                         'value'=>'id',
-                                        'defaultEtiqueta'=>$datac['moneda'],
+                                        'defaultEtiqueta'=>$datac['id_moneda'],
                                         'txtSelect'=>false
                                     ));
                                 ?><i></i>
@@ -166,6 +166,8 @@ $datad = Obj::run()->generarVentaController->getFindVentaD();
                                     <tr id="<?php echo VGEVE?>tr_<?php echo $value['id_producto']?>">
                                         <td>
                                             <input type="hidden" id="<?php echo VGEVE.$key?>hhddIdProducto" name="<?php echo VGEVE?>hhddIdProducto[]" value="<?php echo AesCtr::en($value['id_producto'])?>">
+                                            <input type="hidden" id="<?php echo VGEVE.$key?>hhddIGV" name="<?php echo VGEVE?>hhddIGV[]" value="<?php echo $value['igv']?>">
+                                            <input type="hidden" id="<?php echo VGEVE.$key?>hhddIncl" name="<?php echo VGEVE?>hhddIncl[]" value="<?php echo $value['incligv']?>">
                                             <?php echo $value['descripcion']?>
                                         </td>
                                         <td>                                            

@@ -1,0 +1,85 @@
+<?php /*
+* ---------------------------------------
+* --------- CREATED BY CREATOR ----------
+* fecha: 06-12-2014 21:12:27 
+* Descripcion : formEditCajaApertura.phtml
+* ---------------------------------------
+*/
+
+/*prefijo: CAJAA debe ser alias en tabla men_menuprincipal*/
+$editar = Session::getPermiso("CAJAAACT");
+    
+$data = cajaAperturaController::findCajaApertura();
+
+$mon = Formulario::getParam('_moneda');
+?>
+<form id="<?php echo CAJAA; ?>formEditCajaApertura" name="<?php echo CAJAA; ?>formEditCajaApertura" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close"  aria-hidden="true">
+                    &times;
+                </button>
+                <h4 class="modal-title"><?php echo CAJAA_2.$mon ?></h4>
+            </div>
+            <div class="modal-body smart-form"> 
+               <section>
+                    <div class="row">
+                        <label class="label col col-3"><?php echo CAJAA_3; ?></label>
+                        <div class="col col-8">
+                            <label class="input"> 
+                                <i class="icon-append fa fa-keyboard-o"></i>
+                                <input type="text" id="<?php echo CAJAA; ?>txt_inicio" name="<?php echo CAJAA; ?>txt_inicio" value="<?php echo number_format($data['monto_inicial'],2); ?>">
+                                <b class="tooltip tooltip-top-right"><i class="fa fa-money txt-color-teal"></i> <?php echo LABEL_A86M; ?></b>
+                            </label>
+                        </div>
+                    </div>
+                </section>
+            </div>
+            <div class="modal-footer">
+                <div class="foot-obligar"></div>
+                <?php if($editar["permiso"]):?>
+                <button id="<?php echo CAJAA; ?>btnEdCajaApertura" type="submit" class="<?php echo $editar["theme"]; ?>">
+                    <i class="<?php echo $editar["icono"]; ?>"></i> <?php echo $editar["accion"]; ?>
+                </button>
+                <?php endif; ?>
+                <button type="button" class="<?php echo THEME_CLOSE; ?>">
+                    <i class="<?php echo ICON_CLOSE; ?>"></i> <?php echo BTN_CLOSE; ?>
+                </button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</form>
+<!-- si no tiene permiso se anula submit desde cualquier input -->
+<?php if(!$editar["permiso"]): ?>
+<script>
+    simpleScript.noSubmit("#<?php echo CAJAA; ?>formEditCajaApertura");
+</script>
+<?php endif; ?>
+<script>
+/*configurar validacion de formulario -- este codigo es de ejemplo*/
+$("#<?php echo CAJAA; ?>formEditCajaApertura").validate({
+    rules : {
+        <?php echo CAJAA; ?>txt_campo : {
+            required : true,
+            regular: true,
+            minlength: 3
+        }
+    },
+
+    messages : {
+        <?php echo CAJAA; ?>txt_campo : {
+            required : "Campo requerido",
+            regular: "No se permite caracteres inválidos"
+        }
+    },
+
+    errorPlacement : function(error, element) {
+        error.insertAfter(element.parent());
+    },
+
+    submitHandler: function(){
+        cajaApertura.postEditCajaApertura();
+    }   
+});
+</script>

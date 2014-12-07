@@ -283,6 +283,7 @@ define('VGEVE_22','Cantidad');
 define('VGEVE_23','Click aquí para generar Venta');
 define('VGEVE_24','Total a Pagar');
 define('VGEVE_25','A cuenta');
+define('VGEVE_26','Incl. IGV');
 
 define('VGEVETAB1','Información General');
 define('VGEVETAB2','Listado de Productos');
@@ -339,7 +340,20 @@ define ('VEGRE_5M','Ingrese la descripción del Gasto');
 define ('PANED_1','Reporte de Paneles Disponibles');
 define ('PANED_2','Ciudad');
 
+/*Cotizacion venta*/
+define ('VCOTI_1','Generar Cotización - Venta');
+define ('VCOTI_2','Nueva Cotización');
+define('VCOTI_4','Click aquí para generar Cotización');
 
+/*Caja*/
+
+define('CAJAA_1','Aperturar Caja');
+define('CAJAA_2','Editar Saldo Inicial - ');
+define('CAJAA_3','Monto Inicial');
+define('CAJAA_Apertura','Apertura');
+define('CAJAA_Cierre','Cierre');
+
+define('CAJAC_1','Cierre de Caja');
 
 
 ?>
