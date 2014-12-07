@@ -12,6 +12,7 @@ class vseguimientoventaController extends Controller{
     public function __construct() {
         $this->loadModel(array('modulo'=>'ventas','modelo'=>'vseguimientoventa'));
         $this->loadController(array('modulo'=>'ventas','controller'=>'generarVenta')); 
+        $this->loadController(array('modulo'=>'ventas','controller'=>'cajaApertura'));    
     }
     
     public function index(){ 
@@ -24,6 +25,8 @@ class vseguimientoventaController extends Controller{
         $sEcho          =   $this->post('sEcho');
         
         $rResult = Obj::run()->vseguimientoventaModel->getVseguimientoventa();
+        
+        $validarCaja = $this->getValidarCaja();
         
         $num = Obj::run()->vseguimientoventaModel->_iDisplayStart;
         if($num >= 10){
@@ -60,11 +63,15 @@ class vseguimientoventaController extends Controller{
                  */
                 $axion = '"<div class=\"btn-group\">';
                  
-                if($pagar['permiso']){
+                if($pagar['permiso'] && $validarCaja['existe'] > 0 ){
                     $axion .= '<button type=\"button\" class=\"'.$pagar['theme'].'\" title=\"'.$pagar['accion'].'\" onclick=\"vseguimientoventa.getFormPagarVenta(this,\''.$encryptReg.'\',\''.$aRow['monto_saldo'].'\')\">';
                     $axion .= '    <i class=\"'.$pagar['icono'].'\"></i>';
                     $axion .= '</button>';
-                }              
+                }else{
+                     $axion .= '<button type=\"button\" class=\"'.$pagar['theme'].'\" title=\"'.$pagar['accion'].'\" disabled >';
+                    $axion .= '    <i class=\"'.$pagar['icono'].'\"></i>';
+                    $axion .= '</button>';
+                }
                 if($exportarpdf['permiso'] == 1){
                     $axion .= '<button type=\"button\" class=\"'.$exportarpdf['theme'].'\" title=\"'.$exportarpdf['accion'].'\" onclick=\"vseguimientoventa.postPDF(this,\''.$encryptReg.'\',\''.$aRow['codigo_impresion'].'\')\">';
                     $axion .= '    <i class=\"'.$exportarpdf['icono'].'\"></i>';
@@ -115,6 +122,10 @@ class vseguimientoventaController extends Controller{
         return $data;
      }
     
+     public function getValidarCaja(){ 
+        $data = Obj::run()->cajaAperturaController->getValidarCaja();        
+        return $data;
+    }   
 }
 
 ?>

@@ -12,6 +12,7 @@ class vegresosController extends Controller{
     public function __construct() {
         $this->loadModel(array('modulo'=>'ventas','modelo'=>'vegresos'));
         $this->loadController(array('modulo'=>'ventas','controller'=>'vproducto')); 
+        $this->loadController(array('modulo'=>'ventas','controller'=>'cajaApertura'));         
     }
     
     public function index(){ 
@@ -72,7 +73,7 @@ class vegresosController extends Controller{
                 $axion .= ' </div>" ';
 
                 /*registros a mostrar*/
-                $sOutput .= '["'.$chk.'","'.$aRow['descripcion'].'","'.Functions::cambiaf_a_normal($aRow['fecha']).'","'.$aRow['moneda'].'","'.number_format($aRow['monto'],2).'","'.$estado.'",'.$axion.' ';
+                $sOutput .= '["'.$chk.'","'.$aRow['descripcion'].'","'.Functions::cambiaf_a_normal($aRow['fecha']).'","'.$aRow['moneda'].'","'.number_format($aRow['monto'],2).'","'.$estado.'" ';
 
                 $sOutput .= '],';
 
@@ -131,6 +132,11 @@ class vegresosController extends Controller{
         
         echo json_encode($data);
     }
+    
+    public static function getValidarCaja(){ 
+        $data = Obj::run()->cajaAperturaController->getValidarCaja();        
+        return $data;
+    }      
     
 }
 

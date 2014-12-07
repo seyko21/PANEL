@@ -51,7 +51,7 @@ class cajaCierreController extends Controller{
                 }                                                       
                                         
                  $f = new DateTime($aRow['fecha_creacion']);
-		 $c1 = $f->format('h:i A');                                             
+		 $c1 = $f->format('d/m/Y h:i A');                                             
                  $c2 =  $aRow['sigla_moneda'];             
                  $c3 =  number_format($aRow['monto_inicial'],2);             
                  $c4 =  number_format($aRow['total_ingresos'],2);             

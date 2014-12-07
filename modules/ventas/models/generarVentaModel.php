@@ -122,7 +122,8 @@ class generarVentaModel extends Model{
                 . ":cant2,"
                 . ":precio,"
                 . ":pago,"
-                . ":usuario"
+                . ":usuario,"
+                . ":idSucursal"
             . "); ";
                
         $parms = array(
@@ -140,11 +141,14 @@ class generarVentaModel extends Model{
             ':cant2' => '',
             ':precio' => '',
             ':pago'=>$this->_montoAsignado,
-            ':usuario'=> $this->_usuario
+            ':usuario'=> $this->_usuario,
+            ':idSucursal'=> Session::get('sys_idSucursal')   
         );
         $data = $this->queryOne($query,$parms);
-              
+                
         $idVenta = $data['idVenta'];
+        if($data['result'] == 2)
+            return $data;
         
         if($data['result'] == '1'){
             /*detalle de produccion*/
@@ -164,7 +168,8 @@ class generarVentaModel extends Model{
                     ':cant2' => Functions::deleteComa($this->_cantidad2[$key]),
                     ':precio'=> Functions::deleteComa($this->_precio[$key]),
                     ':pago'=>'',
-                    ':usuario'=> $this->_usuario
+                    ':usuario'=> $this->_usuario,
+                    ':idSucursal'=> Session::get('sys_idSucursal') 
                 );
                 $this->execute($query,$parmsx);
               
@@ -175,20 +180,22 @@ class generarVentaModel extends Model{
     }
 
     private function anularUnaVenta(){
-        $query = "call sp_ventaAnulacion(:flag,:idVenta);";
+        $query = "call sp_ventaAnulacion(:flag,:idVenta,:idSucursal);";
         $parms = array(
             ':flag' =>'1',
-            ':idVenta' => $this->_idVenta           
+            ':idVenta' => $this->_idVenta,
+            ':idSucursal'=> Session::get('sys_idSucursal')
         );
         $this->execute($query,$parms);
     }
     
     public function anularGenerarVentaAll(){
         foreach ($this->_chkdel as $value) {
-            $query = "call sp_ventaAnulacion(:flag,:idVenta); ";
+            $query = "call sp_ventaAnulacion(:flag,:idVenta,:idSucursal); ";
             $parms = array(
                 ':flag' =>'1',
-                ':idVenta' => AesCtr::de($value)
+                ':idVenta' => AesCtr::de($value),
+                ':idSucursal'=> Session::get('sys_idSucursal')
             );
             $this->execute($query,$parms);
         }
@@ -306,6 +313,7 @@ class generarVentaModel extends Model{
         
         return $data;
     }    
+          
     
 }
 

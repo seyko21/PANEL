@@ -53,12 +53,11 @@ var vegresos_ = function(){
             iDisplayLength: 10,            
             aoColumns: [
                 {sTitle: "<input type='checkbox' id='"+diccionario.tabs.VEGRE+"chk_all' onclick='simpleScript.checkAll(this,\"#"+diccionario.tabs.VEGRE+"gridVegresos\");'>", sWidth: "1%", sClass: "center", bSortable: false},                                
-                {sTitle: "Descripción de Gasto", sWidth: "35%"},
+                {sTitle: "Descripción de Gasto", sWidth: "45%"},
                 {sTitle: "Fecha", sWidth: "10%", sClass: "center"},
                 {sTitle: "Moneda", sWidth: "10%", sClass: "center"},
                 {sTitle: "Monto", sWidth: "15%", sClass: "right"},
-                {sTitle: "Estado", sWidth: "10%", sClass: "center"},
-                {sTitle: "Acciones", sWidth: "8%", sClass: "center", bSortable: false}
+                {sTitle: "Estado", sWidth: "10%", sClass: "center"}
             ],
             aaSorting: [[1, "asc"]],
             sScrollY: "300px",

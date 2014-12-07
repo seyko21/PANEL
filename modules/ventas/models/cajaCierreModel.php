@@ -73,8 +73,9 @@ class cajaCierreModel extends Model{
                    fecha_cierre = NOW(),
                    usuario_cierre = :usuario
                 WHERE `estado` = 'A' and 
-                      fecha_caja = curdate(); ";
+                       id_sucursal = :idSucursal; ";
         $parms = array(
+            ":idSucursal" =>Session::get('sys_idSucursal'),
             ':estado' => 'C',
             ':usuario' => $this->_usuario  
         );

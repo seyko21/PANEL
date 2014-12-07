@@ -160,20 +160,22 @@ class generarCotizacionModel extends Model{
     }
 
     private function anularUnaCotizacion(){
-        $query = "call sp_ventaAnulacion(:flag,:idCotizacion);";
+        $query = "call sp_ventaAnulacion(:flag,:idCotizacion,:idSucursal);";
         $parms = array(
             ':flag' =>'2',
-            ':idCotizacion' => $this->_idCotizacion           
+            ':idCotizacion' => $this->_idCotizacion,
+            ':idSucursal'=> Session::get('sys_idSucursal')
         );
         $this->execute($query,$parms);
     }
     
     public function anularGenerarCotizacionAll(){
         foreach ($this->_chkdel as $value) {
-            $query = "call sp_ventaAnulacion(:flag,:idCotizacion); ";
+            $query = "call sp_ventaAnulacion(:flag,:idCotizacion,:idSucursal); ";
             $parms = array(
                 ':flag' =>'2',
-                ':idCotizacion' => AesCtr::de($value)
+                ':idCotizacion' => AesCtr::de($value),
+                ':idSucursal'=> Session::get('sys_idSucursal')
             );
             $this->execute($query,$parms);
         }

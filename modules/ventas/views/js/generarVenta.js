@@ -230,6 +230,16 @@ var generarVenta_ = function(){
                             _private.idVenta = 0;
                         }
                     });
+                }else if(!isNaN(data.result) && parseInt(data.result) === 2){
+                    simpleScript.notify.warning({
+                        content: "No existe CAJA aperturada. Debe Aperturarla para generar Ventas.",
+                         callback: function(){
+                            simpleScript.closeTab(diccionario.tabs.VGEVE+'new');
+                            simpleScript.closeTab(diccionario.tabs.VGEVE+'edit');
+                            generarVenta.getGridGenerarVenta();
+                            _private.idVenta = 0;
+                        }
+                    });
                 }
             }
         });

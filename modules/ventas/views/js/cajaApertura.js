@@ -54,7 +54,7 @@ var cajaApertura_ = function(){
             iDisplayLength: 10,            
             aoColumns: [
                 {sTitle: "N°", sWidth: "1%",bSortable: false},
-                {sTitle: "Hora", sWidth: "10%"},
+                {sTitle: "Fecha / Hora", sWidth: "10%"},
                 {sTitle: "Moneda", sWidth: "8%", sClass: "center"},
                 {sTitle: "Inicial", sWidth: "10%", sClass: "right"},
                 {sTitle: "Ingresos", sWidth: "10%", sClass: "right"},
@@ -63,7 +63,7 @@ var cajaApertura_ = function(){
                 {sTitle: "Estado", sWidth: "10%", sClass: "center"},
                 {sTitle: "Acciones", sWidth: "8%", sClass: "center", bSortable: false}
             ],
-            aaSorting: [[1, "asc"]],
+            aaSorting: [[1, "desc"]],
             sScrollY: "300px",
             sAjaxSource: _private.config.modulo+"getGridCajaApertura",
             fnServerParams: function(aoData) {
@@ -113,13 +113,23 @@ var cajaApertura_ = function(){
                         if(!isNaN(data.result) && parseInt(data.result) === 1){
                             simpleScript.notify.ok({
                                 content: mensajes.MSG_20,
-                                callback: function(){                                  
+                                callback: function(){            
+                                    if($('#'+diccionario.tabs.VGEVE+'_CONTAINER').length > 0)
+                                        simpleScript.closeTab(diccionario.tabs.VGEVE);
+                                    if($('#'+diccionario.tabs.VGEVE+'new_CONTAINER').length > 0)
+                                        simpleScript.closeTab(diccionario.tabs.VGEVE+'new');
+                                    if($('#'+diccionario.tabs.VGEVE+'edit_CONTAINER').length > 0)
+                                        simpleScript.closeTab(diccionario.tabs.VGEVE+'edit');
+                                    if($('#'+diccionario.tabs.VSEVE+'_CONTAINER').length > 0)
+                                        simpleScript.closeTab(diccionario.tabs.VSEVE);                                        
+                                    if($('#'+diccionario.tabs.VEGRE+'_CONTAINER').length > 0)
+                                        simpleScript.closeTab(diccionario.tabs.VEGRE); 
                                         cajaApertura.getGridCajaApertura();                                  
                                 }
                             });
                        }else if(!isNaN(data.result) && parseInt(data.result) === 2){
                             simpleScript.notify.warning({
-                                content: "La Caja ya fue aperturada para la fecha: "+ $("#"+diccionario.tabs.CAJAA+"txt_fechaGrid").val()
+                                content: "Existe Caja Aperturada, debe de cerrar Caja para volver a Aperturar."
                             });
                         }
                     }

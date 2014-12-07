@@ -97,7 +97,8 @@ class cajaAperturaModel extends Model{
     /*editar registro: CajaApertura*/
     public function editCajaApertura(){
        $query = "UPDATE `ven_movimientos_caja` SET
-                   monto_inicial  = :monto
+                   monto_inicial  = :monto,
+                   `total_saldo` = ( `monto_inicial` + `total_ingresos` ) - `total_egresos`
                 WHERE `id_caja` = :idd;";
         $parms = array(
             ':idd' => $this->_idCajaApertura,
@@ -108,7 +109,18 @@ class cajaAperturaModel extends Model{
         return $data;
     }
     
- 
+    public function getValidarCaja(){
+        $query = "SELECT COUNT(*) as existe
+		FROM ven_movimientos_caja
+		WHERE `estado` = 'A' AND
+			`id_sucursal` = :idSucursal; ";        
+        $parms = array(
+            ":idSucursal" =>Session::get('sys_idSucursal')
+        );
+        $data = $this->queryOne($query,$parms);      
+        
+        return $data;
+    }      
     
 }
 

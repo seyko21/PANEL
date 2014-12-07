@@ -12,6 +12,7 @@ class generarVentaController extends Controller{
     public function __construct() {
         $this->loadModel(array('modulo'=>'ventas','modelo'=>'generarVenta'));
         $this->loadController(array('modulo'=>'ventas','controller'=>'vproducto')); 
+        $this->loadController(array('modulo'=>'ventas','controller'=>'cajaApertura')); 
     }
     
     public function index(){ 
@@ -350,7 +351,11 @@ class generarVentaController extends Controller{
         $data = Obj::run()->generarVentaModel->getGenerarCodigo();        
         return $data;
     }       
-
+    
+    public static function getValidarCaja(){ 
+        $data = Obj::run()->cajaAperturaController->getValidarCaja();        
+        return $data;
+    }  
 }
 
 ?>

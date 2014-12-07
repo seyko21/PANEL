@@ -186,7 +186,7 @@ $datad = Obj::run()->generarVentaController->getFindVentaD();
                                             <label class="input"><input type="text" id="<?php echo VGEVE.$key?>txt_precio" name="<?php echo VGEVE?>txt_precio[]" value="<?php echo number_format($value['precio'],2)?>" data-value="<?php echo $value['precio']?>" data-index="<?php echo $key?>" style="text-align:right"></label>
                                         </td>
                                         <td class="right">
-                                            <?php echo number_format($value['importe'],2)?>
+                                            <?php echo number_format($value['total_impuesto'],2)?>
                                         </td>
                                         <td>
                                             <button type="button" class="btn btn-danger btn-xs" onclick="generarVentaScript.removeItem('<?php echo AesCtr::en($value['id_producto'])?>');"><i class="fa fa-trash-o"></i></a>

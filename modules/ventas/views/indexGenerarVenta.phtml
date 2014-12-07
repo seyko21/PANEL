@@ -12,6 +12,9 @@ echo Functions::widgetOpen(array(
         "id"=>VGEVE,
         "title"=>VGEVE_1
     )); 
+
+$validarCaja = generarVentaController::getValidarCaja();
+
 ?>
 <button id="<?php echo VGEVE; ?>btnDowPDF" type="button" class="hide">Descargar</button>
 <button id="<?php echo VGEVE; ?>btnDowExcel" type="button" class="hide">Descargar</button>
@@ -21,13 +24,21 @@ echo Functions::widgetOpen(array(
         <div class="dt-top-row">
             <div class="DTTT btn-group">
                 <!-- verificar permisos -->
-                <?php if($nuevo["permiso"]): ?>
+                <?php if($nuevo["permiso"] && $validarCaja['existe'] > 0 ): ?>
                 <button id="<?php echo VGEVE; ?>btnNewRegGenerarVenta" type="button" onclick="generarVenta.getFormNewGenerarVenta(this);" class="<?php echo $nuevo['theme'];?>">
                     <i class="<?php echo $nuevo['icono'];?>"></i> <?php echo $nuevo['accion'];?>
                 </button>
+                <?php else: ?>
+                <button id="<?php echo VGEVE; ?>btnNewRegGenerarVenta" type="button" class="<?php echo $nuevo['theme'];?>" disabled>
+                    <i class="<?php echo $nuevo['icono'];?>"></i> <?php echo $nuevo['accion'];?>
+                </button>
                 <?php endif; ?>
-                <?php if($anular["permiso"]): ?>
+                <?php if($anular["permiso"] && $validarCaja['existe'] > 0 ): ?>
                 <button id="<?php echo VGEVE; ?>btnNewRegGenerarVenta" type="button" onclick="generarVenta.postAnularGenerarVentaAll(this);" class="<?php echo $anular['theme'];?>">
+                    <i class="<?php echo $anular['icono'];?>"></i> <?php echo $anular['accion'];?>
+                </button>
+                <?php else: ?>
+                 <button id="<?php echo VGEVE; ?>btnNewRegGenerarVenta" type="button" class="<?php echo $anular['theme'];?>" disabled>
                     <i class="<?php echo $anular['icono'];?>"></i> <?php echo $anular['accion'];?>
                 </button>
                 <?php endif; ?>

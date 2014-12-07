@@ -78,7 +78,7 @@ class vegresosModel extends Model{
     
     /*grabar nuevo registro: Vegresos*/
     public function newVegresos(){
-        $query = "call sp_ventaGenerarEgresosMantenimiento(:flag,:key,:descripcion,:fecha,:monto,:moneda,:usuario);";
+        $query = "call sp_ventaGenerarEgresosMantenimiento(:flag,:key,:descripcion,:fecha,:monto,:moneda,:usuario,:idSucursal);";
         $parms = array(
             ':flag' => 1,
             ':key' => $this->_idVegresos,
@@ -86,7 +86,8 @@ class vegresosModel extends Model{
             ':fecha' => $this->_fechaEgreso,            
             ':monto' => $this->_monto, 
             ':moneda' => $this->_idMoneda, 
-            ':usuario' => $this->_usuario
+            ':usuario' => $this->_usuario,
+            ':idSucursal'=> Session::get('sys_idSucursal')  
         );
         $data = $this->queryOne($query,$parms);
         return $data;
@@ -114,7 +115,7 @@ class vegresosModel extends Model{
     
     /*editar registro: Vegresos*/
     public function editVegresos(){
-        $query = "call sp_ventaGenerarEgresosMantenimiento(:flag,:key,:descripcion,:fecha,:monto,:moneda,:usuario);";
+        $query = "call sp_ventaGenerarEgresosMantenimiento(:flag,:key,:descripcion,:fecha,:monto,:moneda,:usuario,:idSucursal);";
         $parms = array(
             ':flag' => 2,
             ':key' => $this->_idVegresos,
@@ -122,7 +123,8 @@ class vegresosModel extends Model{
             ':fecha' => $this->_fechaEgreso,            
             ':monto' => $this->_monto, 
             ':moneda' => $this->_idMoneda, 
-            ':usuario' => $this->_usuario
+            ':usuario' => $this->_usuario,
+            ':idSucursal'=> Session::get('sys_idSucursal')  
         );
         $data = $this->queryOne($query,$parms);
         return $data;
@@ -131,7 +133,7 @@ class vegresosModel extends Model{
     /*eliminar varios registros: Vegresos*/
     public function deleteVegresosAll(){
        foreach ($this->_chkdel as $value) {
-            $query = "call sp_ventaGenerarEgresosMantenimiento(:flag,:key,:descripcion,:fecha,:monto,:moneda,:usuario);";
+            $query = "call sp_ventaGenerarEgresosMantenimiento(:flag,:key,:descripcion,:fecha,:monto,:moneda,:usuario,:idSucursal);";
             $parms = array(
                 ':flag' => 3,
                 ':key' => Aes::de($value),
@@ -139,7 +141,8 @@ class vegresosModel extends Model{
                 ':fecha' => '',   
                 ':monto' => '',
                 ':moneda' => '',
-                ':usuario' => $this->_usuario
+                ':usuario' => $this->_usuario,
+                ':idSucursal'=> Session::get('sys_idSucursal') 
             );
             $this->execute($query,$parms);
         }

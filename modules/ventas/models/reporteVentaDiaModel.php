@@ -39,25 +39,13 @@ class reporteVentaDiaModel extends Model{
     }
     
     public function getGraficoVentaDia(){
-        $query = "SELECT 
-                t.fecha, t.moneda, t.ingresos, t.id_moneda, t.egresos,
-                (t.ingresos - t.egresos) AS monto
-            FROM(
-            SELECT p.`fecha`, 
-                    (SELECT CONCAT(m.sigla,' - ',m.descripcion) FROM pub_moneda m WHERE dd.`moneda` = m.id_moneda) AS moneda,
-                    dd.moneda AS id_moneda,
-                    (SELECT COUNT(d.`codigo_impresion`) AS codigo FROM `ven_documento` d WHERE p.`fecha` = d.`fecha` AND d.estado = 'E' AND d.moneda = dd.`moneda` ) AS numero_doc,	
-                    SUM(p.`monto_pagado`) AS ingresos,                                         
-                    (SELECT 
-                           if( SUM(e.`monto`) is null, 0, SUM(e.`monto`) )                     
-                    FROM `ven_egreso` e WHERE e.fecha = p.`fecha` and e.estado = 'E' ) AS egresos
-
-                    FROM `ven_pago` p
-                            INNER JOIN ven_documento dd ON dd.`id_docventa` = p.`id_docventa`
-                    WHERE p.`estado` = 'E'		
-                    GROUP BY 1,2,3
-            ) AS t
-            where t.`fecha` = :fecha;";
+        $query = "SELECT m.`fecha_caja`, m.`moneda` AS id_moneda,
+                (SELECT CONCAT(mo.sigla,' - ',mo.descripcion) FROM pub_moneda mo WHERE m.`moneda` = mo.id_moneda) AS moneda,
+                SUM(m.`monto_inicial`) AS monto_inicial, SUM(m.`total_ingresos`) AS total_ingresos, 
+                SUM(m.`total_egresos`) AS total_egresos, SUM(m.`total_saldo`) AS monto
+         FROM `ven_movimientos_caja` m      
+         WHERE  m.`fecha_caja` = :fecha
+         GROUP BY 1,2,3;";
         $parms = array(
             ':fecha' => date("Y-m-d")            
         );
@@ -121,5 +109,28 @@ class reporteVentaDiaModel extends Model{
     }        
     
 }
+
+/*
+query antiguo:
+ * SELECT 
+                t.fecha, t.moneda, t.ingresos, t.id_moneda, t.egresos,
+                (t.ingresos - t.egresos) AS monto
+            FROM(
+            SELECT p.`fecha`, 
+                    (SELECT CONCAT(m.sigla,' - ',m.descripcion) FROM pub_moneda m WHERE dd.`moneda` = m.id_moneda) AS moneda,
+                    dd.moneda AS id_moneda,
+                    (SELECT COUNT(d.`codigo_impresion`) AS codigo FROM `ven_documento` d WHERE p.`fecha` = d.`fecha` AND d.estado = 'E' AND d.moneda = dd.`moneda` ) AS numero_doc,	
+                    SUM(p.`monto_pagado`) AS ingresos,                                         
+                    (SELECT 
+                           IF( SUM(e.`monto`) IS NULL, 0, SUM(e.`monto`) )                     
+                    FROM `ven_egreso` e WHERE e.fecha = p.`fecha` AND e.estado = 'E' ) AS egresos
+
+                    FROM `ven_pago` p
+                            INNER JOIN ven_documento dd ON dd.`id_docventa` = p.`id_docventa`
+                    WHERE p.`estado` = 'E'		
+                    GROUP BY 1,2,3
+            ) AS t
+            WHERE t.`fecha` = :fecha
+ *  */
 
 ?>

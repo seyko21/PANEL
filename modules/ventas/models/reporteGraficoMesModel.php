@@ -42,14 +42,14 @@ class reporteGraficoMesModel extends Model{
     
     public function getGrafico(){
         $query = "
-             SELECT MONTH( p.`fecha`) AS mes  ,                     
-                        dd.moneda AS id_moneda,                    
-                ( SUM(p.`monto_pagado`) - 
-                (SELECT IF( SUM(e.`monto`) IS NULL, 0, SUM(e.`monto`) ) FROM `ven_egreso` e WHERE e.fecha = p.`fecha` AND e.estado = 'E' ) ) AS monto   
-              FROM `ven_pago` p
-                            INNER JOIN ven_documento dd ON dd.`id_docventa` = p.`id_docventa`
-                    WHERE p.`estado` = 'E' AND YEAR( p.`fecha`) = :periodo AND dd.`moneda` = :moneda
-                    GROUP BY 1,2
+             SELECT MONTH(m.`fecha_caja`) AS mes, m.`moneda` AS id_moneda,
+                    (SELECT CONCAT(mo.sigla,' - ',mo.descripcion) FROM pub_moneda mo WHERE m.`moneda` = mo.id_moneda) AS moneda,
+
+                    SUM(m.`monto_inicial`) AS monto_inicial, SUM(m.`total_ingresos`) AS total_ingresos, 
+                    SUM(m.`total_egresos`) AS total_egresos, SUM(m.`total_saldo`) AS monto
+             FROM `ven_movimientos_caja` m      
+             WHERE YEAR( m.`fecha_caja`) = :periodo AND m.`moneda` = :moneda
+             GROUP BY 1,2,3
             ";
         $parms = array(
             ':periodo' =>$this->_periodo,

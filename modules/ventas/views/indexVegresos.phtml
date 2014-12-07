@@ -14,6 +14,9 @@ echo Functions::widgetOpen(array(
         "id"=>VEGRE,
         "title"=>VEGRE_1
     )); 
+
+$validarCaja = vegresosController::getValidarCaja();
+
 ?>
 
 <div class="widget-body-toolbar">
@@ -40,14 +43,22 @@ echo Functions::widgetOpen(array(
         <div class="dt-top-row">
             <div class="DTTT btn-group">
                 <!-- verificar permisos -->
-                <?php if($nuevo["permiso"]): ?>
+                <?php if($nuevo["permiso"] && $validarCaja['existe'] > 0): ?>
                 <button id="<?php echo VEGRE; ?>btnNewVegresos" type="button" onclick="vegresos.getFormNewVegresos(this);" class="<?php echo $nuevo["theme"]; ?>">
                     <i class="<?php echo $nuevo["icono"]; ?>"></i> <?php echo $nuevo["accion"]; ?>
                 </button>
+                  <?php else: ?>
+                <button id="<?php echo VGEVE; ?>btnNewRegGenerarVenta" type="button" class="<?php echo $nuevo['theme'];?>" disabled>
+                    <i class="<?php echo $nuevo['icono'];?>"></i> <?php echo $nuevo['accion'];?>
+                </button>                
                 <?php endif; ?>
                 <!-- verificar permisos -->
-                <?php if($anular["permiso"]): ?>
+                <?php if($anular["permiso"] && $validarCaja['existe'] > 0): ?>
                 <button id="<?php echo VEGRE; ?>btnDeleteVegresos" type="button" onclick="vegresos.postDeleteVegresosAll(this);" class="<?php echo $anular["theme"]; ?>">
+                    <i class="<?php echo $anular["icono"]; ?>"></i> <?php echo $anular["accion"]; ?>
+                </button>
+                <?php else: ?>
+                <button id="<?php echo VEGRE; ?>btnDeleteVegresos" type="button" class="<?php echo $anular["theme"]; ?>" disabled>
                     <i class="<?php echo $anular["icono"]; ?>"></i> <?php echo $anular["accion"]; ?>
                 </button>
                 <?php endif; ?>

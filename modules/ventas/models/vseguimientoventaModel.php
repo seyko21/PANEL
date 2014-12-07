@@ -70,13 +70,14 @@ class vseguimientoventaModel extends Model{
     
     /*editar registro: Vseguimientoventa*/
     public function newPagoVenta(){
-         $query = "call sp_ventaPagoMantenimiento(:flag,:key,:pago,:fecha,:usuario);";
+         $query = "call sp_ventaPagoMantenimiento(:flag,:key,:pago,:fecha,:usuario,:idSucursal);";
         $parms = array(
             ':flag' => 1,
             ':key' => $this->_idVseguimientoventa,
             ':pago' => $this->_montoAsignado,
             ':fecha' => $this->_fecha,                      
-            ':usuario' => $this->_usuario
+            ':usuario' => $this->_usuario,
+            ':idSucursal'=> Session::get('sys_idSucursal')
         );
         $data = $this->queryOne($query,$parms);
         return $data;

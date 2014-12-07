@@ -20,6 +20,8 @@ class loginController extends Controller{
             Session::set('sys_idPersona', $data['id_persona']);
             Session::set('sys_usuario', $data['usuario']);
             Session::set('sys_nombreUsuario', $data['nombrecompleto']);
+            Session::set('sys_idSucursal', $data['id_sucursal']);
+            Session::set('sys_idEmpresa', $data['id_empresa']);
             Obj::run()->loginModel->postLastLogin();
             /*los roles*/
             Session::set('sys_roles', Obj::run()->loginModel->getRoles());

@@ -69,7 +69,7 @@ class cajaAperturaController extends Controller{
                 
                 $axion .= ' </div>" ';
                  $f = new DateTime($aRow['fecha_creacion']);
-		 $c1 = $f->format('h:i A');                                             
+		 $c1 = $f->format('d/m/Y h:i A');                                             
                  $c2 =  $aRow['sigla_moneda'];             
                  $c3 =  number_format($aRow['monto_inicial'],2);             
                  $c4 =  number_format($aRow['total_ingresos'],2);             
@@ -95,6 +95,11 @@ class cajaAperturaController extends Controller{
         $data = Obj::run()->cajaAperturaModel->postGenerarApertura();
         echo json_encode($data);
     }    
+
+   public function getValidarCaja(){
+        $data = Obj::run()->cajaAperturaModel->getValidarCaja();
+        return $data;
+    }  
     
     /*carga formulario (editCajaApertura.phtml) para editar registro: CajaApertura*/
     public function getFormEditCajaApertura(){
