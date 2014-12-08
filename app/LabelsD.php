@@ -257,7 +257,7 @@ define('VPROD7','Moneda');
 /*----------------------Registrar Venta----------------------*/
 define('VGEVE_1','Registro de Venta');
 define('VGEVE_2','Registrar Documento de Venta');
-define('VGEVE_3','Clonar Documento de Venta');
+define('VGEVE_3','Nuevo Documento de Venta - Cotizado');
 define('VGEVE_4','Fecha');
 define('VGEVE_5','Moneda');
 define('VGEVE_6','Nombre o Descripción');

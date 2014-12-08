@@ -56,18 +56,19 @@ var vGenerarCotizacion_ = function(){
             aoColumns: [
                 {sTitle: "<input type='checkbox' id='"+diccionario.tabs.VCOTI+"chk_all' onclick='simpleScript.checkAll(this,\"#"+diccionario.tabs.VCOTI+"gridVGenerarCotizacion\");'>", sWidth: "1%", sClass: "center", bSortable: false},                
                 {sTitle: "Código", sWidth: "7%"},
-                {sTitle: "Cliente", sWidth: "30%"},                
-                {sTitle: "Fecha", sWidth: "10%",  sClass: "center"},
+                {sTitle: "Cliente", sWidth: "20%"},                
+                {sTitle: "Fecha", sWidth: "8%",  sClass: "center"},
                 {sTitle: "Moneda", sWidth: "7%"},                                
-                {sTitle: "Total", sWidth: "10%",  sClass: "right"},  
-                {sTitle: "Estado", sWidth: "8%",  sClass: "center"},
+                {sTitle: "Total", sWidth: "10%",  sClass: "right"}, 
+                {sTitle: "Cod. Impr.", sWidth: "8%"},
+                {sTitle: "Estado", sWidth: "8%",  sClass: "center"},                
                 {sTitle: "Acciones", sWidth: "10%", sClass: "center", bSortable: false}
             ],
             aaSorting: [[4, 'desc'],[1, 'desc']],
             sScrollY: "350px",
             sAjaxSource: _private.config.modulo+'getGridGenerarCotizacion',
             fnDrawCallback: function() {
-                $('#'+diccionario.tabs.VCOTI+'gridVGenerarCotizacion_filter').find('input').attr('placeholder','Buscar por Prospecto').css('width','400px');               
+                $('#'+diccionario.tabs.VCOTI+'gridVGenerarCotizacion_filter').find('input').attr('placeholder','Buscar por Prospecto o Codigo de Impresion').css('width','400px');               
                 simpleScript.enterSearch("#"+diccionario.tabs.VCOTI+"gridVGenerarCotizacion",oTable);
                 /*para hacer evento invisible*/
                 simpleScript.removeAttr.click({
@@ -111,7 +112,7 @@ var vGenerarCotizacion_ = function(){
         });
     };
     
-    this.publico.getContProd = function(){
+  this.publico.getContProd = function(){
         simpleAjax.send({
             dataType: 'html',
             root: _private.config.modulo+'getFormNewVGenerarCotizacion',
@@ -119,7 +120,18 @@ var vGenerarCotizacion_ = function(){
                 $('#'+diccionario.tabs.VCOTI+'new_CONTAINER').html(data);
             }
         });
-    };
+    };    
+    
+    this.publico.getContGenerar = function(){
+        simpleAjax.send({
+            dataType: 'html',
+            root: _private.config.modulo+'getFormGenerarVenta',
+            data: '&_idCotizacion='+_private.idCotizacion,
+            fnCallback: function(data){
+                $('#'+diccionario.tabs.VCOTI+'edit_CONTAINER').html(data);
+            }
+        });
+    };           
     
     this.publico.getFormEditarVGenerarCotizacion = function(btn,id){
         _private.idCotizacion = id;
@@ -199,7 +211,6 @@ var vGenerarCotizacion_ = function(){
             root: _private.config.modulo + "postNewGenerarCotizacion",
             form: "#"+diccionario.tabs.VCOTI+"formNewGenerarCotizacion",
             data: '&_idCotizacion='+_private.idCotizacion,
-            clear: true,
             fnCallback: function(data) {
                 if(!isNaN(data.result) && parseInt(data.result) === 1){
                     simpleScript.notify.ok({

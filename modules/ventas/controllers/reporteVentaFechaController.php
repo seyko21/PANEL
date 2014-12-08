@@ -410,11 +410,12 @@ class reporteVentaFechaController extends Controller{
         $html .= '<table id="td2" border="1" style="border-collapse:collapse">               
           <tr>
                 <th style="width:5%;" >ID Caja</th>  
-                <th style="width:13%;" >Fecha / Hora</th>  
-                <th style="width:11%;" >Inicial</th>  
-                <th style="width:11%;" >Ingresos</th>                                
-                <th style="width:11%;" >Egresos</th>
-                <th style="width:11%;" >Saldo</th>
+                <th style="width:8%;" >Fecha / Hora</th>  
+                <th style="width:13%;" >Inicial</th>  
+                <th style="width:13%;" >Ingresos</th>                                
+                <th style="width:13%;" >Egresos</th>
+                <th style="width:13%;" >Saldo</th>
+                <th style="width:8%;" >Cierre</th>
             </tr>';
          foreach ($dataR as $value) {  
              
@@ -422,28 +423,25 @@ class reporteVentaFechaController extends Controller{
             $sumIngresos += $value['total_ingresos'];
             $sumEgresos += $value['total_egresos'];
             $sumSaldo += $value['total_saldo'];
-             
-          $html .=    '<tr>                
-                <td align="center" style="font-size:12px;" >'.$value['id_caja'].'</td>  
-                <td align="center" style="font-size:12px;" >'.$value['fecha_creacion'].'</td>          
+            $fechacierre = ($value['fecha_cierre'] == '')?'- Aperturado -':$value['fecha_cierre'];       
+            $html .=    '<tr>                
+                <td align="center" style="font-size:11px;" >'.$value['id_caja'].'</td>  
+                <td align="center" style="font-size:11px;" >'.$value['fecha_creacion'].'</td>          
                 <td align="right" style="font-size:12px;" >'.$mon.number_format($value['monto_inicial'],2).'</td>                
                 <td align="right" style="font-size:12px;" >'.$mon.number_format($value['total_ingresos'],2).'</td>
                 <td align="right" style="font-size:12px;" >'.$mon.number_format($value['total_egresos'],2).'</td>
                 <td align="right" style="font-size:12px;" ><b>'.$mon.number_format($value['total_saldo'],2).'</b></td>
+                <td align="center" style="font-size:11px;" >'.$fechacierre.'</td>
             </tr>';
-         
-          $fechacierre = ($value['fecha_cierre'] == '')?'- Aperturado -':$value['fecha_cierre'];
-          $estado = ($value['fecha_cierre'] == '')?'Estado':'Fecha Cierre';
-          $html .=    '<tr><td align="center" ><b>'.$estado.'</b></td><td align="center" ><b>'.$fechacierre.'</b></td><td colspan="4"></td>'
-                  . '</tr>';
          }
          
-         $html .=  '<tr><td colspan="6"></td></tr><tr>'
+         $html .=  '<tr><td colspan="7"></td></tr><tr>'
                  . '<td colspan="2"><b>Totales</b></td>'
                  . '<td align="right" ><b>'.$mon.number_format($sumInicial,2).'</b></td>'
                  . '<td align="right" ><b>'.$mon.number_format($sumIngresos,2).'</b></td>'
                  . '<td align="right" ><b>'.$mon.number_format($sumEgresos,2).'</b></td>'
                  . '<td align="right" ><b>'.$mon.number_format($sumSaldo,2).'</b></td>'
+                 . '<td></td>'
                   . '</tr>';
          $html .=   '</table>';        
         

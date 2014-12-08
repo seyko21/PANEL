@@ -27,6 +27,7 @@ class generarCotizacionController extends Controller{
        $exportarpdf   = Session::getPermiso('VCOTIEP');
        $exportarexcel = Session::getPermiso('VCOTIEX');
        $enviaremail   = Session::getPermiso('VCOTIEE');
+       $generar   = Session::getPermiso('VCOTIGN');
        
        $sEcho          =   $this->post('sEcho');
         
@@ -53,14 +54,18 @@ class generarCotizacionController extends Controller{
                     case 'A':
                         $chk = '<input id=\"c_'.(++$key).'\" type=\"checkbox\" name=\"'.VCOTI.'chk_delete[]\" disabled>';       
                         $estado = '<span class=\"label label-danger\">'.SEGPA_9.'</span>';
-                        break;                 
+                        break;        
+                    case 'P':
+                        $chk = '<input id=\"c_'.(++$key).'\" type=\"checkbox\" name=\"'.VCOTI.'chk_delete[]\" disabled>';       
+                        $estado = '<span class=\"label label-info\">'.SEGCO_6.'</span>';
+                        break; 
                 }
                 
                 $idPersona = Aes::en($aRow['id_persona']);
                 $nombre = '<a href=\"javascript:;\" onclick=\"persona.getDatosPersonales(\''.$idPersona.'\');\">'.$aRow['nombre_descripcion'].'</a>';
-                                               
+                $codVenta = $aRow['codigo_venta'];
                 /*datos de manera manual*/
-                $sOutput .= '["'.$chk.'","'.$aRow['codigo'].'","'.$nombre.'","'.  Functions::cambiaf_a_normal($aRow['fecha']).'","'.$aRow['moneda'].'","'.number_format($aRow['monto_total'],2).'","'.$estado.'", ';
+                $sOutput .= '["'.$chk.'","'.$aRow['codigo'].'","'.$nombre.'","'.  Functions::cambiaf_a_normal($aRow['fecha']).'","'.$aRow['moneda'].'","'.number_format($aRow['monto_total'],2).'","'.$codVenta.'","'.$estado.'", ';
                 
                 /*
                  * configurando botones (add/edit/delete etc)
@@ -79,12 +84,16 @@ class generarCotizacionController extends Controller{
                     $sOutput .= '    <i class=\"'.$exportarexcel['icono'].'\"></i>';
                     $sOutput .= '</button>';
                 }
-                if($enviaremail['permiso'] && $aRow['estado'] != 'A'){
+                if($enviaremail['permiso'] && $aRow['estado'] == 'E'){
                     $sOutput .= '<button type=\"button\" class=\"'.$enviaremail['theme'].'\" title=\"'.$enviaremail['accion'].'\" onclick=\"vGenerarCotizacion.postEmail(this,\''.$encryptReg.'\', \''.$aRow['codigo'].'\')\">';
                     $sOutput .= '    <i class=\"'.$enviaremail['icono'].'\"></i>';
                     $sOutput .= '</button>';
                 }
-  
+                if($generar['permiso'] && $aRow['estado'] == 'E'){
+                    $sOutput .= '<button type=\"button\" class=\"'.$generar['theme'].'\" title=\"'.$generar['accion'].'\" onclick=\"generarVenta.getFormEditarGenerarVenta(this,\''.$encryptReg.'\')\">';
+                    $sOutput .= '    <i class=\"'.$generar['icono'].'\"></i>';
+                    $sOutput .= '</button>';
+                }
                 
                 $sOutput .= ' </div>" ';
 

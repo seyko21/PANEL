@@ -6,30 +6,32 @@ $buscar = Session::getPermiso('VGEVEBS');
 $nuevo = Session::getPermiso('VRECLNEW');
 
 echo Functions::widgetOpen(array(
-    'id' => VGEVE.'_EDIT',
+    'id' => VGEVE.'_COTIZACION',
     'title' => VGEVE_3,
     'padding' => true,
     'wizard' => true
 ));
 
-$datac = Obj::run()->generarVentaController->getFindVenta();
+$datac = Obj::run()->generarVentaController->getFindCotizacion();
 
-$datad = Obj::run()->generarVentaController->getFindVentaD();
+$datad = Obj::run()->generarVentaController->getFindCotizacionD();
+$dataCodigo = generarVentaController::getCodigo();
+$codigo = $dataCodigo['cod'];
 
 ?>
 <div class="row">
-    <form id="<?php echo VGEVE; ?>formNewGenerarVenta" name="<?php echo VGEVE; ?>formNewGenerarVenta" novalidate="novalidate">
+    <form id="<?php echo VGEVE; ?>formNewGenerarVenta2" name="<?php echo VGEVE; ?>formNewGenerarVenta2" novalidate="novalidate">
         <div id="<?php echo VGEVE; ?>bootstrap-wizard-1" class="col-sm-12">
             <div class="form-bootstrapWizard">
                 <ul class="bootstrapWizard form-wizard">
                    <li class="active" data-target="#step1">
-                        <a href="#<?php echo VGEVE; ?>tab1" data-toggle="tab"> <span class="step">1</span> <span class="title"><?php echo VGEVETAB1?></span> </a>
+                        <a href="#<?php echo VGEVE; ?>v2tab1" data-toggle="tab"> <span class="step">1</span> <span class="title"><?php echo VGEVETAB1?></span> </a>
                     </li>
                     <li data-target="#step2">
-                        <a href="#<?php echo VGEVE; ?>tab2" data-toggle="tab"> <span class="step">2</span> <span class="title"><?php echo VGEVETAB2?></span> </a>
+                        <a href="#<?php echo VGEVE; ?>v2tab2" data-toggle="tab"> <span class="step">2</span> <span class="title"><?php echo VGEVETAB2?></span> </a>
                     </li>
                     <li data-target="#step3">
-                        <a href="#<?php echo VGEVE; ?>tab3" data-toggle="tab"> <span class="step">3</span> <span class="title"><?php echo VGEVETAB3?></span> </a>
+                        <a href="#<?php echo VGEVE; ?>v2tab3" data-toggle="tab"> <span class="step">3</span> <span class="title"><?php echo VGEVETAB3?></span> </a>
                     </li>
                 </ul>
                 <div class="clearfix"></div>
@@ -40,7 +42,7 @@ $datad = Obj::run()->generarVentaController->getFindVentaD();
                 
                 
                 <!--INICIO TAB1-->
-                 <div class="tab-pane active form-horizontal" id="<?php echo VGEVE; ?>tab1">
+                 <div class="tab-pane active form-horizontal" id="<?php echo VGEVE; ?>v2tab1">
                     <br><br>
                     <h3><strong><?php echo LABEL_GNC19; ?></strong> - <?php echo VGEVETAB1; ?></h3>
   
@@ -67,7 +69,7 @@ $datad = Obj::run()->generarVentaController->getFindVentaD();
                        <label class="control-label col-md-2" for="prepend"><?php echo VGEVE_7; ?></label>
                        <div class="col-md-2">
                            <div class="input">
-                               <input class="form-control"  type="text" id="<?php echo VGEVE; ?>txt_codImpr" name="<?php echo VGEVE; ?>txt_codImpr" maxlength="7" value="<?php echo $datac['codigo_impresion'];?>"  >
+                               <input class="form-control"  type="text" id="<?php echo VGEVE; ?>txt_codImpr" name="<?php echo VGEVE; ?>txt_codImpr" maxlength="7" value="<?php echo $codigo;?>"  >
                            </div>
                        </div>
                     </div>
@@ -89,7 +91,7 @@ $datad = Obj::run()->generarVentaController->getFindVentaD();
                                         ),
                                         'etiqueta'=>'descripcion',
                                         'value'=>'id',
-                                        'defaultEtiqueta'=>$datac['tipo_doc'],
+                                        'defaultEtiqueta'=>"R",
                                         'txtSelect'=>false
                                     ));
                                 ?><i></i>
@@ -130,17 +132,13 @@ $datad = Obj::run()->generarVentaController->getFindVentaD();
                 <!--FIN TAB1-->
                 
                 <!--INICIO TAB2-->
-                <div class="tab-pane" id="<?php echo VGEVE; ?>tab2">
+                <div class="tab-pane" id="<?php echo VGEVE; ?>v2tab2">
                    <br>
                     <h3><strong><?php echo LABEL_GNC21; ?></strong> - <?php echo VGEVETAB2; ?></h3>
 
                     <div class="form-group">
                         <label class="control-label col-md-2" for="prepend">
-                            <?php if($agregar['permiso']):?>
-                            <button id="<?php echo VGEVE; ?>btnGadd" type="button" class="btn txt-color-white bg-color-blueDark" onclick="generarVenta.getFormBuscarProductos(this,'<?php echo VGEVE; ?>',$('#<?php echo VGEVE; ?>lst_moneda').val() );">
-                                <i class="fa fa-plus-circle"></i> <?php echo BTN_ADD; ?>
-                            </button>
-                            <?php endif; ?>
+                           
                         </label>
                     </div>
                     <br><br>
@@ -210,7 +208,7 @@ $datad = Obj::run()->generarVentaController->getFindVentaD();
                 <!--FIN TAB2-->
                 
                 <!--INICIO TAB3-->
-                <div class="tab-pane form-horizontal" id="<?php echo VGEVE; ?>tab3">
+                <div class="tab-pane form-horizontal" id="<?php echo VGEVE; ?>v2tab3">
                     <br>
                     <h3><strong><?php echo LABEL_GNC23; ?></strong><?php echo LABEL_GNC24; ?></h3>
                     <div class="form-group">
@@ -240,7 +238,7 @@ $datad = Obj::run()->generarVentaController->getFindVentaD();
                     </div>
                     
                     <h4 class="text-center">
-                        <button id="<?php echo VGEVE; ?>btnGrprod" type="button" class="btn btn-success btn-large" onclick="generarVenta.postNewGenerarVenta(3);">    
+                        <button id="<?php echo VGEVE; ?>btnGrVenta2" type="button" class="btn btn-success btn-large" onclick="generarVenta.postNewGenerarVenta2();">    
                             <i class="fa fa-plus-circle fa-lg"></i>
                             <?php echo VGEVE_23; ?>
                         </button>
@@ -280,9 +278,9 @@ $datad = Obj::run()->generarVentaController->getFindVentaD();
      /*   simpleScript.setEvent.date({
             element: '#<?php echo VGEVE; ?>txt_fecha' 
         });*/
-        $("#<?php echo VGEVE; ?>formNewGenerarVenta select").addClass('form-control');
+        $("#<?php echo VGEVE; ?>formNewGenerarVenta2 select").addClass('form-control');
         
-            var $validator = $("#<?php echo VGEVE; ?>formNewGenerarVenta").validate({
+            var $validator = $("#<?php echo VGEVE; ?>formNewGenerarVenta2").validate({
                 rules: {
                     <?php echo VGEVE; ?>txt_cliente: {
                         required: true
@@ -331,7 +329,7 @@ $datad = Obj::run()->generarVentaController->getFindVentaD();
                     
                 },
                 onNext: function(tab, navigation, index) {
-                    var $valid = $("#<?php echo VGEVE; ?>formNewGenerarVenta").valid();
+                    var $valid = $("#<?php echo VGEVE; ?>formNewGenerarVenta2").valid();
                     if(index === 1){
                         if (!$valid) {
                             $validator.focusInvalid();
@@ -346,11 +344,11 @@ $datad = Obj::run()->generarVentaController->getFindVentaD();
                     if(index === 2){
                         var pr = 0;
                         var r = simpleScript.validaTable({
-                            id: '#'+diccionario.tabs.VGEVE+'gridProductos',
+                            id: '#<?php echo VGEVE; ?>formNewGenerarVenta2 #'+diccionario.tabs.VGEVE+'gridProductos',
                             msn: mensajes.MSG_10                                                       
                         });
                         //Validar que precios no sean 0                      
-                          $('#'+diccionario.tabs.VGEVE+'gridProductos tbody tr').each(function (index) {
+                          $('#<?php echo VGEVE; ?>formNewGenerarVenta2 #'+diccionario.tabs.VGEVE+'gridProductos tbody tr').each(function (index) {
                                 var precio;
                                 $(this).children("td").each(function (index2) {
                                   switch (index2) {
@@ -377,11 +375,11 @@ $datad = Obj::run()->generarVentaController->getFindVentaD();
                             $('#<?php echo VGEVE; ?>bootstrap-wizard-1').find('.form-wizard').children('li').eq(index - 1).find('.step')
                                     .html('<i class="fa fa-check"></i>');
                             //Poner valor total:
-                            totalPagado = $('#'+diccionario.tabs.VGEVE+'txt_total').val();
-                            $('#'+diccionario.tabs.VGEVE+'txt_totalPago').val(parseFloat(totalPagado).toFixed(2));
+                            totalPagado = $('#<?php echo VGEVE; ?>formNewGenerarVenta2 #'+diccionario.tabs.VGEVE+'txt_total').val();
+                            $('#<?php echo VGEVE; ?>formNewGenerarVenta2 #'+diccionario.tabs.VGEVE+'txt_totalPago').val(parseFloat(totalPagado).toFixed(2));
                             if (totalPagado > 0){
                                 pago = parseFloat(totalPagado) * 0.5;
-                                $('#'+diccionario.tabs.VGEVE+'txt_pago').val(parseFloat(pago).toFixed(2));
+                                $('#<?php echo VGEVE; ?>formNewGenerarVenta2 #'+diccionario.tabs.VGEVE+'txt_pago').val(parseFloat(pago).toFixed(2));
                             }
                         }
                     }
@@ -404,11 +402,11 @@ $datad = Obj::run()->generarVentaController->getFindVentaD();
             });
             /*para hacer evento invisible*/
             simpleScript.removeAttr.click({
-                container: '#<?php echo VGEVE; ?>formNewGenerarVenta',
+                container: '#<?php echo VGEVE; ?>formNewGenerarVenta2',
                 typeElement: 'button'
             });
             simpleScript.removeAttr.keyup({
-                container: '#<?php echo VGEVE; ?>formNewGenerarVenta',
+                container: '#<?php echo VGEVE; ?>formNewGenerarVenta2',
                 typeElement: 'input'
             });
             

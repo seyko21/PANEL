@@ -101,7 +101,7 @@ class reporteVentaDiaController extends Controller{
                      
         $html .='<table width="100%" border="0" cellpadding="5" cellspacing="3">
           <tr bgcolor="#901D78">
-            <th colspan="7"><div align="center"><h2 style="color:#FFF;">REPORTE DE CAJA POR DIA</h2></div></th>
+            <th colspan="8"><div align="center"><h2 style="color:#FFF;">REPORTE DE CAJA POR DIA</h2></div></th>
           </tr>
           <tr>
             <td width="16%"><strong>Fecha:</strong></td>
@@ -119,6 +119,7 @@ class reporteVentaDiaController extends Controller{
                 <th style="width:11%;" >Ingresos</th>                                
                 <th style="width:11%;" >Egresos</th>
                 <th style="width:11%;" >Saldo</th>
+                <th style="width:13%;" >Cierre</th> 
             </tr>';
          foreach ($dataR as $value) {  
              if( $value['id_moneda'] == 'SO'){
@@ -126,7 +127,7 @@ class reporteVentaDiaController extends Controller{
                 $sumIngresos += $value['total_ingresos'];
                 $sumEgresos += $value['total_egresos'];
                 $sumSaldo += $value['total_saldo'];
-
+                $fechacierre = ($value['fecha_cierre'] == '')?'- Aperturado -':$value['fecha_cierre'];
               $html .=    '<tr>                
                     <td align="center" style="font-size:12px;" >'.$value['id_caja'].'</td>  
                     <td align="center" style="font-size:12px;" >'.$value['fecha_creacion'].'</td>          
@@ -135,28 +136,24 @@ class reporteVentaDiaController extends Controller{
                     <td align="right" style="font-size:12px;" >'.$mon.number_format($value['total_ingresos'],2).'</td>
                     <td align="right" style="font-size:12px;" >'.$mon.number_format($value['total_egresos'],2).'</td>
                     <td align="right" style="font-size:12px;" ><b>'.$mon.number_format($value['total_saldo'],2).'</b></td>
-                </tr>';
-
-              $fechacierre = ($value['fecha_cierre'] == '')?'- Aperturado -':$value['fecha_cierre'];
-              $estado = ($value['fecha_cierre'] == '')?'Estado':'Fecha Cierre';
-              $html .=    '<tr><td align="center" ><b>'.$estado.'</b></td><td align="center" ><b>'.$fechacierre.'</b></td><td colspan="5"></td>'
-                      . '</tr>';             
+                    <td align="center" style="font-size:12px;" >'.$fechacierre.'</td>
+                </tr>';           
              }
          }         
-         $html .=  '<tr><td colspan="7"></td></tr><tr>'
+         $html .=  '<tr><td colspan="8"></td></tr><tr>'
                  . '<td colspan="3"><b>Totales en Soles</b></td>'
                  . '<td align="right" ><b>'.number_format($sumInicial,2).'</b></td>'
                  . '<td align="right" ><b>'.number_format($sumIngresos,2).'</b></td>'
                  . '<td align="right" ><b>'.number_format($sumEgresos,2).'</b></td>'
                  . '<td align="right" ><b>'.number_format($sumSaldo,2).'</b></td>'
-                  . '</tr>';        
+                  . '<td></td></tr>';        
        
          // Reiniciamos Valores
         $sumInicial = 0;
         $sumIngresos = 0;
         $sumEgresos = 0;
         $sumSaldo = 0;           
-        $html .=  '<tr><td colspan="7"></td></tr>';  
+        $html .=  '<tr><td colspan="8"></td></tr>';  
         
         foreach ($dataR as $value) {  
              if( $value['id_moneda'] == 'DO'){
@@ -164,7 +161,7 @@ class reporteVentaDiaController extends Controller{
                 $sumIngresos += $value['total_ingresos'];
                 $sumEgresos += $value['total_egresos'];
                 $sumSaldo += $value['total_saldo'];
-
+                $fechacierre = ($value['fecha_cierre'] == '')?'- Aperturado -':$value['fecha_cierre'];
               $html .=    '<tr>                
                     <td align="center" style="font-size:12px;" >'.$value['id_caja'].'</td>  
                     <td align="center" style="font-size:12px;" >'.$value['fecha_creacion'].'</td>          
@@ -173,21 +170,17 @@ class reporteVentaDiaController extends Controller{
                     <td align="right" style="font-size:12px;" >'.number_format($value['total_ingresos'],2).'</td>
                     <td align="right" style="font-size:12px;" >'.number_format($value['total_egresos'],2).'</td>
                     <td align="right" style="font-size:12px;" ><b>'.number_format($value['total_saldo'],2).'</b></td>
-                </tr>';
-
-              $fechacierre = ($value['fecha_cierre'] == '')?'- Aperturado -':$value['fecha_cierre'];
-              $estado = ($value['fecha_cierre'] == '')?'Estado':'Fecha Cierre';
-              $html .=    '<tr><td align="center" ><b>'.$estado.'</b></td><td align="center" ><b>'.$fechacierre.'</b></td><td colspan="5"></td>'
-                      . '</tr>';             
+                    <td align="center" style="font-size:12px;" >'.$fechacierre.'</td>
+                </tr>';              
              }
          }         
-         $html .=  '<tr><td colspan="7"></td></tr><tr>'
+         $html .=  '<tr><td colspan="8"></td></tr><tr>'
                  . '<td colspan="3"><b>Totales en Dolares</b></td>'
                  . '<td align="right" ><b>'.$mon.number_format($sumInicial,2).'</b></td>'
                  . '<td align="right" ><b>'.$mon.number_format($sumIngresos,2).'</b></td>'
                  . '<td align="right" ><b>'.$mon.number_format($sumEgresos,2).'</b></td>'
                  . '<td align="right" ><b>'.$mon.number_format($sumSaldo,2).'</b></td>'
-                  . '</tr>';
+                  . '<td></td></tr>';
          $html .=   '</table>';
          
          

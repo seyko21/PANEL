@@ -98,7 +98,11 @@ var cajaCierre_ = function(){
                         if(!isNaN(data.result) && parseInt(data.result) === 1){
                             simpleScript.notify.ok({
                                 content: mensajes.MSG_20,
-                                callback: function(){               
+                                callback: function(){          
+                                    if($('#'+diccionario.tabs.VGEVE+'_CONTAINER').length > 0)
+                                        simpleScript.closeTab(diccionario.tabs.VGEVE);
+                                    if($('#'+diccionario.tabs.VGEVE+'cotizacion_CONTAINER').length > 0)
+                                        simpleScript.closeTab(diccionario.tabs.VGEVE+'cotizacion');
                                     if($('#'+diccionario.tabs.VGEVE+'_CONTAINER').length > 0)
                                         simpleScript.closeTab(diccionario.tabs.VGEVE);
                                     if($('#'+diccionario.tabs.VGEVE+'new_CONTAINER').length > 0)
@@ -131,7 +135,11 @@ var cajaCierre_ = function(){
                         if(!isNaN(data.result) && parseInt(data.result) === 1){
                             simpleScript.notify.ok({
                                 content: mensajes.MSG_20,
-                                callback: function(){               
+                                callback: function(){      
+                                    if($('#'+diccionario.tabs.VCOTI+'_CONTAINER').length > 0)
+                                        simpleScript.closeTab(diccionario.tabs.VCOTI);
+                                    if($('#'+diccionario.tabs.VCOTI+'edit_CONTAINER').length > 0)
+                                        simpleScript.closeTab(diccionario.tabs.VCOTI+'edit');                                    
                                     if($('#'+diccionario.tabs.VGEVE+'_CONTAINER').length > 0)
                                         simpleScript.closeTab(diccionario.tabs.VGEVE);
                                     if($('#'+diccionario.tabs.VGEVE+'new_CONTAINER').length > 0)

@@ -69,7 +69,7 @@ class generarCotizacionModel extends Model{
     }
     
     public function getGridGenerarCotizacion(){
-        $aColumns       =   array( 'chk','codigo','nombre_descripcion','fecha','moneda','monto_total', 'estado'); //para la ordenacion y pintado en html
+        $aColumns       =   array( 'chk','codigo','nombre_descripcion','fecha','moneda','monto_total','codigo_venta','estado'); //para la ordenacion y pintado en html
         /*
 	 * Ordenando, se verifica por que columna se ordenara
 	 */

@@ -11,6 +11,7 @@ class generarVentaModel extends Model{
 
     private $_flag;
     private $_idVenta;
+    private $_idCotizacion;
     public $_cod;    
     private $_term, $_xSearch;
     private $_idMoneda;
@@ -45,6 +46,8 @@ class generarVentaModel extends Model{
     private function _set(){
         $this->_flag                    = Formulario::getParam("_flag");
         $this->_idVenta   = Aes::de(Formulario::getParam("_idVenta"));    /*se decifra*/
+        $this->_idCotizacion   = Aes::de(Formulario::getParam("_idCotizacion"));    /*se decifra*/
+        
         $this->_usuario                 = Session::get("sys_idUsuario");
         
         $this->_fecha     = Functions::cambiaf_a_mysql(Formulario::getParam(VGEVE."txt_fecha"));
@@ -102,10 +105,6 @@ class generarVentaModel extends Model{
     }
     
     public function newGenerarVenta(){
-        if($this->_flag == 3){//cuando se clona una cotizacion, hay q anularla
-            $this->anularUnaVenta();
-            $this->_flag = 1; //retorna a 1 para ael SP
-        }
                 
         $query = "CALL sp_ventaGenerarVentaMantenimiento("
                 . ":flag,"
@@ -123,11 +122,12 @@ class generarVentaModel extends Model{
                 . ":precio,"
                 . ":pago,"
                 . ":usuario,"
-                . ":idSucursal"
+                . ":idSucursal,"
+                . ":idCotizacion"
             . "); ";
                
         $parms = array(
-            ':flag'=> $this->_flag,
+            ':flag'=> 1,
             ':idVenta'=> $this->_idVenta,
             ':codigoImpr'=>$this->_codImpr,
             ':fecha'=>$this->_fecha,
@@ -142,7 +142,8 @@ class generarVentaModel extends Model{
             ':precio' => '',
             ':pago'=>$this->_montoAsignado,
             ':usuario'=> $this->_usuario,
-            ':idSucursal'=> Session::get('sys_idSucursal')   
+            ':idSucursal'=> Session::get('sys_idSucursal'),
+            ':idCotizacion'=> $this->_idCotizacion
         );
         $data = $this->queryOne($query,$parms);
                 
@@ -169,7 +170,8 @@ class generarVentaModel extends Model{
                     ':precio'=> Functions::deleteComa($this->_precio[$key]),
                     ':pago'=>'',
                     ':usuario'=> $this->_usuario,
-                    ':idSucursal'=> Session::get('sys_idSucursal') 
+                    ':idSucursal'=> Session::get('sys_idSucursal'),
+                    ':idCotizacion'=> $this->_idCotizacion
                 );
                 $this->execute($query,$parmsx);
               
@@ -316,6 +318,63 @@ class generarVentaModel extends Model{
         return $data;
     }    
           
+    public function getFindCotizacion(){
+        $query = "
+        SELECT
+            d.`id_cotizacion`,
+            d.`periodo`,
+            d.`codigo`,
+            DATE_FORMAT(d.`fecha`,'%d/%m/%Y')AS fecha,
+            d.`id_persona`,
+            (select pp.nombrecompleto from mae_persona pp where pp.id_persona = d.id_persona) as cliente,
+            (select concat(`sigla`,' - ',`descripcion`) from pub_moneda mo where mo.id_moneda = d.`moneda`) as descripcion_moneda,
+            (select `sigla` from pub_moneda mo where mo.id_moneda = d.`moneda`) as moneda,   
+            d.`moneda` as id_moneda,
+            d.`observacion`,
+            d.estado,
+            d.monto_importe,
+            d.porcentaje_igv,
+            (SELECT usuario FROM mae_usuario WHERE id_usuario= d.`usuario_creacion`)AS mail_user,
+            (SELECT pp.nombrecompleto FROM mae_usuario uu
+			INNER JOIN mae_persona pp ON pp.persona = uu.persona
+                WHERE id_usuario= d.`usuario_creacion`)AS vendedor,
+            (SELECT pp.telefono FROM mae_usuario uu
+			INNER JOIN mae_persona pp ON pp.persona = uu.persona
+                WHERE id_usuario= d.`usuario_creacion`)AS telefono_vendedor,
+             p.`nombrecompleto`,
+             p.numerodocumento,
+             p.`email`
+          FROM ven_cotizacion d
+            INNER JOIN mae_persona p ON p.`id_persona` = d.`id_persona`
+          WHERE d.id_cotizacion = :idCotizacion; ";
+        
+        $parms = array(
+            ':idCotizacion'=>  $this->_idCotizacion
+        );
+        $data = $this->queryOne($query,$parms);      
+        
+        return $data;
+    }    
+    
+    public function getFindCotizacionD(){
+        $query = "
+        SELECT
+            dd.`cantidad_1`, dd.`cantidad_2`, dd.`cantidad_real`,
+            dd.`id_detalle`, dd.`id_cotizacion`, dd.`id_producto`, dd.`importe`, dd.`precio`,
+            p.`descripcion`, u.`sigla`, u.`cantidad_multiple`,
+            dd.incligv, dd.importe_afectado, dd.impuesto, dd.total_impuesto, dd.precio_final,
+            (SELECT CAST(valor AS DECIMAL(10,2)) FROM `pub_parametro` WHERE alias = 'IGV') AS igv
+        FROM `ven_cotizaciond` dd
+                INNER JOIN `ven_producto` p ON p.`id_producto` = dd.`id_producto`
+                INNER JOIN `ven_unidadmedida` u ON u.`id_unidadmedida` = p.`id_unidadmedida`
+        WHERE dd.id_cotizacion =  :idCotizacion; ";
+        
+        $parms = array(
+            ':idCotizacion'=>  $this->_idCotizacion
+        );
+        $data = $this->queryAll($query,$parms);
+        return $data;
+    }   
     
 }
 

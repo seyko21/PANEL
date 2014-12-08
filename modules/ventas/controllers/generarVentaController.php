@@ -79,11 +79,6 @@ class generarVentaController extends Controller{
                  */
                 $sOutput .= '"<div class=\"btn-group\">';                      
                                        
-                if($clonar['permiso'] && $aRow['estado'] == 'E'){
-                    $sOutput .= '<button type=\"button\" class=\"'.$clonar['theme'].'\" title=\"'.$clonar['accion'].'\" onclick=\"generarVenta.getFormEditarGenerarVenta(this,\''.$encryptReg.'\')\">';
-                    $sOutput .= '    <i class=\"'.$clonar['icono'].'\"></i>';
-                    $sOutput .= '</button>';
-                }
                 if($exportarpdf['permiso'] == 1){
                     $sOutput .= '<button type=\"button\" class=\"'.$exportarpdf['theme'].'\" title=\"'.$exportarpdf['accion'].'\" onclick=\"generarVenta.postPDF(this,\''.$encryptReg.'\',\''.$aRow['codigo_impresion'].'\')\">';
                     $sOutput .= '    <i class=\"'.$exportarpdf['icono'].'\"></i>';
@@ -346,6 +341,17 @@ class generarVentaController extends Controller{
         
         return $data;
     }
+    
+    public function getFindCotizacion(){
+        $data = Obj::run()->generarVentaModel->getFindCotizacion();
+        
+        return $data;
+    }        
+    public function getFindCotizacionD(){
+        $data = Obj::run()->generarVentaModel->getFindCotizacionD();
+        
+        return $data;
+    }    
     
     public static function getCodigo(){ 
         $data = Obj::run()->generarVentaModel->getGenerarCodigo();        

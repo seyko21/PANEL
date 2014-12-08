@@ -11,6 +11,7 @@ var generarVenta_ = function(){
     var _private = {};
     
     _private.idVenta = 0;
+    _private.idCotizacion = 0;
     
     _private.tab = '';
     
@@ -124,12 +125,12 @@ var generarVenta_ = function(){
     };
     
     this.publico.getFormEditarGenerarVenta = function(btn,id){
-        _private.idVenta = id;
+        _private.idCotizacion = id;
         
         generarVentaScript.resetArrayProducto();
         simpleScript.addTab({
-            id : diccionario.tabs.VGEVE+'edit',
-            label: 'Clonar Venta',
+            id : diccionario.tabs.VGEVE+'cotizacion',
+            label: 'Nueva Venta - Cotización',
             fnCallback: function(){
                 generarVenta.getContEditProd();
             }
@@ -140,9 +141,9 @@ var generarVenta_ = function(){
         simpleAjax.send({
             dataType: 'html',
             root: _private.config.modulo+'getFormEditGenerarVenta',
-            data: '&_idVenta='+_private.idVenta,
+            data: '&_idCotizacion='+_private.idCotizacion,
             fnCallback: function(data){
-                $('#'+diccionario.tabs.VGEVE+'edit_CONTAINER').html(data);
+                $('#'+diccionario.tabs.VGEVE+'cotizacion_CONTAINER').html(data);
             }
         });
     };           
@@ -193,8 +194,8 @@ var generarVenta_ = function(){
     };    
     
     
-    this.publico.postNewGenerarVenta = function(f){
-        var acuenta = $('#'+diccionario.tabs.VGEVE+'txt_pago').val();
+    this.publico.postNewGenerarVenta = function(){
+        var acuenta = $('#'+diccionario.tabs.VGEVE+'formNewGenerarVenta #'+diccionario.tabs.VGEVE+'txt_pago').val();
         if(totalPagado <= 0){
              simpleScript.notify.warning({
                         content: 'El total a pagar no debe ser Cero'
@@ -213,12 +214,10 @@ var generarVenta_ = function(){
         }
                          
         simpleAjax.send({
-            flag: f,
             element: "#"+diccionario.tabs.VGEVE+"btnGrVenta",
             root: _private.config.modulo + "postNewGenerarVenta",
             form: "#"+diccionario.tabs.VGEVE+"formNewGenerarVenta",
             data: '&_idVenta='+_private.idVenta,
-            clear: true,
             fnCallback: function(data) {
                 if(!isNaN(data.result) && parseInt(data.result) === 1){
                     simpleScript.notify.ok({
@@ -245,6 +244,56 @@ var generarVenta_ = function(){
         });
     };
     
+    this.publico.postNewGenerarVenta2 = function(){
+        var acuenta = $('#'+diccionario.tabs.VGEVE+'formNewGenerarVenta2 #'+diccionario.tabs.VGEVE+'txt_pago').val();
+        if(totalPagado <= 0){
+             simpleScript.notify.warning({
+                        content: 'El total a pagar no debe ser Cero'
+             });
+             return false;
+         }else if(parseFloat(totalPagado) < acuenta){
+            simpleScript.notify.warning({
+                        content: 'El pago inicial sobrepasa el pago Total.'
+             });
+             return false;          
+        }else if(acuenta < pago ){
+            simpleScript.notify.warning({
+                        content: 'El pago inicial debe ser mayor al 50% ('+pago.toFixed(2)+')'
+             });
+             return false;  
+        }
+                         
+        simpleAjax.send({
+            element: "#"+diccionario.tabs.VGEVE+"btnGrVenta2",
+            root: _private.config.modulo + "postNewGenerarVenta",
+            form: "#"+diccionario.tabs.VGEVE+"formNewGenerarVenta2",
+            data: '&_idCotizacion='+_private.idCotizacion,
+            clear: true,
+            fnCallback: function(data){
+                if(!isNaN(data.result) && parseInt(data.result) === 1){
+                    simpleScript.notify.ok({
+                        content: mensajes.MSG_3,
+                        callback: function(){
+                            simpleScript.closeTab(diccionario.tabs.VGEVE+'cotizacion');
+                             simpleScript.reloadGrid("#"+diccionario.tabs.VCOTI+"gridVGenerarCotizacion");
+                            _private.idCotizacion = 0;
+                        }
+                    });
+                }else if(!isNaN(data.result) && parseInt(data.result) === 2){
+                    simpleScript.notify.warning({
+                        content: "No existe CAJA aperturada. Debe Aperturarla para generar Ventas.",
+                         callback: function(){
+                           simpleScript.closeTab(diccionario.tabs.VGEVE+'cotizacion');
+                            simpleScript.reloadGrid("#"+diccionario.tabs.VCOTI+"gridVGenerarCotizacion");
+                            _private.idCotizacion = 0;
+                        }
+                    });
+                }
+            }
+        });
+    };    
+    
+
     this.publico.postPDF = function(btn,id,cod){
         simpleAjax.send({
             element: btn,
