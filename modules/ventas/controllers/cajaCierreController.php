@@ -77,6 +77,11 @@ class cajaCierreController extends Controller{
         echo json_encode($data);
     }    
     
+     public function postGenerarReajuste(){
+        $data = Obj::run()->cajaCierreModel->postGenerarReajuste();
+        echo json_encode($data);
+    }      
+    
 }
 
 ?>

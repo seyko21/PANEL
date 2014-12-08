@@ -88,6 +88,18 @@ class cajaCierreModel extends Model{
         return $data;
     }
 
+    public function postGenerarReajuste(){
+        $query = "call sp_ventaReajustarCaja(:flag,:idSucursal,:usuario); ";
+        $parms = array(
+            ':flag' => 1,
+            ":idSucursal" =>Session::get('sys_idSucursal'),           
+            ':usuario' => $this->_usuario  
+        );
+       $data = $this->queryOne($query,$parms);                
+       return $data;
+    }    
+    
+    
 }
 
 ?>

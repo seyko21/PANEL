@@ -45,7 +45,7 @@ class reporteVentaFechaModel extends Model{
     
     /*data para el grid: ReporteVentaFecha*/
     public function getReporteVentaFecha(){
-        $aColumns       =   array("","t.fecha","t.numero_doc","t.moneda","t.monto","t.egresos","9","t.saldo" ); //para la ordenacion y pintado en html
+        $aColumns       =   array("","t.fecha","t.numero_doc","t.moneda","t.inicial","t.monto","t.egresos","9" ); //para la ordenacion y pintado en html
         /*
 	 * Ordenando, se verifica por que columna se ordenara
 	 */
@@ -153,7 +153,7 @@ class reporteVentaFechaModel extends Model{
     }    
     
     public function getIndexVentaFecha(){
-        $aColumns       =   array("t.fecha","t.numero_doc","t.moneda","t.monto","t.egresos","9","t.saldo" ); //para la ordenacion y pintado en html
+        $aColumns       =   array("t.fecha","t.numero_doc","t.moneda","t.inicial","t.monto","t.egresos","9" ); //para la ordenacion y pintado en html
         /*
 	 * Ordenando, se verifica por que columna se ordenara
 	 */
@@ -230,6 +230,33 @@ class reporteVentaFechaModel extends Model{
         
         return $data;
     }           
+    
+    public function getListadoResumen(){
+        $query = "
+        SELECT
+            `id_caja`,
+            `id_sucursal`,
+            `moneda`,
+            `fecha_caja`,
+            `monto_inicial`,
+            `total_ingresos`,
+            `total_egresos`,
+            `total_saldo`,
+            `estado`,              
+            DATE_FORMAT(`fecha_cierre`,'%d/%m/%Y %h:%i %p') as fecha_cierre,
+            DATE_FORMAT(`fecha_creacion`,'%d/%m/%Y %h:%i %p') as fecha_creacion
+          FROM `ven_movimientos_caja`
+          where fecha_caja = :fecha and moneda = :moneda
+          order by 1  ";
+        
+        $parms = array(
+            ':fecha'=>  $this->_fecha,
+            ':moneda'=>  $this->_moneda     
+        );
+        $data = $this->queryAll($query,$parms);      
+        
+        return $data;
+    }              
     
 }
 

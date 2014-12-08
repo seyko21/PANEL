@@ -8,6 +8,7 @@
 */
 $generar    = Session::getPermiso("CAJACGN");
 $buscar    = Session::getPermiso("CAJACBS");
+$reajustar    = Session::getPermiso("CAJACRPG");
 echo Functions::widgetOpen(array(
         "id"=>CAJAC,
         "title"=>CAJAC_1
@@ -47,9 +48,14 @@ echo Functions::widgetOpen(array(
                 <!-- verificar permisos -->
                 <?php if($generar["permiso"]): ?>
                 <button id="<?php echo CAJAC; ?>btnNewCajaCierre" type="button" onclick="cajaCierre.postGenerarCierre(this);" class="btn txt-color-white bg-color-blueDark">
-                    <i class="<?php echo $generar["icono"]; ?>"></i> <?php echo $generar["accion"]; ?>
+                    <i class="<?php echo $generar["icono"]; ?>"></i> <?php echo $generar["accion"]; ?> Cierre
                 </button>
-                <?php endif; ?>              
+                <?php endif; ?>
+                 <?php if($reajustar["permiso"]): ?>
+                <button id="<?php echo CAJAC; ?>btnNewCajaCierre" type="button" onclick="cajaCierre.postGenerarReajuste(this);" class="btn txt-color-white bg-color-blueDark">
+                    <i class="<?php echo $reajustar["icono"]; ?>"></i> Reajustar Caja
+                </button>
+                <?php endif; ?>    
             </div>
         </div>
 

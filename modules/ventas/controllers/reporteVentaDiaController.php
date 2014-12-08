@@ -65,6 +65,7 @@ class reporteVentaDiaController extends Controller{
     private function getHtml($mpdf){
         $data = Obj::run()->reporteVentaDiaModel->getListadoVenta();
         $dataE = Obj::run()->reporteVentaDiaModel->getListadoEgresos();
+        $dataR = Obj::run()->reporteVentaDiaModel->getListadoResumen();
         
         $totalD = 0;
         $acuentaD = 0;
@@ -79,6 +80,11 @@ class reporteVentaDiaController extends Controller{
         
         $ingresosS = 0;
         $egresosS = 0;
+                
+        $sumInicial = 0;
+        $sumIngresos = 0;
+        $sumEgresos = 0;
+        $sumSaldo = 0;        
         
         $moneda_1 = 'Nuevos soles';
         $moneda_2 = 'Dolares';
@@ -101,8 +107,105 @@ class reporteVentaDiaController extends Controller{
             <td width="16%"><strong>Fecha:</strong></td>
             <td width="26%"><h3>'.$data[0]['fecha'].'</h3></td>                        
           </tr>         
-        </table> 
-        <h2>Ingresos</h2>
+        </table>';
+        
+        $html .= '<h2>Resumen</h2>';
+        $html .= '<table id="td2" border="1" style="border-collapse:collapse">               
+          <tr>
+                <th style="width:5%;" >ID Caja</th>  
+                <th style="width:13%;" >Fecha / Hora</th>  
+                <th style="width:6%;" >Moneda </th>  
+                <th style="width:11%;" >Inicial</th>  
+                <th style="width:11%;" >Ingresos</th>                                
+                <th style="width:11%;" >Egresos</th>
+                <th style="width:11%;" >Saldo</th>
+            </tr>';
+         foreach ($dataR as $value) {  
+             if( $value['id_moneda'] == 'SO'){
+                $sumInicial += $value['monto_inicial'];
+                $sumIngresos += $value['total_ingresos'];
+                $sumEgresos += $value['total_egresos'];
+                $sumSaldo += $value['total_saldo'];
+
+              $html .=    '<tr>                
+                    <td align="center" style="font-size:12px;" >'.$value['id_caja'].'</td>  
+                    <td align="center" style="font-size:12px;" >'.$value['fecha_creacion'].'</td>          
+                    <td align="center" style="font-size:11px;" >'.$value['moneda'].'</td>   
+                    <td align="right" style="font-size:12px;" >'.$mon.number_format($value['monto_inicial'],2).'</td>                
+                    <td align="right" style="font-size:12px;" >'.$mon.number_format($value['total_ingresos'],2).'</td>
+                    <td align="right" style="font-size:12px;" >'.$mon.number_format($value['total_egresos'],2).'</td>
+                    <td align="right" style="font-size:12px;" ><b>'.$mon.number_format($value['total_saldo'],2).'</b></td>
+                </tr>';
+
+              $fechacierre = ($value['fecha_cierre'] == '')?'- Aperturado -':$value['fecha_cierre'];
+              $estado = ($value['fecha_cierre'] == '')?'Estado':'Fecha Cierre';
+              $html .=    '<tr><td align="center" ><b>'.$estado.'</b></td><td align="center" ><b>'.$fechacierre.'</b></td><td colspan="5"></td>'
+                      . '</tr>';             
+             }
+         }         
+         $html .=  '<tr><td colspan="7"></td></tr><tr>'
+                 . '<td colspan="3"><b>Totales en Soles</b></td>'
+                 . '<td align="right" ><b>'.number_format($sumInicial,2).'</b></td>'
+                 . '<td align="right" ><b>'.number_format($sumIngresos,2).'</b></td>'
+                 . '<td align="right" ><b>'.number_format($sumEgresos,2).'</b></td>'
+                 . '<td align="right" ><b>'.number_format($sumSaldo,2).'</b></td>'
+                  . '</tr>';        
+       
+         // Reiniciamos Valores
+        $sumInicial = 0;
+        $sumIngresos = 0;
+        $sumEgresos = 0;
+        $sumSaldo = 0;           
+        $html .=  '<tr><td colspan="7"></td></tr>';  
+        
+        foreach ($dataR as $value) {  
+             if( $value['id_moneda'] == 'DO'){
+                $sumInicial += $value['monto_inicial'];
+                $sumIngresos += $value['total_ingresos'];
+                $sumEgresos += $value['total_egresos'];
+                $sumSaldo += $value['total_saldo'];
+
+              $html .=    '<tr>                
+                    <td align="center" style="font-size:12px;" >'.$value['id_caja'].'</td>  
+                    <td align="center" style="font-size:12px;" >'.$value['fecha_creacion'].'</td>          
+                    <td align="center" style="font-size:11px;" >'.$value['moneda'].'</td>   
+                    <td align="right" style="font-size:12px;" >'.number_format($value['monto_inicial'],2).'</td>                
+                    <td align="right" style="font-size:12px;" >'.number_format($value['total_ingresos'],2).'</td>
+                    <td align="right" style="font-size:12px;" >'.number_format($value['total_egresos'],2).'</td>
+                    <td align="right" style="font-size:12px;" ><b>'.number_format($value['total_saldo'],2).'</b></td>
+                </tr>';
+
+              $fechacierre = ($value['fecha_cierre'] == '')?'- Aperturado -':$value['fecha_cierre'];
+              $estado = ($value['fecha_cierre'] == '')?'Estado':'Fecha Cierre';
+              $html .=    '<tr><td align="center" ><b>'.$estado.'</b></td><td align="center" ><b>'.$fechacierre.'</b></td><td colspan="5"></td>'
+                      . '</tr>';             
+             }
+         }         
+         $html .=  '<tr><td colspan="7"></td></tr><tr>'
+                 . '<td colspan="3"><b>Totales en Dolares</b></td>'
+                 . '<td align="right" ><b>'.$mon.number_format($sumInicial,2).'</b></td>'
+                 . '<td align="right" ><b>'.$mon.number_format($sumIngresos,2).'</b></td>'
+                 . '<td align="right" ><b>'.$mon.number_format($sumEgresos,2).'</b></td>'
+                 . '<td align="right" ><b>'.$mon.number_format($sumSaldo,2).'</b></td>'
+                  . '</tr>';
+         $html .=   '</table>';
+         
+         
+        
+        $html .= '<h4>Observación </h4>';
+        $html .='<p><b>Generado por: </b> '.Session::get('sys_nombreUsuario').'</p>';                
+        $html .='<p><b>Fecha y Hora: </b> '.date("d/m/Y h:i A").'</p>';  
+        
+        if ($mpdf !== 'EXCEL'){
+            $mpdf->WriteHTML($html);
+            $mpdf->AddPage();
+            $html = '';
+        }
+        $html .= '<table width="100%" border="0" cellpadding="5" cellspacing="3">
+          <tr bgcolor="#901D78">
+            <th colspan="7"><div align="center"><h2 style="color:#FFF;">REPORTE DETALLADO DE CAJA </h2></div></th>
+          </tr></table>
+          <h2>Ingresos</h2>
         <table id="td2" border="1" style="border-collapse:collapse">
             <tr>
                 <th style="width:5%">#</th>
@@ -198,31 +301,7 @@ class reporteVentaDiaController extends Controller{
                 . '</tr>';
         $html .='</table>';
         
-        $html .= '<h2>Resumen</h2>';
-        $html .= '<table id="td2" border="1" style="border-collapse:collapse">               
-          <tr>
-                <th style="width:20%;" >Moneda</th>  
-                <th style="width:30%;" >Ingresos</th>                                
-                <th style="width:30%;" >Egresos</th>
-                <th style="width:30%;" >Total de Caja</th>
-            </tr>
-            <tr>                
-                <td>'.$moneda_1.'</td>
-                <td align="right" style="font-size:12px;" >'.$monS.number_format($ingresosS,2).'</td>
-                <td align="right" style="font-size:12px;" >'.$monS.number_format($egresosS,2).'</td>
-                <td align="right" style="font-size:12px;" ><b>'.$monS.number_format(($ingresosS - $egresosS),2).'</b></td>
-            </tr>
-            <tr>     
-                <td>'.$moneda_2.'</td>
-                <td align="right"  style="font-size:12px;" >'.$monD.number_format($ingresosD,2).'</td>
-                <td align="right"  style="font-size:12px;" >'.$monD.number_format($egresosD,2).'</td>
-                <td align="right"  style="font-size:12px;" ><b>'.$monD.number_format(($ingresosD - $egresosD),2).'</b></td>
-            </tr>
-            </table>';
-        
-        $html .= '<h4>Observación </h4>';
-        $html .='<p><b>Generado por: </b> '.Session::get('sys_nombreUsuario').'</p>';                
-        $html .='<p><b>Fecha y Hora: </b> '.date("d/m/Y h:i A").'</p>';  
+       
         
         if ($mpdf == 'EXCEL'){
            return $html; 

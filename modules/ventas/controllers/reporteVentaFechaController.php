@@ -81,8 +81,10 @@ class reporteVentaFechaController extends Controller{
                 
                 $egresos = number_format($aRow['egresos'],2);
                 $utilidad = number_format($aRow['utilidad'],2);
+                $inicial =  number_format($aRow['inicial'],2);
+                $ingresos = number_format($aRow['monto'],2);
                 /*registros a mostrar*/
-                $sOutput .= '["'.($num++).'","'.  Functions::cambiaf_a_normal($aRow['fecha']).'","'.$aRow['numero_doc'].'","'.$aRow['moneda'].'","'.number_format($aRow['monto'],2).'","'.$egresos.'","'.$utilidad.'","'.$saldo.'",'.$axion.' ';
+                $sOutput .= '["'.($num++).'","'.  Functions::cambiaf_a_normal($aRow['fecha']).'","'.$aRow['numero_doc'].'","'.$aRow['moneda'].'","'.$inicial.'","'.$ingresos.'","'.$egresos.'","'.$utilidad.'",'.$axion.' ';
 
                 $sOutput .= '],';
 
@@ -296,8 +298,10 @@ class reporteVentaFechaController extends Controller{
                 }
                 $egresos = number_format($aRow['egresos'],2);
                 $utilidad = number_format($aRow['utilidad'],2);
+                $inicial =  number_format($aRow['inicial'],2);
+                $ingresos = number_format($aRow['monto'],2);
                 /*registros a mostrar*/
-                $sOutput .= '["'.  Functions::cambiaf_a_normal($aRow['fecha']).'","'.$aRow['numero_doc'].'","'.$aRow['moneda'].'","'.number_format($aRow['monto'],2).'","'.$egresos.'","'.$utilidad.'","'.$saldo.'" ';
+                $sOutput .= '["'.  Functions::cambiaf_a_normal($aRow['fecha']).'","'.$aRow['numero_doc'].'","'.$aRow['moneda'].'","'.$inicial.'","'.$ingresos.'","'.$egresos.'","'.$utilidad.'" ';
 
                 $sOutput .= '],';
 
@@ -367,11 +371,16 @@ class reporteVentaFechaController extends Controller{
     private function getHtml($mpdf){
         $data = Obj::run()->reporteVentaFechaModel->getListadoVenta();
         $dataE = Obj::run()->reporteVentaFechaModel->getListadoEgresos();  
+        $dataR = Obj::run()->reporteVentaFechaModel->getListadoResumen();
         $total = 0;
         $acuenta = 0;
-        $saldo = 0;
-        
+        $saldo = 0;        
         $egresos= 0;        
+        
+        $sumInicial = 0;
+        $sumIngresos = 0;
+        $sumEgresos = 0;
+        $sumSaldo = 0;
         
         $html ='
         <style>           
@@ -395,8 +404,65 @@ class reporteVentaFechaController extends Controller{
             <td width="16%"><strong>Moneda :</strong></td>
             <td width="30%">'.$data[0]['descripcion_moneda'].'</td>
           </tr>         
-        </table> 
-        <h2>Ingresos</h2>
+        </table>';
+        
+        $html .= '<h2>Resumen</h2>';
+        $html .= '<table id="td2" border="1" style="border-collapse:collapse">               
+          <tr>
+                <th style="width:5%;" >ID Caja</th>  
+                <th style="width:13%;" >Fecha / Hora</th>  
+                <th style="width:11%;" >Inicial</th>  
+                <th style="width:11%;" >Ingresos</th>                                
+                <th style="width:11%;" >Egresos</th>
+                <th style="width:11%;" >Saldo</th>
+            </tr>';
+         foreach ($dataR as $value) {  
+             
+            $sumInicial += $value['monto_inicial'];
+            $sumIngresos += $value['total_ingresos'];
+            $sumEgresos += $value['total_egresos'];
+            $sumSaldo += $value['total_saldo'];
+             
+          $html .=    '<tr>                
+                <td align="center" style="font-size:12px;" >'.$value['id_caja'].'</td>  
+                <td align="center" style="font-size:12px;" >'.$value['fecha_creacion'].'</td>          
+                <td align="right" style="font-size:12px;" >'.$mon.number_format($value['monto_inicial'],2).'</td>                
+                <td align="right" style="font-size:12px;" >'.$mon.number_format($value['total_ingresos'],2).'</td>
+                <td align="right" style="font-size:12px;" >'.$mon.number_format($value['total_egresos'],2).'</td>
+                <td align="right" style="font-size:12px;" ><b>'.$mon.number_format($value['total_saldo'],2).'</b></td>
+            </tr>';
+         
+          $fechacierre = ($value['fecha_cierre'] == '')?'- Aperturado -':$value['fecha_cierre'];
+          $estado = ($value['fecha_cierre'] == '')?'Estado':'Fecha Cierre';
+          $html .=    '<tr><td align="center" ><b>'.$estado.'</b></td><td align="center" ><b>'.$fechacierre.'</b></td><td colspan="4"></td>'
+                  . '</tr>';
+         }
+         
+         $html .=  '<tr><td colspan="6"></td></tr><tr>'
+                 . '<td colspan="2"><b>Totales</b></td>'
+                 . '<td align="right" ><b>'.$mon.number_format($sumInicial,2).'</b></td>'
+                 . '<td align="right" ><b>'.$mon.number_format($sumIngresos,2).'</b></td>'
+                 . '<td align="right" ><b>'.$mon.number_format($sumEgresos,2).'</b></td>'
+                 . '<td align="right" ><b>'.$mon.number_format($sumSaldo,2).'</b></td>'
+                  . '</tr>';
+         $html .=   '</table>';        
+        
+        
+        $html .= '<h4>Observación </h4>';
+        $html .='<p><b>Generado por: </b> '.Session::get('sys_nombreUsuario').'</p>';                
+        $html .='<p><b>Fecha y Hora: </b> '.date("d/m/Y h:i A").'</p>'; 
+        
+        if ($mpdf !== 'EXCEL'){
+            $mpdf->WriteHTML($html);
+            $mpdf->AddPage();
+            $html = '';
+        }
+        
+        $html .= '<table width="100%" border="0" cellpadding="5" cellspacing="3">
+          <tr bgcolor="#901D78">
+            <th colspan="6"><div align="center"><h2 style="color:#FFF;">REPORTE DETALLADO DE CAJA </h2></div></th>
+          </tr></table>
+          <h2>Ingresos</h2>
         <table id="td2" border="1" style="border-collapse:collapse">
             <tr>
                 <th style="width:5%">#</th>
@@ -405,7 +471,7 @@ class reporteVentaFechaController extends Controller{
                 <th style="width:12%">Tipo Doc.</th>                
                 <th style="width:12%">Total</th>
                 <th style="width:12%">A Cuenta</th>
-                <th style="width:12%">Saldo</th>
+                <th style="width:12%">Deuda</th>
             </tr>';
         $i =1;
         foreach ($data as $value) {                    
@@ -455,26 +521,7 @@ class reporteVentaFechaController extends Controller{
          $html .= '<tr><td colspan="1"></td><td style="text-align:right;"></td><td class="totales" style="text-align:right; font-weight:bold;">'.$mon.number_format($egresos,2).'</td>'
                 . '</tr>';       
          
-        $html .='</table>';
-        
-        $html .= '<h2>Resumen</h2>';
-        $html .= '<table id="td2" border="1" style="border-collapse:collapse">               
-          <tr>
-                <th style="width:30%;" >Ingresos</th>                                
-                <th style="width:30%;" >Egresos</th>
-                <th style="width:30%;" >Total de Caja</th>
-            </tr>
-            <tr>                
-                <td align="right" style="font-size:12px;" >'.$mon.number_format($acuenta,2).'</td>
-                <td align="right" style="font-size:12px;" >'.$mon.number_format($egresos,2).'</td>
-                <td align="right" style="font-size:12px;" ><b>'.$mon.number_format(($acuenta - $egresos),2).'</b></td>
-            </tr>            
-            </table>';        
-        
-        
-        $html .= '<h4>Observación </h4>';
-        $html .='<p><b>Generado por: </b> '.Session::get('sys_nombreUsuario').'</p>';                
-        $html .='<p><b>Fecha y Hora: </b> '.date("d/m/Y h:i A").'</p>';  
+        $html .='</table>';         
         
         if ($mpdf == 'EXCEL'){
            return $html; 

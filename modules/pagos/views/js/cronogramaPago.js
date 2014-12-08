@@ -251,6 +251,10 @@ var cronogramaPago_ = function(){
                                     },1000);
                                 }
                             });
+                        }else if(!isNaN(data.result) && parseInt(data.result) === 2){
+                            simpleScript.notify.warning({
+                                content: 'No se puede anular este pago. Debe de Anular sus ordenes de instalación para realizar este proceso.'
+                            });
                         }
                     }
                 });

@@ -62,13 +62,13 @@ var reporteVentaFecha_ = function(){
                 {sTitle: "Fecha", sWidth: "10%", sClass: "center"},
                 {sTitle: "Numero Documentos", sWidth: "15%", sClass: "center"},
                 {sTitle: "Moneda", sWidth: "20%"},
+                {sTitle: "Inicial", sWidth: "10%", sClass: "right"},
                 {sTitle: "Ingresos", sWidth: "10%", sClass: "right"},
                 {sTitle: "Egresos", sWidth: "10%", sClass: "right"},
-                {sTitle: "Utilidad", sWidth: "10%", sClass: "right"},
-                {sTitle: "Saldo", sWidth: "10%", sClass: "right"},
+                {sTitle: "Saldo", sWidth: "10%", sClass: "right"},                
                 {sTitle: "Acciones", sWidth: "8%", sClass: "center", bSortable: false}
             ],
-            aaSorting: [[1, "asc"]],
+            aaSorting: [[1, "desc"]],
             sScrollY: "300px",
             sAjaxSource: _private.config.modulo+"getGridReporteVentaFecha",
              fnServerParams: function(aoData) {
@@ -145,10 +145,10 @@ var reporteVentaFecha_ = function(){
                 {sTitle: "Fecha", sWidth: "10%", sClass: "center"},
                 {sTitle: "Numero Documentos", sWidth: "15%", sClass: "center"},
                 {sTitle: "Moneda", sWidth: "20%"},
+                {sTitle: "Inicial", sWidth: "10%", sClass: "right"},
                 {sTitle: "Ingresos", sWidth: "10%", sClass: "right"},
                 {sTitle: "Egresos", sWidth: "10%", sClass: "right"},
-                {sTitle: "Utilidad", sWidth: "10%", sClass: "right"},                
-                {sTitle: "Saldo", sWidth: "10%", sClass: "right"}
+                {sTitle: "Utilidad", sWidth: "10%", sClass: "right"}
             ],
             aaSorting: [[0, 'desc']],
             sScrollY: "125px",

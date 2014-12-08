@@ -107,7 +107,33 @@ class reporteVentaDiaModel extends Model{
         
         return $data;
     }        
-    
+    public function getListadoResumen(){
+        $query = "
+        SELECT
+            `id_caja`,
+            `id_sucursal`,
+            `moneda`,
+            `fecha_caja`,
+            `monto_inicial`,
+            `total_ingresos`,
+            `total_egresos`,
+            `total_saldo`,
+            `estado`,              
+            DATE_FORMAT(`fecha_cierre`,'%d/%m/%Y %h:%i %p') as fecha_cierre,
+            DATE_FORMAT(`fecha_creacion`,'%d/%m/%Y %h:%i %p') as fecha_creacion,
+            (select pm.sigla from pub_moneda pm where pm.id_moneda = `moneda`) as moneda,
+            moneda as id_moneda
+          FROM `ven_movimientos_caja`
+          where fecha_caja = :fecha  
+          order by moneda, id_caja ";
+        
+        $parms = array(
+            ':fecha'=>  $this->_fecha
+        );
+        $data = $this->queryAll($query,$parms);      
+        
+        return $data;
+    }              
 }
 
 /*
