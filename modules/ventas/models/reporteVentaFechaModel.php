@@ -98,6 +98,60 @@ class reporteVentaFechaModel extends Model{
         return $data;
     } 
     
+    public function getConsultaEgresos(){
+           $aColumns       =   array('','descripcion','fecha','sigla_moneda','monto'); //para la ordenacion y pintado en html
+        /*
+	 * Ordenando, se verifica por que columna se ordenara
+	 */
+        $sOrder = "";
+        for ( $i=0 ; $i<intval( $this->_iSortingCols ) ; $i++ ){
+                if ( $this->post( "bSortable_".intval($this->post("iSortCol_".$i)) ) == "true" ){
+                        $sOrder .= " ".$aColumns[ intval( $this->post("iSortCol_".$i) ) ]." ".
+                                ($this->post("sSortDir_".$i)==="asc" ? "asc" : "desc") .",";
+                }
+        }
+        $sOrder = substr_replace( $sOrder, "", -1 );
+        
+        $query = "call sp_ventaConsultaEgresosFechaGrid(:fecha,:moneda,:iDisplayStart,:iDisplayLength,:sOrder);";
+        
+        $parms = array(
+            ":fecha" => $this->_fecha,
+            ":moneda" => $this->_moneda,
+            ":iDisplayStart" => $this->_iDisplayStart,
+            ":iDisplayLength" => $this->_iDisplayLength,
+            ":sOrder" => $sOrder
+        );
+        $data = $this->queryAll($query,$parms);
+        return $data;
+    }
+
+    public function getConsultaCaja(){
+           $aColumns       =   array('id_caja','sigla_moneda','monto_inicial','total_ingresos','total_egresos','total_saldo','fecha_cierre'); //para la ordenacion y pintado en html
+        /*
+	 * Ordenando, se verifica por que columna se ordenara
+	 */
+        $sOrder = "";
+        for ( $i=0 ; $i<intval( $this->_iSortingCols ) ; $i++ ){
+                if ( $this->post( "bSortable_".intval($this->post("iSortCol_".$i)) ) == "true" ){
+                        $sOrder .= " ".$aColumns[ intval( $this->post("iSortCol_".$i) ) ]." ".
+                                ($this->post("sSortDir_".$i)==="asc" ? "asc" : "desc") .",";
+                }
+        }
+        $sOrder = substr_replace( $sOrder, "", -1 );
+        
+        $query = "call sp_ventaConsultaCajaFechaGrid(:fecha,:moneda,:iDisplayStart,:iDisplayLength,:sOrder);";
+        
+        $parms = array(
+            ":fecha" => $this->_fecha,
+            ":moneda" => $this->_moneda,
+            ":iDisplayStart" => $this->_iDisplayStart,
+            ":iDisplayLength" => $this->_iDisplayLength,
+            ":sOrder" => $sOrder
+        );
+        $data = $this->queryAll($query,$parms);
+        return $data;
+    }    
+    
     public function getIndexVentaFecha(){
         $aColumns       =   array("t.fecha","t.numero_doc","t.moneda","t.monto","t.egresos","9","t.saldo" ); //para la ordenacion y pintado en html
         /*

@@ -44,7 +44,7 @@ var cronogramaPago_ = function(){
             }
         });
     };
-    
+     
     this.publico.getGridOrdenes = function (){
         var oTable = $("#"+diccionario.tabs.CROPA+"getGridOrdenes").dataTable({
             bProcessing: true,
@@ -161,8 +161,10 @@ var cronogramaPago_ = function(){
                 if(!isNaN(data.result) && parseInt(data.result) === 1){
                     simpleScript.notify.ok({
                         content: mensajes.MSG_3,
-                        callback: function(){
-                            cronogramaPago.getGridOrdenes();
+                        callback: function(){                            
+                            setTimeout(function(){
+                                        simpleScript.reloadGrid('#'+diccionario.tabs.CROPA+'getGridOrdenes');
+                                    },1000);
                             simpleScript.closeModal('#'+diccionario.tabs.CROPA+'formPagarOrdenParametros');
                             $("#"+_private.fila+diccionario.tabs.CROPA+"dfecha").html(data.fecha);
                             $("#"+_private.fila+diccionario.tabs.CROPA+"tr_estado").html('<span class="label label-success">Pagado</span>');
@@ -173,7 +175,7 @@ var cronogramaPago_ = function(){
 //                            $('#'+diccionario.tabs.CROPA+_private.fila+'btnAnular').click(function(){
 //                                cronogramaPago.postAnularPago(this,_private.idCompromiso);
 //                            });
-                            cronogramaPago.getTableCronograma();
+                            cronogramaPago.getTableCronograma();                            
                             _private.idCompromiso = 0;
                             _private.boton = 0;
                             _private.fila = 0;
@@ -217,6 +219,9 @@ var cronogramaPago_ = function(){
                         content: mensajes.MSG_3,
                         callback: function(){
                             cronogramaPago.getTableCronograma();
+                            setTimeout(function(){
+                                        simpleScript.reloadGrid('#'+diccionario.tabs.CROPA+'getGridOrdenes');
+                                    },1000);
                             simpleScript.closeModal('#'+diccionario.tabs.CROPA+'formReprogramar');
                             _private.idCompromiso = 0;
                             _private.fila = 0;
@@ -241,6 +246,9 @@ var cronogramaPago_ = function(){
                                 content: mensajes.MSG_17,
                                 callback: function(){
                                     cronogramaPago.getTableCronograma();
+                                    setTimeout(function(){
+                                        simpleScript.reloadGrid('#'+diccionario.tabs.CROPA+'getGridOrdenes');
+                                    },1000);
                                 }
                             });
                         }

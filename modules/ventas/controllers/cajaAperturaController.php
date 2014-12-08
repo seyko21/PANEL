@@ -76,7 +76,7 @@ class cajaAperturaController extends Controller{
                  $c5 =  number_format($aRow['total_egresos'],2);             
                  $c6 =  number_format($aRow['total_saldo'],2);             
                 /*registros a mostrar*/
-                $sOutput .= '["'.($num++).'","'.$c1.'","'.$c2.'","'.$c3.'","'.$c4.'","'.$c5.'","'.$c6.'","'.$estado.'",'.$axion.' ';
+                $sOutput .= '["'.$aRow['id_caja'].'","'.$c1.'","'.$c2.'","'.$c3.'","'.$c4.'","'.$c5.'","'.$c6.'","'.$estado.'",'.$axion.' ';
 
                 $sOutput .= '],';
 

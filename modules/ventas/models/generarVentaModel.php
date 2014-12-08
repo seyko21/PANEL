@@ -180,22 +180,24 @@ class generarVentaModel extends Model{
     }
 
     private function anularUnaVenta(){
-        $query = "call sp_ventaAnulacion(:flag,:idVenta,:idSucursal);";
+        $query = "call sp_ventaAnulacion(:flag,:idVenta,:idSucursal,:usuario);";
         $parms = array(
             ':flag' =>'1',
             ':idVenta' => $this->_idVenta,
-            ':idSucursal'=> Session::get('sys_idSucursal')
+            ':idSucursal'=> Session::get('sys_idSucursal'),
+             ':usuario'=> $this->_usuario
         );
         $this->execute($query,$parms);
     }
     
     public function anularGenerarVentaAll(){
         foreach ($this->_chkdel as $value) {
-            $query = "call sp_ventaAnulacion(:flag,:idVenta,:idSucursal); ";
+            $query = "call sp_ventaAnulacion(:flag,:idVenta,:idSucursal,:usuario); ";
             $parms = array(
                 ':flag' =>'1',
                 ':idVenta' => AesCtr::de($value),
-                ':idSucursal'=> Session::get('sys_idSucursal')
+                ':idSucursal'=> Session::get('sys_idSucursal'),
+                 ':usuario'=> $this->_usuario
             );
             $this->execute($query,$parms);
         }

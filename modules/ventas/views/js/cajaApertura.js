@@ -53,8 +53,8 @@ var cajaApertura_ = function(){
             bPaginate: true,
             iDisplayLength: 10,            
             aoColumns: [
-                {sTitle: "N°", sWidth: "1%",bSortable: false},
-                {sTitle: "Fecha / Hora", sWidth: "10%"},
+                {sTitle: "ID Caja", sWidth: "2%"},
+                {sTitle: "Fecha / Hora", sWidth: "15%"},
                 {sTitle: "Moneda", sWidth: "8%", sClass: "center"},
                 {sTitle: "Inicial", sWidth: "10%", sClass: "right"},
                 {sTitle: "Ingresos", sWidth: "10%", sClass: "right"},
@@ -63,11 +63,12 @@ var cajaApertura_ = function(){
                 {sTitle: "Estado", sWidth: "10%", sClass: "center"},
                 {sTitle: "Acciones", sWidth: "8%", sClass: "center", bSortable: false}
             ],
-            aaSorting: [[1, "desc"]],
+            aaSorting: [[0, "desc"]],
             sScrollY: "300px",
             sAjaxSource: _private.config.modulo+"getGridCajaApertura",
             fnServerParams: function(aoData) {
-                aoData.push({"name": "_fecha", "value": $("#"+diccionario.tabs.CAJAA+"txt_fechaGrid").val()});                
+                aoData.push({"name": "_fecha1", "value": $("#"+diccionario.tabs.CAJAA+"txt_f1").val()});                
+                aoData.push({"name": "_fecha2", "value": $("#"+diccionario.tabs.CAJAA+"txt_f2").val()});
             },
             fnDrawCallback: function() {                                
                 /*para hacer evento invisible*/

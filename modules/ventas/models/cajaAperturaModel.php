@@ -11,7 +11,8 @@ class cajaAperturaModel extends Model{
 
     private $_flag;
     private $_idCajaApertura;
-    private $_fecha;
+    private $_fecha1;
+    private $_fecha2;
     private $_usuario;    
     private $_montoInicial;
     
@@ -30,8 +31,8 @@ class cajaAperturaModel extends Model{
         $this->_flag        = Formulario::getParam("_flag");
         $this->_idCajaApertura   = Aes::de(Formulario::getParam("_idCajaApertura"));    /*se decifra*/
         $this->_usuario     = Session::get("sys_idUsuario");
-        $this->_fecha = Functions::cambiaf_a_mysql(Formulario::getParam("_fecha"));
-        
+        $this->_fecha1 = Functions::cambiaf_a_mysql(Formulario::getParam("_fecha1"));
+        $this->_fecha2 = Functions::cambiaf_a_mysql(Formulario::getParam("_fecha2"));
         $this->_montoInicial    = Functions::deleteComa(Formulario::getParam(CAJAA.'txt_inicio'));        
         
         $this->_iDisplayStart  = Formulario::getParam("iDisplayStart"); 
@@ -42,7 +43,7 @@ class cajaAperturaModel extends Model{
     
     /*data para el grid: CajaApertura*/
     public function getCajaApertura(){
-        $aColumns       =   array("","fecha_creacion","sigla_moneda","monto_inicial","total_ingresos","total_egresos","total_saldo","estado" ); //para la ordenacion y pintado en html
+        $aColumns       =   array("id_caja","fecha_creacion","sigla_moneda","monto_inicial","total_ingresos","total_egresos","total_saldo","estado" ); //para la ordenacion y pintado en html
         /*
 	 * Ordenando, se verifica por que columna se ordenara
 	 */
@@ -55,10 +56,11 @@ class cajaAperturaModel extends Model{
         }
         $sOrder = substr_replace( $sOrder, "", -1 );
         
-        $query = "call sp_ventaCajaAperturaGrid(:fecha,:iDisplayStart,:iDisplayLength,:sOrder);";
+        $query = "call sp_ventaCajaAperturaGrid(:fecha1,:fecha2,:iDisplayStart,:iDisplayLength,:sOrder);";
         
         $parms = array(
-            ":fecha"=> $this->_fecha,
+            ":fecha1"=> $this->_fecha1,
+            ":fecha2"=> $this->_fecha2,
             ":iDisplayStart" => $this->_iDisplayStart,
             ":iDisplayLength" => $this->_iDisplayLength,
             ":sOrder" => $sOrder

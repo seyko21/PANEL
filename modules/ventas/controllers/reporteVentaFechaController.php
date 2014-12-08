@@ -139,7 +139,7 @@ class reporteVentaFechaController extends Controller{
                 
                 $axion .= ' </div>" ';
                 if ($aRow['monto_saldo'] > 0):
-                    $saldo = '<span class=\"badge bg-color-red\">'.number_format($aRow['monto_saldo'],2).'</span>';
+                    $saldo = '<span class=\"badge bg-color-red\" style=\"padding:5px;\">'.number_format($aRow['monto_saldo'],2).'</span>';
                 else :
                      $saldo = number_format($aRow['monto_saldo'],2);
                 endif;
@@ -161,8 +161,107 @@ class reporteVentaFechaController extends Controller{
         echo $sOutput;
 
     }    
+    public function getConsultaCaja(){                        
+        $sEcho          =   $this->post('sEcho');
+        
+        $rResult = Obj::run()->reporteVentaFechaModel->getConsultaCaja();
+        
+        $num = Obj::run()->reporteVentaFechaModel->_iDisplayStart;
+        if($num >= 10){
+            $num++;
+        }else{
+            $num = 1;
+        }
+        
+        if(!isset($rResult['error'])){  
+            $iTotal         = isset($rResult[0]['total'])?$rResult[0]['total']:0;
+            
+            $sOutput = '{';
+            $sOutput .= '"sEcho": '.intval($sEcho).', ';
+            $sOutput .= '"iTotalRecords": '.$iTotal.', ';
+            $sOutput .= '"iTotalDisplayRecords": '.$iTotal.', ';
+            $sOutput .= '"aaData": [ ';     
+            
+            foreach ( $rResult as $aRow ){
+                
+                /*antes de enviar id se encrypta*/
+                $encryptReg = Aes::en($aRow['id_egreso']);                               
+                                                
+                $c1 = $aRow['id_caja'];
+                $c2 = $aRow['sigla_moneda'];
+                $c3 = number_format($aRow['monto_inicial'],2);
+                $c4 = number_format($aRow['total_ingresos'],2);
+                $c5 = number_format($aRow['total_egresos'],2);
+                $c6 = number_format($aRow['total_saldo'],2);
+                if ($aRow['estado'] == 'C'){
+                    $f = new DateTime($aRow['fecha_cierre']);
+                    $c7 = $f->format('d/m/Y h:i A');         
+                }else{
+                    $c7 = ' - Aperturado - ';
+                }
+                /*registros a mostrar*/
+                $sOutput .= '["'.$c1.'","'.$c2.'","'.$c3.'","'.$c4.'","'.$c5.'","'.$c6.'","'.$c7.'" ';
+
+                $sOutput .= '],';
+
+            }
+            $sOutput = substr_replace( $sOutput, "", -1 );
+            $sOutput .= '] }';
+        }else{
+            $sOutput = $rResult['error'];
+        }
+        
+        echo $sOutput;
+
+    }    
     
- public function getGridIndexVentaFecha(){
+      public function getConsultaEgresos(){                        
+        $sEcho          =   $this->post('sEcho');
+        
+        $rResult = Obj::run()->reporteVentaFechaModel->getConsultaEgresos();
+        
+        $num = Obj::run()->reporteVentaFechaModel->_iDisplayStart;
+        if($num >= 10){
+            $num++;
+        }else{
+            $num = 1;
+        }
+        
+        if(!isset($rResult['error'])){  
+            $iTotal         = isset($rResult[0]['total'])?$rResult[0]['total']:0;
+            
+            $sOutput = '{';
+            $sOutput .= '"sEcho": '.intval($sEcho).', ';
+            $sOutput .= '"iTotalRecords": '.$iTotal.', ';
+            $sOutput .= '"iTotalDisplayRecords": '.$iTotal.', ';
+            $sOutput .= '"aaData": [ ';     
+            
+            foreach ( $rResult as $aRow ){
+                
+                /*antes de enviar id se encrypta*/
+                $encryptReg = Aes::en($aRow['id_egreso']);                               
+                                                
+                                                
+                $nombre = $aRow['descripcion'];
+                $fecha = Functions::cambiaf_a_normal($aRow['fecha']);
+                
+                /*registros a mostrar*/
+                $sOutput .= '["'.($num++).'","'.$nombre.'","'.$fecha.'","'.$aRow['sigla_moneda'].'","'.number_format($aRow['monto'],2).'" ';
+
+                $sOutput .= '],';
+
+            }
+            $sOutput = substr_replace( $sOutput, "", -1 );
+            $sOutput .= '] }';
+        }else{
+            $sOutput = $rResult['error'];
+        }
+        
+        echo $sOutput;
+
+    }    
+    
+    public function getGridIndexVentaFecha(){
 
         $sEcho          =   $this->post('sEcho');
         

@@ -82,7 +82,7 @@ class alquilerCulminarController extends Controller{
                 $c3 = $aRow['cliente'];
                 $c4 = Functions::cambiaf_a_normal($aRow['fecha_inicio']);
                 $c5 = Functions::cambiaf_a_normal($aRow['fecha_termino']);
-                $c6 = $aRow['meses_contrato'];
+                $c6 = Functions::convertirDiaMes($aRow['meses_contrato']);
                 
                 $ffd = '<span class=\"label label-danger\">'.$c5.'</span>';  
                 

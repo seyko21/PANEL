@@ -130,7 +130,7 @@ $estado = Formulario::getParam('_estado');
             </div>
             <div class="modal-footer">    
                 <!--solo se edita si el estado es EMITIDO-->
-                <?php if($editar['permiso'] && $estado == 'E'):?>
+                <?php if($editar['permiso'] ):?>
                 <button id="<?php echo GNOSE; ?>btnEdOrd" type="submit" class="<?php echo $editar['theme']; ?>" style="padding: 5px">
                     <i class="<?php echo $editar['icono']; ?>"></i> <?php echo $editar['accion']; ?>
                 </button>

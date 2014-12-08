@@ -12,7 +12,8 @@ class cajaCierreModel extends Model{
     private $_flag;
     private $_idCajaCierre;
     private $_usuario;
-    private $_fecha;
+    private $_fecha1;
+    private $_fecha2;
     
     /*para el grid*/
     public  $_iDisplayStart;
@@ -30,7 +31,8 @@ class cajaCierreModel extends Model{
         $this->_idCajaCierre   = Aes::de(Formulario::getParam("_idCajaCierre"));    /*se decifra*/
         $this->_usuario     = Session::get("sys_idUsuario");
         
-        $this->_fecha = Functions::cambiaf_a_mysql(Formulario::getParam("_fecha"));
+        $this->_fecha1 = Functions::cambiaf_a_mysql(Formulario::getParam("_fecha1"));
+        $this->_fecha2 = Functions::cambiaf_a_mysql(Formulario::getParam("_fecha2"));
         
         $this->_iDisplayStart  = Formulario::getParam("iDisplayStart"); 
         $this->_iDisplayLength = Formulario::getParam("iDisplayLength"); 
@@ -40,7 +42,7 @@ class cajaCierreModel extends Model{
     
     /*data para el grid: CajaCierre*/
     public function getCajaCierre(){
-        $aColumns       =   array("","fecha_creacion","sigla_moneda","monto_inicial","total_ingresos","total_egresos","total_saldo","estado" ); //para la ordenacion y pintado en html
+        $aColumns       =   array("id_caja","fecha_creacion","sigla_moneda","monto_inicial","total_ingresos","total_egresos","total_saldo","estado" ); //para la ordenacion y pintado en html
         /*
 	 * Ordenando, se verifica por que columna se ordenara
 	 */
@@ -53,10 +55,11 @@ class cajaCierreModel extends Model{
         }
         $sOrder = substr_replace( $sOrder, "", -1 );
         
-        $query = "call sp_ventaCajaCierreGrid(:fecha,:iDisplayStart,:iDisplayLength,:sOrder);";
+        $query = "call sp_ventaCajaCierreGrid(:fecha1,:fecha2,:iDisplayStart,:iDisplayLength,:sOrder);";
         
         $parms = array(
-            ":fecha"=> $this->_fecha,
+            ":fecha1"=> $this->_fecha1,
+            ":fecha2"=> $this->_fecha2,
             ":iDisplayStart" => $this->_iDisplayStart,
             ":iDisplayLength" => $this->_iDisplayLength,
             ":sOrder" => $sOrder

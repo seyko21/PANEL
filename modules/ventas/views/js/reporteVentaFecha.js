@@ -113,7 +113,7 @@ var reporteVentaFecha_ = function(){
                 {sTitle: "Acciones", sWidth: "10%", sClass: "center", bSortable: false} 
             ],
             aaSorting: [[2, "asc"]],
-            sScrollY: "150px",
+            sScrollY: "280px",
             sAjaxSource: _private.config.modulo+"getGridConsultaVentaFecha",       
             fnServerParams: function(aoData) {
                 aoData.push({"name": "_fecha", "value": _private.fecha });
@@ -164,6 +164,83 @@ var reporteVentaFecha_ = function(){
         });
 
     };     
+    
+   this.publico.getGridConsultaEgresos = function (){       
+        
+        var oTable = $("#"+diccionario.tabs.VRPT2+"gridConsultaEgresos").dataTable({
+            bFilter:false,
+            bProcessing: true,
+            bServerSide: true,
+            bDestroy: true,
+            sPaginationType: "bootstrap_full", //two_button
+            sServerMethod: "POST",
+            bPaginate: true,
+            iDisplayLength: 10,            
+            aoColumns: [
+                {sTitle: "N°", sWidth: "1%",bSortable: false},
+                {sTitle: "Descripcion", sWidth: "30%"},
+                {sTitle: "Fecha ", sWidth: "15%"},     
+                {sTitle: "Moneda", sWidth: "7%"},                                
+                {sTitle: "Monto", sWidth: "11%",  sClass: "right"}                        
+            ],
+            aaSorting: [[1, "asc"]],
+            sScrollY: "280px",
+            sAjaxSource: _private.config.modulo+"getConsultaEgresos",       
+            fnServerParams: function(aoData) {
+                aoData.push({"name": "_fecha", "value": _private.fecha });
+                aoData.push({"name": "_moneda", "value": _private.moneda });
+            },
+            fnDrawCallback: function(){
+                /*para hacer evento invisible*/
+                simpleScript.removeAttr.click({
+                    container: "#widget_"+diccionario.tabs.VCSCL,
+                    typeElement: "button"
+                });               
+            }
+        });
+        setup_widgets_desktop();
+    };    
+      
+    
+    this.publico.getGridConsultaCaja = function (){       
+        
+        var oTable = $("#"+diccionario.tabs.VRPT2+"gridConsultaCaja").dataTable({
+            bFilter:false,
+            bProcessing: true,
+            bServerSide: true,
+            bDestroy: true,
+            sPaginationType: "bootstrap_full", //two_button
+            sServerMethod: "POST",
+            bPaginate: true,
+            iDisplayLength: 10,            
+            aoColumns: [
+                {sTitle: "ID Caja", sWidth: "2%"},
+                {sTitle: "Moneda", sWidth: "6%"},
+                {sTitle: "Inicio", sWidth: "10%",sClass: "right"},
+                {sTitle: "Ingresos", sWidth: "10%",sClass: "right"},                                
+                {sTitle: "Egresos", sWidth: "10%",  sClass: "right"},  
+                {sTitle: "Saldo", sWidth: "10%",  sClass: "right"},
+                {sTitle: "Cierre", sWidth: "15%",  sClass: "center"}
+            ],
+            aaSorting: [[0, "desc"]],
+            sScrollY: "280px",
+            sAjaxSource: _private.config.modulo+"getConsultaCaja",       
+            fnServerParams: function(aoData) {
+                aoData.push({"name": "_fecha", "value": _private.fecha });
+                aoData.push({"name": "_moneda", "value": _private.moneda });
+            },
+            fnDrawCallback: function(){
+                /*para hacer evento invisible*/
+                simpleScript.removeAttr.click({
+                    container: "#widget_"+diccionario.tabs.VCSCL,
+                    typeElement: "button"
+                });               
+            }
+        });
+        setup_widgets_desktop();
+    };    
+          
+    
     
     this.publico.getFormConsultaVenta = function(btn,fecha,moneda){
         _private.fecha = fecha;
