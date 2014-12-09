@@ -59,6 +59,12 @@ class vproductoController extends Controller{
                     }
                 }
                 
+                 if($aRow['incligv'] == 'S'){                
+                    $incl = '<span class=\"label label-success\">'.LABEL_S.'</span>';                
+                }elseif($aRow['incligv'] == 'N'){
+                    $incl = '<span class=\"label label-info\">'.LABEL_N.'</span>';
+                }             
+                                
                 if($aRow['uso'] == 0):
                     $chk = '<input id=\"c_'.(++$key).'\" type=\"checkbox\" name=\"'.VPROD.'chk_delete[]\" value=\"'.$encryptReg.'\">';
                 else:
@@ -81,7 +87,7 @@ class vproductoController extends Controller{
                 $axion .= ' </div>" ';
                 
                 /*registros a mostrar*/
-                $sOutput .= '["'.$chk.'","'.$aRow['descripcion'].'","'.$aRow['unidadMedida'].'","'.$aRow['moneda'].'","'.number_format($aRow['precio'],2).'","'.$estado.'",'.$axion.' ';
+                $sOutput .= '["'.$chk.'","'.$aRow['descripcion'].'","'.$aRow['unidadMedida'].'","'.$incl.'","'.$aRow['moneda'].'","'.number_format($aRow['precio'],2).'","'.$estado.'",'.$axion.' ';
 
                 $sOutput .= '],';
 

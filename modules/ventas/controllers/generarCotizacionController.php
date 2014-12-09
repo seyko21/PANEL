@@ -321,8 +321,7 @@ class generarCotizacionController extends Controller{
     }
     
  public function postEmail(){ 
-        $this->postPDF('N');
-        Obj::run()->generarCotizacionModel->postTiempoCotizacion();
+        $this->postPDF('N');        
         $data = Obj::run()->generarCotizacionModel->getFindCotizacion();
         
         $data0 = Obj::run()->configurarUsuariosController->getParametros('EMAIL');        
@@ -330,18 +329,18 @@ class generarCotizacionController extends Controller{
         $emailEmpresa = $data0['valor'];
         $empresa = $data1['valor'];
         
-        $emailCliente = $data[0]['email'];
-        $cliente = $data[0]['nombrecompleto'];
-        $emailUser = $data[0]['mail_user'];
-        $vendedor = $data[0]['vendedor'];
-        $numCotizacion = $data[0]['cotizacion_numero'];
-        $numVendedor = $data[0]['telefono_vendedor'];
+        $emailCliente = $data['email'];
+        $cliente = $data['nombrecompleto'];
+        $emailUser = $data['mail_user'];
+        $vendedor = $data['vendedor'];
+        $numCotizacion = $data['codigo'];
+        $numVendedor = $data['telefono_vendedor'];
         
         $archivo = 'cotizacion_'.$numCotizacion.'.pdf';
         //Html de Cotizacion:
          $body = '
             <h3>Estimado: ' . $cliente . '</h3>
-            <p>Muchas gracias por confiar en <b>'.LB_EMPRESA.'</b>, le enviamos nuestra cotizacion acerca de nuestros productos y servicios.
+            <p>Muchas gracias por confiar en <b>'.LB_EMPRESA2.'</b>, le enviamos nuestra cotizacion acerca de nuestros productos y servicios.
             <br/>Esperamos su pronta respuesta.</p>
             <hr>
             <p>Atte:<br/>

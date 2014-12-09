@@ -295,7 +295,7 @@ var vGenerarCotizacion_ = function(){
         simpleAjax.send({
             element: btn,
             root: _private.config.modulo + 'postEmail',
-            data: '&_idCotizacion='+idCot+'&_num='+num,
+            data: '&_idCotizacion='+idCot+'&_cod='+num,
             fnCallback: function(data) {
                 if(!isNaN(data.result) && parseInt(data.result) === 1){
                     simpleScript.notify.ok({

@@ -37,7 +37,7 @@ class vlistadopreciosModel extends Model{
     
     /*data para el grid: Vlistadoprecios*/
     public function getVlistadoprecios(){
-        $aColumns       =   array("id_producto","descripcion","unidad_medida","descripcion_moneda","precio" ); //para la ordenacion y pintado en html
+        $aColumns       =   array("id_producto","descripcion","unidad_medida","incligv","descripcion_moneda","precio" ); //para la ordenacion y pintado en html
         /*
 	 * Ordenando, se verifica por que columna se ordenara
 	 */
@@ -71,7 +71,8 @@ class vlistadopreciosModel extends Model{
             (SELECT m.`sigla` FROM `pub_moneda` m WHERE m.`id_moneda` = p.`moneda`) AS sigla_moneda,
             (SELECT m.`descripcion` FROM `pub_moneda` m WHERE m.`id_moneda` = p.`moneda`) AS descripcion_moneda,
             p.`moneda` AS id_moneda,
-            CONCAT(um.`sigla`,' - ',um.`nombre`) AS unidad_medida 
+            CONCAT(um.`sigla`,' - ',um.`nombre`) AS unidad_medida,
+             p.`incligv` 
           FROM `ven_producto` p
                   INNER JOIN `ven_unidadmedida` um ON um.`id_unidadmedida` = p.`id_unidadmedida`
           WHERE p.`estado` <> :estado

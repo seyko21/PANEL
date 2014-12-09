@@ -49,7 +49,7 @@ class vproductoModel extends Model{
     
     /*data para el grid: Vproducto*/
     public function getVproducto(){
-        $aColumns       =   array("","descripcion","5","7","precio","estado" ); //para la ordenacion y pintado en html
+        $aColumns       =   array("","descripcion","5","incligv","7","precio","estado" ); //para la ordenacion y pintado en html
         /*
 	 * Ordenando, se verifica por que columna se ordenara
 	 */

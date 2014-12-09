@@ -41,8 +41,13 @@ class vlistadopreciosController extends Controller{
             
             foreach ( $rResult as $aRow ){
                 
+                if($aRow['incligv'] == 'S'){                
+                    $incl = '<span class=\"label label-success\">'.LABEL_S.'</span>';                
+                }elseif($aRow['incligv'] == 'N'){
+                    $incl = '<span class=\"label label-info\">'.LABEL_N.'</span>';
+                }   
                 /*registros a mostrar*/
-                $sOutput .= '["'.($num++).'","'.$aRow['descripcion'].'","'.$aRow['unidad_medida'].'","'.$aRow['descripcion_moneda'].'","'.number_format($aRow['precio'],2).'" ';
+                $sOutput .= '["'.($num++).'","'.$aRow['descripcion'].'","'.$aRow['unidad_medida'].'","'.$incl.'","'.$aRow['descripcion_moneda'].'","'.number_format($aRow['precio'],2).'" ';
 
                 $sOutput .= '],';
 
@@ -125,6 +130,7 @@ class vlistadopreciosController extends Controller{
                         <th style="width:5%">#</th>
                         <th style="width:40%">Descripción del producto</th>
                         <th style="width:20%">Unidad Medida</th>
+                        <th style="width:10%">Incl. IGV</th>
                         <th style="width:20%">Precio</th>
                     </tr>'; 		        
        
@@ -136,11 +142,19 @@ class vlistadopreciosController extends Controller{
               $i =1;
             }   
             $moneda = $value['id_moneda'];    
-            $mon = $value['sigla_moneda'].' ';          
+            $mon = $value['sigla_moneda'].' ';  
+            
+            if($value['incligv'] == 'S'){                
+                $incl = LABEL_S;  
+            }elseif($value['incligv'] == 'N'){
+                $incl = LABEL_N;
+            }   
+            
             $html .= '<tr>
                 <td style="text-align:center">'.($i++).'</td>
                 <td>'.$value['descripcion'].'</td>
                 <td style="text-align:center">'.$value['unidad_medida'].'</td>
+                <td style="text-align:center">'.$incl.'</td>
                 <td style="text-align:right"><b>'.$mon.number_format($value['precio'],2).'</b></td>
             </tr>';    
 

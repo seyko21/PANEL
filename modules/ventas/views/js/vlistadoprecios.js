@@ -55,6 +55,7 @@ var vlistadoprecios_ = function(){
                 {sTitle: "N°", sWidth: "1%",bSortable: false},         
                 {sTitle: "Descripción del producto", sWidth: "25%"},
                 {sTitle: "Unid. Med.", sWidth: "20%"},
+                {sTitle: "Incl. Igv", sWidth: "10%"},
                 {sTitle: "Moneda", sWidth: "10%"},
                 {sTitle: "Precio", sWidth: "15%",sClass: "right"}
             ],

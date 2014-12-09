@@ -55,6 +55,7 @@ var vproducto_ = function(){
                 {sTitle: "<input type='checkbox' id='"+diccionario.tabs.VPROD+"chk_all' onclick='simpleScript.checkAll(this,\"#"+diccionario.tabs.VPROD+"gridVproducto\");'>", sWidth: "1%", sClass: "center", bSortable: false},
                 {sTitle: "Descripción", sWidth: "35%"},
                 {sTitle: "Unidad Medida", sWidth: "20%"},
+                {sTitle: "Incl. IGV", sWidth: "10%"},
                 {sTitle: "Moneda", sWidth: "10%"},
                 {sTitle: "Precio Unit.", sWidth: "15%", sClass: "right"},
                 {sTitle: "Estado", sWidth: "10%", sClass: "center"},
