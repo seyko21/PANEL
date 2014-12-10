@@ -30,7 +30,7 @@ var vGenerarCotizacionScript_ = function(){
                         incligv = cad[5];
                         igv  = cad[6];             
                         /*validanco duplicidad*/
-                        if(_private.productoAdd.length > 0){//hay data
+                        /*if(_private.productoAdd.length > 0){//hay data
                             for(var x in _private.productoAdd){
                                 if(_private.productoAdd[x] === simpleAjax.stringGet(idProducto)){
                                     duplicado = 1;
@@ -39,7 +39,7 @@ var vGenerarCotizacionScript_ = function(){
                                     });
                                 }
                             }
-                        }
+                        }*/
                                                                                                            
                         if(duplicado === 0){//no duplicado, agregar
                             if (incligv=='S')
@@ -137,7 +137,7 @@ var vGenerarCotizacionScript_ = function(){
             
             /*keyup para cantidad 1*/
             $(this).find('td:eq(2)').find('input:text').keyup(function(){
-                if(isNaN($(this).val()) || $(this).val() <= 0 ){
+                if(isNaN($(this).val()) || $(this).val() < 0 ){
                     $(this).val(1);
                 }else{
                     var index = $(this).attr('data-index');
@@ -169,7 +169,7 @@ var vGenerarCotizacionScript_ = function(){
             
             /*keyup para Cantidad 2*/
             $(this).find('td:eq(3)').find('input:text').keyup(function(){
-                if(isNaN($(this).val()) || $(this).val() <= 0 ){
+                if(isNaN($(this).val()) || $(this).val() < 0 ){
                     var d = $(this).attr('data-value');
                     $(this).val(d);
                 }else{
