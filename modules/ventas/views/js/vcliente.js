@@ -125,9 +125,9 @@ var vcliente_ = function(){
                         callback: function(){
                             
                             if(_private.callbackData.length > 0){       
-                                 if($('#'+diccionario.tabs.VRECL+'_CONTAINER').length > 0){
+                                 if($('#'+diccionario.tabs.VGEVE+'_CONTAINER').length > 0){
                                     $("#"+diccionario.tabs.VGEVE+"txt_idpersona").val(simpleAjax.stringPost(data.idPersona));       
-                                    $("#"+diccionario.tabs.VGEVE+"txt_cliente").val(data.nombre); 
+                                    $("#"+diccionario.tabs.VGEVE+"txt_cliente").val(data.nombre);
                                 }
                                 if($('#'+diccionario.tabs.VCOTI+'_CONTAINER').length > 0){
                                     $("#"+diccionario.tabs.VCOTI+"txt_idpersona").val(simpleAjax.stringPost(data.idPersona));       
@@ -143,8 +143,12 @@ var vcliente_ = function(){
                     });
                 }else if(!isNaN(data.result) && parseInt(data.result) === 2){
                     simpleScript.notify.error({
-                        content: "Cliente ya existe."
-                    });
+                        content: "Nro de Documento ya existe."
+                    });                
+                }else if(!isNaN(data.result) && parseInt(data.result) === 3){
+                    simpleScript.notify.error({
+                        content: "El Cliente que esta registrando ya existe. Debe de buscarlo y seleccionarlo."
+                    });                
                 }
             }
         });
@@ -169,8 +173,12 @@ var vcliente_ = function(){
                     });
                 }else if(!isNaN(data.result) && parseInt(data.result) === 2){
                     simpleScript.notify.error({
-                        content: "Cliente ya existe."
-                    });
+                        content: "Nro de Documento ya existe."
+                    });                
+                }else if(!isNaN(data.result) && parseInt(data.result) === 3){
+                    simpleScript.notify.error({
+                        content: "El Cliente que esta registrando ya existe. Debe de buscarlo y seleccionarlo."
+                    });                
                 }
             }
         });
