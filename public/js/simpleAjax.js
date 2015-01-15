@@ -3,8 +3,10 @@ var simpleAjax_ = function(){
     /*metodos y variables privadas*/
     var _private = {};
     
-    _private.clear = function(form){       
-        $(form)[0].reset();
+    _private.clear = function(form){   
+        if(form !== undefined ){
+            $(form)[0].reset();
+        }
     };
     
     _private.processIn = function(){

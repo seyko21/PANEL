@@ -358,5 +358,14 @@ define('CAJAA_Cierre','Cierre');
 
 define('CAJAC_1','Cierre de Caja');
 
+/*----------------------Registrar Mensaje----------------------*/
+define('PMSJ_01','Configurar Mensajes');
+define('PMSJ_02','Nuevo Mensaje');
+define('PMSJ_03','Editar Mensaje');
+define('PMSJ_04','Asunto');
+define('PMSJ_04M','Debe de ingresar Asunto');
+define('PMSJ_05','Alias');
+define('PMSJ_05M','Debe de ingresar un Alias');
+define('PMSJ_06','Plantilla Mensaje');
 
 ?>

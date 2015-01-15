@@ -1,0 +1,147 @@
+<?php /*
+* ---------------------------------------
+* --------- CREATED BY CREATOR ----------
+* fecha: 09-12-2014 17:12:42 
+* Descripcion : formNewMensajes.phtml
+* ---------------------------------------
+*/
+
+/*prefijo: PMSJ debe ser alias en tabla men_menuprincipal*/
+echo Functions::widgetOpen(array(
+    'id' => PMSJ.'new',
+    'title' => PMSJ_02    
+));
+
+$grabar = Session::getPermiso("PMSJGR");
+?>
+<form id="<?php echo PMSJ; ?>formNewMensajes" name="<?php echo PMSJ; ?>formNewMensajes">
+    <div class="row" style="padding:10px;">
+        
+        <div class="modal-body smart-form"> 
+            <section>
+                <div class="row">
+                    <label class="label col col-2"><?php echo PMSJ_04; ?></label>
+                    <div class="col col-10">
+                        <label class="input"> 
+                            <i class="icon-append fa fa-keyboard-o"></i>
+                            <input type="text" id="<?php echo PMSJ; ?>txt_asunto" name="<?php echo PMSJ; ?>txt_asunto" >
+                            <b class="tooltip tooltip-top-right"><i class="fa fa-question-circle txt-color-teal"></i> <?php echo PMSJ_04M; ?></b>
+                        </label>
+                    </div>
+                </div>
+            </section> 
+            <section>
+                <div class="row">
+                    <label class="label col col-2"><?php echo PMSJ_05; ?></label>
+                    <div class="col col-5">
+                        <label class="input"> 
+                            <i class="icon-append fa fa-keyboard-o"></i>
+                            <input type="text" id="<?php echo PMSJ; ?>txt_alias" name="<?php echo PMSJ; ?>txt_alias" >
+                            <b class="tooltip tooltip-top-right"><i class="fa fa-question-circle txt-color-teal"></i> <?php echo PMSJ_05M; ?></b>
+                        </label>
+                    </div>
+                </div>
+            </section>    
+        </div>            
+        <article class="col-sm-12 col-md-12 col-lg-6 sortable-grid ui-sortable" style="width: 100%; ">
+<div class="jarviswidget jarviswidget-color-blueDark" id="wid-id-0" data-widget-colorbutton="false" 
+ data-widget-editbutton="false" data-widget-togglebutton="false" data-widget-fullscreenbutton="false" data-widget-sortable="false">				
+                           <header><h2><?php echo PMSJ_06; ?></h2></header>
+                            <!-- widget div-->
+                            <div>
+                                    <!-- widget edit box -->
+                                    <div class="jarviswidget-editbox">
+                                            <!-- This area used as dropdown edit box -->                                                    
+                                    </div>
+                                    <!-- end widget edit box -->
+                                    <!-- widget content -->
+                                    <div class="widget-body no-padding">
+                                            <div class="summernote_msj">							
+                                            </div>						
+                                            <div class="widget-footer smart-form">
+                                                <div class="btn-group">
+                                                        <!--
+                                                        <button class="btn btn-sm btn-primary" type="button">
+                                                                <i class="fa fa-times"></i> Cancel
+                                                        </button>	
+                                                        -->			
+                                                </div>				
+                                            </div>						
+                                    </div>
+                                    <!-- end widget content -->
+                            </div>
+                            <!-- end widget div -->
+                    </div>	
+        </article>
+        <textarea id="<?php echo PMSJ; ?>txt_mensaje" name="<?php echo PMSJ; ?>txt_mensaje" class="hide" rows="3"></textarea>
+        <div class="modal-footer"  style="border:none;" >
+            <div class="foot-obligar"></div>
+            <?php if($grabar["permiso"]):?>
+            <button id="<?php echo PMSJ; ?>btnGrMensajes" type="submit" class="<?php echo $grabar["theme"]; ?>">
+                <i class="<?php echo $grabar["icono"]; ?>"></i> <?php echo $grabar["accion"]; ?>
+            </button>
+            <?php endif; ?>
+            <button type="button" class="<?php echo THEME_CLOSE; ?>" onclick="simpleScript.closeTab(diccionario.tabs.PMSJ+'new');" >
+                <i class="<?php echo ICON_CLOSE; ?>"></i> <?php echo BTN_CLOSE; ?>
+            </button>
+        </div>        
+    </div><!-- /.modal-dialog -->
+</form>
+<!-- si no tiene permiso se anula submit desde cualquier input -->
+<?php if(!$grabar["permiso"]): ?>
+<script>
+    simpleScript.noSubmit("#<?php echo PMSJ; ?>formNewMensajes");
+</script>
+<?php endif; ?>
+<script>
+    pageSetUp();
+    var pagefunction = function() {		
+            $('.summernote_msj').summernote({
+                    height : 300,
+                    focus : true,
+                    tabsize : 2,
+                    toolbar: [
+                    ['style', ['style','bold', 'italic', 'underline', 'clear']],                    
+                    ['fontsize', ['fontsize']],
+                    ['color', ['color']],
+                    ['para', ['ul', 'ol', 'paragraph']],
+                    ['table', ['table']],
+                    ['height', ['height']],
+                    ['insert', ['picture']],
+                    ['Misc',['codeview']],
+                  ]
+            });				
+    };	
+        
+    loadScript("theme/<?php echo DEFAULT_LAYOUT ?>/js/plugin/summernote/summernote.min.js", function(){
+            loadScript("theme/<?php echo DEFAULT_LAYOUT ?>/js/plugin/markdown/markdown.min.js", function(){
+                            loadScript("theme/<?php echo DEFAULT_LAYOUT ?>/js/plugin/markdown/bootstrap-markdown.min.js", pagefunction);
+            });
+    });
+    
+
+    /*configurar validacion de formulario -- este codigo es de ejemplo*/
+    $("#<?php echo PMSJ; ?>formNewMensajes").validate({
+        rules : {
+            <?php echo PMSJ; ?>txt_asunto : {
+                required : true,
+                minlength: 3
+            },
+            <?php echo PMSJ; ?>txt_alias : {
+                required : true,
+                regular: true                
+            }
+        },       
+
+       
+        errorPlacement : function(error, element) {
+            error.insertAfter(element.parent());
+        },
+
+        submitHandler: function(){
+            $("#<?php echo PMSJ; ?>txt_mensaje").val($('#<?php echo PMSJ; ?>formNewMensajes .summernote_msj').code());
+            mensajesPlantilla.postNewMensajes();
+        }   
+ });
+  
+</script>

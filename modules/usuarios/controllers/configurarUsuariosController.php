@@ -10,6 +10,7 @@ class configurarUsuariosController extends Controller{
     
     public function __construct() {
         $this->loadModel(array('modulo' => 'usuarios', 'modelo' => 'configurarUsuarios'));        
+        $this->loadController(array('modulo'=>'configuracion','controller'=>'mensajesPlantilla'));                        
     }
 
     public function index(){ 
@@ -176,7 +177,7 @@ class configurarUsuariosController extends Controller{
         $data = Obj::run()->configurarUsuariosModel->getParametros($p);
         return $data;
     }   
-
+/*
     public function postAcceso() {
         $idd = Formulario::getParam('_id');
         $nombres = Formulario::getParam('_nombres');
@@ -212,7 +213,7 @@ class configurarUsuariosController extends Controller{
         $mail->MsgHTML($body);
         $mail->CharSet = 'UTF-8';
         
-        /* validar si dominio de correo existe */
+        // validar si dominio de correo existe 
         if ($mail->Send()) {
             $data = array('result' => 1);
         } else {
@@ -221,7 +222,87 @@ class configurarUsuariosController extends Controller{
 
         echo json_encode($data);
     }
+*/
+     public function postAcceso() {
+        $msj = Obj::run()->mensajesPlantillaController->getPlantillaMensaje('ACCESO01'); 
+        $idd = Formulario::getParam('_id');
+        $nombres = Formulario::getParam('_nombres');
+        $email = Formulario::getParam('_mail');
+        $data = Obj::run()->configurarUsuariosController->getParametros('EMAIL');        
+        $data1 = Obj::run()->configurarUsuariosController->getParametros('EMCO');        
+        $emailEmpresa = $data['valor'];
+        $empresa = $data1['valor'];
+        $persona = str_replace(' ', '_',$nombres );
+        
+        $body = str_replace('\\','',$msj['cuerpo'] );
+        $body = htmlspecialchars_decode($body,ENT_QUOTES);
+                
+        $body = str_replace('{{NOMBRES}}',$nombres, $body);
+        $body = str_replace('{{URL_ENLACE}}', BASE_URL . 'usuarios/configurarUsuarios/confirm/'.$idd.'/'.$persona, $body);
+        
+        $mail = new PHPMailer(); // defaults to using php "mail()"
 
+        //$mail->IsSMTP();
+    
+        $mail->SetFrom($emailEmpresa, $empresa);
+
+        $mail->AddAddress($email, $nombres);
+
+        $mail->Subject = $msj['asunto'];
+
+        $mail->MsgHTML($body);
+        
+        $mail->CharSet = 'UTF-8';
+        
+        /* validar si dominio de correo existe */
+        if ($mail->Send()) {
+            $data = array('result' => 1);
+        } else {
+            $data = array('result' => 2);
+        }
+        echo json_encode($data);
+    }
+    
+    public function postAccesoCliente() {
+        $msj = Obj::run()->mensajesPlantillaController->getPlantillaMensaje('CLIENTE01'); 
+        $idd = Formulario::getParam('_id');
+        $nombres = Formulario::getParam('_nombres');
+        $email = Formulario::getParam('_mail');
+        $data = Obj::run()->configurarUsuariosController->getParametros('EMAIL');        
+        $data1 = Obj::run()->configurarUsuariosController->getParametros('EMCO');        
+        $emailEmpresa = $data['valor'];
+        $empresa = $data1['valor'];
+        $persona = str_replace(' ', '_',$nombres );
+        
+        $body = str_replace('\\','',$msj['cuerpo'] );
+        $body = htmlspecialchars_decode($body,ENT_QUOTES);
+                
+        $body = str_replace('{{NOMBRES}}',$nombres, $body);
+        $body = str_replace('{{URL_ENLACE}}', BASE_URL . 'usuarios/configurarUsuarios/confirm/'.$idd.'/'.$persona, $body);
+        
+        $mail = new PHPMailer(); // defaults to using php "mail()"
+
+        //$mail->IsSMTP();
+    
+        $mail->SetFrom($emailEmpresa, $empresa);
+
+        $mail->AddAddress($email, $nombres);
+
+        $mail->Subject = $msj['asunto'];
+
+        $mail->MsgHTML($body);
+        
+        $mail->CharSet = 'UTF-8';
+        
+        /* validar si dominio de correo existe */
+        if ($mail->Send()) {
+            $data = array('result' => 1);
+        } else {
+            $data = array('result' => 2);
+        }
+        echo json_encode($data);
+    }
+    
     /* llama html para actualizar clave de Socio */
     public function confirm($id, $nom) {
         Obj::run()->View->idd = $id;

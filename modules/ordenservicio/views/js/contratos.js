@@ -22,7 +22,7 @@ var contratos_ = function(){
     /*crea tab : Contratos*/
     this.publico.main = function(element){
         simpleScript.addTab({
-            id : diccionario.tabs.CONTR,
+            id : diccionario.tabs.MCON,
             label: $(element).attr("title"),
             fnCallback: function(){
                 contratos.getContenido();
@@ -36,17 +36,17 @@ var contratos_ = function(){
             dataType: "html",
             root: _private.config.modulo,
             fnCallback: function(data){
-                $("#"+diccionario.tabs.CONTR+"_CONTAINER").html(data);
+                $("#"+diccionario.tabs.MCON+"_CONTAINER").html(data);
                 contratos.getGridContratos();
             }
         });
     };
     
     this.publico.getGridContratos = function (){
-        var _f1 = $("#"+diccionario.tabs.CONTR+"txt_f1").val();
-        var _f2 = $("#"+diccionario.tabs.CONTR+"txt_f2").val();        
+        var _f1 = $("#"+diccionario.tabs.MCON+"txt_f1").val();
+        var _f2 = $("#"+diccionario.tabs.MCON+"txt_f2").val();        
        
-        var oTable = $("#"+diccionario.tabs.CONTR+"gridContratos").dataTable({
+        var oTable = $("#"+diccionario.tabs.MCON+"gridContratos").dataTable({
             bProcessing: true,
             bServerSide: true,
             bDestroy: true,
@@ -71,19 +71,19 @@ var contratos_ = function(){
                 aoData.push({"name": "_f2", "value": _f2}); 
             },            
             fnDrawCallback: function() {
-                $("#"+diccionario.tabs.CONTR+"gridContratos_filter").find("input").attr("placeholder","Buscar por N° OS").css("width","200px");
-                simpleScript.enterSearch("#"+diccionario.tabs.CONTR+'gridContratos',oTable);
+                $("#"+diccionario.tabs.MCON+"gridContratos_filter").find("input").attr("placeholder","Buscar por N° OS").css("width","200px");
+                simpleScript.enterSearch("#"+diccionario.tabs.MCON+'gridContratos',oTable);
                 /*para hacer evento invisible*/
                 simpleScript.removeAttr.click({
-                    container: "#widget_"+diccionario.tabs.CONTR,
+                    container: "#widget_"+diccionario.tabs.MCON,
                     typeElement: "button"
                 });
-                $('#'+diccionario.tabs.CONTR+'refresh').click(function(){
+                $('#'+diccionario.tabs.MCON+'refresh').click(function(){
                    oTable.fnReloadAjax(oTable.fnSettings());
                 }); 
             },
             fnInfoCallback: function( oSettings, iStart, iEnd, iMax, iTotal, sPre ) {
-               return '<button id="'+diccionario.tabs.CONTR+'refresh" class="btn btn-primary" title="Actualizar"><i class="fa fa-refresh"></i></button> '+iStart +" al "+ iEnd+' de '+iTotal;
+               return '<button id="'+diccionario.tabs.MCON+'refresh" class="btn btn-primary" title="Actualizar"><i class="fa fa-refresh"></i></button> '+iStart +" al "+ iEnd+' de '+iTotal;
            }
         });
         setup_widgets_desktop();
@@ -130,10 +130,10 @@ var contratos_ = function(){
             data: '&_idOrden='+id+'&_numOrden='+num,
             fnCallback: function(data) {
                 if(parseInt(data.result) === 1){
-                    $('#'+diccionario.tabs.CONTR+'btnDowPDF').off('onclick');
-                    $('#'+diccionario.tabs.CONTR+'btnDowPDF').off('click');
-                    $('#'+diccionario.tabs.CONTR+'btnDowPDF').attr("onclick","window.open('public/files/"+data.archivo+"','_blank');generarCotizacion.deleteArchivo('"+data.archivo+"');");
-                    $('#'+diccionario.tabs.CONTR+'btnDowPDF').click();
+                    $('#'+diccionario.tabs.MCON+'btnDowPDF').off('onclick');
+                    $('#'+diccionario.tabs.MCON+'btnDowPDF').off('click');
+                    $('#'+diccionario.tabs.MCON+'btnDowPDF').attr("onclick","window.open('public/files/"+data.archivo+"','_blank');generarCotizacion.deleteArchivo('"+data.archivo+"');");
+                    $('#'+diccionario.tabs.MCON+'btnDowPDF').click();
                 }
             }
         });
@@ -146,10 +146,10 @@ var contratos_ = function(){
             data: '&_idOrden='+id+'&_numOrden='+num,
             fnCallback: function(data) {
                 if(parseInt(data.result) === 1){
-                    $('#'+diccionario.tabs.CONTR+'btnDowPDF').off('onclick');
-                    $('#'+diccionario.tabs.CONTR+'btnDowPDF').off('click');
-                    $('#'+diccionario.tabs.CONTR+'btnDowPDF').attr("onclick","window.open('public/files/"+data.archivo+"','_blank');generarCotizacion.deleteArchivo('"+data.archivo+"');");
-                    $('#'+diccionario.tabs.CONTR+'btnDowPDF').click();
+                    $('#'+diccionario.tabs.MCON+'btnDowPDF').off('onclick');
+                    $('#'+diccionario.tabs.MCON+'btnDowPDF').off('click');
+                    $('#'+diccionario.tabs.MCON+'btnDowPDF').attr("onclick","window.open('public/files/"+data.archivo+"','_blank');generarCotizacion.deleteArchivo('"+data.archivo+"');");
+                    $('#'+diccionario.tabs.MCON+'btnDowPDF').click();
                 }
             }
         });

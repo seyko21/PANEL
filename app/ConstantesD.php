@@ -58,6 +58,6 @@ define("VEGRE","VEGRE");             /*tab modulo VEGRESOS*/
 define("VCOTI","VCOTI");             /*tab modulo VEGRESOS*/
 define("CAJAA","CAJAA");             /*tab modulo CAJAAPERTURA*/
 define("CAJAC","CAJAC");             /*tab modulo CAJACIERRE*/
-
+define("PMSJ","PMSJ");             /*tab modulo MENSAJES*/
 
 ?>

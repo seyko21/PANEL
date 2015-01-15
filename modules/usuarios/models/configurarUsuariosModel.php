@@ -198,7 +198,7 @@ class configurarUsuariosModel extends Model{
         $res = array('result'=>$data['result'],'duplicado'=>$data['duplicado']);
         
         if($data['result'] != 3){
-            /*se borra roles*/
+            /*se borra roles*/                        
             if (Session::get('sys_defaultRol') == APP_COD_SADM){
                 $query = "DELETE FROM men_usuariorol WHERE id_usuario = :idUsuario";
             }else{
@@ -222,7 +222,9 @@ class configurarUsuariosModel extends Model{
                     ':activo' => '',
                     ':user' => $this->_usuario
                 );
+                
                 $this->execute($query,$parms);
+                
             }
 
             $res = array('result'=>1,'duplicado'=>0);

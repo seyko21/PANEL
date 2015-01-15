@@ -49,7 +49,8 @@
         VEGRE: '<?php echo VEGRE; ?>',
         VCOTI: '<?php echo VCOTI; ?>',
         CAJAA: '<?php echo CAJAA; ?>',
-        CAJAC: '<?php echo CAJAC; ?>'
+        CAJAC: '<?php echo CAJAC; ?>',
+        PMSJ: '<?php echo PMSJ; ?>'        
     }
 };
 </script>

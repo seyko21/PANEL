@@ -265,6 +265,22 @@ var configurarUsuarios_ = function(){
         });
     };
     
+    this.public.postAccesoCliente = function(btn,id,vend,mail){
+        simpleAjax.send({
+            element: btn,
+            root: _private.config.modulo + 'postAccesoCliente',
+            data: '&_nombres='+vend+'&_id='+id+'&_mail='+mail,
+            clear: true,
+            fnCallback: function(data) {
+                if(!isNaN(data.result) && parseInt(data.result) === 1){
+                    simpleScript.notify.ok({
+                        content: 'Acceso se envió correctamente al Cliente'
+                    });
+                }
+            }
+        });
+    };
+    
     return this.public;
     
 };

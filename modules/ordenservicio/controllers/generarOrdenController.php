@@ -112,7 +112,7 @@ class generarOrdenController extends Controller{
                 /*solo si tiene compromisos se podra exportar contrato*/
                 if($aRow['compromisos'] && $aRow['id_contrato'] != '0' && $cronograma >= $aRow['monto_total']){
                     if($email['permiso']){
-                        $sOutput .= '<button type=\"button\" class=\"'.$email['theme'].'\" title=\"'.GNOSE_16.'\" onclick=\"registrarVendedor.postAccesoVendedor(this,\'' . $idUser . '\',\'' . $aRow['nombrecompleto'] . '\',\'' . $aRow['email'] . '\')\">';
+                        $sOutput .= '<button type=\"button\" class=\"'.$email['theme'].'\" title=\"'.GNOSE_16.'\" onclick=\"configurarUsuarios.postAccesoCliente(this,\'' . $idUser . '\',\'' . $aRow['nombrecompleto'] . '\',\'' . $aRow['email'] . '\')\">';
                         $sOutput .= '    <i class=\"'.$email['icono'].'\"></i>';
                         $sOutput .= '</button>';
                     }
@@ -285,8 +285,7 @@ class generarOrdenController extends Controller{
                 . '<th style="width:7%;border-bottom:solid 1px #000">'.LABEL_A37.'</th>'  
                 . '<th style="width:15%;border-bottom:solid 1px #000">'.LABEL_A27.'</th>'
                 . '<th style="width:45%;border-bottom:solid 1px #000">'.LABEL_A38.'</th>'                  
-                . '<th style="width:12%;border-bottom:solid 1px #000">'.LABEL_A44.'</th>' 
-                . '<th style="width:8%;border-bottom:solid 1px #000">'.LABEL_A45.'</th>' 
+                . '<th style="width:12%;border-bottom:solid 1px #000">'.LABEL_A44.'</th>'                 
                 . '</tr>';
         
         $impuesto = number_format($caratula[0]['monto_impuesto'],2);
@@ -294,28 +293,23 @@ class generarOrdenController extends Controller{
         foreach ($caratula as $v) {
             
             if ($value['incluyeigv'] == '1'){
-                $precio = number_format($v['precio'],2);    
-                $produccion = number_format($v['costo_produccion'],2);    
+                $precio = $v['precio'];    
+                $produccion = $v['costo_produccion'];    
             }
             else{
-                $precio = number_format($v['precio_incigv'],2);     
-                $produccion = number_format($v['produccion_incigv'],2);    
+                $precio = $v['precio_incigv'];     
+                $produccion = $v['produccion_incigv'];    
             }
             
             if($produccion > 0){
-                $produccion = 'S/.'.$produccion;
-                $align = 'right';
-            }else{
-                $produccion = 'NO';
-                $align = 'center';
+                $precio = $precio + $produccion;                
             }
                         
             $panel .= '<tr>';
             $panel .=  '   <td style="text-align:center; font-size:11px;">'.$v['codigo'].'</td>';
             $panel .=  '   <td style="text-align:center; font-size:11px;">'.$v['elemento'].'</td>';
             $panel .= '    <td style="font-size:11px;">'.$v['ubicacion'].' - '.$v['medidas'].' Area: '.$v['dimesion_area'].' m<sup>2</sup></td>';            
-            $panel .=  '   <td style="text-align:right; font-size:11px;">S/. '.$precio.'</td>';  
-            $panel .=  '   <td style="text-align:'.$align.'; font-size:10px;">'.$produccion.'</td>';
+            $panel .=  '   <td style="text-align:right; font-size:11px;">S/. '. number_format($precio,2).'</td>';              
             $panel .=  '</tr>';
         }
         $panel .= '</table>';

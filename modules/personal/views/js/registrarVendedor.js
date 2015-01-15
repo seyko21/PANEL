@@ -242,7 +242,6 @@ var registrarVendedor_ = function(){
             element: btn,
             root: _private.config.modulo + 'postDesactivarVendedor',
             data: '&_idPersona='+id,
-            clear: true,
             fnCallback: function(data) {
                 if(!isNaN(data.result) && parseInt(data.result) === 1){
                     simpleScript.notify.ok({
@@ -261,7 +260,6 @@ var registrarVendedor_ = function(){
             element: btn,
             root: _private.config.modulo + 'postActivarVendedor',
             data: '&_idPersona='+id,
-            clear: true,
             fnCallback: function(data) {
                 if(!isNaN(data.result) && parseInt(data.result) === 1){
                     simpleScript.notify.ok({
